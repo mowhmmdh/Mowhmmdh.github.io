@@ -147,6 +147,25 @@
         <span class="lang-en">LinkedIn</span>
     </a>
 
-    <script src="script.js"></script>
+    <script>
+    function switchLang(lang) {
+        document.body.className = ''; 
+        document.body.classList.add('lang-' + lang);
+
+        if (lang === 'fa') {
+            document.documentElement.setAttribute('lang', 'fa');
+            document.documentElement.setAttribute('dir', 'rtl');
+        } else {
+            document.documentElement.setAttribute('lang', 'en');
+            document.documentElement.setAttribute('dir', 'ltr');
+        }
+    }
+
+    // زبان پیشفرض را روی فارسی تنظیم می کند
+    document.addEventListener('DOMContentLoaded', () => {
+        switchLang('fa');
+    });
+</script>
+
 </body>
 </html>
