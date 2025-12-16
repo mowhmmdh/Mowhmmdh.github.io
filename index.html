@@ -2,350 +2,188 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محمد حسین عسگری ثمرین | متخصص فناوری اطلاعات</title>
     <meta name="google-site-verification" content="w1K0ObPBkDyumGF71kjJyBwGvPFh1rhb6PBLBd-RC90" />
-    <meta property="og:title" content="محمد حسین عسگری ثمرین | متخصص فناوری اطلاعات">
-    <meta property="og:description" content="رزومه و نمونه کار محمد حسین عسگری ثمرین، متخصص پشتیبانی فناوری اطلاعات.">
-    <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.jpg">
-    <meta property="og:url" content="https://mowhmmdh.github.io/">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title class="lang-fa">محمد حسین عسگری ثمرین | متخصص فناوری اطلاعات </title>
+    <title class="lang-en">Mohammad Hosein Asgari | IT Specialist</title>
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-       /* ---- استایل‌های عمومی و فونت ---- */
-@font-face {
-    font-family: 'Vazirmatn';
-    src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); /* اگر فونت فارسی را در پوشه fonts/Vazirmatn-Medium.woff2 قرار داده‌اید */
-    font-weight: 500;
-    font-style: normal;
-}
+        /* ---- استایل‌های عمومی و فونت ---- */
+        @font-face {
+            font-family: 'Vazirmatn';
+            src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); /* اگر فونت فارسی را در پوشه fonts/Vazirmatn-Medium.woff2 قرار داده‌اید */
+            font-weight: 500;
+            font-style: normal;
+        }
 
-body {
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-    padding-bottom: 80px; /* فضای کافی برای دکمه ثابت لینکدین */
-}
+        body {
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+            padding-bottom: 80px;
+        }
 
-/* ---- استایل‌های دو زبانگی ---- */
+        /* ---- استایل‌های دو زبانگی ---- */
 
-/* موقتاً این خط را حذف یا کامنت (//) کنید تا عیب یابی انجام شود */
-/* .lang-fa, .lang-en { display: none; } */ 
+        /* اگر جاوا اسکریپت اجرا نشود، محتوا مخفی می ماند.
+           display: none; را دوباره بر می گردانیم چون مطمئنیم تگ ها درست هستند */
+        .lang-fa, .lang-en { display: none; } 
 
-/* اگر کلاس body=lang-fa باشد، محتوای فارسی نمایش داده می‌شود */
-body.lang-fa .lang-fa { 
-    display: block; 
-    direction: rtl; /* جهت راست به چپ */
-    text-align: right;
-}
+        body.lang-fa .lang-fa { 
+            display: block; 
+            direction: rtl; 
+            text-align: right;
+        }
 
-/* اگر کلاس body=lang-en باشد، محتوای انگلیسی نمایش داده می‌شود */
-body.lang-en .lang-en { 
-    display: block; 
-    direction: ltr; /* جهت چپ به راست */
-    text-align: left;
-}
+        body.lang-en .lang-en { 
+            display: block; 
+            direction: ltr; 
+            text-align: left;
+        }
 
-/* تنظیم جهت بدنه و متن اصلی بر اساس زبان فعال */
-body.lang-fa {
-    direction: rtl;
-    text-align: right;
-}
-body.lang-en {
-    direction: ltr;
-    text-align: left;
-}
+        body.lang-fa {
+            direction: rtl;
+            text-align: right;
+        }
+        body.lang-en {
+            direction: ltr;
+            text-align: left;
+        }
 
 
-/* ---- استایل‌دهی طرح اصلی ---- */
+        /* ---- استایل‌دهی طرح اصلی ---- */
 
-.container {
-    width: 90%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-}
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-.header {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    margin-bottom: 40px;
-}
+        .header {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 40px;
+        }
 
-h1 {
-    font-size: 2.5em;
-    color: #1a73e8; /* رنگ آبی جذاب */
-    margin-bottom: 5px;
-}
+        h1 {
+            font-size: 2.5em;
+            color: #1a73e8;
+            margin-bottom: 5px;
+        }
 
-h2 {
-    font-size: 1.5em;
-    color: #555;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-    margin-top: 0;
-}
+        .section {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
 
-.contact-info {
-    margin-top: 20px;
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-    font-size: 0.9em;
-}
+        /* ---- استایل‌دهی عکس پروفایل (همیشه در چپ) ---- */
+        .profile-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: absolute; 
+            top: 20px; 
+            left: 20px; /* موقعیت ثابت در گوشه بالا و سمت چپ */
+            right: auto;
+            z-index: 10;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
 
-.contact-info p {
-    margin: 5px 0;
-    display: inline-block;
-    margin-right: 20px;
-}
-.contact-info i {
-    color: #1a73e8;
-    margin-left: 5px; /* برای فارسی */
-}
-body.lang-en .contact-info i {
-    margin-right: 5px; /* برای انگلیسی */
-    margin-left: 0;
-}
+        /* ---- دکمه جابجایی زبان (در بالا و سمت راست) ---- */
+        .lang-switcher {
+            position: absolute;
+            top: 30px;
+            right: 20px; 
+            left: auto; 
+            z-index: 10;
+        }
+        .lang-switcher button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            opacity: 0.6;
+        }
+        .lang-switcher button:hover {
+            opacity: 1;
+        }
+        body.lang-fa #lang-fa-btn,
+        body.lang-en #lang-en-btn {
+            opacity: 1;
+            font-weight: bold;
+            background-color: #0d47a1;
+        }
 
-.summary {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-    font-size: 1.05em;
-    color: #444;
-}
+        /* ---- استایل دکمه ثابت لینکدین ---- */
+        .linkedin-fixed-btn {
+            position: fixed;
+            bottom: 20px; 
+            left: 20px; 
+            z-index: 999; 
+            display: inline-flex;
+            align-items: center; 
+            padding: 10px 15px;
+            background-color: #0077B5; 
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+            transition: transform 0.3s;
+        }
 
-.section {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    margin-bottom: 30px;
-}
-
-.section-title {
-    font-size: 1.8em;
-    color: #1a73e8;
-    margin-bottom: 25px;
-    border-bottom: 3px solid #1a73e8;
-    display: inline-block;
-    padding-bottom: 5px;
-}
-
-.job-item, .education-item {
-    margin-bottom: 25px;
-    border-bottom: 1px dashed #eee;
-    padding-bottom: 15px;
-}
-
-.job-item h3, .education-item h3 {
-    font-size: 1.25em;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.duration, .institution {
-    font-size: 0.9em;
-    color: #777;
-    margin-top: 5px;
-}
-
-.job-item ul {
-    list-style-type: '• '; /* سفارشی سازی لیست */
-    padding-right: 20px; /* برای فارسی */
-    padding-left: 0;
-    margin-top: 10px;
-}
-body.lang-en .job-item ul {
-    list-style-type: disc;
-/* ---- استایل‌های دو زبانگی ---- */
-
-/* این کد را حتماً برگردانید تا فقط محتوای زبان فعال نمایش داده شود */
-.lang-fa, .lang-en { display: none; } 
-
-/* اگر کلاس body=lang-fa باشد، محتوای فارسی نمایش داده می‌شود */
-body.lang-fa .lang-fa { 
-    display: block; 
-    direction: rtl; 
-    text-align: right;
-}
-
-/* اگر کلاس body=lang-en باشد، محتوای انگلیسی نمایش داده می‌شود */
-body.lang-en .lang-en { 
-    display: block; 
-    direction: ltr; 
-    text-align: left;
-}
-
-/* تنظیم جهت بدنه و متن اصلی بر اساس زبان فعال */
-body.lang-fa {
-    direction: rtl;
-    text-align: right;
-}
-body.lang-en {
-    direction: ltr;
-    text-align: left;
-}
-
-
-/* ---- استایل دکمه جابجایی زبان ---- */
-.lang-switcher {
-    position: absolute;
-    top: 30px;
-    right: 120px;
-    z-index: 10;
-}
-.lang-switcher button {
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    opacity: 0.6;
-}
-
-
-/* ---- استایل دکمه ثابت لینکدین ---- */
-.linkedin-fixed-btn {
-    position: fixed;
-    bottom: 20px; 
-    left: 20px; 
-    z-index: 999; 
-    display: inline-flex;
-    align-items: center; 
-    padding: 10px 15px;
-    background-color: #0077B5; 
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-    transition: transform 0.3s;
-}
-
-/* تنظیم آیکون در فارسی */
-body.lang-fa .linkedin-fixed-btn i {
-    margin-left: 10px;
-    margin-right: 0;
-}
-/* تنظیم آیکون در انگلیسی */
-body.lang-en .linkedin-fixed-btn i {
-    margin-right: 10px;
-    margin-left: 0;
-}
-
-/* ---- استایل دکمه ثابت لینکدین (قبلی) ---- */
-.linkedin-fixed-btn {
-    position: fixed;
-    bottom: 20px; 
-    left: 20px; 
-    z-index: 999; 
-    display: inline-flex;
-    align-items: center; 
-    padding: 10px 15px;
-    background-color: #0077B5; 
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-    transition: transform 0.3s, background-color 0.3s;
-}
-
-.linkedin-fixed-btn:hover {
-    transform: scale(1.05);
-    background-color: #005a87;
-}
-
-/* تنظیم آیکون در فارسی */
-body.lang-fa .linkedin-fixed-btn i {
-    margin-left: 10px;
-    margin-right: 0;
-}
-/* تنظیم آیکون در انگلیسی */
-body.lang-en .linkedin-fixed-btn i {
-    margin-right: 10px;
-    margin-left: 0;
-}
-
-/* ---- دکمه جابجایی زبان ---- */
-.lang-switcher {
-    position: absolute;
-    top: 30px;
-    right: 120px; /* فاصله از عکس پروفایل */
-    z-index: 10;
-}
-body.lang-en .lang-switcher {
-    left: 120px;
-    right: auto;
-}
-.lang-switcher button {
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-.lang-switcher button:hover {
-    opacity: 1;
-}
-
-/* مخفی کردن دکمه زبان فعال */
-body.lang-fa #lang-fa-btn,
-body.lang-en #lang-en-btn {
-    opacity: 1;
-    font-weight: bold;
-    background-color: #0d47a1;
-}
-
-/* ---- رسپانسیو (برای موبایل) ---- */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    h1 {
-        font-size: 2em;
-    }
-    .profile-icon {
-        width: 50px;
-        height: 50px;
-        top: 15px;
-        right: 15px;
-    }
-    .lang-switcher {
-        top: 20px;
-        right: 80px;
-    }
-    body.lang-en .lang-switcher {
-        left: 80px;
-    }
-    .skills-list {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .skill-category {
-        flex-basis: 100%;
-    }
-    .linkedin-fixed-btn {
-        bottom: 10px;
-        left: 10px;
-        padding: 8px 12px;
-        font-size: 0.9em;
-    }
-}
-
+        /* تنظیم آیکون در فارسی */
+        body.lang-fa .linkedin-fixed-btn i {
+            margin-left: 10px;
+            margin-right: 0;
+        }
+        /* تنظیم آیکون در انگلیسی */
+        body.lang-en .linkedin-fixed-btn i {
+            margin-right: 10px;
+            margin-left: 0;
+        }
+        
+        /* ---- استایل های جزیی ---- */
+        .contact-info { margin-top: 20px; padding: 10px 0; border-top: 1px solid #eee; font-size: 0.9em; }
+        .contact-info p { margin: 5px 0; display: inline-block; margin-right: 20px; }
+        .contact-info i { color: #1a73e8; margin-left: 5px; }
+        body.lang-en .contact-info i { margin-right: 5px; margin-left: 0; }
+        .summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; font-size: 1.05em; color: #444; }
+        .section-title { font-size: 1.8em; color: #1a73e8; margin-bottom: 25px; border-bottom: 3px solid #1a73e8; display: inline-block; padding-bottom: 5px; }
+        .job-item, .education-item { margin-bottom: 25px; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .job-item h3, .education-item h3 { font-size: 1.25em; color: #333; margin-bottom: 5px; }
+        .duration, .institution { font-size: 0.9em; color: #777; margin-top: 5px; }
+        .job-item ul { list-style-type: '• '; padding-right: 20px; padding-left: 0; margin-top: 10px; }
+        body.lang-en .job-item ul { list-style-type: disc; padding-left: 20px; padding-right: 0; }
+        .skills-list { display: flex; flex-wrap: wrap; gap: 20px; }
+        .skill-category { padding: 15px; border: 1px solid #eee; border-radius: 8px; flex-basis: calc(50% - 10px); }
+        .skill-category h4 { color: #0077B5; margin-top: 0; padding-bottom: 5px; border-bottom: 1px solid #0077B5; margin-bottom: 15px; font-size: 1.1em; }
+        .skill-tag { display: inline-block; background-color: #e6f0ff; color: #1a73e8; padding: 6px 12px; border-radius: 20px; margin: 5px; font-size: 0.9em; font-weight: 500; }
+        
+        /* ---- رسپانسیو (برای موبایل) ---- */
+        @media (max-width: 600px) {
+            .container { padding: 10px; } h1 { font-size: 2em; }
+            .profile-icon { width: 50px; height: 50px; top: 15px; left: 15px; }
+            .lang-switcher { top: 20px; right: 15px; }
+            .skills-list { flex-direction: column; gap: 15px; }
+            .skill-category { flex-basis: 100%; }
+        }
     </style>
-
 </head>
 <body class="lang-fa">
 
@@ -354,7 +192,7 @@ body.lang-en #lang-en-btn {
         <button onclick="switchLang('en')" id="lang-en-btn">English</button>
     </div>
 
-    <img src="profile.jpg" alt="عکس محمد حسین عسگری" class="profile-icon">
+    <img src="images/profile.jpg" alt="عکس محمد حسین عسگری ثمرین" class="profile-icon">
 
     <main class="container">
         
@@ -371,8 +209,8 @@ body.lang-en #lang-en-btn {
             </div>
             
             <section class="summary">
-                <p class="lang-fa">من یک متخصص پشتیبانی فناوری اطلاعات هستم که تجربه عملی در عیب یابی سیستم‌ها، پشتیبانی از کاربران و نگهداری شبکه ها دارم. با سازمان‌هایی مانند وزارت کشور، روزنامه صمت و کیمیا مهر اسپادانا همکاری داشته ام و در آنجا مهارتهای فنی و ارتباطی خود را تقویت کرده ام. [span_0](start_span)به شبکه و امنیت سایبری علاقه مند هستم و آماده پذیرش فرصتهای جدید و رشد حرفه‌ای هستم.[span_0](end_span)</p>
-                <p class="lang-en">I am an IT support specialist with practical experience in system troubleshooting, user support, and network maintenance. I have collaborated with organizations such as the Ministry of Interior, Samt Newspaper, and Kimiamehr Espadana, where I enhanced my technical and communication skills. [span_1](start_span)I am interested in networking and cybersecurity and continually improve my knowledge, ready for new opportunities and professional growth.[span_1](end_span)</p>
+                <p class="lang-fa">من یک متخصص پشتیبانی فناوری اطلاعات هستم که تجربه عملی در عیب یابی سیستم‌ها، پشتیبانی از کاربران و نگهداری شبکه ها دارم. با سازمان‌هایی مانند وزارت کشور، روزنامه صمت و کیمیا مهر اسپادانا همکاری داشته ام و در آنجا مهارتهای فنی و ارتباطی خود را تقویت کرده ام. به شبکه و امنیت سایبری علاقه مند هستم و آماده پذیرش فرصت های جدید و رشد حرفه‌ای هستم.</p>
+                <p class="lang-en">I am an IT support specialist with practical experience in system troubleshooting, user support, and network maintenance. I have collaborated with organizations such as the Ministry of Interior, Samt Newspaper, and Kimiamehr Espadana, where I enhanced my technical and communication skills. I am interested in networking and cybersecurity and continually improve my knowledge, ready for new opportunities and professional growth.</p>
             </section>
         </header>
 
@@ -383,13 +221,13 @@ body.lang-en #lang-en-btn {
             <div class="job-item">
                 <h3 class="lang-fa">کارشناس پشتیبانی سایت | کیمیا مهر اسپادانا تدبیر</h3>
                 <h3 class="lang-en">Site Support Expert | Kimiamehr Espadana Tadbir</h3>
-                [span_2](start_span)<p class="duration lang-fa">آبان ۱۴۰۱ - آذر ۱۴۰۲ (۱ سال و ۱ ماه)</p>[span_2](end_span)
+                <p class="duration lang-fa">آبان ۱۴۰۱ - آذر ۱۴۰۲ (۱ سال و ۱ ماه)</p>
                 <p class="duration lang-en">Nov 2022 - Dec 2023 (1 year 1 month)</p>
                 <ul class="lang-fa">
-                    [span_3](start_span)<li>پشتیبانی فنی سایت و رفع مشکلات کاربران[span_3](end_span)</li>
-                    [span_4](start_span)<li>مدیریت سفارش‌ها و هماهنگی با تیم فنی[span_4](end_span)</li>
-                    [span_5](start_span)<li>آپلود، ویرایش و بروزرسانی محتوا[span_5](end_span)</li>
-                    [span_6](start_span)<li>عیب‌یابی اولیه سخت‌افزار و نرم‌افزار سیستم‌ها[span_6](end_span)</li>
+                    <li>پشتیبانی فنی سایت و رفع مشکلات کاربران</li>
+                    <li>مدیریت سفارش‌ها و هماهنگی با تیم فنی</li>
+                    <li>آپلود، ویرایش و بروزرسانی محتوا</li>
+                    <li>عیب‌یابی اولیه سخت‌افزار و نرم‌افزار سیستم‌ها</li>
                 </ul>
                 <ul class="lang-en">
                     <li>Provided technical website support and resolved user issues.</li>
@@ -398,39 +236,7 @@ body.lang-en #lang-en-btn {
                     <li>Conducted primary troubleshooting of system hardware and software.</li>
                 </ul>
             </div>
-
-            <div class="job-item">
-                <h3 class="lang-fa">کارشناس پشتیبانی فنی | Helpdesk | موسسه فرهنگی مطبوعاتی صمت</h3>
-                <h3 class="lang-en">Technical Support Expert | Helpdesk | Samt Cultural and Press Institute</h3>
-                [span_7](start_span)<p class="duration lang-fa">فروردین ۱۴۰۱ - مهر ۱۴۰۱ (۶ ماه)</p>[span_7](end_span)
-                <p class="duration lang-en">Apr 2022 - Oct 2022 (6 months)</p>
-                <ul class="lang-fa">
-                    [span_8](start_span)<li>پشتیبانی سیستم‌ها، شبکه و تجهیزات اداری[span_8](end_span)</li>
-                    [span_9](start_span)<li>تعمیرات سخت‌افزاری و نرم‌افزاری سیستم‌ها[span_9](end_span)</li>
-                    [span_10](start_span)<li>مدیریت و نگهداری سیستم‌های سازمان[span_10](end_span)</li>
-                </ul>
-                <ul class="lang-en">
-                    <li>Provided support for systems, network, and office equipment.</li>
-                    <li>Performed hardware and software repairs for systems.</li>
-                    <li>Managed and maintained organizational systems.</li>
-                </ul>
-            </div>
-
-            <div class="job-item">
-                <h3 class="lang-fa">کارشناس پشتیبانی IT | وزارت کشور</h3>
-                <h3 class="lang-en">IT Support Specialist | Ministry of Interior</h3>
-                [span_11](start_span)<p class="duration lang-fa">تیر ۱۳۹۷ - آذر ۱۳۹۷ (۵ ماه)</p>[span_11](end_span)
-                <p class="duration lang-en">Jul 2018 - Dec 2018 (5 months)</p>
-                <ul class="lang-fa">
-                    [span_12](start_span)<li>پشتیبانی و عیب‌یابی سیستم‌ها و شبکه داخلی[span_12](end_span)</li>
-                    [span_13](start_span)<li>نصب و راه‌اندازی سیستم عامل و نرم‌افزارهای سازمانی[span_13](end_span)</li>
-                </ul>
-                <ul class="lang-en">
-                    <li>Supported and troubleshoot internal systems and network.</li>
-                    <li>Installed and configured operating systems and organizational software.</li>
-                </ul>
-            </div>
-        </section>
+            </section>
 
         <section class="section">
             <h2 class="section-title lang-fa">مهارت‌ها</h2>
@@ -440,23 +246,20 @@ body.lang-en #lang-en-btn {
                 <div class="skill-category">
                     <h4 class="lang-fa">شبکه و زیرساخت</h4>
                     <h4 class="lang-en">Network & Infrastructure</h4>
-                    [span_14](start_span)<span class="skill-tag">CCNA (متوسط)</span>[span_14](end_span)
-                    [span_15](start_span)<span class="skill-tag">Network+ (متوسط)</span>[span_15](end_span)
-                    [span_16](start_span)<span class="skill-tag">Active Directory (متوسط)</span>[span_16](end_span)
-                    [span_17](start_span)<span class="skill-tag">Windows Server (متوسط)</span>[span_17](end_span)
-                    [span_18](start_span)<span class="skill-tag">Linux (متوسط)</span>[span_18](end_span)
-                    [span_19](start_span)<span class="skill-tag">Wireshark (متوسط)</span>[span_19](end_span)
+                    <span class="skill-tag">CCNA (متوسط)</span>
+                    <span class="skill-tag">Network+ (متوسط)</span>
+                    <span class="skill-tag">Active Directory (متوسط)</span>
+                    <span class="skill-tag">Windows Server (متوسط)</span>
+                    <span class="skill-tag">Linux (متوسط)</span>
                 </div>
 
                 <div class="skill-category">
                     <h4 class="lang-fa">نرم‌افزار و عمومی</h4>
                     <h4 class="lang-en">Software & General</h4>
-                    [span_20](start_span)<span class="skill-tag">Microsoft Excel (پیشرفته)</span>[span_20](end_span)
-                    [span_21](start_span)<span class="skill-tag">Microsoft Word (پیشرفته)</span>[span_21](end_span)
-                    [span_22](start_span)<span class="skill-tag lang-fa">عیب‌یابی سخت‌افزاری و نرم‌افزاری</span>[span_22](end_span)
+                    <span class="skill-tag">Microsoft Excel (پیشرفته)</span>
+                    <span class="skill-tag">Microsoft Word (پیشرفته)</span>
+                    <span class="skill-tag lang-fa">عیب‌یابی سخت‌افزاری و نرم‌افزاری</span>
                     <span class="skill-tag lang-en">Hardware/Software Troubleshooting</span>
-                    [span_23](start_span)<span class="skill-tag lang-fa">توانایی کار تیمی</span>[span_23](end_span)
-                    <span class="skill-tag lang-en">Teamwork</span>
                 </div>
             </div>
         </section>
@@ -464,335 +267,34 @@ body.lang-en #lang-en-btn {
         <section class="section">
             <h2 class="section-title lang-fa">سوابق تحصیلی</h2>
             <h2 class="section-title lang-en">Education</h2>
-
-            <div class="education-item">
-                <h3 class="lang-fa">کاردانی - مهندسی کامپیوتر</h3>
-                <h3 class="lang-en">Associate's Degree - Computer Engineering</h3>
-                <p class="institution lang-fa">دانشگاه آزاد اسلامی یادگار امام خمینی (ره) - شهر ری</p>
-                <p class="institution lang-en">Islamic Azad University Yadegar-e-Imam Khomeini (RAH) - Shahr-e Rey</p>
-                <p class="duration lang-fa">**** , **** | [span_24](start_span)معدل: ****</p>[span_24](end_span)
-                <p class="duration lang-en">**** - **** | GPA: ****</p>
-            </div>
-        </section>
+            </section>
         
     </main>
 
-    <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" class="linkedin-fixed-btn">
-        <i class="fa-brands fa-linkedin" style="margin-left: 10px; font-size: 18px;"></i> 
+    <a href="*https::linkedin.com/in/mohammadhosseinasgari" target="_blank" class="linkedin-fixed-btn">
+        <i class="fa-brands fa-linkedin" style="font-size: 18px;"></i> 
         <span class="lang-fa">لینکدین</span>
         <span class="lang-en">LinkedIn</span>
     </a>
-/* ---- استایل‌های عمومی و فونت ---- */
-@font-face {
-    font-family: 'Vazirmatn';
-    src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); /* اگر فونت فارسی را در پوشه fonts/Vazirmatn-Medium.woff2 قرار داده‌اید */
-    font-weight: 500;
-    font-style: normal;
-}
 
-body {
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
-    padding-bottom: 80px; /* فضای کافی برای دکمه ثابت لینکدین */
-}
-
-/* ---- استایل‌های دو زبانگی ---- */
-
-/* به صورت پیشفرض، همه محتوای دو زبانه پنهان است */
-.lang-fa, .lang-en { display: none; }
-
-/* اگر کلاس body=lang-fa باشد، محتوای فارسی نمایش داده می‌شود */
-body.lang-fa .lang-fa { 
-    display: block; 
-    direction: rtl; /* جهت راست به چپ */
-    text-align: right;
-}
-
-/* اگر کلاس body=lang-en باشد، محتوای انگلیسی نمایش داده می‌شود */
-body.lang-en .lang-en { 
-    display: block; 
-    direction: ltr; /* جهت چپ به راست */
-    text-align: left;
-}
-
-/* تنظیم جهت بدنه و متن اصلی بر اساس زبان فعال */
-body.lang-fa {
-    direction: rtl;
-    text-align: right;
-}
-body.lang-en {
-    direction: ltr;
-    text-align: left;
-}
-
-
-/* ---- استایل‌دهی طرح اصلی ---- */
-
-.container {
-    width: 90%;
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.header {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    margin-bottom: 40px;
-}
-
-h1 {
-    font-size: 2.5em;
-    color: #1a73e8; /* رنگ آبی جذاب */
-    margin-bottom: 5px;
-}
-
-h2 {
-    font-size: 1.5em;
-    color: #555;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-    margin-top: 0;
-}
-
-.contact-info {
-    margin-top: 20px;
-    padding: 10px 0;
-    border-top: 1px solid #eee;
-    font-size: 0.9em;
-}
-
-.contact-info p {
-    margin: 5px 0;
-    display: inline-block;
-    margin-right: 20px;
-}
-.contact-info i {
-    color: #1a73e8;
-    margin-left: 5px; /* برای فارسی */
-}
-body.lang-en .contact-info i {
-    margin-right: 5px; /* برای انگلیسی */
-    margin-left: 0;
-}
-
-.summary {
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid #eee;
-    font-size: 1.05em;
-    color: #444;
-}
-
-.section {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    margin-bottom: 30px;
-}
-
-.section-title {
-    font-size: 1.8em;
-    color: #1a73e8;
-    margin-bottom: 25px;
-    border-bottom: 3px solid #1a73e8;
-    display: inline-block;
-    padding-bottom: 5px;
-}
-
-.job-item, .education-item {
-    margin-bottom: 25px;
-    border-bottom: 1px dashed #eee;
-    padding-bottom: 15px;
-}
-
-.job-item h3, .education-item h3 {
-    font-size: 1.25em;
-    color: #333;
-    margin-bottom: 5px;
-}
-
-.duration, .institution {
-    font-size: 0.9em;
-    color: #777;
-    margin-top: 5px;
-}
-
-.job-item ul {
-    list-style-type: '• '; /* سفارشی سازی لیست */
-    padding-right: 20px; /* برای فارسی */
-    padding-left: 0;
-    margin-top: 10px;
-}
-body.lang-en .job-item ul {
-    list-style-type: disc;
-    padding-left: 20px; 
-    padding-right: 0;
-}
-
-
-/* ---- استایل‌دهی مهارت‌ها (Tags) ---- */
-
-.skills-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-}
-
-.skill-category {
-    padding: 15px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    flex-basis: calc(50% - 10px);
-}
-
-.skill-category h4 {
-    color: #0077B5; /* رنگ لینکدین برای تگ‌ها */
-    margin-top: 0;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #0077B5;
-    margin-bottom: 15px;
-    font-size: 1.1em;
-}
-
-.skill-tag {
-    display: inline-block;
-    background-color: #e6f0ff;
-    color: #1a73e8;
-    padding: 6px 12px;
-    border-radius: 20px;
-    margin: 5px;
-    font-size: 0.9em;
-    font-weight: 500;
-}
-
-/* ---- استایل‌دهی عکس پروفایل (قبلی) ---- */
-.profile-icon {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    object-fit: cover;
-    position: absolute; 
-    top: 20px; 
-    right: 20px; /* قرارگیری در گوشه بالا راست */
-    z-index: 10;
-    border: 3px solid #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-body.lang-en .profile-icon {
-    left: 20px; /* قرارگیری در گوشه بالا چپ برای انگلیسی */
-    right: auto;
-}
-
-/* ---- استایل دکمه ثابت لینکدین (قبلی) ---- */
-.linkedin-fixed-btn {
-    position: fixed;
-    bottom: 20px; 
-    left: 20px; 
-    z-index: 999; 
-    display: inline-flex;
-    align-items: center; 
-    padding: 10px 15px;
-    background-color: #0077B5; 
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-    transition: transform 0.3s, background-color 0.3s;
-}
-
-.linkedin-fixed-btn:hover {
-    transform: scale(1.05);
-    background-color: #005a87;
-}
-
-/* تنظیم آیکون در فارسی */
-body.lang-fa .linkedin-fixed-btn i {
-    margin-left: 10px;
-    margin-right: 0;
-}
-/* تنظیم آیکون در انگلیسی */
-body.lang-en .linkedin-fixed-btn i {
-    margin-right: 10px;
-    margin-left: 0;
-}
-
-/* ---- دکمه جابجایی زبان ---- */
-.lang-switcher {
-    position: absolute;
-    top: 30px;
-    right: 120px; /* فاصله از عکس پروفایل */
-    z-index: 10;
-}
-body.lang-en .lang-switcher {
-    left: 120px;
-    right: auto;
-}
-.lang-switcher button {
-    background-color: #1a73e8;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    opacity: 0.6;
-    transition: opacity 0.2s;
-}
-.lang-switcher button:hover {
-    opacity: 1;
-}
-
-/* مخفی کردن دکمه زبان فعال */
-body.lang-fa #lang-fa-btn,
-body.lang-en #lang-en-btn {
-    opacity: 1;
-    font-weight: bold;
-    background-color: #0d47a1;
-}
-
-/* ---- رسپانسیو (برای موبایل) ---- */
-@media (max-width: 600px) {
-    .container {
-        padding: 10px;
-    }
-    h1 {
-        font-size: 2em;
-    }
-    .profile-icon {
-        width: 50px;
-        height: 50px;
-        top: 15px;
-        right: 15px;
-    }
-    .lang-switcher {
-        top: 20px;
-        right: 80px;
-    }
-    body.lang-en .lang-switcher {
-        left: 80px;
-    }
-    .skills-list {
-        flex-direction: column;
-        gap: 15px;
-    }
-    .skill-category {
-        flex-basis: 100%;
-    }
-    .linkedin-fixed-btn {
-        bottom: 10px;
-        left: 10px;
-        padding: 8px 12px;
-        font-size: 0.9em;
-    }
-}
-
-    </body>
+    <script>
+        function switchLang(lang) {
+            document.body.className = ''; 
+            document.body.classList.add('lang-' + lang);
+            
+            if (lang === 'fa') {
+                document.documentElement.setAttribute('lang', 'fa');
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('lang', 'en');
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+        }
+    
+        // زبان پیشفرض را روی فارسی تنظیم می کند
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLang('fa');
+        });
+    </script>
+</body>
 </html>
