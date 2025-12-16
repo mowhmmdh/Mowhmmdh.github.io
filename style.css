@@ -1,0 +1,118 @@
+/* ---- استایل‌های عمومی و فونت ---- */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
+    font-weight: 500;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    padding-bottom: 80px;
+}
+
+/* ---- استایل‌های دو زبانگی ---- */
+
+/* پیشفرض: هر دو زبان مخفی هستند تا جاوا اسکریپت زبان صحیح را نمایش دهد */
+.lang-fa, .lang-en { display: none; } 
+
+/* نمایش محتوای فارسی */
+body.lang-fa .lang-fa { 
+    display: block; 
+    direction: rtl; 
+    text-align: right;
+}
+
+/* نمایش محتوای انگلیسی */
+body.lang-en .lang-en { 
+    display: block; 
+    direction: ltr; 
+    text-align: left;
+}
+
+/* تنظیمات کلی بدنه بر اساس زبان */
+body.lang-fa {
+    direction: rtl;
+    text-align: right;
+}
+body.lang-en {
+    direction: ltr;
+    text-align: left;
+}
+
+
+/* ---- استایل‌دهی طرح اصلی و کانتینر ---- */
+
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.header {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 40px;
+}
+
+h1 {
+    font-size: 2.5em;
+    color: #1a73e8; 
+    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #555;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.section {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 30px;
+}
+
+.section-title {
+    font-size: 1.8em;
+    color: #1a73e8;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #1a73e8;
+    display: inline-block;
+    padding-bottom: 5px;
+}
+
+/* ---- جزئیات محتوا ---- */
+.contact-info { margin-top: 20px; padding: 10px 0; border-top: 1px solid #eee; font-size: 0.9em; }
+.contact-info p { margin: 5px 0; display: inline-block; margin-right: 20px; }
+.contact-info i { color: #1a73e8; margin-left: 5px; }
+body.lang-en .contact-info i { margin-right: 5px; margin-left: 0; }
+.summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; font-size: 1.05em; color: #444; }
+.job-item, .education-item { margin-bottom: 25px; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+.job-item h3, .education-item h3 { font-size: 1.25em; color: #333; margin-bottom: 5px; }
+.duration, .institution { font-size: 0.9em; color: #777; margin-top: 5px; }
+
+/* استایل لیست‌ها بر اساس زبان */
+.job-item ul { list-style-type: '• '; padding-right: 20px; padding-left: 0; margin-top: 10px; }
+body.lang-en .job-item ul { list-style-type: disc; padding-left: 20px; padding-right: 0; }
+
+/* ---- استایل‌دهی مهارت‌ها (Tags) ---- */
+.skills-list { display: flex; flex-wrap: wrap; gap: 20px; }
+.skill-category { padding: 15px; border: 1px solid #eee; border-radius: 8px; flex-basis: calc(50% - 10px); }
+.skill-category h4 { color: #0077B5; margin-top: 0; padding-bottom: 5px; border-bottom: 1px solid #0077B5; margin-bottom: 15px; font-size: 1.1em; }
+.skill-tag { display: inline-block; background-color: #e6f0ff; color: #1a73e8; padding: 6px 12px; border-radius: 20px; margin: 5px; font-size: 0.9em; font-weight: 500; }
+
+/* ---- عکس پروفایل (همیشه در چپ) ---- */
+.
