@@ -6,42 +6,46 @@
     font-style: normal;
 }
 
+/* تعریف رنگ‌های اصلی */
+:root {
+    --primary-color: #0d47a1; /* آبی تیره سازمانی */
+    --accent-color: #1a73e8;  /* آبی روشن تر برای لینک‌ها */
+    --background-color: #f8f8f8;
+    --text-color: #333;
+    --light-border: #e0e0e0;
+    --shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
 body {
     font-family: 'Vazirmatn', Tahoma, sans-serif;
     line-height: 1.6;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f9;
-    color: #333;
+    background-color: var(--background-color);
+    color: var(--text-color);
     padding-bottom: 80px;
 }
 
-/* ---- استایل‌های دو زبانگی: اصلاح حیاتی برای نمایش پیش‌فرض ---- */
-
-/* به طور پیش فرض، محتوای انگلیسی پنهان است تا فارسی نمایش داده شود */
+/* ---- استایل‌های دو زبانگی ---- */
 .lang-en { 
     display: none; 
 } 
 
-/* تنظیمات پیش‌فرض زبان فارسی (نمایش و راست‌چین) */
 .lang-fa { 
-    display: block; /* تضمین نمایش محتوای فارسی */
+    display: block; 
     direction: rtl; 
     text-align: right;
 }
 
-/* اگر کلاس lang-en روی body اعمال شد (توسط JS) */
 body.lang-en .lang-fa { 
-    display: none; /* فارسی را پنهان کن */
+    display: none; 
 }
 body.lang-en .lang-en { 
-    display: block; /* انگلیسی را نمایش بده */
+    display: block; 
     direction: ltr; 
     text-align: left;
 }
 
-
-/* تنظیمات کلی بدنه بر اساس زبان */
 body.lang-fa {
     direction: rtl;
     text-align: right;
@@ -58,138 +62,176 @@ body.lang-en {
     width: 90%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 30px 20px;
 }
 
 .header {
     background-color: #fff;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    /* گوشه‌های کمتر گرد */
+    border-radius: 6px; 
+    box-shadow: var(--shadow);
     margin-bottom: 40px;
 }
 
 h1 {
     font-size: 2.5em;
-    color: #1a73e8; 
+    color: var(--primary-color); /* استفاده از رنگ اصلی تیره */
     margin-bottom: 5px;
+    font-weight: 700;
 }
 
 h2 {
     font-size: 1.5em;
     color: #555;
-    border-bottom: 2px solid #ddd;
+    border-bottom: 1px solid var(--light-border);
     padding-bottom: 10px;
     margin-top: 0;
+    font-weight: 500;
 }
 
 .section {
     background-color: #fff;
     padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    /* گوشه‌های کمتر گرد */
+    border-radius: 6px; 
+    box-shadow: var(--shadow);
     margin-bottom: 30px;
 }
 
 .section-title {
-    font-size: 1.8em;
-    color: #1a73e8;
+    font-size: 1.6em;
+    color: var(--primary-color);
     margin-bottom: 25px;
-    border-bottom: 3px solid #1a73e8;
+    /* خط قوی‌تر برای سرفصل */
+    border-bottom: 4px solid var(--primary-color); 
     display: inline-block;
     padding-bottom: 5px;
+    font-weight: 600;
 }
 
 /* ---- جزئیات محتوا ---- */
-.contact-info { margin-top: 20px; padding: 10px 0; border-top: 1px solid #eee; font-size: 0.9em; }
-.contact-info p { margin: 5px 0; display: inline-block; margin-right: 20px; }
-.contact-info i { color: #1a73e8; margin-left: 5px; }
-body.lang-en .contact-info i { margin-right: 5px; margin-left: 0; }
-.summary { margin-top: 20px; padding-top: 15px; border-top: 1px solid #eee; font-size: 1.05em; color: #444; }
-.job-item, .education-item { margin-bottom: 25px; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-.job-item h3, .education-item h3 { font-size: 1.25em; color: #333; margin-bottom: 5px; }
-.duration, .institution { font-size: 0.9em; color: #777; margin-top: 5px; }
+.contact-info { 
+    margin-top: 20px; 
+    padding: 10px 0; 
+    border-top: 1px solid var(--light-border); 
+    font-size: 0.95em; 
+}
+.contact-info p { 
+    margin: 5px 0; 
+    display: inline-block; 
+    margin-right: 25px; /* افزایش فاصله */
+}
+.contact-info i { 
+    color: var(--accent-color); 
+    margin-left: 5px; 
+}
+body.lang-en .contact-info i { 
+    margin-right: 5px; 
+    margin-left: 0; 
+}
+.summary { 
+    margin-top: 20px; 
+    padding-top: 15px; 
+    border-top: 1px solid var(--light-border); 
+    font-size: 1.05em; 
+    color: #444; 
+    line-height: 1.8;
+}
+.job-item, .education-item { 
+    margin-bottom: 25px; 
+    border-bottom: 1px solid var(--light-border); 
+    padding-bottom: 15px; 
+}
+.job-item:last-child, .education-item:last-child {
+    border-bottom: none;
+}
+.job-item h3, .education-item h3 { 
+    font-size: 1.2em; 
+    color: #222; 
+    margin-bottom: 5px; 
+}
+.duration, .institution { 
+    font-size: 0.9em; 
+    color: #777; 
+    margin-top: 5px; 
+}
 
-/* استایل لیست‌ها بر اساس زبان */
-.job-item ul { list-style-type: '• '; padding-right: 20px; padding-left: 0; margin-top: 10px; }
-body.lang-en .job-item ul { list-style-type: disc; padding-left: 20px; padding-right: 0; }
+/* استایل لیست‌ها */
+.job-item ul { 
+    list-style-type: '— '; /* استفاده از خط تیره برای رسمی‌تر شدن */
+    padding-right: 20px; 
+    padding-left: 0; 
+    margin-top: 10px; 
+}
+body.lang-en .job-item ul { 
+    list-style-type: disc; 
+    padding-left: 20px; 
+    padding-right: 0; 
+}
 
 /* ---- استایل‌دهی مهارت‌ها (Tags) ---- */
-.skills-list { display: flex; flex-wrap: wrap; gap: 20px; }
-.skill-category { padding: 15px; border: 1px solid #eee; border-radius: 8px; flex-basis: calc(50% - 10px); }
-.skill-category h4 { color: #0077B5; margin-top: 0; padding-bottom: 5px; border-bottom: 1px solid #0077B5; margin-bottom: 15px; font-size: 1.1em; }
-.skill-tag { display: inline-block; background-color: #e6f0ff; color: #1a73e8; padding: 6px 12px; border-radius: 20px; margin: 5px; font-size: 0.9em; font-weight: 500; }
+.skills-list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+}
+.skill-category { 
+    padding: 15px; 
+    border: 1px solid var(--light-border); 
+    border-radius: 4px; 
+    flex-basis: calc(50% - 10px); 
+}
+.skill-category h4 { 
+    color: var(--primary-color); 
+    margin-top: 0; 
+    padding-bottom: 5px; 
+    border-bottom: 2px solid var(--light-border); 
+    margin-bottom: 15px; 
+    font-size: 1.05em; 
+}
+.skill-tag { 
+    display: inline-block; 
+    background-color: #e3f2fd; /* آبی بسیار ملایم */
+    color: var(--primary-color); 
+    padding: 5px 10px; 
+    border-radius: 4px; /* گوشه‌های تیزتر */
+    margin: 4px; 
+    font-size: 0.85em; 
+    font-weight: 500; 
+    border: 1px solid #c8e6f0;
+}
 
 /* ---- عکس پروفایل (همیشه در چپ) ---- */
 .profile-icon {
-    width: 70px;
-    height: 70px;
+    width: 65px; /* کمی کوچکتر */
+    height: 65px; 
     border-radius: 50%;
     object-fit: cover;
     position: absolute; 
-    top: 20px; 
-    left: 20px; 
+    top: 30px; 
+    left: 30px; 
     right: auto;
     z-index: 10;
     border: 3px solid #fff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 /* ---- دکمه جابجایی زبان (در بالا و سمت راست) ---- */
 .lang-switcher {
     position: absolute;
     top: 30px;
-    right: 20px; 
+    right: 30px; 
     left: auto; 
     z-index: 10;
 }
 .lang-switcher button {
-    background-color: #1a73e8;
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 4px 8px; /* کمی کوچکتر */
     cursor: pointer;
-    border-radius: 5px;
-    opacity: 0.6;
+    border-radius: 4px;
+    opacity: 0.7;
     transition: opacity 0.2s;
-}
-.lang-switcher button:hover { opacity: 1; }
-body.lang-fa #lang-fa-btn,
-body.lang-en #lang-en-btn {
-    opacity: 1;
-    font-weight: bold;
-    background-color: #0d47a1;
-}
-
-/* ---- دکمه ثابت لینکدین (پایین و چپ) ---- */
-.linkedin-fixed-btn {
-    position: fixed;
-    bottom: 20px; 
-    left: 20px; 
-    z-index: 999; 
-    display: inline-flex;
-    align-items: center; 
-    padding: 10px 15px;
-    background-color: #0077B5; 
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-    font-weight: bold;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
-    transition: transform 0.3s;
-}
-.linkedin-fixed-btn:hover { transform: scale(1.05); }
-
-/* تنظیم موقعیت آیکون لینکدین بر اساس زبان */
-body.lang-fa .linkedin-fixed-btn i { margin-left: 10px; margin-right: 0; }
-body.lang-en .linkedin-fixed-btn i { margin-right: 10px; margin-left: 0; }
-
-/* ---- رسپانسیو (برای موبایل) ---- */
-@media (max-width: 600px) {
-    .container { padding: 10px; } 
-    h1 { font-size: 2em; }
-    .profile-icon { width: 50px; height: 50px; top: 15px; left: 15px; }
-    .lang-switcher { top: 20px; right: 15px; }
-    .skills-list { flex-direction: column; gap: 15px; }
-    .skill-category { flex-basis: 100%; }
-}
+    font-size: 0.8
