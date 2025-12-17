@@ -89,14 +89,14 @@ body.lang-en {
 
 /* ---- استایل جدید برای بسم الله الرحمن الرحیم ---- */
 .bismillah-icon {
-    height: 150px; /* تنظیم ارتفاع ثابت برای بسم الله */
+    height: 100px; /* تنظیم ارتفاع ثابت برای بسم الله */
     max-width: 300%; /* حداکثر عرض در دسکتاپ */
     object-fit: contain;
 }
 
 /* ---- دکمه جابجایی زبان ---- */
 .lang-switcher {
-    z-index: 10;
+    z-index: 8;
 }
 .lang-switcher a, .lang-switcher button {
     text-decoration: none;
