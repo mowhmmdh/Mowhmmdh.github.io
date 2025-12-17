@@ -188,8 +188,8 @@ body.lang-en .job-item li::before {
     border-radius: 20%;
     object-fit: cover;
     position: absolute; 
-    top: 0; /* موقعیت دقیق در گوشه بالا */
-    left: 0; 
+    top: 10px; /* موقعیت دقیق در گوشه بالا */
+    left: 10px; 
     right: auto;
     z-index: 10;
     border: 4px solid #fff;
