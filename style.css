@@ -78,9 +78,9 @@ body.lang-en {
 /* ---- عکس پروفایل (Profile Icon) ---- */
 .profile-icon {
     display: block; 
-    width: 80px; 
-    height: 80px; 
-    border-radius: 50%;
+    width: 100px; 
+    height: 120px; 
+    border-radius: 20%;
     object-fit: cover;
     z-index: 10;
     border: 4px solid #fff;
@@ -89,8 +89,8 @@ body.lang-en {
 
 /* ---- استایل جدید برای بسم الله الرحمن الرحیم ---- */
 .bismillah-icon {
-    height: 30px; /* تنظیم ارتفاع ثابت برای بسم الله */
-    max-width: 50%; /* حداکثر عرض در دسکتاپ */
+    height: 150px; /* تنظیم ارتفاع ثابت برای بسم الله */
+    max-width: 300%; /* حداکثر عرض در دسکتاپ */
     object-fit: contain;
 }
 
