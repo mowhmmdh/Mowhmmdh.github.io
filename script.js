@@ -3,21 +3,21 @@ function switchLang(lang) {
     document.body.className = 'lang-' + lang;
 
     // 2. تنظیم جهت‌گیری صفحه (rtl برای فارسی و ltr برای انگلیسی)
-    if (lang === 'fa') {
-        document.documentElement.setAttribute('lang', 'fa');
-        document.documentElement.setAttribute('dir', 'rtl');
-    } else {
-        document.documentElement.setAttribute('lang', 'en');
-        document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', (lang === 'fa' ? 'rtl' : 'ltr'));
+
+    // 3. **************** کد ایمن شده برای رفع خطا ****************
+    // قبل از تغییر استایل، مطمئن می‌شویم دکمه‌ها وجود دارند
+    const faBtn = document.getElementById('lang-fa-btn');
+    const enBtn = document.getElementById('lang-en-btn');
+
+    if (faBtn && enBtn) {
+        faBtn.style.fontWeight = (lang === 'fa' ? 'bold' : 'normal');
+        enBtn.style.fontWeight = (lang === 'en' ? 'bold' : 'normal');
     }
-    
-    // 3. فعال کردن دکمه‌های سوئیچر (اختیاری: برای نشان دادن دکمه فعال)
-    document.getElementById('lang-fa-btn').style.fontWeight = (lang === 'fa' ? 'bold' : 'normal');
-    document.getElementById('lang-en-btn').style.fontWeight = (lang === 'en' ? 'bold' : 'normal');
 }
 
 // تنظیم زبان پیشفرض روی فارسی هنگام بارگذاری صفحه
-// ما از DOMContentLoaded استفاده می‌کنیم چون حالا مطمئنیم که JS اجرا می‌شود
 document.addEventListener('DOMContentLoaded', () => {
     switchLang('fa');
 });
