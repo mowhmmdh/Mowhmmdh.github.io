@@ -1,3 +1,8 @@
+/* ---- تنظیم اسکرول نرم (Smooth Scroll) ---- */
+html {
+    scroll-behavior: smooth;
+}
+
 /* ---- استایل‌های عمومی و فونت (بررسی آدرس‌دهی) ---- */
 @font-face {
     /* BNazanin برای متون فارسی (رسمی) */
@@ -32,7 +37,6 @@ body {
     background-color: var(--background-color);
     color: var(--secondary-color);
     padding-bottom: 80px;
-    /* اعمال فونت پیش‌فرض در صورتی که فونت‌های محلی بارگذاری نشوند */
     font-family: Tahoma, sans-serif; 
 }
 
@@ -67,7 +71,7 @@ body.lang-en {
     padding: 0; 
     margin-bottom: 50px;
     position: relative;
-    /* این پدینگ‌ها برای خالی ماندن فضای عکس کنار اسم و سوییچر است */
+    padding-top: 20px; /* اضافه کردن فضای بالای هدر برای منو */
     padding-left: 100px; 
     padding-right: 100px;
 }
@@ -147,7 +151,6 @@ h2 {
 .job-item { 
     margin-bottom: 30px; 
     padding-bottom: 10px; 
-    /* این حاشیه سمت چپ یا راست بسته به زبان عوض می‌شود */
     border-inline-start: 3px solid var(--border-color); 
     padding-inline-start: 20px;
 }
@@ -166,7 +169,6 @@ h2 {
 .job-item ul { list-style-type: none; padding-right: 0; padding-left: 0; margin-top: 15px; }
 .job-item li {
     position: relative;
-    /* اینها هم بسته به زبان عوض می‌شوند */
     padding-inline-start: 15px;
     margin-bottom: 10px;
     font-size: 0.95em;
@@ -175,7 +177,7 @@ h2 {
 .job-item li::before {
     content: '—'; 
     position: absolute;
-    inset-inline-start: 0; /* جهت دهی برای راست و چپ */
+    inset-inline-start: 0; 
     color: var(--primary-color);
 }
 
@@ -219,7 +221,7 @@ h2 {
     border-radius: 20%;
     object-fit: cover;
     position: absolute; 
-    top: 20px; 
+    top: 30px; 
     z-index: 10;
     border: 4px solid #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -227,25 +229,12 @@ h2 {
 /* موقعیت عکس در حالت فارسی (راست) */
 body.lang-fa .profile-icon {
     left: auto; 
-    right: 20px; 
+    right: 30px; 
 }
 /* موقعیت عکس در حالت انگلیسی (چپ) */
 body.lang-en .profile-icon {
-    left: 20px; 
+    left: 30px; 
     right: auto; 
-}
-
-/* ---- بخش مدارک تخصصی (CERTIFICATES) و تحصیلات (EDUCATION) ---- */
-.certificate-item, .education-item { 
-    margin-bottom: 30px; 
-    padding-bottom: 10px; 
-    border-inline-start: 3px solid var(--border-color); 
-    padding-inline-start: 20px;
-}
-.certificate-item h3, .education-item h3 {
-    font-size: 1.2em; 
-    color: var(--secondary-color); 
-    margin-bottom: 5px; 
 }
 
 /* ---- دکمه جابجایی زبان ---- */
@@ -292,24 +281,84 @@ body.lang-en .lang-switcher {
 }
 
 
+/* ================================================= */
+/* ---- منو ناوبری (NAVBAR) و استایل دهی ثابت ---- */
+/* ================================================= */
+
+#navbar {
+    background-color: var(--primary-color);
+    color: white;
+    position: sticky; 
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 0;
+}
+
+#navbar .container {
+    padding: 0 20px;
+    width: 90%; 
+    max-width: 900px; 
+    margin: 0 auto;
+}
+
+#navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+#navbar li {
+    padding: 15px 10px;
+    display: inline-block;
+}
+
+#navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: color 0.3s;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+
+#navbar a:hover {
+    color: #ffd700;
+}
+
+/* کنترل نمایش منوها */
+.lang-fa-nav, .lang-en-nav {
+    display: none;
+    flex-grow: 1; /* اجازه می‌دهد کل عرض را اشغال کند */
+}
+body.lang-fa .lang-fa-nav {
+    display: flex;
+}
+body.lang-en .lang-en-nav {
+    display: flex;
+}
+
+
 /* ---- استایل‌های فرم تماس (CONTACT FORM) - بازنویسی شده ---- */
 .contact-form {
     max-width: 600px;
     margin: 20px 0;
     padding: 30px;
     border: 1px solid var(--border-color);
-    border-radius: 8px; /* گوشه‌های گردتر */
-    background-color: #ffffff; /* پس‌زمینه سفید */
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* سایه نرم */
+    border-radius: 8px; 
+    background-color: #ffffff; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
     transition: box-shadow 0.3s ease-in-out;
 }
 
 .contact-form:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* سایه بیشتر هنگام هاور */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); 
 }
 
 .form-group {
-    margin-bottom: 25px; /* فاصله بیشتر بین فیلدها */
+    margin-bottom: 25px; 
 }
 
 .contact-form label {
@@ -326,7 +375,7 @@ body.lang-en .lang-switcher {
     width: 100%;
     padding: 12px;
     border: 1px solid #ddd;
-    border-radius: 6px; /* گوشه‌های گرد برای فیلد */
+    border-radius: 6px; 
     box-sizing: border-box; 
     font-family: inherit;
     font-size: 0.95em;
@@ -339,7 +388,7 @@ body.lang-en .lang-switcher {
 .contact-form textarea:focus {
     border-color: var(--primary-color);
     box-shadow: 0 0 5px rgba(0, 51, 102, 0.2);
-    outline: none; /* حذف خط آبی پیش فرض مرورگر */
+    outline: none; 
 }
 
 .contact-form button[type="submit"] {
@@ -354,18 +403,17 @@ body.lang-en .lang-switcher {
     transition: background-color 0.3s, transform 0.1s;
     font-family: inherit; 
     letter-spacing: 0.5px;
-    /* اعمال جهت‌دهی صحیح دکمه برای RTL/LTR */
     display: block;
     width: 100%;
     text-align: center;
 }
 
 .contact-form button[type="submit"]:hover {
-    background-color: #0055a4; /* رنگ کمی تیره‌تر هنگام هاور */
+    background-color: #0055a4; 
 }
 
 .contact-form button[type="submit"]:active {
-    transform: scale(0.99); /* افکت کوچک شدن دکمه هنگام کلیک */
+    transform: scale(0.99); 
 }
 
 
@@ -390,10 +438,19 @@ body.lang-en .lang-switcher {
     body.lang-fa .header, body.lang-en .header {
         padding-left: 0; 
         padding-right: 0;
-        /* جبران فضای هدر برای متن زیر عکس */
-        padding-top: 70px; 
+        padding-top: 90px; 
     }
 
+    #navbar ul {
+        flex-wrap: wrap; /* در موبایل آیتم‌ها شکسته شوند */
+        justify-content: space-between;
+    }
+    #navbar li {
+        padding: 10px 5px;
+        font-size: 0.75em; /* کوچکتر شدن فونت منو در موبایل */
+        flex-basis: 30%; /* سه آیتم در هر ردیف */
+        text-align: center;
+    }
     .skills-list { flex-direction: column; gap: 15px; }
     .skill-category { flex-basis: 100%; }
 }
