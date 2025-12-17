@@ -1,13 +1,13 @@
 /* ---- استایل‌های عمومی و فونت ---- */
 @font-face {
-    /* BNazanin برای متون فارسی */
+    /* BNazanin برای متون فارسی (رسمی) */
     font-family: 'BNazanin';
     src: url('fonts/BNazanin.woff2') format('woff2'); 
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    /* Vazirmatn برای انگلیسی و سرفصل‌ها */
+    /* Vazirmatn برای انگلیسی و سرفصل‌ها (خوانایی بالا) */
     font-family: 'Vazirmatn'; 
     src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
     font-weight: 500;
@@ -34,7 +34,6 @@ body {
 }
 
 /* ---- تنظیمات زبان و فونت (حل مشکل نمایش) ---- */
-/* پیش فرض: انگلیسی پنهان است */
 .lang-en { display: none; } 
 .lang-fa { 
     display: block; 
@@ -44,14 +43,12 @@ body {
     font-size: 1.05em; 
 }
 
-/* وقتی کلاس lang-en به body اعمال شد، محتوای فارسی پنهان و انگلیسی نمایش داده می‌شود */
 body.lang-en .lang-fa { display: none; }
 body.lang-en .lang-en { 
     display: block; 
     direction: ltr; 
     text-align: left;
 }
-
 body.lang-fa { direction: rtl; }
 body.lang-en { direction: ltr; }
 
@@ -68,7 +65,6 @@ body.lang-en { direction: ltr; }
     padding: 0; 
     margin-bottom: 50px;
     position: relative;
-    /* فضای خالی برای عکس و سوئیچر */
     padding-left: 100px; 
     padding-right: 100px;
 }
@@ -150,7 +146,7 @@ body.lang-en .contact-info i { margin-right: 5px; margin-left: 0; }
     margin-top: 5px; 
 }
 
-/* استایل لیست‌ها */
+/* استایل لیست‌ها (رسمی) */
 .job-item ul { list-style-type: none; padding-right: 0; padding-left: 0; margin-top: 15px; }
 .job-item li {
     position: relative;
@@ -201,16 +197,16 @@ body.lang-en .job-item li::before {
     font-weight: 500; 
 }
 
-/* ---- عکس پروفایل ---- */
+/* ---- عکس پروفایل (حفظ شده) ---- */
 .profile-icon {
     display: block; 
     width: 100px; 
-    height: 12ppx; 
+    height: 120px; 
     border-radius: 20%;
     object-fit: cover;
     position: absolute; 
-    top: 10px; 
-    left: 10px; 
+    top: 20px; 
+    left: 20px; 
     right: auto;
     z-index: 10;
     border: 4px solid #fff;
@@ -235,10 +231,10 @@ body.lang-en .job-item li::before {
     opacity: 0.8;
     transition: opacity 0.2s, background-color 0.2s;
     font-size: 0.8em;
-    /* تنظیم فونت برای دکمه‌های فارسی/انگلیسی */
     font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
 .lang-switcher button:hover { opacity: 1; background-color: var(--section-bg); }
+/* این استایل‌ها با وجود حذف کد JS فعال، با تغییر کلاس body کار می‌کنند */
 body.lang-fa #lang-fa-btn,
 body.lang-en #lang-en-btn {
     opacity: 1;
@@ -247,7 +243,7 @@ body.lang-en #lang-en-btn {
     color: white;
 }
 
-/* ---- دکمه ثابت لینکدین (حذف) ---- */
+/* ---- دکمه ثابت لینکدین (حذف شده) ---- */
 .linkedin-fixed-btn {
     display: none; 
 }
