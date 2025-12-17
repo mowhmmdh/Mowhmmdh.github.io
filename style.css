@@ -1,26 +1,271 @@
+/* ---- استایل‌های عمومی و فونت (بررسی آدرس‌دهی) ---- */
+@font-face {
+    /* BNazanin برای متون فارسی (رسمی) */
+    font-family: 'BNazanin';
+    src: url('fonts/BNazanin.woff2') format('woff2'); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    /* Vazirmatn برای انگلیسی و سرفصل‌ها (خوانایی بالا) */
+    font-family: 'Vazirmatn'; 
+    src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* تعریف رنگ‌های رسمی */
+:root {
+    --primary-color: #003366; /* سرمه‌ای تیره */
+    --secondary-color: #333;   
+    --background-color: #ffffff; 
+    --section-bg: #f5f5f5;      
+    --border-color: #cccccc;   
+}
+
+body {
+    line-height: 1.7; 
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--secondary-color);
+    padding-bottom: 80px;
+    font-family: Tahoma, sans-serif; 
+}
+
 /* ================================================= */
-/* ---- تنظیمات زبان و فونت (حل قاطع مشکل نمایش با دو فایل) ---- */
+/* ---- تنظیمات زبان و فونت (اصلاح جهت‌دهی) ---- */
 /* ================================================= */
 
-/* جهت‌دهی فارسی (پیش‌فرض) */
+/* جهت‌دهی فارسی (برای index.html) */
 body.lang-fa { 
     direction: rtl; 
     text-align: right;
     font-family: 'BNazanin', Tahoma, sans-serif; 
 } 
 
-/* جهت‌دهی انگلیسی */
+/* جهت‌دهی انگلیسی (برای en.html) */
 body.lang-en { 
     direction: ltr; 
     text-align: left;
     font-family: 'Vazirmatn', Tahoma, sans-serif; 
 } 
 
+/* ---- استایل‌دهی طرح اصلی و کانتینر ---- */
+.container {
+    width: 90%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px; 
+}
+
+.header {
+    background-color: #fff;
+    padding: 0; 
+    margin-bottom: 50px;
+    position: relative;
+    /* این پدینگ‌ها برای خالی ماندن فضای عکس کنار اسم است */
+    padding-left: 100px; 
+    padding-right: 100px;
+}
+/* اصلاح پدینگ هدر در حالت انگلیسی */
+body.lang-en .header {
+    padding-left: 100px; /* فضای عکس در سمت چپ */
+    padding-right: 100px; /* فضای دکمه سوییچر در سمت راست */
+}
+/* اصلاح پدینگ هدر در حالت فارسی */
+body.lang-fa .header {
+    padding-left: 100px; /* فضای دکمه سوییچر در سمت چپ */
+    padding-right: 100px; /* فضای عکس در سمت راست */
+}
+
+
+h1 {
+    font-size: 3.5em; 
+    color: var(--primary-color); 
+    margin: 0;
+    font-weight: bold; 
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #555;
+    padding-bottom: 10px;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+.section {
+    background-color: var(--background-color);
+    padding: 30px 0; 
+    margin-bottom: 20px;
+    border-top: 1px solid var(--border-color); 
+}
+.section:first-of-type {
+    border-top: none;
+}
+
+.section-title {
+    font-size: 1.6em;
+    color: var(--primary-color);
+    margin-top: 0; 
+    margin-bottom: 15px; 
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+/* ---- جزئیات محتوا ---- */
+.contact-info { 
+    margin-top: 20px; 
+    padding: 15px 0; 
+    border-top: 2px solid var(--border-color); 
+    font-size: 0.95em; 
+    color: #666;
+}
+.contact-info p { 
+    margin: 5px 0; 
+    display: inline-block; 
+    margin-inline-end: 30px; /* برای تطبیق با RTL/LTR */
+}
+.contact-info i { 
+    color: var(--primary-color); 
+    margin-inline-end: 5px; /* برای تطبیق با RTL/LTR */
+}
+
+.summary { 
+    margin-top: 30px; 
+    padding: 20px;
+    background-color: var(--section-bg); 
+    border-radius: 4px;
+    font-size: 1.05em; 
+    color: #444; 
+    line-height: 1.8;
+}
+.job-item { 
+    margin-bottom: 30px; 
+    padding-bottom: 10px; 
+    /* این حاشیه سمت چپ یا راست بسته به زبان عوض می‌شود */
+    border-inline-start: 3px solid var(--border-color); 
+    padding-inline-start: 20px;
+}
+.job-item h3 { 
+    font-size: 1.2em; 
+    color: var(--secondary-color); 
+    margin-bottom: 5px; 
+}
+.duration, .institution { 
+    font-size: 0.9em; 
+    color: #777; 
+    margin-top: 5px; 
+}
+
+/* استایل لیست‌ها (رسمی) */
+.job-item ul { list-style-type: none; padding-right: 0; padding-left: 0; margin-top: 15px; }
+.job-item li {
+    position: relative;
+    /* اینها هم بسته به زبان عوض می‌شوند */
+    padding-inline-start: 15px;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+/* تنظیم علامت لیست بسته به جهت */
+.job-item li::before {
+    content: '—'; 
+    position: absolute;
+    inset-inline-start: 0; /* جهت دهی برای راست و چپ */
+    color: var(--primary-color);
+}
+
+
+/* ---- استایل‌دهی مهارت‌ها (Tags) ---- */
+.skills-list { display: flex; flex-wrap: wrap; gap: 20px; }
+.skill-category { 
+    padding: 15px; 
+    border: 1px solid var(--border-color); 
+    border-radius: 4px; 
+    flex-basis: calc(50% - 10px); 
+    background-color: var(--section-bg);
+}
+.skill-category h4 { 
+    color: var(--primary-color); 
+    margin-top: 0; 
+    padding-bottom: 5px; 
+    border-bottom: 1px solid var(--border-color); 
+    margin-bottom: 15px; 
+    font-size: 1.05em; 
+}
+.skill-tag { 
+    display: inline-block; 
+    background-color: #e6e6e6; 
+    color: #333; 
+    padding: 5px 10px; 
+    border-radius: 3px; 
+    margin: 4px; 
+    font-size: 0.85em; 
+    font-weight: 500; 
+}
+
+/* ================================================= */
+/* ---- تنظیمات عکس پروفایل (Profile Icon) ---- */
+/* ================================================= */
+
+.profile-icon {
+    display: block; 
+    width: 100px; 
+    height: 120px; 
+    border-radius: 20%;
+    object-fit: cover;
+    position: absolute; 
+    top: 20px; 
+    z-index: 10;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+/* موقعیت عکس در حالت فارسی (راست) */
+body.lang-fa .profile-icon {
+    left: auto; 
+    right: 20px; 
+}
+/* موقعیت عکس در حالت انگلیسی (چپ) */
+body.lang-en .profile-icon {
+    left: 20px; 
+    right: auto; 
+}
+
+/* ---- بخش مدارک تخصصی (CERTIFICATES) و تحصیلات (EDUCATION) ---- */
+.certificate-item, .education-item { 
+    margin-bottom: 30px; 
+    padding-bottom: 10px; 
+    border-inline-start: 3px solid var(--border-color); 
+    padding-inline-start: 20px;
+}
+.certificate-item h3, .education-item h3 {
+    font-size: 1.2em; 
+    color: var(--secondary-color); 
+    margin-bottom: 5px; 
+}
+
+/* ---- دکمه جابجایی زبان ---- */
+.lang-switcher {
+    position: absolute;
+    top: 50px; 
+    z-index: 10;
+}
+/* موقعیت سوییچر در حالت فارسی (چپ) */
+body.lang-fa .lang-switcher {
+    left: 0;
+    right: auto;
+}
+/* موقعیت سوییچر در حالت انگلیسی (راست) */
+body.lang-en .lang-switcher {
+    left: auto;
+    right: 0;
+}
+
 /* استایل دکمه‌های جابجایی زبان */
 .lang-switcher a, .lang-switcher button {
-    /* اطمینان از اعمال استایل برای لینک‌ها */
     text-decoration: none;
-    display: inline-block; /* برای اینکه شبیه دکمه باشند */
+    display: inline-block;
     background-color: transparent; 
     color: var(--primary-color);
     border: 1px solid var(--border-color); 
@@ -37,8 +282,3 @@ body.lang-en {
 /* دکمه زبان فعال */
 .lang-switcher .active-lang {
     opacity: 1;
-    font-weight: bold;
-    background-color: var(--primary-color);
-    color: white;
-    cursor: default; /* غیرفعال کردن کلیک روی زبان فعال */
-}
