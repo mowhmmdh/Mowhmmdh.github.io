@@ -144,6 +144,32 @@
         <span class="lang-en">LinkedIn</span>
     </a>
 
-    <script src="script.js"></script>
+    <script>
+        function switchLang(lang) {
+            // 1. تنظیم کلاس زبان
+            document.body.className = 'lang-' + lang;
+
+            // 2. تنظیم جهت‌گیری صفحه
+            document.documentElement.setAttribute('lang', lang);
+            document.documentElement.setAttribute('dir', (lang === 'fa' ? 'rtl' : 'ltr'));
+
+            // 3. کد ایمن برای تنظیم وزن فونت دکمه‌ها
+            const faBtn = document.getElementById('lang-fa-btn');
+            const enBtn = document.getElementById('lang-en-btn');
+
+            if (faBtn && enBtn) {
+                faBtn.style.fontWeight = (lang === 'fa' ? 'bold' : 'normal');
+                enBtn.style.fontWeight = (lang === 'en' ? 'bold' : 'normal');
+            }
+        }
+
+        // تنظیم زبان پیشفرض روی فارسی
+        // (این خط، چون درون index.html است، دیگر خطا نمی‌دهد)
+        document.addEventListener('DOMContentLoaded', () => {
+            switchLang('fa');
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>
