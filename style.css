@@ -221,7 +221,7 @@ h2 {
     border-radius: 20%;
     object-fit: cover;
     position: absolute; 
-    top: 30px; 
+    top: 50px; 
     z-index: 10;
     border: 4px solid #fff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -240,18 +240,18 @@ body.lang-en .profile-icon {
 /* ---- دکمه جابجایی زبان ---- */
 .lang-switcher {
     position: absolute;
-    top: 50px; 
+    top: 60px; 
     z-index: 10;
 }
 /* موقعیت سوییچر در حالت فارسی (چپ) */
 body.lang-fa .lang-switcher {
-    left: 0;
+    left: 20px;
     right: auto;
 }
 /* موقعیت سوییچر در حالت انگلیسی (راست) */
 body.lang-en .lang-switcher {
     left: auto;
-    right: 0;
+    right: 20px;
 }
 
 /* استایل دکمه‌های جابجایی زبان */
