@@ -2,6 +2,7 @@
 @font-face {
     /* BNazanin برای متون فارسی (رسمی) */
     font-family: 'BNazanin';
+    /* مطمئن شوید که پوشه 'fonts' وجود دارد */
     src: url('fonts/BNazanin.woff2') format('woff2'); 
     font-weight: normal;
     font-style: normal;
@@ -9,6 +10,7 @@
 @font-face {
     /* Vazirmatn برای انگلیسی و سرفصل‌ها (خوانایی بالا) */
     font-family: 'Vazirmatn'; 
+    /* مطمئن شوید که پوشه 'fonts' وجود دارد */
     src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
     font-weight: 500;
     font-style: normal;
@@ -30,11 +32,12 @@ body {
     background-color: var(--background-color);
     color: var(--secondary-color);
     padding-bottom: 80px;
+    /* اعمال فونت پیش‌فرض در صورتی که فونت‌های محلی بارگذاری نشوند */
     font-family: Tahoma, sans-serif; 
 }
 
 /* ================================================= */
-/* ---- تنظیمات زبان و فونت (اصلاح جهت‌دهی) ---- */
+/* ---- تنظیمات زبان و فونت (اصلاح جهت‌دهی قطعی) ---- */
 /* ================================================= */
 
 /* جهت‌دهی فارسی (برای index.html) */
@@ -64,18 +67,18 @@ body.lang-en {
     padding: 0; 
     margin-bottom: 50px;
     position: relative;
-    /* این پدینگ‌ها برای خالی ماندن فضای عکس کنار اسم است */
+    /* این پدینگ‌ها برای خالی ماندن فضای عکس کنار اسم و سوییچر است */
     padding-left: 100px; 
     padding-right: 100px;
 }
-/* اصلاح پدینگ هدر در حالت انگلیسی */
+/* تنظیم پدینگ هدر در حالت انگلیسی */
 body.lang-en .header {
     padding-left: 100px; /* فضای عکس در سمت چپ */
-    padding-right: 100px; /* فضای دکمه سوییچر در سمت راست */
+    padding-right: 100px; /* فضای سوییچر در سمت راست */
 }
-/* اصلاح پدینگ هدر در حالت فارسی */
+/* تنظیم پدینگ هدر در حالت فارسی */
 body.lang-fa .header {
-    padding-left: 100px; /* فضای دکمه سوییچر در سمت چپ */
+    padding-left: 100px; /* فضای سوییچر در سمت چپ */
     padding-right: 100px; /* فضای عکس در سمت راست */
 }
 
@@ -282,3 +285,115 @@ body.lang-en .lang-switcher {
 /* دکمه زبان فعال */
 .lang-switcher .active-lang {
     opacity: 1;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: default;
+}
+
+
+/* ---- استایل‌های فرم تماس (CONTACT FORM) - بازنویسی شده ---- */
+.contact-form {
+    max-width: 600px;
+    margin: 20px 0;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* گوشه‌های گردتر */
+    background-color: #ffffff; /* پس‌زمینه سفید */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* سایه نرم */
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.contact-form:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); /* سایه بیشتر هنگام هاور */
+}
+
+.form-group {
+    margin-bottom: 25px; /* فاصله بیشتر بین فیلدها */
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px; /* گوشه‌های گرد برای فیلد */
+    box-sizing: border-box; 
+    font-family: inherit;
+    font-size: 0.95em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: vertical;
+}
+
+/* افکت تمرکز (Focus) روی فیلدها */
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 51, 102, 0.2);
+    outline: none; /* حذف خط آبی پیش فرض مرورگر */
+}
+
+.contact-form button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.1s;
+    font-family: inherit; 
+    letter-spacing: 0.5px;
+    /* اعمال جهت‌دهی صحیح دکمه برای RTL/LTR */
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.contact-form button[type="submit"]:hover {
+    background-color: #0055a4; /* رنگ کمی تیره‌تر هنگام هاور */
+}
+
+.contact-form button[type="submit"]:active {
+    transform: scale(0.99); /* افکت کوچک شدن دکمه هنگام کلیک */
+}
+
+
+/* ---- رسپانسیو (برای موبایل) ---- */
+@media (max-width: 600px) {
+    .container { padding: 15px 10px; } 
+    .header { padding-left: 0; padding-right: 0; } 
+    h1 { font-size: 2.5em; }
+    
+    /* موقعیت عکس و سوییچر در موبایل */
+    .profile-icon {
+        width: 60px; height: 60px; top: 10px; 
+    }
+    body.lang-fa .profile-icon { right: 10px; left: auto; }
+    body.lang-en .profile-icon { left: 10px; right: auto; }
+
+    .lang-switcher { top: 15px; }
+    body.lang-fa .lang-switcher { left: 10px; right: auto; }
+    body.lang-en .lang-switcher { right: 10px; left: auto; }
+
+    /* حذف پدینگ‌های اضافه هدر در موبایل */
+    body.lang-fa .header, body.lang-en .header {
+        padding-left: 0; 
+        padding-right: 0;
+        /* جبران فضای هدر برای متن زیر عکس */
+        padding-top: 70px; 
+    }
+
+    .skills-list { flex-direction: column; gap: 15px; }
+    .skill-category { flex-basis: 100%; }
+}
