@@ -86,3 +86,108 @@
                 <h3 class="lang-en">IT Support Specialist | Ministry of Interior</h3>
                 <p class="duration lang-fa">تیر ۱۳۹۷ - آذر ۱۳۹۷ (۵ ماه)</p>
                 <p class="duration lang-en">Jul 2018 - Dec 2018 (5 months)</p>
+                <ul class="lang-fa">
+                    <li>پشتیبانی و عیب‌یابی سیستم‌ها و شبکه داخلی</li>
+                    <li>نصب و راه‌اندازی سیستم عامل و نرم‌افزارهای سازمانی</li>
+                </ul>
+                <ul class="lang-en">
+                    <li>Supported and troubleshoot internal systems and network.</li>
+                    <li>Installed and configured operating systems and organizational software.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title lang-fa">مهارت‌ها</h2>
+            <h2 class="section-title lang-en">Technical Skills</h2>
+
+            <div class="skills-list">
+                <div class="skill-category">
+                    <h4 class="lang-fa">شبکه و زیرساخت</h4>
+                    <h4 class="lang-en">Network & Infrastructure</h4>
+                    <span class="skill-tag">CCNA (متوسط)</span>
+                    <span class="skill-tag">Network+ (متوسط)</span>
+                    <span class="skill-tag">Active Directory (متوسط)</span>
+                    <span class="skill-tag">Windows Server (متوسط)</span>
+                    <span class="skill-tag">Linux (متوسط)</span>
+                    <span class="skill-tag">Wireshark (متوسط)</span>
+                </div>
+
+                <div class="skill-category">
+                    <h4 class="lang-fa">نرم‌افزار و عمومی</h4>
+                    <h4 class="lang-en">Software & General</h4>
+                    <span class="skill-tag">Microsoft Excel (پیشرفته)</span>
+                    <span class="skill-tag">Microsoft Word (پیشرفته)</span>
+                    <span class="skill-tag lang-fa">عیب‌یابی سخت‌افزاری و نرم‌افزاری</span>
+                    <span class="skill-tag lang-en">Hardware/Software Troubleshooting</span>
+                    <span class="skill-tag lang-fa">توانایی کار تیمی</span>
+                    <span class="skill-tag lang-en">Teamwork</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title lang-fa">مدارک و گواهینامه‌های تخصصی</h2>
+            <h2 class="section-title lang-en">Certificates and Training</h2>
+
+            <div class="certificate-item">
+                <h3 class="lang-fa">گواهینامه CCNA</h3>
+                <h3 class="lang-en">CCNA Certification</h3>
+                <p class="institution lang-fa">مرکز آموزش لایتک دانشگاه صنعتی شریف</p>
+                <p class="institution lang-en">LayTech Training Center, Sharif University of Technology</p>
+            </div>
+
+            <div class="certificate-item">
+                <h3 class="lang-fa">گواهینامه Network+</h3>
+                <h3 class="lang-en">Network+ Certification</h3>
+                <p class="institution lang-fa">مرکز آموزش لایتک دانشگاه صنعتی شریف</p>
+                <p class="institution lang-en">LayTech Training Center, Sharif University of Technology</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title lang-fa">سوابق تحصیلی</h2>
+            <h2 class="section-title lang-en">Education</h2>
+
+            <div class="education-item">
+                <h3 class="lang-fa">کاردانی - مهندسی کامپیوتر</h3>
+                <h3 class="lang-en">Associate's Degree - Computer Engineering</h3>
+                <p class="institution lang-fa">دانشگاه آزاد اسلامی یادگار امام خمینی (ره) - شهر ری</p>
+                <p class="institution lang-en">Islamic Azad University Yadegar-e-Imam Khomeini (RAH) - Shahr-e Rey</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title lang-fa">تماس با من</h2>
+            <h2 class="section-title lang-en">Contact Me</h2>
+            
+            <p class="lang-fa">لطفا پیام خود را از طریق فرم زیر برای من ارسال کنید.</p>
+            <p class="lang-en">Please send your message to me via the form below.</p>
+
+            <form action="https://formspree.io/f/YOUR_FORMSPREE_HASH" method="POST" class="contact-form">
+                <div class="form-group">
+                    <label for="email" class="lang-fa">ایمیل شما:</label>
+                    <label for="email" class="lang-en">Your Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message" class="lang-fa">متن پیام:</label>
+                    <label for="message" class="lang-en">Message:</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="lang-fa">ارسال پیام</button>
+                <button type="submit" class="lang-en">Send Message</button>
+            </form>
+
+        </section>
+        
+    </main>
+
+    <script>
+        function switchLang(lang) {
+            // 1. تنظیم کلاس زبان روی تگ body
+            document.body.className = 'lang-' + lang;
+
+            // 2. تنظیم جهت‌گیری صفحه (dir="ltr" یا dir="
