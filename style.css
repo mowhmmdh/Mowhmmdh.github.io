@@ -96,7 +96,7 @@ h2 {
 }
 
 .section-title {
-    /* استایل عناوین بخش‌ها (شامل "درباره من") */
+    /* استایل عناوین بخش‌ها (شامل "درباره من" و عناوین بخش‌های دیگر) */
     font-size: 1.6em;
     color: var(--primary-color);
     margin-top: 0; 
@@ -280,7 +280,7 @@ body.lang-en #lang-en-btn {
     font-size: 0.95em;
 }
 
-.contact-form input[type="mohammedhasgari@gmail.com"],
+.contact-form input[type="email"],
 .contact-form textarea {
     width: 100%;
     padding: 10px;
