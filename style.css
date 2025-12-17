@@ -5,14 +5,12 @@ html {
 
 /* ---- استایل‌های عمومی و فونت ---- */
 @font-face {
-    /* BNazanin برای متون فارسی (رسمی) */
     font-family: 'BNazanin';
     src: url('fonts/BNazanin.woff2') format('woff2'); 
     font-weight: normal;
     font-style: normal;
 }
 @font-face {
-    /* Vazirmatn برای انگلیسی و سرفصل‌ها (خوانایی بالا) */
     font-family: 'Vazirmatn'; 
     src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
     font-weight: 500;
@@ -21,7 +19,7 @@ html {
 
 /* تعریف رنگ‌های رسمی */
 :root {
-    --primary-color: #003366; /* سرمه‌ای تیره */
+    --primary-color: #003366; 
     --secondary-color: #333;   
     --background-color: #ffffff; 
     --section-bg: #f5f5f5;      
@@ -64,27 +62,70 @@ body.lang-en {
     padding: 0 20px; 
 }
 
+/* ================================================= */
+/* ---- کانتینر بالای صفحه (Top Area) - جدید برای فلکس‌باکس ---- */
+/* ================================================= */
+
+#top-area {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ---- عکس پروفایل (Profile Icon) - اصلاح شده ---- */
+.profile-icon {
+    display: block; 
+    width: 80px; 
+    height: 80px; 
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 10;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- دکمه جابجایی زبان ---- */
+.lang-switcher {
+    z-index: 10;
+}
+.lang-switcher a, .lang-switcher button {
+    text-decoration: none;
+    display: inline-block;
+    background-color: transparent; 
+    color: var(--primary-color);
+    border: 1px solid var(--border-color); 
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    opacity: 0.8;
+    transition: opacity 0.2s, background-color 0.2s;
+    font-size: 0.8em;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+.lang-switcher a:hover, .lang-switcher button:hover { opacity: 1; background-color: var(--section-bg); }
+
+/* دکمه زبان فعال */
+.lang-switcher .active-lang {
+    opacity: 1;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: default;
+}
+
+
+/* ---- هدر اصلی (HEADER) - اصلاح شده ---- */
 .header {
     background-color: #fff;
     padding: 0; 
     margin-bottom: 50px;
     position: relative;
-    /* فضای کافی برای navbar و اسم و آیکون */
-    padding-top: 80px; 
-    padding-left: 100px; 
-    padding-right: 100px;
+    padding-top: 0; 
+    padding-left: 0; 
+    padding-right: 0;
 }
-/* تنظیم پدینگ هدر در حالت انگلیسی */
-body.lang-en .header {
-    padding-left: 100px; 
-    padding-right: 100px; 
-}
-/* تنظیم پدینگ هدر در حالت فارسی */
-body.lang-fa .header {
-    padding-left: 100px; 
-    padding-right: 100px; 
-}
-
 
 h1 {
     font-size: 3.5em; 
@@ -210,79 +251,7 @@ h2 {
 }
 
 /* ================================================= */
-/* ---- تنظیمات عکس پروفایل (Profile Icon) ---- */
-/* ================================================= */
-
-.profile-icon {
-    display: block; 
-    width: 100px; 
-    height: 120px; 
-    border-radius: 20%;
-    object-fit: cover;
-    position: absolute; 
-    top: 65px; /* کمی پایین‌تر */
-    z-index: 10;
-    border: 4px solid #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-/* موقعیت عکس در حالت فارسی (راست) */
-body.lang-fa .profile-icon {
-    left: auto; 
-    right: 20px; 
-}
-/* موقعیت عکس در حالت انگلیسی (چپ) */
-body.lang-en .profile-icon {
-    left: 20px; 
-    right: auto; 
-}
-
-/* ---- دکمه جابجایی زبان (موقعیت دهی ثابت در بالا) ---- */
-.lang-switcher {
-    position: absolute;
-    /* این بخش از هدر خارج شده و در فضای بین هدر و navbar قرار می‌گیرد */
-    top: 20px; 
-    z-index: 10;
-}
-/* موقعیت سوییچر در حالت فارسی (چپ) */
-body.lang-fa .lang-switcher {
-    left: 20px; /* از حاشیه سمت چپ کمی فاصله دارد */
-    right: auto;
-}
-/* موقعیت سوییچر در حالت انگلیسی (راست) */
-body.lang-en .lang-switcher {
-    left: auto;
-    right: 20px; /* از حاشیه سمت راست کمی فاصله دارد */
-}
-
-/* استایل دکمه‌های جابجایی زبان */
-.lang-switcher a, .lang-switcher button {
-    text-decoration: none;
-    display: inline-block;
-    background-color: transparent; 
-    color: var(--primary-color);
-    border: 1px solid var(--border-color); 
-    padding: 4px 8px;
-    cursor: pointer;
-    border-radius: 3px;
-    opacity: 0.8;
-    transition: opacity 0.2s, background-color 0.2s;
-    font-size: 0.8em;
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-}
-.lang-switcher a:hover, .lang-switcher button:hover { opacity: 1; background-color: var(--section-bg); }
-
-/* دکمه زبان فعال */
-.lang-switcher .active-lang {
-    opacity: 1;
-    font-weight: bold;
-    background-color: var(--primary-color);
-    color: white;
-    cursor: default;
-}
-
-
-/* ================================================= */
-/* ---- منو ناوبری (NAVBAR) و استایل دهی ثابت ---- */
+/* ---- منو ناوبری (NAVBAR) ---- */
 /* ================================================= */
 
 #navbar {
@@ -418,37 +387,33 @@ body.lang-en .lang-en-nav {
 
 
 /* ================================================= */
-/* ---- رسپانسیو (برای موبایل - حل مشکل تداخل) ---- */
+/* ---- رسپانسیو (برای موبایل - Flexbox) ---- */
 /* ================================================= */
 @media (max-width: 600px) {
-    .container { padding: 15px 10px; } 
-    .header { padding-left: 0; padding-right: 0; } 
-    h1 { font-size: 2.5em; }
+    .container { padding: 0 10px; } 
     
-    /* تنظیمات موقعیت دهی عکس پروفایل در موبایل */
+    /* تنظیمات top-area با فلکس‌باکس */
+    #top-area {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        flex-direction: row; 
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* تنظیمات عکس پروفایل در موبایل */
     .profile-icon {
-        width: 60px; 
-        height: 60px; 
-        top: 10px; 
+        width: 50px; 
+        height: 50px; 
         border: 2px solid #fff;
     }
-    body.lang-fa .profile-icon { right: 10px; left: auto; }
-    body.lang-en .profile-icon { left: 10px; right: auto; }
 
-    /* تنظیمات موقعیت دهی دکمه سوییچر در موبایل */
-    .lang-switcher { 
-        top: 20px; 
+    /* هدر */
+    .header {
+        margin-top: 20px; 
     }
-    body.lang-fa .lang-switcher { left: 10px; right: auto; }
-    body.lang-en .lang-switcher { right: 10px; left: auto; }
-
-    /* پدینگ هدر برای جبران فضای navbar و عکس/سوییچر */
-    body.lang-fa .header, body.lang-en .header {
-        padding-left: 0; 
-        padding-right: 0;
-        /* Navbar حدود 50px است. هدر باید از 55px شروع شود */
-        padding-top: 60px; 
-    }
+    h1 { font-size: 2em; }
+    h2 { font-size: 1.2em; }
 
     /* تنظیمات منو ناوبری در موبایل */
     #navbar ul {
@@ -456,8 +421,8 @@ body.lang-en .lang-en-nav {
         justify-content: space-between;
     }
     #navbar li {
-        padding: 10px 5px;
-        font-size: 0.75em; 
+        padding: 8px 5px;
+        font-size: 0.7em; 
         flex-basis: 30%; 
         text-align: center;
     }
