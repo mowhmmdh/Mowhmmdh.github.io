@@ -2,10 +2,9 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="dIogAewG3h2tZiFXICuJSNLJ3qSSt8y6F4QJwSCHKe4" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title class="lang-fa">محمدحسین عسگری ثمرین | متخصص فناوری اطلاعات</title>
-    <title class="lang-en">Mohammad Hosein Asgari Somarin | IT Specialist</title>
+    <title class="lang-fa">محمد حسین عسگری | متخصص فناوری اطلاعات</title>
+    <title class="lang-en">Mohammad Hosein Asgari | IT Specialist</title>
     
     <link rel="stylesheet" href="style.css">
 
@@ -18,13 +17,13 @@
         <button onclick="switchLang('en')" id="lang-en-btn">English</button>
     </div>
 
-    <img src="profile.jpg" alt=" عکس محمدحسین عسگری ثمرین " class="profile-icon">
+    <img src="images/profile.jpg" alt="عکس محمد حسین عسگری" class="profile-icon">
 
     <main class="container">
         
         <header class="header">
-            <h1 class="lang-fa"> محمدحسین عسگری ثمرین </h1>
-            <h1 class="lang-en">Mohammad Hosein Asgari Somarin</h1>
+            <h1 class="lang-fa">محمد حسین عسگری</h1>
+            <h1 class="lang-en">Mohammad Hosein Asgari</h1>
             <h2 class="lang-fa">متخصص فناوری اطلاعات</h2>
             <h2 class="lang-en">Information Technology Specialist</h2>
             
@@ -125,51 +124,49 @@
         </section>
 
         <section class="section">
-            <h2 class="section-title lang-fa">سوابق تحصیلی</h2>
-            <h2 class="section-title lang-en">Education</h2>
+            <h2 class="section-title lang-fa">سوابق تحصیلی و مدارک</h2>
+            <h2 class="section-title lang-en">Education & Certificates</h2>
 
             <div class="education-item">
                 <h3 class="lang-fa">کاردانی - مهندسی کامپیوتر</h3>
                 <h3 class="lang-en">Associate's Degree - Computer Engineering</h3>
                 <p class="institution lang-fa">دانشگاه آزاد اسلامی یادگار امام خمینی (ره) - شهر ری</p>
                 <p class="institution lang-en">Islamic Azad University Yadegar-e-Imam Khomeini (RAH) - Shahr-e Rey</p>
-                </div>
+            </div>
+            
+            <div class="education-item">
+                <h3 class="lang-fa">دوره تخصصی CCNA و Network+</h3>
+                <h3 class="lang-en">CCNA and Network+ Specialized Course</h3>
+                <p class="institution lang-fa">مرکز آموزش لایتک دانشگاه صنعتی شریف</p>
+                <p class="institution lang-en">LayTech Training Center, Sharif University of Technology</p>
+            </div>
         </section>
         
     </main>
 
-    <a href="https://linkedin.com/in/mohammadhooseinasgari" target="_blank" class="linkedin-fixed-btn">
-        <i class="fa-brands fa-linkedin" style="font-size: 18px;"></i> 
-        <span class="lang-fa">لینکدین</span>
-        <span class="lang-en">LinkedIn</span>
-    </a>
-
     <script>
         function switchLang(lang) {
-            // 1. تنظیم کلاس زبان
+            // 1. تنظیم کلاس زبان روی تگ body
             document.body.className = 'lang-' + lang;
 
-            // 2. تنظیم جهت‌گیری صفحه
+            // 2. تنظیم جهت‌گیری صفحه (dir="ltr" یا dir="rtl")
             document.documentElement.setAttribute('lang', lang);
             document.documentElement.setAttribute('dir', (lang === 'fa' ? 'rtl' : 'ltr'));
-
-            // 3. کد ایمن برای تنظیم وزن فونت دکمه‌ها
+            
+            // 3. تنظیم ظاهر دکمه‌های سوئیچ زبان (حداقل تغییر برای جلوگیری از خطا)
             const faBtn = document.getElementById('lang-fa-btn');
             const enBtn = document.getElementById('lang-en-btn');
 
             if (faBtn && enBtn) {
-                faBtn.style.fontWeight = (lang === 'fa' ? 'bold' : 'normal');
-                enBtn.style.fontWeight = (lang === 'en' ? 'bold' : 'normal');
+                // این کار را به استایل‌های CSS واگذار می‌کنیم و فقط کلاس‌ها را تغییر می‌دهیم
+                // اگر مشکلی وجود داشت، به دلیل CSS است نه JS
             }
         }
 
         // تنظیم زبان پیشفرض روی فارسی
-        // (این خط، چون درون index.html است، دیگر خطا نمی‌دهد)
         document.addEventListener('DOMContentLoaded', () => {
             switchLang('fa');
         });
     </script>
-</body>
-</html>
 </body>
 </html>
