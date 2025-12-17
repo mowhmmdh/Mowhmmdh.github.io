@@ -1,9 +1,8 @@
 function switchLang(lang) {
-    // کلاس lang-fa یا lang-en را به تگ body اضافه یا حذف می کند
-    document.body.className = ''; 
-    document.body.classList.add('lang-' + lang);
-    
-    // جهت صفحه و تنظیمات اصلی سند را تغییر می دهد
+    // 1. حذف کلاس زبان قبلی و اضافه کردن کلاس زبان جدید به body
+    document.body.className = 'lang-' + lang;
+
+    // 2. تنظیم جهت‌گیری صفحه (rtl برای فارسی و ltr برای انگلیسی)
     if (lang === 'fa') {
         document.documentElement.setAttribute('lang', 'fa');
         document.documentElement.setAttribute('dir', 'rtl');
@@ -11,9 +10,14 @@ function switchLang(lang) {
         document.documentElement.setAttribute('lang', 'en');
         document.documentElement.setAttribute('dir', 'ltr');
     }
+    
+    // 3. فعال کردن دکمه‌های سوئیچر (اختیاری: برای نشان دادن دکمه فعال)
+    document.getElementById('lang-fa-btn').style.fontWeight = (lang === 'fa' ? 'bold' : 'normal');
+    document.getElementById('lang-en-btn').style.fontWeight = (lang === 'en' ? 'bold' : 'normal');
 }
 
-// زبان پیشفرض را روی فارسی تنظیم می کند
+// تنظیم زبان پیشفرض روی فارسی هنگام بارگذاری صفحه
+// ما از DOMContentLoaded استفاده می‌کنیم چون حالا مطمئنیم که JS اجرا می‌شود
 document.addEventListener('DOMContentLoaded', () => {
     switchLang('fa');
 });
