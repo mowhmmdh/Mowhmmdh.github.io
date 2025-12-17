@@ -16,22 +16,32 @@ body {
     padding-bottom: 80px;
 }
 
-/* ---- استایل‌های دو زبانگی ---- */
-/* این خط باید فعال باشد تا محتوای غیرفعال پنهان شود */
-.lang-fa, .lang-en { display: none; } 
+/* ---- استایل‌های دو زبانگی: اصلاح حیاتی برای نمایش پیش‌فرض ---- */
 
-body.lang-fa .lang-fa { 
-    display: block; 
+/* به طور پیش فرض، محتوای انگلیسی پنهان است تا فارسی نمایش داده شود */
+.lang-en { 
+    display: none; 
+} 
+
+/* تنظیمات پیش‌فرض زبان فارسی (نمایش و راست‌چین) */
+.lang-fa { 
+    display: block; /* تضمین نمایش محتوای فارسی */
     direction: rtl; 
     text-align: right;
 }
 
+/* اگر کلاس lang-en روی body اعمال شد (توسط JS) */
+body.lang-en .lang-fa { 
+    display: none; /* فارسی را پنهان کن */
+}
 body.lang-en .lang-en { 
-    display: block; 
+    display: block; /* انگلیسی را نمایش بده */
     direction: ltr; 
     text-align: left;
 }
 
+
+/* تنظیمات کلی بدنه بر اساس زبان */
 body.lang-fa {
     direction: rtl;
     text-align: right;
