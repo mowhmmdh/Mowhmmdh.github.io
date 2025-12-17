@@ -33,36 +33,41 @@ body {
     padding-bottom: 80px;
 }
 
-/* ---- تنظیمات زبان و فونت (حل قطعی مشکل نمایش) ---- */
+/* ---- تنظیمات زبان و فونت (حل قاطع مشکل نمایش) ---- */
 
-/* به صورت پیش فرض همه متن‌های انگلیسی پنهان هستند */
+/* 1. تنظیمات پیش‌فرض برای فارسی */
 .lang-en { 
     display: none !important; 
     font-family: 'Vazirmatn', Tahoma, sans-serif; 
 } 
 
-/* به صورت پیش فرض همه متن‌های فارسی نمایش داده می‌شوند */
 .lang-fa { 
-    display: inline !important; /* از inline استفاده می‌کنیم تا تداخل block در CSS را حذف کنیم */
+    display: inline !important; 
     direction: rtl; 
     text-align: right;
     font-family: 'BNazanin', Tahoma, sans-serif; 
     font-size: 1em; 
 }
 
-/* اگر کلاس lang-en روی body باشد: */
+/* 2. وقتی دکمه انگلیسی فشرده شد (body.lang-en): */
 body.lang-en { direction: ltr; text-align: left; }
-body.lang-en .lang-fa { display: none !important; } 
+body.lang-en .lang-fa { 
+    display: none !important; 
+} 
 body.lang-en .lang-en { 
     display: inline !important; /* نمایش انگلیسی */
     direction: ltr; 
     text-align: left;
 }
 
-/* اگر کلاس lang-fa روی body باشد: */
+/* 3. وقتی دکمه فارسی فشرده شد (body.lang-fa): */
 body.lang-fa { direction: rtl; text-align: right; }
-body.lang-fa .lang-fa { display: inline !important; } /* نمایش فارسی */
-body.lang-fa .lang-en { display: none !important; }
+body.lang-fa .lang-fa { 
+    display: inline !important; /* نمایش فارسی */
+} 
+body.lang-fa .lang-en { 
+    display: none !important; 
+}
 
 
 /* ---- استایل‌دهی طرح اصلی و کانتینر ---- */
@@ -216,7 +221,7 @@ body.lang-en .job-item li::before {
 /* ---- عکس پروفایل (حفظ شده) ---- */
 .profile-icon {
     display: block; 
-    width: 100px; 
+    width: 1pppx; 
     height: 120px; 
     border-radius: 20%;
     object-fit: cover;
