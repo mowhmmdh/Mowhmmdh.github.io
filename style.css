@@ -204,9 +204,9 @@ body.lang-en .job-item ul {
 
 /* ---- عکس پروفایل (همیشه در چپ) ---- */
 .profile-icon {
-    width: 65px; /* کمی کوچکتر */
-    height: 65px; 
-    border-radius: 50%;
+    width: 100px; /* کمی کوچکتر */
+    height: 120px; 
+    border-radius: 20%;
     object-fit: cover;
     position: absolute; 
     top: 30px; 
