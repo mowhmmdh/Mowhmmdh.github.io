@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="fa" dir="rtl"> 
 <head>
     <meta charset="UTF-8">
-    <meta name="google-site-verification" content="w1K0ObPBkDyumGF71kjJyBwGvPFh1rhb6PBLBd-RC90" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title class="lang-fa">محمد حسین عسگری ثمرین | متخصص فناوری اطلاعات</title>
-    <title class="lang-en">Mohammad Hosein Asgari Somarin | IT Specialist</title>
+    <title class="lang-fa">محمد حسین عسگری | متخصص فناوری اطلاعات</title>
+    <title class="lang-en">Mohammad Hosein Asgari | IT Specialist</title>
     
     <link rel="stylesheet" href="style.css">
 
@@ -18,13 +17,13 @@
         <button onclick="switchLang('en')" id="lang-en-btn">English</button>
     </div>
 
-    <img src="profile.jpg" alt="عکس محمد حسین عسگری ثمرین" class="profile-icon">
+    <img src="images/profile.jpg" alt="عکس محمد حسین عسگری" class="profile-icon">
 
     <main class="container">
         
         <header class="header">
-            <h1 class="lang-fa">محمد حسین عسگری ثمرین</h1>
-            <h1 class="lang-en">Mohammad Hosein Asgari Somarin</h1>
+            <h1 class="lang-fa">محمد حسین عسگری</h1>
+            <h1 class="lang-en">Mohammad Hosein Asgari</h1>
             <h2 class="lang-fa">متخصص فناوری اطلاعات</h2>
             <h2 class="lang-en">Information Technology Specialist</h2>
             
@@ -154,14 +153,7 @@
             document.documentElement.setAttribute('lang', lang);
             document.documentElement.setAttribute('dir', (lang === 'fa' ? 'rtl' : 'ltr'));
             
-            // 3. تنظیم ظاهر دکمه‌های سوئیچ زبان (حداقل تغییر برای جلوگیری از خطا)
-            const faBtn = document.getElementById('lang-fa-btn');
-            const enBtn = document.getElementById('lang-en-btn');
-
-            if (faBtn && enBtn) {
-                // این کار را به استایل‌های CSS واگذار می‌کنیم و فقط کلاس‌ها را تغییر می‌دهیم
-                // اگر مشکلی وجود داشت، به دلیل CSS است نه JS
-            }
+            // 3. کد استایل‌دهی دکمه‌ها را حذف کردیم تا خطایی رخ ندهد.
         }
 
         // تنظیم زبان پیشفرض روی فارسی
