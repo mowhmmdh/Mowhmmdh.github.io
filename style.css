@@ -1,23 +1,30 @@
 /* ---- استایل‌های عمومی و فونت ---- */
 @font-face {
+    /* BNazanin برای متون فارسی */
     font-family: 'BNazanin';
     src: url('fonts/BNazanin.woff2') format('woff2'); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    /* Vazirmatn برای انگلیسی و سرفصل‌ها */
+    font-family: 'Vazirmatn'; 
+    src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
     font-weight: 500;
     font-style: normal;
 }
 
 /* تعریف رنگ‌های رسمی */
 :root {
-    --primary-color: #003366; /* سرمه‌ای تیره (Navy Blue) */
-    --secondary-color: #333;   /* رنگ متون اصلی */
-    --background-color: #ffffff; /* زمینه سفید مطلق */
-    --section-bg: #f5f5f5;      /* زمینه خاکستری روشن برای بخش‌ها */
-    --border-color: #cccccc;   /* رنگ خطوط جداکننده */
-    --accent-color: #0077b5;   /* رنگ لینکدین/آیکون‌ها */
+    --primary-color: #003366; /* سرمه‌ای تیره */
+    --secondary-color: #333;   
+    --background-color: #ffffff; 
+    --section-bg: #f5f5f5;      
+    --border-color: #cccccc;   
 }
 
 body {
-    font-family: 'BNazanin', Tahoma, sans-serif;
+    font-family: 'Vazirmatn', Tahoma, sans-serif; /* پیش فرض: Vazirmatn */
     line-height: 1.7; 
     margin: 0;
     padding: 0;
@@ -26,13 +33,27 @@ body {
     padding-bottom: 80px;
 }
 
-/* ---- تنظیمات زبان (بر اساس حل مشکل جاوا اسکریپت) ---- */
+/* ---- تنظیمات زبان و فونت (حل مشکل نمایش) ---- */
+/* پیش فرض: انگلیسی پنهان است */
 .lang-en { display: none; } 
-.lang-fa { display: block; direction: rtl; text-align: right; }
+.lang-fa { 
+    display: block; 
+    direction: rtl; 
+    text-align: right;
+    font-family: 'BNazanin', Tahoma, sans-serif; /* اعمال BNazanin */
+    font-size: 1.05em; 
+}
+
+/* وقتی کلاس lang-en به body اعمال شد، محتوای فارسی پنهان و انگلیسی نمایش داده می‌شود */
 body.lang-en .lang-fa { display: none; }
-body.lang-en .lang-en { display: block; direction: ltr; text-align: left; }
-body.lang-fa { direction: rtl; text-align: right; }
-body.lang-en { direction: ltr; text-align: left; }
+body.lang-en .lang-en { 
+    display: block; 
+    direction: ltr; 
+    text-align: left;
+}
+
+body.lang-fa { direction: rtl; }
+body.lang-en { direction: ltr; }
 
 /* ---- استایل‌دهی طرح اصلی و کانتینر ---- */
 .container {
@@ -47,7 +68,7 @@ body.lang-en { direction: ltr; text-align: left; }
     padding: 0; 
     margin-bottom: 50px;
     position: relative;
-    /* فضای خالی بیشتر در سمت چپ/راست برای عکس و سوئیچر */
+    /* فضای خالی برای عکس و سوئیچر */
     padding-left: 100px; 
     padding-right: 100px;
 }
@@ -56,7 +77,7 @@ h1 {
     font-size: 3em;
     color: var(--primary-color); 
     margin: 0;
-    font-weight: 700;
+    font-weight: bold; 
 }
 
 h2 {
@@ -64,7 +85,7 @@ h2 {
     color: #555;
     padding-bottom: 10px;
     margin-top: 5px;
-    font-weight: 500;
+    font-weight: normal;
 }
 
 .section {
@@ -82,7 +103,7 @@ h2 {
     color: var(--primary-color);
     margin-bottom: 30px;
     padding-bottom: 5px;
-    font-weight: 600;
+    font-weight: bold;
 }
 
 /* ---- جزئیات محتوا ---- */
@@ -180,15 +201,15 @@ body.lang-en .job-item li::before {
     font-weight: 500; 
 }
 
-/* ---- عکس پروفایل (فعال‌سازی مجدد) ---- */
+/* ---- عکس پروفایل ---- */
 .profile-icon {
-    display: block; /* تضمین نمایش */
+    display: block; 
     width: 100px; 
-    height: 120px; 
+    height: 12ppx; 
     border-radius: 20%;
     object-fit: cover;
     position: absolute; 
-    top: 10px; /* موقعیت دقیق در گوشه بالا */
+    top: 10px; 
     left: 10px; 
     right: auto;
     z-index: 10;
@@ -196,7 +217,7 @@ body.lang-en .job-item li::before {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ---- دکمه جابجایی زبان (ساده و مینیمال) ---- */
+/* ---- دکمه جابجایی زبان ---- */
 .lang-switcher {
     position: absolute;
     top: 50px; 
@@ -207,13 +228,15 @@ body.lang-en .job-item li::before {
 .lang-switcher button {
     background-color: transparent; 
     color: var(--primary-color);
-    border: 1px solid var(--border-color); /* خطوط خاکستری ملایم‌تر */
+    border: 1px solid var(--border-color); 
     padding: 4px 8px;
     cursor: pointer;
     border-radius: 3px;
     opacity: 0.8;
     transition: opacity 0.2s, background-color 0.2s;
     font-size: 0.8em;
+    /* تنظیم فونت برای دکمه‌های فارسی/انگلیسی */
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
 .lang-switcher button:hover { opacity: 1; background-color: var(--section-bg); }
 body.lang-fa #lang-fa-btn,
@@ -232,7 +255,7 @@ body.lang-en #lang-en-btn {
 /* ---- رسپانسیو (برای موبایل) ---- */
 @media (max-width: 600px) {
     .container { padding: 15px 10px; } 
-    .header { padding-left: 0; padding-right: 0; } /* حذف padding اضافی در موبایل */
+    .header { padding-left: 0; padding-right: 0; } 
     h1 { font-size: 2.5em; }
     .lang-switcher { top: 15px; right: 10px; }
     .skills-list { flex-direction: column; gap: 15px; }
