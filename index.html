@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <span class="lang-fa">محمد حسین عسگری | متخصص فناوری اطلاعات</span>
-        <span class="lang-en">Mohammad Hosein Asgari | IT Specialist</span>
-    </title>
+    <title>محمد حسین عسگری | متخصص فناوری اطلاعات</title>
     
     <link rel="stylesheet" href="style.css">
 
@@ -26,26 +23,10 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
-    <script>
-        function switchLang(lang) {
-            // تنظیم کلاس و جهت‌گیری صفحه
-            document.body.className = 'lang-' + lang;
-            document.documentElement.setAttribute('lang', lang);
-            document.documentElement.setAttribute('dir', (lang === 'fa' ? 'rtl' : 'ltr'));
-        }
-
-        // تنظیم زبان پیشفرض روی فارسی بلافاصله پس از بارگذاری DOM
-        document.addEventListener('DOMContentLoaded', () => {
-            switchLang('fa');
-        });
-    </script>
-
 </head>
-<body>
-
-    <div class="lang-switcher">
-        <button onclick="switchLang('fa')" id="lang-fa-btn">فارسی</button>
-        <button onclick="switchLang('en')" id="lang-en-btn">English</button>
+<body class="lang-fa"> <div class="lang-switcher">
+        <a href="en.html" class="lang-link" id="lang-en-btn">English</a>
+        <button class="active-lang" id="lang-fa-btn">فارسی</button>
     </div>
 
     <img src="images/profile.jpg" alt="عکس محمد حسین عسگری" class="profile-icon">
@@ -53,56 +34,62 @@
     <main class="container">
         
         <header class="header">
-            <h1>
-                <span class="lang-fa">محمد حسین عسگری</span>
-                <span class="lang-en">Mohammad Hosein Asgari</span>
-            </h1>
-            <h2>
-                <span class="lang-fa">متخصص فناوری اطلاعات</span>
-                <span class="lang-en">Information Technology Specialist</span>
-            </h2>
+            <h1>محمد حسین عسگری</h1>
+            <h2>متخصص فناوری اطلاعات</h2>
             
             <div class="contact-info">
                 <p><i class="fas fa-envelope"></i> mohammedhasgari@gmail.com</p>
                 <p><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/mohammadhooseinasgari" target="_blank">لینکدین</a></p>
             </div>
             
-            <h2 class="section-title">
-                <span class="lang-fa">درباره من</span>
-                <span class="lang-en">About Me</span>
-            </h2>
+            <h2 class="section-title">درباره من</h2>
             
             <section class="summary">
-                <p>
-                    <span class="lang-fa">من یک متخصص پشتیبانی فناوری اطلاعات با بیش از ۴ سال تجربه عملی در عیب‌یابی سیستم‌ها، پشتیبانی Helpdesk از کاربران، و نگهداری شبکه‌های سازمانی هستم. همکاری با سازمان‌هایی مانند وزارت کشور و کیمیا مهر اسپادانا، مهارت‌های فنی و همچنین توانایی حل مسئله و کار تیمی مرا تقویت کرده است. با تسلط بر مفاهیم CCNA، Network+ و ویندوز سرور، همیشه در حال به‌روزرسانی دانش خود در زمینه شبکه و امنیت سایبری هستم و آماده پذیرش چالش‌های جدید برای رشد حرفه‌ای هستم.</span>
-                    <span class="lang-en">I am a dedicated IT Support Specialist with over 4 years of practical experience in system troubleshooting, user support (Helpdesk), and organizational network maintenance. My background, including work with the Ministry of Interior and Kimiamehr Espadana, has strengthened my technical skills, problem-solving abilities, and teamwork capacity. Proficient in CCNA, Network+, and Windows Server fundamentals, I continually update my knowledge in networking and cybersecurity, ready to embrace new challenges for professional growth.</span>
-                </p>
+                <p>متخصص پشتیبانی فناوری اطلاعات با بیش از ۴ سال سابقه عملی در محیط‌های سازمانی. تخصص اصلی شامل عیب‌یابی Helpdesk، مدیریت سیستم‌ها و زیرساخت شبکه داخلی است. دارای دانش فنی قوی در مفاهیم CCNA، Network+ و Windows Server. متمرکز بر ارائه پشتیبانی مؤثر و تضمین پایداری سیستم‌ها.</p>
             </section>
         </header>
 
         <section class="section">
-            <h2 class="section-title">
-                <span class="lang-fa">سوابق شغلی</span>
-                <span class="lang-en">Work Experience</span>
-            </h2>
+            <h2 class="section-title">سوابق شغلی</h2>
 
             <div class="job-item">
-                <h3>
-                    <span class="lang-fa">کارشناس پشتیبانی سایت | کیمیا مهر اسپادانا تدبیر</span>
-                    <span class="lang-en">Site Support Expert | Kimiamehr Espadana Tadbir</span>
-                </h3>
-                <p class="duration">
-                    <span class="lang-fa">آبان ۱۴۰۱ - آذر ۱۴۰۲ (۱ سال و ۱ ماه)</span>
-                    <span class="lang-en">Nov 2022 - Dec 2023 (1 year 1 month)</span>
-                </p>
+                <h3>کارشناس پشتیبانی سایت | کیمیا مهر اسپادانا تدبیر</h3>
+                <p class="duration">آبان ۱۴۰۱ - آذر ۱۴۰۲ (۱ سال و ۱ ماه)</p>
                 <ul>
-                    <li>
-                        <span class="lang-fa">ارائه پشتیبانی فنی کامل از وب‌سایت و سیستم‌های داخلی جهت تضمین عملکرد بدون وقفه.</span>
-                        <span class="lang-en">Provided comprehensive technical support for the website and internal systems to ensure uninterrupted operation.</span>
-                    </li>
-                    <li>
-                        <span class="lang-fa">مدیریت دقیق فرآیند سفارش‌ها و هماهنگی مؤثر با تیم فنی برای اجرای سریع درخواست‌های مشتریان.</span>
-                        <span class="lang-en">Managed order processes precisely and effectively coordinated with the technical team for quick customer request fulfillment.</span>
-                    </li>
-                    <li>
-                        <span class="lang-fa">مس
+                    <li>ارائه پشتیبانی فنی کامل از وب‌سایت و سیستم‌های داخلی جهت تضمین عملکرد بدون وقفه.</li>
+                    <li>مدیریت دقیق فرآیند سفارش‌ها و هماهنگی مؤثر با تیم فنی برای اجرای سریع درخواست‌های مشتریان.</li>
+                    <li>مسئولیت آپلود، ویرایش و به‌روزرسانی محتوا جهت حفظ اطلاعات جاری و صحت داده‌ها.</li>
+                    <li>انجام عیب‌یابی اولیه سخت‌افزار و نرم‌افزار سیستم‌های کاربران برای حل مشکلات روزمره.</li>
+                </ul>
+            </div>
+
+            <div class="job-item">
+                <h3>کارشناس پشتیبانی فنی | Helpdesk | موسسه فرهنگی مطبوعاتی صمت</h3>
+                <p class="duration">فروردین ۱۴۰۱ - مهر ۱۴۰۱ (۶ ماه)</p>
+                <ul>
+                    <li>مدیریت و پشتیبانی سیستم‌ها، تجهیزات اداری و زیرساخت شبکه داخلی سازمان.</li>
+                    <li>انجام تعمیرات و نگهداری پیشگیرانه برای سخت‌افزار و نرم‌افزارهای حیاتی سیستم‌ها.</li>
+                    <li>برنامه‌ریزی و اجرای روش‌های مؤثر برای مدیریت و نگهداری کلیه سیستم‌های سازمان.</li>
+                </ul>
+            </div>
+
+            <div class="job-item">
+                <h3>کارشناس پشتیبانی IT | وزارت کشور</h3>
+                <p class="duration">تیر ۱۳۹۷ - آذر ۱۳۹۷ (۵ ماه)</p>
+                <ul>
+                    <li>ارائه پشتیبانی سطح اول و عیب‌یابی سریع سیستم‌ها و شبکه داخلی.</li>
+                    <li>نصب، پیکربندی و راه‌اندازی سیستم عامل‌ها و نرم‌افزارهای تخصصی سازمان.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">مهارت‌ها</h2>
+
+            <div class="skills-list">
+                <div class="skill-category">
+                    <h4>شبکه و زیرساخت</h4>
+                    <span class="skill-tag">CCNA (متوسط)</span>
+                    <span class="skill-tag">Network+ (متوسط)</span>
+                    <span class="skill-tag">Active Directory (متوسط)</span>
+                    <span class="skill-
