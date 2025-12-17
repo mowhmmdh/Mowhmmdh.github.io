@@ -419,7 +419,7 @@ body.lang-en .lang-en-nav {
     /* اندازه کوچکتر بسم الله در موبایل */
     .bismillah-icon {
         height: 60px; 
-        max-width: 200%;
+        max-width: 300%;
     }
     
     /* هدر زیر top-area قرار می‌گیرد */
