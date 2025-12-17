@@ -17,25 +17,21 @@ body {
 }
 
 /* ---- استایل‌های دو زبانگی ---- */
-
-/* پیشفرض: هر دو زبان مخفی هستند تا جاوا اسکریپت زبان صحیح را نمایش دهد */
+/* این خط باید فعال باشد تا محتوای غیرفعال پنهان شود */
 .lang-fa, .lang-en { display: none; } 
 
-/* نمایش محتوای فارسی */
 body.lang-fa .lang-fa { 
     display: block; 
     direction: rtl; 
     text-align: right;
 }
 
-/* نمایش محتوای انگلیسی */
 body.lang-en .lang-en { 
     display: block; 
     direction: ltr; 
     text-align: left;
 }
 
-/* تنظیمات کلی بدنه بر اساس زبان */
 body.lang-fa {
     direction: rtl;
     text-align: right;
@@ -115,4 +111,75 @@ body.lang-en .job-item ul { list-style-type: disc; padding-left: 20px; padding-r
 .skill-tag { display: inline-block; background-color: #e6f0ff; color: #1a73e8; padding: 6px 12px; border-radius: 20px; margin: 5px; font-size: 0.9em; font-weight: 500; }
 
 /* ---- عکس پروفایل (همیشه در چپ) ---- */
-.
+.profile-icon {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    position: absolute; 
+    top: 20px; 
+    left: 20px; 
+    right: auto;
+    z-index: 10;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ---- دکمه جابجایی زبان (در بالا و سمت راست) ---- */
+.lang-switcher {
+    position: absolute;
+    top: 30px;
+    right: 20px; 
+    left: auto; 
+    z-index: 10;
+}
+.lang-switcher button {
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+.lang-switcher button:hover { opacity: 1; }
+body.lang-fa #lang-fa-btn,
+body.lang-en #lang-en-btn {
+    opacity: 1;
+    font-weight: bold;
+    background-color: #0d47a1;
+}
+
+/* ---- دکمه ثابت لینکدین (پایین و چپ) ---- */
+.linkedin-fixed-btn {
+    position: fixed;
+    bottom: 20px; 
+    left: 20px; 
+    z-index: 999; 
+    display: inline-flex;
+    align-items: center; 
+    padding: 10px 15px;
+    background-color: #0077B5; 
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); 
+    transition: transform 0.3s;
+}
+.linkedin-fixed-btn:hover { transform: scale(1.05); }
+
+/* تنظیم موقعیت آیکون لینکدین بر اساس زبان */
+body.lang-fa .linkedin-fixed-btn i { margin-left: 10px; margin-right: 0; }
+body.lang-en .linkedin-fixed-btn i { margin-right: 10px; margin-left: 0; }
+
+/* ---- رسپانسیو (برای موبایل) ---- */
+@media (max-width: 600px) {
+    .container { padding: 10px; } 
+    h1 { font-size: 2em; }
+    .profile-icon { width: 50px; height: 50px; top: 15px; left: 15px; }
+    .lang-switcher { top: 20px; right: 15px; }
+    .skills-list { flex-direction: column; gap: 15px; }
+    .skill-category { flex-basis: 100%; }
+}
