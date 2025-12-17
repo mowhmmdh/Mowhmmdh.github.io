@@ -33,24 +33,32 @@ body {
     padding-bottom: 80px;
 }
 
-/* ---- تنظیمات زبان و فونت (حل مشکل نمایش) ---- */
-.lang-en { display: none; } 
+/* ---- تنظیمات زبان و فونت (حل قطعی مشکل نمایش) ---- */
+
+/* به صورت پیش فرض همه متن‌های انگلیسی پنهان هستند */
+.lang-en { display: none !important; } 
+
+/* به صورت پیش فرض همه متن‌های فارسی نمایش داده می‌شوند */
 .lang-fa { 
-    display: block !important;
+    display: block !important; 
     direction: rtl; 
     text-align: right;
     font-family: 'BNazanin', Tahoma, sans-serif; 
     font-size: 1.05em; 
 }
 
-body.lang-en .lang-fa { display: none; }
+/* اگر کلاس lang-en روی body باشد: */
+body.lang-en .lang-fa { display: none !important; } /* فارسی را پنهان کن */
 body.lang-en .lang-en { 
-    display: block  !important;
+    display: block !important; /* انگلیسی را نمایش بده */
     direction: ltr; 
     text-align: left;
 }
-body.lang-fa { direction: rtl; }
-body.lang-en { direction: ltr; }
+
+/* اگر کلاس lang-fa روی body باشد: */
+body.lang-fa .lang-fa { display: block !important; } /* فارسی را نمایش بده */
+body.lang-fa .lang-en { display: none !important; } /* انگلیسی را پنهان کن */
+
 
 /* ---- استایل‌دهی طرح اصلی و کانتینر ---- */
 .container {
