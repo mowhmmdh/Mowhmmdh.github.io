@@ -412,14 +412,14 @@ body.lang-en .lang-en-nav {
     /* تنظیمات عکس پروفایل در موبایل */
     .profile-icon {
         width: 50px; 
-        height: 60px; 
+        height: 65px; 
         border: 2px solid #fff;
     }
 
     /* اندازه کوچکتر بسم الله در موبایل */
     .bismillah-icon {
         height: 60px; 
-        max-width: 110%;
+        max-width: 200%;
     }
     
     /* هدر زیر top-area قرار می‌گیرد */
