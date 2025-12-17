@@ -7,7 +7,6 @@ html {
 @font-face {
     /* BNazanin برای متون فارسی (رسمی) */
     font-family: 'BNazanin';
-    /* مطمئن شوید که پوشه 'fonts' وجود دارد */
     src: url('fonts/BNazanin.woff2') format('woff2'); 
     font-weight: normal;
     font-style: normal;
@@ -15,7 +14,6 @@ html {
 @font-face {
     /* Vazirmatn برای انگلیسی و سرفصل‌ها (خوانایی بالا) */
     font-family: 'Vazirmatn'; 
-    /* مطمئن شوید که پوشه 'fonts' وجود دارد */
     src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
     font-weight: 500;
     font-style: normal;
@@ -64,6 +62,406 @@ body.lang-en {
     max-width: 900px;
     margin: 0 auto;
     padding: 40px 20px; 
+}
+
+.header {
+    background-color: #fff;
+    padding: 0; 
+    margin-bottom: 50px;
+    position: relative;
+    padding-top: 20px; /* اضافه کردن فضای بالای هدر برای منو */
+    padding-left: 100px; 
+    padding-right: 100px;
+}
+/* تنظیم پدینگ هدر در حالت انگلیسی */
+body.lang-en .header {
+    padding-left: 100px; /* فضای عکس در سمت چپ */
+    padding-right: 100px; /* فضای سوییچر در سمت راست */
+}
+/* تنظیم پدینگ هدر در حالت فارسی */
+body.lang-fa .header {
+    padding-left: 100px; /* فضای سوییچر در سمت چپ */
+    padding-right: 100px; /* فضای عکس در سمت راست */
+}
+
+
+h1 {
+    font-size: 3.5em; 
+    color: var(--primary-color); 
+    margin: 0;
+    font-weight: bold; 
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #555;
+    padding-bottom: 10px;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+.section {
+    background-color: var(--background-color);
+    padding: 30px 0; 
+    margin-bottom: 20px;
+    border-top: 1px solid var(--border-color); 
+}
+.section:first-of-type {
+    border-top: none;
+}
+
+.section-title {
+    font-size: 1.6em;
+    color: var(--primary-color);
+    margin-top: 0; 
+    margin-bottom: 15px; 
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+/* ---- جزئیات محتوا ---- */
+.contact-info { 
+    margin-top: 20px; 
+    padding: 15px 0; 
+    border-top: 2px solid var(--border-color); 
+    font-size: 0.95em; 
+    color: #666;
+}
+.contact-info p { 
+    margin: 5px 0; 
+    display: inline-block; 
+    margin-inline-end: 30px; 
+}
+.contact-info i { 
+    color: var(--primary-color); 
+    margin-inline-end: 5px; 
+}
+
+.summary { 
+    margin-top: 30px; 
+    padding: 20px;
+    background-color: var(--section-bg); 
+    border-radius: 4px;
+    font-size: 1.05em; 
+    color: #444; 
+    line-height: 1.8;
+}
+.job-item { 
+    margin-bottom: 30px; 
+    padding-bottom: 10px; 
+    border-inline-start: 3px solid var(--border-color); 
+    padding-inline-start: 20px;
+}
+.job-item h3 { 
+    font-size: 1.2em; 
+    color: var(--secondary-color); 
+    margin-bottom: 5px; 
+}
+.duration, .institution { 
+    font-size: 0.9em; 
+    color: #777; 
+    margin-top: 5px; 
+}
+
+/* استایل لیست‌ها (رسمی) */
+.job-item ul { list-style-type: none; padding-right: 0; padding-left: 0; margin-top: 15px; }
+.job-item li {
+    position: relative;
+    padding-inline-start: 15px;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+/* تنظیم علامت لیست بسته به جهت */
+.job-item li::before {
+    content: '—'; 
+    position: absolute;
+    inset-inline-start: 0; 
+    color: var(--primary-color);
+}
+
+
+/* ---- استایل‌دهی مهارت‌ها (Tags) ---- */
+.skills-list { display: flex; flex-wrap: wrap; gap: 20px; }
+.skill-category { 
+    padding: 15px; 
+    border: 1px solid var(--border-color); 
+    border-radius: 4px; 
+    flex-basis: calc(50% - 10px); 
+    background-color: var(--section-bg);
+}
+.skill-category h4 { 
+    color: var(--primary-color); 
+    margin-top: 0; 
+    padding-bottom: 5px; 
+    border-bottom: 1px solid var(--border-color); 
+    margin-bottom: 15px; 
+    font-size: 1.05em; 
+}
+.skill-tag { 
+    display: inline-block; 
+    background-color: #e6e6e6; 
+    color: #333; 
+    padding: 5px 10px; 
+    border-radius: 3px; 
+    margin: 4px; 
+    font-size: 0.85em; 
+    font-weight: 500; 
+}
+
+/* ================================================= */
+/* ---- تنظیمات عکس پروفایل (Profile Icon) ---- */
+/* ================================================= */
+
+.profile-icon {
+    display: block; 
+    width: 100px; 
+    height: 120px; 
+    border-radius: 20%;
+    object-fit: cover;
+    position: absolute; 
+    top: 65px; 
+    z-index: 10;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+/* موقعیت عکس در حالت فارسی (راست) */
+body.lang-fa .profile-icon {
+    left: auto; 
+    right: 30px; 
+}
+/* موقعیت عکس در حالت انگلیسی (چپ) */
+body.lang-en .profile-icon {
+    left: 30px; 
+    right: auto; 
+}
+
+/* ---- دکمه جابجایی زبان ---- */
+.lang-switcher {
+    position: absolute;
+    top: 50px; 
+    z-index: 10;
+}
+/* موقعیت سوییچر در حالت فارسی (چپ) */
+body.lang-fa .lang-switcher {
+    left: 0;
+    right: auto;
+}
+/* موقعیت سوییچر در حالت انگلیسی (راست) */
+body.lang-en .lang-switcher {
+    left: auto;
+    right: 0;
+}
+
+/* استایل دکمه‌های جابجایی زبان */
+.lang-switcher a, .lang-switcher button {
+    text-decoration: none;
+    display: inline-block;
+    background-color: transparent; 
+    color: var(--primary-color);
+    border: 1px solid var(--border-color); 
+    padding: 4px 8px;
+    cursor: pointer;
+    border-radius: 3px;
+    opacity: 0.8;
+    transition: opacity 0.2s, background-color 0.2s;
+    font-size: 0.8em;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+.lang-switcher a:hover, .lang-switcher button:hover { opacity: 1; background-color: var(--section-bg); }
+
+/* دکمه زبان فعال */
+.lang-switcher .active-lang {
+    opacity: 1;
+    font-weight: bold;
+    background-color: var(--primary-color);
+    color: white;
+    cursor: default;
+}
+
+
+/* ================================================= */
+/* ---- منو ناوبری (NAVBAR) و استایل دهی ثابت ---- */
+/* ================================================= */
+
+#navbar {
+    background-color: var(--primary-color);
+    color: white;
+    position: sticky; 
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 0;
+}
+
+#navbar .container {
+    padding: 0 20px;
+    width: 90%; 
+    max-width: 900px; 
+    margin: 0 auto;
+}
+
+#navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+#navbar li {
+    padding: 15px 10px;
+    display: inline-block;
+}
+
+#navbar a {
+    color: white;
+    text-decoration: none;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: color 0.3s;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+}
+
+#navbar a:hover {
+    color: #ffd700;
+}
+
+/* کنترل نمایش منوها */
+.lang-fa-nav, .lang-en-nav {
+    display: none;
+    flex-grow: 1; 
+}
+body.lang-fa .lang-fa-nav {
+    display: flex;
+}
+body.lang-en .lang-en-nav {
+    display: flex;
+}
+
+
+/* ---- استایل‌های فرم تماس (CONTACT FORM) ---- */
+.contact-form {
+    max-width: 600px;
+    margin: 20px 0;
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px; 
+    background-color: #ffffff; 
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); 
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.contact-form:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); 
+}
+
+.form-group {
+    margin-bottom: 25px; 
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 1em;
+    opacity: 0.9;
+}
+
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px; 
+    box-sizing: border-box; 
+    font-family: inherit;
+    font-size: 0.95em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: vertical;
+}
+
+/* افکت تمرکز (Focus) روی فیلدها */
+.contact-form input[type="email"]:focus,
+.contact-form textarea:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 51, 102, 0.2);
+    outline: none; 
+}
+
+.contact-form button[type="submit"] {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.1s;
+    font-family: inherit; 
+    letter-spacing: 0.5px;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.contact-form button[type="submit"]:hover {
+    background-color: #0055a4; 
+}
+
+.contact-form button[type="submit"]:active {
+    transform: scale(0.99); 
+}
+
+
+/* ================================================= */
+/* ---- رسپانسیو (برای موبایل - اصلاح شده) ---- */
+/* ================================================= */
+@media (max-width: 600px) {
+    .container { padding: 15px 10px; } 
+    .header { padding-left: 0; padding-right: 0; } 
+    h1 { font-size: 2.5em; }
+    
+    /* موقعیت عکس و سوییچر در موبایل (تغییر سایز) */
+    .profile-icon {
+        width:  100px; 
+        height: 120px; 
+        top: 20px; 
+        /* موقعیت عکس در موبایل */
+    }
+    body.lang-fa .profile-icon { right: 10px; left: auto; }
+    body.lang-en .profile-icon { left: 10px; right: auto; }
+
+    /* موقعیت دکمه جابجایی زبان در موبایل */
+    .lang-switcher { 
+        top: 15px; 
+    }
+    body.lang-fa .lang-switcher { left: 10px; right: auto; }
+    body.lang-en .lang-switcher { right: 10px; left: auto; }
+
+    /* حذف پدینگ‌های اضافه هدر در موبایل */
+    body.lang-fa .header, body.lang-en .header {
+        padding-left: 0; 
+        padding-right: 0;
+        /* جبران فضای هدر برای متن زیر عکس و سوییچر */
+        padding-top: 80px; 
+    }
+
+    /* تنظیمات منو ناوبری در موبایل */
+    #navbar ul {
+        flex-wrap: wrap; 
+        justify-content: space-between;
+    }
+    #navbar li {
+        padding: 10px 5px;
+        font-size: 0.75em; 
+        flex-basis: 30%; 
+        text-align: center;
+    }
+
+    .skills-list { flex-direction: column; gap: 15px; }
+    .skill-category { flex-basis: 100%; }
 }
 
 .header {
