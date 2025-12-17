@@ -32,12 +32,6 @@
             document.body.className = 'lang-' + lang;
             document.documentElement.setAttribute('lang', lang);
             document.documentElement.setAttribute('dir', (lang === 'fa' ? 'rtl' : 'ltr'));
-            
-            // کد اضافی برای اطمینان از اعمال فوری CSS
-            const style = document.createElement('style');
-            style.innerHTML = 'body { animation: none; }'; 
-            document.head.appendChild(style);
-            setTimeout(() => document.head.removeChild(style), 0);
         }
 
         // تنظیم زبان پیشفرض روی فارسی بلافاصله پس از بارگذاری DOM
@@ -80,8 +74,8 @@
             
             <section class="summary">
                 <p>
-                    <span class="lang-fa">من یک متخصص پشتیبانی فناوری اطلاعات هستم که تجربه عملی در عیب یابی سیستم‌ها، پشتیبانی از کاربران و نگهداری شبکه ها دارم. با سازمان‌هایی مانند وزارت کشور، روزنامه صمت و کیمیا مهر اسپادانا همکاری داشته ام و در آنجا مهارتهای فنی و ارتباطی خود را تقویت کرده ام. به شبکه و امنیت سایبری علاقه مند هستم و آماده پذیرش فرصتهای جدید و رشد حرفه‌ای هستم.</span>
-                    <span class="lang-en">I am an IT support specialist with practical experience in system troubleshooting, user support, and network maintenance. I have collaborated with organizations such as the Ministry of Interior, Samt Newspaper, and Kimiamehr Espadana, where I enhanced my technical and communication skills. I am interested in networking and cybersecurity and continually improve my knowledge, ready for new opportunities and professional growth.</span>
+                    <span class="lang-fa">من یک متخصص پشتیبانی فناوری اطلاعات با بیش از ۴ سال تجربه عملی در عیب‌یابی سیستم‌ها، پشتیبانی Helpdesk از کاربران، و نگهداری شبکه‌های سازمانی هستم. همکاری با سازمان‌هایی مانند وزارت کشور و کیمیا مهر اسپادانا، مهارت‌های فنی و همچنین توانایی حل مسئله و کار تیمی مرا تقویت کرده است. با تسلط بر مفاهیم CCNA، Network+ و ویندوز سرور، همیشه در حال به‌روزرسانی دانش خود در زمینه شبکه و امنیت سایبری هستم و آماده پذیرش چالش‌های جدید برای رشد حرفه‌ای هستم.</span>
+                    <span class="lang-en">I am a dedicated IT Support Specialist with over 4 years of practical experience in system troubleshooting, user support (Helpdesk), and organizational network maintenance. My background, including work with the Ministry of Interior and Kimiamehr Espadana, has strengthened my technical skills, problem-solving abilities, and teamwork capacity. Proficient in CCNA, Network+, and Windows Server fundamentals, I continually update my knowledge in networking and cybersecurity, ready to embrace new challenges for professional growth.</span>
                 </p>
             </section>
         </header>
@@ -103,94 +97,12 @@
                 </p>
                 <ul>
                     <li>
-                        <span class="lang-fa">پشتیبانی فنی سایت و رفع مشکلات کاربران</span>
-                        <span class="lang-en">Provided technical website support and resolved user issues.</span>
+                        <span class="lang-fa">ارائه پشتیبانی فنی کامل از وب‌سایت و سیستم‌های داخلی جهت تضمین عملکرد بدون وقفه.</span>
+                        <span class="lang-en">Provided comprehensive technical support for the website and internal systems to ensure uninterrupted operation.</span>
                     </li>
                     <li>
-                        <span class="lang-fa">مدیریت سفارش‌ها و هماهنگی با تیم فنی</span>
-                        <span class="lang-en">Managed orders and coordinated with the technical team.</span>
+                        <span class="lang-fa">مدیریت دقیق فرآیند سفارش‌ها و هماهنگی مؤثر با تیم فنی برای اجرای سریع درخواست‌های مشتریان.</span>
+                        <span class="lang-en">Managed order processes precisely and effectively coordinated with the technical team for quick customer request fulfillment.</span>
                     </li>
                     <li>
-                        <span class="lang-fa">آپلود، ویرایش و بروزرسانی محتوا</span>
-                        <span class="lang-en">Uploaded, edited, and updated content.</span>
-                    </li>
-                    <li>
-                        <span class="lang-fa">عیب‌یابی اولیه سخت‌افزار و نرم‌افزار سیستم‌ها</span>
-                        <span class="lang-en">Conducted primary troubleshooting of system hardware and software.</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="job-item">
-                <h3>
-                    <span class="lang-fa">کارشناس پشتیبانی فنی | Helpdesk | موسسه فرهنگی مطبوعاتی صمت</span>
-                    <span class="lang-en">Technical Support Expert | Helpdesk | Samt Cultural and Press Institute</span>
-                </h3>
-                <p class="duration">
-                    <span class="lang-fa">فروردین ۱۴۰۱ - مهر ۱۴۰۱ (۶ ماه)</span>
-                    <span class="lang-en">Apr 2022 - Oct 2022 (6 months)</span>
-                </p>
-                <ul>
-                    <li>
-                        <span class="lang-fa">پشتیبانی سیستم‌ها، شبکه و تجهیزات اداری</span>
-                        <span class="lang-en">Provided support for systems, network, and office equipment.</span>
-                    </li>
-                    <li>
-                        <span class="lang-fa">تعمیرات سخت‌افزاری و نرم‌افزاری سیستم‌ها</span>
-                        <span class="lang-en">Performed hardware and software repairs for systems.</span>
-                    </li>
-                    <li>
-                        <span class="lang-fa">مدیریت و نگهداری سیستم‌های سازمان</span>
-                        <span class="lang-en">Managed and maintained organizational systems.</span>
-                    </li>
-                </ul>
-            </div>
-
-            <div class="job-item">
-                <h3>
-                    <span class="lang-fa">کارشناس پشتیبانی IT | وزارت کشور</span>
-                    <span class="lang-en">IT Support Specialist | Ministry of Interior</span>
-                </h3>
-                <p class="duration">
-                    <span class="lang-fa">تیر ۱۳۹۷ - آذر ۱۳۹۷ (۵ ماه)</span>
-                    <span class="lang-en">Jul 2018 - Dec 2018 (5 months)</span>
-                </p>
-                <ul>
-                    <li>
-                        <span class="lang-fa">پشتیبانی و عیب‌یابی سیستم‌ها و شبکه داخلی</span>
-                        <span class="lang-en">Supported and troubleshoot internal systems and network.</span>
-                    </li>
-                    <li>
-                        <span class="lang-fa">نصب و راه‌اندازی سیستم عامل و نرم‌افزارهای سازمانی</span>
-                        <span class="lang-en">Installed and configured operating systems and organizational software.</span>
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section class="section">
-            <h2 class="section-title">
-                <span class="lang-fa">مهارت‌ها</span>
-                <span class="lang-en">Technical Skills</span>
-            </h2>
-
-            <div class="skills-list">
-                <div class="skill-category">
-                    <h4>
-                        <span class="lang-fa">شبکه و زیرساخت</span>
-                        <span class="lang-en">Network & Infrastructure</span>
-                    </h4>
-                    <span class="skill-tag">CCNA (متوسط)</span>
-                    <span class="skill-tag">Network+ (متوسط)</span>
-                    <span class="skill-tag">Active Directory (متوسط)</span>
-                    <span class="skill-tag">Windows Server (متوسط)</span>
-                    <span class="skill-tag">Linux (متوسط)</span>
-                    <span class="skill-tag">Wireshark (متوسط)</span>
-                </div>
-
-                <div class="skill-category">
-                    <h4>
-                        <span class="lang-fa">نرم‌افزار و مدیریت سیستم‌ها</span>
-                        <span class="lang-en">Software & System Management</span>
-                    </h4>
-                    <span class="
+                        <span class="lang-fa">مس
