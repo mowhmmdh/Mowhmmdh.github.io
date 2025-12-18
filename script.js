@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (entry.isIntersecting) {
                 const skillBar = entry.target.querySelector('.skill-bar');
                 if (skillBar) {
-                    const percent = skillBar.style.width; 
+                    // اطمینان از خواندن مقدار width از صفت style در HTML
+                    const percent = entry.target.querySelector('.skill-percent').textContent;
                     skillBar.style.width = percent; 
                     entry.target.classList.add('show');
                 }
@@ -45,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const backToTopButton = document.getElementById('back-to-top');
 
     window.addEventListener('scroll', () => {
+        // دکمه زمانی ظاهر می‌شود که اسکرول از یک ارتفاع مشخص بگذرد (مثلاً ارتفاع کل پنجره)
         if (window.scrollY > window.innerHeight) {
             backToTopButton.style.display = 'block';
         } else {
