@@ -111,7 +111,6 @@ body.lang-en {
 
 /* ================================================= */
 /* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح نهایی Z-INDEX ---- */
-/* (این استایل‌ها فقط برای دسکتاپ اعمال می‌شوند) */
 /* ================================================= */
 
 #top-area {
@@ -130,7 +129,7 @@ body.lang-en {
     height: 108px; 
     border-radius: 50%; 
     object-fit: cover;
-    z-index: 100; /* عکس بالای بسم الله */
+    z-index: 100; 
     border: 3px solid var(--accent-color); 
     box-shadow: var(--shadow-light);
     transition: transform 0.3s;
@@ -140,7 +139,6 @@ body.lang-en {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* جلوه نورانی (Pulsing Light) با انیمیشن */
     animation: pulse-border 3s infinite alternate;
 }
 .profile-icon:hover {
@@ -165,7 +163,7 @@ body.lang-en {
     left: 50%; 
     transform: translate(-50%, -50%); 
     opacity: 0.08; 
-    z-index: 5; /* پایین‌ترین لایه */
+    z-index: 5; 
     animation: fade-in 2s ease-in-out forwards;
 }
 
@@ -174,13 +172,429 @@ body.lang-en {
     to { opacity: 0.08; }
 }
 
-/* دکمه جابجایی زبان - FIX: بالاترین Z-Index */
+/* دکمه جابجایی زبان - FIX: بالاترین Z-Index در دسکتاپ */
 .lang-switcher {
-    z-index: 200; /* بالاترین لایه برای کلیک در دسکتاپ */
+    z-index: 200; 
     display: flex; 
     gap: 5px;
     order: -1; 
 }
 .lang-switcher a, .lang-switcher button {
     text-decoration: none;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color); 
+    padding: 4px 8px; 
+    border-radius: 6px;
+    font-size: 0.8em;
+    transition: all 0.3s ease-in-out;
+    background-color: white; 
+    font-weight: 600; 
+}
+.lang-switcher .active-lang {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0, 51, 102, 0.3); 
+}
+.lang-switcher a:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: scale(1.1); 
+}
+
+
+/* ---- هدر اصلی (HEADER) و عناوین ---- */
+.header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+h1 {
+    font-size: 2.5em; 
+    color: var(--primary-color); 
+    margin-bottom: 5px;
+    letter-spacing: 1px; 
+}
+
+h2 {
+    font-size: 1.1em; 
+    color: #555; 
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.section {
+    padding: 30px 0; 
+    opacity: 0; 
+    transform: translateY(20px); 
+    transition: opacity 1s ease-out, transform 1s ease-out;
+}
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.section-title {
+    font-size: 1.8em; 
+    color: var(--primary-color);
+    margin-top: 0; 
+    margin-bottom: 25px; 
+    font-weight: bold;
+    border-inline-start: 6px solid var(--accent-color); 
+    padding-inline-start: 15px;
+    transition: all 0.3s;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+.section-title:hover {
+    color: var(--accent-color);
+    border-inline-start-color: var(--primary-color); 
+}
+
+
+/* ---- اطلاعات تماس ---- */
+.contact-info { 
+    margin-top: 20px; 
+    font-size: 0.9em; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    align-items: flex-start;
+}
+body.lang-fa .contact-info {
+    align-items: flex-end; 
+}
+.contact-info p {
+    margin: 0;
+    color: var(--secondary-color);
+    transition: transform 0.3s, color 0.3s;
+}
+.contact-info p:hover {
+    transform: translateX(5px);
+    color: var(--accent-color);
+}
+body.lang-en .contact-info p:hover {
+    transform: translateX(-5px);
+}
+body.lang-fa .contact-info p:hover {
+    transform: translateX(5px);
+}
+
+/* ---- خلاصه (درباره من) ---- */
+.summary { 
+    padding: 25px; 
+    background-color: var(--section-bg); 
+    border-radius: 12px; 
+    font-size: 1.05em; 
+    line-height: 1.8;
+    text-align: justify;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1); 
+}
+
+/* ---- آیتم‌های شغلی و تحصیلی ---- */
+.job-item {
+    margin-bottom: 25px;
+    padding: 15px;
+    border-bottom: 1px dotted var(--border-color);
+    transition: background-color 0.3s, border-right 0.3s, border-left 0.3s;
+    border-radius: 5px;
+}
+.job-item:hover {
+    background-color: rgba(0, 123, 255, 0.05); 
+    border-inline-start: 4px solid var(--accent-color); 
+    border-inline-end: 1px solid transparent; 
+    padding-inline-start: 11px; 
+}
+.job-item:last-child {
+    border-bottom: none;
+}
+.job-item h3 {
+    color: var(--primary-color);
+    font-size: 1.2em; 
+}
+.job-item ul {
+    list-style-type: none;
+    padding-inline-start: 15px;
+}
+.job-item ul li::before {
+    content: "\f00c"; 
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    color: #28a745; 
+}
+
+
+/* ================================================= */
+/* ---- مهارت‌ها (Skill Progress Bars) - انیمیشن و جلوه ---- */
+/* ================================================= */
+.skills-list { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 30px; 
+}
+.skill-category { 
+    padding: 20px; 
+    border: 1px solid var(--border-color); 
+    border-radius: 10px; 
+    background-color: var(--background-color); 
+    box-shadow: var(--shadow-light);
+    transition: box-shadow 0.3s;
+}
+.skill-category:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.skill-category h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--accent-color);
+    font-size: 1.1em;
+}
+.skill-bar-container {
+    height: 10px; 
+    background-color: #e9ecef;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.skill-bar {
+    width: 0 !important; 
+    height: 100%;
+    background: linear-gradient(to right, #007bff, #0056b3); 
+    background-color: var(--progress-bar-color); 
+    transition: width 2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+body.lang-fa .skill-bar {
+    background: linear-gradient(to left, #007bff, #0056b3); 
+}
+
+
+/* ================================================= */
+/* ---- ۲. منو ناوبری (NAVBAR) - داخل سایدبار ---- */
+/* ================================================= */
+
+#navbar {
+    margin-top: 25px;
+    background-color: transparent; 
+}
+
+#navbar a {
+    color: var(--secondary-color); 
+    text-decoration: none;
+    padding: 12px 15px; 
+    display: block;
+    font-size: 1em; 
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+}
+
+#navbar a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,123,255,0.1), rgba(0,123,255,0.0));
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-out;
+    z-index: -1;
+}
+
+#navbar a:hover::before {
+    transform: translateX(0); 
+}
+
+#navbar a.active {
+    color: var(--primary-color) !important; 
+    background-color: rgba(0, 51, 102, 0.1); 
+    font-weight: bold;
+    box-shadow: inset 0 0 8px rgba(0, 51, 102, 0.2);
+}
+
+#navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; 
+    gap: 8px; 
+}
+
+
+/* ================================================= */
+/* ---- استایل‌های فرم تماس (CONTACT FORM) و فوتر ---- */
+/* ================================================= */
+/* ... (سایر استایل‌های فرم تماس و فوتر را بدون تغییر نگه دارید) ... */
+
+/* ================================================= */
+/* ---- ۵. دکمه بازگشت به بالا (Back to Top) ---- */
+/* ================================================= */
+#back-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 1.2em;
+    cursor: pointer;
+    box-shadow: var(--shadow-light);
+    z-index: 1000;
+    display: none; 
+    transition: background-color 0.3s, transform 0.3s;
+}
+body.lang-fa #back-to-top {
+    left: 20px;
+    right: auto;
+}
+
+#back-to-top:hover {
+    background-color: var(--accent-color);
+    transform: translateY(-5px); 
+}
+
+
+/* ================================================= */
+/* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) ---- */
+/* (نسخه نهایی و استاندارد موبایل) */
+/* ================================================= */
+@media (max-width: 992px) {
+    
+    /* حذف جلوه شناور دسکتاپ در موبایل */
+    #sidebar-info:hover, #main-content:hover {
+        box-shadow: var(--shadow-light); 
+        transform: translateY(0); 
+    }
+    
+    /* چیدمان تک ستونی */
+    #main-wrapper {
+        flex-direction: column;
+        padding-top: 0; 
+        gap: 15px;
+    }
+    
+    /* سایدبار (بخش بالا) */
+    #sidebar-info {
+        position: static;
+        width: 100%;
+        min-width: auto;
+        padding: 15px;
+        border-radius: 0 0 15px 15px; 
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* محتوای اصلی - فاصله برای navbar ثابت پایین */
+    #main-content {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 70px; 
+        border-radius: 15px; 
+    }
+    
+    /* FIX: Top Area موبایل - چیدمان خطی و درست */
+    #top-area {
+        height: auto; 
+        flex-direction: row; 
+        justify-content: space-between;
+        align-items: flex-start; 
+        padding-top: 5px;
+        padding-bottom: 15px; 
+        position: static; 
+    }
+
+    /* عکس پروفایل در موبایل: بازگشت به جریان عادی و کوچک‌تر */
+    .profile-icon {
+        position: static; 
+        transform: none; 
+        order: 2; 
+        z-index: 100; /* FIX: همیشه در جلو باشد */
+        width: 70px; 
+        height: 70px;
+        border-radius: 50%; /* دایره در موبایل */
+        animation: none; 
+        border: 2px solid var(--accent-color);
+    }
+    
+    /* FIX: دکمه زبان در موبایل */
+    .lang-switcher {
+        order: 1; 
+        z-index: 200; /* FIX: حتماً بالاترین لایه در موبایل */
+        margin-top: 10px;
+    }
+    
+    /* FIX: بسم الله در موبایل پنهان شود */
+    .bismillah-icon {
+        display: none; 
+    }
+    
+    /* هدر در موبایل - چیدمان متن زیر عکس و وسط‌چین */
+    .header {
+        text-align: center;
+        margin-top: 15px;
+        order: 3;
+        width: 100%; /* مطمئن شوید که کل عرض را بگیرد */
+    }
+    h1 {
+        font-size: 1.6em;
+    }
+    h2 {
+        font-size: 0.9em;
+    }
+    .contact-info {
+        align-items: center; /* وسط‌چین شدن اطلاعات تماس */
+    }
+    body.lang-fa .contact-info {
+        align-items: center; 
+    }
+
+    /* =========================================== */
+    /* FIX: Navbar ثابت پایین (Fixed Bottom Navbar) */
+    /* =========================================== */
+    /* پنهان کردن Navbar قبلی در چیدمان موبایل */
+    #sidebar-info > #navbar {
+        display: none; 
+    }
+
+    /* ساختار جدید Navbar موبایل */
+    #navbar-mobile {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        margin: 0;
+        z-index: 9999; /* FIX: بالاترین Z-Index مطلق */
+        background-color: var(--primary-color); 
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        padding: 0;
+    }
+
+    #navbar-mobile ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: row; 
+        justify-content: space-around;
+    }
+    
+    #navbar-mobile li {
+        flex-grow: 1; 
+        text-align: center;
+    }
+    
+    #navbar-mobile a {
+        color: white; 
+        padding: 10px 5px;
+        font-size: 0.8em;
+        text-decoration: none;
+        display: flex; 
+        flex-direction: column;
+        align-items
