@@ -69,7 +69,6 @@ body.lang-en {
 
 /* ================================================= */
 /* ---- ۱. کانتینر بالای صفحه (Top Area) ---- */
-/* ** FIX: حذف position: absolute/relative برای عناصر داخلی** */
 /* ================================================= */
 
 #top-area {
@@ -78,10 +77,10 @@ body.lang-en {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    position: relative; /* برای نگه‌داری بسم الله در پس‌زمینه */
+    position: relative; 
 }
 
-/* عکس پروفایل */
+/* عکس پروفایل (تنظیمات درخواستی شما) */
 .profile-icon {
     width: 100px; 
     height: 120px; 
@@ -337,7 +336,7 @@ body.lang-en .contact-info i {
     color: var(--accent-color);
 }
 
-/* استایل لینک فعال (توسط JS هنگام اسکرول اضافه می‌شود) */
+/* استایل لینک فعال (توسط JS هنگام کلیک اضافه می‌شود) */
 #navbar a.active {
     color: var(--accent-color) !important; 
     background-color: rgba(255, 255, 255, 0.1);
@@ -469,15 +468,13 @@ section[id] {
 
 /* ================================================= */
 /* ---- ۴. رسپانسیو برای موبایل (Max-width: 600px) ---- */
-/* ** FIX: بخش کلیدی برای حل مشکل چینش موبایل و Navbar ** */
+/* ** FIX: بخش نهایی برای حل مشکل چینش موبایل و Navbar ** */
 /* ================================================= */
 @media (max-width: 600px) {
     .container { padding: 0 10px; } 
     
     /* FIX: تنظیم top-area در موبایل */
-    /* از absolute positioning برای پروفایل و دکمه‌ها استفاده نمی‌کنیم. */
     #top-area {
-        /* بازگشت به تنظیمات اصلی Flexbox برای حفظ نظم */
         flex-direction: row; 
         justify-content: space-between;
         align-items: center;
@@ -485,15 +482,15 @@ section[id] {
         padding-bottom: 15px; 
     }
     
-    /* چینش دقیق عناصر در top-area موبایل */
+    /* چینش دقیق عناصر در top-area موبایل (برای RTL) */
     .profile-icon {
         width: 70px; 
         height: 84px; 
-        order: 3; /* عنصر سوم در چینش: گوشه راست (در RTL) */
+        order: 3; /* در RTL، گوشه راست */
     }
 
     .lang-switcher {
-        order: 1; /* عنصر اول در چینش: گوشه چپ (در RTL) */
+        order: 1; /* در RTL، گوشه چپ */
     }
     
     .bismillah-icon {
@@ -510,7 +507,7 @@ section[id] {
         font-size: 0.8em; 
     }
 
-    h1 { font-size: 1.8em; } /* کاهش بیشتر اندازه عنوان اصلی */
+    h1 { font-size: 1.8em; } 
     h2 { font-size: 1em; }
     
     /* FIX: نوار ناوبری موبایل - نمایش در ۲ سطر */
@@ -519,4 +516,32 @@ section[id] {
         justify-content: space-between;
     }
     #navbar li {
-        padding:
+        padding: 8px 0; 
+        font-size: 0.8em; 
+        flex-basis: 33.3%; 
+        text-align: center;
+    }
+    /* برداشتن فاصله بین آیتم‌های ناوبری */
+    #navbar a {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* مهارت‌ها در موبایل یک ستونه می‌شوند */
+    .skills-list { flex-direction: column; gap: 20px; }
+    .skill-category { 
+        flex-basis: 100%; 
+    }
+    
+    .contact-info {
+        flex-direction: column; 
+        gap: 10px; 
+        align-items: flex-start; 
+    }
+    
+    /* اصلاح پرش لینک‌ها در موبایل */
+    section[id] {
+        padding-top: 60px; 
+        margin-top: -60px; 
+    }
+}
