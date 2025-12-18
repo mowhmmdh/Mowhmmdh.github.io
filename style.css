@@ -476,6 +476,13 @@ body.lang-en .lang-en-nav {
         max-width: 60%; 
     }
     
+    /* **اصلاح اندازه دکمه‌های تغییر زبان در موبایل** */
+    .lang-switcher a, .lang-switcher button {
+        padding: 2px 5px; /* کاهش Padding */
+        font-size: 0.7em; /* کاهش اندازه فونت */
+        border: 1px solid var(--border-color);
+    }
+
     .header { margin-top: 20px; }
     h1 { font-size: 2em; }
     h2 { font-size: 1.2em; }
