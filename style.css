@@ -109,6 +109,8 @@ body.lang-en {
 /* ---- دکمه جابجایی زبان ---- */
 .lang-switcher {
     z-index: 8;
+    /* تضمین می‌کند که دکمه‌ها در یک خط بمانند */
+    white-space: nowrap; 
 }
 .lang-switcher a, .lang-switcher button {
     text-decoration: none;
@@ -180,33 +182,41 @@ h2 {
     font-weight: bold;
 }
 
-/* ---- جزئیات محتوا ---- */
+/* ---- جزئیات محتوا (شامل تماس‌ها) ---- */
 .contact-info { 
     margin-top: 20px; 
-    /* اصلاح شده: فاصله پایین بیشتر برای دور کردن اینستاگرام از خط بعدی */
+    /* اصلاح شد: فاصله پایین بیشتر برای دور کردن لینک‌ها از خط بعدی */
     padding: 15px 0 25px 0; 
     border-top: 2px solid var(--border-color); 
     font-size: 0.95em; 
     color: #666;
+    /* اینستاگرام و لینکدین در یک خط منظم ظاهر می‌شوند */
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: flex-end; 
+    gap: 15px 30px; /* فاصله بین آیتم‌ها */
 }
+body.lang-en .contact-info {
+    justify-content: flex-start;
+}
+
 .contact-info p { 
-    margin: 5px 0; 
+    margin: 0; /* حذف مارجین اضافی */
     display: flex; 
     align-items: center;
-    justify-content: flex-end; 
 }
+
 .contact-info i { 
     color: var(--primary-color); 
-    margin-left: 8px; 
+    margin-left: 8px; /* فاصله آیکون از متن در فارسی */
 }
 body.lang-en .contact-info i {
     margin-right: 8px; 
     margin-left: 0;
 }
-body.lang-en .contact-info p {
-    justify-content: flex-start; 
-}
 
+
+/* بخش خلاصه (درباره من) */
 .summary { 
     margin-top: 30px; 
     padding: 20px;
@@ -257,12 +267,15 @@ body.lang-en .contact-info p {
     display: flex; 
     flex-wrap: wrap; 
     gap: 20px; 
+    /* این تضمین می‌کند که دسته‌بندی‌ها به طور مرتب و درست کنار هم قرار گیرند */
+    align-items: flex-start; 
 }
 .skill-category { 
     padding: 15px; 
     border: 1px solid var(--border-color); 
     border-radius: 4px; 
-    flex-basis: calc(50% - 10px); /* 2 ستونه در دسکتاپ */
+    /* سه دسته‌بندی دارید، پس هر کدام یک سوم فضا را می‌گیرند (کمی کمتر برای فاصله) */
+    flex-basis: calc(33.33% - 15px); 
     background-color: var(--section-bg);
     display: flex;
     flex-direction: column;
@@ -272,7 +285,7 @@ body.lang-en .contact-info p {
     margin-top: 0; 
     padding-bottom: 5px; 
     border-bottom: 1px solid var(--border-color); 
-    margin-bottom: 20px; /* فضای بیشتر زیر عنوان دسته‌بندی */
+    margin-bottom: 20px; 
     font-size: 1.05em; 
 }
 
@@ -297,9 +310,9 @@ body.lang-en .contact-info p {
 
 /* کانتینر نوار پیشرفت */
 .skill-bar-container {
-    background-color: #e0e0e0; /* رنگ زمینه نوار */
+    background-color: #e0e0e0; 
     border-radius: 4px;
-    height: 8px; /* ارتفاع نوار */
+    height: 8px; 
     overflow: hidden;
 }
 
@@ -307,8 +320,6 @@ body.lang-en .contact-info p {
 .skill-bar {
     height: 100%;
     background-color: var(--primary-color); 
-    /* width توسط HTML به کمک متغیر --level تعیین می‌شود */
-    width: 0; /* شروع از صفر برای انیمیشن احتمالی در آینده */
     transition: width 0.8s ease-out; 
 }
 
@@ -342,6 +353,21 @@ body.lang-en .contact-info p {
     justify-content: space-around;
 }
 
+/* کنترل نمایش منوها */
+.lang-fa-nav, .lang-en-nav {
+    display: none;
+    flex-grow: 1; 
+    /* این خط در HTML شما وجود دارد، باید آن را از li به ul منتقل کنیم */
+    display: flex; 
+    justify-content: space-around;
+    width: 100%;
+}
+/* نمایش فقط زبان فعال */
+body.lang-fa .lang-en-nav { display: none; }
+body.lang-en .lang-fa-nav { display: none; }
+body.lang-fa .lang-fa-nav { display: flex; }
+body.lang-en .lang-en-nav { display: flex; }
+
 #navbar li {
     padding: 15px 10px;
     display: inline-block;
@@ -360,22 +386,11 @@ body.lang-en .contact-info p {
     color: var(--active-link-color);
 }
 
-/* کنترل نمایش منوها */
-.lang-fa-nav, .lang-en-nav {
-    display: none;
-    flex-grow: 1; 
-}
-body.lang-fa .lang-fa-nav {
-    display: flex;
-}
-body.lang-en .lang-en-nav {
-    display: flex;
-}
 
 /* ================================================= */
 /* ---- FIX: اصلاح پرش لینک‌ها (Anchor Scroll Offset) ---- */
 /* ================================================= */
-/* افزایش ارتفاع جبرانی برای نمایش کامل عنوان بخش (75px) */
+/* تضمین می‌کند که عنوان بخش زیر نوار ناوبری پنهان نشود */
 section[id] {
     padding-top: 75px; 
     margin-top: -75px; 
@@ -395,6 +410,7 @@ section[id] {
     transition: box-shadow 0.3s ease-in-out;
 }
 
+/* ... (بخش‌های دیگر فرم تماس بدون تغییر) ... */
 .contact-form:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1); 
 }
@@ -551,12 +567,19 @@ section[id] {
 
     /* مهارت‌ها در موبایل یک ستونه می‌شوند */
     .skills-list { flex-direction: column; gap: 15px; }
-    .skill-category { flex-basis: 100%; }
+    .skill-category { 
+        flex-basis: 100%; 
+        /* رفع خطای ۳ ستونه شدن به ۱ ستونه در موبایل */
+    }
     
     /* اصلاح نمایش اطلاعات تماس در موبایل */
+    .contact-info {
+        /* در موبایل، آیتم‌ها زیر هم قرار می‌گیرند تا فضای کافی داشته باشند */
+        flex-direction: column; 
+        gap: 10px; 
+    }
     .contact-info p { 
         justify-content: flex-start; 
-        margin: 5px 0;
     }
     
     /* رسپانسیو فوتر برندینگ در موبایل */
