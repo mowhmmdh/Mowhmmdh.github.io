@@ -86,7 +86,8 @@ body.lang-en {
     height: 120px; 
     border-radius: 20%; 
     object-fit: cover;
-    z-index: 10;
+    /* FIX: Z-index بالاتر برای نمایش روی بسم الله */
+    z-index: 100; 
     border: 3px solid var(--accent-color); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -100,12 +101,14 @@ body.lang-en {
     left: 50%; 
     transform: translate(-50%, -50%); 
     opacity: 0.1; 
-    z-index: 5;
+    /* FIX: Z-index پایین‌تر از پروفایل و کلید زبان */
+    z-index: 5; 
 }
 
 /* دکمه جابجایی زبان */
 .lang-switcher {
-    z-index: 10; /* تضمین می‌کند روی بسم الله قرار گیرد */
+    /* FIX: Z-index بالاتر برای نمایش روی بسم الله */
+    z-index: 100; 
 }
 .lang-switcher a, .lang-switcher button {
     text-decoration: none;
@@ -332,16 +335,16 @@ body.lang-en .contact-info i {
 }
 
 #navbar a:hover {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.15); /* کمی پررنگ‌تر */
     color: var(--accent-color);
 }
 
-/* استایل لینک فعال (توسط جاوااسکریپت اضافه می‌شود) */
+/* FIX: استایل لینک فعال - توسط JS اضافه می‌شود و نباید به صورت پیش‌فرض فعال باشد */
 #navbar a.active {
     color: var(--accent-color) !important; 
     background-color: rgba(255, 255, 255, 0.1);
     font-weight: bold;
-    border-bottom: 2px solid var(--accent-color); 
+    border-bottom: 3px solid var(--accent-color); /* ضخیم‌تر برای تاکید بیشتر */
 }
 
 #navbar ul {
@@ -468,56 +471,61 @@ section[id] {
 
 /* ================================================= */
 /* ---- ۴. رسپانسیو برای موبایل (Max-width: 600px) ---- */
-/* **این بخش برای رفع بهم ریختگی موبایل حیاتی است** */
 /* ================================================= */
 @media (max-width: 600px) {
     .container { padding: 0 10px; } 
     
     /* FIX: تنظیم top-area در موبایل */
     #top-area {
-        /* تغییر چینش به ستونی در موبایل */
         flex-direction: column; 
         align-items: center;
         padding-top: 15px;
-        padding-bottom: 5px; /* کاهش فاصله پایین */
+        padding-bottom: 5px; 
     }
 
     .profile-icon {
-        width: 80px; 
-        height: 80px; 
-        /* پروفایل را به سمت بالا چپ (یا راست در فارسی) منتقل می‌کنیم */
+        width: 70px; /* کمی کوچکتر */
+        height: 84px; /* متناسب با نسبت ۵:۶ جدید */
+        border-radius: 20%; 
         position: absolute;
         inset-inline-start: 10px; 
         top: 10px;
+        z-index: 100; /* اطمینان از قرارگیری در بالا */
     }
     
     .bismillah-icon {
-        height: 60px; 
-        max-width: 80%; 
-        /* بسم الله را کمی پایین‌تر می‌آوریم تا با پروفایل تداخل نکند */
-        top: 50px; 
+        height: 50px; /* کوچکتر */
+        max-width: 70%; 
+        top: 40px; /* بالاتر برای جلوگیری از تداخل */
         transform: translateX(-50%);
+        z-index: 5; /* در پایین‌ترین لایه */
     }
 
     .lang-switcher {
-        /* دکمه‌های زبان را به بالا راست (یا چپ در انگلیسی) منتقل می‌کنیم */
         position: absolute;
         inset-inline-end: 10px; 
         top: 15px;
+        z-index: 100; /* اطمینان از قرارگیری در بالا */
     }
 
-    h1 { font-size: 2em; } /* کاهش اندازه عناوین اصلی */
+    /* FIX: دکمه‌های زبان در موبایل */
+    .lang-switcher a, .lang-switcher button {
+        padding: 4px 8px; /* پدینگ کمتر */
+        font-size: 0.8em; /* فونت کوچکتر */
+    }
+
+    h1 { font-size: 2em; } 
     h2 { font-size: 1.1em; }
     
-    /* FIX: نوار ناوبری موبایل - نمایش در ۲ سطر */
+    /* FIX: نوار ناوبری موبایل */
     #navbar ul {
         flex-wrap: wrap;
         justify-content: space-between;
     }
     #navbar li {
-        padding: 8px 0; /* کاهش پدینگ عمودی */
+        padding: 8px 0; 
         font-size: 0.8em; 
-        flex-basis: 33%; /* تقسیم بر ۳ برای ۳ ستون در دو سطر */
+        flex-basis: 33%; 
         text-align: center;
     }
 
