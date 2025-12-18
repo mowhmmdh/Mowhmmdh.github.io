@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     
     // =========================================================
-    // ۱. منطق نوار پیشرفت (Skill Progress Bars) - پویا
+    // ۱. منطق نوار پیشرفت (Skill Progress Bars)
     // =========================================================
     
     const skillItems = document.querySelectorAll('.skill-level-item');
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // =========================================================
-    // ۲. انیمیشن ورود بخش‌ها (Section Fade-In) - جدید
+    // ۲. انیمیشن ورود بخش‌ها (Section Fade-In)
     // =========================================================
     const sections = document.querySelectorAll('.section');
 
@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { 
-        threshold: 0.1, // وقتی 10% از بخش قابل مشاهده شد، انیمیشن اجرا شود
-        rootMargin: '0px 0px -100px 0px' // شروع کمی زودتر از پایین صفحه
+        threshold: 0.1, 
+        rootMargin: '0px 0px -100px 0px' 
     });
 
     sections.forEach(section => {
@@ -48,10 +48,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // =========================================================
     // ۳. منطق ناوبری (Navbar) - فعال‌سازی لینک‌ها
-    // (حالت فعال با کلیک و همچنین فعال‌سازی بر اساس اسکرول برای حالت پویا)
     // =========================================================
     
-    const navLinks = document.querySelectorAll('#navbar a');
+    // انتخاب هر دو Navbar (دسکتاپ و موبایل)
+    const navLinks = document.querySelectorAll('#navbar a, #navbar-mobile a');
     
     // تابع برای فعال کردن لینک navbar بر اساس بخش قابل مشاهده
     function setActiveNavLink() {
@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
             const sectionHeight = section.clientHeight;
+            
             // 200px برای Offset از بالای صفحه
             if (window.scrollY >= sectionTop - 200) { 
                 current = section.getAttribute('id');
@@ -67,6 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         navLinks.forEach(link => {
             link.classList.remove('active');
+            // چک کردن بر اساس href (که شامل #id است)
             if (link.getAttribute('href').includes(current)) {
                 link.classList.add('active');
             }
@@ -84,9 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
         link.addEventListener('click', function(event) {
             // اجازه دهید اسکرول نرم اتفاق بیفتد، سپس کلاس active را تنظیم کنید
             setTimeout(() => {
-                navLinks.forEach(l => l.classList.remove('active'));
+                // اطمینان از حذف active از همه لینک‌ها، از جمله لینک‌های Navbar دیگر
+                document.querySelectorAll('#navbar a, #navbar-mobile a').forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
-            }, 600); // زمان تأخیر متناسب با scroll-behavior: smooth
+            }, 600); 
         });
     });
 
