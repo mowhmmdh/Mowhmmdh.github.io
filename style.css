@@ -100,7 +100,7 @@ body.lang-en {
 
 
 /* ================================================= */
-/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح شده ---- */
+/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح نهایی ---- */
 /* ================================================= */
 
 #top-area {
@@ -108,8 +108,9 @@ body.lang-en {
     padding-bottom: 20px;
     display: flex;
     justify-content: space-between; 
-    align-items: center; /* تراز عمودی وسط */
+    align-items: flex-start; 
     position: relative; 
+    height: 110px; 
 }
 
 /* عکس پروفایل */
@@ -122,7 +123,8 @@ body.lang-en {
     border: 3px solid var(--accent-color); 
     box-shadow: var(--shadow-light);
     transition: transform 0.3s;
-    /* در دسکتاپ، عکس وسط قرار می‌گیرد */
+    
+    /* دسکتاپ: موقعیت مطلق و وسط */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -148,7 +150,6 @@ body.lang-en {
     z-index: 100; 
     display: flex; 
     gap: 5px;
-    /* در دسکتاپ RTL: در سمت چپ */
     order: -1; 
 }
 .lang-switcher a, .lang-switcher button {
@@ -158,6 +159,7 @@ body.lang-en {
     border-radius: 6px;
     font-size: 0.8em;
     transition: all 0.2s;
+    background-color: white; /* برای جلوگیری از شفافیت */
 }
 .lang-switcher .active-lang {
     background-color: var(--primary-color);
@@ -221,7 +223,22 @@ h2 {
 body.lang-fa .contact-info {
     align-items: flex-end; 
 }
-/* ... (Contact Info styling remains similar) ... */
+.contact-info p {
+    margin: 0;
+    color: var(--secondary-color);
+}
+.contact-info i {
+    color: var(--accent-color);
+    margin-inline-end: 8px;
+}
+.contact-info a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s;
+}
+.contact-info a:hover {
+    color: var(--accent-color);
+}
 
 
 /* ---- خلاصه (درباره من) ---- */
@@ -236,7 +253,51 @@ body.lang-fa .contact-info {
 }
 
 /* ---- آیتم‌های شغلی و تحصیلی ---- */
-/* ... (Job Item styling remains similar) ... */
+.job-item {
+    margin-bottom: 25px;
+    padding: 15px 0;
+    border-bottom: 1px dotted var(--border-color);
+}
+.job-item:last-child {
+    border-bottom: none;
+}
+.job-item h3 {
+    margin: 0 0 5px 0;
+    color: var(--primary-color);
+    font-size: 1.1em;
+}
+.job-item p.duration, .job-item p.institution {
+    margin: 0 0 10px 0;
+    color: #777;
+    font-size: 0.9em;
+}
+.job-item ul {
+    list-style-type: none;
+    padding-inline-start: 20px;
+    margin: 10px 0 0 0;
+}
+.job-item ul li {
+    position: relative;
+    margin-bottom: 8px;
+    padding-inline-start: 15px;
+}
+.job-item ul li::before {
+    content: "•"; 
+    color: var(--accent-color);
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+}
+body.lang-en .job-item ul li::before {
+    left: 0;
+    right: auto;
+}
+body.lang-fa .job-item ul li::before {
+    right: 0;
+    left: auto;
+}
 
 
 /* ================================================= */
@@ -256,13 +317,42 @@ body.lang-fa .contact-info {
     display: flex;
     flex-direction: column;
 }
+.skill-category h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+    font-size: 1.1em;
+}
+.skill-level-item {
+    margin-bottom: 15px;
+}
+.skill-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.skill-percent {
+    color: var(--accent-color);
+}
+.skill-bar-container {
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
 .skill-bar {
     width: 0 !important; 
     height: 100%;
     background-color: var(--progress-bar-color); 
     transition: width 1.5s ease-out; 
 }
-/* ... (Skill Bar styling remains similar) ... */
+.skill-level-item.show .skill-bar {
+    /* مقدار نهایی از صفت style در HTML/JS گرفته می‌شود */
+    width: var(--skill-width, 0%);
+}
 
 
 /* ================================================= */
@@ -307,12 +397,10 @@ body.lang-fa .contact-info {
     gap: 5px;
 }
 
-/* ... (Navbar visibility styling remains similar) ... */
-
 
 /* ================================================= */
 /* ---- استایل‌های فرم تماس (CONTACT FORM) ---- */
-/* ... (Contact form styling remains similar) ... */
+/* ================================================= */
 .contact-intro-text {
     font-size: 1em;
     color: #555;
@@ -345,13 +433,17 @@ body.lang-fa .contact-info {
     align-items: center;
 }
 .contact-form label i {
-    margin-left: 8px;
+    margin-inline-end: 8px; /* استفاده از inlin-end برای سازگاری RTL/LTR */
     color: var(--accent-color);
     font-size: 1.2em;
 }
 body.lang-en .contact-form label i {
     margin-right: 8px;
     margin-left: 0;
+}
+body.lang-fa .contact-form label i {
+    margin-left: 8px;
+    margin-right: 0;
 }
 
 .contact-form input[type="email"],
@@ -410,11 +502,7 @@ body.lang-en .contact-form label i {
     transition: transform 0.3s, box-shadow 0.3s;
 }
 .quick-link i {
-    margin-left: 8px;
-}
-body.lang-en .quick-link i {
-    margin-right: 8px;
-    margin-left: 0;
+    margin-inline-end: 8px;
 }
 .quick-link:hover {
     transform: translateY(-3px);
@@ -437,7 +525,7 @@ body.lang-en .quick-link i {
 /* ================================================= */
 
 footer {
-    padding: 20px 0 0 0; /* فضای داخلی فوتر */
+    padding: 20px 0 0 0; 
 }
 
 .footer-branding {
@@ -500,34 +588,38 @@ footer {
     
     /* FIX: Top Area موبایل - عکس، بسم الله و دکمه زبان */
     #top-area {
+        height: auto; 
         flex-direction: row; 
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start; 
         padding-top: 5px;
-        padding-bottom: 10px; 
+        padding-bottom: 15px; 
+        position: static; 
     }
     
     .profile-icon {
-        /* در موبایل، عکس دوباره از حالت absolute خارج شده و در جریان قرار می‌گیرد */
+        /* FIX: حذف موقعیت مطلق و بازگشت به جریان عادی */
         position: static; 
         transform: none; 
-        order: 2; /* وسط قرار می‌گیرد */
+        order: 2; 
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
+        margin: 0 5px; /* کمی فاصله برای تنفس */
+    }
+    .profile-icon:hover {
+        transform: none; 
     }
 
     .lang-switcher {
-        order: 1; /* در RTL (فارسی)، گوشه چپ */
+        order: 1; 
     }
     
     .bismillah-icon {
-        /* در موبایل، بسم الله را پنهان کنید تا با چیدمان تداخلی نداشته باشد */
+        /* FIX: بسم الله را در موبایل کاملاً پنهان کنید */
         display: none; 
     }
 
-    /* ... (سایر استایل‌های موبایل Navbar, Skills, Footer) ... */
-    
     /* Navbar موبایل (زیر عنوان اصلی قرار می‌گیرد) */
     #navbar {
         margin-top: 15px;
