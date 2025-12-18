@@ -12,6 +12,34 @@
     <link rel="stylesheet" href="style.css">
 
     <link rel="icon" type="image/png" href="images/favicon.png"> 
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "محمدحسین عسگری ثمرین",
+  "jobTitle": "متخصص پشتیبانی فناوری اطلاعات", 
+  "url": "https://mowhmmdh.github.io/index.html",
+  "image": "https://mowhmmdh.github.io/images/profile.jpg",
+  "email": "mailto:mohammedhasgari@gmail.com",
+  "sameAs": [
+    "https://linkedin.com/in/mohammadhosseinasgari",
+    "https://instagram.com/mowhmmdh"
+  ],
+  "alumniOf": {
+    "@type": "EducationalOrganization",
+    "name": "دانشگاه آزاد اسلامی واحد یادگار امام (ره)"
+  },
+  "knowsAbout": [
+    "پشتیبانی IT",
+    "زیرساخت شبکه",
+    "Windows Server",
+    "CCNA",
+    "عیب‌یابی هلپ‌دسک"
+  ]
+}
+</script>
+
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
 </head>
@@ -23,15 +51,17 @@
         <aside id="sidebar-info">
             
             <div id="top-area">
-                <img src="images/profile.jpg" alt="عکس محمدحسین عسگری ثمرین" class="profile-icon">
-                
-                <img src="images/bismillah.png" alt="بسم الله" class="bismillah-icon">
                 
                 <div class="lang-switcher">
                     <button class="active-lang" id="lang-fa-btn">فارسی</button>
                     |
                     <a href="en.html" class="lang-link" id="lang-en-btn">English</a>
                 </div>
+                
+                <img src="images/profile.jpg" alt="عکس محمدحسین عسگری ثمرین" class="profile-icon">
+                
+                <img src="images/bismillah.png" alt="بسم الله" class="bismillah-icon">
+                
             </div>
 
             <header class="header">
@@ -97,11 +127,27 @@
 
             <section class="section" id="contact">
                 <h2 class="section-title">تماس با من</h2>
-                <p>لطفاً پیام خود را از طریق فرم زیر برای من ارسال کنید.</p>
+                
+                <p class="contact-intro-text">آماده شروع همکاری و دریافت پیشنهادات کاری هستم. لطفاً برای ارتباط سریع، از فرم زیر استفاده کنید:</p>
+
                 <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form">
-                    <div class="form-group"><label for="email">ایمیل شما:</label><input type="email" id="email" name="email" required placeholder="example@gmail.com"></div>
-                    <div class="form-group"><label for="message">پیام:</label><textarea id="message" name="message" rows="5" required placeholder="پیام خود را در اینجا بنویسید..."></textarea></div>
+                    <div class="form-group">
+                        <label for="email"><i class="fas fa-envelope-open-text"></i> ایمیل شما:</label>
+                        <input type="email" id="email" name="email" required placeholder="example@gmail.com">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message"><i class="fas fa-comment-dots"></i> پیام:</label>
+                        <textarea id="message" name="message" rows="5" required placeholder="موضوع همکاری یا سوال خود را در اینجا بنویسید..."></textarea>
+                    </div>
+
                     <button type="submit">ارسال پیام</button>
+                    
+                    <div class="quick-contact-info">
+                        <p>یا از طریق لینک‌های زیر در تماس باشید:</p>
+                        <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" class="quick-link linked-in"><i class="fab fa-linkedin"></i> لینکدین</a>
+                        <a href="mailto:mohammedhasgari@gmail.com" class="quick-link email-link"><i class="fas fa-paper-plane"></i> ایمیل مستقیم</a>
+                    </div>
                 </form>
 
             </section>
@@ -112,7 +158,9 @@
                         <img src="images/mha-logo.png" alt="لوگوی محمدحسین عسگری ثمرین (MHA)" class="footer-mha-logo">
                     </div>
                     <p class="copyright-text">
-                        &copy; ۲۰۲۵ محمدحسین عسگری ثمرین. کلیه حقوق محفوظ است؛ طراحی و توسعه توسط محمدحسین عسگری ثمرین.
+                        <span>طراحی و توسعه: محمدحسین عسگری ثمرین</span>
+                        <br>
+                        &copy; ۲۰۲۵. کلیه حقوق محفوظ است.
                     </p>
                 </div>
             </footer> 
