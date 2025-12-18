@@ -195,7 +195,7 @@
 
                     <div class="skill-level-item">
                         <div class="skill-label">
-                            <span>Microsoft Office (Word, Excel)</span>
+                            <span>Microsoft Office (Word, Excel, ...)</span>
                             <span class="skill-percent">85%</span>
                         </div>
                         <div class="skill-bar-container">
@@ -318,18 +318,6 @@
         </div>
     </footer> 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const skillBars = document.querySelectorAll('.skill-bar');
-            skillBars.forEach(bar => {
-                // This code ensures a smooth transition/animation when the page loads
-                const width = bar.style.width; 
-                bar.style.width = '0'; // Temporary reset
-                setTimeout(() => {
-                    bar.style.width = width; // Set again to trigger the CSS animation
-                }, 100); 
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
