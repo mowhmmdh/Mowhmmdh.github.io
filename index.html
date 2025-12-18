@@ -39,56 +39,58 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
 </head>
+
 <body class="lang-fa">
 
-    <div id="top-area" class="container">
-        <img src="images/profile.jpg" alt="عکس محمدحسین عسگری ثمرین" class="profile-icon">
-        
-        <img src="images/bismillah.png" alt="بسم الله الرحمن الرحیم" class="bismillah-icon">
-        
-        <div class="lang-switcher">
-            <a href="en.html" class="lang-link" id="lang-en-btn">English</a>
-            <button class="active-lang" id="lang-fa-btn">فارسی</button>
+    <div class="container">
+        <div id="top-area">
+            
+            <img src="images/profile.jpg" alt="عکس محمدحسین عسگری ثمرین" class="profile-icon">
+            
+            <img src="images/bismillah.png" alt="بسم الله الرحمن الرحیم" class="bismillah-icon">
+            
+            <div class="lang-switcher">
+                <a href="en.html" class="lang-link" id="lang-en-btn">English</a>
+                |
+                <button class="active-lang" id="lang-fa-btn">فارسی</button>
+            </div>
         </div>
     </div>
 
+    <header class="header container">
+        <h1>محمدحسین عسگری ثمرین</h1>
+        <h2>متخصص فناوری اطلاعات</h2>
+    
+        <div class="contact-info">
+            <p><i class="fas fa-envelope"></i> mohammedhasgari@gmail.com</p>
+            <p><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank">لینکدین</a></p>
+            <p><i class="fab fa-instagram"></i> <a href="https://instagram.com/mowhmmdh" target="_blank">اینستاگرام</a></p>
+        </div>
+    </header>
+
     <nav id="navbar">
         <div class="container">
-            <ul>
-                <span class="lang-fa-nav">
-                    <li><a href="#about">معرفی</a></li>
-                    <li><a href="#experience">سوابق شغلی</a></li>
-                    <li><a href="#skills">مهارت‌ها</a></li>
-                    <li><a href="#certificates">مدارک</a></li>
-                    <li><a href="#education">تحصیلات</a></li>
-                    <li><a href="#contact">تماس با من</a></li>
-                </span>
+            <ul class="lang-fa-nav">
+                <li><a href="#about">معرفی</a></li>
+                <li><a href="#experience">سوابق شغلی</a></li>
+                <li><a href="#skills">مهارت‌ها</a></li>
+                <li><a href="#certificates">مدارک</a></li>
+                <li><a href="#education">تحصیلات</a></li>
+                <li><a href="#contact">تماس با من</a></li>
             </ul>
         </div>
     </nav>
     
     <main class="container">
         
-        <header class="header">
-            <h1>محمدحسین عسگری ثمرین</h1>
-            <h2>متخصص فناوری اطلاعات</h2>
-        
-            <div class="contact-info">
-    <p><i class="fas fa-envelope"></i> mohammedhasgari@gmail.com</p>
-    <p><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank">لینکدین</a></p>
-    <p><i class="fab fa-instagram"></i> <a href="https://instagram.com/mowhmmdh" target="_blank">اینستاگرام</a></p>
-</div>
-
-            
+        <section id="about" class="section">
             <h2 class="section-title">درباره من</h2>
-            <section class="summary" id="about" >
+            <div class="summary">
                 <p>من یک متخصص پشتیبانی فناوری اطلاعات هستم که تجربه عملی در عیب‌یابی سیستم‌ها، پشتیبانی از کاربران و نگهداری شبکه‌ها دارم. من با سازمان‌هایی مانند وزارت کشور، روزنامه صمت و کیمیا مهر اسپادانا (سایت های فروشگاهی کیمیاآنلاین و های ایسوس ) همکاری داشته‌ام و در آنجا مهارت‌های فنی و ارتباطی خود را تقویت کرده‌ام.
-
-من به شبکه و امنیت سایبری علاقه‌مند هستم و به طور مداوم دانش خود را بهبود می‌بخشم.
-
-آماده پذیرش فرصت‌های جدید و رشد حرفه‌ای هستم.</p>
-            </section>
-        </header>
+                <br><br>
+                من به شبکه و امنیت سایبری علاقه‌مند هستم و به طور مداوم دانش خود را بهبود می‌بخشم. آماده پذیرش فرصت‌های جدید و رشد حرفه‌ای هستم.</p>
+            </div>
+        </section>
 
         <section class="section" id="experience">
             <h2 class="section-title">سوابق شغلی</h2>
@@ -128,29 +130,129 @@
             <h2 class="section-title">مهارت‌ها</h2>
 
             <div class="skills-list">
+                
                 <div class="skill-category">
                     <h4>شبکه و زیرساخت</h4>
-                    <span class="skill-tag">CCNA </span>
-                    <span class="skill-tag">Network+ </span>
-                    <span class="skill-tag">Active Directory </span>
-                    <span class="skill-tag">Windows Server </span>
-                    <span class="skill-tag">Linux </span>
-                    <span class="skill-tag">Wireshark </span>
+                    
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>Active Directory & Windows Server</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>CCNA (مفاهیم)</span>
+                            <span class="skill-percent">80%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 80%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>Network+ / مفاهیم شبکه</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>Linux (مفاهیم پایه)</span>
+                            <span class="skill-percent">65%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 65%;"></div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="skill-category">
                     <h4>نرم‌افزار و مدیریت سیستم‌ها</h4>
-                    <span class="skill-tag">Microsoft Office (Word, Excel, ...)</span>
-                    <span class="skill-tag">پشتیبانی و عیب‌یابی Helpdesk</span>
-                    <span class="skill-tag">نگهداری و مدیریت سیستم عامل</span>
-                    <span class="skill-tag">مدیریت موجودی (Asset Management)</span>
+                    
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>پشتیبانی و عیب‌یابی Helpdesk</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 95%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>Microsoft Office (Word, Excel)</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>نگهداری و مدیریت سیستم عامل</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 90%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>مدیریت موجودی (Asset Management)</span>
+                            <span class="skill-percent">70%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 70%;"></div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="skill-category">
                     <h4>مهارت‌های بین فردی (Soft Skills)</h4>
-                    <span class="skill-tag">مهارت‌های ارتباطی و گزارش‌دهی</span>
-                    <span class="skill-tag">کار تیمی و انطباق‌پذیری</span>
-                    <span class="skill-tag">حل مسئله و تصمیم‌گیری</span>
+                    
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>حل مسئله و تصمیم‌گیری</span>
+                            <span class="skill-percent">90%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>کار تیمی و انطباق‌پذیری</span>
+                            <span class="skill-percent">95%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="skill-level-item">
+                        <div class="skill-label">
+                            <span>مهارت‌های ارتباطی و گزارش‌دهی</span>
+                            <span class="skill-percent">85%</span>
+                        </div>
+                        <div class="skill-bar-container">
+                            <div class="skill-bar" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </section>
@@ -158,12 +260,12 @@
         <section class="section" id="certificates">
             <h2 class="section-title">مدارک و گواهینامه‌های تخصصی</h2>
 
-            <div class="certificate-item">
+            <div class="job-item">
                 <h3>گواهینامه CCNA</h3>
                 <p class="institution">مرکز آموزش لایتک دانشگاه صنعتی شریف | ۱۳۹۹</p>
             </div>
 
-            <div class="certificate-item">
+            <div class="job-item">
                 <h3>گواهینامه Network+</h3>
                 <p class="institution">مرکز آموزش لایتک دانشگاه صنعتی شریف | ۱۳۹۹</p>
             </div>
@@ -172,7 +274,7 @@
         <section class="section" id="education">
             <h2 class="section-title">سوابق تحصیلی</h2>
 
-            <div class="education-item">
+            <div class="job-item">
                 <h3>مهندسی کامپیوتر</h3>
                 <p class="institution">دانشگاه آزاد اسلامی یادگار امام خمینی (ره) - شهر ری </p>
             </div>
@@ -186,12 +288,12 @@
             <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form">
                 <div class="form-group">
                     <label for="email">ایمیل شما:</label>
-                    <input type="email" id="email" name="email" required>
+                    <input type="email" id="email" name="email" required placeholder="example@gmail.com">
                 </div>
                 
                 <div class="form-group">
                     <label for="message">متن پیام:</label>
-                    <textarea id="message" name="message" rows="5" required></textarea>
+                    <textarea id="message" name="message" rows="5" required placeholder="پیام خود را اینجا بنویسید..."></textarea>
                 </div>
 
                 <button type="submit">ارسال پیام</button>
@@ -200,14 +302,30 @@
         </section>
         
     </main>
-<div class="footer-branding container">
-    <div class="footer-logo">
-        <img src="images/mha-logo.png" alt="لوگو محمدحسین عسگری ثمرین (MHA)" class="footer-mha-logo">
-    </div>
-    <p class="copyright-text">
-        &copy; ۲۰۲۵ محمدحسین عسگری ثمرین. تمامی حقوق محفوظ است؛طراحی و توسعه توسط محمد حسین عسگری ثمرین.
-    </p>
-</div> 
+    
+    <footer class="container">
+        <div class="footer-branding">
+            <div class="footer-logo">
+                <img src="images/mha-logo.png" alt="لوگو محمدحسین عسگری ثمرین (MHA)" class="footer-mha-logo">
+            </div>
+            <p class="copyright-text">
+                &copy; ۲۰۲۵ محمدحسین عسگری ثمرین. تمامی حقوق محفوظ است؛طراحی و توسعه توسط محمد حسین عسگری ثمرین.
+            </p>
+        </div>
+    </footer> 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            skillBars.forEach(bar => {
+                // این کد برای ایجاد یک انیمیشن نرم (Smooth transition) هنگام بارگذاری صفحه است
+                const width = bar.style.width; 
+                bar.style.width = '0'; // ریست موقت
+                setTimeout(() => {
+                    bar.style.width = width; // تنظیم مجدد برای اجرای انیمیشن CSS
+                }, 100); 
+            });
+        });
+    </script>
 </body>
 </html>
