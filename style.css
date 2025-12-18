@@ -104,6 +104,9 @@ body.lang-en {
 }
 
 /* دکمه جابجایی زبان */
+.lang-switcher {
+    z-index: 10; /* تضمین می‌کند روی بسم الله قرار گیرد */
+}
 .lang-switcher a, .lang-switcher button {
     text-decoration: none;
     border: 1px solid var(--border-color); 
@@ -259,7 +262,7 @@ body.lang-en .contact-info i {
     border: 1px solid var(--border-color); 
     border-radius: 8px; 
     flex-basis: calc(33.33% - 20px); 
-    background-color: #ffffff; /* زمینه داخلی سفید برای کنتراست بیشتر */
+    background-color: #ffffff; 
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
@@ -301,7 +304,6 @@ body.lang-en .contact-info i {
 .skill-bar {
     height: 100%;
     background-color: var(--progress-bar-color); 
-    /* این ترنزیشن برای جاوااسکریپت داینامیک ضروری است */
     transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
 }
 
@@ -466,20 +468,60 @@ section[id] {
 
 /* ================================================= */
 /* ---- ۴. رسپانسیو برای موبایل (Max-width: 600px) ---- */
+/* **این بخش برای رفع بهم ریختگی موبایل حیاتی است** */
 /* ================================================= */
 @media (max-width: 600px) {
     .container { padding: 0 10px; } 
     
-    h1 { font-size: 2.5em; }
+    /* FIX: تنظیم top-area در موبایل */
+    #top-area {
+        /* تغییر چینش به ستونی در موبایل */
+        flex-direction: column; 
+        align-items: center;
+        padding-top: 15px;
+        padding-bottom: 5px; /* کاهش فاصله پایین */
+    }
+
+    .profile-icon {
+        width: 80px; 
+        height: 80px; 
+        /* پروفایل را به سمت بالا چپ (یا راست در فارسی) منتقل می‌کنیم */
+        position: absolute;
+        inset-inline-start: 10px; 
+        top: 10px;
+    }
+    
+    .bismillah-icon {
+        height: 60px; 
+        max-width: 80%; 
+        /* بسم الله را کمی پایین‌تر می‌آوریم تا با پروفایل تداخل نکند */
+        top: 50px; 
+        transform: translateX(-50%);
+    }
+
+    .lang-switcher {
+        /* دکمه‌های زبان را به بالا راست (یا چپ در انگلیسی) منتقل می‌کنیم */
+        position: absolute;
+        inset-inline-end: 10px; 
+        top: 15px;
+    }
+
+    h1 { font-size: 2em; } /* کاهش اندازه عناوین اصلی */
     h2 { font-size: 1.1em; }
     
+    /* FIX: نوار ناوبری موبایل - نمایش در ۲ سطر */
+    #navbar ul {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
     #navbar li {
-        padding: 12px 5px;
+        padding: 8px 0; /* کاهش پدینگ عمودی */
         font-size: 0.8em; 
-        flex-basis: 30%; 
+        flex-basis: 33%; /* تقسیم بر ۳ برای ۳ ستون در دو سطر */
         text-align: center;
     }
 
+    /* مهارت‌ها در موبایل یک ستونه می‌شوند */
     .skills-list { flex-direction: column; gap: 20px; }
     .skill-category { 
         flex-basis: 100%; 
@@ -491,6 +533,7 @@ section[id] {
         align-items: flex-start; 
     }
     
+    /* اصلاح پرش لینک‌ها در موبایل */
     section[id] {
         padding-top: 60px; 
         margin-top: -60px; 
