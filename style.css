@@ -24,6 +24,12 @@ html {
     --background-color: #ffffff; 
     --section-bg: #f5f5f5;      
     --border-color: #cccccc;   
+    --active-link-color: #ffd700; /* رنگ طلایی برای لینک‌های فعال */
+}
+
+/* ریست استایل‌ها */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 body {
@@ -63,16 +69,17 @@ body.lang-en {
 }
 
 /* ================================================= */
-/* ---- کانتینر بالای صفحه (Top Area) - دارای عکس بسم الله ---- */
+/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح مرکزیت بسم الله ---- */
 /* ================================================= */
 
 #top-area {
     padding-top: 20px;
     padding-bottom: 20px;
-    /* تنظیم فلکس‌باکس برای پخش کردن ۳ عنصر: عکس، بسم الله، سوییچر */
     display: flex;
     justify-content: space-between; 
     align-items: center;
+    /* **کلید اصلی: برای امکان موقعیت‌دهی مطلق برای بسم الله** */
+    position: relative; 
 }
 
 /* ---- عکس پروفایل (Profile Icon) ---- */
@@ -83,15 +90,22 @@ body.lang-en {
     border-radius: 20%;
     object-fit: cover;
     z-index: 10;
-    border: 4px solid #fff;
+    border: 4px solid var(--background-color);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* ---- استایل جدید برای بسم الله الرحمن الرحیم ---- */
+/* ---- استایل جدید برای بسم الله الرحمن الرحیم (مرکزیت مطلق) ---- */
 .bismillah-icon {
-    height: 100px; /* تنظیم ارتفاع ثابت برای بسم الله */
-    max-width: 300%; /* حداکثر عرض در دسکتاپ */
+    height: 100px; 
+    max-width: 100%; /* اصلاح شد: حداکثر عرض نباید خیلی بزرگ باشد */
     object-fit: contain;
+    
+    /* **تنظیمات اصلی مرکزیت** */
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); /* انتقال دقیق به مرکز */
+    z-index: 5; /* زیر عکس پروفایل و سوییچر */
 }
 
 /* ---- دکمه جابجایی زبان ---- */
@@ -126,7 +140,7 @@ body.lang-en {
 
 /* ---- هدر اصلی (HEADER) ---- */
 .header {
-    background-color: #fff;
+    background-color: var(--background-color);
     padding: 0; 
     margin-bottom: 50px;
     position: relative;
@@ -178,13 +192,23 @@ h2 {
     color: #666;
 }
 .contact-info p { 
-    margin: 5px 0; 
-    display: inline-block; 
-    margin-inline-end: 30px; 
+    /* اصلاح شد: از فلکس باکس برای کنترل بهتر در RTL/LTR استفاده شد */
+    margin: 10px 0; 
+    display: flex; /* تبدیل به فلکس برای کنترل آیکون */
+    align-items: center;
+    /* این خاصیت برای موبایل در رسپانسیو اصلاح می‌شود */
+    justify-content: flex-end; /* راست‌چین کردن محتوا */
 }
 .contact-info i { 
     color: var(--primary-color); 
-    margin-inline-end: 5px; 
+    margin-left: 8px; /* فاصله آیکون از متن در RTL */
+}
+body.lang-en .contact-info i {
+    margin-right: 8px; /* فاصله آیکون از متن در LTR */
+    margin-left: 0;
+}
+body.lang-en .contact-info p {
+    justify-content: flex-start; /* چپ‌چین کردن در LTR */
 }
 
 .summary { 
@@ -195,10 +219,12 @@ h2 {
     font-size: 1.05em; 
     color: #444; 
     line-height: 1.8;
+    text-align: justify; /* توجیه متن برای ظاهر رسمی */
 }
 .job-item { 
     margin-bottom: 30px; 
     padding-bottom: 10px; 
+    /* استفاده از border-inline-start برای سازگاری با RTL/LTR */
     border-inline-start: 3px solid var(--border-color); 
     padding-inline-start: 20px;
 }
@@ -217,15 +243,17 @@ h2 {
 .job-item ul { list-style-type: none; padding-right: 0; padding-left: 0; margin-top: 15px; }
 .job-item li {
     position: relative;
+    /* تنظیم برای سازگاری با RTL/LTR */
     padding-inline-start: 15px;
     margin-bottom: 10px;
     font-size: 0.95em;
+    text-align: justify;
 }
 /* تنظیم علامت لیست بسته به جهت */
 .job-item li::before {
     content: '—'; 
     position: absolute;
-    inset-inline-start: 0; 
+    inset-inline-start: 0; /* موقعیت شروع خط (راست در RTL، چپ در LTR) */
     color: var(--primary-color);
 }
 
@@ -236,6 +264,7 @@ h2 {
     padding: 15px; 
     border: 1px solid var(--border-color); 
     border-radius: 4px; 
+    /* اصلاح شد: استفاده از calc برای فضای بهتر بین ستون‌ها */
     flex-basis: calc(50% - 10px); 
     background-color: var(--section-bg);
 }
@@ -259,7 +288,7 @@ h2 {
 }
 
 /* ================================================= */
-/* ---- منو ناوبری (NAVBAR) ---- */
+/* ---- ۲. منو ناوبری (NAVBAR) ---- */
 /* ================================================= */
 
 #navbar {
@@ -302,7 +331,7 @@ h2 {
 }
 
 #navbar a:hover {
-    color: #ffd700;
+    color: var(--active-link-color);
 }
 
 /* کنترل نمایش منوها */
@@ -321,7 +350,7 @@ body.lang-en .lang-en-nav {
 /* ---- استایل‌های فرم تماس (CONTACT FORM) ---- */
 .contact-form {
     max-width: 600px;
-    margin: 20px 0;
+    margin: 20px auto; /* مرکزیت فرم در صفحه */
     padding: 30px;
     border: 1px solid var(--border-color);
     border-radius: 8px; 
@@ -395,7 +424,7 @@ body.lang-en .lang-en-nav {
 
 
 /* ================================================= */
-/* ---- رسپانسیو (برای موبایل - Flexbox) ---- */
+/* ---- ۳. رسپانسیو برای موبایل (Max-width: 600px) ---- */
 /* ================================================= */
 @media (max-width: 600px) {
     .container { padding: 0 10px; } 
@@ -404,7 +433,7 @@ body.lang-en .lang-en-nav {
     #top-area {
         padding-top: 10px;
         padding-bottom: 10px;
-        flex-direction: row; 
+        /* فلکس دایرکشن در موبایل نیاز به تغییر ندارد */
         justify-content: space-between;
         align-items: center;
     }
@@ -413,13 +442,13 @@ body.lang-en .lang-en-nav {
     .profile-icon {
         width: 50px; 
         height: 65px; 
-        border: 2px solid #fff;
+        border: 2px solid var(--background-color);
     }
 
     /* اندازه کوچکتر بسم الله در موبایل */
     .bismillah-icon {
         height: 60px; 
-        max-width: 300%;
+        max-width: 60%; /* اصلاح شد */
     }
     
     /* هدر زیر top-area قرار می‌گیرد */
@@ -443,4 +472,11 @@ body.lang-en .lang-en-nav {
 
     .skills-list { flex-direction: column; gap: 15px; }
     .skill-category { flex-basis: 100%; }
+    
+    /* **اصلاح نمایش اطلاعات تماس در موبایل** */
+    .contact-info p { 
+        /* چپ‌چین در موبایل (برای RTL) */
+        justify-content: flex-start; 
+        margin: 5px 0;
+    }
 }
