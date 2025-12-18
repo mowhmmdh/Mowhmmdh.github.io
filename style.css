@@ -183,13 +183,14 @@ h2 {
 /* ---- جزئیات محتوا ---- */
 .contact-info { 
     margin-top: 20px; 
-    padding: 15px 0; 
+    /* اصلاح شده: فاصله پایین بیشتر برای دور کردن اینستاگرام از خط بعدی */
+    padding: 15px 0 25px 0; 
     border-top: 2px solid var(--border-color); 
     font-size: 0.95em; 
     color: #666;
 }
 .contact-info p { 
-    margin: 10px 0; 
+    margin: 5px 0; 
     display: flex; 
     align-items: center;
     justify-content: flex-end; 
@@ -249,33 +250,68 @@ body.lang-en .contact-info p {
 }
 
 
-/* ---- استایل‌دهی مهارت‌ها (Tags) ---- */
-.skills-list { display: flex; flex-wrap: wrap; gap: 20px; }
+/* ================================================= */
+/* ---- استایل‌دهی مهارت‌ها (Progress Bars) ---- */
+/* ================================================= */
+.skills-list { 
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 20px; 
+}
 .skill-category { 
     padding: 15px; 
     border: 1px solid var(--border-color); 
     border-radius: 4px; 
-    flex-basis: calc(50% - 10px); 
+    flex-basis: calc(50% - 10px); /* 2 ستونه در دسکتاپ */
     background-color: var(--section-bg);
+    display: flex;
+    flex-direction: column;
 }
 .skill-category h4 { 
     color: var(--primary-color); 
     margin-top: 0; 
     padding-bottom: 5px; 
     border-bottom: 1px solid var(--border-color); 
-    margin-bottom: 15px; 
+    margin-bottom: 20px; /* فضای بیشتر زیر عنوان دسته‌بندی */
     font-size: 1.05em; 
 }
-.skill-tag { 
-    display: inline-block; 
-    background-color: #e6e6e6; 
-    color: #333; 
-    padding: 5px 10px; 
-    border-radius: 3px; 
-    margin: 4px; 
-    font-size: 0.85em; 
-    font-weight: 500; 
+
+/* استایل هر آیتم مهارت */
+.skill-level-item {
+    margin-bottom: 20px;
 }
+
+/* لیبل مهارت و درصد */
+.skill-label {
+    font-size: 0.95em;
+    color: var(--secondary-color);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.skill-percent {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* کانتینر نوار پیشرفت */
+.skill-bar-container {
+    background-color: #e0e0e0; /* رنگ زمینه نوار */
+    border-radius: 4px;
+    height: 8px; /* ارتفاع نوار */
+    overflow: hidden;
+}
+
+/* نوار اصلی پر شده */
+.skill-bar {
+    height: 100%;
+    background-color: var(--primary-color); 
+    /* width توسط HTML به کمک متغیر --level تعیین می‌شود */
+    width: 0; /* شروع از صفر برای انیمیشن احتمالی در آینده */
+    transition: width 0.8s ease-out; 
+}
+
 
 /* ================================================= */
 /* ---- ۲. منو ناوبری (NAVBAR) ---- */
@@ -339,12 +375,10 @@ body.lang-en .lang-en-nav {
 /* ================================================= */
 /* ---- FIX: اصلاح پرش لینک‌ها (Anchor Scroll Offset) ---- */
 /* ================================================= */
-/* تنظیم فضای خالی بالای هر بخش برای جبران نوار ناوبری ثابت */
+/* افزایش ارتفاع جبرانی برای نمایش کامل عنوان بخش (75px) */
 section[id] {
-    /* ارتفاع نوار ناوبری در دسکتاپ حدود 65px است */
-    padding-top: 65px; 
-    /* کشیدن المان به بالا برای حفظ فضای اصلی صفحه */
-    margin-top: -65px; 
+    padding-top: 75px; 
+    margin-top: -75px; 
     box-sizing: border-box; 
 }
 
@@ -501,9 +535,9 @@ section[id] {
 
     /* **اصلاح پرش لینک‌ها در موبایل** */
     section[id] {
-        /* ارتفاع نوار ناوبری در موبایل حدود 55px است */
-        padding-top: 55px; 
-        margin-top: -55px; 
+        /* ارتفاع جبرانی برای نمایش کامل عنوان بخش در موبایل (65px) */
+        padding-top: 65px; 
+        margin-top: -65px; 
     }
 
     /* تنظیمات منو ناوبری در موبایل */
@@ -515,6 +549,7 @@ section[id] {
         text-align: center;
     }
 
+    /* مهارت‌ها در موبایل یک ستونه می‌شوند */
     .skills-list { flex-direction: column; gap: 15px; }
     .skill-category { flex-basis: 100%; }
     
