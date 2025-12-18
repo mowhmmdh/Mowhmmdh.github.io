@@ -22,10 +22,10 @@ html {
     --primary-color: #003366;       /* آبی تیره (IT Blue) */
     --secondary-color: #333;        /* متن اصلی تیره */
     --background-color: #ffffff;    /* پس‌زمینه سفید */
-    --section-bg: #f7f7f7;          /* پس‌زمینه بخش‌های خاص (مانند خلاصه و مهارت) */
+    --section-bg: #f7f7f7;          /* پس‌زمینه بخش‌های خاص */
     --border-color: #e0e0e0;        /* مرزهای روشن و تمیز */
     --accent-color: #007bff;        /* رنگ تاکیدی برای لینک‌ها و آیکون‌ها */
-    --progress-bar-color: #007bff;  /* رنگ نوار پیشرفت (می‌تواند همان primary باشد) */
+    --progress-bar-color: #007bff;  /* رنگ نوار پیشرفت */
 }
 
 /* ریست و تنظیمات جهانی */
@@ -34,7 +34,7 @@ html {
 }
 
 body {
-    line-height: 1.6; /* کمی کمتر برای خوانایی بیشتر */
+    line-height: 1.6; 
     margin: 0;
     padding: 0;
     background-color: var(--background-color);
@@ -72,7 +72,7 @@ body.lang-en {
 /* ================================================= */
 
 #top-area {
-    padding-top: 30px; /* فضای بیشتر در بالا */
+    padding-top: 30px; 
     padding-bottom: 30px;
     display: flex;
     justify-content: space-between; 
@@ -84,10 +84,10 @@ body.lang-en {
 .profile-icon {
     width: 100px; 
     height: 100px; 
-    border-radius: 50%; /* دایره‌ای برای حس مدرن‌تر */
+    border-radius: 50%; 
     object-fit: cover;
     z-index: 10;
-    border: 3px solid var(--accent-color); /* حاشیه تاکیدی */
+    border: 3px solid var(--accent-color); 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -99,7 +99,7 @@ body.lang-en {
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%); 
-    opacity: 0.1; /* بسیار کمرنگ برای پس‌زمینه */
+    opacity: 0.1; 
     z-index: 5;
 }
 
@@ -107,7 +107,7 @@ body.lang-en {
 .lang-switcher a, .lang-switcher button {
     text-decoration: none;
     border: 1px solid var(--border-color); 
-    padding: 6px 10px; /* پدینگ بیشتر */
+    padding: 6px 10px; 
     border-radius: 4px;
     font-size: 0.9em;
     transition: all 0.2s;
@@ -135,15 +135,14 @@ h1 {
 
 h2 {
     font-size: 1.3em;
-    color: var(--accent-color); /* رنگ تاکیدی برای عنوان شغلی */
+    color: var(--accent-color); 
     margin-top: 5px;
     font-weight: 500;
 }
 
 .section {
-    padding: 40px 0; /* فاصله عمودی بیشتر بین بخش‌ها */
+    padding: 40px 0; 
     border-top: 1px solid var(--border-color); 
-    /* باکس شادو مینیمال برای جدا کردن بخش‌ها */
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05); 
 }
 .section:first-of-type {
@@ -155,9 +154,9 @@ h2 {
     font-size: 1.8em;
     color: var(--primary-color);
     margin-top: 0; 
-    margin-bottom: 25px; /* فاصله بیشتر زیر عنوان بخش */
+    margin-bottom: 25px; 
     font-weight: bold;
-    border-inline-start: 4px solid var(--accent-color); /* خط تاکیدی در کنار عنوان */
+    border-inline-start: 4px solid var(--accent-color); 
     padding-inline-start: 10px;
 }
 
@@ -169,11 +168,11 @@ h2 {
     font-size: 0.95em; 
     display: flex; 
     flex-wrap: wrap; 
-    justify-content: flex-end; /* راست‌چین در فارسی */
+    justify-content: flex-end; 
     gap: 15px 30px; 
 }
 body.lang-en .contact-info {
-    justify-content: flex-start; /* چپ‌چین در انگلیسی */
+    justify-content: flex-start; 
 }
 .contact-info p { 
     margin: 0; 
@@ -181,7 +180,7 @@ body.lang-en .contact-info {
     align-items: center;
 }
 .contact-info i { 
-    color: var(--accent-color); /* آیکون‌ها با رنگ تاکیدی */
+    color: var(--accent-color); 
     margin-left: 8px; 
 }
 body.lang-en .contact-info i {
@@ -202,7 +201,7 @@ body.lang-en .contact-info i {
 .summary { 
     padding: 25px;
     background-color: var(--section-bg); 
-    border-radius: 8px; /* گوشه‌های گرد */
+    border-radius: 8px; 
     font-size: 1.05em; 
     line-height: 1.7;
     text-align: justify;
@@ -213,7 +212,7 @@ body.lang-en .contact-info i {
 .job-item { 
     margin-bottom: 35px; 
     padding-bottom: 15px; 
-    border-inline-start: 3px solid var(--accent-color); /* خط زمان با رنگ تاکیدی */
+    border-inline-start: 3px solid var(--accent-color); 
     padding-inline-start: 20px;
 }
 .job-item h3 { 
@@ -231,13 +230,13 @@ body.lang-en .contact-info i {
 .job-item ul { list-style-type: none; padding-right: 0; padding-left: 0; margin-top: 15px; }
 .job-item li {
     position: relative;
-    padding-inline-start: 18px; /* فاصله بیشتر برای آیکون */
+    padding-inline-start: 18px; 
     margin-bottom: 10px;
     font-size: 0.95em;
     text-align: justify;
 }
 .job-item li::before {
-    content: '\25CF'; /* دایره پر شده (Bullet point) */
+    content: '\25CF'; 
     position: absolute;
     inset-inline-start: 0; 
     color: var(--accent-color);
@@ -252,16 +251,16 @@ body.lang-en .contact-info i {
 .skills-list { 
     display: flex; 
     flex-wrap: wrap; 
-    gap: 30px; /* فاصله بیشتر بین دسته‌بندی‌ها */
+    gap: 30px; 
     align-items: flex-start; 
 }
 .skill-category { 
     padding: 20px; 
     border: 1px solid var(--border-color); 
     border-radius: 8px; 
-    /* تنظیم برای نمایش ۳ ستونه در دسکتاپ */
     flex-basis: calc(33.33% - 20px); 
-    background-color: var(--section-bg);
+    background-color: #ffffff; /* زمینه داخلی سفید برای کنتراست بیشتر */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
 }
@@ -269,7 +268,7 @@ body.lang-en .contact-info i {
     color: var(--primary-color); 
     margin-top: 0; 
     padding-bottom: 10px; 
-    border-bottom: 2px solid var(--border-color); /* خط زیرین ضخیم‌تر */
+    border-bottom: 2px solid var(--border-color); 
     margin-bottom: 25px; 
     font-size: 1.1em; 
     font-weight: bold;
@@ -277,7 +276,7 @@ body.lang-en .contact-info i {
 
 /* استایل هر آیتم مهارت */
 .skill-level-item {
-    margin-bottom: 25px; /* فاصله بیشتر بین آیتم‌ها */
+    margin-bottom: 25px; 
 }
 
 /* لیبل مهارت و درصد */
@@ -292,9 +291,9 @@ body.lang-en .contact-info i {
 
 /* کانتینر نوار پیشرفت */
 .skill-bar-container {
-    background-color: #e6e6e6; /* رنگ زمینه روشن‌تر */
+    background-color: #e6e6e6; 
     border-radius: 10px;
-    height: 10px; /* ارتفاع بیشتر */
+    height: 10px; 
     overflow: hidden;
 }
 
@@ -302,7 +301,8 @@ body.lang-en .contact-info i {
 .skill-bar {
     height: 100%;
     background-color: var(--progress-bar-color); 
-    transition: width 0.8s ease-out; 
+    /* این ترنزیشن برای جاوااسکریپت داینامیک ضروری است */
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
 }
 
 
@@ -334,6 +334,14 @@ body.lang-en .contact-info i {
     color: var(--accent-color);
 }
 
+/* استایل لینک فعال (توسط جاوااسکریپت اضافه می‌شود) */
+#navbar a.active {
+    color: var(--accent-color) !important; 
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: bold;
+    border-bottom: 2px solid var(--accent-color); 
+}
+
 #navbar ul {
     list-style: none;
     margin: 0;
@@ -342,7 +350,7 @@ body.lang-en .contact-info i {
     justify-content: space-around;
 }
 
-/* کنترل نمایش منوها در فایل‌های مربوطه */
+/* کنترل نمایش منوها */
 .lang-fa-nav, .lang-en-nav {
     display: flex; 
     width: 100%;
@@ -355,7 +363,6 @@ body.lang-en .lang-fa-nav { display: none; }
 /* ---- FIX: اصلاح پرش لینک‌ها (Anchor Scroll Offset) ---- */
 /* ================================================= */
 section[id] {
-    /* ارتفاع جبرانی (ارتفاع نوار ناوبری) برای نمایش کامل عنوان بخش */
     padding-top: 70px; 
     margin-top: -70px; 
     box-sizing: border-box; 
@@ -370,10 +377,9 @@ section[id] {
     border: 1px solid var(--border-color);
     border-radius: 8px; 
     background-color: #ffffff; 
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); /* سایه حرفه‌ای‌تر */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); 
 }
 
-/* ... (ورودی‌ها و دکمه‌ها بدون تغییر) ... */
 .form-group {
     margin-bottom: 25px; 
 }
@@ -401,13 +407,13 @@ section[id] {
 
 .contact-form input[type="email"]:focus,
 .contact-form textarea:focus {
-    border-color: var(--accent-color); /* فوکوس با رنگ تاکیدی */
+    border-color: var(--accent-color); 
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
     outline: none; 
 }
 
 .contact-form button[type="submit"] {
-    background-color: var(--accent-color); /* دکمه با رنگ تاکیدی */
+    background-color: var(--accent-color); 
     color: white;
     padding: 12px 25px;
     border: none;
@@ -464,11 +470,9 @@ section[id] {
 @media (max-width: 600px) {
     .container { padding: 0 10px; } 
     
-    /* فونت بزرگتر در موبایل */
     h1 { font-size: 2.5em; }
     h2 { font-size: 1.1em; }
     
-    /* ناوبری موبایل (جمع شدن لینک‌ها) */
     #navbar li {
         padding: 12px 5px;
         font-size: 0.8em; 
@@ -476,20 +480,17 @@ section[id] {
         text-align: center;
     }
 
-    /* مهارت‌ها در موبایل یک ستونه می‌شوند */
     .skills-list { flex-direction: column; gap: 20px; }
     .skill-category { 
         flex-basis: 100%; 
     }
     
-    /* اطلاعات تماس در موبایل عمودی */
     .contact-info {
         flex-direction: column; 
         gap: 10px; 
         align-items: flex-start; 
     }
     
-    /* اصلاح پرش لینک‌ها در موبایل */
     section[id] {
         padding-top: 60px; 
         margin-top: -60px; 
