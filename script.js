@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // =========================================================
     // ۱. منطق نوار پیشرفت (Skill Progress Bars)
     // =========================================================
-    
     const skillItems = document.querySelectorAll('.skill-level-item');
 
     const skillObserver = new IntersectionObserver((entries, observer) => {
@@ -47,18 +46,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     // =========================================================
-    // ۳. منطق ناوبری (Navbar) - فعال‌سازی لینک‌ها
+    // ۳. منطق ناوبری (Navbar) - مدیریت هر دو منو
     // =========================================================
     
-    // انتخاب هر دو Navbar (دسکتاپ و موبایل)
+    // انتخاب لینک‌ها از هر دو Navbar
     const navLinks = document.querySelectorAll('#navbar a, #navbar-mobile a');
     
-    // تابع برای فعال کردن لینک navbar بر اساس بخش قابل مشاهده
     function setActiveNavLink() {
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
             
             // 200px برای Offset از بالای صفحه
             if (window.scrollY >= sectionTop - 200) { 
@@ -68,25 +65,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            // چک کردن بر اساس href (که شامل #id است)
+            // فعال کردن لینک‌هایی که شامل ID بخش فعلی هستند
             if (link.getAttribute('href').includes(current)) {
                 link.classList.add('active');
             }
         });
     }
 
-    // فعال کردن لینک هنگام اسکرول
     window.addEventListener('scroll', setActiveNavLink);
-    
-    // فعال کردن لینک هنگام بارگذاری اولیه
     setActiveNavLink();
     
-    // فعال کردن لینک هنگام کلیک
+    // فعال کردن لینک هنگام کلیک و اجرای اسکرول نرم
     navLinks.forEach(link => {
         link.addEventListener('click', function(event) {
-            // اجازه دهید اسکرول نرم اتفاق بیفتد، سپس کلاس active را تنظیم کنید
+            // Wait for smooth scroll to finish, then set active class
             setTimeout(() => {
-                // اطمینان از حذف active از همه لینک‌ها، از جمله لینک‌های Navbar دیگر
+                // حذف کلاس active از همه لینک‌ها قبل از اضافه کردن به لینک فعلی
                 document.querySelectorAll('#navbar a, #navbar-mobile a').forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
             }, 600); 
