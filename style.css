@@ -109,14 +109,32 @@ body.lang-en {
 
 /* دکمه جابجایی زبان - FIX: حتماً بالاترین لایه */
 .lang-switcher {
-    z-index: 300; /* بالاتر از عکس و بسم الله */
+    z-index: 300; 
     display: flex; 
     gap: 5px;
     order: -1; 
-    position: relative; /* برای اطمینان از قرارگیری در بالاترین لایه */
+    position: relative;
 }
 .lang-switcher a, .lang-switcher button {
-    /* ... (سایر استایل‌های دکمه زبان) ... */
+    text-decoration: none;
+    border: 1px solid var(--border-color); 
+    padding: 4px 8px; 
+    border-radius: 6px;
+    font-size: 0.8em;
+    transition: all 0.3s ease-in-out;
+    background-color: white; 
+    font-weight: 600; 
+}
+.lang-switcher .active-lang {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0, 51, 102, 0.3); 
+}
+.lang-switcher a:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: scale(1.1); 
 }
 
 /* تصویر بسم الله (واترمارک) - دسکتاپ */
@@ -127,8 +145,12 @@ body.lang-en {
     left: 50%; 
     transform: translate(-50%, -50%); 
     opacity: 0.08; 
-    z-index: 5; /* پایین‌ترین لایه */
+    z-index: 5; 
     animation: fade-in 2s ease-in-out forwards;
+}
+@keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 0.08; }
 }
 
 /* عکس پروفایل - دسکتاپ */
@@ -137,7 +159,7 @@ body.lang-en {
     height: 108px; 
     border-radius: 50%; 
     object-fit: cover;
-    z-index: 100; /* بالاتر از بسم الله و پایین‌تر از دکمه زبان */
+    z-index: 100; 
     border: 3px solid var(--accent-color); 
     box-shadow: var(--shadow-light);
     
@@ -146,6 +168,17 @@ body.lang-en {
     left: 50%;
     transform: translate(-50%, -50%);
     animation: pulse-border 3s infinite alternate;
+}
+@keyframes pulse-border {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 123, 255, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 0 10px rgba(0, 123, 255, 0);
+    }
+}
+.profile-icon:hover {
+    transform: translate(-50%, -50%) scale(1.05); 
 }
 
 /* ---- هدر اصلی و عناوین ---- */
@@ -158,11 +191,13 @@ h1 {
     font-size: 2.5em; 
     color: var(--primary-color); 
     margin-bottom: 5px;
+    letter-spacing: 1px; 
 }
 h2 {
     font-size: 1.1em; 
     color: #555; 
     margin-top: 5px;
+    font-weight: 500;
 }
 .section {
     padding: 30px 0; 
@@ -185,11 +220,50 @@ h2 {
     transition: all 0.3s;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
+.section-title:hover {
+    color: var(--accent-color);
+    border-inline-start-color: var(--primary-color); 
+}
 
 /* ---- منو ناوبری دسکتاپ ---- */
 #navbar {
     margin-top: 25px;
     background-color: transparent; 
+}
+#navbar a {
+    color: var(--secondary-color); 
+    text-decoration: none;
+    padding: 12px 15px; 
+    display: block;
+    font-size: 1em; 
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+}
+#navbar a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0,123,255,0.1), rgba(0,123,255,0.0));
+    transform: translateX(-100%);
+    transition: transform 0.4s ease-out;
+    z-index: -1;
+}
+#navbar a:hover::before {
+    transform: translateX(0); 
+}
+#navbar a.active {
+    color: var(--primary-color) !important; 
+    background-color: rgba(0, 51, 102, 0.1); 
+    font-weight: bold;
+    box-shadow: inset 0 0 8px rgba(0, 51, 102, 0.2);
 }
 #navbar ul {
     list-style: none;
@@ -199,15 +273,14 @@ h2 {
     flex-direction: column; 
     gap: 8px; 
 }
-/* ... (سایر استایل‌های navbar دسکتاپ) ... */
-
+/* ... (سایر استایل‌ها) ... */
 
 /* ================================================= */
 /* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     
-    /* چیدمان تک ستونی و حذف استایل‌های دسکتاپ */
+    /* چیدمان تک ستونی */
     #main-wrapper {
         flex-direction: column;
         padding-top: 0; 
@@ -232,14 +305,14 @@ h2 {
     #main-content {
         width: 100%;
         padding: 15px;
-        margin-bottom: 70px; /* فضای پایین برای Navbar ثابت موبایل */
+        margin-bottom: 70px; 
         border-radius: 15px; 
     }
     
     /* فیکس Top Area موبایل - چیدمان خطی و درست */
     #top-area {
         height: auto; 
-        flex-direction: column; /* چیدمان عمودی برای موبایل */
+        flex-direction: column; 
         align-items: center; 
         padding-top: 5px;
         padding-bottom: 15px; 
@@ -255,14 +328,22 @@ h2 {
         height: 70px;
         border-radius: 50%; 
         animation: none; 
-        margin-bottom: 10px; /* فاصله از نام */
+        margin-bottom: 10px; 
+        border: 2px solid var(--accent-color);
     }
     
     /* دکمه زبان در موبایل - FIX: بالای همه عناصر */
     .lang-switcher {
-        order: 0; /* بالاترین جایگاه در ستون */
-        z-index: 9999; /* بالاترین Z-Index */
+        order: 0; 
+        z-index: 9999; 
         margin-bottom: 10px;
+        position: absolute; /* برای موبایل: باید مطلق باشد */
+        top: 10px;
+        right: 15px;
+    }
+    body.lang-en .lang-switcher {
+        left: 15px;
+        right: auto;
     }
     
     /* FIX: بسم الله در موبایل پنهان شود */
@@ -284,7 +365,7 @@ h2 {
         font-size: 0.9em;
     }
     .contact-info {
-        align-items: center; /* وسط‌چین شدن اطلاعات تماس */
+        align-items: center; 
     }
 
     /* پنهان کردن Navbar دسکتاپ در موبایل */
@@ -325,7 +406,7 @@ h2 {
     
     #navbar-mobile a {
         color: white; 
-        padding: 8px 3px; /* فضای کمتر در موبایل */
+        padding: 8px 3px; 
         font-size: 0.8em;
         text-decoration: none;
         display: flex; 
@@ -333,6 +414,9 @@ h2 {
         align-items: center;
         gap: 2px;
         transition: background-color 0.2s;
+    }
+    #navbar-mobile a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
     }
 
     /* آیکون‌ها */
@@ -346,13 +430,20 @@ h2 {
         transition: color 0.3s;
     }
     
-    /* تخصیص آیکون (مثال برای فارسی) */
+    /* تخصیص آیکون (فارسی) */
     body.lang-fa #navbar-mobile ul li:nth-child(1) a::after { content: "\f007"; } 
     body.lang-fa #navbar-mobile ul li:nth-child(2) a::after { content: "\f0b1"; } 
     body.lang-fa #navbar-mobile ul li:nth-child(3) a::after { content: "\f085"; } 
     body.lang-fa #navbar-mobile ul li:nth-child(4) a::after { content: "\f573"; } 
     body.lang-fa #navbar-mobile ul li:nth-child(5) a::after { content: "\f549"; } 
     body.lang-fa #navbar-mobile ul li:nth-child(6) a::after { content: "\f2b6"; } 
+    /* تخصیص آیکون (انگلیسی - برای یکپارچگی) */
+    body.lang-en #navbar-mobile ul li:nth-child(1) a::after { content: "\f007"; } 
+    body.lang-en #navbar-mobile ul li:nth-child(2) a::after { content: "\f0b1"; } 
+    body.lang-en #navbar-mobile ul li:nth-child(3) a::after { content: "\f085"; } 
+    body.lang-en #navbar-mobile ul li:nth-child(4) a::after { content: "\f573"; } 
+    body.lang-en #navbar-mobile ul li:nth-child(5) a::after { content: "\f549"; } 
+    body.lang-en #navbar-mobile ul li:nth-child(6) a::after { content: "\f2b6"; } 
 
     #navbar-mobile a.active {
         background-color: rgba(255, 255, 255, 0.2) !important; 
