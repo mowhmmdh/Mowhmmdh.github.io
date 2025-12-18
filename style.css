@@ -342,9 +342,9 @@ body.lang-en .lang-en-nav {
 /* تنظیم فضای خالی بالای هر بخش برای جبران نوار ناوبری ثابت */
 section[id] {
     /* ارتفاع نوار ناوبری در دسکتاپ حدود 65px است */
-    padding-top: 65px; 
+    padding-top: 60px; 
     /* کشیدن المان به بالا برای حفظ فضای اصلی صفحه */
-    margin-top: -65px; 
+    margin-top: -60px; 
     box-sizing: border-box; 
 }
 
