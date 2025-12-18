@@ -78,7 +78,7 @@ body.lang-en {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-    position: relative; /* کلید اصلی برای مرکزیت بسم الله */
+    position: relative; 
 }
 
 /* ---- عکس پروفایل (Profile Icon) ---- */
@@ -336,6 +336,18 @@ body.lang-en .lang-en-nav {
     display: flex;
 }
 
+/* ================================================= */
+/* ---- FIX: اصلاح پرش لینک‌ها (Anchor Scroll Offset) ---- */
+/* ================================================= */
+/* تنظیم فضای خالی بالای هر بخش برای جبران نوار ناوبری ثابت */
+section[id] {
+    /* ارتفاع نوار ناوبری در دسکتاپ حدود 65px است */
+    padding-top: 65px; 
+    /* کشیدن المان به بالا برای حفظ فضای اصلی صفحه */
+    margin-top: -65px; 
+    box-sizing: border-box; 
+}
+
 
 /* ---- استایل‌های فرم تماس (CONTACT FORM) ---- */
 .contact-form {
@@ -476,16 +488,23 @@ body.lang-en .lang-en-nav {
         max-width: 60%; 
     }
     
-    /* **اصلاح اندازه دکمه‌های تغییر زبان در موبایل** */
+    /* **کوچک کردن دکمه‌های تغییر زبان در موبایل** */
     .lang-switcher a, .lang-switcher button {
-        padding: 2px 5px; /* کاهش Padding */
-        font-size: 0.7em; /* کاهش اندازه فونت */
+        padding: 2px 5px; 
+        font-size: 0.7em; 
         border: 1px solid var(--border-color);
     }
 
     .header { margin-top: 20px; }
     h1 { font-size: 2em; }
     h2 { font-size: 1.2em; }
+
+    /* **اصلاح پرش لینک‌ها در موبایل** */
+    section[id] {
+        /* ارتفاع نوار ناوبری در موبایل حدود 55px است */
+        padding-top: 55px; 
+        margin-top: -55px; 
+    }
 
     /* تنظیمات منو ناوبری در موبایل */
     #navbar ul { flex-wrap: wrap; justify-content: space-between; }
