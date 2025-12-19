@@ -113,7 +113,7 @@ body.lang-en {
     height: 110px; 
 }
 
-/* عکس پروفایل */
+/* عکس پروفایل - **تنظیمات دسکتاپ** */
 .profile-icon {
     width: 90px; 
     height: 108px; 
@@ -586,26 +586,24 @@ footer {
     /* FIX اصلی: استفاده از Flexbox برای Top Area در موبایل */
     #top-area {
         height: auto; 
-        display: flex; /* تبدیل به Flex Container */
-        flex-direction: column; /* چیدمان عمودی */
-        align-items: center; /* **همه چیز را در مرکز تراز می‌کند** */
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; 
         padding-top: 5px;
         padding-bottom: 15px; 
-        position: relative; 
+        position: relative; /* مهم برای absolute کردن دکمه‌های زبان */
     }
 
-    /* عکس پروفایل - دیگر float ندارد */
+    /* عکس پروفایل - FIX: بازنشانی کامل موقعیت برای نمایش صحیح در مرکز */
     .profile-icon {
-        position: static; 
-        transform: none; 
+        position: static !important; 
+        transform: none !important; 
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
         z-index: 100;
         margin-top: 10px; 
         margin-bottom: 15px; 
-        /* حذف تنظیمات float و margin-left/right مخصوص موبایل */
-        float: none;
         margin-left: auto;
         margin-right: auto;
     }
@@ -615,43 +613,38 @@ footer {
         z-index: 250; 
         display: flex;
         gap: 5px;
-        position: static; /* دیگر مطلق نیست */
-        top: auto; 
-        margin-left: auto; /* **FIX: دکمه‌ها را به سمت راست (فارسی) یا چپ (انگلیسی) گوشه می‌برد** */
-        
-        /* برای چیدمان دکمه‌ها در گوشه بالا-راست/چپ */
         position: absolute; 
+        top: 15px;
     }
     
-    /* **تنظیمات موقعیت دکمه‌ها در گوشه بالا** */
+    /* **FIX داینامیک: تنظیم موقعیت دکمه‌ها بر اساس زبان** */
+    
+    /* حالت فارسی (RTL): دکمه‌ها باید سمت راست باشند */
     body.lang-fa .lang-switcher {
-        left: auto;
-        right: 15px; 
-        top: 15px;
+        left: auto;     /* چپ را غیرفعال کن */
+        right: 15px;    /* برو راست */
     }
 
+    /* حالت انگلیسی (LTR): دکمه‌ها باید سمت چپ باشند */
     body.lang-en .lang-switcher {
-        left: 15px; 
-        right: auto;
-        top: 15px;
+        left: 15px;     /* برو چپ */
+        right: auto;    /* راست را غیرفعال کن */
     }
     
-    /* هدر (شامل نام و عناوین) - اکنون کاملاً مرکز چین است */
+    /* هدر (شامل نام و عناوین) - کاملاً مرکز چین */
     .header {
-        /* دیگر نیازی به overflow: hidden نیست چون float حذف شده است */
         overflow: visible; 
         margin-top: 5px;
         border-bottom: none;
         padding-bottom: 0;
         
-        /* **نام و عنوان کاملاً در مرکز تراز می‌شوند** */
         text-align: center; 
         
-        padding-inline-start: 0; /* حذف padding اضافی */
+        padding-inline-start: 0; 
         margin-bottom: 0;
     }
     
-    /* **FIX: اطلاعات تماس باید در مرکز تراز شوند** */
+    /* **اطلاعات تماس در مرکز تراز می‌شوند** */
     .contact-info { 
         align-items: center; 
         flex-direction: column; 
@@ -660,11 +653,9 @@ footer {
         text-align: center; 
     }
     
-    /* تنظیمات خاص برای آیتم‌های تماس */
     .contact-info p, .contact-info a {
         text-align: center; 
-        /* نیاز به بازنشانی جهت برای نمایش آیکون و متن در خط (برای مرکزیت بهتر) */
-        direction: ltr; 
+        direction: ltr; /* کمک می‌کند آیکون‌ها و متن در یک خط مرکزی بمانند */
     }
     
     /* ناوبری موبایل (در زیر هدر قرار می‌گیرد) */
