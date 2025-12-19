@@ -115,9 +115,9 @@ body.lang-en {
 
 /* عکس پروفایل */
 .profile-icon {
-    width: 90px; 
-    height: 108px; 
-    border-radius: 50%; 
+    width: 100px; 
+    height: 120px; 
+    border-radius: 20%; 
     object-fit: cover;
     z-index: 100; 
     border: 3px solid var(--accent-color); 
@@ -600,7 +600,7 @@ footer {
         height: 84px;
         border-radius: 20%; 
         z-index: 100;
-        margin-top: 5px; /* فاصله کم از بالا */
+        margin-top: 20px; /* فاصله کم از بالا */
         margin-bottom: 15px; 
     }
     
@@ -618,7 +618,7 @@ footer {
     /* حالت فارسی (RTL): عکس چپ، دکمه راست */
     body.lang-fa .profile-icon {
         float: left; /* **عکس سمت چپ** */
-        margin-left: 10px;
+        margin-left: 25px;
         margin-right: 0;
     }
     body.lang-fa .lang-switcher {
@@ -629,7 +629,7 @@ footer {
     /* حالت انگلیسی (LTR): عکس راست، دکمه چپ */
     body.lang-en .profile-icon {
         float: right; /* **عکس سمت راست** */
-        margin-right: 10px;
+        margin-right: 30px;
         margin-left: 0;
     }
     body.lang-en .lang-switcher {
