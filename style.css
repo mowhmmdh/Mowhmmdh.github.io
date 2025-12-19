@@ -147,7 +147,7 @@ body.lang-en {
 
 /* دکمه جابجایی زبان */
 .lang-switcher {
-    z-index: 100; 
+    z-index: 200; 
     display: flex; 
     gap: 5px;
     order: -1; 
