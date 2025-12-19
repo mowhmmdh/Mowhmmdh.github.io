@@ -1,7 +1,7 @@
 /* ---- تنظیم اسکرول نرم (Smooth Scroll) ---- */
 html {
     scroll-behavior: smooth;
-}
+} 
 
 /* ---- فونت‌ها ---- */
 @font-face {
