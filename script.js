@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===============================================
     // توابع کمکی (Utility Functions)
     // ===============================================
-    
+     
     // تابع Debounce: محدود کردن فراخوانی یک تابع در یک دوره زمانی مشخص
     function debounce(func, delay) {
         let timeout;
