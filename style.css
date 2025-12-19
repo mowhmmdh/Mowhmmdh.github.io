@@ -115,9 +115,9 @@ body.lang-en {
 
 /* عکس پروفایل */
 .profile-icon {
-    width: 90px; 
-    height: 108px; 
-    border-radius: 50%; 
+    width: 100px; 
+    height: 120px; 
+    border-radius: 20%; 
     object-fit: cover;
     z-index: 100; 
     border: 3px solid var(--accent-color); 
@@ -585,10 +585,10 @@ footer {
     
     /* Top Area موبایل - تنظیمات برای موقعیت مطلق و ارتفاع کافی */
     #top-area {
-        height: 125px; /* ارتفاع بیشتر برای پایین آمدن عکس */
+        height: 200px; /* ارتفاع بیشتر برای پایین آمدن عکس */
         display: block; 
-        padding-top: 5px;
-        padding-bottom: 15px; 
+        padding-top: 10px;
+        padding-bottom: 20px; 
         position: relative; 
     }
     
