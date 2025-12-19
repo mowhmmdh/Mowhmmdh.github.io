@@ -145,3 +145,49 @@ document.addEventListener('DOMContentLoaded', function() {
     // اجرای اولیه برای تنظیم بخش فعال هنگام بارگذاری صفحه
     updateActiveNav(); 
 });
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // ===============================================
+    // فعال‌سازی نوارهای مهارت (Skill Bars)
+    // ===============================================
+    
+    const skillItems = document.querySelectorAll('.skill-level-item');
+
+    // تابع اصلی برای اجرای انیمیشن پر شدن
+    function animateSkillBars() {
+        skillItems.forEach(item => {
+            const percentSpan = item.querySelector('.skill-percent');
+            
+            if (percentSpan) {
+                const percentValue = percentSpan.textContent; // مثلاً "85%"
+                
+                // 1. تنظیم متغیر CSS (--skill-width) با مقدار درصد
+                item.style.setProperty('--skill-width', percentValue);
+                
+                // 2. افزودن کلاس 'show' برای اجرای انیمیشن CSS
+                item.classList.add('show');
+            }
+        });
+    }
+
+    // مشاهده‌گر برای اجرای انیمیشن زمانی که بخش مهارت‌ها در دید کاربر قرار می‌گیرد
+    const skillsSection = document.getElementById('skills');
+
+    if (skillsSection) {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    // پس از اجرا، Observer را متوقف کن
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(skillsSection);
+    } 
+    // اگر آیدی #skills نبود، بلافاصله اجرا کن
+    else {
+        animateSkillBars();
+    }
+});
