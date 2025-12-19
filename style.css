@@ -100,7 +100,7 @@ body.lang-en {
 
 
 /* ================================================= */
-/* ---- ۱. کانتینر بالای صفحه (Top Area) ---- */
+/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح نهایی Z-Index ---- */
 /* ================================================= */
 
 #top-area {
@@ -119,7 +119,7 @@ body.lang-en {
     height: 108px; 
     border-radius: 50%; 
     object-fit: cover;
-    z-index: 100; 
+    z-index: 100; /* FIX: اولویت متوسط */
     border: 3px solid var(--accent-color); 
     box-shadow: var(--shadow-light);
     transition: transform 0.3s;
@@ -142,12 +142,12 @@ body.lang-en {
     left: 50%; 
     transform: translate(-50%, -50%); 
     opacity: 0.08; 
-    z-index: 5; 
+    z-index: 5; /* FIX: پایین‌ترین اولویت */
 }
 
 /* دکمه جابجایی زبان */
 .lang-switcher {
-    z-index: 200; 
+    z-index: 250; /* FIX: بالاترین اولویت برای تعامل */
     display: flex; 
     gap: 5px;
     order: -1; 
@@ -343,7 +343,6 @@ body.lang-fa .job-item ul li::before {
     border-radius: 4px;
     overflow: hidden;
 }
-/* **تنها اصلاح برای فعال‌سازی انیمیشن Skill Bar** */
 .skill-bar {
     width: 0; 
     height: 100%;
@@ -562,7 +561,6 @@ footer {
 
 /* ================================================= */
 /* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) ---- */
-/* **اصلاحات برای رفع بهم ریختگی قسمت انتهایی و فوتر** */
 /* ================================================= */
 @media (max-width: 992px) {
     
@@ -602,6 +600,7 @@ footer {
         position: static; 
         transform: none; 
         order: 2; 
+        z-index: 100; /* FIX: اولویت متوسط در موبایل */
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
@@ -613,6 +612,7 @@ footer {
 
     .lang-switcher {
         order: 1; 
+        z-index: 250; /* FIX: بالاترین اولویت در موبایل */
     }
     
     .bismillah-icon {
@@ -660,11 +660,11 @@ footer {
         gap: 15px; 
     }
     
-    /* **اصلاح بهم ریختگی فوتر و لینک‌های سریع** */
+    /* اصلاح بهم ریختگی فوتر و لینک‌های سریع */
     .footer-branding {
         flex-direction: column;
         text-align: center;
-        margin-top: 20px; /* کاهش فاصله در موبایل */
+        margin-top: 20px; 
     }
     .footer-logo {
         margin-inline-end: 0;
@@ -674,9 +674,8 @@ footer {
         padding: 10px 0;
     }
     .quick-link {
-        display: block; /* لینک‌های تماس سریع زیر هم قرار بگیرند */
+        display: block; 
         width: 90%; 
-        margin: 10px auto; /* مرکز قرار دادن لینک‌ها */
+        margin: 10px auto; 
     }
-    
 }
