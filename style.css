@@ -583,75 +583,74 @@ footer {
         padding: 15px;
     }
     
-    /* Top Area موبایل - حالت ستونی (عمودی) - پایه چیدمان موبایل */
+    /* Top Area موبایل - حالت بلاک (پایه چیدمان موبایل) */
     #top-area {
         height: auto; 
-        display: flex; 
-        flex-direction: column; 
-        justify-content: flex-start; 
-        align-items: center; /* مرکزیت نام و عناوین */
+        display: block; 
         padding-top: 5px;
         padding-bottom: 15px; 
         position: relative; 
     }
 
-    /* عکس پروفایل - تنظیمات Flexbox برای جابجایی در گوشه */
+    /* عکس پروفایل - **استفاده از float برای قرارگیری در گوشه** */
     .profile-icon {
         position: static; 
         transform: none; 
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
-        margin-top: 15px; /* فاصله از دکمه‌های زبان */
+        z-index: 100;
+        margin-top: 5px; /* فاصله کم از بالا */
         margin-bottom: 15px; 
-        
-        /* **تنظیمات کلیدی برای جابجایی در گوشه** */
-        align-self: flex-start; /* پیش‌فرض به سمت چپ می‌رود (برای LTR) */
-        order: 2; /* در ردیف دوم قرار می‌گیرد (زیر دکمه‌های زبان) */
     }
-
+    
     /* دکمه‌های جابجایی زبان در موبایل */
     .lang-switcher {
-        width: 100%; /* برای اینکه بتواند در گوشه‌ها پخش شود */
+        z-index: 250; 
         display: flex;
-        justify-content: flex-end; /* پیش‌فرض دکمه‌ها در گوشه راست می‌روند (برای LTR) */
-        padding: 5px 10px;
-        order: 1; /* در ردیف اول (بالاترین قسمت) قرار می‌گیرد */
+        gap: 5px;
+        position: absolute; /* **موقعیت مطلق برای رفتن به گوشه متضاد عکس** */
+        top: 15px;
     }
     
     /* **تنظیمات مخصوص زبان (RTL/LTR) برای جابجایی عکس و دکمه‌ها** */
     
     /* حالت فارسی (RTL): عکس چپ، دکمه راست */
     body.lang-fa .profile-icon {
-        align-self: flex-start; /* عکس در سمت چپ */
-        margin-inline-start: 10px; /* فاصله از گوشه */
-        margin-inline-end: 0;
+        float: left; /* **عکس سمت چپ** */
+        margin-left: 10px;
+        margin-right: 0;
     }
     body.lang-fa .lang-switcher {
-        justify-content: flex-end; /* دکمه‌ها در سمت راست */
+        left: auto;
+        right: 10px; /* **دکمه‌های زبان سمت راست** */
     }
 
     /* حالت انگلیسی (LTR): عکس راست، دکمه چپ */
     body.lang-en .profile-icon {
-        align-self: flex-end; /* عکس در سمت راست */
-        margin-inline-end: 10px; /* فاصله از گوشه */
-        margin-inline-start: 0;
+        float: right; /* **عکس سمت راست** */
+        margin-right: 10px;
+        margin-left: 0;
     }
     body.lang-en .lang-switcher {
-        justify-content: flex-start; /* دکمه‌ها در سمت چپ */
+        left: 10px; /* **دکمه‌های زبان سمت چپ** */
+        right: auto;
     }
     
-    /* هدر (شامل نام و عناوین) - باید وسط قرار گیرد */
+    /* هدر (شامل نام و عناوین) - قرارگیری در کنار عکس */
     .header {
-        order: 3; 
-        width: 100%;
-        text-align: center; 
+        overflow: hidden; /* **تضمین می‌کند محتوای هدر کنار عکس قرار بگیرد و چیدمان بهم نریزد** */
         margin-top: 5px;
         border-bottom: none;
         padding-bottom: 0;
+        text-align: initial; /* نام و عنوان کنار عکس می‌آید */
+        padding-inline-start: 5px; 
+        
+        /* FIX: اگر عکس float شده باشد، margin را برای Header حذف می‌کنیم */
+        margin-bottom: 0;
     }
-
-    /* Navbar موبایل (زیر عنوان اصلی قرار می‌گیرد) */
+    
+    /* ناوبری موبایل (در زیر هدر قرار می‌گیرد) */
     #navbar {
         margin-top: 15px;
         background-color: var(--primary-color); 
