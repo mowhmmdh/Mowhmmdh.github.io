@@ -128,12 +128,12 @@ body.lang-en {
     top: 50%;
 }
 
-/* FIX: جابجایی عکس پروفایل در حالت فارسی (به سمت چپ تر - 20%) */
+/* جابجایی عکس پروفایل در حالت فارسی (به سمت چپ تر - 20%) */
 body.lang-fa .profile-icon {
     left: 20%; 
     transform: translate(-50%, -50%); 
 }
-/* FIX: جابجایی عکس پروفایل در حالت انگلیسی (به سمت راست تر - 80%) */
+/* جابجایی عکس پروفایل در حالت انگلیسی (به سمت راست تر - 80%) */
 body.lang-en .profile-icon {
     left: 80%; 
     transform: translate(-50%, -50%); 
@@ -559,7 +559,7 @@ footer {
 
 
 /* ================================================= */
-/* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) ---- */
+/* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) - **اصلاح نهایی** ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     
@@ -584,26 +584,26 @@ footer {
         padding: 15px;
     }
     
-    /* Top Area موبایل - عکس و دکمه زبان */
+    /* Top Area موبایل - **اصلاح فلکس و جایگاه عکس** */
     #top-area {
         height: auto; 
-        flex-direction: row; 
-        justify-content: space-between;
-        align-items: flex-start; 
+        flex-direction: column; /* FIX: تغییر به ستونی برای مرکزیت */
+        justify-content: center;
+        align-items: center; 
         padding-top: 5px;
         padding-bottom: 15px; 
         position: static; 
     }
     
     .profile-icon {
-        position: static; /* حفظ موقعیت استاتیک برای موبایل */
+        position: static; 
         transform: none; 
-        order: 2; 
+        order: 2; /* زیر دکمه‌های زبان می‌آید */
         z-index: 100; 
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
-        margin: 0 5px; 
+        margin: 10px 0; /* کمی فاصله از بالا و پایین */
     }
     .profile-icon:hover {
         transform: none; 
@@ -612,8 +612,17 @@ footer {
     .lang-switcher {
         order: 1; 
         z-index: 250; 
+        width: 100%; /* FIX: برای حفظ جایگاه در گوشه‌ها */
+        display: flex;
+        justify-content: flex-end; /* دکمه‌ها در سمت راست (در RTL) یا چپ (در LTR) باشند */
+        padding: 5px 0;
     }
     
+    /* اگر زبان فارسی باشد، دکمه‌ها باید در گوشه چپ باشند (بسته به جهت RTL) */
+    body.lang-fa .lang-switcher {
+         justify-content: flex-start;
+    }
+
     .bismillah-icon {
         display: none; 
     }
