@@ -25,6 +25,7 @@ body {
 }
 
 /* ---- فونت‌ها و جهت‌دهی (RTL/LTR) ---- */
+/* (استایل فونت‌ها بدون تغییر) */
 @font-face {
     font-family: 'BNazanin';
     src: url('fonts/BNazanin.woff2') format('woff2'); 
@@ -92,40 +93,33 @@ body.lang-en {
 
 
 /* ================================================= */
-/* ---- ۲. بخش هدر پروفایل (Profile Header Area) - دسکتاپ ---- */
+/* ---- ۲. بخش هدر و اطلاعات تماس در سایدبار (دسکتاپ) ---- */
 /* ================================================= */
 
-#profile-header-area {
-    /* استفاده از Grid */
-    display: grid;
-    grid-template-areas: 
-        "switcher switcher"
-        "image header"
-        "image header";
-    grid-template-columns: 100px 1fr;
-    gap: 0 15px;
-    align-items: center;
+#top-area {
     position: relative;
     padding-bottom: 25px;
 }
 
 /* دکمه جابجایی زبان */
 .lang-switcher {
-    grid-area: switcher;
     display: flex; 
     justify-content: flex-end; 
     gap: 5px;
-    z-index: 300; 
+    margin-bottom: 15px; 
+    font-size: 0.9em;
 }
-.lang-switcher a {
+.lang-switcher button, .lang-switcher a {
     text-decoration: none;
     color: var(--secondary-color);
     padding: 3px 8px;
     border-radius: 5px;
-    transition: background-color 0.3s, color 0.3s; /* انیمیشن نرم برای رنگ */
-    font-size: 0.9em;
+    transition: background-color 0.3s, color 0.3s; 
+    background: none; 
+    border: none;
+    cursor: pointer;
 }
-.lang-switcher a:hover {
+.lang-switcher a:hover, .lang-switcher button:hover {
     background-color: var(--border-color);
 }
 .lang-switcher .active-lang {
@@ -138,7 +132,7 @@ body.lang-en .lang-switcher {
 
 /* عکس پروفایل */
 .profile-icon {
-    grid-area: image;
+    display: block;
     width: 90px; 
     height: 90px; 
     border-radius: 50%; 
@@ -146,16 +140,7 @@ body.lang-en .lang-switcher {
     z-index: 100; 
     border: 3px solid var(--accent-color); 
     box-shadow: var(--shadow-light);
-    justify-self: center; 
-}
-
-/* هدر (نام و عنوان) */
-.header {
-    grid-area: header;
-    margin: 0;
-    padding: 0;
-    border-bottom: 1px solid var(--border-color); 
-    padding-bottom: 15px;
+    margin: 0 auto 15px; 
 }
 
 /* تصویر بسم الله (واترمارک) */
@@ -170,11 +155,34 @@ body.lang-en .lang-switcher {
     pointer-events: none; 
 }
 
+/* هدر (نام و عنوان) */
+.header {
+    text-align: center;
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+/* اطلاعات تماس در سایدبار */
+.contact-info {
+    margin: 10px 0;
+    padding: 0 10px;
+}
+.contact-info a {
+    text-decoration: none;
+    color: var(--secondary-color);
+}
+.contact-info i {
+    width: 25px;
+    color: var(--accent-color);
+}
+
 /* ================================================= */
 /* ---- ۳. ناوبری دسکتاپ (#navbar) ---- */
 /* ================================================= */
 #navbar {
     margin-top: 25px;
+    padding: 0 10px;
 }
 #navbar ul {
     list-style: none;
@@ -190,7 +198,7 @@ body.lang-en .lang-switcher {
     display: block;
     padding: 10px 15px;
     border-radius: 8px;
-    transition: background-color 0.3s, color 0.3s; /* انیمیشن نرم برای رنگ */
+    transition: background-color 0.3s, color 0.3s; 
     font-weight: 500;
 }
 #navbar a:hover {
@@ -200,7 +208,7 @@ body.lang-en .lang-switcher {
 #navbar a.active {
     background-color: var(--primary-color);
     color: white; 
-    box-shadow: 0 4px 8px rgba(0, 51, 102, 0.3); /* سایه نرم برای فعال */
+    box-shadow: 0 4px 8px rgba(0, 51, 102, 0.3); 
 }
 
 
@@ -234,17 +242,33 @@ body.lang-en .lang-switcher {
     border-radius: 8px;
     cursor: pointer;
     font-size: 1em;
-    transition: background-color 0.3s, transform 0.2s; /* انیمیشن نرم برای رنگ */
+    transition: background-color 0.3s, transform 0.2s; 
 }
 .contact-form button[type="submit"]:hover {
     background-color: var(--accent-color); 
     transform: translateY(-2px);
 }
-/* لینک‌های تماس سریع (Quick Contact) را در دسکتاپ به صورت لینک‌های معمولی حفظ می‌کنیم */
-.contact-info p { 
-    margin: 5px 0;
-    font-size: 0.95em;
-    color: var(--secondary-color);
+/* لینک‌های تماس سریع (Quick Contact) */
+.quick-contact-info a {
+    display: inline-block;
+    padding: 8px 15px;
+    margin-inline-end: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
+.quick-contact-info .linked-in {
+    background-color: #0077B5; 
+    color: white;
+}
+.quick-contact-info .email-link {
+    background-color: var(--accent-color);
+    color: white;
+}
+.quick-contact-info a:hover {
+    opacity: 0.9;
 }
 
 
@@ -259,6 +283,11 @@ body.lang-en .lang-switcher {
 /* ================================================= */
 @media (max-width: 992px) {
     
+    .container {
+        width: 100%;
+        padding: 0;
+    }
+
     #main-wrapper {
         flex-direction: column;
         padding-top: 0; 
@@ -281,39 +310,36 @@ body.lang-en .lang-switcher {
     #main-content {
         width: 100%;
         padding: 15px;
-        margin-bottom: 70px; 
+        /* فضای کافی برای نوار ثابت پایین */
+        padding-bottom: 80px; 
     }
     
-    /* FIX: Top Area موبایل - چیدمان خطی و درست (Flexbox) */
-    #profile-header-area {
+    /* FIX: Top Area موبایل - وسط چین */
+    #top-area {
         display: flex;
         flex-direction: column; 
         align-items: center; 
-        position: relative; 
         padding-bottom: 10px;
     }
-    
+
     /* دکمه زبان در موبایل - FIX: مطلق و در گوشه بالا */
     .lang-switcher {
         position: absolute; 
-        top: 0px;
+        top: 10px;
         right: 10px;
-        justify-content: flex-end; 
+        z-index: 1000;
+        margin-bottom: 0;
     }
     body.lang-en .lang-switcher {
         left: 10px;
         right: auto;
-        justify-content: flex-start; 
     }
 
     /* عکس پروفایل در موبایل: وسط چین */
     .profile-icon {
-        position: static; 
-        transform: none; 
-        order: 1; 
         width: 100px; 
         height: 100px;
-        margin-bottom: 10px; 
+        margin: 0 auto 10px; 
     }
     
     /* بسم الله در موبایل پنهان شود */
@@ -324,49 +350,26 @@ body.lang-en .lang-switcher {
     /* هدر در موبایل - وسط‌چین */
     .header {
         text-align: center;
-        order: 2;
         width: 100%; 
         padding-bottom: 10px; 
+        margin-bottom: 0; 
     }
     .header h1 {
         font-size: 1.5em;
     }
-    
-    /* پنهان کردن Navbar دسکتاپ */
-    #sidebar-info > #navbar {
+
+    /* اطلاعات تماس در سایدبار (مخفی می‌شود تا فقط در فرم تماس نمایش داده شود) */
+    #sidebar-info .contact-info {
         display: none; 
     }
     
-    /* ********************************************* */
-    /* FIX 1: پنهان کردن بلوک ناوبری اضافی که در عکس دیده می‌شود */
-    /* فرض بر این است که بلوک ناوبری اضافی شما داخل سایدبار است و در HTML وجود دارد */
-    #sidebar-info .nav-links-mobile { /* اگر این بلوک نام دیگری دارد، لطفاً نام کلاس یا ID را جایگزین کنید */
-        display: none;
+    /* FIX 1: پنهان کردن قطعی ناوبری دسکتاپ (#navbar) در موبایل */
+    #sidebar-info #navbar {
+        display: none !important; 
     }
-    /* FIX 2: اصلاح استایل لینک‌های سریع (که در عکس‌ها به شکل بلوک‌های رنگی دیده می‌شوند) */
-    /* این بخش احتمالاً باعث تداخل شده است. آن را به لینک‌های معمولی تبدیل می‌کنیم. */
-    #sidebar-info .contact-info {
-        padding: 0 15px; /* کمی فاصله */
-        margin-top: 15px;
-        display: flex; /* چیدمان افقی یا عمودی بسته به محتوا */
-        flex-direction: column; 
-        gap: 8px;
-    }
-    #sidebar-info .contact-info p {
-        background-color: transparent; /* حذف رنگ پس‌زمینه ناخواسته */
-        color: var(--secondary-color); /* بازگرداندن رنگ متن معمولی */
-        padding: 0;
-        margin: 0;
-        text-align: right; /* برای فارسی */
-        font-weight: normal;
-    }
-    body.lang-en #sidebar-info .contact-info p {
-        text-align: left; /* برای انگلیسی */
-    }
-    /* ********************************************* */
-
+    
     /* =========================================== */
-    /* FIX: نمایش Navbar ثابت پایین (Fixed Bottom Navbar) در موبایل */
+    /* FIX: نمایش و استایل Navbar ثابت پایین (#navbar-mobile) */
     /* =========================================== */
     #navbar-mobile {
         display: block; /* نمایش در موبایل */
@@ -377,7 +380,7 @@ body.lang-en .lang-switcher {
         width: 100%;
         z-index: 9999; 
         background-color: var(--primary-color); 
-        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.3);
     }
 
     #navbar-mobile ul {
@@ -393,33 +396,43 @@ body.lang-en .lang-switcher {
         text-align: center;
     }
     
+    /* FIX: تثبیت رنگ‌ها با !important و استایل آیکون */
     #navbar-mobile a {
-        color: white; 
-        padding: 8px 3px; 
-        font-size: 0.8em;
+        color: white !important; /* تثبیت رنگ لینک */
+        padding: 10px 3px; 
+        font-size: 0.75em; /* کمی کوچکتر */
         text-decoration: none;
         display: flex; 
         flex-direction: column;
         align-items: center;
         gap: 2px;
-        transition: background-color 0.3s; /* انیمیشن نرم برای رنگ */
+        transition: background-color 0.3s; 
     }
+    /* استایل آیکون در نوار ناوبری موبایل */
+    #navbar-mobile a i {
+        font-size: 1.3em;
+        margin-bottom: 2px;
+        color: white;
+        transition: color 0.3s;
+    }
+
 
     #navbar-mobile a:hover {
-        background-color: rgba(255, 255, 255, 0.1); /* هاور نرم */
+        background-color: rgba(255, 255, 255, 0.1); 
     }
 
+    /* FIX: تثبیت رنگ لینک و آیکون فعال */
     #navbar-mobile a.active {
         background-color: rgba(255, 255, 255, 0.2) !important; 
+        color: white !important;
     }
-    #navbar-mobile a.active::after {
-        color: var(--accent-color);
-        transition: color 0.3s; /* انیمیشن نرم برای آیکون */
+    #navbar-mobile a.active i {
+        color: var(--accent-color) !important; 
     }
     
-    /* (کدهای آیکون ثابت هستند) */
-    body.lang-fa #navbar-mobile ul li:nth-child(1) a::after { content: "\f007"; } 
-    body.lang-fa #navbar-mobile ul li:nth-child(2) a::after { content: "\f0b1"; } 
-    body.lang-fa #navbar-mobile ul li:nth-child(3) a::after { content: "\f085"; } 
-    body.lang-fa #navbar-mobile ul li:nth-child(4) a::after { content: "\f573"; } 
-    body.lang-fa #navbar-mobile ul li:
+    /* FIX: پنهان کردن آیکون‌های FontAwesome که در CSS قبلی شما با ::after اضافه شده بودند 
+       (چون در HTML جدید آیکون‌ها را مستقیم با <i> اضافه کردیم) */
+    #navbar-mobile a::after {
+        content: none !important;
+    }
+}
