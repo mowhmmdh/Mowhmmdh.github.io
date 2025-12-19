@@ -100,7 +100,7 @@ body.lang-en {
 
 
 /* ================================================= */
-/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح نهایی موقعیت و Z-Index ---- */
+/* ---- ۱. کانتینر بالای صفحه (Top Area) - موقعیت دسکتاپ ---- */
 /* ================================================= */
 
 #top-area {
@@ -115,9 +115,9 @@ body.lang-en {
 
 /* عکس پروفایل */
 .profile-icon {
-    width: 100px; 
-    height: 120px; 
-    border-radius: 20%; 
+    width: 90px; 
+    height: 108px; 
+    border-radius: 50%; 
     object-fit: cover;
     z-index: 100; 
     border: 3px solid var(--accent-color); 
@@ -128,26 +128,25 @@ body.lang-en {
     top: 50%;
 }
 
-/* FIX: جابجایی عکس پروفایل در حالت فارسی (به سمت چپ) */
+/* FIX: جابجایی عکس پروفایل در حالت فارسی (به سمت چپ تر - 20%) */
 body.lang-fa .profile-icon {
-    left: 20%; /* جابجایی از مرکز (50%) به 40% (سمت راست) */
-    transform: translate(-50%, -50%); /* حفظ موقعیت عمودی */
+    left: 20%; 
+    transform: translate(-50%, -50%); 
 }
-/* FIX: جابجایی عکس پروفایل در حالت انگلیسی (به سمت راست) */
+/* FIX: جابجایی عکس پروفایل در حالت انگلیسی (به سمت راست تر - 80%) */
 body.lang-en .profile-icon {
-    left: 80%; /* جابجایی از مرکز (50%) به 60% (سمت چپ) */
-    transform: translate(-50%, -50%); /* حفظ موقعیت عمودی */
+    left: 80%; 
+    transform: translate(-50%, -50%); 
 }
 
 /* تصویر بسم الله (واترمارک) */
 .bismillah-icon {
-    /* FIX: حذف کامل بسم الله */
     display: none; 
 }
 
 /* دکمه جابجایی زبان */
 .lang-switcher {
-    z-index: 250; /* بالاترین اولویت برای تعامل */
+    z-index: 250; 
     display: flex; 
     gap: 5px;
     order: -1; 
@@ -585,7 +584,7 @@ footer {
         padding: 15px;
     }
     
-    /* Top Area موبایل - عکس، بسم الله و دکمه زبان */
+    /* Top Area موبایل - عکس و دکمه زبان */
     #top-area {
         height: auto; 
         flex-direction: row; 
@@ -597,7 +596,7 @@ footer {
     }
     
     .profile-icon {
-        position: static; 
+        position: static; /* حفظ موقعیت استاتیک برای موبایل */
         transform: none; 
         order: 2; 
         z-index: 100; 
