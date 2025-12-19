@@ -115,9 +115,9 @@ body.lang-en {
 
 /* عکس پروفایل */
 .profile-icon {
-    width: 100px; 
-    height: 120px; 
-    border-radius: 20%; 
+    width: 90px; 
+    height: 108px; 
+    border-radius: 50%; 
     object-fit: cover;
     z-index: 100; 
     border: 3px solid var(--accent-color); 
@@ -583,60 +583,64 @@ footer {
         padding: 15px;
     }
     
-    /* Top Area موبایل - تنظیمات برای موقعیت مطلق و ارتفاع کافی */
+    /* Top Area موبایل - تنظیمات فلکس عمودی برای مرتب‌سازی نام و اطلاعات */
     #top-area {
-        height: 200px; /* ارتفاع بیشتر برای پایین آمدن عکس */
-        display: block; 
-        padding-top: 10px;
-        padding-bottom: 20px; 
-        position: relative; 
+        height: auto; 
+        display: flex; 
+        flex-direction: column; 
+        justify-content: flex-start; 
+        align-items: flex-start; 
+        padding-top: 5px;
+        padding-bottom: 15px; 
+        position: static; 
+    }
+
+    /* دکمه‌های جابجایی زبان در موبایل */
+    .lang-switcher {
+        order: 1; 
+        z-index: 250; 
+        display: flex;
+        gap: 5px;
+        width: 100%;
+        padding: 5px 0;
+        /* ترازبندی دکمه‌ها در گوشه راست (در فارسی) و چپ (در انگلیسی) */
+        justify-content: flex-end; 
+    }
+    body.lang-fa .lang-switcher {
+         justify-content: flex-start; /* فارسی: چپ */
     }
     
+    /* عکس پروفایل - تنظیمات Float برای قرارگیری در گوشه */
     .profile-icon {
-        position: absolute; 
+        position: static; 
         transform: none; 
-        order: initial; 
+        order: 2; 
         z-index: 100; 
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
-        margin: 0; 
-        top: 20px; /* **تنظیم ارتفاع عکس** */
-    }
-
-    /* تنظیم موقعیت در گوشه چپ برای فارسی/RTL و گوشه راست برای انگلیسی/LTR */
-    body.lang-fa .profile-icon {
-        left: 5px; /* گوشه بالا سمت چپ */
-        right: auto;
-    }
-    body.lang-en .profile-icon {
-        right: 5px; /* گوشه بالا سمت راست */
-        left: auto;
-    }
-
-    .lang-switcher {
-        order: initial; 
-        z-index: 250; 
-        display: flex;
-        gap: 5px;
-        position: absolute; 
-        top: 15px; /* **تنظیم ارتفاع دکمه‌های زبان** */
+        margin-top: 10px; /* ایجاد فاصله از بالای صفحه */
+        margin-bottom: 15px; 
     }
     
-    /* جابجایی دکمه‌های زبان (مکمل عکس) */
-    body.lang-fa .lang-switcher {
-         right: 5px; /* دکمه‌های زبان در گوشه راست (مکمل عکس چپ) */
-         left: auto;
+    /* **تنظیم دقیق گوشه بر اساس زبان با استفاده از float** */
+    body.lang-fa .profile-icon {
+        float: right; /* فارسی (RTL): گوشه راست */
+        margin-right: 5px;
+        margin-left: 10px; /* کمی فاصله از محتوای سمت چپ (نام) */
     }
-    body.lang-en .lang-switcher {
-         left: 5px; /* دکمه‌های زبان در گوشه چپ (مکمل عکس راست) */
-         right: auto;
-    }
-
-    .bismillah-icon {
-        display: none; 
+    body.lang-en .profile-icon {
+        float: left; /* انگلیسی (LTR): گوشه چپ */
+        margin-left: 5px;
+        margin-right: 10px; /* کمی فاصله از محتوای سمت راست (نام) */
     }
 
+    /* FIX: حل مشکل float: پاکسازی float برای عناصر بعدی (نام، ایمیل) */
+    .header {
+        overflow: hidden; /* این خط تضمین می‌کند که محتوای بعدی (نام و عناوین) زیر عکس شناور قرار نگیرند و چیدمان بهم نریزد */
+        margin-top: 5px;
+    }
+    
     /* Navbar موبایل (زیر عنوان اصلی قرار می‌گیرد) */
     #navbar {
         margin-top: 15px;
@@ -648,4 +652,56 @@ footer {
         list-style: none;
         margin: 0;
         padding: 0;
-        display: flex
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap;
+        justify-content: space-around;
+        gap: 5px; 
+        padding: 5px 0; 
+    }
+
+    #navbar li {
+        flex-basis: 30%; 
+        text-align: center;
+        margin: 5px 0;
+    }
+    
+    #navbar a {
+        color: white; 
+        padding: 8px 5px; 
+        font-size: 0.85em; 
+        white-space: nowrap; 
+        display: block;
+        border-radius: 4px;
+    }
+    
+    #navbar a.active {
+        color: var(--accent-color) !important; 
+        background-color: rgba(255, 255, 255, 0.1); 
+    }
+
+    /* Skills Grid در موبایل تک ستونی می‌شود */
+    .skills-list { 
+        grid-template-columns: 1fr;
+        gap: 15px; 
+    }
+    
+    /* اصلاح بهم ریختگی فوتر و لینک‌های سریع */
+    .footer-branding {
+        flex-direction: column;
+        text-align: center;
+        margin-top: 20px; 
+    }
+    .footer-logo {
+        margin-inline-end: 0;
+        margin-bottom: 10px;
+    }
+    .quick-contact-info {
+        padding: 10px 0;
+    }
+    .quick-link {
+        display: block; 
+        width: 90%; 
+        margin: 10px auto; 
+    }
+}
