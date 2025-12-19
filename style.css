@@ -588,13 +588,22 @@ footer {
         height: auto; 
         display: flex; 
         flex-direction: column; 
-        align-items: center; 
         padding-top: 5px;
         padding-bottom: 15px; 
-        position: relative; /* مهم برای absolute کردن دکمه‌های زبان */
+        position: relative; 
     }
 
-    /* عکس پروفایل - FIX: بازنشانی کامل موقعیت برای نمایش صحیح در مرکز */
+    /* **جداسازی Flexbox برای ردیف بالا (عکس و دکمه‌های زبان)** */
+    
+    /* تعریف یک کانتینر برای ردیف بالا (فقط عکس و دکمه‌ها) */
+    .top-controls-row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 15px; 
+    }
+    
+    /* عکس پروفایل - FIX: بازنشانی کامل موقعیت */
     .profile-icon {
         position: static !important; 
         transform: none !important; 
@@ -602,10 +611,9 @@ footer {
         height: 84px;
         border-radius: 20%; 
         z-index: 100;
-        margin-top: 10px; 
-        margin-bottom: 15px; 
-        margin-left: auto;
-        margin-right: auto;
+        margin-top: 0; 
+        margin-bottom: 0; 
+        /* Flexbox این کار را انجام می‌دهد */
     }
     
     /* دکمه‌های جابجایی زبان در موبایل */
@@ -613,33 +621,57 @@ footer {
         z-index: 250; 
         display: flex;
         gap: 5px;
-        position: absolute; 
-        top: 15px;
     }
     
-    /* **FIX داینامیک: تنظیم موقعیت دکمه‌ها بر اساس زبان** */
-    
-    /* حالت فارسی (RTL): دکمه‌ها باید سمت راست باشند */
+    /* **تنظیمات داینامیک Flexbox برای ردیف بالا** */
+
+    /* حالت فارسی (RTL): عکس چپ، دکمه راست */
+    body.lang-fa .top-controls-row {
+        justify-content: space-between; /* پخش شدن عناصر */
+    }
+    body.lang-fa .profile-icon {
+        order: -1; /* عکس می‌رود سمت چپ (در RTL: ابتدا) */
+    }
     body.lang-fa .lang-switcher {
-        left: auto;     /* چپ را غیرفعال کن */
-        right: 15px;    /* برو راست */
+        order: 1; /* دکمه‌ها می‌روند سمت راست (در RTL: انتها) */
+        margin-right: 0;
+        margin-left: auto; /* برای فاصله گرفتن از عکس */
     }
 
-    /* حالت انگلیسی (LTR): دکمه‌ها باید سمت چپ باشند */
+    /* حالت انگلیسی (LTR): دکمه چپ، عکس راست */
+    body.lang-en .top-controls-row {
+        justify-content: space-between; /* پخش شدن عناصر */
+    }
+    body.lang-en .profile-icon {
+        order: 1; /* عکس می‌رود سمت راست (در LTR: انتها) */
+    }
     body.lang-en .lang-switcher {
-        left: 15px;     /* برو چپ */
-        right: auto;    /* راست را غیرفعال کن */
+        order: -1; /* دکمه‌ها می‌روند سمت چپ (در LTR: ابتدا) */
+        margin-left: 0;
+        margin-right: auto; /* برای فاصله گرفتن از عکس */
     }
     
-    /* هدر (شامل نام و عناوین) - کاملاً مرکز چین */
+    /* برای نگه‌داشتن عکس و دکمه‌ها در گوشه‌ها و مرکز ماندن نام، نیاز به یک عنصر واسط داریم */
+    .top-controls-row::after {
+        content: "";
+        flex-grow: 1; /* فضا را پر می‌کند */
+    }
+    body.lang-fa .top-controls-row::after {
+        order: 0; 
+    }
+    body.lang-en .top-controls-row::after {
+        order: 0; 
+    }
+    
+    /* هدر (شامل نام و عناوین) - اکنون کاملاً مرکز چین است */
     .header {
+        /* FIX: نام و عنوان در موبایل باید کاملاً مرکز شوند */
+        width: 100%;
+        text-align: center; 
         overflow: visible; 
         margin-top: 5px;
         border-bottom: none;
         padding-bottom: 0;
-        
-        text-align: center; 
-        
         padding-inline-start: 0; 
         margin-bottom: 0;
     }
@@ -655,7 +687,7 @@ footer {
     
     .contact-info p, .contact-info a {
         text-align: center; 
-        direction: ltr; /* کمک می‌کند آیکون‌ها و متن در یک خط مرکزی بمانند */
+        direction: ltr; 
     }
     
     /* ناوبری موبایل (در زیر هدر قرار می‌گیرد) */
