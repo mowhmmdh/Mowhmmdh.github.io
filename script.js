@@ -191,3 +191,42 @@ document.addEventListener('DOMContentLoaded', function() {
         animateSkillBars();
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    
+    const skillItems = document.querySelectorAll('.skill-level-item');
+
+    function animateSkillBars() {
+        skillItems.forEach(item => {
+            const percentSpan = item.querySelector('.skill-percent');
+            
+            if (percentSpan) {
+                const percentValue = percentSpan.textContent; 
+                
+                // تنظیم متغیر CSS (--skill-width)
+                item.style.setProperty('--skill-width', percentValue);
+                
+                // افزودن کلاس 'show' برای اجرای انیمیشن CSS
+                item.classList.add('show');
+            }
+        });
+    }
+
+    // استفاده از IntersectionObserver برای اجرای انیمیشن فقط زمانی که بخش مهارت‌ها در دید است
+    const skillsSection = document.getElementById('skills');
+
+    if (skillsSection) {
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    observer.unobserve(entry.target); 
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        observer.observe(skillsSection);
+    } 
+    else {
+        animateSkillBars();
+    }
+});
