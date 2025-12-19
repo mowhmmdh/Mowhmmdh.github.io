@@ -583,16 +583,18 @@ footer {
         padding: 15px;
     }
     
-    /* Top Area موبایل - حالت بلاک (پایه چیدمان موبایل) */
+    /* FIX اصلی: استفاده از Flexbox برای Top Area در موبایل */
     #top-area {
         height: auto; 
-        display: block; 
+        display: flex; /* تبدیل به Flex Container */
+        flex-direction: column; /* چیدمان عمودی */
+        align-items: center; /* **همه چیز را در مرکز تراز می‌کند** */
         padding-top: 5px;
         padding-bottom: 15px; 
         position: relative; 
     }
 
-    /* عکس پروفایل - استفاده از float برای قرارگیری در گوشه */
+    /* عکس پروفایل - دیگر float ندارد */
     .profile-icon {
         position: static; 
         transform: none; 
@@ -600,8 +602,12 @@ footer {
         height: 84px;
         border-radius: 20%; 
         z-index: 100;
-        margin-top: 5px; 
+        margin-top: 10px; 
         margin-bottom: 15px; 
+        /* حذف تنظیمات float و margin-left/right مخصوص موبایل */
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
     }
     
     /* دکمه‌های جابجایی زبان در موبایل */
@@ -609,82 +615,58 @@ footer {
         z-index: 250; 
         display: flex;
         gap: 5px;
+        position: static; /* دیگر مطلق نیست */
+        top: auto; 
+        margin-left: auto; /* **FIX: دکمه‌ها را به سمت راست (فارسی) یا چپ (انگلیسی) گوشه می‌برد** */
+        
+        /* برای چیدمان دکمه‌ها در گوشه بالا-راست/چپ */
         position: absolute; 
+    }
+    
+    /* **تنظیمات موقعیت دکمه‌ها در گوشه بالا** */
+    body.lang-fa .lang-switcher {
+        left: auto;
+        right: 15px; 
+        top: 15px;
+    }
+
+    body.lang-en .lang-switcher {
+        left: 15px; 
+        right: auto;
         top: 15px;
     }
     
-    /* **تنظیمات مخصوص زبان (RTL/LTR) برای جابجایی عکس و دکمه‌ها** */
-    
-    /* حالت فارسی (RTL): عکس چپ، دکمه راست */
-    body.lang-fa .profile-icon {
-        float: left; /* **عکس سمت چپ** */
-        margin-left: 10px;
-        margin-right: 0;
-    }
-    body.lang-fa .lang-switcher {
-        left: auto;
-        right: 10px; /* **دکمه‌های زبان سمت راست** */
-    }
-
-    /* حالت انگلیسی (LTR): عکس راست، دکمه چپ */
-    body.lang-en .profile-icon {
-        float: right; /* **عکس سمت راست** */
-        margin-right: 10px;
-        margin-left: 0;
-    }
-    body.lang-en .lang-switcher {
-        left: 10px; /* **دکمه‌های زبان سمت چپ** */
-        right: auto;
-    }
-    
-    /* هدر (شامل نام و عناوین) - قرارگیری در کنار عکس */
+    /* هدر (شامل نام و عناوین) - اکنون کاملاً مرکز چین است */
     .header {
-        overflow: hidden; /* تضمین می‌کند محتوای هدر کنار عکس قرار بگیرد */
+        /* دیگر نیازی به overflow: hidden نیست چون float حذف شده است */
+        overflow: visible; 
         margin-top: 5px;
         border-bottom: none;
         padding-bottom: 0;
         
-        /* **FIX کلیدی:** در موبایل باید کل هدر (نام و عنوان) وسط باشد */
+        /* **نام و عنوان کاملاً در مرکز تراز می‌شوند** */
         text-align: center; 
         
-        padding-inline-start: 5px; 
+        padding-inline-start: 0; /* حذف padding اضافی */
         margin-bottom: 0;
     }
     
     /* **FIX: اطلاعات تماس باید در مرکز تراز شوند** */
     .contact-info { 
-        /* این تنظیمات مرکزیت را برای چیدمان عمودی (flex-direction: column) تضمین می‌کند */
         align-items: center; 
         flex-direction: column; 
         margin-top: 15px;
         width: 100%;
-        
-        /* **FIX کلیدی:** متون داخل contact-info باید مرکز چین شوند */
         text-align: center; 
     }
     
     /* تنظیمات خاص برای آیتم‌های تماس */
     .contact-info p, .contact-info a {
-        /* مطمئن شدن از مرکزیت متون داخل پاراگراف‌ها/لینک‌ها */
         text-align: center; 
-        /* آیکون‌ها باید در LTR/RTL صحیح نمایش داده شوند */
-        padding: 0; 
+        /* نیاز به بازنشانی جهت برای نمایش آیکون و متن در خط (برای مرکزیت بهتر) */
+        direction: ltr; 
     }
     
-    /* **FIX: اصلاح نمایش آیکون و متن در حالت فارسی و انگلیسی در موبایل** */
-    .contact-info i {
-        /* در حالت موبایل، فاصله آیکون از متن (در Flexbox مرکزی) تنظیم شود */
-        margin-inline-end: 8px;
-    }
-    body.lang-en .contact-info p {
-        /* در انگلیسی، آیکون سمت چپ است، پس متن به سمت چپ آیکون می‌آید */
-        direction: ltr;
-    }
-    body.lang-fa .contact-info p {
-         /* در فارسی، آیکون سمت راست است، پس متن به سمت راست آیکون می‌آید */
-        direction: rtl;
-    }
-
     /* ناوبری موبایل (در زیر هدر قرار می‌گیرد) */
     #navbar {
         margin-top: 15px;
