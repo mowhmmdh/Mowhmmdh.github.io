@@ -1,4 +1,503 @@
+/* ---- تنظیم اسکرول نرم (Smooth Scroll) ---- */
+html {
+    scroll-behavior: smooth;
+}
+
+/* ---- فونت‌ها ---- */
+@font-face {
+    font-family: 'BNazanin';
+    src: url('fonts/BNazanin.woff2') format('woff2'); 
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Vazirmatn'; 
+    src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
+    font-weight: 500;
+    font-style: normal;
+}
+
+/* تعریف رنگ‌ها و متغیرهای اصلی */
+:root {
+    --primary-color: #003366;       
+    --secondary-color: #333;        
+    --background-color: #ffffff;    
+    --section-bg: #f7f7f7;          
+    --border-color: #e0e0e0;        
+    --accent-color: #007bff;        
+    --progress-bar-color: #007bff;  
+    --shadow-light: 0 4px 10px rgba(0, 0, 0, 0.08); 
+}
+
+/* ریست و تنظیمات جهانی */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 1.6; 
+    margin: 0;
+    padding: 0;
+    background-color: var(--section-bg); 
+    color: var(--secondary-color);
+    font-family: Tahoma, sans-serif; 
+}
+
 /* ================================================= */
+/* ---- جهت‌دهی (RTL/LTR) و فونت ---- */
+/* ================================================= */
+
+body.lang-fa { 
+    direction: rtl; 
+    text-align: right;
+    font-family: 'BNazanin', Tahoma, sans-serif; 
+} 
+
+body.lang-en { 
+    direction: ltr; 
+    text-align: left;
+    font-family: 'Vazirmatn', Tahoma, sans-serif; 
+} 
+
+/* کانتینر مرکزی (فقط عرض را کنترل می‌کند) */
+.container {
+    width: 90%;
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 20px; 
+}
+
+/* ================================================= */
+/* ---- ۱. ساختار دو ستونی (Desktop) ---- */
+/* ================================================= */
+#main-wrapper {
+    display: flex;
+    padding-top: 30px; 
+    gap: 30px;
+    align-items: flex-start; 
+}
+
+/* سایدبار (اطلاعات ثابت) */
+#sidebar-info {
+    position: sticky;
+    top: 30px; 
+    width: 30%; 
+    min-width: 250px;
+    background-color: var(--background-color);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+}
+
+/* محتوای اصلی (بخش‌های رزومه) */
+#main-content {
+    width: 70%; 
+    background-color: var(--background-color);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+}
+
+
+/* ================================================= */
+/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح نهایی ---- */
+/* ================================================= */
+
+#top-area {
+    padding-top: 10px; 
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: flex-start; 
+    position: relative; 
+    height: 110px; 
+}
+
+/* عکس پروفایل */
+.profile-icon {
+    width: 90px; 
+    height: 108px; 
+    border-radius: 50%; 
+    object-fit: cover;
+    z-index: 100; 
+    border: 3px solid var(--accent-color); 
+    box-shadow: var(--shadow-light);
+    transition: transform 0.3s;
+    
+    /* دسکتاپ: موقعیت مطلق و وسط */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.profile-icon:hover {
+    transform: translate(-50%, -50%) scale(1.05); 
+}
+
+/* تصویر بسم الله (واترمارک) */
+.bismillah-icon {
+    height: 70px; 
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    opacity: 0.08; 
+    z-index: 5; 
+}
+
+/* دکمه جابجایی زبان */
+.lang-switcher {
+    z-index: 100; 
+    display: flex; 
+    gap: 5px;
+    order: -1; 
+}
+.lang-switcher a, .lang-switcher button {
+    text-decoration: none;
+    border: 1px solid var(--border-color); 
+    padding: 4px 8px; 
+    border-radius: 6px;
+    font-size: 0.8em;
+    transition: all 0.2s;
+    background-color: white; /* برای جلوگیری از شفافیت */
+}
+.lang-switcher .active-lang {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+.lang-switcher a:hover {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+
+/* ---- هدر اصلی (HEADER) و عناوین ---- */
+.header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+h1 {
+    font-size: 2.5em; 
+    color: var(--primary-color); 
+    margin-bottom: 5px;
+}
+
+h2 {
+    font-size: 1.1em; 
+    color: #555; 
+    margin-top: 5px;
+    font-weight: 500;
+}
+
+.section {
+    padding: 30px 0; 
+}
+
+.section-title {
+    font-size: 1.6em;
+    color: var(--primary-color);
+    margin-top: 0; 
+    margin-bottom: 20px; 
+    font-weight: bold;
+    border-inline-start: 5px solid var(--accent-color); 
+    padding-inline-start: 15px;
+    transition: all 0.3s;
+}
+.section:hover .section-title {
+    color: var(--accent-color);
+}
+
+
+/* ---- اطلاعات تماس ---- */
+.contact-info { 
+    margin-top: 20px; 
+    font-size: 0.9em; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 10px; 
+    align-items: flex-start;
+}
+body.lang-fa .contact-info {
+    align-items: flex-end; 
+}
+.contact-info p {
+    margin: 0;
+    color: var(--secondary-color);
+}
+.contact-info i {
+    color: var(--accent-color);
+    margin-inline-end: 8px;
+}
+.contact-info a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: color 0.3s;
+}
+.contact-info a:hover {
+    color: var(--accent-color);
+}
+
+
+/* ---- خلاصه (درباره من) ---- */
+.summary { 
+    padding: 20px;
+    background-color: var(--section-bg); 
+    border-radius: 8px; 
+    font-size: 1em; 
+    line-height: 1.7;
+    text-align: justify;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05); 
+}
+
+/* ---- آیتم‌های شغلی و تحصیلی ---- */
+.job-item {
+    margin-bottom: 25px;
+    padding: 15px 0;
+    border-bottom: 1px dotted var(--border-color);
+}
+.job-item:last-child {
+    border-bottom: none;
+}
+.job-item h3 {
+    margin: 0 0 5px 0;
+    color: var(--primary-color);
+    font-size: 1.1em;
+}
+.job-item p.duration, .job-item p.institution {
+    margin: 0 0 10px 0;
+    color: #777;
+    font-size: 0.9em;
+}
+.job-item ul {
+    list-style-type: none;
+    padding-inline-start: 20px;
+    margin: 10px 0 0 0;
+}
+.job-item ul li {
+    position: relative;
+    margin-bottom: 8px;
+    padding-inline-start: 15px;
+}
+.job-item ul li::before {
+    content: "•"; 
+    color: var(--accent-color);
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: auto;
+}
+body.lang-en .job-item ul li::before {
+    left: 0;
+    right: auto;
+}
+body.lang-fa .job-item ul li::before {
+    right: 0;
+    left: auto;
+}
+
+
+/* ================================================= */
+/* ---- مهارت‌ها (Skill Progress Bars) ---- */
+/* ================================================= */
+.skills-list { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+    gap: 25px; 
+}
+.skill-category { 
+    padding: 20px; 
+    border: 1px solid var(--border-color); 
+    border-radius: 8px; 
+    background-color: var(--background-color); 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+.skill-category h4 {
+    color: var(--primary-color);
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+    font-size: 1.1em;
+}
+.skill-level-item {
+    margin-bottom: 15px;
+}
+.skill-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+.skill-percent {
+    color: var(--accent-color);
+}
+.skill-bar-container {
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.skill-bar {
+    width: 0; /* FIX: حذف !important و تنظیم اولیه روی 0 */
+    height: 100%;
+    background-color: var(--progress-bar-color); 
+    transition: width 1.5s ease-out; /* FIX: تعریف انیمیشن پر شدن */
+}
+.skill-level-item.show .skill-bar {
+    /* FIX: پر شدن بر اساس متغیر CSS که در JS تنظیم می‌شود */
+    width: var(--skill-width, 0%) !important;
+}
+
+
+/* ================================================= */
+/* ---- ۲. منو ناوبری (NAVBAR) - داخل سایدبار ---- */
+/* ================================================= */
+
+#navbar {
+    margin-top: 20px;
+    background-color: transparent; 
+}
+
+#navbar a {
+    color: var(--secondary-color); 
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    font-size: 0.95em;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Vazirmatn', Tahoma, sans-serif;
+    border-radius: 4px;
+}
+
+#navbar a:hover {
+    background-color: var(--section-bg); 
+    color: var(--accent-color);
+}
+
+/* استایل لینک فعال (فقط با کلیک) */
+#navbar a.active {
+    color: var(--primary-color) !important; 
+    background-color: rgba(0, 51, 102, 0.05); 
+    font-weight: bold;
+}
+
+#navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column; 
+    gap: 5px;
+}
+
+
+/* ================================================= */
+/* ---- استایل‌های فرم تماس (CONTACT FORM) ---- */
+/* ================================================= */
+.contact-intro-text {
+    font-size: 1em;
+    color: #555;
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.contact-form {
+    max-width: 600px;
+    margin: 20px auto; 
+    padding: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px; 
+    background-color: #ffffff; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15); 
+}
+
+.form-group {
+    margin-bottom: 20px; 
+}
+
+.contact-form label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--primary-color);
+    font-size: 0.95em;
+    display: flex;
+    align-items: center;
+}
+.contact-form label i {
+    margin-inline-end: 8px; /* استفاده از inlin-end برای سازگاری RTL/LTR */
+    color: var(--accent-color);
+    font-size: 1.2em;
+}
+body.lang-en .contact-form label i {
+    margin-right: 8px;
+    margin-left: 0;
+}
+body.lang-fa .contact-form label i {
+    margin-left: 8px;
+    margin-right: 0;
+}
+
+.contact-form input[type="email"],
+.contact-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px; 
+    box-sizing: border-box; 
+    font-family: inherit;
+    font-size: 0.95em;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    resize: vertical;
+}
+
+.contact-form button[type="submit"] {
+    background-color: var(--accent-color); 
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.1s;
+    font-family: inherit; 
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 25px; 
+}
+
+.contact-form button[type="submit"]:hover {
+    background-color: #0056b3; 
+    transform: translateY(-2px); 
+}
+
+.quick-contact-info {
+    text-align: center;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+.quick-contact-info p {
+    color: #777;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+.quick-link {
+    text-decoration: none;
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 6px;
+    display: inline-block;
+    /* ================================================= */
 /* ---- مهارت‌ها (Skill Progress Bars) ---- */
 /* ================================================= */
 .skills-list { 
@@ -52,3 +551,4 @@
     /* پر شدن بر اساس متغیر CSS که در JS تنظیم می‌شود */
     width: var(--skill-width, 0%) !important;
 }
+
