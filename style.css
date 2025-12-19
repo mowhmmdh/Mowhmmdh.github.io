@@ -600,7 +600,7 @@ footer {
         height: 84px;
         border-radius: 20%; 
         z-index: 100;
-        margin-top: 35px; /* فاصله کم از بالا */
+        margin-top: 45px; /* فاصله کم از بالا */
         margin-bottom: 15px; 
     }
     
@@ -618,7 +618,7 @@ footer {
     /* حالت فارسی (RTL): عکس چپ، دکمه راست */
     body.lang-fa .profile-icon {
         float: left; /* **عکس سمت چپ** */
-        margin-left: 10px;
+        margin-left: 25px;
         margin-right: 0;
     }
     body.lang-fa .lang-switcher {
@@ -629,7 +629,7 @@ footer {
     /* حالت انگلیسی (LTR): عکس راست، دکمه چپ */
     body.lang-en .profile-icon {
         float: right; /* **عکس سمت راست** */
-        margin-right: 5px;
+        margin-right: -50px;
         margin-left: 0;
     }
     body.lang-en .lang-switcher {
