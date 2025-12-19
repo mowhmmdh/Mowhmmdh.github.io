@@ -643,24 +643,46 @@ footer {
         margin-top: 5px;
         border-bottom: none;
         padding-bottom: 0;
-        text-align: initial; 
+        
+        /* **FIX کلیدی:** در موبایل باید کل هدر (نام و عنوان) وسط باشد */
+        text-align: center; 
+        
         padding-inline-start: 5px; 
         margin-bottom: 0;
     }
     
     /* **FIX: اطلاعات تماس باید در مرکز تراز شوند** */
     .contact-info { 
-        align-items: center; /* **تراز عمودی در مرکز** */
+        /* این تنظیمات مرکزیت را برای چیدمان عمودی (flex-direction: column) تضمین می‌کند */
+        align-items: center; 
         flex-direction: column; 
         margin-top: 15px;
         width: 100%;
-        text-align: center; /* تراز افقی متون در مرکز */
+        
+        /* **FIX کلیدی:** متون داخل contact-info باید مرکز چین شوند */
+        text-align: center; 
     }
-    body.lang-fa .contact-info {
-        align-items: center; /* فارسی نیز در مرکز تراز می‌شود */
+    
+    /* تنظیمات خاص برای آیتم‌های تماس */
+    .contact-info p, .contact-info a {
+        /* مطمئن شدن از مرکزیت متون داخل پاراگراف‌ها/لینک‌ها */
+        text-align: center; 
+        /* آیکون‌ها باید در LTR/RTL صحیح نمایش داده شوند */
+        padding: 0; 
     }
-    .contact-info p {
-        text-align: center; /* مطمئن شدن از مرکزیت متون داخل پاراگراف‌ها */
+    
+    /* **FIX: اصلاح نمایش آیکون و متن در حالت فارسی و انگلیسی در موبایل** */
+    .contact-info i {
+        /* در حالت موبایل، فاصله آیکون از متن (در Flexbox مرکزی) تنظیم شود */
+        margin-inline-end: 8px;
+    }
+    body.lang-en .contact-info p {
+        /* در انگلیسی، آیکون سمت چپ است، پس متن به سمت چپ آیکون می‌آید */
+        direction: ltr;
+    }
+    body.lang-fa .contact-info p {
+         /* در فارسی، آیکون سمت راست است، پس متن به سمت راست آیکون می‌آید */
+        direction: rtl;
     }
 
     /* ناوبری موبایل (در زیر هدر قرار می‌گیرد) */
