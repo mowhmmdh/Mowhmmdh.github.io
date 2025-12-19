@@ -623,17 +623,17 @@ footer {
     }
     body.lang-fa .lang-switcher {
         left: auto;
-        right: 30px; /* **دکمه‌های زبان سمت راست** */
+        right: 10px; /* **دکمه‌های زبان سمت راست** */
     }
 
     /* حالت انگلیسی (LTR): عکس راست، دکمه چپ */
     body.lang-en .profile-icon {
         float: right; /* **عکس سمت راست** */
-        margin-right: -60px;
+        margin-right: -50px;
         margin-left: 0;
     }
     body.lang-en .lang-switcher {
-        left: 10px; /* **دکمه‌های زبان سمت چپ** */
+        left: 15px; /* **دکمه‌های زبان سمت چپ** */
         right: auto;
     }
     
