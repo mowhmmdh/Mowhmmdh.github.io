@@ -100,7 +100,7 @@ body.lang-en {
 
 
 /* ================================================= */
-/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح نهایی Z-Index ---- */
+/* ---- ۱. کانتینر بالای صفحه (Top Area) - اصلاح نهایی موقعیت و Z-Index ---- */
 /* ================================================= */
 
 #top-area {
@@ -119,35 +119,35 @@ body.lang-en {
     height: 108px; 
     border-radius: 50%; 
     object-fit: cover;
-    z-index: 100; /* FIX: اولویت متوسط */
+    z-index: 100; 
     border: 3px solid var(--accent-color); 
     box-shadow: var(--shadow-light);
     transition: transform 0.3s;
     
-    /* دسکتاپ: موقعیت مطلق و وسط */
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
-.profile-icon:hover {
-    transform: translate(-50%, -50%) scale(1.05); 
+
+/* FIX: جابجایی عکس پروفایل در حالت فارسی (به سمت چپ) */
+body.lang-fa .profile-icon {
+    left: 40%; /* جابجایی از مرکز (50%) به 40% (سمت راست) */
+    transform: translate(-50%, -50%); /* حفظ موقعیت عمودی */
+}
+/* FIX: جابجایی عکس پروفایل در حالت انگلیسی (به سمت راست) */
+body.lang-en .profile-icon {
+    left: 60%; /* جابجایی از مرکز (50%) به 60% (سمت چپ) */
+    transform: translate(-50%, -50%); /* حفظ موقعیت عمودی */
 }
 
 /* تصویر بسم الله (واترمارک) */
 .bismillah-icon {
-    height: 70px; 
-    position: absolute; 
-    top: 50%; 
-    left: 50%; 
-    transform: translate(-50%, -50%); 
-    opacity: 0.08; 
-    z-index: 5; /* FIX: پایین‌ترین اولویت */
+    /* FIX: حذف کامل بسم الله */
+    display: none; 
 }
 
 /* دکمه جابجایی زبان */
 .lang-switcher {
-    z-index: 250; /* FIX: بالاترین اولویت برای تعامل */
+    z-index: 250; /* بالاترین اولویت برای تعامل */
     display: flex; 
     gap: 5px;
     order: -1; 
@@ -600,7 +600,7 @@ footer {
         position: static; 
         transform: none; 
         order: 2; 
-        z-index: 100; /* FIX: اولویت متوسط در موبایل */
+        z-index: 100; 
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
@@ -612,7 +612,7 @@ footer {
 
     .lang-switcher {
         order: 1; 
-        z-index: 250; /* FIX: بالاترین اولویت در موبایل */
+        z-index: 250; 
     }
     
     .bismillah-icon {
