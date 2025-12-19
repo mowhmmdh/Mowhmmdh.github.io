@@ -629,11 +629,11 @@ footer {
     /* حالت انگلیسی (LTR): عکس راست، دکمه چپ */
     body.lang-en .profile-icon {
         float: right; /* **عکس سمت راست** */
-        margin-right: -50px;
+        margin-right: -40px;
         margin-left: 0;
     }
     body.lang-en .lang-switcher {
-        left: 15px; /* **دکمه‌های زبان سمت چپ** */
+        left: 10px; /* **دکمه‌های زبان سمت چپ** */
         right: auto;
     }
     
