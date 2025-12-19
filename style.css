@@ -115,9 +115,9 @@ body.lang-en {
 
 /* عکس پروفایل */
 .profile-icon {
-    width: 100px; 
-    height: 120px; 
-    border-radius: 20%; 
+    width: 90px; 
+    height: 108px; 
+    border-radius: 50%; 
     object-fit: cover;
     z-index: 100; 
     border: 3px solid var(--accent-color); 
@@ -128,12 +128,11 @@ body.lang-en {
     top: 50%;
 }
 
-/* جابجایی عکس پروفایل در حالت فارسی (به سمت چپ تر - 20%) */
+/* موقعیت دسکتاپ (۲۰٪ و ۸۰٪) */
 body.lang-fa .profile-icon {
     left: 20%; 
     transform: translate(-50%, -50%); 
 }
-/* جابجایی عکس پروفایل در حالت انگلیسی (به سمت راست تر - 80%) */
 body.lang-en .profile-icon {
     left: 80%; 
     transform: translate(-50%, -50%); 
@@ -559,7 +558,7 @@ footer {
 
 
 /* ================================================= */
-/* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) - **اصلاح نهایی** ---- */
+/* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     
@@ -584,43 +583,54 @@ footer {
         padding: 15px;
     }
     
-    /* Top Area موبایل - **اصلاح فلکس و جایگاه عکس** */
+    /* Top Area موبایل - تنظیمات برای موقعیت مطلق */
     #top-area {
-        height: auto; 
-        flex-direction: column; /* FIX: تغییر به ستونی برای مرکزیت */
-        justify-content: center;
-        align-items: center; 
+        height: 110px; 
+        display: block; 
         padding-top: 5px;
         padding-bottom: 15px; 
-        position: static; 
+        position: relative; 
     }
     
     .profile-icon {
-        position: static; 
+        position: absolute; /* برای قرارگیری در گوشه */
         transform: none; 
-        order: 2; /* زیر دکمه‌های زبان می‌آید */
+        order: initial; 
         z-index: 100; 
         width: 70px; 
         height: 84px;
         border-radius: 20%; 
-        margin: 10px 0; /* کمی فاصله از بالا و پایین */
+        margin: 0; 
+        top: 5px; 
     }
-    .profile-icon:hover {
-        transform: none; 
+
+    /* **مهم: تنظیم موقعیت در گوشه چپ برای فارسی/RTL و گوشه راست برای انگلیسی/LTR** */
+    body.lang-fa .profile-icon {
+        left: 5px; /* گوشه بالا سمت چپ */
+        right: auto;
+    }
+    body.lang-en .profile-icon {
+        right: 5px; /* گوشه بالا سمت راست */
+        left: auto;
     }
 
     .lang-switcher {
-        order: 1; 
+        order: initial; 
         z-index: 250; 
-        width: 100%; /* FIX: برای حفظ جایگاه در گوشه‌ها */
         display: flex;
-        justify-content: flex-end; /* دکمه‌ها در سمت راست (در RTL) یا چپ (در LTR) باشند */
-        padding: 5px 0;
+        gap: 5px;
+        position: absolute; 
+        top: 10px;
     }
     
-    /* اگر زبان فارسی باشد، دکمه‌ها باید در گوشه چپ باشند (بسته به جهت RTL) */
+    /* جابجایی دکمه‌های زبان (مکمل عکس) */
     body.lang-fa .lang-switcher {
-         justify-content: flex-start;
+         right: 5px; /* دکمه‌های زبان در گوشه راست (مکمل عکس چپ) */
+         left: auto;
+    }
+    body.lang-en .lang-switcher {
+         left: 5px; /* دکمه‌های زبان در گوشه چپ (مکمل عکس راست) */
+         right: auto;
     }
 
     .bismillah-icon {
@@ -635,6 +645,10 @@ footer {
     }
 
     #navbar ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
         flex-direction: row; 
         flex-wrap: wrap;
         justify-content: space-around;
