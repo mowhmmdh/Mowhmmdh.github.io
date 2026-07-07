@@ -1172,3 +1172,32 @@ footer {
         right: 20px;
     }
 }
+
+/* ================================================= */
+/* ---- استایل پروژه‌ها ---- */
+/* ================================================= */
+#projects > div {
+    transition: var(--transition);
+}
+
+#projects > div:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-3px);
+}
+
+#projects .projects-grid > div {
+    transition: var(--transition);
+}
+
+#projects .projects-grid > div:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+#projects .projects-grid > div img {
+    transition: var(--transition);
+}
+
+#projects .projects-grid > div:hover img {
+    transform: scale(1.02);
+}
