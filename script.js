@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // توابع کمکی (Utility Functions)
     // ===============================================
      
-    // تابع Debounce: محدود کردن فراخوانی یک تابع در یک دوره زمانی مشخص
     function debounce(func, delay) {
         let timeout;
         return function() {
@@ -16,21 +15,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ===============================================
-    // 1. فعال‌سازی نوارهای مهارت (Skill Bars)
+    // 1. فعال‌سازی نوارهای مهارت (Skill Bars) - بهبودیافته
     // ===============================================
     
     const skillItems = document.querySelectorAll('.skill-level-item');
 
-    // تابع اصلی برای اجرای انیمیشن پر شدن
     function animateSkillBars() {
         skillItems.forEach(item => {
+            const bar = item.querySelector('.skill-bar');
             const percentSpan = item.querySelector('.skill-percent');
             
-            if (percentSpan) {
-                const percentValue = percentSpan.textContent; // مثلاً "85%"
+            if (bar && percentSpan) {
+                const percentValue = percentSpan.textContent; // "85%"
+                const numericValue = parseInt(percentValue); // 85
                 
-                // تنظیم متغیر CSS در سطح آیتم (برای شروع انیمیشن)
+                // تنظیم متغیر CSS
                 item.style.setProperty('--skill-width', percentValue);
+                
+                // تنظیم عرض نوار با داده‌های موجود
+                bar.style.width = numericValue + '%';
                 
                 // افزودن کلاس 'show'
                 item.classList.add('show');
@@ -41,12 +44,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const skillsSection = document.getElementById('skills');
 
     if (skillsSection) {
-        // استفاده از IntersectionObserver برای اجرای انیمیشن فقط زمانی که در دید است
-        const observer = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateSkillBars();
-                    observer.unobserve(entry.target); // تنها یکبار اجرا شود
+                    observer.unobserve(entry.target);
                 }
             });
         }, { 
@@ -57,10 +59,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         observer.observe(skillsSection);
     } else {
-        // FIX: اگر بخش مهارت‌ها آیدی 'skills' نداشت، بلافاصله اجرا شود
         animateSkillBars();
     }
-
 
     // ===============================================
     // 2. اسکرول به بالا (Back to Top Button)
@@ -71,14 +71,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function toggleBackToTop() {
         if (backToTopBtn) {
             if (window.scrollY > 300) {
-                backToTopBtn.style.display = 'block';
+                backToTopBtn.style.display = 'flex';
             } else {
                 backToTopBtn.style.display = 'none';
             }
         }
     }
     
-    // عملکرد اسکرول نرم
     if (backToTopBtn) {
         backToTopBtn.addEventListener('click', () => {
             window.scrollTo({
@@ -86,10 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 behavior: 'smooth'
             });
         });
-        // FIX: اجرای اولیه هنگام بارگذاری
         toggleBackToTop(); 
     }
-
 
     // ===============================================
     // 3. فعال‌سازی نوار ناوبری (Active Link Management)
@@ -97,7 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
     const sections = document.querySelectorAll('main section');
     const navLinksDesktop = document.querySelectorAll('#navbar a');
-    // فرض بر این است که #navbar-mobile هم در HTML وجود دارد
     const navLinksMobile = document.querySelectorAll('#navbar-mobile a'); 
     
     function updateActiveNav() {
@@ -105,8 +101,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            // تنظیم موقعیت فعال بر اساس 200px کمتر از بالای صفحه (برای بهتر دیده شدن عنوان بخش)
             if (window.scrollY >= sectionTop - 200) { 
                 current = section.getAttribute('id');
             }
@@ -121,7 +115,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         };
         
-        // به‌روزرسانی نوار دسکتاپ و موبایل
         updateLinks(navLinksDesktop);
         updateLinks(navLinksMobile);
     }
@@ -130,103 +123,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // مدیریت رویدادها (Event Listeners)
     // ===============================================
 
-    // FIX: استفاده از Debounce برای بهینه‌سازی عملکرد هنگام اسکرول
     const debouncedScrollHandler = debounce(function() {
         updateActiveNav();
         toggleBackToTop();
-    }, 50); // تأخیر 50 میلی‌ثانیه
+    }, 50);
 
-    // اجرای به‌روزرسانی هنگام اسکرول
     window.addEventListener('scroll', debouncedScrollHandler);
-    
-    // اجرای به‌روزرسانی هنگام تغییر اندازه صفحه
     window.addEventListener('resize', debouncedScrollHandler);
-    
-    // اجرای اولیه برای تنظیم بخش فعال هنگام بارگذاری صفحه
     updateActiveNav(); 
-});
-document.addEventListener('DOMContentLoaded', function() {
-    
-    // ===============================================
-    // فعال‌سازی نوارهای مهارت (Skill Bars)
-    // ===============================================
-    
-    const skillItems = document.querySelectorAll('.skill-level-item');
-
-    // تابع اصلی برای اجرای انیمیشن پر شدن
-    function animateSkillBars() {
-        skillItems.forEach(item => {
-            const percentSpan = item.querySelector('.skill-percent');
-            
-            if (percentSpan) {
-                const percentValue = percentSpan.textContent; // مثلاً "85%"
-                
-                // 1. تنظیم متغیر CSS (--skill-width) با مقدار درصد
-                item.style.setProperty('--skill-width', percentValue);
-                
-                // 2. افزودن کلاس 'show' برای اجرای انیمیشن CSS
-                item.classList.add('show');
-            }
-        });
-    }
-
-    // مشاهده‌گر برای اجرای انیمیشن زمانی که بخش مهارت‌ها در دید کاربر قرار می‌گیرد
-    const skillsSection = document.getElementById('skills');
-
-    if (skillsSection) {
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkillBars();
-                    // پس از اجرا، Observer را متوقف کن
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        observer.observe(skillsSection);
-    } 
-    // اگر آیدی #skills نبود، بلافاصله اجرا کن
-    else {
-        animateSkillBars();
-    }
-});
-document.addEventListener('DOMContentLoaded', function() {
-    
-    const skillItems = document.querySelectorAll('.skill-level-item');
-
-    function animateSkillBars() {
-        skillItems.forEach(item => {
-            const percentSpan = item.querySelector('.skill-percent');
-            
-            if (percentSpan) {
-                const percentValue = percentSpan.textContent; 
-                
-                // تنظیم متغیر CSS (--skill-width)
-                item.style.setProperty('--skill-width', percentValue);
-                
-                // افزودن کلاس 'show' برای اجرای انیمیشن CSS
-                item.classList.add('show');
-            }
-        });
-    }
-
-    // استفاده از IntersectionObserver برای اجرای انیمیشن فقط زمانی که بخش مهارت‌ها در دید است
-    const skillsSection = document.getElementById('skills');
-
-    if (skillsSection) {
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkillBars();
-                    observer.unobserve(entry.target); 
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        observer.observe(skillsSection);
-    } 
-    else {
-        animateSkillBars();
-    }
 });
