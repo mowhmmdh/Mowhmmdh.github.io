@@ -10,7 +10,6 @@
     <link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/index.html" />
     <link rel="icon" href="/favicon.png" sizes="48x48" type="image/png">
 
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7W5WP27ZH"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -62,12 +61,12 @@
             <div id="top-area">
                 
                 <div class="lang-switcher">
-                    <button class="active-lang" id="lang-en-btn">English</button>
+                    <button class="active-lang" id="lang-en-btn" aria-label="Change language to English">English</button>
                     |
-                    <a href="index.html" class="lang-link" id="lang-fa-btn">فارسی</a>
+                    <a href="index.html" class="lang-link" id="lang-fa-btn" aria-label="تغییر زبان به فارسی">فارسی</a>
                 </div>
                 
-                <img src="images/profile.jpg" alt="Mohammad Hossein Asgari Somarin's photo" class="profile-icon">
+                <img src="images/profile.jpg" alt="Mohammad Hossein Asgari Somarin's photo" class="profile-icon" loading="lazy">
                 
             </div>
 
@@ -77,8 +76,8 @@
                 
                 <div class="contact-info">
                     <p><i class="fas fa-envelope"></i> mohammedhasgari@gmail.com</p>
-                    <p><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank">LinkedIn</a></p>
-                    <p><i class="fab fa-instagram"></i> <a href="https://instagram.com/mowhmmdh" target="_blank">Instagram</a></p>
+                    <p><i class="fab fa-linkedin"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener">LinkedIn</a></p>
+                    <p><i class="fab fa-instagram"></i> <a href="https://instagram.com/mowhmmdh" target="_blank" rel="noopener">Instagram</a></p>
                 </div>
             </header>
 
@@ -99,7 +98,7 @@
             <section id="about" class="section">
                 <h2 class="section-title">About Me</h2>
                 <div class="summary">
-                    <p>I am an IT specialist with practical experience in troubleshooting systems, supporting users, and maintaining networks. I have worked with organizations such as the Ministry of Interior, Samat Newspaper, and Kimia Mehr Espadana (Kimiaonline and HiAsus shopping sites), where I have strengthened my technical and communication skills and now I'm working at Mahex company.</p>
+                    <p>I am an IT specialist with practical experience in troubleshooting systems, supporting users, and maintaining networks. I have worked with organizations such as the Ministry of Interior, Samat Newspaper, and Kimia Mehr Espadana (Kimiaonline and HiAsus shopping sites), where I have strengthened my technical and communication skills and I am currently working at Mahex Company.</p>
                     <p>I am passionate about networking and cybersecurity and am constantly improving my knowledge. I am open to new opportunities and professional growth.</p>
                 </div>
             </section>
@@ -107,10 +106,9 @@
             <section class="section" id="experience">
                 <h2 class="section-title">Work Experience</h2>
 
-                <!-- Job 1 - Current position with enhanced style -->
                 <div class="job-item" style="background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); border-left-color: #ff6b35; border-left-width: 6px; border-right: none;">
                     <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 2px;">
-                        <h3 style="margin: 0;">IT Specialist | Mahex Air Cargo Services (Mahex Company)</h3>
+                        <h3 style="margin: 0;">IT Specialist | Mahex Air Cargo Services</h3>
                         <span style="background: linear-gradient(135deg, #ff6b35, #e5532e); color: #fff; font-size: 0.7rem; font-weight: 700; padding: 2px 14px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;">Current</span>
                     </div>
                     <p class="duration" style="margin: 2px 0 12px 0;">January 2026 - Present (6 months)</p>
@@ -160,60 +158,93 @@
                 <div class="skills-list">
                     
                     <div class="skill-category">
-                        <h4>Network & Infrastructure</h4>
+                        <h4><i class="fas fa-network-wired"></i> Network & Infrastructure</h4>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>Active Directory & Windows Server</span><span class="skill-percent">85%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 85%;"></div></div>
+                            <div class="skill-label"><span>Active Directory</span><span class="skill-percent">70%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="70"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>CCNA (Concepts)</span><span class="skill-percent">80%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 80%;"></div></div>
+                            <div class="skill-label"><span>Windows Server</span><span class="skill-percent">70%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="70"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>Network+ / Networking Concepts</span><span class="skill-percent">90%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 90%;"></div></div>
+                            <div class="skill-label"><span>CCNA</span><span class="skill-percent">65%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="65"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>Linux (Basic Concepts)</span><span class="skill-percent">65%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 65%;"></div></div>
-                        </div>
-                    </div>
-
-                    <div class="skill-category">
-                        <h4>Software & System Management</h4>
-                        <div class="skill-level-item">
-                            <div class="skill-label"><span>Advanced Helpdesk Troubleshooting</span><span class="skill-percent">95%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 95%;"></div></div>
+                            <div class="skill-label"><span>Network+</span><span class="skill-percent">65%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="65"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>Microsoft Office (Word, Excel, ...)</span><span class="skill-percent">85%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 85%;"></div></div>
+                            <div class="skill-label"><span>DHCP</span><span class="skill-percent">70%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="70"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>OS Maintenance & Management</span><span class="skill-percent">90%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 90%;"></div></div>
+                            <div class="skill-label"><span>DNS Settings</span><span class="skill-percent">70%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="70"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>IT Inventory Management (Asset Management)</span><span class="skill-percent">70%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 70%;"></div></div>
+                            <div class="skill-label"><span>Mikrotik</span><span class="skill-percent">45%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="45"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>VoIP</span><span class="skill-percent">60%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="60"></div></div>
                         </div>
                     </div>
 
                     <div class="skill-category">
-                        <h4>Interpersonal Skills (Soft Skills)</h4>
+                        <h4><i class="fas fa-shield-alt"></i> Security & Virtualization</h4>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>Problem-Solving & Decision Making</span><span class="skill-percent">90%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 90%;"></div></div>
+                            <div class="skill-label"><span>Hacking & Security</span><span class="skill-percent">60%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="60"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>Teamwork & Adaptability</span><span class="skill-percent">95%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 95%;"></div></div>
+                            <div class="skill-label"><span>CEH (Fundamentals)</span><span class="skill-percent">35%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="35"></div></div>
                         </div>
                         <div class="skill-level-item">
-                            <div class="skill-label"><span>Communication & Reporting Skills</span><span class="skill-percent">85%</span></div>
-                            <div class="skill-bar-container"><div class="skill-bar" style="width: 85%;"></div></div>
+                            <div class="skill-label"><span>Server Virtualization (ESX, VMware)</span><span class="skill-percent">40%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="40"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>Wireshark</span><span class="skill-percent">55%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="55"></div></div>
                         </div>
                     </div>
+
+                    <div class="skill-category">
+                        <h4><i class="fas fa-desktop"></i> OS & Software</h4>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>Microsoft Word</span><span class="skill-percent">90%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="90"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>Microsoft Excel</span><span class="skill-percent">85%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="85"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>Microsoft PowerPoint</span><span class="skill-percent">60%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="60"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>Linux</span><span class="skill-percent">60%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="60"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>Mac OS</span><span class="skill-percent">40%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="40"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>HTML & CSS</span><span class="skill-percent">55%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="55"></div></div>
+                        </div>
+                        <div class="skill-level-item">
+                            <div class="skill-label"><span>Microsoft Visual Studio</span><span class="skill-percent">35%</span></div>
+                            <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="35"></div></div>
+                        </div>
+                    </div>
+
                 </div>
             </section>
 
@@ -245,7 +276,8 @@
                 
                 <p class="contact-intro-text">I'm ready to start collaboration and receive job offers. Please use the form below for quick contact:</p>
 
-                <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form">
+                <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form" aria-describedby="contact-form-desc">
+                    <div id="contact-form-desc" style="display:none;">Contact form to send message to Mohammad Hossein Asgari Somarin</div>
                     <div class="form-group">
                         <label for="email"><i class="fas fa-envelope-open-text"></i> Your Email:</label>
                         <input type="email" id="email" name="email" required placeholder="example@gmail.com">
@@ -260,7 +292,7 @@
                     
                     <div class="quick-contact-info">
                         <p>Or contact me through the links below:</p>
-                        <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" class="quick-link linked-in"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener" class="quick-link linked-in"><i class="fab fa-linkedin"></i> LinkedIn</a>
                         <a href="mailto:mohammedhasgari@gmail.com" class="quick-link email-link"><i class="fas fa-paper-plane"></i> Direct Email</a>
                     </div>
                 </form>
@@ -270,7 +302,7 @@
             <footer>
                 <div class="footer-branding">
                     <div class="footer-logo">
-                        <img src="images/mha-logo.png" alt="Mohammad Hossein Asgari Somarin Logo (MHA)" class="footer-mha-logo">
+                        <img src="images/mha-logo.png" alt="Mohammad Hossein Asgari Somarin Logo (MHA)" class="footer-mha-logo" loading="lazy">
                     </div>
                     <p class="copyright-text">
                         <span>Designed & Developed by: Mohammad Hossein Asgari Somarin</span>
@@ -283,7 +315,7 @@
         </main>
     </div>
     
-    <button id="back-to-top" title="Back to Top"><i class="fas fa-arrow-up"></i></button>
+    <button id="back-to-top" title="Back to Top" aria-label="Back to top of page"><i class="fas fa-arrow-up"></i></button>
 
     <script src="script.js"></script>
 </body>
