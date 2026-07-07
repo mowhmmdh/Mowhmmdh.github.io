@@ -15,7 +15,74 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ===============================================
-    // 1. فعال‌سازی نوارهای مهارت (Skill Bars) - داینامیک
+    // 0. محاسبه خودکار مدت زمان شغل فعلی (Dynamic Duration)
+    // ===============================================
+    
+    function updateJobDuration() {
+        const now = new Date();
+        
+        // ---- نسخه فارسی (تاریخ شمسی) ----
+        const startDateFa = document.getElementById('start-date-fa');
+        const durationDisplayFa = document.getElementById('duration-display-fa');
+        
+        if (startDateFa && durationDisplayFa) {
+            const startDateStr = startDateFa.getAttribute('data-start');
+            const start = new Date(startDateStr);
+            
+            let months = (now.getFullYear() - start.getFullYear()) * 12;
+            months += now.getMonth() - start.getMonth();
+            
+            if (now.getDate() < start.getDate()) {
+                months--;
+            }
+            
+            if (months >= 12) {
+                const years = Math.floor(months / 12);
+                const remainingMonths = months % 12;
+                if (remainingMonths === 0) {
+                    durationDisplayFa.textContent = years + ' سال';
+                } else {
+                    durationDisplayFa.textContent = years + ' سال و ' + remainingMonths + ' ماه';
+                }
+            } else {
+                durationDisplayFa.textContent = months + ' ماه';
+            }
+        }
+        
+        // ---- نسخه انگلیسی (تاریخ میلادی) ----
+        const startDateEn = document.getElementById('start-date-en');
+        const durationDisplayEn = document.getElementById('duration-display-en');
+        
+        if (startDateEn && durationDisplayEn) {
+            const startDateStr = startDateEn.getAttribute('data-start');
+            const start = new Date(startDateStr);
+            
+            let months = (now.getFullYear() - start.getFullYear()) * 12;
+            months += now.getMonth() - start.getMonth();
+            
+            if (now.getDate() < start.getDate()) {
+                months--;
+            }
+            
+            if (months >= 12) {
+                const years = Math.floor(months / 12);
+                const remainingMonths = months % 12;
+                if (remainingMonths === 0) {
+                    durationDisplayEn.textContent = years + ' year' + (years > 1 ? 's' : '');
+                } else {
+                    durationDisplayEn.textContent = years + ' year' + (years > 1 ? 's' : '') + ' and ' + remainingMonths + ' month' + (remainingMonths > 1 ? 's' : '');
+                }
+            } else {
+                durationDisplayEn.textContent = months + ' month' + (months > 1 ? 's' : '');
+            }
+        }
+    }
+    
+    // اجرای تابع در ابتدا
+    updateJobDuration();
+    
+    // ===============================================
+    // 1. فعال‌سازی نوارهای مهارت (Skill Bars)
     // ===============================================
     
     const skillItems = document.querySelectorAll('.skill-level-item');
@@ -26,16 +93,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const percentSpan = item.querySelector('.skill-percent');
             
             if (bar && percentSpan) {
-                const percentValue = percentSpan.textContent; // "85%"
-                const numericValue = parseInt(percentValue); // 85
+                const percentValue = percentSpan.textContent;
+                const numericValue = parseInt(percentValue);
                 
-                // تنظیم متغیر CSS برای انیمیشن
                 item.style.setProperty('--skill-width', percentValue);
-                
-                // تنظیم عرض نوار
                 bar.style.width = numericValue + '%';
-                
-                // افزودن کلاس 'show' برای اجرای انیمیشن
                 item.classList.add('show');
             }
         });
