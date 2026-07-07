@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 months--;
             }
             
+            // اصلاح: نمایش بدون کلمه تکراری "ماه"
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const remainingMonths = months % 12;
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 months--;
             }
             
+            // اصلاح: نمایش بدون کلمه تکراری "month"
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const remainingMonths = months % 12;
