@@ -1,1128 +1,134 @@
-/* ---- تنظیم اسکرول نرم (Smooth Scroll) ---- */
-html {
-    scroll-behavior: smooth;
-}
-
-/* ---- فونت‌ها ---- */
-@font-face {
-    font-family: 'BNazanin';
-    src: url('fonts/BNazanin.woff2') format('woff2'); 
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Vazirmatn'; 
-    src: url('fonts/Vazirmatn-Medium.woff2') format('woff2'); 
-    font-weight: 500;
-    font-style: normal;
-}
-
-/* تعریف رنگ‌ها و متغیرهای اصلی - حرفه‌ای‌تر */
-:root {
-    --primary-color: #1a365d;       
-    --primary-light: #2b6cb0;
-    --secondary-color: #2d3748;        
-    --background-color: #ffffff;    
-    --section-bg: #f7fafc;          
-    --border-color: #e2e8f0;        
-    --accent-color: #3182ce;        
-    --accent-hover: #2c5282;
-    --progress-bar-color: #3182ce;  
-    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.06); 
-    --shadow-hover: 0 8px 35px rgba(26, 54, 93, 0.12);
-    --radius: 14px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ریست و تنظیمات جهانی */
-*, *::before, *::after {
-    box-sizing: border-box;
-}
-
-body {
-    line-height: 1.7; 
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
-    color: var(--secondary-color);
-    font-family: Tahoma, sans-serif; 
-    min-height: 100vh;
-}
-
-/* ================================================= */
-/* ---- جهت‌دهی (RTL/LTR) و فونت ---- */
-/* ================================================= */
-
-body.lang-fa { 
-    direction: rtl; 
-    text-align: right;
-    font-family: 'BNazanin', Tahoma, sans-serif; 
-} 
-
-body.lang-en { 
-    direction: ltr; 
-    text-align: left;
-    font-family: 'Vazirmatn', Tahoma, sans-serif; 
-} 
-
-/* کانتینر مرکزی */
-.container {
-    width: 92%;
-    max-width: 1240px; 
-    margin: 0 auto;
-    padding: 0 15px; 
-}
-
-/* ================================================= */
-/* ---- ۱. ساختار دو ستونی (Desktop) ---- */
-/* ================================================= */
-#main-wrapper {
-    display: flex;
-    padding-top: 30px; 
-    gap: 30px;
-    align-items: flex-start; 
-}
-
-/* سایدبار - حرفه‌ای‌تر */
-#sidebar-info {
-    position: sticky;
-    top: 30px; 
-    width: 30%; 
-    min-width: 250px;
-    background: linear-gradient(160deg, #ffffff 0%, #f7fafc 100%);
-    padding: 25px 20px 30px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(10px);
-    transition: var(--transition);
-}
-
-#sidebar-info:hover {
-    box-shadow: var(--shadow-hover);
-}
-
-/* محتوای اصلی - حرفه‌ای‌تر */
-#main-content {
-    width: 70%; 
-    background: var(--background-color);
-    padding: 35px 35px 25px;
-    border-radius: var(--radius);
-    box-shadow: var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    transition: var(--transition);
-}
-
-#main-content:hover {
-    box-shadow: var(--shadow-hover);
-}
-
-/* ================================================= */
-/* ---- ۱. کانتینر بالای صفحه (Top Area) ---- */
-/* ================================================= */
-
-#top-area {
-    padding-top: 10px; 
-    padding-bottom: 20px;
-    display: flex;
-    justify-content: space-between; 
-    align-items: flex-start; 
-    position: relative; 
-    height: 110px;
-}
-
-/* عکس پروفایل - حرفه‌ای‌تر */
-.profile-icon {
-    width: 100px; 
-    height: 120px; 
-    border-radius: 20%; 
-    object-fit: cover;
-    z-index: 100; 
-    border: 4px solid var(--accent-color); 
-    box-shadow: 0 8px 25px rgba(49, 130, 206, 0.25);
-    transition: var(--transition);
-    position: absolute;
-    top: 50%;
-}
-
-.profile-icon:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 12px 35px rgba(49, 130, 206, 0.35);
-    border-color: var(--primary-color);
-}
-
-body.lang-fa .profile-icon {
-    left: 20%; 
-    transform: translate(-50%, -50%); 
-}
-body.lang-en .profile-icon {
-    left: 80%; 
-    transform: translate(-50%, -50%); 
-}
-
-/* دکمه جابجایی زبان - حرفه‌ای‌تر */
-.lang-switcher {
-    z-index: 250; 
-    display: flex; 
-    gap: 6px;
-    order: -1; 
-    background: rgba(255, 255, 255, 0.92);
-    padding: 4px 8px;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-}
-
-.lang-switcher a, .lang-switcher button {
-    text-decoration: none;
-    border: 1px solid var(--border-color); 
-    padding: 5px 12px; 
-    border-radius: 8px;
-    font-size: 0.8em;
-    font-weight: 600;
-    transition: var(--transition);
-    background: transparent;
-    cursor: pointer;
-    color: var(--secondary-color);
-}
-
-.lang-switcher a:hover, .lang-switcher button:hover {
-    background-color: var(--accent-color);
-    color: white;
-    border-color: var(--accent-color);
-    transform: translateY(-1px);
-}
-
-.lang-switcher .active-lang {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    color: white;
-    border-color: var(--primary-color);
-    box-shadow: 0 2px 8px rgba(26, 54, 93, 0.25);
-}
-
-/* ---- هدر اصلی (HEADER) - حرفه‌ای‌تر ---- */
-.header {
-    margin-bottom: 25px;
-    padding-bottom: 18px;
-    border-bottom: 2px solid var(--border-color);
-}
-
-h1 {
-    font-size: 2.6em; 
-    color: var(--primary-color); 
-    margin-bottom: 4px;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-}
-
-h2 {
-    font-size: 1.15em; 
-    color: var(--primary-light); 
-    margin-top: 4px;
-    font-weight: 500;
-    letter-spacing: 0.3px;
-}
-
-/* بخش‌ها - حرفه‌ای‌تر */
-.section {
-    padding: 30px 0; 
-}
-
-.section-title {
-    font-size: 1.65em;
-    color: var(--primary-color);
-    margin-top: 0; 
-    margin-bottom: 25px; 
-    font-weight: 700;
-    border-inline-start: 5px solid var(--accent-color); 
-    padding-inline-start: 18px;
-    transition: var(--transition);
-    position: relative;
-}
-
-.section-title::after {
-    content: '';
-    position: absolute;
-    bottom: -4px;
-    left: 0;
-    width: 40px;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-color), transparent);
-    border-radius: 3px;
-}
-
-.section:hover .section-title {
-    color: var(--accent-color);
-    border-inline-start-color: var(--primary-color);
-}
-
-.section:hover .section-title::after {
-    width: 60px;
-}
-
-body.lang-fa .section-title::after {
-    left: auto;
-    right: 0;
-}
-
-/* ---- اطلاعات تماس - حرفه‌ای‌تر ---- */
-.contact-info { 
-    margin-top: 22px; 
-    font-size: 0.92em; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 10px; 
-    align-items: flex-start;
-}
-
-body.lang-fa .contact-info {
-    align-items: flex-end; 
-}
-
-.contact-info p {
-    margin: 0;
-    color: var(--secondary-color);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.contact-info i {
-    color: var(--accent-color);
-    width: 22px;
-    text-align: center;
-    font-size: 1.1em;
-}
-
-.contact-info a {
-    text-decoration: none;
-    color: var(--primary-color);
-    transition: var(--transition);
-    font-weight: 500;
-    position: relative;
-}
-
-.contact-info a::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--accent-color);
-    transition: var(--transition);
-}
-
-.contact-info a:hover {
-    color: var(--accent-color);
-}
-
-.contact-info a:hover::after {
-    width: 100%;
-}
-
-body.lang-fa .contact-info a::after {
-    left: auto;
-    right: 0;
-}
-
-/* ---- خلاصه (درباره من) - حرفه‌ای‌تر ---- */
-.summary { 
-    padding: 28px 32px;
-    background: linear-gradient(135deg, var(--section-bg) 0%, #edf2f7 100%);
-    border-radius: var(--radius);
-    font-size: 1em; 
-    line-height: 2;
-    text-align: justify;
-    border-right: 5px solid var(--accent-color);
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.03);
-    transition: var(--transition);
-}
-
-.summary:hover {
-    box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.06), 0 4px 20px rgba(0, 0, 0, 0.04);
-}
-
-body.lang-en .summary {
-    border-right: none;
-    border-left: 5px solid var(--accent-color);
-}
-
-/* ---- آیتم‌های شغلی و تحصیلی - حرفه‌ای‌تر ---- */
-.job-item {
-    margin-bottom: 22px;
-    padding: 22px 28px;
-    border-radius: var(--radius);
-    background: var(--section-bg);
-    border-right: 5px solid var(--accent-color);
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-}
-
-.job-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 0;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(49, 130, 206, 0.03));
-    transition: var(--transition);
-}
-
-.job-item:hover::before {
-    width: 100%;
-}
-
-body.lang-en .job-item {
-    border-right: none;
-    border-left: 5px solid var(--accent-color);
-}
-
-.job-item:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-3px);
-    background: #ffffff;
-}
-
-.job-item:last-child {
-    margin-bottom: 0;
-}
-
-.job-item h3 {
-    margin: 0 0 6px 0;
-    color: var(--primary-color);
-    font-size: 1.15em;
-    font-weight: 700;
-}
-
-.job-item p.duration, .job-item p.institution {
-    margin: 0 0 12px 0;
-    color: #64748b;
-    font-size: 0.88em;
-    font-weight: 500;
-    display: inline-block;
-    background: rgba(49, 130, 206, 0.08);
-    padding: 2px 16px;
-    border-radius: 20px;
-    letter-spacing: 0.3px;
-}
-
-.job-item ul {
-    list-style-type: none;
-    padding-inline-start: 20px;
-    margin: 8px 0 0 0;
-}
-
-.job-item ul li {
-    position: relative;
-    margin-bottom: 8px;
-    padding-inline-start: 22px;
-    line-height: 1.7;
-}
-
-.job-item ul li::before {
-    content: "▹";
-    color: var(--accent-color);
-    font-weight: bold;
-    position: absolute;
-    top: 0;
-    font-size: 1.1em;
-}
-
-body.lang-en .job-item ul li::before {
-    left: 0;
-    right: auto;
-}
-body.lang-fa .job-item ul li::before {
-    right: 0;
-    left: auto;
-}
-
-/* ================================================= */
-/* ---- مهارت‌ها (Skill Progress Bars) - حرفه‌ای‌تر ---- */
-/* ================================================= */
-.skills-list { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-    gap: 25px; 
-}
-
-.skill-category { 
-    padding: 25px 22px 22px; 
-    border: 1px solid var(--border-color); 
-    border-radius: var(--radius);
-    background: var(--background-color); 
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
-    transition: var(--transition);
-}
-
-.skill-category:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-3px);
-    border-color: var(--accent-color);
-}
-
-.skill-category h4 {
-    color: var(--primary-color);
-    margin-top: 0;
-    padding-bottom: 14px;
-    border-bottom: 2px solid var(--accent-color);
-    font-size: 1.1em;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.skill-level-item {
-    margin-bottom: 18px;
-}
-
-.skill-level-item:last-child {
-    margin-bottom: 0;
-}
-
-.skill-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9em;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: var(--secondary-color);
-}
-
-.skill-percent {
-    color: var(--accent-color);
-    font-weight: 700;
-}
-
-.skill-bar-container {
-    height: 8px;
-    background-color: #e2e8f0;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
-}
-
-.skill-bar {
-    width: 0; 
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent-color), var(--primary-light));
-    border-radius: 10px;
-    transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1); 
-}
-
-.skill-level-item.show .skill-bar {
-    width: var(--skill-width, 0%) !important;
-}
-
-/* ================================================= */
-/* ---- ۲. منو ناوبری (NAVBAR) - حرفه‌ای‌تر ---- */
-/* ================================================= */
-
-#navbar {
-    margin-top: 28px;
-    background-color: transparent; 
-}
-
-#navbar a {
-    color: var(--secondary-color); 
-    text-decoration: none;
-    padding: 11px 18px;
-    display: block;
-    font-size: 0.95em;
-    font-weight: 500;
-    transition: var(--transition);
-    font-family: 'Vazirmatn', Tahoma, sans-serif;
-    border-radius: 10px;
-    position: relative;
-}
-
-#navbar a::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 4px;
-    height: 100%;
-    background: linear-gradient(180deg, var(--accent-color), var(--primary-light));
-    border-radius: 0 4px 4px 0;
-    opacity: 0;
-    transition: var(--transition);
-}
-
-body.lang-en #navbar a::before {
-    right: auto;
-    left: 0;
-    border-radius: 4px 0 0 4px;
-}
-
-#navbar a:hover {
-    background-color: var(--section-bg); 
-    color: var(--accent-color);
-    transform: translateX(4px);
-    padding-right: 22px;
-}
-
-body.lang-fa #navbar a:hover {
-    transform: translateX(-4px);
-    padding-left: 22px;
-    padding-right: 18px;
-}
-
-#navbar a:hover::before {
-    opacity: 1;
-}
-
-#navbar a.active {
-    color: var(--primary-color) !important; 
-    background: linear-gradient(135deg, rgba(49, 130, 206, 0.08), rgba(26, 54, 93, 0.04)); 
-    font-weight: 700;
-}
-
-#navbar a.active::before {
-    opacity: 1;
-}
-
-#navbar ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column; 
-    gap: 4px;
-}
-
-/* ================================================= */
-/* ---- استایل‌های فرم تماس (CONTACT FORM) - حرفه‌ای‌تر ---- */
-/* ================================================= */
-.contact-intro-text {
-    font-size: 1em;
-    color: #555;
-    margin-bottom: 25px;
-    padding-bottom: 14px;
-    border-bottom: 2px dashed var(--border-color);
-}
-
-.contact-form {
-    max-width: 620px;
-    margin: 20px auto; 
-    padding: 35px 40px 30px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius);
-    background: var(--background-color); 
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05); 
-    transition: var(--transition);
-}
-
-.contact-form:hover {
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.08);
-}
-
-.form-group {
-    margin-bottom: 22px; 
-}
-
-.contact-form label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
-    color: var(--primary-color);
-    font-size: 0.95em;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.contact-form label i {
-    color: var(--accent-color);
-    font-size: 1.2em;
-}
-
-.contact-form input[type="email"],
-.contact-form textarea {
-    width: 100%;
-    padding: 14px 18px;
-    border: 2px solid var(--border-color);
-    border-radius: 10px; 
-    box-sizing: border-box; 
-    font-family: inherit;
-    font-size: 0.95em;
-    transition: var(--transition);
-    resize: vertical;
-    background: var(--section-bg);
-}
-
-.contact-form input[type="email"]:focus,
-.contact-form textarea:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.1);
-    outline: none;
-    background: #ffffff;
-}
-
-.contact-form button[type="submit"] {
-    background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
-    color: white;
-    padding: 15px 28px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 1.05em;
-    font-weight: 700;
-    transition: var(--transition);
-    font-family: inherit; 
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-bottom: 25px; 
-    letter-spacing: 0.5px;
-}
-
-.contact-form button[type="submit"]:hover {
-    background: linear-gradient(135deg, var(--primary-light), var(--accent-hover));
-    transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(49, 130, 206, 0.35);
-}
-
-.quick-contact-info {
-    text-align: center;
-    padding-top: 20px;
-    border-top: 1px solid var(--border-color);
-}
-
-.quick-contact-info p {
-    color: #64748b;
-    font-size: 0.9em;
-    margin-bottom: 15px;
-    font-weight: 500;
-}
-
-.quick-link {
-    text-decoration: none;
-    padding: 11px 22px;
-    margin: 0 6px;
-    border-radius: 10px;
-    display: inline-block;
-    font-weight: 600;
-    font-size: 0.9em;
-    transition: var(--transition);
-}
-
-.quick-link i {
-    margin-inline-end: 8px;
-}
-
-.quick-link:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
-}
-
-.linked-in {
-    background: linear-gradient(135deg, #0077b5, #005e8a);
-    color: white;
-}
-
-.linked-in:hover {
-    background: linear-gradient(135deg, #0088c8, #006a9e);
-    box-shadow: 0 6px 25px rgba(0, 119, 181, 0.3);
-}
-
-.email-link {
-    background: var(--section-bg);
-    color: var(--primary-color);
-    border: 2px solid var(--border-color);
-}
-
-.email-link:hover {
-    background: var(--accent-color);
-    color: white;
-    border-color: var(--accent-color);
-    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.3);
-}
-
-/* ================================================= */
-/* ---- ۳. فوتر برندینگ (پایین صفحه) - حرفه‌ای‌تر ---- */
-/* ================================================= */
-
-footer {
-    padding: 20px 0 0 0; 
-}
-
-.footer-branding {
-    display: flex;
-    align-items: center; 
-    justify-content: center; 
-    padding-top: 22px;
-    border-top: 2px solid var(--border-color);
-    margin-top: 40px;
-    gap: 25px;
-    flex-wrap: wrap;
-}
-
-.footer-logo {
-    display: flex;
-    align-items: center;
-}
-
-.footer-mha-logo {
-    height: 42px; 
-    opacity: 0.85; 
-    transition: var(--transition);
-}
-
-.footer-mha-logo:hover {
-    opacity: 1;
-    transform: scale(1.06);
-}
-
-.copyright-text {
-    font-size: 0.85em;
-    color: #64748b;
-    margin: 0;
-    line-height: 1.8;
-    text-align: center;
-}
-
-.copyright-text span {
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-/* ================================================= */
-/* ---- ۴. دکمه بازگشت به بالا (Back to Top) - حرفه‌ای ---- */
-/* ================================================= */
-#back-to-top {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 999;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-    color: white;
-    border: none;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.4em;
-    cursor: pointer;
-    box-shadow: 0 4px 20px rgba(26, 54, 93, 0.3);
-    transition: var(--transition);
-    display: none;
-    align-items: center;
-    justify-content: center;
-}
-
-#back-to-top:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(26, 54, 93, 0.4);
-}
-
-/* ================================================= */
-/* ---- ۵. رسپانسیو برای موبایل (Max-width: 992px) ---- */
-/* ================================================= */
-@media (max-width: 992px) {
+document.addEventListener('DOMContentLoaded', function() {
     
-    #main-wrapper {
-        flex-direction: column;
-        padding-top: 10px;
-        gap: 20px;
+    // ===============================================
+    // توابع کمکی (Utility Functions)
+    // ===============================================
+     
+    function debounce(func, delay) {
+        let timeout;
+        return function() {
+            const context = this;
+            const args = arguments;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), delay);
+        };
     }
     
-    #sidebar-info {
-        position: static;
-        width: 100%;
-        min-width: auto;
-        padding: 20px 18px;
-    }
+    // ===============================================
+    // 1. فعال‌سازی نوارهای مهارت (Skill Bars) - بهبودیافته
+    // ===============================================
     
-    #main-content {
-        width: 100%;
-        padding: 20px 18px;
-    }
-    
-    #top-area {
-        height: 120px;
-        display: block;
-        position: relative;
-        padding-top: 5px;
-        padding-bottom: 15px; 
+    const skillItems = document.querySelectorAll('.skill-level-item');
+
+    function animateSkillBars() {
+        skillItems.forEach(item => {
+            const bar = item.querySelector('.skill-bar');
+            const percentSpan = item.querySelector('.skill-percent');
+            
+            if (bar && percentSpan) {
+                const percentValue = percentSpan.textContent; // "85%"
+                const numericValue = parseInt(percentValue); // 85
+                
+                // تنظیم متغیر CSS
+                item.style.setProperty('--skill-width', percentValue);
+                
+                // تنظیم عرض نوار با داده‌های موجود
+                bar.style.width = numericValue + '%';
+                
+                // افزودن کلاس 'show'
+                item.classList.add('show');
+            }
+        });
     }
 
-    .profile-icon {
-        width: 70px; 
-        height: 84px;
-        border-radius: 20%; 
-        z-index: 100;
-        position: absolute !important; 
-        top: 20px; 
-        transform: none !important;
-        left: auto;
-        right: auto;
-        border-width: 3px;
-    }
-    
-    .lang-switcher {
-        z-index: 250; 
-        display: flex;
-        gap: 5px;
-        position: absolute; 
-        top: 22px;
-        padding: 3px 6px;
-    }
-    
-    body.lang-fa .profile-icon {
-        left: 15px !important;
-        right: auto !important; 
-    }
-    body.lang-fa .lang-switcher {
-        right: 15px;
-        left: auto;
+    const skillsSection = document.getElementById('skills');
+
+    if (skillsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkillBars();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { 
+            root: null, 
+            rootMargin: '0px',
+            threshold: 0.1 
+        });
+        
+        observer.observe(skillsSection);
+    } else {
+        animateSkillBars();
     }
 
-    body.lang-en .profile-icon {
-        right: 15px !important;
-        left: auto !important;
-    }
-    body.lang-en .lang-switcher {
-        left: 15px;
-        right: auto;
+    // ===============================================
+    // 2. اسکرول به بالا (Back to Top Button)
+    // ===============================================
+    
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    function toggleBackToTop() {
+        if (backToTopBtn) {
+            if (window.scrollY > 300) {
+                backToTopBtn.style.display = 'flex';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        }
     }
     
-    .header {
-        overflow: visible; 
-        margin-top: 100px;
-        border-bottom: none;
-        padding-bottom: 0;
-        text-align: center; 
-        padding-inline-start: 0; 
-        margin-bottom: 0;
-    }
-    
-    .contact-info { 
-        align-items: center !important;
-        flex-direction: column; 
-        margin-top: 15px;
-        width: 100%;
-        text-align: center; 
-    }
-    
-    .contact-info p, .contact-info a {
-        text-align: center; 
-        direction: ltr;
-    }
-    
-    #navbar {
-        margin-top: 18px;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-        border-radius: var(--radius);
-        padding: 8px 0;
-        box-shadow: 0 4px 20px rgba(26, 54, 93, 0.15);
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        toggleBackToTop(); 
     }
 
-    #navbar ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: row; 
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 3px; 
-        padding: 5px 8px; 
-    }
+    // ===============================================
+    // 3. فعال‌سازی نوار ناوبری (Active Link Management)
+    // ===============================================
+    
+    const sections = document.querySelectorAll('main section');
+    const navLinksDesktop = document.querySelectorAll('#navbar a');
+    const navLinksMobile = document.querySelectorAll('#navbar-mobile a'); 
+    
+    function updateActiveNav() {
+        let current = '';
 
-    #navbar li {
-        flex-basis: 28%; 
-        text-align: center;
-        margin: 3px 0;
-    }
-    
-    #navbar a {
-        color: white !important;
-        padding: 7px 5px; 
-        font-size: 0.78em; 
-        white-space: nowrap; 
-        display: block;
-        border-radius: 8px;
-        font-weight: 500;
-        transition: var(--transition);
-    }
-    
-    #navbar a::before {
-        display: none;
-    }
-    
-    #navbar a:hover {
-        background: rgba(255, 255, 255, 0.15);
-        color: white !important;
-        transform: none;
-        padding: 7px 5px;
-    }
-    
-    #navbar a.active {
-        color: #ffd700 !important;
-        background: rgba(255, 255, 255, 0.12);
-        font-weight: 700;
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            if (window.scrollY >= sectionTop - 200) { 
+                current = section.getAttribute('id');
+            }
+        });
 
-    .skills-list { 
-        grid-template-columns: 1fr;
-        gap: 15px; 
+        const updateLinks = (links) => {
+            links.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        };
+        
+        updateLinks(navLinksDesktop);
+        updateLinks(navLinksMobile);
     }
     
-    .footer-branding {
-        flex-direction: column;
-        text-align: center;
-        margin-top: 20px; 
-        gap: 10px;
-    }
-    
-    .footer-logo {
-        margin-inline-end: 0;
-        margin-bottom: 5px;
-    }
-    
-    .quick-contact-info {
-        padding: 10px 0;
-    }
-    
-    .quick-link {
-        display: block; 
-        width: 90%; 
-        margin: 8px auto; 
-    }
-    
-    .job-item {
-        padding: 18px 20px;
-    }
-    
-    .summary {
-        padding: 20px 22px;
-    }
-    
-    .contact-form {
-        padding: 22px 20px 20px;
-    }
-    
-    h1 {
-        font-size: 2em;
-    }
-    
-    .section-title {
-        font-size: 1.4em;
-    }
-}
+    // ===============================================
+    // مدیریت رویدادها (Event Listeners)
+    // ===============================================
 
-/* ================================================= */
-/* ---- ۶. رسپانسیو برای موبایل کوچک (Max-width: 480px) ---- */
-/* ================================================= */
-@media (max-width: 480px) {
-    .container {
-        width: 96%;
-        padding: 0 8px;
-    }
-    
-    #sidebar-info {
-        padding: 15px 12px;
-    }
-    
-    #main-content {
-        padding: 15px 12px;
-    }
-    
-    .profile-icon {
-        width: 60px;
-        height: 72px;
-        top: 15px;
-    }
-    
-    body.lang-fa .profile-icon {
-        left: 10px !important;
-    }
-    body.lang-fa .lang-switcher {
-        right: 10px;
-        top: 18px;
-    }
-    body.lang-en .profile-icon {
-        right: 10px !important;
-    }
-    body.lang-en .lang-switcher {
-        left: 10px;
-        top: 18px;
-    }
-    
-    .lang-switcher a, .lang-switcher button {
-        padding: 3px 8px;
-        font-size: 0.7em;
-    }
-    
-    .header {
-        margin-top: 80px;
-    }
-    
-    h1 {
-        font-size: 1.6em;
-    }
-    
-    h2 {
-        font-size: 0.95em;
-    }
-    
-    .section-title {
-        font-size: 1.2em;
-        padding-inline-start: 12px;
-    }
-    
-    .job-item {
-        padding: 14px 16px;
-    }
-    
-    .job-item h3 {
-        font-size: 1em;
-    }
-    
-    .summary {
-        padding: 16px 18px;
-        font-size: 0.95em;
-    }
-    
-    #navbar a {
-        font-size: 0.7em !important;
-        padding: 5px 3px !important;
-    }
-    
-    #navbar li {
-        flex-basis: 30%;
-    }
-    
-    .skill-category {
-        padding: 18px 16px;
-    }
-    
-    .contact-form {
-        padding: 18px 14px;
-    }
-    
-    .contact-form input[type="email"],
-    .contact-form textarea {
-        padding: 10px 14px;
-        font-size: 0.9em;
-    }
-    
-    .quick-link {
-        padding: 8px 16px;
-        font-size: 0.8em;
-    }
-    
-    #back-to-top {
-        width: 44px;
-        height: 44px;
-        font-size: 1.2em;
-        bottom: 20px;
-        right: 20px;
-    }
-}
+    const debouncedScrollHandler = debounce(function() {
+        updateActiveNav();
+        toggleBackToTop();
+    }, 50);
+
+    window.addEventListener('scroll', debouncedScrollHandler);
+    window.addEventListener('resize', debouncedScrollHandler);
+    updateActiveNav(); 
+});
