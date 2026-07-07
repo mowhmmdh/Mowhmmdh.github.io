@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ===============================================
-    // 1. فعال‌سازی نوارهای مهارت (Skill Bars) - بهبودیافته
+    // 1. فعال‌سازی نوارهای مهارت (Skill Bars) - داینامیک
     // ===============================================
     
     const skillItems = document.querySelectorAll('.skill-level-item');
@@ -29,13 +29,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 const percentValue = percentSpan.textContent; // "85%"
                 const numericValue = parseInt(percentValue); // 85
                 
-                // تنظیم متغیر CSS
+                // تنظیم متغیر CSS برای انیمیشن
                 item.style.setProperty('--skill-width', percentValue);
                 
-                // تنظیم عرض نوار با داده‌های موجود
+                // تنظیم عرض نوار
                 bar.style.width = numericValue + '%';
                 
-                // افزودن کلاس 'show'
+                // افزودن کلاس 'show' برای اجرای انیمیشن
                 item.classList.add('show');
             }
         });
