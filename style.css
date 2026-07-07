@@ -17,7 +17,7 @@ html {
     font-style: normal;
 }
 
-/* تعریف رنگ‌ها و متغیرهای اصلی - حرفه‌ای‌تر */
+/* تعریف رنگ‌ها و متغیرهای اصلی */
 :root {
     --primary-color: #1a365d;       
     --primary-light: #2b6cb0;
@@ -83,7 +83,7 @@ body.lang-en {
     align-items: flex-start; 
 }
 
-/* سایدبار - حرفه‌ای‌تر */
+/* سایدبار */
 #sidebar-info {
     position: sticky;
     top: 30px; 
@@ -102,7 +102,7 @@ body.lang-en {
     box-shadow: var(--shadow-hover);
 }
 
-/* محتوای اصلی - حرفه‌ای‌تر */
+/* محتوای اصلی */
 #main-content {
     width: 70%; 
     background: var(--background-color);
@@ -118,7 +118,7 @@ body.lang-en {
 }
 
 /* ================================================= */
-/* ---- ۱. کانتینر بالای صفحه (Top Area) ---- */
+/* ---- کانتینر بالای صفحه (Top Area) ---- */
 /* ================================================= */
 
 #top-area {
@@ -131,7 +131,7 @@ body.lang-en {
     height: 110px;
 }
 
-/* عکس پروفایل - حرفه‌ای‌تر */
+/* عکس پروفایل */
 .profile-icon {
     width: 100px; 
     height: 120px; 
@@ -160,7 +160,7 @@ body.lang-en .profile-icon {
     transform: translate(-50%, -50%); 
 }
 
-/* دکمه جابجایی زبان - حرفه‌ای‌تر */
+/* دکمه جابجایی زبان */
 .lang-switcher {
     z-index: 250; 
     display: flex; 
@@ -200,7 +200,7 @@ body.lang-en .profile-icon {
     box-shadow: 0 2px 8px rgba(26, 54, 93, 0.25);
 }
 
-/* ---- هدر اصلی (HEADER) - حرفه‌ای‌تر ---- */
+/* ---- هدر اصلی ---- */
 .header {
     margin-bottom: 25px;
     padding-bottom: 18px;
@@ -224,7 +224,7 @@ h2 {
     letter-spacing: 0.3px;
 }
 
-/* بخش‌ها - حرفه‌ای‌تر */
+/* بخش‌ها */
 .section {
     padding: 30px 0; 
 }
@@ -266,7 +266,7 @@ body.lang-fa .section-title::after {
     right: 0;
 }
 
-/* ---- اطلاعات تماس - حرفه‌ای‌تر ---- */
+/* ---- اطلاعات تماس ---- */
 .contact-info { 
     margin-top: 22px; 
     font-size: 0.92em; 
@@ -327,7 +327,7 @@ body.lang-fa .contact-info a::after {
     right: 0;
 }
 
-/* ---- خلاصه (درباره من) - حرفه‌ای‌تر ---- */
+/* ---- خلاصه (درباره من) ---- */
 .summary { 
     padding: 28px 32px;
     background: linear-gradient(135deg, var(--section-bg) 0%, #edf2f7 100%);
@@ -349,7 +349,9 @@ body.lang-en .summary {
     border-left: 5px solid var(--accent-color);
 }
 
-/* ---- آیتم‌های شغلی و تحصیلی - حرفه‌ای‌تر ---- */
+/* ================================================= */
+/* ---- آیتم‌های شغلی (حرفه‌ای‌تر) ---- */
+/* ================================================= */
 .job-item {
     margin-bottom: 22px;
     padding: 22px 28px;
@@ -441,8 +443,47 @@ body.lang-fa .job-item ul li::before {
     left: auto;
 }
 
+/* ---- استایل مخصوص شغل فعلی ---- */
+.job-item.current-position {
+    background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+    border-right-color: #ff6b35;
+    border-right-width: 6px;
+}
+
+body.lang-en .job-item.current-position {
+    border-right: none;
+    border-left-color: #ff6b35;
+    border-left-width: 6px;
+}
+
+.job-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.job-header h3 {
+    margin: 0;
+}
+
+.badge-current {
+    background: linear-gradient(135deg, #ff6b35, #e5532e);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 16px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.25);
+}
+
 /* ================================================= */
-/* ---- مهارت‌ها (Skill Progress Bars) - حرفه‌ای‌تر ---- */
+/* ---- مهارت‌ها (Skill Progress Bars) ---- */
 /* ================================================= */
 .skills-list { 
     display: grid; 
@@ -520,7 +561,7 @@ body.lang-fa .job-item ul li::before {
 }
 
 /* ================================================= */
-/* ---- ۲. منو ناوبری (NAVBAR) - حرفه‌ای‌تر ---- */
+/* ---- منو ناوبری (NAVBAR) ---- */
 /* ================================================= */
 
 #navbar {
@@ -597,7 +638,7 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- استایل‌های فرم تماس (CONTACT FORM) - حرفه‌ای‌تر ---- */
+/* ---- فرم تماس (CONTACT FORM) ---- */
 /* ================================================= */
 .contact-intro-text {
     font-size: 1em;
@@ -745,7 +786,7 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- ۳. فوتر برندینگ (پایین صفحه) - حرفه‌ای‌تر ---- */
+/* ---- فوتر برندینگ ---- */
 /* ================================================= */
 
 footer {
@@ -793,7 +834,7 @@ footer {
 }
 
 /* ================================================= */
-/* ---- ۴. دکمه بازگشت به بالا (Back to Top) - حرفه‌ای ---- */
+/* ---- دکمه بازگشت به بالا ---- */
 /* ================================================= */
 #back-to-top {
     position: fixed;
@@ -821,7 +862,7 @@ footer {
 }
 
 /* ================================================= */
-/* ---- ۵. رسپانسیو برای موبایل (Max-width: 992px) ---- */
+/* ---- رسپانسیو برای موبایل (Max-width: 992px) ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     
@@ -1000,6 +1041,11 @@ footer {
         padding: 18px 20px;
     }
     
+    .job-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
     .summary {
         padding: 20px 22px;
     }
@@ -1018,7 +1064,7 @@ footer {
 }
 
 /* ================================================= */
-/* ---- ۶. رسپانسیو برای موبایل کوچک (Max-width: 480px) ---- */
+/* ---- رسپانسیو برای موبایل کوچک (Max-width: 480px) ---- */
 /* ================================================= */
 @media (max-width: 480px) {
     .container {
