@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateJobDuration() {
         const now = new Date();
         
-        // ---- نسخه فارسی (تاریخ شمسی) ----
+        // ---- نسخه فارسی ----
         const startDateFa = document.getElementById('start-date-fa');
         const durationDisplayFa = document.getElementById('duration-display-fa');
         
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 months--;
             }
             
-            // اصلاح نهایی: نمایش بدون هیچ تکرار اضافی
+            // نمایش بدون هیچ کلمه تکراری
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const remainingMonths = months % 12;
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // ---- نسخه انگلیسی (تاریخ میلادی) ----
+        // ---- نسخه انگلیسی ----
         const startDateEn = document.getElementById('start-date-en');
         const durationDisplayEn = document.getElementById('duration-display-en');
         
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 months--;
             }
             
-            // اصلاح نهایی: نمایش بدون هیچ تکرار اضافی
+            // نمایش بدون هیچ کلمه تکراری
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const remainingMonths = months % 12;
