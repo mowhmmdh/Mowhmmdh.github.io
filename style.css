@@ -68,6 +68,19 @@ body.dark-mode .dark-toggle {
     color: #0f172a;
 }
 
+/* ================================================= */
+/* ---- افکت پس‌زمینه با ذرات ---- */
+/* ================================================= */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
 /* ---- ریست و تنظیمات ---- */
 * {
     margin: 0;
@@ -108,8 +121,6 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     transition: background 0.5s ease, color 0.5s ease;
-    margin: 0;
-    padding: 0;
 }
 
 body.lang-fa {
@@ -134,7 +145,9 @@ body.lang-en {
     z-index: 1;
 }
 
+/* ================================================= */
 /* ---- نوار پیشرفت ---- */
+/* ================================================= */
 #progress-bar {
     position: fixed;
     top: 0;
@@ -147,10 +160,12 @@ body.lang-en {
     will-change: width;
 }
 
+/* ================================================= */
 /* ---- ساختار دو ستونی ---- */
+/* ================================================= */
 #main-wrapper {
     display: flex;
-    padding-top: 0px;
+    padding-top: 30px;
     gap: 30px;
     align-items: flex-start;
 }
@@ -158,7 +173,7 @@ body.lang-en {
 /* ---- سایدبار ---- */
 #sidebar-info {
     position: sticky;
-    top: 20px;
+    top: 30px;
     width: 30%;
     min-width: 250px;
     background: var(--bg-sidebar);
@@ -189,7 +204,9 @@ body.dark-mode #sidebar-info {
     transition: var(--transition);
 }
 
+/* ================================================= */
 /* ---- افکت محو شدن بخش‌ها ---- */
+/* ================================================= */
 .section {
     padding: 30px 0;
     opacity: 0;
@@ -203,7 +220,9 @@ body.dark-mode #sidebar-info {
     transform: translateY(0);
 }
 
+/* ================================================= */
 /* ---- بالای صفحه ---- */
+/* ================================================= */
 #top-area {
     display: flex;
     justify-content: space-between;
@@ -214,7 +233,9 @@ body.dark-mode #sidebar-info {
     padding-bottom: 20px;
 }
 
-/* ---- دکمه زبان ---- */
+/* ================================================= */
+/* ---- دکمه زبان (دسکتاپ) ---- */
+/* ================================================= */
 .lang-switcher {
     z-index: 250;
     display: flex;
@@ -277,7 +298,9 @@ body.dark-mode .lang-switcher .active-lang {
     color: #0f172a;
 }
 
-/* ---- عکس پروفایل ---- */
+/* ================================================= */
+/* ---- عکس پروفایل (دسکتاپ) ---- */
+/* ================================================= */
 .profile-wrapper {
     position: absolute;
     top: 50%;
@@ -314,7 +337,9 @@ body.lang-en .profile-wrapper {
     border: 3px solid rgba(255, 255, 255, 0.9);
 }
 
-/* ---- تایپ‌رایتر ---- */
+/* ================================================= */
+/* ---- تایپ‌رایتر (Typing Effect) ---- */
+/* ================================================= */
 .typing-text {
     display: inline-block;
     overflow: hidden;
@@ -582,7 +607,9 @@ body.lang-en .job-item.current-position {
     box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
 }
 
+/* ================================================= */
 /* ---- مهارت‌ها ---- */
+/* ================================================= */
 .skills-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -655,7 +682,9 @@ body.lang-en .job-item.current-position {
     width: var(--skill-width, 0%) !important;
 }
 
+/* ================================================= */
 /* ---- منو ---- */
+/* ================================================= */
 #navbar {
     margin-top: 28px;
 }
@@ -723,7 +752,9 @@ body.lang-fa #navbar a:hover {
     gap: 4px;
 }
 
+/* ================================================= */
 /* ---- فرم تماس ---- */
+/* ================================================= */
 .contact-intro-text {
     color: var(--text-muted);
     margin-bottom: 25px;
@@ -844,7 +875,9 @@ body.lang-fa #navbar a:hover {
     border-color: var(--accent);
 }
 
+/* ================================================= */
 /* ---- لوگو ---- */
+/* ================================================= */
 .footer-logo-wrapper {
     display: flex;
     align-items: center;
@@ -904,7 +937,9 @@ body.lang-fa #navbar a:hover {
     transform: scale(1.06);
 }
 
+/* ================================================= */
 /* ---- فوتر ---- */
+/* ================================================= */
 footer {
     padding: 20px 0 0 0;
 }
@@ -932,7 +967,9 @@ footer {
     color: var(--primary);
 }
 
+/* ================================================= */
 /* ---- دکمه بازگشت ---- */
+/* ================================================= */
 #back-to-top {
     position: fixed;
     bottom: 30px;
@@ -958,249 +995,19 @@ footer {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* ---- بخش پروژه‌ها ---- */
-#projects .project-card {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    background: var(--bg-card);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 25px 28px;
-    border-radius: var(--radius);
-    border-right: 5px solid rgba(37, 99, 235, 0.3);
-    box-shadow: var(--shadow);
-    transition: var(--transition);
-    align-items: stretch;
-}
-
-body.dark-mode #projects .project-card {
-    background: rgba(255, 255, 255, 0.03);
-    border-right-color: rgba(96, 165, 250, 0.15);
-}
-
-body.lang-en #projects .project-card {
-    border-right: none;
-    border-left: 5px solid rgba(37, 99, 235, 0.3);
-}
-
-body.dark-mode.lang-en #projects .project-card {
-    border-left-color: rgba(96, 165, 250, 0.15);
-}
-
-#projects .project-card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-3px);
-}
-
-#projects .project-image-wrapper {
-    flex: 0 0 220px;
-    min-width: 160px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    transition: var(--transition);
-}
-
-#projects .project-image-wrapper:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
-}
-
-#projects .project-image-wrapper img {
-    width: 100%;
-    height: 100%;
-    min-height: 160px;
-    object-fit: cover;
-    display: block;
-    cursor: pointer;
-}
-
-#projects .project-content {
-    flex: 1;
-    min-width: 200px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-#projects .project-content h3 {
-    color: var(--primary);
-    font-size: 1.2em;
-    margin: 0 0 6px 0;
-}
-
-body.dark-mode #projects .project-content h3 {
-    color: #f1f5f9;
-}
-
-#projects .project-content .project-date {
-    color: var(--text-muted);
-    font-size: 0.85em;
-    margin: 0 0 12px 0;
-}
-
-#projects .project-content .project-description {
-    color: var(--text);
-    line-height: 1.9;
-    margin: 0;
-    font-size: 0.95em;
-}
-
-body.dark-mode #projects .project-content .project-description {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-#projects .project-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 16px;
-}
-
-#projects .project-actions .github-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: linear-gradient(135deg, #24292e, #1a1e23);
-    color: white;
-    padding: 10px 22px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.85em;
-    transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(36, 41, 46, 0.15);
-}
-
-#projects .project-actions .github-link:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 25px rgba(36, 41, 46, 0.2);
-}
-
-body.dark-mode #projects .project-actions .github-link {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    box-shadow: none;
-}
-
-body.dark-mode #projects .project-actions .github-link:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-#projects .project-actions .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    background: rgba(37, 99, 235, 0.08);
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 0.8em;
-    color: var(--text-muted);
-    border: 1px solid var(--border);
-    transition: var(--transition);
-}
-
-body.dark-mode #projects .project-actions .badge {
-    background: rgba(96, 165, 250, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    color: rgba(255, 255, 255, 0.5);
-}
-
-#projects .project-actions .badge i {
-    color: var(--accent);
-}
-
 /* ================================================= */
-/* ---- نشانگر نور (Cursor Glow) ---- */
-/* ================================================= */
-#cursor-glow {
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.04) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: all 0.1s ease-out;
-    will-change: transform, opacity;
-}
-
-body.dark-mode #cursor-glow {
-    background: radial-gradient(circle, rgba(96, 165, 250, 0.04) 0%, transparent 70%);
-}
-
-/* ================================================= */
-/* ---- لایت‌باکس ---- */
-/* ================================================= */
-.lightbox-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 99999;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.lightbox-overlay.active {
-    display: flex;
-    opacity: 1;
-}
-
-.lightbox-overlay img {
-    max-width: 90%;
-    max-height: 90%;
-    border-radius: 12px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-    transform: scale(0.9);
-    transition: transform 0.4s ease;
-}
-
-.lightbox-overlay.active img {
-    transform: scale(1);
-}
-
-.lightbox-close {
-    position: absolute;
-    top: 30px;
-    right: 30px;
-    color: white;
-    font-size: 2em;
-    cursor: pointer;
-    background: none;
-    border: none;
-    transition: var(--transition);
-    z-index: 100000;
-}
-
-.lightbox-close:hover {
-    transform: rotate(90deg);
-    color: var(--accent);
-}
-
-/* ================================================= */
-/* ---- موبایل ---- */
+/* ---- موبایل (نسخه اصلاح‌شده برای هر دو زبان) ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
         flex-direction: column;
-        padding-top: 0px;
+        padding-top: 0;
         gap: 0;
         background: var(--bg);
     }
 
     #sidebar-info {
         position: static;
-        top: 0;
         width: 100%;
         padding: 16px 16px 24px;
         border-radius: 0 0 28px 28px;
@@ -1222,6 +1029,24 @@ body.dark-mode #cursor-glow {
         border: none;
     }
 
+    /* ================================================= */
+    /* ---- تنظیمات Top Area در موبایل ---- */
+    /* ================================================= */
+    #top-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: auto;
+        padding: 10px 0 10px;
+        position: relative;
+        min-height: 200px;
+        width: 100%;
+    }
+
+    /* ================================================= */
+    /* ---- دکمه زبان در موبایل (همان گوشه برای هر دو زبان) ---- */
+    /* ================================================= */
     .lang-switcher {
         position: absolute;
         top: 5px;
@@ -1239,6 +1064,7 @@ body.dark-mode #cursor-glow {
         align-items: center;
     }
 
+    /* برای نسخه انگلیسی هم دکمه در سمت راست می‌ماند */
     body.lang-en .lang-switcher {
         right: 5px !important;
         left: auto !important;
@@ -1257,18 +1083,9 @@ body.dark-mode #cursor-glow {
         border: 1px solid var(--border);
     }
 
-    #top-area {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        height: auto;
-        padding: 10px 0 10px;
-        position: relative;
-        min-height: 200px;
-        width: 100%;
-    }
-
+    /* ================================================= */
+    /* ---- عکس پروفایل در موبایل (در مرکز و پایین‌تر) ---- */
+    /* ================================================= */
     .profile-wrapper {
         position: relative;
         top: auto;
@@ -1283,7 +1100,7 @@ body.dark-mode #cursor-glow {
         background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--accent));
         background-size: 300% 300%;
         animation: gradientMove 4s ease-in-out infinite;
-        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.15);
+        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.2);
         will-change: transform, background-position;
         z-index: 1;
     }
@@ -1299,6 +1116,7 @@ body.dark-mode #cursor-glow {
         border: 3px solid rgba(255, 255, 255, 0.95);
     }
 
+    /* ---- هدر در موبایل ---- */
     .header {
         margin-top: 0;
         text-align: center;
@@ -1344,6 +1162,7 @@ body.dark-mode #cursor-glow {
         display: none;
     }
 
+    /* ---- منو در موبایل ---- */
     #navbar {
         margin-top: 16px;
         background: transparent;
@@ -1396,20 +1215,21 @@ body.dark-mode #cursor-glow {
         color: #fff !important;
         background: linear-gradient(135deg, var(--accent), var(--primary-light));
         border-color: var(--accent);
-        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
     }
 
     body.dark-mode #navbar a.active {
         color: #0f172a !important;
     }
 
+    /* ---- کارت‌ها در موبایل ---- */
     .job-item {
         padding: 16px 18px;
         border-radius: 14px;
         background: var(--bg-card);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border: 1px solid var(--border);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         box-shadow: var(--shadow);
     }
 
@@ -1421,39 +1241,10 @@ body.dark-mode #cursor-glow {
         background: var(--bg-card);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border: 1px solid var(--border);
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    #projects .project-card {
-        padding: 18px 20px;
-        flex-direction: column;
-    }
-
-    #projects .project-image-wrapper {
-        flex: 0 0 auto;
-        width: 100%;
-        max-height: 200px;
-    }
-
-    #projects .project-image-wrapper img {
-        min-height: 120px;
-        max-height: 200px;
-    }
-
-    #projects .project-content h3 {
-        font-size: 1.05em;
-    }
-
-    #projects .project-actions .github-link {
-        padding: 8px 16px;
-        font-size: 0.8em;
-    }
-
-    #projects .project-actions .badge {
-        padding: 6px 12px;
-        font-size: 0.75em;
-    }
-
+    /* ---- لوگو در موبایل ---- */
     .footer-logo-wrapper {
         width: 80px;
         height: 80px;
@@ -1469,16 +1260,13 @@ body.dark-mode #cursor-glow {
         font-size: 0.72em;
     }
 
+    /* ---- دکمه دارک مود در موبایل ---- */
     .dark-toggle {
         bottom: 20px;
         left: 20px;
         width: 44px;
         height: 44px;
         font-size: 1.1em;
-    }
-
-    #cursor-glow {
-        display: none;
     }
 }
 
@@ -1521,37 +1309,6 @@ body.dark-mode #cursor-glow {
     .contact-info p {
         font-size: 0.72em;
         padding: 2px 10px;
-    }
-
-    #projects .project-card {
-        padding: 14px 16px;
-    }
-
-    #projects .project-image-wrapper {
-        max-height: 150px;
-    }
-
-    #projects .project-image-wrapper img {
-        min-height: 100px;
-        max-height: 150px;
-    }
-
-    #projects .project-content h3 {
-        font-size: 0.95em;
-    }
-
-    #projects .project-content .project-description {
-        font-size: 0.85em;
-    }
-
-    #projects .project-actions .github-link {
-        padding: 6px 14px;
-        font-size: 0.75em;
-    }
-
-    #projects .project-actions .badge {
-        padding: 4px 10px;
-        font-size: 0.7em;
     }
 
     .footer-logo-wrapper {
@@ -1631,9 +1388,5 @@ body.dark-mode #cursor-glow {
 
     h1 {
         font-size: 2.2em;
-    }
-
-    #projects .project-card {
-        padding: 20px 24px;
     }
 }
