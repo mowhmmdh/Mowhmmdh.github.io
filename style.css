@@ -108,6 +108,8 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     transition: background 0.5s ease, color 0.5s ease;
+    margin: 0;
+    padding: 0;
 }
 
 body.lang-fa {
@@ -148,7 +150,7 @@ body.lang-en {
 /* ---- ساختار دو ستونی ---- */
 #main-wrapper {
     display: flex;
-    padding-top: 30px;
+    padding-top: 0px;
     gap: 30px;
     align-items: flex-start;
 }
@@ -156,7 +158,7 @@ body.lang-en {
 /* ---- سایدبار ---- */
 #sidebar-info {
     position: sticky;
-    top: 30px;
+    top: 20px;
     width: 30%;
     min-width: 250px;
     background: var(--bg-sidebar);
@@ -1110,18 +1112,95 @@ body.dark-mode #projects .project-actions .badge {
 }
 
 /* ================================================= */
+/* ---- نشانگر نور (Cursor Glow) ---- */
+/* ================================================= */
+#cursor-glow {
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.1s ease-out;
+    will-change: transform, opacity;
+}
+
+body.dark-mode #cursor-glow {
+    background: radial-gradient(circle, rgba(96, 165, 250, 0.04) 0%, transparent 70%);
+}
+
+/* ================================================= */
+/* ---- لایت‌باکس ---- */
+/* ================================================= */
+.lightbox-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 99999;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.lightbox-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.lightbox-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    transform: scale(0.9);
+    transition: transform 0.4s ease;
+}
+
+.lightbox-overlay.active img {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    color: white;
+    font-size: 2em;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: var(--transition);
+    z-index: 100000;
+}
+
+.lightbox-close:hover {
+    transform: rotate(90deg);
+    color: var(--accent);
+}
+
+/* ================================================= */
 /* ---- موبایل ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
         flex-direction: column;
-        padding-top: 0;
+        padding-top: 0px;
         gap: 0;
         background: var(--bg);
     }
 
     #sidebar-info {
         position: static;
+        top: 0;
         width: 100%;
         padding: 16px 16px 24px;
         border-radius: 0 0 28px 28px;
