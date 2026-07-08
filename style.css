@@ -1,4 +1,87 @@
-/* ---- تنظیمات پایه ---- */
+/* ================================================= */
+/* ---- تنظیمات پایه و متغیرها ---- */
+/* ================================================= */
+:root {
+    --primary: #0f2b4d;
+    --primary-light: #1a4a7a;
+    --secondary: #1e293b;
+    --accent: #2563eb;
+    --accent-glow: rgba(37, 99, 235, 0.2);
+    --bg: #f0f4f8;
+    --bg-card: #ffffff;
+    --bg-sidebar: rgba(255, 255, 255, 0.7);
+    --bg-main: rgba(255, 255, 255, 0.85);
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    --shadow-hover: 0 10px 40px rgba(37, 99, 235, 0.08);
+    --radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* حالت تاریک (Dark Mode) */
+body.dark-mode {
+    --primary: #e2e8f0;
+    --primary-light: #94a3b8;
+    --secondary: #f1f5f9;
+    --accent: #60a5fa;
+    --bg: #0f172a;
+    --bg-card: #1e293b;
+    --bg-sidebar: rgba(30, 41, 59, 0.85);
+    --bg-main: rgba(30, 41, 59, 0.9);
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: #334155;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 10px 40px rgba(96, 165, 250, 0.08);
+}
+
+/* ---- دکمه دارک مود ---- */
+.dark-toggle {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 9999;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 1.3em;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dark-toggle:hover {
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .dark-toggle {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: #0f172a;
+}
+
+/* ================================================= */
+/* ---- افکت پس‌زمینه با ذرات ---- */
+/* ================================================= */
+#particles-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ---- ریست و تنظیمات ---- */
 * {
     margin: 0;
     padding: 0;
@@ -28,30 +111,16 @@ html {
     font-display: swap;
 }
 
-/* ---- متغیرها ---- */
-:root {
-    --primary: #0f2b4d;
-    --primary-light: #1a4a7a;
-    --secondary: #1e293b;
-    --accent: #2563eb;
-    --accent-glow: rgba(37, 99, 235, 0.2);
-    --bg: #f0f4f8;
-    --white: #ffffff;
-    --glass: rgba(255, 255, 255, 0.7);
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-    --radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
 /* ---- بدنه ---- */
 body {
     font-family: Tahoma, sans-serif;
     background: var(--bg);
-    color: var(--secondary);
+    color: var(--text);
     min-height: 100vh;
     line-height: 1.7;
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
+    transition: background 0.5s ease, color 0.5s ease;
 }
 
 body.lang-fa {
@@ -72,6 +141,8 @@ body.lang-en {
     max-width: 1240px;
     margin: 0 auto;
     padding: 0 15px;
+    position: relative;
+    z-index: 1;
 }
 
 /* ================================================= */
@@ -105,27 +176,32 @@ body.lang-en {
     top: 30px;
     width: 30%;
     min-width: 250px;
-    background: var(--glass);
+    background: var(--bg-sidebar);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     padding: 25px 20px 30px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition);
     z-index: 2;
+}
+
+body.dark-mode #sidebar-info {
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 /* ---- محتوای اصلی ---- */
 #main-content {
     width: 70%;
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--bg-main);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     padding: 35px 35px 25px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
 }
 
 /* ================================================= */
@@ -158,13 +234,13 @@ body.lang-en {
 }
 
 /* ================================================= */
-/* ---- دکمه زبان (دقیقاً در گوشه بالا) ---- */
+/* ---- دکمه زبان ---- */
 /* ================================================= */
 .lang-switcher {
     z-index: 250;
     display: flex;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.9);
     padding: 4px 10px;
     border-radius: 30px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
@@ -173,6 +249,11 @@ body.lang-en {
     top: 0;
     right: 0;
     margin: 0;
+}
+
+body.dark-mode .lang-switcher {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 body.lang-fa .lang-switcher {
@@ -188,7 +269,7 @@ body.lang-en .lang-switcher {
 .lang-switcher a,
 .lang-switcher button {
     text-decoration: none;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     padding: 5px 14px;
     border-radius: 20px;
     font-size: 0.75em;
@@ -196,7 +277,7 @@ body.lang-en .lang-switcher {
     transition: var(--transition);
     background: transparent;
     cursor: pointer;
-    color: var(--secondary);
+    color: var(--text);
 }
 
 .lang-switcher a:hover,
@@ -212,8 +293,13 @@ body.lang-en .lang-switcher {
     border-color: var(--primary);
 }
 
+body.dark-mode .lang-switcher .active-lang {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: #0f172a;
+}
+
 /* ================================================= */
-/* ---- عکس پروفایل (کاملاً جدا از دکمه زبان) ---- */
+/* ---- عکس پروفایل ---- */
 /* ================================================= */
 .profile-wrapper {
     position: absolute;
@@ -251,11 +337,37 @@ body.lang-en .profile-wrapper {
     border: 3px solid rgba(255, 255, 255, 0.9);
 }
 
-/* ---- هدر (اسم پشت عکس نرود) ---- */
+/* ================================================= */
+/* ---- تایپ‌رایتر (Typing Effect) ---- */
+/* ================================================= */
+.typing-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+    border-left: 3px solid var(--accent);
+    animation: blink-caret 0.75s step-end infinite;
+    padding-right: 5px;
+}
+
+@keyframes blink-caret {
+    0%, 100% { border-color: var(--accent); }
+    50% { border-color: transparent; }
+}
+
+body.dark-mode .typing-text {
+    border-color: #60a5fa;
+}
+
+body.lang-fa .typing-text {
+    border-left: none;
+    border-right: 3px solid var(--accent);
+}
+
+/* ---- هدر ---- */
 .header {
     margin-bottom: 25px;
     padding-bottom: 18px;
-    border-bottom: 2px solid #e2e8f0;
+    border-bottom: 2px solid var(--border);
     margin-top: 10px;
     position: relative;
     z-index: 5;
@@ -368,7 +480,7 @@ body.lang-fa .contact-info a::after {
 /* ---- درباره من ---- */
 .summary {
     padding: 28px 32px;
-    background: linear-gradient(135deg, #f8fafc, #edf2f7);
+    background: var(--bg-card);
     border-radius: var(--radius);
     border-right: 5px solid var(--accent);
     line-height: 2;
@@ -386,7 +498,7 @@ body.lang-en .summary {
     margin-bottom: 22px;
     padding: 22px 28px;
     border-radius: var(--radius);
-    background: #f8fafc;
+    background: var(--bg-card);
     border-right: 5px solid var(--accent);
     transition: var(--transition);
     position: relative;
@@ -399,9 +511,8 @@ body.lang-en .job-item {
 }
 
 .job-item:hover {
-    box-shadow: 0 10px 40px rgba(37, 99, 235, 0.08);
+    box-shadow: var(--shadow-hover);
     transform: translateY(-3px);
-    background: #ffffff;
 }
 
 .job-item h3 {
@@ -413,7 +524,7 @@ body.lang-en .job-item {
 
 .job-item .duration,
 .job-item .institution {
-    color: #64748b;
+    color: var(--text-muted);
     font-size: 0.88em;
     font-weight: 500;
     background: rgba(37, 99, 235, 0.08);
@@ -456,9 +567,13 @@ body.lang-fa .job-item ul li::before {
 
 /* ---- شغل فعلی ---- */
 .job-item.current-position {
-    background: linear-gradient(135deg, #eff6ff, #ffffff);
+    background: linear-gradient(135deg, #eff6ff, var(--bg-card));
     border-right-color: #f59e0b;
     border-right-width: 6px;
+}
+
+body.dark-mode .job-item.current-position {
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.1), var(--bg-card));
 }
 
 body.lang-en .job-item.current-position {
@@ -503,14 +618,14 @@ body.lang-en .job-item.current-position {
 
 .skill-category {
     padding: 25px 22px 22px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    background: var(--white);
+    background: var(--bg-card);
     transition: var(--transition);
 }
 
 .skill-category:hover {
-    box-shadow: 0 10px 40px rgba(37, 99, 235, 0.06);
+    box-shadow: var(--shadow-hover);
     transform: translateY(-3px);
     border-color: var(--accent);
 }
@@ -550,7 +665,7 @@ body.lang-en .job-item.current-position {
 
 .skill-bar-container {
     height: 8px;
-    background: #e2e8f0;
+    background: var(--border);
     border-radius: 10px;
     overflow: hidden;
 }
@@ -575,7 +690,7 @@ body.lang-en .job-item.current-position {
 }
 
 #navbar a {
-    color: var(--secondary);
+    color: var(--text);
     text-decoration: none;
     padding: 11px 18px;
     display: block;
@@ -606,7 +721,7 @@ body.lang-en #navbar a::before {
 }
 
 #navbar a:hover {
-    background: #f8fafc;
+    background: var(--bg-card);
     color: var(--accent);
     padding-right: 22px;
 }
@@ -641,20 +756,20 @@ body.lang-fa #navbar a:hover {
 /* ---- فرم تماس ---- */
 /* ================================================= */
 .contact-intro-text {
-    color: #555;
+    color: var(--text-muted);
     margin-bottom: 25px;
     padding-bottom: 14px;
-    border-bottom: 2px dashed #e2e8f0;
+    border-bottom: 2px dashed var(--border);
 }
 
 .contact-form {
     max-width: 620px;
     margin: 20px auto;
     padding: 35px 40px 30px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    background: var(--white);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+    background: var(--bg-card);
+    box-shadow: var(--shadow);
 }
 
 .form-group {
@@ -681,13 +796,14 @@ body.lang-fa #navbar a:hover {
 .contact-form textarea {
     width: 100%;
     padding: 14px 18px;
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border);
     border-radius: 10px;
     font-family: inherit;
     font-size: 0.95em;
     transition: var(--transition);
     resize: vertical;
-    background: #f8fafc;
+    background: var(--bg);
+    color: var(--text);
 }
 
 .contact-form input[type="email"]:focus,
@@ -695,7 +811,6 @@ body.lang-fa #navbar a:hover {
     border-color: var(--accent);
     box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
     outline: none;
-    background: var(--white);
 }
 
 .contact-form button[type="submit"] {
@@ -720,7 +835,7 @@ body.lang-fa #navbar a:hover {
 .quick-contact-info {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid var(--border);
 }
 
 .quick-link {
@@ -749,9 +864,9 @@ body.lang-fa #navbar a:hover {
 }
 
 .email-link {
-    background: #f8fafc;
+    background: var(--bg-card);
     color: var(--primary);
-    border: 2px solid #e2e8f0;
+    border: 2px solid var(--border);
 }
 
 .email-link:hover {
@@ -761,17 +876,17 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- لوگو (بدون IT Solutions) ---- */
+/* ---- لوگو ---- */
 /* ================================================= */
 .footer-logo-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 12px;
-    background: linear-gradient(145deg, #ffffff, #eef2f7);
+    background: linear-gradient(145deg, var(--bg-card), var(--bg));
     border-radius: 50%;
     border: 3px solid rgba(37, 99, 235, 0.15);
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+    box-shadow: var(--shadow);
     transition: var(--transition);
     width: 90px;
     height: 90px;
@@ -805,7 +920,7 @@ body.lang-fa #navbar a:hover {
 .footer-logo-wrapper:hover {
     transform: translateY(-5px) scale(1.05);
     border-color: var(--accent);
-    box-shadow: 0 8px 40px rgba(37, 99, 235, 0.18);
+    box-shadow: 0 8px 40px rgba(37, 99, 235, 0.15);
 }
 
 .footer-logo-img {
@@ -818,7 +933,7 @@ body.lang-fa #navbar a:hover {
 }
 
 .footer-logo-wrapper:hover .footer-logo-img {
-    filter: drop-shadow(0 4px 20px rgba(37, 99, 235, 0.18));
+    filter: drop-shadow(0 4px 20px rgba(37, 99, 235, 0.15));
     transform: scale(1.06);
 }
 
@@ -835,14 +950,14 @@ footer {
     align-items: center;
     justify-content: center;
     padding-top: 22px;
-    border-top: 2px solid #e2e8f0;
+    border-top: 2px solid var(--border);
     margin-top: 40px;
     gap: 18px;
 }
 
 .copyright-text {
     font-size: 0.85em;
-    color: #64748b;
+    color: var(--text-muted);
     text-align: center;
     line-height: 1.8;
 }
@@ -868,7 +983,7 @@ footer {
     height: 50px;
     font-size: 1.4em;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(15, 43, 77, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     transition: var(--transition);
     display: none;
     align-items: center;
@@ -877,18 +992,18 @@ footer {
 
 #back-to-top:hover {
     transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(15, 43, 77, 0.3);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
 }
 
 /* ================================================= */
-/* ---- موبایل (نسخه فوق‌حرفه‌ای و بدون لگ) ---- */
+/* ---- موبایل ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
         flex-direction: column;
         padding-top: 0;
         gap: 0;
-        background: linear-gradient(135deg, #f0f4f8, #e2e8f0);
+        background: var(--bg);
     }
 
     #sidebar-info {
@@ -896,12 +1011,12 @@ footer {
         width: 100%;
         padding: 16px 16px 24px;
         border-radius: 0 0 28px 28px;
-        background: rgba(255, 255, 255, 0.9);
+        background: var(--bg-sidebar);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow);
     }
 
     #main-content {
@@ -914,19 +1029,23 @@ footer {
         border: none;
     }
 
-    /* ---- دکمه زبان در موبایل (جدا از عکس) ---- */
     .lang-switcher {
         position: absolute;
-        top: 10px;
+        top: 8px;
         right: 10px;
         left: auto !important;
         margin: 0;
         padding: 3px 8px;
         border-radius: 30px;
-        background: rgba(255, 255, 255, 0.92);
+        background: rgba(255, 255, 255, 0.9);
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         z-index: 50;
         border: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    body.dark-mode .lang-switcher {
+        background: rgba(30, 41, 59, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     body.lang-fa .lang-switcher {
@@ -946,7 +1065,6 @@ footer {
         border-radius: 16px;
     }
 
-    /* ---- عکس پروفایل در موبایل (در مرکز) ---- */
     #top-area {
         display: flex;
         flex-direction: column;
@@ -969,7 +1087,7 @@ footer {
         border-radius: 24px;
         padding: 4px;
         margin: 0 auto 12px;
-        background: linear-gradient(135deg, #2563eb, #1a4a7a, #2563eb);
+        background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--accent));
         background-size: 300% 300%;
         animation: gradientMove 4s ease-in-out infinite;
         box-shadow: 0 10px 40px rgba(37, 99, 235, 0.2);
@@ -987,7 +1105,6 @@ footer {
         border: 3px solid rgba(255, 255, 255, 0.95);
     }
 
-    /* ---- هدر در موبایل ---- */
     .header {
         margin-top: 0;
         text-align: center;
@@ -1002,6 +1119,12 @@ footer {
 
     h2 {
         font-size: 1em;
+    }
+
+    .typing-text {
+        white-space: normal;
+        border: none;
+        animation: none;
     }
 
     .contact-info {
@@ -1025,7 +1148,6 @@ footer {
         display: none;
     }
 
-    /* ---- منو در موبایل ---- */
     #navbar {
         margin-top: 16px;
         background: transparent;
@@ -1047,7 +1169,7 @@ footer {
     }
 
     #navbar a {
-        color: #1e293b !important;
+        color: var(--text) !important;
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
@@ -1062,6 +1184,12 @@ footer {
         will-change: transform;
     }
 
+    body.dark-mode #navbar a {
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--text) !important;
+    }
+
     #navbar a:hover {
         background: rgba(37, 99, 235, 0.06);
         transform: translateY(-2px);
@@ -1070,20 +1198,23 @@ footer {
 
     #navbar a.active {
         color: #fff !important;
-        background: linear-gradient(135deg, #2563eb, #1a4a7a);
-        border-color: #2563eb;
+        background: linear-gradient(135deg, var(--accent), var(--primary-light));
+        border-color: var(--accent);
         box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
     }
 
-    /* ---- کارت‌ها در موبایل ---- */
+    body.dark-mode #navbar a.active {
+        color: #0f172a !important;
+    }
+
     .job-item {
         padding: 16px 18px;
         border-radius: 14px;
-        background: rgba(255, 255, 255, 0.85);
+        background: var(--bg-card);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow);
     }
 
     .job-item h3 {
@@ -1091,13 +1222,12 @@ footer {
     }
 
     .skill-category {
-        background: rgba(255, 255, 255, 0.85);
+        background: var(--bg-card);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    /* ---- لوگو در موبایل ---- */
     .footer-logo-wrapper {
         width: 80px;
         height: 80px;
@@ -1111,6 +1241,14 @@ footer {
 
     .copyright-text {
         font-size: 0.72em;
+    }
+
+    .dark-toggle {
+        bottom: 20px;
+        left: 20px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1em;
     }
 }
 
@@ -1185,6 +1323,14 @@ footer {
 
     .contact-form {
         padding: 18px 14px;
+    }
+
+    .dark-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 0.95em;
+        bottom: 15px;
+        left: 15px;
     }
 }
 
