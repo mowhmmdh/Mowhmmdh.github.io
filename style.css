@@ -812,39 +812,118 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- لوگوی فوتر (برجسته و حرفه‌ای) ---- */
+/* ---- لوگوی فوتر (دایره‌ای و برجسته) ---- */
 /* ================================================= */
 .footer-logo-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px 25px;
-    background: linear-gradient(145deg, #ffffff, #f0f4f8);
-    border-radius: 20px;
-    border: 2px solid rgba(49, 130, 206, 0.15);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    padding: 10px;
+    background: linear-gradient(145deg, #ffffff, #eef2f7);
+    border-radius: 50%;
+    border: 3px solid rgba(49, 130, 206, 0.2);
+    box-shadow: 
+        0 4px 20px rgba(49, 130, 206, 0.15),
+        inset 0 2px 6px rgba(255, 255, 255, 0.8);
     transition: var(--transition);
     cursor: default;
+    width: 85px;
+    height: 85px;
+    position: relative;
+}
+
+/* حلقه‌های نورانی دور لوگو */
+.footer-logo-wrapper::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    padding: 3px;
+    background: conic-gradient(from 0deg, var(--accent-color), var(--primary-light), var(--accent-color), var(--primary-light), var(--accent-color));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.footer-logo-wrapper:hover::before {
+    opacity: 1;
+    animation: spin 3s linear infinite;
+}
+
+/* انیمیشن چرخش حلقه نورانی */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .footer-logo-wrapper:hover {
-    background: linear-gradient(145deg, #ffffff, #e8f0fe);
+    transform: translateY(-5px) scale(1.05);
     border-color: var(--accent-color);
-    box-shadow: 0 8px 30px rgba(49, 130, 206, 0.15);
-    transform: translateY(-3px) scale(1.02);
+    box-shadow: 
+        0 8px 40px rgba(49, 130, 206, 0.25),
+        inset 0 2px 6px rgba(255, 255, 255, 0.9);
 }
 
 .footer-logo-img {
     height: 55px;
-    width: auto;
+    width: 55px;
     display: block;
-    filter: drop-shadow(0 2px 10px rgba(26, 54, 93, 0.12));
+    border-radius: 50%;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 10px rgba(26, 54, 93, 0.15));
     transition: var(--transition);
 }
 
 .footer-logo-wrapper:hover .footer-logo-img {
-    filter: drop-shadow(0 4px 20px rgba(26, 54, 93, 0.2));
-    transform: scale(1.08) rotate(-1deg);
+    filter: drop-shadow(0 4px 20px rgba(49, 130, 206, 0.3));
+    transform: scale(1.08) rotate(-2deg);
+}
+
+/* ================================================= */
+/* ---- المان‌های اطراف لوگو (جذاب‌تر) ---- */
+/* ================================================= */
+.footer-logo-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo-line {
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-color));
+    transition: var(--transition);
+}
+
+.footer-logo-container:hover .footer-logo-line {
+    width: 60px;
+    background: linear-gradient(90deg, transparent, var(--primary-light));
+}
+
+body.lang-fa .footer-logo-line {
+    background: linear-gradient(270deg, transparent, var(--accent-color));
+}
+
+body.lang-fa .footer-logo-container:hover .footer-logo-line {
+    background: linear-gradient(270deg, transparent, var(--primary-light));
+}
+
+.footer-logo-text-small {
+    font-size: 0.7em;
+    color: var(--accent-color);
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.6;
+    transition: var(--transition);
+    white-space: nowrap;
+}
+
+.footer-logo-container:hover .footer-logo-text-small {
+    opacity: 1;
+    color: var(--primary-color);
 }
 
 /* ================================================= */
@@ -857,18 +936,13 @@ footer {
 
 .footer-branding {
     display: flex;
-    align-items: center; 
-    justify-content: center; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding-top: 22px;
     border-top: 2px solid var(--border-color);
     margin-top: 40px;
-    gap: 25px;
-    flex-wrap: wrap;
-}
-
-.footer-logo {
-    display: flex;
-    align-items: center;
+    gap: 20px;
 }
 
 .copyright-text {
@@ -917,12 +991,26 @@ footer {
 /* ================================================= */
 @media (max-width: 480px) {
     .footer-logo-wrapper {
-        padding: 8px 18px;
-        border-radius: 16px;
+        width: 70px;
+        height: 70px;
+        padding: 8px;
     }
     
     .footer-logo-img {
-        height: 42px;
+        height: 45px;
+        width: 45px;
+    }
+    
+    .footer-logo-line {
+        width: 25px;
+    }
+    
+    .footer-logo-container:hover .footer-logo-line {
+        width: 35px;
+    }
+    
+    .footer-logo-text-small {
+        font-size: 0.55em;
     }
 }
 
@@ -1078,13 +1166,6 @@ footer {
     .skills-list { 
         grid-template-columns: 1fr;
         gap: 15px; 
-    }
-    
-    .footer-branding {
-        flex-direction: column;
-        text-align: center;
-        margin-top: 20px; 
-        gap: 10px;
     }
     
     .quick-contact-info {
