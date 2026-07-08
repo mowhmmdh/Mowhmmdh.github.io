@@ -299,7 +299,7 @@ body.dark-mode .lang-switcher .active-lang {
 }
 
 /* ================================================= */
-/* ---- عکس پروفایل ---- */
+/* ---- عکس پروفایل (دسکتاپ) ---- */
 /* ================================================= */
 .profile-wrapper {
     position: absolute;
@@ -996,7 +996,7 @@ footer {
 }
 
 /* ================================================= */
-/* ---- موبایل (اصلاح کلید زبان) ---- */
+/* ---- موبایل (نسخه اصلاح‌شده برای هر دو زبان) ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
@@ -1030,12 +1030,27 @@ footer {
     }
 
     /* ================================================= */
-    /* ---- دکمه زبان در موبایل (جدا از عکس) ---- */
+    /* ---- تنظیمات Top Area در موبایل ---- */
+    /* ================================================= */
+    #top-area {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: auto;
+        padding: 10px 0 10px;
+        position: relative;
+        min-height: 200px;
+        width: 100%;
+    }
+
+    /* ================================================= */
+    /* ---- دکمه زبان در موبایل (همان گوشه برای هر دو زبان) ---- */
     /* ================================================= */
     .lang-switcher {
         position: absolute;
-        top: 8px;
-        right: 10px;
+        top: 5px;
+        right: 5px;
         left: auto !important;
         margin: 0;
         padding: 3px 8px;
@@ -1049,19 +1064,15 @@ footer {
         align-items: center;
     }
 
-    body.dark-mode .lang-switcher {
-        background: rgba(30, 41, 59, 0.92);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    body.lang-fa .lang-switcher {
-        right: 10px;
+    /* برای نسخه انگلیسی هم دکمه در سمت راست می‌ماند */
+    body.lang-en .lang-switcher {
+        right: 5px !important;
         left: auto !important;
     }
 
-    body.lang-en .lang-switcher {
-        left: 10px;
-        right: auto !important;
+    body.dark-mode .lang-switcher {
+        background: rgba(30, 41, 59, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .lang-switcher a,
@@ -1073,20 +1084,8 @@ footer {
     }
 
     /* ================================================= */
-    /* ---- عکس پروفایل در موبایل (در مرکز) ---- */
+    /* ---- عکس پروفایل در موبایل (در مرکز و پایین‌تر) ---- */
     /* ================================================= */
-    #top-area {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: auto;
-        padding: 15px 0 10px;
-        position: relative;
-        min-height: 180px;
-        width: 100%;
-    }
-
     .profile-wrapper {
         position: relative;
         top: auto;
@@ -1097,12 +1096,13 @@ footer {
         height: 140px;
         border-radius: 24px;
         padding: 4px;
-        margin: 0 auto 12px;
+        margin: 25px auto 10px;
         background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--accent));
         background-size: 300% 300%;
         animation: gradientMove 4s ease-in-out infinite;
         box-shadow: 0 10px 40px rgba(37, 99, 235, 0.2);
         will-change: transform, background-position;
+        z-index: 1;
     }
 
     @keyframes gradientMove {
@@ -1122,6 +1122,8 @@ footer {
         text-align: center;
         border-bottom: none;
         padding-bottom: 0;
+        position: relative;
+        z-index: 1;
     }
 
     h1 {
@@ -1276,6 +1278,7 @@ footer {
         width: 100px;
         height: 118px;
         padding: 3px;
+        margin: 20px auto 8px;
     }
 
     .profile-icon {
@@ -1348,6 +1351,18 @@ footer {
         bottom: 15px;
         left: 15px;
     }
+
+    .lang-switcher {
+        top: 3px;
+        right: 3px;
+        padding: 2px 6px;
+    }
+
+    .lang-switcher a,
+    .lang-switcher button {
+        padding: 1px 6px;
+        font-size: 0.55em;
+    }
 }
 
 /* ================================================= */
@@ -1368,6 +1383,7 @@ footer {
     .profile-wrapper {
         width: 130px;
         height: 150px;
+        margin: 30px auto 12px;
     }
 
     h1 {
