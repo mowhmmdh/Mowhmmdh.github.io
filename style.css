@@ -900,51 +900,6 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- المان‌های اطراف لوگو (جذاب‌تر) ---- */
-/* ================================================= */
-.footer-logo-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-}
-
-.footer-logo-line {
-    width: 40px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--accent-color));
-    transition: var(--transition);
-}
-
-.footer-logo-container:hover .footer-logo-line {
-    width: 60px;
-    background: linear-gradient(90deg, transparent, var(--primary-light));
-}
-
-body.lang-fa .footer-logo-line {
-    background: linear-gradient(270deg, transparent, var(--accent-color));
-}
-
-body.lang-fa .footer-logo-container:hover .footer-logo-line {
-    background: linear-gradient(270deg, transparent, var(--primary-light));
-}
-
-.footer-logo-text-small {
-    font-size: 0.7em;
-    color: var(--accent-color);
-    font-weight: 400;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    opacity: 0.6;
-    transition: var(--transition);
-    white-space: nowrap;
-}
-
-.footer-logo-container:hover .footer-logo-text-small {
-    opacity: 1;
-    color: var(--primary-color);
-}
-
-/* ================================================= */
 /* ---- فوتر برندینگ ---- */
 /* ================================================= */
 
@@ -1005,294 +960,279 @@ footer {
 }
 
 /* ================================================= */
-/* ---- استایل جایگزین برای موبایل ---- */
+/* ---- تغییرات ویژه موبایل (جذاب و حرفه‌ای) ---- */
 /* ================================================= */
-@media (max-width: 480px) {
-    .footer-logo-wrapper {
-        width: 70px;
-        height: 70px;
-        padding: 8px;
-    }
-    
-    .footer-logo-img {
-        height: 45px;
-        width: 45px;
-    }
-    
-    .footer-logo-line {
-        width: 25px;
-    }
-    
-    .footer-logo-container:hover .footer-logo-line {
-        width: 35px;
-    }
-    
-    .footer-logo-text-small {
-        font-size: 0.55em;
-    }
-}
 
-/* ================================================= */
-/* ---- ۴. رسپانسیو برای موبایل (Max-width: 992px) ---- */
-/* ================================================= */
 @media (max-width: 992px) {
     
     #main-wrapper {
         flex-direction: column;
-        padding-top: 10px;
-        gap: 20px;
+        padding-top: 0;
+        gap: 0;
+        background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
     }
     
+    /* سایدبار شیشه‌ای و تمام‌صفحه */
     #sidebar-info {
         position: static;
         width: 100%;
         min-width: auto;
-        padding: 20px 18px;
+        padding: 20px 20px 30px;
+        border-radius: 0 0 30px 30px;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        margin-bottom: 0;
     }
     
+    /* محتوای اصلی */
     #main-content {
         width: 100%;
-        padding: 20px 18px;
+        padding: 20px 18px 30px;
+        border-radius: 0;
+        background: transparent;
+        backdrop-filter: none;
+        box-shadow: none;
+        border: none;
     }
     
+    /* تنظیم Top Area برای موبایل */
     #top-area {
-        height: 120px;
-        display: block;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 0 15px;
         position: relative;
-        padding-top: 5px;
-        padding-bottom: 15px; 
-    }
-
-    .profile-wrapper {
-        width: 70px; 
-        height: 84px;
-        border-radius: 20%;
-        position: absolute !important;
-        top: 20px;
-        transform: none !important;
-        left: auto;
-        right: auto;
-        padding: 3px;
     }
     
-    body.lang-fa .profile-wrapper {
-        left: 15px !important;
+    /* رپ‌ر عکس پروفایل - بزرگ و مرکزی */
+    .profile-wrapper {
+        position: relative;
+        top: auto;
+        left: auto !important;
         right: auto !important;
         transform: none !important;
+        width: 130px;
+        height: 150px;
+        border-radius: 25px;
+        padding: 5px;
+        margin: 0 auto 15px;
+        background: linear-gradient(135deg, #2563eb, #1a4a7a, #2563eb);
+        background-size: 300% 300%;
+        animation: gradientMove 4s ease-in-out infinite;
+        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.3);
     }
-    body.lang-fa .profile-wrapper:hover {
-        transform: none !important;
+    
+    @keyframes gradientMove {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
-    body.lang-en .profile-wrapper {
-        right: 15px !important;
-        left: auto !important;
-        transform: none !important;
+    
+    .profile-wrapper:hover {
+        transform: scale(1.02) !important;
     }
-    body.lang-en .profile-wrapper:hover {
-        transform: none !important;
+    
+    .profile-icon {
+        border-radius: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.95);
+    }
+    
+    /* دکمه زبان - بالای صفحه */
+    .lang-switcher {
+        position: absolute;
+        top: 5px;
+        left: auto;
+        right: auto;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 4px 10px;
+        border-radius: 30px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+        z-index: 50;
+    }
+    
+    body.lang-fa .lang-switcher {
+        left: 15px;
+        right: auto;
+    }
+    body.lang-en .lang-switcher {
+        right: 15px;
+        left: auto;
+    }
+    
+    /* هدر - نام و اطلاعات تماس */
+    .header {
+        margin-top: 0;
+        text-align: center;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    
+    h1 {
+        font-size: 2em;
+        color: #0f2b4d;
+        margin-top: 5px;
+    }
+    
+    h2 {
+        font-size: 1em;
+        color: #2563eb;
+    }
+    
+    .contact-info {
+        align-items: center !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px 20px;
+        margin-top: 12px;
+        width: 100%;
+    }
+    
+    .contact-info p {
+        direction: ltr;
+        font-size: 0.85em;
+        background: rgba(37, 99, 235, 0.06);
+        padding: 4px 14px;
+        border-radius: 20px;
+    }
+    
+    .contact-info a::after {
+        display: none;
+    }
+    
+    /* منو ناوبری موبایل - دکمه‌های گرد */
+    #navbar {
+        margin-top: 20px;
+        background: transparent;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+    }
+    
+    #navbar ul {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        padding: 0;
+    }
+    
+    #navbar li {
+        flex-basis: auto;
+        margin: 0;
+    }
+    
+    #navbar a {
+        color: #1e293b !important;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 8px 18px;
+        font-size: 0.8em;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        font-weight: 600;
+    }
+    
+    #navbar a:hover {
+        background: rgba(37, 99, 235, 0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(37, 99, 235, 0.1);
+    }
+    
+    #navbar a.active {
+        color: #fff !important;
+        background: linear-gradient(135deg, #2563eb, #1a4a7a);
+        border-color: #2563eb;
+        box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
+    }
+    
+    /* کارت‌های شغلی با انیمیشن */
+    .job-item {
+        padding: 18px 20px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        transition: all 0.4s ease;
+    }
+    
+    .job-item:hover {
+        transform: translateY(-3px) scale(1.01);
+        box-shadow: 0 8px 30px rgba(37, 99, 235, 0.08);
+    }
+    
+    /* مهارت‌ها در موبایل */
+    .skill-category {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    
+    /* فوتر - لوگوی جذاب */
+    .footer-logo-wrapper {
+        width: 90px;
+        height: 90px;
+        padding: 12px;
+    }
+    
+    .footer-logo-img {
+        height: 55px;
+        width: 55px;
+    }
+    
+    .footer-logo-container {
+        gap: 10px;
+    }
+    
+    .footer-logo-line {
+        display: none;
+    }
+    
+    .footer-logo-text-small {
+        display: none;
+    }
+    
+    .copyright-text {
+        font-size: 0.75em;
+    }
+}
+
+/* ================================================= */
+/* ---- موبایل کوچک (Max-width: 480px) ---- */
+/* ================================================= */
+@media (max-width: 480px) {
+    
+    .profile-wrapper {
+        width: 110px;
+        height: 130px;
+        padding: 4px;
     }
     
     .profile-icon {
         border-width: 2px;
     }
     
-    .lang-switcher {
-        z-index: 250; 
-        display: flex;
-        gap: 5px;
-        position: absolute; 
-        top: 22px;
-        padding: 3px 6px;
-    }
-    
-    body.lang-fa .lang-switcher {
-        right: 15px;
-        left: auto;
-    }
-
-    body.lang-en .lang-switcher {
-        left: 15px;
-        right: auto;
-    }
-    
-    .header {
-        overflow: visible; 
-        margin-top: 100px;
-        border-bottom: none;
-        padding-bottom: 0;
-        text-align: center; 
-        padding-inline-start: 0; 
-        margin-bottom: 0;
-    }
-    
-    .contact-info { 
-        align-items: center !important;
-        flex-direction: column; 
-        margin-top: 15px;
-        width: 100%;
-        text-align: center; 
-    }
-    
-    .contact-info p, .contact-info a {
-        text-align: center; 
-        direction: ltr;
-    }
-    
-    #navbar {
-        margin-top: 18px;
-        background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
-        border-radius: var(--radius);
-        padding: 8px 0;
-        box-shadow: 0 4px 20px rgba(15, 43, 77, 0.15);
-    }
-
-    #navbar ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: row; 
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 3px; 
-        padding: 5px 8px; 
-    }
-
-    #navbar li {
-        flex-basis: 28%; 
-        text-align: center;
-        margin: 3px 0;
-    }
-    
-    #navbar a {
-        color: white !important;
-        padding: 7px 5px; 
-        font-size: 0.78em; 
-        white-space: nowrap; 
-        display: block;
-        border-radius: 8px;
-        font-weight: 500;
-        transition: var(--transition);
-    }
-    
-    #navbar a::before {
-        display: none;
-    }
-    
-    #navbar a:hover {
-        background: rgba(255, 255, 255, 0.15);
-        color: white !important;
-        transform: none;
-        padding: 7px 5px;
-    }
-    
-    #navbar a.active {
-        color: #ffd700 !important;
-        background: rgba(255, 255, 255, 0.12);
-        font-weight: 700;
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
-    }
-
-    .skills-list { 
-        grid-template-columns: 1fr;
-        gap: 15px; 
-    }
-    
-    .quick-contact-info {
-        padding: 10px 0;
-    }
-    
-    .quick-link {
-        display: block; 
-        width: 90%; 
-        margin: 8px auto; 
-    }
-    
-    .job-item {
-        padding: 18px 20px;
-    }
-    
-    .job-header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    
-    .summary {
-        padding: 20px 22px;
-    }
-    
-    .contact-form {
-        padding: 22px 20px 20px;
-    }
-    
-    h1 {
-        font-size: 2em;
-    }
-    
-    .section-title {
-        font-size: 1.4em;
-    }
-}
-
-/* ================================================= */
-/* ---- ۵. رسپانسیو برای موبایل کوچک (Max-width: 480px) ---- */
-/* ================================================= */
-@media (max-width: 480px) {
-    .container {
-        width: 96%;
-        padding: 0 8px;
-    }
-    
-    #sidebar-info {
-        padding: 15px 12px;
-    }
-    
-    #main-content {
-        padding: 15px 12px;
-    }
-    
-    .profile-wrapper {
-        width: 60px;
-        height: 72px;
-        top: 15px;
-        padding: 2px;
-    }
-    
-    body.lang-fa .profile-wrapper {
-        left: 10px !important;
-    }
-    body.lang-fa .lang-switcher {
-        right: 10px;
-        top: 18px;
-    }
-    body.lang-en .profile-wrapper {
-        right: 10px !important;
-    }
-    body.lang-en .lang-switcher {
-        left: 10px;
-        top: 18px;
-    }
-    
-    .lang-switcher a, .lang-switcher button {
-        padding: 3px 8px;
-        font-size: 0.7em;
-    }
-    
-    .header {
-        margin-top: 80px;
-    }
-    
     h1 {
         font-size: 1.6em;
     }
     
-    h2 {
-        font-size: 0.95em;
-    }
-    
-    .section-title {
-        font-size: 1.2em;
-        padding-inline-start: 12px;
+    #navbar a {
+        font-size: 0.7em !important;
+        padding: 6px 14px !important;
     }
     
     .job-item {
@@ -1300,47 +1240,22 @@ footer {
     }
     
     .job-item h3 {
-        font-size: 1em;
-    }
-    
-    .summary {
-        padding: 16px 18px;
         font-size: 0.95em;
     }
     
-    #navbar a {
-        font-size: 0.7em !important;
-        padding: 5px 3px !important;
+    .contact-info p {
+        font-size: 0.75em;
+        padding: 3px 12px;
     }
     
-    #navbar li {
-        flex-basis: 30%;
+    .footer-logo-wrapper {
+        width: 75px;
+        height: 75px;
+        padding: 10px;
     }
     
-    .skill-category {
-        padding: 18px 16px;
-    }
-    
-    .contact-form {
-        padding: 18px 14px;
-    }
-    
-    .contact-form input[type="email"],
-    .contact-form textarea {
-        padding: 10px 14px;
-        font-size: 0.9em;
-    }
-    
-    .quick-link {
-        padding: 8px 16px;
-        font-size: 0.8em;
-    }
-    
-    #back-to-top {
-        width: 44px;
-        height: 44px;
-        font-size: 1.2em;
-        bottom: 20px;
-        right: 20px;
+    .footer-logo-img {
+        height: 45px;
+        width: 45px;
     }
 }
