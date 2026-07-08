@@ -54,6 +54,15 @@
 
 <body class="lang-fa">
 
+    <!-- نشانگر نور (Cursor Glow) -->
+    <div id="cursor-glow"></div>
+
+    <!-- لایت‌باکس برای پروژه‌ها -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="lightbox-close" id="lightbox-close">✕</button>
+        <img id="lightbox-image" src="" alt="تصویر پروژه">
+    </div>
+
     <div id="progress-bar"></div>
 
     <!-- دکمه دارک مود -->
@@ -268,7 +277,7 @@
 
             <section class="section" id="education">
                 <h2 class="section-title">تحصیلات</h2>
-                <div class="job-item"><h3>مهندسی کامپیوتر</h3><p class="institution">دانشگاه آزاد اسلامی واحد یادگار امام خمینی (ره) - شهر ری</p></div>
+                <div class="job-item"><h3>مهندسی کامپیوتر</h3><p class="institution">دانشگاه آزاد اسلامی واحد یادگار امام (ره) - شهر ری</p></div>
             </section>
 
             <section class="section" id="projects">
@@ -276,25 +285,26 @@
                 
                 <div style="display: flex; flex-direction: column; gap: 25px;">
                     
-                    <div style="display: flex; flex-wrap: wrap; gap: 25px; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); padding: 25px 28px; border-radius: var(--radius); border-right: 5px solid var(--accent); box-shadow: var(--shadow); transition: var(--transition); align-items: stretch;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 25px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 25px 28px; border-radius: var(--radius); border-right: 5px solid rgba(96, 165, 250, 0.3); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: var(--transition); align-items: stretch;">
                         
-                        <div style="flex: 0 0 220px; min-width: 160px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
+                        <div style="flex: 0 0 220px; min-width: 160px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                             <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" 
                                  alt="رک شبکه ماهکس" 
-                                 style="width: 100%; height: 100%; min-height: 160px; object-fit: cover; display: block;">
+                                 data-lightbox
+                                 style="width: 100%; height: 100%; min-height: 160px; object-fit: cover; display: block; cursor: pointer;">
                         </div>
                         
                         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
-                                <h3 style="color: var(--primary); font-size: 1.2em; margin: 0 0 6px 0;">
-                                    <i class="fas fa-server" style="color: var(--accent); margin-left: 10px;"></i>
+                                <h3 style="color: #f1f5f9; font-size: 1.2em; margin: 0 0 6px 0;">
+                                    <i class="fas fa-server" style="color: #60a5fa; margin-left: 10px;"></i>
                                     پروژه زیرساخت شبکه ماهکس
                                 </h3>
-                                <p style="color: #64748b; font-size: 0.85em; margin: 0 0 12px 0;">
+                                <p style="color: rgba(255, 255, 255, 0.5); font-size: 0.85em; margin: 0 0 12px 0;">
                                     <i class="fas fa-calendar-alt" style="margin-left: 6px;"></i>
                                     اردیبهشت ۱۴۰۵
                                 </p>
-                                <p style="color: var(--secondary); line-height: 1.9; margin: 0; font-size: 0.95em;">
+                                <p style="color: rgba(255, 255, 255, 0.8); line-height: 1.9; margin: 0; font-size: 0.95em;">
                                     پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی 
                                     سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.
                                 </p>
@@ -302,15 +312,15 @@
                             
                             <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;">
                                 <a href="https://github.com/mowhmmdh/Projects" target="_blank" rel="noopener" 
-                                   style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #24292e, #1a1e23); color: white; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85em; transition: var(--transition); box-shadow: 0 4px 15px rgba(36, 41, 46, 0.2);">
+                                   style="display: inline-flex; align-items: center; gap: 8px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); color: white; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85em; transition: var(--transition); border: 1px solid rgba(255, 255, 255, 0.05);">
                                     <i class="fab fa-github" style="font-size: 1.2em;"></i>
                                     مشاهده پروژه در گیت‌هاب
                                 </a>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
+                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(96, 165, 250, 0.05); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.03);">
                                     <i class="fas fa-images"></i>
                                     ۵ تصویر
                                 </span>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
+                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(96, 165, 250, 0.05); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.03);">
                                     <i class="fas fa-tag"></i>
                                     زیرساخت
                                 </span>
