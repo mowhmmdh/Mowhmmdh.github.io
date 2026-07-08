@@ -19,18 +19,18 @@ html {
 
 /* تعریف رنگ‌ها و متغیرهای اصلی */
 :root {
-    --primary-color: #1a365d;       
-    --primary-light: #2b6cb0;
-    --secondary-color: #2d3748;        
+    --primary-color: #0f2b4d;       
+    --primary-light: #1a4a7a;
+    --secondary-color: #1e293b;        
     --background-color: #ffffff;    
-    --section-bg: #f7fafc;          
+    --section-bg: #f8fafc;          
     --border-color: #e2e8f0;        
-    --accent-color: #3182ce;        
-    --accent-hover: #2c5282;
-    --progress-bar-color: #3182ce;  
-    --shadow-light: 0 4px 20px rgba(0, 0, 0, 0.06); 
-    --shadow-hover: 0 8px 35px rgba(26, 54, 93, 0.12);
-    --radius: 14px;
+    --accent-color: #2563eb;        
+    --accent-hover: #1d4ed8;
+    --progress-bar-color: #2563eb;  
+    --shadow-light: 0 4px 25px rgba(0, 0, 0, 0.05); 
+    --shadow-hover: 0 10px 40px rgba(37, 99, 235, 0.12);
+    --radius: 16px;
     --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -43,7 +43,7 @@ body {
     line-height: 1.7; 
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+    background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
     color: var(--secondary-color);
     font-family: Tahoma, sans-serif; 
     min-height: 100vh;
@@ -61,7 +61,7 @@ body {
     background: linear-gradient(90deg, var(--accent-color), var(--primary-light));
     z-index: 9999;
     transition: width 0.1s ease-out;
-    box-shadow: 0 2px 10px rgba(49, 130, 206, 0.3);
+    box-shadow: 0 2px 15px rgba(37, 99, 235, 0.3);
 }
 
 /* ================================================= */
@@ -98,38 +98,41 @@ body.lang-en {
     align-items: flex-start; 
 }
 
-/* سایدبار */
+/* سایدبار - با افکت شیشه‌ای */
 #sidebar-info {
     position: sticky;
     top: 30px; 
     width: 30%; 
     min-width: 250px;
-    background: linear-gradient(160deg, #ffffff 0%, #f7fafc 100%);
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     padding: 25px 20px 30px;
     border-radius: var(--radius);
-    box-shadow: var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     transition: var(--transition);
 }
 
 #sidebar-info:hover {
-    box-shadow: var(--shadow-hover);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.08);
 }
 
 /* محتوای اصلی */
 #main-content {
     width: 70%; 
-    background: var(--background-color);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     padding: 35px 35px 25px;
     border-radius: var(--radius);
-    box-shadow: var(--shadow-light);
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     transition: var(--transition);
 }
 
 #main-content:hover {
-    box-shadow: var(--shadow-hover);
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.06);
 }
 
 /* ================================================= */
@@ -138,13 +141,13 @@ body.lang-en {
 .section {
     padding: 30px 0; 
     opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.8s ease, transform 0.8s ease;
+    transform: translateY(40px) scale(0.98);
+    transition: opacity 0.9s ease, transform 0.9s ease;
 }
 
 .section.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
 
 /* ================================================= */
@@ -161,33 +164,48 @@ body.lang-en {
     height: 110px;
 }
 
-/* عکس پروفایل */
-.profile-icon {
-    width: 100px; 
-    height: 120px; 
-    border-radius: 20%; 
-    object-fit: cover;
-    z-index: 100; 
-    border: 4px solid var(--accent-color); 
-    box-shadow: 0 8px 25px rgba(49, 130, 206, 0.25);
-    transition: var(--transition);
+/* رپ‌ر عکس پروفایل */
+.profile-wrapper {
     position: absolute;
     top: 50%;
+    width: 100px;
+    height: 120px;
+    border-radius: 20%;
+    padding: 4px;
+    background: linear-gradient(135deg, var(--accent-color), var(--primary-light));
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.25);
+    transition: var(--transition);
 }
 
-.profile-icon:hover {
-    transform: scale(1.05) translateY(-2px);
-    box-shadow: 0 12px 35px rgba(49, 130, 206, 0.35);
-    border-color: var(--primary-color);
+.profile-wrapper:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 40px rgba(37, 99, 235, 0.35);
 }
 
-body.lang-fa .profile-icon {
+body.lang-fa .profile-wrapper {
     left: 20%; 
     transform: translate(-50%, -50%); 
 }
-body.lang-en .profile-icon {
+body.lang-en .profile-wrapper {
     left: 80%; 
     transform: translate(-50%, -50%); 
+}
+
+body.lang-fa .profile-wrapper:hover {
+    transform: translate(-50%, -50%) scale(1.03);
+}
+body.lang-en .profile-wrapper:hover {
+    transform: translate(-50%, -50%) scale(1.03);
+}
+
+/* عکس پروفایل */
+.profile-icon {
+    width: 100%; 
+    height: 100%; 
+    border-radius: 20%; 
+    object-fit: cover;
+    display: block;
+    border: 3px solid rgba(255, 255, 255, 0.9);
 }
 
 /* دکمه جابجایی زبان */
@@ -227,7 +245,7 @@ body.lang-en .profile-icon {
     background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
     color: white;
     border-color: var(--primary-color);
-    box-shadow: 0 2px 8px rgba(26, 54, 93, 0.25);
+    box-shadow: 0 2px 8px rgba(15, 43, 77, 0.25);
 }
 
 /* ---- هدر اصلی ---- */
@@ -396,7 +414,7 @@ body.lang-en .summary {
     right: 0;
     width: 0;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(49, 130, 206, 0.03));
+    background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.04));
     transition: var(--transition);
 }
 
@@ -432,7 +450,7 @@ body.lang-en .job-item {
     font-size: 0.88em;
     font-weight: 500;
     display: inline-block;
-    background: rgba(49, 130, 206, 0.08);
+    background: rgba(37, 99, 235, 0.08);
     padding: 2px 16px;
     border-radius: 20px;
     letter-spacing: 0.3px;
@@ -471,14 +489,14 @@ body.lang-fa .job-item ul li::before {
 
 /* ---- استایل مخصوص شغل فعلی ---- */
 .job-item.current-position {
-    background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
-    border-right-color: #ff6b35;
+    background: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+    border-right-color: #f59e0b;
     border-right-width: 6px;
 }
 
 body.lang-en .job-item.current-position {
     border-right: none;
-    border-left-color: #ff6b35;
+    border-left-color: #f59e0b;
     border-left-width: 6px;
 }
 
@@ -496,7 +514,7 @@ body.lang-en .job-item.current-position {
 }
 
 .badge-current {
-    background: linear-gradient(135deg, #ff6b35, #e5532e);
+    background: linear-gradient(135deg, #f59e0b, #d97706);
     color: #fff;
     font-size: 0.7rem;
     font-weight: 700;
@@ -505,7 +523,7 @@ body.lang-en .job-item.current-position {
     letter-spacing: 0.5px;
     text-transform: uppercase;
     white-space: nowrap;
-    box-shadow: 0 2px 8px rgba(255, 107, 53, 0.25);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
 }
 
 /* ================================================= */
@@ -646,7 +664,7 @@ body.lang-fa #navbar a:hover {
 
 #navbar a.active {
     color: var(--primary-color) !important; 
-    background: linear-gradient(135deg, rgba(49, 130, 206, 0.08), rgba(26, 54, 93, 0.04)); 
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(15, 43, 77, 0.04)); 
     font-weight: 700;
 }
 
@@ -726,7 +744,7 @@ body.lang-fa #navbar a:hover {
 .contact-form input[type="email"]:focus,
 .contact-form textarea:focus {
     border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(49, 130, 206, 0.1);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
     outline: none;
     background: #ffffff;
 }
@@ -752,7 +770,7 @@ body.lang-fa #navbar a:hover {
 .contact-form button[type="submit"]:hover {
     background: linear-gradient(135deg, var(--primary-light), var(--accent-hover));
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(49, 130, 206, 0.35);
+    box-shadow: 0 8px 30px rgba(37, 99, 235, 0.35);
 }
 
 .quick-contact-info {
@@ -808,7 +826,7 @@ body.lang-fa #navbar a:hover {
     background: var(--accent-color);
     color: white;
     border-color: var(--accent-color);
-    box-shadow: 0 6px 25px rgba(49, 130, 206, 0.3);
+    box-shadow: 0 6px 25px rgba(37, 99, 235, 0.3);
 }
 
 /* ================================================= */
@@ -821,9 +839,9 @@ body.lang-fa #navbar a:hover {
     padding: 10px;
     background: linear-gradient(145deg, #ffffff, #eef2f7);
     border-radius: 50%;
-    border: 3px solid rgba(49, 130, 206, 0.2);
+    border: 3px solid rgba(37, 99, 235, 0.2);
     box-shadow: 
-        0 4px 20px rgba(49, 130, 206, 0.15),
+        0 4px 20px rgba(37, 99, 235, 0.15),
         inset 0 2px 6px rgba(255, 255, 255, 0.8);
     transition: var(--transition);
     cursor: default;
@@ -862,7 +880,7 @@ body.lang-fa #navbar a:hover {
     transform: translateY(-5px) scale(1.05);
     border-color: var(--accent-color);
     box-shadow: 
-        0 8px 40px rgba(49, 130, 206, 0.25),
+        0 8px 40px rgba(37, 99, 235, 0.25),
         inset 0 2px 6px rgba(255, 255, 255, 0.9);
 }
 
@@ -872,12 +890,12 @@ body.lang-fa #navbar a:hover {
     display: block;
     border-radius: 50%;
     object-fit: contain;
-    filter: drop-shadow(0 2px 10px rgba(26, 54, 93, 0.15));
+    filter: drop-shadow(0 2px 10px rgba(15, 43, 77, 0.15));
     transition: var(--transition);
 }
 
 .footer-logo-wrapper:hover .footer-logo-img {
-    filter: drop-shadow(0 4px 20px rgba(49, 130, 206, 0.3));
+    filter: drop-shadow(0 4px 20px rgba(37, 99, 235, 0.3));
     transform: scale(1.08) rotate(-2deg);
 }
 
@@ -974,7 +992,7 @@ footer {
     height: 50px;
     font-size: 1.4em;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(26, 54, 93, 0.3);
+    box-shadow: 0 4px 20px rgba(15, 43, 77, 0.3);
     transition: var(--transition);
     display: none;
     align-items: center;
@@ -983,7 +1001,7 @@ footer {
 
 #back-to-top:hover {
     transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(26, 54, 93, 0.4);
+    box-shadow: 0 8px 30px rgba(15, 43, 77, 0.4);
 }
 
 /* ================================================= */
@@ -1045,17 +1063,37 @@ footer {
         padding-bottom: 15px; 
     }
 
-    .profile-icon {
+    .profile-wrapper {
         width: 70px; 
         height: 84px;
-        border-radius: 20%; 
-        z-index: 100;
-        position: absolute !important; 
-        top: 20px; 
+        border-radius: 20%;
+        position: absolute !important;
+        top: 20px;
         transform: none !important;
         left: auto;
         right: auto;
-        border-width: 3px;
+        padding: 3px;
+    }
+    
+    body.lang-fa .profile-wrapper {
+        left: 15px !important;
+        right: auto !important;
+        transform: none !important;
+    }
+    body.lang-fa .profile-wrapper:hover {
+        transform: none !important;
+    }
+    body.lang-en .profile-wrapper {
+        right: 15px !important;
+        left: auto !important;
+        transform: none !important;
+    }
+    body.lang-en .profile-wrapper:hover {
+        transform: none !important;
+    }
+    
+    .profile-icon {
+        border-width: 2px;
     }
     
     .lang-switcher {
@@ -1067,19 +1105,11 @@ footer {
         padding: 3px 6px;
     }
     
-    body.lang-fa .profile-icon {
-        left: 15px !important;
-        right: auto !important; 
-    }
     body.lang-fa .lang-switcher {
         right: 15px;
         left: auto;
     }
 
-    body.lang-en .profile-icon {
-        right: 15px !important;
-        left: auto !important;
-    }
     body.lang-en .lang-switcher {
         left: 15px;
         right: auto;
@@ -1113,7 +1143,7 @@ footer {
         background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
         border-radius: var(--radius);
         padding: 8px 0;
-        box-shadow: 0 4px 20px rgba(26, 54, 93, 0.15);
+        box-shadow: 0 4px 20px rgba(15, 43, 77, 0.15);
     }
 
     #navbar ul {
@@ -1221,20 +1251,21 @@ footer {
         padding: 15px 12px;
     }
     
-    .profile-icon {
+    .profile-wrapper {
         width: 60px;
         height: 72px;
         top: 15px;
+        padding: 2px;
     }
     
-    body.lang-fa .profile-icon {
+    body.lang-fa .profile-wrapper {
         left: 10px !important;
     }
     body.lang-fa .lang-switcher {
         right: 10px;
         top: 18px;
     }
-    body.lang-en .profile-icon {
+    body.lang-en .profile-wrapper {
         right: 10px !important;
     }
     body.lang-en .lang-switcher {
