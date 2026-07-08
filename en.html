@@ -56,6 +56,11 @@
 
     <div id="progress-bar"></div>
 
+    <!-- Dark Mode Toggle -->
+    <button id="dark-toggle" class="dark-toggle" aria-label="Toggle dark/light mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <div id="main-wrapper" class="container">
         
         <aside id="sidebar-info">
@@ -76,7 +81,7 @@
 
             <header class="header">
                 <h1>Mohammad Hossein Asgari Somarin</h1>
-                <h2>Information Technology Specialist</h2>
+                <h2 class="typing-text">Information Technology Specialist</h2>
                 
                 <div class="contact-info">
                     <p><i class="fas fa-envelope"></i> <a href="mailto:mohammedhasgari@gmail.com">Email</a></p>
@@ -284,7 +289,7 @@
                 
                 <div style="display: flex; flex-direction: column; gap: 25px;">
                     
-                    <div style="display: flex; flex-wrap: wrap; gap: 25px; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); padding: 25px 28px; border-radius: var(--radius); border-left: 5px solid var(--accent-color); box-shadow: var(--shadow-light); transition: var(--transition); align-items: stretch;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 25px; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); padding: 25px 28px; border-radius: var(--radius); border-left: 5px solid var(--accent); box-shadow: var(--shadow); transition: var(--transition); align-items: stretch;">
                         
                         <div style="flex: 0 0 220px; min-width: 160px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
                             <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" 
@@ -294,15 +299,15 @@
                         
                         <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
-                                <h3 style="color: var(--primary-color); font-size: 1.2em; margin: 0 0 6px 0;">
-                                    <i class="fas fa-server" style="color: var(--accent-color); margin-right: 10px;"></i>
+                                <h3 style="color: var(--primary); font-size: 1.2em; margin: 0 0 6px 0;">
+                                    <i class="fas fa-server" style="color: var(--accent); margin-right: 10px;"></i>
                                     Mahex Network Infrastructure Project
                                 </h3>
                                 <p style="color: #64748b; font-size: 0.85em; margin: 0 0 12px 0;">
                                     <i class="fas fa-calendar-alt" style="margin-right: 6px;"></i>
-                                    May 2026 
+                                    May 2026
                                 </p>
-                                <p style="color: var(--secondary-color); line-height: 1.9; margin: 0; font-size: 0.95em;">
+                                <p style="color: var(--secondary); line-height: 1.9; margin: 0; font-size: 0.95em;">
                                     Implementation and setup of network infrastructure including installation and configuration 
                                     of switches, patch panels, and accessories in the organizational rack.
                                 </p>
@@ -314,11 +319,11 @@
                                     <i class="fab fa-github" style="font-size: 1.2em;"></i>
                                     View Project on GitHub
                                 </a>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent-color);">
+                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
                                     <i class="fas fa-images"></i>
                                     5 Images
                                 </span>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent-color);">
+                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
                                     <i class="fas fa-tag"></i>
                                     Infrastructure
                                 </span>
@@ -360,14 +365,8 @@
             
             <footer>
                 <div class="footer-branding">
-                    <div class="footer-logo-container">
-                        
-                        <span class="footer-logo-line"></span>
-                        <div class="footer-logo-wrapper">
-                            <img src="images/mha-logo.png" alt="Mohammad Hossein Asgari Somarin Logo (MHA)" class="footer-logo-img" loading="lazy">
-                        </div>
-                        <span class="footer-logo-line"></span>
-                       
+                    <div class="footer-logo-wrapper">
+                        <img src="images/mha-logo.png" alt="Logo" class="footer-logo-img" loading="lazy">
                     </div>
                     <p class="copyright-text">
                         <span>Designed & Developed by: Mohammad Hossein Asgari Somarin</span>
