@@ -15,7 +15,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // ===============================================
-    // 0. محاسبه خودکار مدت زمان شغل فعلی (Dynamic Duration)
+    // 0. نوار پیشرفت مطالعه (Reading Progress Bar)
+    // ===============================================
+    
+    function updateProgressBar() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        
+        const progressBar = document.getElementById('progress-bar');
+        if (progressBar) {
+            progressBar.style.width = scrollPercent + '%';
+        }
+    }
+    
+    // اجرای اولیه و هنگام اسکرول
+    updateProgressBar();
+    window.addEventListener('scroll', debounce(updateProgressBar, 10));
+    
+    // ===============================================
+    // 1. محاسبه خودکار مدت زمان شغل فعلی (Dynamic Duration)
     // ===============================================
     
     function updateJobDuration() {
@@ -36,7 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 months--;
             }
             
-            // نمایش بدون هیچ کلمه تکراری
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const remainingMonths = months % 12;
@@ -65,7 +83,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 months--;
             }
             
-            // نمایش بدون هیچ کلمه تکراری
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const remainingMonths = months % 12;
@@ -84,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
     
     // ===============================================
-    // 1. فعال‌سازی نوارهای مهارت (Skill Bars)
+    // 2. فعال‌سازی نوارهای مهارت (Skill Bars)
     // ===============================================
     
     const skillItems = document.querySelectorAll('.skill-level-item');
@@ -127,7 +144,29 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // 2. اسکرول به بالا (Back to Top Button)
+    // 3. افکت محو شدن بخش‌ها هنگام اسکرول (Fade-in Sections)
+    // ===============================================
+    
+    const sections = document.querySelectorAll('.section');
+    
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { 
+        root: null, 
+        rootMargin: '0px',
+        threshold: 0.1 
+    });
+    
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+    
+    // ===============================================
+    // 4. اسکرول به بالا (Back to Top Button)
     // ===============================================
     
     const backToTopBtn = document.getElementById('back-to-top');
@@ -153,10 +192,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // 3. فعال‌سازی نوار ناوبری (Active Link Management)
+    // 5. فعال‌سازی نوار ناوبری (Active Link Management)
     // ===============================================
     
-    const sections = document.querySelectorAll('main section');
     const navLinksDesktop = document.querySelectorAll('#navbar a');
     const navLinksMobile = document.querySelectorAll('#navbar-mobile a'); 
     
@@ -190,6 +228,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const debouncedScrollHandler = debounce(function() {
         updateActiveNav();
         toggleBackToTop();
+        updateProgressBar();
     }, 50);
 
     window.addEventListener('scroll', debouncedScrollHandler);
