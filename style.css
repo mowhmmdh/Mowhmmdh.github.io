@@ -1198,3 +1198,100 @@ footer {
         right: 20px;
     }
 }
+
+/* ================================================= */
+/* ---- لوگوی فوتر (حرفه‌ای‌تر) ---- */
+/* ================================================= */
+.footer-logo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 20px;
+    background: linear-gradient(135deg, rgba(49, 130, 206, 0.05), rgba(26, 54, 93, 0.05));
+    border-radius: 12px;
+    border: 1px solid rgba(49, 130, 206, 0.1);
+    transition: var(--transition);
+}
+
+.footer-logo-wrapper:hover {
+    background: linear-gradient(135deg, rgba(49, 130, 206, 0.1), rgba(26, 54, 93, 0.08));
+    border-color: var(--accent-color);
+    box-shadow: 0 4px 20px rgba(49, 130, 206, 0.1);
+    transform: translateY(-2px);
+}
+
+.footer-logo-img {
+    height: 45px;
+    width: auto;
+    filter: drop-shadow(0 2px 8px rgba(26, 54, 93, 0.15));
+    transition: var(--transition);
+}
+
+.footer-logo-wrapper:hover .footer-logo-img {
+    filter: drop-shadow(0 4px 12px rgba(26, 54, 93, 0.25));
+    transform: scale(1.05) rotate(-2deg);
+}
+
+.footer-logo-text {
+    display: flex;
+    flex-direction: column;
+    padding-right: 15px;
+    border-right: 2px solid var(--border-color);
+}
+
+body.lang-en .footer-logo-text {
+    padding-right: 0;
+    padding-left: 15px;
+    border-right: none;
+    border-left: 2px solid var(--border-color);
+}
+
+.footer-logo-text .brand-name {
+    font-size: 1.1em;
+    font-weight: 800;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+}
+
+.footer-logo-text .brand-sub {
+    font-size: 0.65em;
+    font-weight: 400;
+    color: var(--accent-color);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+}
+
+/* ================================================= */
+/* ---- استایل جایگزین برای موبایل ---- */
+/* ================================================= */
+@media (max-width: 480px) {
+    .footer-logo-wrapper {
+        padding: 6px 14px;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .footer-logo-img {
+        height: 35px;
+    }
+    
+    .footer-logo-text {
+        padding-right: 10px;
+        border-right-width: 1px;
+    }
+    
+    body.lang-en .footer-logo-text {
+        padding-left: 10px;
+        border-left-width: 1px;
+    }
+    
+    .footer-logo-text .brand-name {
+        font-size: 0.95em;
+    }
+    
+    .footer-logo-text .brand-sub {
+        font-size: 0.55em;
+    }
+}
