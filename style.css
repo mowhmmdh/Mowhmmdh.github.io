@@ -812,6 +812,42 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
+/* ---- لوگوی فوتر (برجسته و حرفه‌ای) ---- */
+/* ================================================= */
+.footer-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 25px;
+    background: linear-gradient(145deg, #ffffff, #f0f4f8);
+    border-radius: 20px;
+    border: 2px solid rgba(49, 130, 206, 0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    transition: var(--transition);
+    cursor: default;
+}
+
+.footer-logo-wrapper:hover {
+    background: linear-gradient(145deg, #ffffff, #e8f0fe);
+    border-color: var(--accent-color);
+    box-shadow: 0 8px 30px rgba(49, 130, 206, 0.15);
+    transform: translateY(-3px) scale(1.02);
+}
+
+.footer-logo-img {
+    height: 55px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(0 2px 10px rgba(26, 54, 93, 0.12));
+    transition: var(--transition);
+}
+
+.footer-logo-wrapper:hover .footer-logo-img {
+    filter: drop-shadow(0 4px 20px rgba(26, 54, 93, 0.2));
+    transform: scale(1.08) rotate(-1deg);
+}
+
+/* ================================================= */
 /* ---- فوتر برندینگ ---- */
 /* ================================================= */
 
@@ -833,17 +869,6 @@ footer {
 .footer-logo {
     display: flex;
     align-items: center;
-}
-
-.footer-mha-logo {
-    height: 42px; 
-    opacity: 0.85; 
-    transition: var(--transition);
-}
-
-.footer-mha-logo:hover {
-    opacity: 1;
-    transform: scale(1.06);
 }
 
 .copyright-text {
@@ -885,6 +910,20 @@ footer {
 #back-to-top:hover {
     transform: translateY(-4px) scale(1.05);
     box-shadow: 0 8px 30px rgba(26, 54, 93, 0.4);
+}
+
+/* ================================================= */
+/* ---- استایل جایگزین برای موبایل ---- */
+/* ================================================= */
+@media (max-width: 480px) {
+    .footer-logo-wrapper {
+        padding: 8px 18px;
+        border-radius: 16px;
+    }
+    
+    .footer-logo-img {
+        height: 42px;
+    }
 }
 
 /* ================================================= */
@@ -1048,11 +1087,6 @@ footer {
         gap: 10px;
     }
     
-    .footer-logo {
-        margin-inline-end: 0;
-        margin-bottom: 5px;
-    }
-    
     .quick-contact-info {
         padding: 10px 0;
     }
@@ -1196,102 +1230,5 @@ footer {
         font-size: 1.2em;
         bottom: 20px;
         right: 20px;
-    }
-}
-
-/* ================================================= */
-/* ---- لوگوی فوتر (حرفه‌ای‌تر) ---- */
-/* ================================================= */
-.footer-logo-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    padding: 8px 20px;
-    background: linear-gradient(135deg, rgba(49, 130, 206, 0.05), rgba(26, 54, 93, 0.05));
-    border-radius: 12px;
-    border: 1px solid rgba(49, 130, 206, 0.1);
-    transition: var(--transition);
-}
-
-.footer-logo-wrapper:hover {
-    background: linear-gradient(135deg, rgba(49, 130, 206, 0.1), rgba(26, 54, 93, 0.08));
-    border-color: var(--accent-color);
-    box-shadow: 0 4px 20px rgba(49, 130, 206, 0.1);
-    transform: translateY(-2px);
-}
-
-.footer-logo-img {
-    height: 45px;
-    width: auto;
-    filter: drop-shadow(0 2px 8px rgba(26, 54, 93, 0.15));
-    transition: var(--transition);
-}
-
-.footer-logo-wrapper:hover .footer-logo-img {
-    filter: drop-shadow(0 4px 12px rgba(26, 54, 93, 0.25));
-    transform: scale(1.05) rotate(-2deg);
-}
-
-.footer-logo-text {
-    display: flex;
-    flex-direction: column;
-    padding-right: 15px;
-    border-right: 2px solid var(--border-color);
-}
-
-body.lang-en .footer-logo-text {
-    padding-right: 0;
-    padding-left: 15px;
-    border-right: none;
-    border-left: 2px solid var(--border-color);
-}
-
-.footer-logo-text .brand-name {
-    font-size: 1.1em;
-    font-weight: 800;
-    color: var(--primary-color);
-    letter-spacing: -0.5px;
-    line-height: 1.2;
-}
-
-.footer-logo-text .brand-sub {
-    font-size: 0.65em;
-    font-weight: 400;
-    color: var(--accent-color);
-    letter-spacing: 0.3px;
-    text-transform: uppercase;
-}
-
-/* ================================================= */
-/* ---- استایل جایگزین برای موبایل ---- */
-/* ================================================= */
-@media (max-width: 480px) {
-    .footer-logo-wrapper {
-        padding: 6px 14px;
-        gap: 10px;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    
-    .footer-logo-img {
-        height: 35px;
-    }
-    
-    .footer-logo-text {
-        padding-right: 10px;
-        border-right-width: 1px;
-    }
-    
-    body.lang-en .footer-logo-text {
-        padding-left: 10px;
-        border-left-width: 1px;
-    }
-    
-    .footer-logo-text .brand-name {
-        font-size: 0.95em;
-    }
-    
-    .footer-logo-text .brand-sub {
-        font-size: 0.55em;
     }
 }
