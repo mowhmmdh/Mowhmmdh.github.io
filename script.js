@@ -12,6 +12,92 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
+    // افکت پس‌زمینه با ذرات (Particles)
+    // ===============================================
+    function initParticles() {
+        const canvas = document.createElement('canvas');
+        canvas.id = 'particles-canvas';
+        document.body.prepend(canvas);
+        
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        const particleCount = 50;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
+                if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(37, 99, 235, ${this.opacity})`;
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // رسم خطوط بین ذرات نزدیک
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(37, 99, 235, ${0.1 * (1 - distance / 150)})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animateParticles);
+        }
+
+        animateParticles();
+    }
+
+    // اجرای افکت ذرات فقط در دسکتاپ
+    if (window.innerWidth > 992) {
+        initParticles();
+    }
+
+    // ===============================================
     // نوار پیشرفت مطالعه
     // ===============================================
     function updateProgressBar() {
@@ -183,5 +269,50 @@ document.addEventListener('DOMContentLoaded', function() {
         item.style.transform = 'translateY(20px)';
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         jobObserver.observe(item);
+    });
+
+    // ===============================================
+    // افکت تایپ‌رایتر (Typing Effect)
+    // ===============================================
+    function initTypingEffect() {
+        const typingElements = document.querySelectorAll('.typing-text');
+        
+        typingElements.forEach(element => {
+            const text = element.textContent;
+            element.textContent = '';
+            let index = 0;
+            
+            function typeChar() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(typeChar, 50 + Math.random() * 50);
+                }
+            }
+            
+            // شروع تایپ با تأخیر
+            setTimeout(typeChar, 500);
+        });
+    }
+
+    initTypingEffect();
+
+    // ===============================================
+    // دارک مود (Dark Mode)
+    // ===============================================
+    const darkToggle = document.getElementById('dark-toggle');
+    const body = document.body;
+
+    // بررسی وضعیت ذخیره‌شده
+    if (localStorage.getItem('dark-mode') === 'true') {
+        body.classList.add('dark-mode');
+        darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+
+    darkToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('dark-mode', isDark);
+        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     });
 });
