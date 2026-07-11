@@ -149,13 +149,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const bar = item.querySelector('.skill-bar');
             const percent = item.querySelector('.skill-percent');
             if (bar && percent) {
-                // استخراج عدد از درصد (مثلاً "70%" → 70)
                 const val = parseInt(percent.textContent);
-                // تنظیم متغیر CSS برای انیمیشن
                 item.style.setProperty('--skill-width', val + '%');
-                // افزودن کلاس show برای اجرای انیمیشن
                 item.classList.add('show');
-                // اطمینان از اعمال عرض به نوار
                 bar.style.width = val + '%';
             }
         });
