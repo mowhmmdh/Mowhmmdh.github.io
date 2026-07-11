@@ -1616,25 +1616,25 @@ footer {
 }
 
 /* ================================================= */
-/* ---- دکمه‌های اشتراک‌گذاری (Share Buttons) - موقعیت پایین صفحه ---- */
+/* ---- دکمه‌های اشتراک‌گذاری (Share Buttons) - انتهای صفحه به صورت افقی ---- */
 /* ================================================= */
 .share-buttons {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
+    position: relative;
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    justify-content: center;
+    gap: 12px;
+    margin: 30px auto 10px auto;
+    padding: 10px 24px;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    padding: 8px 16px;
     border-radius: 50px;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.2);
     transition: var(--transition);
+    width: fit-content;
+    max-width: 90%;
 }
 
 body.dark-mode .share-buttons {
@@ -1643,12 +1643,12 @@ body.dark-mode .share-buttons {
 }
 
 .share-btn {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: none;
     color: white;
-    font-size: 0.9em;
+    font-size: 0.95em;
     cursor: pointer;
     transition: var(--transition);
     display: flex;
@@ -1658,7 +1658,6 @@ body.dark-mode .share-buttons {
     position: relative;
 }
 
-/* ---- Tooltip برای دکمه‌های اشتراک‌گذاری ---- */
 .share-btn .tooltip {
     position: absolute;
     bottom: calc(100% + 10px);
@@ -1668,7 +1667,7 @@ body.dark-mode .share-buttons {
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: white;
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 6px;
     font-size: 0.65em;
     white-space: nowrap;
@@ -1943,16 +1942,16 @@ body.dark-mode .share-copy {
 
     /* ---- دکمه‌های اشتراک‌گذاری در موبایل ---- */
     .share-buttons {
-        bottom: 15px;
-        padding: 6px 14px;
-        gap: 8px;
+        padding: 8px 18px;
+        gap: 10px;
+        margin: 25px auto 8px auto;
         border-radius: 40px;
     }
 
     .share-btn {
-        width: 34px;
-        height: 34px;
-        font-size: 0.8em;
+        width: 36px;
+        height: 36px;
+        font-size: 0.85em;
     }
 
     .share-btn .tooltip {
@@ -2154,16 +2153,16 @@ body.dark-mode .share-copy {
 
     /* ---- دکمه‌های اشتراک‌گذاری در موبایل کوچک ---- */
     .share-buttons {
-        bottom: 12px;
-        padding: 5px 12px;
-        gap: 6px;
+        padding: 6px 14px;
+        gap: 8px;
+        margin: 20px auto 6px auto;
         border-radius: 30px;
     }
 
     .share-btn {
-        width: 30px;
-        height: 30px;
-        font-size: 0.7em;
+        width: 32px;
+        height: 32px;
+        font-size: 0.75em;
     }
 
     .services-grid {
