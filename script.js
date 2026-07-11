@@ -321,6 +321,36 @@ document.addEventListener('DOMContentLoaded', function() {
     initAdvancedTyping();
 
     // ===============================================
+    // نمایش تاریخ به‌روزرسانی خودکار
+    // ===============================================
+    function updateDate() {
+        const now = new Date();
+        
+        // تاریخ شمسی (فارسی)
+        const updateFa = document.getElementById('update-date-fa');
+        if (updateFa) {
+            const persianDate = new Intl.DateTimeFormat('fa-IR', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            }).format(now);
+            updateFa.textContent = `آخرین به‌روزرسانی: ${persianDate}`;
+        }
+        
+        // تاریخ میلادی (انگلیسی)
+        const updateEn = document.getElementById('update-date-en');
+        if (updateEn) {
+            const englishDate = new Intl.DateTimeFormat('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            }).format(now);
+            updateEn.textContent = `Last Updated: ${englishDate}`;
+        }
+    }
+    updateDate();
+
+    // ===============================================
     // دارک مود
     // ===============================================
     const darkToggle = document.getElementById('dark-toggle');
