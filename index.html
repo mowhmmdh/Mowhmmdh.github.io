@@ -92,7 +92,8 @@
 
             <nav id="navbar">
                 <ul class="lang-fa-nav">
-                    <li><a href="#about" class="active">معرفی</a></li> 
+                    <li><a href="#about" class="active">معرفی</a></li>
+                    <li><a href="#services">خدمات</a></li>
                     <li><a href="#experience">سوابق شغلی</a></li>
                     <li><a href="#skills">مهارت‌ها</a></li>
                     <li><a href="#certificates">مدارک</a></li>
@@ -110,6 +111,131 @@
                 <div class="summary">
                     <p>من یک متخصص فناوری اطلاعات هستم که تجربه عملی در عیب‌یابی سیستم‌ها، پشتیبانی از کاربران و نگهداری شبکه‌ها دارم. من با سازمان‌هایی مانند وزارت کشور، روزنامه صمت و کیمیا مهر اسپادانا (سایت‌های فروشگاهی Kimiaonline و HiAsus) همکاری داشته‌ام و در آنجا مهارت‌های فنی و ارتباطی خود را تقویت کرده‌ام و هم‌اکنون در شرکت خدمات بار هوایی سریع‌ترابر ماهان (ماهکس) مشغول به کار هستم.</p>
                     <p>من به شبکه و امنیت سایبری علاقه‌مند هستم و به طور مداوم دانش خود را بهبود می‌بخشم. آماده پذیرش فرصت‌های جدید و رشد حرفه‌ای هستم.</p>
+                </div>
+            </section>
+
+            <!-- ================================================= -->
+            <!-- بخش خدمات من (My Services) -->
+            <!-- ================================================= -->
+            <section class="section" id="services">
+                <h2 class="section-title">خدمات من</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 10px;">
+                    
+                    <!-- خدمات شبکه و زیرساخت -->
+                    <div class="service-card" data-service="شبکه و زیرساخت">
+                        <div class="service-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3>شبکه و زیرساخت</h3>
+                        <ul>
+                            <li>طراحی و پیاده‌سازی شبکه</li>
+                            <li>راه‌اندازی و پیکربندی تجهیزات شبکه</li>
+                            <li>عیب‌یابی و رفع مشکلات شبکه</li>
+                            <li>راه‌اندازی شبکه‌های بی‌سیم (Wi-Fi)</li>
+                        </ul>
+                        <button class="service-select-btn" data-service="شبکه و زیرساخت">درخواست این خدمت</button>
+                    </div>
+                    
+                    <!-- خدمات دوربین مداربسته -->
+                    <div class="service-card" data-service="دوربین مداربسته (CCTV)">
+                        <div class="service-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>دوربین‌های مداربسته (CCTV)</h3>
+                        <ul>
+                            <li>نصب و راه‌اندازی دوربین‌های آنالوگ و IP</li>
+                            <li>پیکربندی و نگهداری سیستم‌های نظارتی</li>
+                            <li>عیب‌یابی و تعمیرات دوربین‌ها</li>
+                            <li>طراحی سیستم‌های نظارتی برای سازمان‌ها</li>
+                        </ul>
+                        <button class="service-select-btn" data-service="دوربین مداربسته (CCTV)">درخواست این خدمت</button>
+                    </div>
+                    
+                    <!-- خدمات تعمیرات نرم‌افزاری -->
+                    <div class="service-card" data-service="تعمیرات نرم‌افزاری">
+                        <div class="service-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>تعمیرات نرم‌افزاری</h3>
+                        <ul>
+                            <li>عیب‌یابی و رفع مشکلات سیستمعامل</li>
+                            <li>نصب و پیکربندی نرم‌افزارهای تخصصی</li>
+                            <li>بازیابی اطلاعات (Data Recovery)</li>
+                            <li>رفع مشکلات ویروسی و بدافزاری</li>
+                        </ul>
+                        <button class="service-select-btn" data-service="تعمیرات نرم‌افزاری">درخواست این خدمت</button>
+                    </div>
+                    
+                    <!-- خدمات تعمیرات سخت‌افزاری -->
+                    <div class="service-card" data-service="تعمیرات سخت‌افزاری">
+                        <div class="service-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h3>تعمیرات سخت‌افزاری</h3>
+                        <ul>
+                            <li>تعمیر و ارتقاء سیستم‌های کامپیوتری</li>
+                            <li>عیب‌یابی و تعویض قطعات سخت‌افزاری</li>
+                            <li>تعمیر لپ‌تاپ و کامپیوترهای شخصی</li>
+                            <li>ارتقاء و بهینه‌سازی تجهیزات</li>
+                        </ul>
+                        <button class="service-select-btn" data-service="تعمیرات سخت‌افزاری">درخواست این خدمت</button>
+                    </div>
+                    
+                </div>
+                
+                <!-- فرم درخواست خدمات حرفه‌ای -->
+                <div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+                    <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
+                        <i class="fas fa-pen" style="color: var(--accent);"></i>
+                        درخواست خدمات
+                    </h3>
+                    <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">
+                        لطفاً اطلاعات زیر را تکمیل کنید تا در اسرع وقت با شما تماس بگیرم.
+                    </p>
+                    
+                    <form id="service-form" action="https://formspree.io/f/mblnnwvk" method="POST">
+                        
+                        <input type="hidden" id="selected-service" name="نوع خدمت" value="">
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="client-name"><i class="fas fa-user"></i> نام و نام خانوادگی</label>
+                                <input type="text" id="client-name" name="نام" required placeholder="مثال: علی محمدی">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="client-phone"><i class="fas fa-phone"></i> شماره تماس</label>
+                                <input type="tel" id="client-phone" name="شماره تماس" required placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="client-email"><i class="fas fa-envelope"></i> ایمیل</label>
+                                <input type="email" id="client-email" name="ایمیل" placeholder="example@gmail.com">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="client-budget"><i class="fas fa-money-bill-wave"></i> بودجه تقریبی (اختیاری)</label>
+                                <input type="text" id="client-budget" name="بودجه تقریبی" placeholder="مثال: ۵۰ میلیون تومان">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="client-description"><i class="fas fa-align-left"></i> توضیحات پروژه یا نیاز شما</label>
+                            <textarea id="client-description" name="توضیحات" rows="4" required placeholder="لطفاً توضیح دهید که چه خدمتی نیاز دارید، چه تجهیزاتی دارید، چه مشکلاتی وجود دارد و چه انتظاری دارید..."></textarea>
+                        </div>
+                        
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+                            <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
+                                <i class="fas fa-paper-plane"></i>
+                                ارسال درخواست
+                            </button>
+                            <button type="reset" class="cta-button" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
+                                <i class="fas fa-times"></i>
+                                لغو
+                            </button>
+                        </div>
+                    </form>
                 </div>
             </section>
 
