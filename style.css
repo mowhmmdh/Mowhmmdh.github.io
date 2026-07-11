@@ -684,26 +684,9 @@ body.lang-en .job-item.current-position {
     border-radius: var(--radius);
     background: var(--bg-card);
     transition: var(--transition);
-    opacity: 0;
-    transform: translateY(30px);
-    animation: skillFadeIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
-
-/* تأخیر پلکانی برای هر بخش مهارت */
-.skill-category:nth-child(1) { animation-delay: 0.1s; }
-.skill-category:nth-child(2) { animation-delay: 0.2s; }
-.skill-category:nth-child(3) { animation-delay: 0.3s; }
-.skill-category:nth-child(4) { animation-delay: 0.4s; }
-
-@keyframes skillFadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    100% {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
 }
 
 .skill-category:hover {
@@ -726,7 +709,26 @@ body.lang-en .job-item.current-position {
 
 .skill-level-item {
     margin-bottom: 18px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
+
+body.lang-fa .skill-level-item {
+    transform: translateX(20px);
+}
+
+.skill-level-item.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.skill-level-item:nth-child(2) { transition-delay: 0.05s; }
+.skill-level-item:nth-child(3) { transition-delay: 0.1s; }
+.skill-level-item:nth-child(4) { transition-delay: 0.15s; }
+.skill-level-item:nth-child(5) { transition-delay: 0.2s; }
+.skill-level-item:nth-child(6) { transition-delay: 0.25s; }
+.skill-level-item:nth-child(7) { transition-delay: 0.3s; }
 
 .skill-level-item:last-child {
     margin-bottom: 0;
@@ -765,7 +767,7 @@ body.lang-en .job-item.current-position {
     width: var(--skill-width, 0%) !important;
 }
 
-/* ---- ریسپانسیو برای تبلت (۲ ستونه) ---- */
+/* ---- ریسپانسیو مهارت‌ها ---- */
 @media (max-width: 992px) {
     .skills-list {
         grid-template-columns: repeat(2, 1fr);
@@ -776,7 +778,6 @@ body.lang-en .job-item.current-position {
     }
 }
 
-/* ---- ریسپانسیو برای موبایل (۲ ستونه با اسکرول افقی) ---- */
 @media (max-width: 480px) {
     .skills-list {
         grid-template-columns: repeat(2, 1fr);
@@ -801,7 +802,6 @@ body.lang-en .job-item.current-position {
     }
 }
 
-/* ---- برای موبایل‌های خیلی کوچک (۱ ستونه) ---- */
 @media (max-width: 360px) {
     .skills-list {
         grid-template-columns: 1fr;
@@ -885,7 +885,7 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- خدمات ---- */
+/* ---- خدمات (ریسپانسیو جذاب‌تر) ---- */
 /* ================================================= */
 .services-grid {
     display: grid;
@@ -907,50 +907,13 @@ body.lang-fa #navbar a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    opacity: 0;
-    transform: translateY(60px) scale(0.9);
-    will-change: transform, opacity;
-}
-
-.service-card.show {
     opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-.service-card:nth-child(1) { transition-delay: 0.05s; }
-.service-card:nth-child(2) { transition-delay: 0.15s; }
-.service-card:nth-child(3) { transition-delay: 0.25s; }
-.service-card:nth-child(4) { transition-delay: 0.35s; }
-
-/* ---- افکت شناور برای کارت‌های خدمات ---- */
-.floating-card {
-    animation: float-card 6s ease-in-out infinite;
-}
-
-.floating-card:nth-child(2) {
-    animation-delay: 1.5s;
-}
-
-.floating-card:nth-child(3) {
-    animation-delay: 3s;
-}
-
-.floating-card:nth-child(4) {
-    animation-delay: 4.5s;
-}
-
-@keyframes float-card {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-}
-
-.floating-card:hover {
-    animation-play-state: paused;
-    transform: translateY(-12px) scale(1.02);
+    transform: translateY(0);
 }
 
 .service-card:hover {
     box-shadow: var(--shadow-hover);
+    transform: translateY(-5px);
     border-color: var(--accent);
 }
 
@@ -1060,28 +1023,6 @@ body.lang-en .service-card ul li::before {
     overflow: hidden;
 }
 
-.service-select-btn::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.05), transparent);
-    animation: shimmer 4s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.service-select-btn:hover::before {
-    opacity: 1;
-}
-
-@keyframes shimmer {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 .service-select-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
@@ -1091,7 +1032,89 @@ body.dark-mode .service-select-btn {
     background: linear-gradient(135deg, #60a5fa, #3b82f6);
 }
 
+/* ---- ریسپانسیو خدمات ---- */
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    
+    .service-card {
+        padding: 20px 18px;
+    }
+    
+    .service-card .service-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3em;
+    }
+    
+    .service-card h3 {
+        font-size: 1em;
+    }
+    
+    .service-card ul li {
+        font-size: 0.85em;
+        padding: 5px 0;
+    }
+    
+    .service-select-btn {
+        font-size: 0.8em;
+        padding: 8px 16px;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 600px) {
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    .service-card {
+        padding: 16px 14px;
+        border-radius: 12px;
+    }
+    
+    .service-card .service-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.1em;
+        margin-bottom: 10px;
+    }
+    
+    .service-card h3 {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+    
+    .service-card ul li {
+        font-size: 0.75em;
+        padding: 4px 0;
+        padding-inline-start: 16px;
+    }
+    
+    .service-select-btn {
+        font-size: 0.7em;
+        padding: 6px 12px;
+        border-radius: 20px;
+    }
+}
+
+@media (max-width: 400px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    
+    .service-card {
+        padding: 18px 16px;
+    }
+}
+
+/* ================================================= */
 /* ---- فرم درخواست خدمات ---- */
+/* ================================================= */
 #service-request-form {
     background: var(--bg-card);
     border-radius: var(--radius);
@@ -1221,23 +1244,6 @@ body.dark-mode #service-request-form textarea {
     overflow: hidden;
 }
 
-.cta-button::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.05), transparent);
-    animation: shimmer 4s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.cta-button:hover::before {
-    opacity: 1;
-}
-
 .cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 30px rgba(37, 99, 235, 0.3);
@@ -1320,23 +1326,6 @@ body.dark-mode .cta-button {
     margin-bottom: 25px;
     position: relative;
     overflow: hidden;
-}
-
-.contact-form button[type="submit"]::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(from 0deg, transparent, rgba(255, 255, 255, 0.1), transparent, rgba(255, 255, 255, 0.05), transparent);
-    animation: shimmer 4s linear infinite;
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.contact-form button[type="submit"]:hover::before {
-    opacity: 1;
 }
 
 .contact-form button[type="submit"]:hover {
@@ -1793,7 +1782,7 @@ body.dark-mode .share-copy {
 }
 
 /* ================================================= */
-/* ---- ریسپانسیو ---- */
+/* ---- ریسپانسیو کلی ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
@@ -2055,70 +2044,6 @@ body.dark-mode .share-copy {
         border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .services-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 15px;
-    }
-
-    .service-card {
-        padding: 18px 15px;
-        animation: none !important;
-    }
-
-    .service-card .service-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-
-    .service-card h3 {
-        font-size: 0.95em;
-        margin-bottom: 8px;
-    }
-
-    .service-card ul li {
-        font-size: 0.8em;
-        padding: 4px 0;
-        padding-inline-start: 16px;
-    }
-
-    .service-select-btn {
-        font-size: 0.75em;
-        padding: 6px 14px;
-        max-width: 100%;
-    }
-
-    .project-card {
-        padding: 18px 20px;
-        flex-direction: column;
-    }
-
-    .project-image-wrapper {
-        flex: 0 0 auto;
-        width: 100%;
-        max-height: 200px;
-    }
-
-    .project-image-wrapper img {
-        min-height: 120px;
-        max-height: 200px;
-    }
-
-    .project-content h3 {
-        font-size: 1.05em;
-    }
-
-    .project-actions .github-link {
-        padding: 8px 16px;
-        font-size: 0.8em;
-    }
-
-    .project-actions .badge {
-        padding: 6px 12px;
-        font-size: 0.75em;
-    }
-
     #service-request-form {
         padding: 20px;
     }
@@ -2231,39 +2156,6 @@ body.dark-mode .share-copy {
         width: 32px;
         height: 32px;
         font-size: 0.75em;
-    }
-
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-
-    .service-card {
-        padding: 14px 12px;
-        border-radius: 12px;
-        animation: none !important;
-    }
-
-    .service-card .service-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 1em;
-    }
-
-    .service-card h3 {
-        font-size: 0.9em;
-    }
-
-    .service-card ul li {
-        font-size: 0.75em;
-        padding: 3px 0;
-        padding-inline-start: 14px;
-    }
-
-    .service-select-btn {
-        font-size: 0.7em;
-        padding: 5px 12px;
-        border-radius: 20px;
     }
 
     #navbar a {
@@ -2444,9 +2336,5 @@ body.dark-mode .share-copy {
 
     .project-card {
         padding: 20px 24px;
-    }
-
-    .services-grid {
-        grid-template-columns: 1fr 1fr;
     }
 }
