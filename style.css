@@ -237,16 +237,18 @@ body.dark-mode #sidebar-info {
 /* ================================================= */
 #top-area {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
     position: relative;
-    height: 130px;
-    padding-top: 10px;
-    padding-bottom: 20px;
+    padding-top: 45px;
+    padding-bottom: 10px;
+    min-height: 180px;
+    width: 100%;
 }
 
 /* ================================================= */
-/* ---- دکمه زبان (دسکتاپ) ---- */
+/* ---- دکمه زبان (دسکتاپ) - اصلاح شده ---- */
 /* ================================================= */
 .lang-switcher {
     z-index: 250;
@@ -317,11 +319,9 @@ body.dark-mode .lang-switcher .active-lang {
 }
 
 /* ================================================= */
-/* ---- عکس پروفایل (دسکتاپ) ---- */
+/* ---- عکس پروفایل (دسکتاپ) - اصلاح شده ---- */
 /* ================================================= */
 .profile-wrapper {
-    position: absolute;
-    top: 50%;
     width: 110px;
     height: 130px;
     border-radius: 20%;
@@ -330,20 +330,12 @@ body.dark-mode .lang-switcher .active-lang {
     box-shadow: 0 8px 30px var(--accent-glow);
     transition: var(--transition);
     will-change: transform;
-}
-
-body.lang-fa .profile-wrapper {
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-body.lang-en .profile-wrapper {
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    flex-shrink: 0;
 }
 
 .profile-wrapper:hover {
-    transform: translate(-50%, -50%) scale(1.04);
+    transform: scale(1.04);
 }
 
 .profile-icon {
@@ -398,10 +390,11 @@ body.dark-mode .typing-text {
     margin-top: 10px;
     position: relative;
     z-index: 5;
+    text-align: center;
 }
 
 h1 {
-    font-size: 2.6em;
+    font-size: 2.2em;
     color: var(--primary);
     font-weight: 700;
     letter-spacing: -0.5px;
@@ -409,7 +402,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1.15em;
+    font-size: 1.05em;
     font-weight: 500;
 }
 
@@ -443,19 +436,13 @@ body.lang-fa .section-title::after {
 
 /* ---- اطلاعات تماس ---- */
 .contact-info {
-    margin-top: 22px;
+    margin-top: 18px;
     font-size: 0.92em;
     display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-body.lang-fa .contact-info {
-    align-items: flex-end;
-}
-
-body.lang-en .contact-info {
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px 20px;
 }
 
 .contact-info p {
@@ -1877,8 +1864,8 @@ body.dark-mode .share-copy {
         flex-direction: column;
         align-items: center;
         justify-content: flex-start;
-        height: auto;
-        padding: 10px 0 10px;
+        padding-top: 50px;
+        padding-bottom: 10px;
         position: relative;
         min-height: 200px;
         width: 100%;
@@ -1931,7 +1918,7 @@ body.dark-mode .share-copy {
         height: 140px;
         border-radius: 24px;
         padding: 4px;
-        margin: 30px auto 10px;
+        margin: 20px auto 10px;
         background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--accent));
         background-size: 300% 300%;
         animation: gradientMove 4s ease-in-out infinite;
@@ -2188,7 +2175,7 @@ body.dark-mode .share-copy {
         width: 100px;
         height: 118px;
         padding: 3px;
-        margin: 20px auto 8px;
+        margin: 15px auto 8px;
     }
 
     .profile-icon {
@@ -2387,7 +2374,7 @@ body.dark-mode .share-copy {
     .profile-wrapper {
         width: 130px;
         height: 150px;
-        margin: 30px auto 12px;
+        margin: 25px auto 12px;
     }
 
     h1 {
