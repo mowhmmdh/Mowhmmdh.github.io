@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت
+    // انیمیشن نوارهای مهارت - نسخه اصلاح شده
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
 
@@ -149,9 +149,12 @@ document.addEventListener('DOMContentLoaded', function() {
             const bar = item.querySelector('.skill-bar');
             const percent = item.querySelector('.skill-percent');
             if (bar && percent) {
-                // استخراج عدد از درصد (مثلاً "۷۰%" → 70)
-                const val = parseInt(percent.textContent);
-                // تنظیم عرض نوار به‌صورت مستقیم
+                // استخراج عدد از درصد (پشتیبانی از فارسی و انگلیسی)
+                let val = parseInt(percent.textContent.replace(/[^0-9]/g, ''));
+                if (isNaN(val)) val = 0;
+                // محدود کردن به 100
+                val = Math.min(val, 100);
+                // تنظیم عرض نوار
                 bar.style.width = val + '%';
                 // تنظیم متغیر CSS برای انیمیشن
                 item.style.setProperty('--skill-width', val + '%');
@@ -417,7 +420,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const descField = document.getElementById('client-description');
                 if (descField) {
                     const currentValue = descField.value;
-                    descField.value = `نوع خدمت درخواستی: ${service}\n\n${currentValue}`;
+                    const isPersian = document.body.classList.contains('lang-fa');
+                    const prefix = isPersian ? 'نوع خدمت درخواستی:' : 'Requested Service:';
+                    descField.value = `${prefix} ${service}\n\n${currentValue}`;
                 }
             }
         });
