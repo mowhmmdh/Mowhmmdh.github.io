@@ -419,4 +419,50 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // ===============================================
+    // دکمه‌های اشتراک‌گذاری
+    // ===============================================
+    const shareButtons = document.querySelectorAll('.share-btn');
+    const currentURL = window.location.href;
+    const currentTitle = document.title;
+
+    shareButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const shareType = this.getAttribute('data-share');
+            let shareURL = '';
+            
+            switch(shareType) {
+                case 'linkedin':
+                    shareURL = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentURL)}`;
+                    break;
+                case 'twitter':
+                    shareURL = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentURL)}&text=${encodeURIComponent(currentTitle)}`;
+                    break;
+                case 'whatsapp':
+                    shareURL = `https://api.whatsapp.com/send?text=${encodeURIComponent(currentTitle + ' - ' + currentURL)}`;
+                    break;
+                case 'email':
+                    shareURL = `mailto:?subject=${encodeURIComponent(currentTitle)}&body=${encodeURIComponent('من این رزومه حرفه‌ای را دیدم. لینک: ' + currentURL)}`;
+                    break;
+                case 'copy':
+                    navigator.clipboard.writeText(currentURL).then(() => {
+                        const originalText = this.innerHTML;
+                        this.innerHTML = '<i class="fas fa-check"></i>';
+                        this.style.background = '#28a745';
+                        setTimeout(() => {
+                            this.innerHTML = originalText;
+                            this.style.background = '#6c757d';
+                        }, 2000);
+                    }).catch(() => {
+                        alert('لینک کپی نشد. لطفاً دستی کپی کنید.');
+                    });
+                    return;
+            }
+            
+            if (shareURL) {
+                window.open(shareURL, '_blank', 'width=600,height=500');
+            }
+        });
+    });
 });
