@@ -644,12 +644,36 @@ body.lang-en .job-item.current-position {
 }
 
 /* ================================================= */
-/* ---- مهارت‌ها ---- */
+/* ---- مهارت‌ها با اسکرول افقی ---- */
 /* ================================================= */
+.skills-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+    padding-bottom: 10px;
+}
+
+.skills-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.skills-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.skills-wrapper::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+
 .skills-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 25px;
+    min-width: min-content;
 }
 
 .skill-category {
@@ -1592,6 +1616,89 @@ footer {
 }
 
 /* ================================================= */
+/* ---- دکمه‌های اشتراک‌گذاری (Share Buttons) ---- */
+/* ================================================= */
+.share-buttons {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+body.lang-fa .share-buttons {
+    right: 20px;
+    left: auto;
+}
+
+body.lang-en .share-buttons {
+    left: 20px;
+    right: auto;
+}
+
+.share-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: none;
+    color: white;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.share-btn::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.share-btn:hover::after {
+    opacity: 1;
+}
+
+.share-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.share-linkedin {
+    background: #0077b5;
+}
+
+.share-twitter {
+    background: #000000;
+}
+
+.share-whatsapp {
+    background: #25d366;
+}
+
+.share-email {
+    background: #ea4335;
+}
+
+.share-copy {
+    background: #6c757d;
+}
+
+body.dark-mode .share-copy {
+    background: #4a4a4a;
+}
+
+/* ================================================= */
 /* ---- ریسپانسیو ---- */
 /* ================================================= */
 @media (max-width: 992px) {
@@ -1811,6 +1918,22 @@ footer {
         color: #0f172a !important;
     }
 
+    .share-buttons {
+        right: 10px;
+        gap: 8px;
+    }
+
+    body.lang-en .share-buttons {
+        left: 10px;
+        right: auto;
+    }
+
+    .share-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9em;
+    }
+
     .job-item {
         padding: 16px 18px;
         border-radius: 14px;
@@ -1948,6 +2071,19 @@ footer {
     #sidebar-info:hover {
         transform: none;
     }
+
+    /* اسکرول افقی مهارت‌ها در موبایل و تبلت */
+    .skills-list {
+        grid-template-columns: repeat(3, minmax(180px, 220px));
+        gap: 15px;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+
+    .skill-category {
+        min-width: 180px;
+        max-width: 220px;
+    }
 }
 
 @media (max-width: 768px) {
@@ -1989,6 +2125,22 @@ footer {
 
     h2 {
         font-size: 0.85em;
+    }
+
+    .share-buttons {
+        right: 8px;
+        gap: 6px;
+    }
+
+    body.lang-en .share-buttons {
+        left: 8px;
+        right: auto;
+    }
+
+    .share-btn {
+        width: 34px;
+        height: 34px;
+        font-size: 0.8em;
     }
 
     .services-grid {
@@ -2140,6 +2292,26 @@ footer {
     .lang-switcher button {
         padding: 1px 6px;
         font-size: 0.55em;
+    }
+
+    /* اسکرول افقی مهارت‌ها در موبایل کوچک */
+    .skills-list {
+        grid-template-columns: repeat(2, minmax(150px, 180px));
+        gap: 12px;
+    }
+
+    .skill-category {
+        min-width: 150px;
+        max-width: 180px;
+        padding: 16px 14px;
+    }
+
+    .skill-category h4 {
+        font-size: 0.9em;
+    }
+
+    .skill-label {
+        font-size: 0.75em;
     }
 }
 
