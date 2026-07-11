@@ -66,17 +66,14 @@
         <aside id="sidebar-info">
             
             <div id="top-area">
-                
                 <div class="lang-switcher">
                     <button class="active-lang" id="lang-fa-btn" aria-label="تغییر زبان به فارسی">فارسی</button>
                     |
                     <a href="en.html" class="lang-link" id="lang-en-btn" aria-label="Change language to English">English</a>
                 </div>
-                
                 <div class="profile-wrapper">
                     <img src="images/profile.jpg" alt="عکس محمدحسین عسگری ثمرین" class="profile-icon" loading="lazy">
                 </div>
-                
             </div>
 
             <header class="header">
@@ -106,6 +103,7 @@
 
         <main id="main-content">
             
+            <!-- درباره من -->
             <section id="about" class="section">
                 <h2 class="section-title">درباره من</h2>
                 <div class="summary">
@@ -114,19 +112,14 @@
                 </div>
             </section>
 
-            <!-- ================================================= -->
-            <!-- بخش خدمات من (My Services) -->
-            <!-- ================================================= -->
-            <section class="section" id="services">
+            <!-- خدمات من -->
+            <section id="services" class="section">
                 <h2 class="section-title">خدمات من</h2>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 10px;">
-                    
-                    <!-- خدمات شبکه و زیرساخت -->
+                <div class="services-grid">
+                    <!-- شبکه و زیرساخت -->
                     <div class="service-card" data-service="شبکه و زیرساخت">
-                        <div class="service-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-network-wired"></i></div>
                         <h3>شبکه و زیرساخت</h3>
                         <ul>
                             <li>طراحی و پیاده‌سازی شبکه</li>
@@ -137,11 +130,9 @@
                         <button class="service-select-btn" data-service="شبکه و زیرساخت">درخواست این خدمت</button>
                     </div>
                     
-                    <!-- خدمات دوربین مداربسته -->
+                    <!-- دوربین مداربسته -->
                     <div class="service-card" data-service="دوربین مداربسته (CCTV)">
-                        <div class="service-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-video"></i></div>
                         <h3>دوربین‌های مداربسته (CCTV)</h3>
                         <ul>
                             <li>نصب و راه‌اندازی دوربین‌های آنالوگ و IP</li>
@@ -152,11 +143,9 @@
                         <button class="service-select-btn" data-service="دوربین مداربسته (CCTV)">درخواست این خدمت</button>
                     </div>
                     
-                    <!-- خدمات تعمیرات نرم‌افزاری -->
+                    <!-- تعمیرات نرم‌افزاری -->
                     <div class="service-card" data-service="تعمیرات نرم‌افزاری">
-                        <div class="service-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-code"></i></div>
                         <h3>تعمیرات نرم‌افزاری</h3>
                         <ul>
                             <li>عیب‌یابی و رفع مشکلات سیستمعامل</li>
@@ -167,11 +156,9 @@
                         <button class="service-select-btn" data-service="تعمیرات نرم‌افزاری">درخواست این خدمت</button>
                     </div>
                     
-                    <!-- خدمات تعمیرات سخت‌افزاری -->
+                    <!-- تعمیرات سخت‌افزاری -->
                     <div class="service-card" data-service="تعمیرات سخت‌افزاری">
-                        <div class="service-icon">
-                            <i class="fas fa-microchip"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-microchip"></i></div>
                         <h3>تعمیرات سخت‌افزاری</h3>
                         <ul>
                             <li>تعمیر و ارتقاء سیستم‌های کامپیوتری</li>
@@ -181,65 +168,53 @@
                         </ul>
                         <button class="service-select-btn" data-service="تعمیرات سخت‌افزاری">درخواست این خدمت</button>
                     </div>
-                    
                 </div>
                 
-                <!-- فرم درخواست خدمات حرفه‌ای -->
-                <div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
-                    <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
-                        <i class="fas fa-pen" style="color: var(--accent);"></i>
-                        درخواست خدمات
-                    </h3>
-                    <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">
-                        لطفاً اطلاعات زیر را تکمیل کنید تا در اسرع وقت با شما تماس بگیرم.
-                    </p>
+                <!-- فرم درخواست خدمات -->
+                <div id="service-request-form" style="display: none; margin-top: 40px;">
+                    <h3><i class="fas fa-pen" style="color: var(--accent);"></i> درخواست خدمات</h3>
+                    <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">لطفاً اطلاعات زیر را تکمیل کنید تا در اسرع وقت با شما تماس بگیرم.</p>
                     
                     <form id="service-form" action="https://formspree.io/f/mblnnwvk" method="POST">
-                        
                         <input type="hidden" id="selected-service" name="نوع خدمت" value="">
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group" style="margin-bottom: 0;">
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label for="client-name"><i class="fas fa-user"></i> نام و نام خانوادگی</label>
                                 <input type="text" id="client-name" name="نام" required placeholder="مثال: علی محمدی">
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
+                            <div class="form-group">
                                 <label for="client-phone"><i class="fas fa-phone"></i> شماره تماس</label>
                                 <input type="tel" id="client-phone" name="شماره تماس" required placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
                             </div>
                         </div>
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group" style="margin-bottom: 0;">
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label for="client-email"><i class="fas fa-envelope"></i> ایمیل</label>
                                 <input type="email" id="client-email" name="ایمیل" placeholder="example@gmail.com">
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
+                            <div class="form-group">
                                 <label for="client-budget"><i class="fas fa-money-bill-wave"></i> بودجه تقریبی (اختیاری)</label>
                                 <input type="text" id="client-budget" name="بودجه تقریبی" placeholder="مثال: ۵۰ میلیون تومان">
                             </div>
                         </div>
                         
-                        <div class="form-group" style="margin-bottom: 0;">
+                        <div class="form-group full-width">
                             <label for="client-description"><i class="fas fa-align-left"></i> توضیحات پروژه یا نیاز شما</label>
-                            <textarea id="client-description" name="توضیحات" rows="4" required placeholder="لطفاً توضیح دهید که چه خدمتی نیاز دارید، چه تجهیزاتی دارید، چه مشکلاتی وجود دارد و چه انتظاری دارید..."></textarea>
+                            <textarea id="client-description" name="توضیحات" rows="5" required placeholder="لطفاً توضیح دهید که چه خدمتی نیاز دارید، چه تجهیزاتی دارید، چه مشکلاتی وجود دارد و چه انتظاری دارید..."></textarea>
                         </div>
                         
-                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
-                            <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
-                                <i class="fas fa-paper-plane"></i>
-                                ارسال درخواست
-                            </button>
-                            <button type="reset" class="cta-button" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
-                                <i class="fas fa-times"></i>
-                                لغو
-                            </button>
+                        <div class="form-actions">
+                            <button type="submit" class="cta-button"><i class="fas fa-paper-plane"></i> ارسال درخواست</button>
+                            <button type="reset" class="cta-button cancel-btn"><i class="fas fa-times"></i> لغو</button>
                         </div>
                     </form>
                 </div>
             </section>
 
-            <section class="section" id="experience">
+            <!-- سوابق شغلی -->
+            <section id="experience" class="section">
                 <h2 class="section-title">سوابق شغلی</h2>
                 
                 <div class="job-item current-position">
@@ -291,10 +266,10 @@
                 </div>
             </section>
 
-            <section class="section" id="skills">
+            <!-- مهارت‌ها -->
+            <section id="skills" class="section">
                 <h2 class="section-title">مهارت‌های فنی</h2>
                 <div class="skills-list">
-                    
                     <div class="skill-category">
                         <h4><i class="fas fa-network-wired"></i> شبکه و زیرساخت</h4>
                         <div class="skill-level-item">
@@ -382,75 +357,47 @@
                             <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="35"></div></div>
                         </div>
                     </div>
-
                 </div>
             </section>
 
-            <section class="section" id="certificates">
+            <!-- مدارک -->
+            <section id="certificates" class="section">
                 <h2 class="section-title">مدارک و دوره‌های آموزشی</h2>
                 <div class="job-item"><h3>گواهینامه CCNA</h3><p class="institution">مرکز آموزشی لایتک، دانشگاه صنعتی شریف</p></div>
                 <div class="job-item"><h3>گواهینامه Network+</h3><p class="institution">مرکز آموزشی لایتک، دانشگاه صنعتی شریف</p></div>
             </section>
 
-            <section class="section" id="education">
+            <!-- تحصیلات -->
+            <section id="education" class="section">
                 <h2 class="section-title">تحصیلات</h2>
                 <div class="job-item"><h3>مهندسی کامپیوتر</h3><p class="institution">دانشگاه آزاد اسلامی واحد یادگار امام (ره) - شهر ری</p></div>
             </section>
 
-            <section class="section" id="projects">
+            <!-- پروژه‌ها -->
+            <section id="projects" class="section">
                 <h2 class="section-title">پروژه‌های زیرساختی</h2>
-                
-                <div style="display: flex; flex-direction: column; gap: 25px;">
-                    
-                    <div style="display: flex; flex-wrap: wrap; gap: 25px; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); padding: 25px 28px; border-radius: var(--radius); border-right: 5px solid var(--accent); box-shadow: var(--shadow); transition: var(--transition); align-items: stretch;">
-                        
-                        <div style="flex: 0 0 220px; min-width: 160px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
-                            <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" 
-                                 alt="رک شبکه ماهکس" 
-                                 style="width: 100%; height: 100%; min-height: 160px; object-fit: cover; display: block;">
-                        </div>
-                        
-                        <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
-                            <div>
-                                <h3 style="color: var(--primary); font-size: 1.2em; margin: 0 0 6px 0;">
-                                    <i class="fas fa-server" style="color: var(--accent); margin-left: 10px;"></i>
-                                    پروژه زیرساخت شبکه ماهکس
-                                </h3>
-                                <p style="color: #64748b; font-size: 0.85em; margin: 0 0 12px 0;">
-                                    <i class="fas fa-calendar-alt" style="margin-left: 6px;"></i>
-                                    اردیبهشت ۱۴۰۵ 
-                                </p>
-                                <p style="color: var(--secondary); line-height: 1.9; margin: 0; font-size: 0.95em;">
-                                    پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی 
-                                    سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.
-                                </p>
-                            </div>
-                            
-                            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;">
-                                <a href="https://github.com/mowhmmdh/Projects" target="_blank" rel="noopener" 
-                                   style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #24292e, #1a1e23); color: white; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85em; transition: var(--transition); box-shadow: 0 4px 15px rgba(36, 41, 46, 0.2);">
-                                    <i class="fab fa-github" style="font-size: 1.2em;"></i>
-                                    مشاهده پروژه در گیت‌هاب
-                                </a>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
-                                    <i class="fas fa-images"></i>
-                                    ۵ تصویر
-                                </span>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
-                                    <i class="fas fa-tag"></i>
-                                    زیرساخت
-                                </span>
-                            </div>
-                        </div>
-                        
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" alt="رک شبکه ماهکس">
                     </div>
-                    
+                    <div class="project-content">
+                        <div>
+                            <h3><i class="fas fa-server" style="color: var(--accent); margin-left: 10px;"></i> پروژه زیرساخت شبکه ماهکس</h3>
+                            <p class="project-date"><i class="fas fa-calendar-alt" style="margin-left: 6px;"></i> اردیبهشت ۱۴۰۵</p>
+                            <p class="project-description">پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.</p>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/mowhmmdh/Projects" target="_blank" rel="noopener" class="github-link"><i class="fab fa-github"></i> مشاهده پروژه در گیت‌هاب</a>
+                            <span class="badge"><i class="fas fa-images"></i> ۵ تصویر</span>
+                            <span class="badge"><i class="fas fa-tag"></i> زیرساخت</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section class="section" id="contact">
+            <!-- تماس با من -->
+            <section id="contact" class="section">
                 <h2 class="section-title">تماس با من</h2>
-                
                 <p class="contact-intro-text">آماده شروع همکاری و دریافت پیشنهادات کاری هستم. لطفاً برای ارتباط سریع، از فرم زیر استفاده کنید:</p>
 
                 <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form" aria-describedby="contact-form-desc">
@@ -459,21 +406,17 @@
                         <label for="email"><i class="fas fa-envelope-open-text"></i> ایمیل شما:</label>
                         <input type="email" id="email" name="email" required placeholder="example@gmail.com">
                     </div>
-                    
                     <div class="form-group">
                         <label for="message"><i class="fas fa-comment-dots"></i> پیام:</label>
                         <textarea id="message" name="message" rows="5" required placeholder="موضوع همکاری یا سوال خود را در اینجا بنویسید..."></textarea>
                     </div>
-
                     <button type="submit">ارسال پیام</button>
-                    
                     <div class="quick-contact-info">
                         <p>یا از طریق لینک‌های زیر در تماس باشید:</p>
                         <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener" class="quick-link linked-in"><i class="fab fa-linkedin"></i> لینکدین</a>
                         <a href="mailto:mohammedhasgari@gmail.com" class="quick-link email-link"><i class="fas fa-paper-plane"></i> ایمیل مستقیم</a>
                     </div>
                 </form>
-
             </section>
             
             <footer>
