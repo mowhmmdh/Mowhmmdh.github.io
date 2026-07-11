@@ -138,32 +138,37 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     updateJobDuration();
+// ===============================================
+// انیمیشن نوارهای مهارت - نسخه اصلاح شده با پشتیبانی از فارسی
+// ===============================================
+const skillItems = document.querySelectorAll('.skill-level-item');
 
-    // ===============================================
-    // انیمیشن نوارهای مهارت - نسخه اصلاح شده
-    // ===============================================
-    const skillItems = document.querySelectorAll('.skill-level-item');
-
-    function animateSkills() {
-        skillItems.forEach(item => {
-            const bar = item.querySelector('.skill-bar');
-            const percent = item.querySelector('.skill-percent');
-            if (bar && percent) {
-                // استخراج عدد از درصد (پشتیبانی از فارسی و انگلیسی)
-                let val = parseInt(percent.textContent.replace(/[^0-9]/g, ''));
-                if (isNaN(val)) val = 0;
-                // محدود کردن به 100
-                val = Math.min(val, 100);
-                // تنظیم عرض نوار
-                bar.style.width = val + '%';
-                // تنظیم متغیر CSS برای انیمیشن
-                item.style.setProperty('--skill-width', val + '%');
-                // افزودن کلاس show برای اجرای انیمیشن
-                item.classList.add('show');
-            }
-        });
-    }
-
+function animateSkills() {
+    skillItems.forEach(item => {
+        const bar = item.querySelector('.skill-bar');
+        const percent = item.querySelector('.skill-percent');
+        if (bar && percent) {
+            // استخراج عدد از درصد (پشتیبانی از فارسی و انگلیسی)
+            let text = percent.textContent.trim();
+            // حذف کاراکترهای غیرعددی (به جز اعداد فارسی)
+            let val = text.replace(/[^۰-۹0-9]/g, '');
+            // تبدیل اعداد فارسی به انگلیسی
+            const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+            persianNumbers.forEach((p, i) => {
+                val = val.replace(new RegExp(p, 'g'), englishNumbers[i]);
+            });
+            let num = parseInt(val);
+            if (isNaN(num)) num = 0;
+            num = Math.min(num, 100);
+            
+            // تنظیم عرض نوار
+            bar.style.width = num + '%';
+            item.style.setProperty('--skill-width', num + '%');
+            item.classList.add('show');
+        }
+    });
+}
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
         const observer = new IntersectionObserver((entries) => {
