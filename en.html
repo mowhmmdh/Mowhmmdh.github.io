@@ -66,17 +66,14 @@
         <aside id="sidebar-info">
             
             <div id="top-area">
-                
                 <div class="lang-switcher">
                     <button class="active-lang" id="lang-en-btn" aria-label="Change language to English">English</button>
                     |
                     <a href="index.html" class="lang-link" id="lang-fa-btn" aria-label="تغییر زبان به فارسی">فارسی</a>
                 </div>
-                
                 <div class="profile-wrapper">
                     <img src="images/profile.jpg" alt="Mohammad Hossein Asgari Somarin's photo" class="profile-icon" loading="lazy">
                 </div>
-                
             </div>
 
             <header class="header">
@@ -106,6 +103,7 @@
 
         <main id="main-content">
             
+            <!-- About Me -->
             <section id="about" class="section">
                 <h2 class="section-title">About Me</h2>
                 <div class="summary">
@@ -114,19 +112,14 @@
                 </div>
             </section>
 
-            <!-- ================================================= -->
-            <!-- My Services Section -->
-            <!-- ================================================= -->
-            <section class="section" id="services">
+            <!-- My Services -->
+            <section id="services" class="section">
                 <h2 class="section-title">My Services</h2>
                 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 10px;">
-                    
+                <div class="services-grid">
                     <!-- Network & Infrastructure -->
                     <div class="service-card" data-service="Network & Infrastructure">
-                        <div class="service-icon">
-                            <i class="fas fa-network-wired"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-network-wired"></i></div>
                         <h3>Network & Infrastructure</h3>
                         <ul>
                             <li>Network design and implementation</li>
@@ -139,9 +132,7 @@
                     
                     <!-- CCTV Services -->
                     <div class="service-card" data-service="CCTV & Surveillance">
-                        <div class="service-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-video"></i></div>
                         <h3>CCTV & Surveillance</h3>
                         <ul>
                             <li>Installation of analog and IP cameras</li>
@@ -154,9 +145,7 @@
                     
                     <!-- Software Repair -->
                     <div class="service-card" data-service="Software Repair">
-                        <div class="service-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-code"></i></div>
                         <h3>Software Repair</h3>
                         <ul>
                             <li>Operating system troubleshooting</li>
@@ -169,9 +158,7 @@
                     
                     <!-- Hardware Repair -->
                     <div class="service-card" data-service="Hardware Repair">
-                        <div class="service-icon">
-                            <i class="fas fa-microchip"></i>
-                        </div>
+                        <div class="service-icon"><i class="fas fa-microchip"></i></div>
                         <h3>Hardware Repair</h3>
                         <ul>
                             <li>Computer system repair and upgrade</li>
@@ -181,65 +168,53 @@
                         </ul>
                         <button class="service-select-btn" data-service="Hardware Repair">Request This Service</button>
                     </div>
-                    
                 </div>
                 
                 <!-- Service Request Form -->
-                <div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
-                    <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
-                        <i class="fas fa-pen" style="color: var(--accent);"></i>
-                        Request a Service
-                    </h3>
-                    <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">
-                        Please fill in the information below and I will contact you as soon as possible.
-                    </p>
+                <div id="service-request-form" style="display: none; margin-top: 40px;">
+                    <h3><i class="fas fa-pen" style="color: var(--accent);"></i> Request a Service</h3>
+                    <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">Please fill in the information below and I will contact you as soon as possible.</p>
                     
                     <form id="service-form" action="https://formspree.io/f/mblnnwvk" method="POST">
-                        
                         <input type="hidden" id="selected-service" name="Service Type" value="">
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group" style="margin-bottom: 0;">
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label for="client-name"><i class="fas fa-user"></i> Full Name</label>
                                 <input type="text" id="client-name" name="Name" required placeholder="Example: John Doe">
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
+                            <div class="form-group">
                                 <label for="client-phone"><i class="fas fa-phone"></i> Phone Number</label>
                                 <input type="tel" id="client-phone" name="Phone Number" required placeholder="Example: +98 912 345 6789">
                             </div>
                         </div>
                         
-                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                            <div class="form-group" style="margin-bottom: 0;">
+                        <div class="form-row">
+                            <div class="form-group">
                                 <label for="client-email"><i class="fas fa-envelope"></i> Email</label>
                                 <input type="email" id="client-email" name="Email" placeholder="example@gmail.com">
                             </div>
-                            <div class="form-group" style="margin-bottom: 0;">
+                            <div class="form-group">
                                 <label for="client-budget"><i class="fas fa-money-bill-wave"></i> Estimated Budget (Optional)</label>
                                 <input type="text" id="client-budget" name="Estimated Budget" placeholder="Example: 50 million IRR">
                             </div>
                         </div>
                         
-                        <div class="form-group" style="margin-bottom: 0;">
+                        <div class="form-group full-width">
                             <label for="client-description"><i class="fas fa-align-left"></i> Project Description</label>
-                            <textarea id="client-description" name="Description" rows="4" required placeholder="Please describe what service you need, what equipment you have, what problems exist, and what you expect..."></textarea>
+                            <textarea id="client-description" name="Description" rows="5" required placeholder="Please describe what service you need, what equipment you have, what problems exist, and what you expect..."></textarea>
                         </div>
                         
-                        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
-                            <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
-                                <i class="fas fa-paper-plane"></i>
-                                Send Request
-                            </button>
-                            <button type="reset" class="cta-button" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
-                                <i class="fas fa-times"></i>
-                                Cancel
-                            </button>
+                        <div class="form-actions">
+                            <button type="submit" class="cta-button"><i class="fas fa-paper-plane"></i> Send Request</button>
+                            <button type="reset" class="cta-button cancel-btn"><i class="fas fa-times"></i> Cancel</button>
                         </div>
                     </form>
                 </div>
             </section>
 
-            <section class="section" id="experience">
+            <!-- Work Experience -->
+            <section id="experience" class="section">
                 <h2 class="section-title">Work Experience</h2>
 
                 <div class="job-item current-position">
@@ -291,11 +266,10 @@
                 </div>
             </section>
 
-            <section class="section" id="skills">
+            <!-- Technical Skills -->
+            <section id="skills" class="section">
                 <h2 class="section-title">Technical Skills</h2>
-
                 <div class="skills-list">
-                    
                     <div class="skill-category">
                         <h4><i class="fas fa-network-wired"></i> Network & Infrastructure</h4>
                         <div class="skill-level-item">
@@ -383,87 +357,56 @@
                             <div class="skill-bar-container"><div class="skill-bar" style="width: 0%;" data-width="35"></div></div>
                         </div>
                     </div>
-
                 </div>
             </section>
 
-            <section class="section" id="certificates">
+            <!-- Certificates -->
+            <section id="certificates" class="section">
                 <h2 class="section-title">Certificates and Training</h2>
-
                 <div class="job-item">
                     <h3>CCNA Certification</h3>
                     <p class="institution">Laitec Training Center, Sharif University of Technology</p>
                 </div>
-
                 <div class="job-item">
                     <h3>Network+ Certification</h3>
                     <p class="institution">Laitec Training Center, Sharif University of Technology</p>
                 </div>
             </section>
 
-            <section class="section" id="education">
+            <!-- Education -->
+            <section id="education" class="section">
                 <h2 class="section-title">Education</h2>
-
                 <div class="job-item">
                     <h3>Computer Engineering</h3>
                     <p class="institution">Islamic Azad University Yadegar-e-Imam Khomeini (RAH) - Shahr-e Rey</p>
                 </div>
             </section>
 
-            <section class="section" id="projects">
+            <!-- Projects -->
+            <section id="projects" class="section">
                 <h2 class="section-title">Infrastructure Projects</h2>
-                
-                <div style="display: flex; flex-direction: column; gap: 25px;">
-                    
-                    <div style="display: flex; flex-wrap: wrap; gap: 25px; background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%); padding: 25px 28px; border-radius: var(--radius); border-left: 5px solid var(--accent); box-shadow: var(--shadow); transition: var(--transition); align-items: stretch;">
-                        
-                        <div style="flex: 0 0 220px; min-width: 160px; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.08);">
-                            <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" 
-                                 alt="Mahex Network Rack" 
-                                 style="width: 100%; height: 100%; min-height: 160px; object-fit: cover; display: block;">
-                        </div>
-                        
-                        <div style="flex: 1; min-width: 200px; display: flex; flex-direction: column; justify-content: space-between;">
-                            <div>
-                                <h3 style="color: var(--primary); font-size: 1.2em; margin: 0 0 6px 0;">
-                                    <i class="fas fa-server" style="color: var(--accent); margin-right: 10px;"></i>
-                                    Mahex Network Infrastructure Project
-                                </h3>
-                                <p style="color: #64748b; font-size: 0.85em; margin: 0 0 12px 0;">
-                                    <i class="fas fa-calendar-alt" style="margin-right: 6px;"></i>
-                                    May 2026
-                                </p>
-                                <p style="color: var(--secondary); line-height: 1.9; margin: 0; font-size: 0.95em;">
-                                    Implementation and setup of network infrastructure including installation and configuration 
-                                    of switches, patch panels, and accessories in the organizational rack.
-                                </p>
-                            </div>
-                            
-                            <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px;">
-                                <a href="https://github.com/mowhmmdh/Projects" target="_blank" rel="noopener" 
-                                   style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #24292e, #1a1e23); color: white; padding: 10px 22px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85em; transition: var(--transition); box-shadow: 0 4px 15px rgba(36, 41, 46, 0.2);">
-                                    <i class="fab fa-github" style="font-size: 1.2em;"></i>
-                                    View Project on GitHub
-                                </a>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
-                                    <i class="fas fa-images"></i>
-                                    5 Images
-                                </span>
-                                <span style="display: inline-flex; align-items: center; gap: 5px; background: rgba(49, 130, 206, 0.08); padding: 8px 16px; border-radius: 8px; font-size: 0.8em; color: var(--accent);">
-                                    <i class="fas fa-tag"></i>
-                                    Infrastructure
-                                </span>
-                            </div>
-                        </div>
-                        
+                <div class="project-card">
+                    <div class="project-image-wrapper">
+                        <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" alt="Mahex Network Rack">
                     </div>
-                    
+                    <div class="project-content">
+                        <div>
+                            <h3><i class="fas fa-server" style="color: var(--accent); margin-right: 10px;"></i> Mahex Network Infrastructure Project</h3>
+                            <p class="project-date"><i class="fas fa-calendar-alt" style="margin-right: 6px;"></i> May 2026</p>
+                            <p class="project-description">Implementation and setup of network infrastructure including installation and configuration of switches, patch panels, and accessories in the organizational rack.</p>
+                        </div>
+                        <div class="project-actions">
+                            <a href="https://github.com/mowhmmdh/Projects" target="_blank" rel="noopener" class="github-link"><i class="fab fa-github"></i> View Project on GitHub</a>
+                            <span class="badge"><i class="fas fa-images"></i> 5 Images</span>
+                            <span class="badge"><i class="fas fa-tag"></i> Infrastructure</span>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section class="section" id="contact">
+            <!-- Contact -->
+            <section id="contact" class="section">
                 <h2 class="section-title">Contact Me</h2>
-                
                 <p class="contact-intro-text">I'm ready to start collaboration and receive job offers. Please use the form below for quick contact:</p>
 
                 <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form" aria-describedby="contact-form-desc">
@@ -472,21 +415,17 @@
                         <label for="email"><i class="fas fa-envelope-open-text"></i> Your Email:</label>
                         <input type="email" id="email" name="email" required placeholder="example@gmail.com">
                     </div>
-                    
                     <div class="form-group">
                         <label for="message"><i class="fas fa-comment-dots"></i> Message:</label>
                         <textarea id="message" name="message" rows="5" required placeholder="Write your collaboration topic or question here..."></textarea>
                     </div>
-
                     <button type="submit">Send Message</button>
-                    
                     <div class="quick-contact-info">
                         <p>Or contact me through the links below:</p>
                         <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener" class="quick-link linked-in"><i class="fab fa-linkedin"></i> LinkedIn</a>
                         <a href="mailto:mohammedhasgari@gmail.com" class="quick-link email-link"><i class="fas fa-paper-plane"></i> Direct Email</a>
                     </div>
                 </form>
-
             </section>
             
             <footer>
