@@ -252,20 +252,17 @@ body.dark-mode #sidebar-info {
     z-index: 250;
     display: flex;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     padding: 4px 12px;
     border-radius: 30px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.5);
     position: absolute;
     top: 0;
-    right: 0;
     margin: 0;
-}
-
-body.dark-mode .lang-switcher {
-    background: rgba(30, 41, 59, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: var(--transition);
 }
 
 body.lang-fa .lang-switcher {
@@ -278,11 +275,16 @@ body.lang-en .lang-switcher {
     right: auto;
 }
 
+body.dark-mode .lang-switcher {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
 .lang-switcher a,
 .lang-switcher button {
     text-decoration: none;
     border: 1px solid var(--border);
-    padding: 5px 16px;
+    padding: 6px 16px;
     border-radius: 20px;
     font-size: 0.78em;
     font-weight: 600;
@@ -297,17 +299,21 @@ body.lang-en .lang-switcher {
     background: var(--accent);
     color: white;
     border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
 }
 
 .lang-switcher .active-lang {
     background: linear-gradient(135deg, var(--primary), var(--primary-light));
     color: white;
     border-color: var(--primary);
+    box-shadow: 0 2px 12px rgba(15, 43, 77, 0.15);
 }
 
 body.dark-mode .lang-switcher .active-lang {
     background: linear-gradient(135deg, #60a5fa, #3b82f6);
     color: #0f172a;
+    box-shadow: 0 2px 12px rgba(96, 165, 250, 0.15);
 }
 
 /* ================================================= */
@@ -327,12 +333,12 @@ body.dark-mode .lang-switcher .active-lang {
 }
 
 body.lang-fa .profile-wrapper {
-    left: 20%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
 body.lang-en .profile-wrapper {
-    left: 80%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 
@@ -1880,14 +1886,16 @@ body.dark-mode .share-copy {
 
     .lang-switcher {
         position: absolute;
-        top: 5px;
-        right: 5px;
+        top: 8px;
+        right: 8px !important;
         left: auto !important;
         margin: 0;
-        padding: 3px 8px;
+        padding: 4px 8px;
         border-radius: 30px;
         background: rgba(255, 255, 255, 0.92);
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
         z-index: 50;
         border: 1px solid rgba(255, 255, 255, 0.5);
         display: flex;
@@ -1896,7 +1904,7 @@ body.dark-mode .share-copy {
     }
 
     body.lang-en .lang-switcher {
-        right: 5px !important;
+        right: 8px !important;
         left: auto !important;
     }
 
@@ -1907,8 +1915,8 @@ body.dark-mode .share-copy {
 
     .lang-switcher a,
     .lang-switcher button {
-        padding: 2px 8px;
-        font-size: 0.6em;
+        padding: 3px 10px;
+        font-size: 0.65em;
         border-radius: 14px;
         border: 1px solid var(--border);
     }
@@ -1923,7 +1931,7 @@ body.dark-mode .share-copy {
         height: 140px;
         border-radius: 24px;
         padding: 4px;
-        margin: 25px auto 10px;
+        margin: 30px auto 10px;
         background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--accent));
         background-size: 300% 300%;
         animation: gradientMove 4s ease-in-out infinite;
@@ -2316,15 +2324,16 @@ body.dark-mode .share-copy {
     }
 
     .lang-switcher {
-        top: 3px;
-        right: 3px;
-        padding: 2px 6px;
+        top: 5px;
+        right: 5px !important;
+        padding: 3px 6px;
     }
 
     .lang-switcher a,
     .lang-switcher button {
-        padding: 1px 6px;
-        font-size: 0.55em;
+        padding: 2px 8px;
+        font-size: 0.6em;
+        border-radius: 12px;
     }
 
     /* ---- ۴ ستونه در موبایل به ۲ ستونه با اسکرول افقی تبدیل می‌شود ---- */
