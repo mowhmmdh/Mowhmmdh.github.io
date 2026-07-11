@@ -654,6 +654,7 @@ body.lang-en .job-item.current-position {
     scrollbar-width: thin;
     scrollbar-color: var(--accent) transparent;
     padding-bottom: 10px;
+    position: relative;
 }
 
 .skills-wrapper::-webkit-scrollbar {
@@ -669,12 +670,12 @@ body.lang-en .job-item.current-position {
     border-radius: 10px;
 }
 
-/* ---- ۴ ستونه در دسکتاپ و ۲ ستونه در تبلت و ۱ ستونه در موبایل ---- */
+/* ---- ۴ ستونه در دسکتاپ ---- */
 .skills-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 25px;
-    min-width: min-content;
+    min-width: max-content;
 }
 
 .skill-category {
@@ -769,16 +770,47 @@ body.lang-en .job-item.current-position {
     .skills-list {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
+        min-width: max-content;
         padding-right: 10px;
         padding-left: 10px;
     }
 }
 
-/* ---- ریسپانسیو برای موبایل (۱ ستونه) ---- */
+/* ---- ریسپانسیو برای موبایل (۲ ستونه با اسکرول افقی) ---- */
 @media (max-width: 480px) {
     .skills-list {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr);
         gap: 12px;
+        min-width: max-content;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+    
+    .skill-category {
+        min-width: 160px;
+        max-width: 220px;
+        padding: 16px 14px;
+    }
+    
+    .skill-category h4 {
+        font-size: 0.9em;
+    }
+    
+    .skill-label {
+        font-size: 0.75em;
+    }
+}
+
+/* ---- برای موبایل‌های خیلی کوچک (۱ ستونه) ---- */
+@media (max-width: 360px) {
+    .skills-list {
+        grid-template-columns: 1fr;
+        min-width: 100%;
+    }
+    
+    .skill-category {
+        min-width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -2140,6 +2172,7 @@ body.dark-mode .share-copy {
     .skills-list {
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
+        min-width: max-content;
         padding-right: 10px;
         padding-left: 10px;
     }
@@ -2351,10 +2384,39 @@ body.dark-mode .share-copy {
         font-size: 0.55em;
     }
 
-    /* ---- ۴ ستونه در موبایل به ۱ ستونه تبدیل می‌شود ---- */
+    /* ---- ۴ ستونه در موبایل به ۲ ستونه با اسکرول افقی تبدیل می‌شود ---- */
+    .skills-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        min-width: max-content;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+    
+    .skill-category {
+        min-width: 160px;
+        max-width: 220px;
+        padding: 16px 14px;
+    }
+    
+    .skill-category h4 {
+        font-size: 0.9em;
+    }
+    
+    .skill-label {
+        font-size: 0.75em;
+    }
+}
+
+@media (max-width: 360px) {
     .skills-list {
         grid-template-columns: 1fr;
-        gap: 12px;
+        min-width: 100%;
+    }
+    
+    .skill-category {
+        min-width: 100%;
+        max-width: 100%;
     }
 }
 
