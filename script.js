@@ -140,37 +140,37 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت
-    // ===============================================
-    const skillItems = document.querySelectorAll('.skill-level-item');
+// انیمیشن نوارهای مهارت
+// ===============================================
+const skillItems = document.querySelectorAll('.skill-level-item');
 
-    function animateSkills() {
-        skillItems.forEach(item => {
-            const bar = item.querySelector('.skill-bar');
-            const percent = item.querySelector('.skill-percent');
-            if (bar && percent) {
-                const val = parseInt(percent.textContent);
-                item.style.setProperty('--skill-width', val + '%');
-                item.classList.add('show');
-                bar.style.width = val + '%';
+function animateSkills() {
+    skillItems.forEach(item => {
+        const bar = item.querySelector('.skill-bar');
+        const percent = item.querySelector('.skill-percent');
+        if (bar && percent) {
+            const val = parseInt(percent.textContent);
+            item.style.setProperty('--skill-width', val + '%');
+            // فقط کلاس show را اضافه کنید، بقیه کار را CSS انجام می‌دهد
+            item.classList.add('show');
+        }
+    });
+}
+
+const skillsSection = document.getElementById('skills');
+if (skillsSection) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                animateSkills();
+                observer.unobserve(entry.target);
             }
         });
-    }
-
-    const skillsSection = document.getElementById('skills');
-    if (skillsSection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateSkills();
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
-        observer.observe(skillsSection);
-    } else {
-        animateSkills();
-    }
+    }, { threshold: 0.1 });
+    observer.observe(skillsSection);
+} else {
+    animateSkills();
+}
 
     // ===============================================
     // افکت محو شدن بخش‌ها
