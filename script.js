@@ -140,37 +140,41 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-// انیمیشن نوارهای مهارت
-// ===============================================
-const skillItems = document.querySelectorAll('.skill-level-item');
+    // انیمیشن نوارهای مهارت
+    // ===============================================
+    const skillItems = document.querySelectorAll('.skill-level-item');
 
-function animateSkills() {
-    skillItems.forEach(item => {
-        const bar = item.querySelector('.skill-bar');
-        const percent = item.querySelector('.skill-percent');
-        if (bar && percent) {
-            const val = parseInt(percent.textContent);
-            item.style.setProperty('--skill-width', val + '%');
-            // فقط کلاس show را اضافه کنید، بقیه کار را CSS انجام می‌دهد
-            item.classList.add('show');
-        }
-    });
-}
-
-const skillsSection = document.getElementById('skills');
-if (skillsSection) {
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateSkills();
-                observer.unobserve(entry.target);
+    function animateSkills() {
+        skillItems.forEach(item => {
+            const bar = item.querySelector('.skill-bar');
+            const percent = item.querySelector('.skill-percent');
+            if (bar && percent) {
+                // استخراج عدد از درصد (مثلاً "۷۰%" → 70)
+                const val = parseInt(percent.textContent);
+                // تنظیم عرض نوار به‌صورت مستقیم
+                bar.style.width = val + '%';
+                // تنظیم متغیر CSS برای انیمیشن
+                item.style.setProperty('--skill-width', val + '%');
+                // افزودن کلاس show برای اجرای انیمیشن
+                item.classList.add('show');
             }
         });
-    }, { threshold: 0.1 });
-    observer.observe(skillsSection);
-} else {
-    animateSkills();
-}
+    }
+
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSkills();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        observer.observe(skillsSection);
+    } else {
+        animateSkills();
+    }
 
     // ===============================================
     // افکت محو شدن بخش‌ها
