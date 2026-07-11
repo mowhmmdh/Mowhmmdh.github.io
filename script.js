@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-
                 if (this.x > canvas.width || this.x < 0) this.speedX *= -1;
                 if (this.y > canvas.height || this.y < 0) this.speedY *= -1;
             }
@@ -62,19 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-
-            // رسم خطوط بین ذرات نزدیک
+            particles.forEach(p => { p.update(); p.draw(); });
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    
                     if (distance < 150) {
                         ctx.beginPath();
                         ctx.strokeStyle = `rgba(37, 99, 235, ${0.1 * (1 - distance / 150)})`;
@@ -85,14 +77,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             }
-
             requestAnimationFrame(animateParticles);
         }
-
         animateParticles();
     }
 
-    // اجرای افکت ذرات فقط در دسکتاپ
     if (window.innerWidth > 992) {
         initParticles();
     }
@@ -118,15 +107,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===============================================
     function updateJobDuration() {
         const now = new Date();
-
-        // فارسی
         const startFa = document.getElementById('start-date-fa');
         const displayFa = document.getElementById('duration-display-fa');
         if (startFa && displayFa) {
             const start = new Date(startFa.getAttribute('data-start'));
             let months = (now.getFullYear() - start.getFullYear()) * 12 + now.getMonth() - start.getMonth();
             if (now.getDate() < start.getDate()) months--;
-
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const rem = months % 12;
@@ -136,14 +122,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // انگلیسی
         const startEn = document.getElementById('start-date-en');
         const displayEn = document.getElementById('duration-display-en');
         if (startEn && displayEn) {
             const start = new Date(startEn.getAttribute('data-start'));
             let months = (now.getFullYear() - start.getFullYear()) * 12 + now.getMonth() - start.getMonth();
             if (now.getDate() < start.getDate()) months--;
-
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const rem = months % 12;
@@ -153,14 +137,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     }
-
     updateJobDuration();
 
     // ===============================================
     // انیمیشن نوارهای مهارت
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
-
     function animateSkills() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
@@ -200,20 +182,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { threshold: 0.08 });
-
     sections.forEach(section => sectionObserver.observe(section));
 
     // ===============================================
     // دکمه بازگشت به بالا
     // ===============================================
     const backBtn = document.getElementById('back-to-top');
-
     function toggleBackBtn() {
         if (backBtn) {
             backBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
         }
     }
-
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -226,7 +205,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // منو فعال
     // ===============================================
     const navLinks = document.querySelectorAll('#navbar a');
-
     function updateActiveNav() {
         let current = '';
         const scrollY = window.scrollY;
@@ -236,7 +214,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 current = section.getAttribute('id');
             }
         });
-
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href') === '#' + current) {
@@ -244,12 +221,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
     window.addEventListener('scroll', debounce(updateActiveNav, 50), { passive: true });
     updateActiveNav();
 
     // ===============================================
-    // انیمیشن کارت‌های شغلی در موبایل
+    // انیمیشن کارت‌های شغلی
     // ===============================================
     const jobItems = document.querySelectorAll('.job-item');
     const jobObserver = new IntersectionObserver((entries) => {
@@ -263,7 +239,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, { threshold: 0.05 });
-
     jobItems.forEach((item) => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(20px)';
@@ -272,16 +247,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // افکت تایپ‌رایتر (Typing Effect)
+    // افکت تایپ‌رایتر
     // ===============================================
     function initTypingEffect() {
         const typingElements = document.querySelectorAll('.typing-text');
-        
         typingElements.forEach(element => {
             const text = element.textContent;
             element.textContent = '';
             let index = 0;
-            
             function typeChar() {
                 if (index < text.length) {
                     element.textContent += text.charAt(index);
@@ -289,30 +262,57 @@ document.addEventListener('DOMContentLoaded', function() {
                     setTimeout(typeChar, 50 + Math.random() * 50);
                 }
             }
-            
-            // شروع تایپ با تأخیر
             setTimeout(typeChar, 500);
         });
     }
-
     initTypingEffect();
 
     // ===============================================
-    // دارک مود (Dark Mode)
+    // دارک مود
     // ===============================================
     const darkToggle = document.getElementById('dark-toggle');
     const body = document.body;
-
-    // بررسی وضعیت ذخیره‌شده
     if (localStorage.getItem('dark-mode') === 'true') {
         body.classList.add('dark-mode');
         darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
-
     darkToggle.addEventListener('click', function() {
         body.classList.toggle('dark-mode');
         const isDark = body.classList.contains('dark-mode');
         localStorage.setItem('dark-mode', isDark);
         this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
     });
+
+    // ===============================================
+    // بخش خدمات - نمایش فرم و انتخاب نوع خدمت
+    // ===============================================
+    const serviceButtons = document.querySelectorAll('.service-select-btn');
+    const serviceForm = document.getElementById('service-request-form');
+    const selectedServiceInput = document.getElementById('selected-service');
+
+    serviceButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const serviceName = this.getAttribute('data-service');
+            selectedServiceInput.value = serviceName;
+            if (serviceForm) {
+                serviceForm.style.display = 'block';
+                serviceForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    const serviceRequestForm = document.getElementById('service-form');
+    if (serviceRequestForm) {
+        serviceRequestForm.addEventListener('submit', function(e) {
+            const service = selectedServiceInput.value;
+            if (service) {
+                const descField = document.getElementById('client-description');
+                if (descField) {
+                    const currentValue = descField.value;
+                    descField.value = `نوع خدمت درخواستی: ${service}\n\n${currentValue}`;
+                }
+            }
+        });
+    }
 });
