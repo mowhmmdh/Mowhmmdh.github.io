@@ -209,60 +209,60 @@
         </a>
     </div>
     
-    <!-- فرم درخواست خدمات حرفه‌ای -->
-    <div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
-        <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
-            <i class="fas fa-pen" style="color: var(--accent);"></i>
-            درخواست خدمات
-        </h3>
-        <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">
-            لطفاً اطلاعات زیر را تکمیل کنید تا در اسرع وقت با شما تماس بگیرم.
-        </p>
+<!-- فرم درخواست خدمات حرفه‌ای -->
+<div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+    <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
+        <i class="fas fa-pen" style="color: var(--accent);"></i>
+        درخواست خدمات
+    </h3>
+    <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">
+        لطفاً اطلاعات زیر را تکمیل کنید تا در اسرع وقت با شما تماس بگیرم.
+    </p>
+    
+    <form id="service-form" action="https://formspree.io/f/mblnnwvk" method="POST">
         
-        <form id="service-form" action="https://formspree.io/f/mblnnwvk" method="POST">
-            
-            <!-- انتخاب نوع خدمت (پنهان) -->
-            <input type="hidden" id="selected-service" name="نوع خدمت" value="">
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-name"><i class="fas fa-user"></i> نام و نام خانوادگی</label>
-                    <input type="text" id="client-name" name="نام" required placeholder="مثال: علی محمدی">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-phone"><i class="fas fa-phone"></i> شماره تماس</label>
-                    <input type="tel" id="client-phone" name="شماره تماس" required placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
-                </div>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-email"><i class="fas fa-envelope"></i> ایمیل</label>
-                    <input type="email" id="client-email" name="ایمیل" placeholder="example@gmail.com">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-budget"><i class="fas fa-money-bill-wave"></i> بودجه تقریبی (اختیاری)</label>
-                    <input type="text" id="client-budget" name="بودجه تقریبی" placeholder="مثال: ۵۰ میلیون تومان">
-                </div>
-            </div>
-            
+        <!-- انتخاب نوع خدمت (پنهان) -->
+        <input type="hidden" id="selected-service" name="نوع خدمت" value="">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="form-group" style="margin-bottom: 0;">
-                <label for="client-description"><i class="fas fa-align-left"></i> توضیحات پروژه یا نیاز شما</label>
-                <textarea id="client-description" name="توضیحات" rows="4" required placeholder="لطفاً توضیح دهید که چه خدمتی نیاز دارید، چه تجهیزاتی دارید، چه مشکلاتی وجود دارد و چه انتظاری دارید..."></textarea>
+                <label for="client-name"><i class="fas fa-user"></i> نام و نام خانوادگی</label>
+                <input type="text" id="client-name" name="نام" required placeholder="مثال: علی محمدی">
             </div>
-            
-            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
-                <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
-                    <i class="fas fa-paper-plane"></i>
-                    ارسال درخواست
-                </button>
-                <button type="reset" class="cta-button" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
-                    <i class="fas fa-times"></i>
-                    لغو
-                </button>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="client-phone"><i class="fas fa-phone"></i> شماره تماس</label>
+                <input type="tel" id="client-phone" name="شماره تماس" required placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
             </div>
-        </form>
-    </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="client-email"><i class="fas fa-envelope"></i> ایمیل</label>
+                <input type="email" id="client-email" name="ایمیل" placeholder="example@gmail.com">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="client-budget"><i class="fas fa-money-bill-wave"></i> بودجه تقریبی (اختیاری)</label>
+                <input type="text" id="client-budget" name="بودجه تقریبی" placeholder="مثال: ۵۰ میلیون تومان">
+            </div>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 0;">
+            <label for="client-description"><i class="fas fa-align-left"></i> توضیحات پروژه یا نیاز شما</label>
+            <textarea id="client-description" name="توضیحات" rows="4" required placeholder="لطفاً توضیح دهید که چه خدمتی نیاز دارید، چه تجهیزاتی دارید، چه مشکلاتی وجود دارد و چه انتظاری دارید..."></textarea>
+        </div>
+        
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+            <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
+                <i class="fas fa-paper-plane"></i>
+                ارسال درخواست
+            </button>
+            <button type="button" class="cta-button cancel-btn" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
+                <i class="fas fa-times"></i>
+                لغو
+            </button>
+        </div>
+    </form>
+</div>
 </section>
 
             <!-- سوابق شغلی -->
