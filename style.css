@@ -885,12 +885,12 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- خدمات (ریسپانسیو جذاب‌تر) ---- */
+/* ---- خدمات (۲ ستونه در دسکتاپ) ---- */
 /* ================================================= */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
     margin-top: 10px;
 }
 
@@ -898,7 +898,7 @@ body.lang-fa #navbar a:hover {
     background: var(--bg-card);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    padding: 25px 22px 22px;
+    padding: 28px 24px 24px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
@@ -907,8 +907,6 @@ body.lang-fa #navbar a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .service-card:hover {
@@ -918,15 +916,15 @@ body.lang-fa #navbar a:hover {
 }
 
 .service-card .service-icon {
-    width: 65px;
-    height: 65px;
+    width: 70px;
+    height: 70px;
     background: rgba(37, 99, 235, 0.08);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto 15px;
-    font-size: 1.6em;
+    font-size: 1.8em;
     color: var(--accent);
     transition: var(--transition);
 }
@@ -948,7 +946,7 @@ body.dark-mode .service-card:hover .service-icon {
 
 .service-card h3 {
     color: var(--primary);
-    font-size: 1.1em;
+    font-size: 1.15em;
     font-weight: 700;
     margin: 0 0 12px 0;
 }
@@ -960,7 +958,7 @@ body.dark-mode .service-card h3 {
 .service-card ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 16px 0;
+    margin: 0 0 18px 0;
     width: 100%;
     text-align: right;
 }
@@ -1010,17 +1008,16 @@ body.lang-en .service-card ul li::before {
     background: linear-gradient(135deg, var(--accent), var(--primary-light));
     color: white;
     border: none;
-    padding: 10px 20px;
+    padding: 10px 22px;
     border-radius: 30px;
     font-size: 0.85em;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
     width: 100%;
-    max-width: 200px;
+    max-width: 220px;
     font-family: inherit;
-    position: relative;
-    overflow: hidden;
+    margin-top: auto;
 }
 
 .service-select-btn:hover {
@@ -1036,21 +1033,21 @@ body.dark-mode .service-select-btn {
 @media (max-width: 992px) {
     .services-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 15px;
+        gap: 18px;
     }
     
     .service-card {
-        padding: 20px 18px;
+        padding: 22px 18px;
     }
     
     .service-card .service-icon {
-        width: 55px;
-        height: 55px;
-        font-size: 1.3em;
+        width: 60px;
+        height: 60px;
+        font-size: 1.5em;
     }
     
     .service-card h3 {
-        font-size: 1em;
+        font-size: 1.05em;
     }
     
     .service-card ul li {
@@ -1060,7 +1057,7 @@ body.dark-mode .service-select-btn {
     
     .service-select-btn {
         font-size: 0.8em;
-        padding: 8px 16px;
+        padding: 8px 18px;
         max-width: 100%;
     }
 }
@@ -1068,35 +1065,35 @@ body.dark-mode .service-select-btn {
 @media (max-width: 600px) {
     .services-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 12px;
+        gap: 14px;
     }
     
     .service-card {
-        padding: 16px 14px;
+        padding: 18px 14px;
         border-radius: 12px;
     }
     
     .service-card .service-icon {
-        width: 48px;
-        height: 48px;
-        font-size: 1.1em;
+        width: 50px;
+        height: 50px;
+        font-size: 1.2em;
         margin-bottom: 10px;
     }
     
     .service-card h3 {
-        font-size: 0.9em;
+        font-size: 0.95em;
         margin-bottom: 8px;
     }
     
     .service-card ul li {
-        font-size: 0.75em;
+        font-size: 0.78em;
         padding: 4px 0;
         padding-inline-start: 16px;
     }
     
     .service-select-btn {
-        font-size: 0.7em;
-        padding: 6px 12px;
+        font-size: 0.72em;
+        padding: 6px 14px;
         border-radius: 20px;
     }
 }
@@ -1104,11 +1101,17 @@ body.dark-mode .service-select-btn {
 @media (max-width: 400px) {
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 14px;
     }
     
     .service-card {
-        padding: 18px 16px;
+        padding: 20px 16px;
+    }
+    
+    .service-card .service-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3em;
     }
 }
 
