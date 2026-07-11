@@ -302,6 +302,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // ===============================================
+    // بستن فرم با دکمه لغو
+    // ===============================================
+    const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = document.getElementById('service-request-form');
+            if (form) {
+                form.style.display = 'none';
+                // ریست کردن فرم
+                const formElement = document.getElementById('service-form');
+                if (formElement) {
+                    formElement.reset();
+                }
+            }
+        });
+    }
+
+    // ===============================================
+    // ارسال فرم خدمات - اضافه کردن نوع خدمت به توضیحات
+    // ===============================================
     const serviceRequestForm = document.getElementById('service-form');
     if (serviceRequestForm) {
         serviceRequestForm.addEventListener('submit', function(e) {
