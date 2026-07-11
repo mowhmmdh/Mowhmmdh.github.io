@@ -326,7 +326,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateDate() {
         const now = new Date();
         
-        // تاریخ شمسی (فارسی)
         const updateFa = document.getElementById('update-date-fa');
         if (updateFa) {
             const persianDate = new Intl.DateTimeFormat('fa-IR', { 
@@ -337,7 +336,6 @@ document.addEventListener('DOMContentLoaded', function() {
             updateFa.textContent = `آخرین به‌روزرسانی: ${persianDate}`;
         }
         
-        // تاریخ میلادی (انگلیسی)
         const updateEn = document.getElementById('update-date-en');
         if (updateEn) {
             const englishDate = new Intl.DateTimeFormat('en-US', { 
