@@ -210,59 +210,59 @@
         </a>
     </div>
     
-    <!-- Service Request Form -->
-    <div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
-        <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
-            <i class="fas fa-pen" style="color: var(--accent);"></i>
-            Request a Service
-        </h3>
-        <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">
-            Please fill in the information below and I will contact you as soon as possible.
-        </p>
+ <!-- Service Request Form -->
+<div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+    <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
+        <i class="fas fa-pen" style="color: var(--accent);"></i>
+        Request a Service
+    </h3>
+    <p style="color: var(--text-muted); text-align: center; margin-bottom: 25px; font-size: 0.95em;">
+        Please fill in the information below and I will contact you as soon as possible.
+    </p>
+    
+    <form id="service-form" action="https://formspree.io/f/mblnnwvk" method="POST">
         
-        <form id="service-form" action="https://formspree.io/f/mblnnwvk" method="POST">
-            
-            <input type="hidden" id="selected-service" name="Service Type" value="">
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-name"><i class="fas fa-user"></i> Full Name</label>
-                    <input type="text" id="client-name" name="Name" required placeholder="Example: John Doe">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-phone"><i class="fas fa-phone"></i> Phone Number</label>
-                    <input type="tel" id="client-phone" name="Phone Number" required placeholder="Example: +98 912 345 6789">
-                </div>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-email"><i class="fas fa-envelope"></i> Email</label>
-                    <input type="email" id="client-email" name="Email" placeholder="example@gmail.com">
-                </div>
-                <div class="form-group" style="margin-bottom: 0;">
-                    <label for="client-budget"><i class="fas fa-money-bill-wave"></i> Estimated Budget (Optional)</label>
-                    <input type="text" id="client-budget" name="Estimated Budget" placeholder="Example: 50 million IRR">
-                </div>
-            </div>
-            
+        <input type="hidden" id="selected-service" name="Service Type" value="">
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
             <div class="form-group" style="margin-bottom: 0;">
-                <label for="client-description"><i class="fas fa-align-left"></i> Project Description</label>
-                <textarea id="client-description" name="Description" rows="4" required placeholder="Please describe what service you need, what equipment you have, what problems exist, and what you expect..."></textarea>
+                <label for="client-name"><i class="fas fa-user"></i> Full Name</label>
+                <input type="text" id="client-name" name="Name" required placeholder="Example: John Doe">
             </div>
-            
-            <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
-                <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
-                    <i class="fas fa-paper-plane"></i>
-                    Send Request
-                </button>
-                <button type="reset" class="cta-button" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
-                    <i class="fas fa-times"></i>
-                    Cancel
-                </button>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="client-phone"><i class="fas fa-phone"></i> Phone Number</label>
+                <input type="tel" id="client-phone" name="Phone Number" required placeholder="Example: +98 912 345 6789">
             </div>
-        </form>
-    </div>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="client-email"><i class="fas fa-envelope"></i> Email</label>
+                <input type="email" id="client-email" name="Email" placeholder="example@gmail.com">
+            </div>
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="client-budget"><i class="fas fa-money-bill-wave"></i> Estimated Budget (Optional)</label>
+                <input type="text" id="client-budget" name="Estimated Budget" placeholder="Example: 50 million IRR">
+            </div>
+        </div>
+        
+        <div class="form-group" style="margin-bottom: 0;">
+            <label for="client-description"><i class="fas fa-align-left"></i> Project Description</label>
+            <textarea id="client-description" name="Description" rows="4" required placeholder="Please describe what service you need, what equipment you have, what problems exist, and what you expect..."></textarea>
+        </div>
+        
+        <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
+            <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
+                <i class="fas fa-paper-plane"></i>
+                Send Request
+            </button>
+            <button type="button" class="cta-button cancel-btn" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
+                <i class="fas fa-times"></i>
+                Cancel
+            </button>
+        </div>
+    </form>
+</div>
 </section>
 
             <!-- Work Experience -->
