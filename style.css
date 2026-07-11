@@ -6,18 +6,18 @@
     --primary-light: #1a4a7a;
     --secondary: #1e293b;
     --accent: #2563eb;
-    --accent-glow: rgba(37, 99, 235, 0.2);
+    --accent-glow: rgba(37, 99, 235, 0.25);
     --bg: #f0f4f8;
     --bg-card: #ffffff;
-    --bg-sidebar: rgba(255, 255, 255, 0.7);
-    --bg-main: rgba(255, 255, 255, 0.85);
+    --bg-sidebar: rgba(255, 255, 255, 0.75);
+    --bg-main: rgba(255, 255, 255, 0.88);
     --text: #1e293b;
     --text-muted: #64748b;
     --border: #e2e8f0;
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
-    --shadow-hover: 0 10px 40px rgba(37, 99, 235, 0.08);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.07);
+    --shadow-hover: 0 16px 48px rgba(37, 99, 235, 0.12);
     --radius: 16px;
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* حالت تاریک (Dark Mode) */
@@ -29,12 +29,12 @@ body.dark-mode {
     --bg: #0f172a;
     --bg-card: #1e293b;
     --bg-sidebar: rgba(30, 41, 59, 0.85);
-    --bg-main: rgba(30, 41, 59, 0.9);
+    --bg-main: rgba(30, 41, 59, 0.92);
     --text: #f1f5f9;
     --text-muted: #94a3b8;
     --border: #334155;
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-    --shadow-hover: 0 10px 40px rgba(96, 165, 250, 0.08);
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 16px 48px rgba(96, 165, 250, 0.1);
 }
 
 /* ---- دکمه دارک مود ---- */
@@ -47,11 +47,11 @@ body.dark-mode {
     color: white;
     border: none;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    font-size: 1.3em;
+    width: 52px;
+    height: 52px;
+    font-size: 1.4em;
     cursor: pointer;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
     transition: var(--transition);
     display: flex;
     align-items: center;
@@ -59,8 +59,8 @@ body.dark-mode {
 }
 
 .dark-toggle:hover {
-    transform: translateY(-4px) scale(1.05);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px) scale(1.06);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
 
 body.dark-mode .dark-toggle {
@@ -153,11 +153,12 @@ body.lang-en {
     top: 0;
     left: 0;
     width: 0%;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent), var(--primary-light));
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--accent));
     z-index: 9999;
     transition: width 0.15s ease-out;
     will-change: width;
+    box-shadow: 0 0 20px var(--accent-glow);
 }
 
 /* ================================================= */
@@ -166,7 +167,7 @@ body.lang-en {
 #main-wrapper {
     display: flex;
     padding-top: 30px;
-    gap: 30px;
+    gap: 32px;
     align-items: flex-start;
 }
 
@@ -175,14 +176,14 @@ body.lang-en {
     position: sticky;
     top: 30px;
     width: 30%;
-    min-width: 250px;
+    min-width: 260px;
     background: var(--bg-sidebar);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: 25px 20px 30px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    padding: 28px 22px 32px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     transition: var(--transition);
     z-index: 2;
     transform-style: preserve-3d;
@@ -191,7 +192,7 @@ body.lang-en {
 
 #sidebar-info:hover {
     transform: rotateY(-2deg) rotateX(2deg) scale(1.01);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-hover);
 }
 
 body.lang-fa #sidebar-info:hover {
@@ -206,12 +207,12 @@ body.dark-mode #sidebar-info {
 #main-content {
     width: 70%;
     background: var(--bg-main);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 35px 35px 25px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 38px 38px 28px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     transition: var(--transition);
 }
 
@@ -219,7 +220,7 @@ body.dark-mode #sidebar-info {
 /* ---- افکت محو شدن بخش‌ها ---- */
 /* ================================================= */
 .section {
-    padding: 30px 0;
+    padding: 32px 0;
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease, transform 0.8s ease;
@@ -252,7 +253,7 @@ body.dark-mode #sidebar-info {
     display: flex;
     gap: 6px;
     background: rgba(255, 255, 255, 0.9);
-    padding: 4px 10px;
+    padding: 4px 12px;
     border-radius: 30px;
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.5);
@@ -281,9 +282,9 @@ body.lang-en .lang-switcher {
 .lang-switcher button {
     text-decoration: none;
     border: 1px solid var(--border);
-    padding: 5px 14px;
+    padding: 5px 16px;
     border-radius: 20px;
-    font-size: 0.75em;
+    font-size: 0.78em;
     font-weight: 600;
     transition: var(--transition);
     background: transparent;
@@ -315,10 +316,10 @@ body.dark-mode .lang-switcher .active-lang {
 .profile-wrapper {
     position: absolute;
     top: 50%;
-    width: 100px;
-    height: 120px;
+    width: 110px;
+    height: 130px;
     border-radius: 20%;
-    padding: 4px;
+    padding: 5px;
     background: linear-gradient(135deg, var(--accent), var(--primary-light));
     box-shadow: 0 8px 30px var(--accent-glow);
     transition: var(--transition);
@@ -336,13 +337,13 @@ body.lang-en .profile-wrapper {
 }
 
 .profile-wrapper:hover {
-    transform: translate(-50%, -50%) scale(1.03);
+    transform: translate(-50%, -50%) scale(1.04);
 }
 
 .profile-icon {
     width: 100%;
     height: 100%;
-    border-radius: 20%;
+    border-radius: 18%;
     object-fit: cover;
     display: block;
     border: 3px solid rgba(255, 255, 255, 0.9);
@@ -408,12 +409,12 @@ h2 {
 
 /* ---- بخش‌ها ---- */
 .section-title {
-    font-size: 1.65em;
+    font-size: 1.7em;
     color: var(--primary);
     font-weight: 700;
-    padding-inline-start: 18px;
-    border-inline-start: 5px solid var(--accent);
-    margin-bottom: 25px;
+    padding-inline-start: 20px;
+    border-inline-start: 6px solid var(--accent);
+    margin-bottom: 28px;
     position: relative;
     transition: var(--transition);
 }
@@ -421,9 +422,9 @@ h2 {
 .section-title::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -6px;
     left: 0;
-    width: 40px;
+    width: 50px;
     height: 3px;
     background: linear-gradient(90deg, var(--accent), transparent);
     border-radius: 3px;
@@ -498,13 +499,14 @@ body.lang-fa .contact-info a::after {
 
 /* ---- درباره من ---- */
 .summary {
-    padding: 28px 32px;
+    padding: 30px 35px;
     background: var(--bg-card);
     border-radius: var(--radius);
     border-right: 5px solid var(--accent);
     line-height: 2;
     text-align: justify;
     transition: var(--transition);
+    box-shadow: var(--shadow);
 }
 
 body.lang-en .summary {
@@ -512,16 +514,21 @@ body.lang-en .summary {
     border-left: 5px solid var(--accent);
 }
 
+.summary:hover {
+    box-shadow: var(--shadow-hover);
+}
+
 /* ---- آیتم‌های شغلی ---- */
 .job-item {
     margin-bottom: 22px;
-    padding: 22px 28px;
+    padding: 24px 30px;
     border-radius: var(--radius);
     background: var(--bg-card);
     border-right: 5px solid var(--accent);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
+    box-shadow: var(--shadow);
 }
 
 .job-item::after {
@@ -531,7 +538,7 @@ body.lang-en .summary {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(37, 99, 235, 0.04) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 0.6s ease;
     pointer-events: none;
@@ -548,7 +555,7 @@ body.lang-en .job-item {
 
 .job-item:hover {
     transform: translateY(-6px) scale(1.01);
-    box-shadow: 0 15px 50px rgba(37, 99, 235, 0.12);
+    box-shadow: var(--shadow-hover);
 }
 
 .job-item h3 {
@@ -687,11 +694,12 @@ body.lang-en .job-item.current-position {
     opacity: 1;
     transform: translateY(0);
     animation: none;
+    box-shadow: var(--shadow);
 }
 
 .skill-category:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     border-color: var(--accent);
 }
 
@@ -890,7 +898,7 @@ body.lang-fa #navbar a:hover {
 .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
+    gap: 28px;
     margin-top: 10px;
 }
 
@@ -898,7 +906,7 @@ body.lang-fa #navbar a:hover {
     background: var(--bg-card);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    padding: 28px 24px 24px;
+    padding: 30px 26px 26px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
@@ -907,32 +915,53 @@ body.lang-fa #navbar a:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--accent));
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.service-card:hover::before {
+    opacity: 1;
 }
 
 .service-card:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-5px);
+    transform: translateY(-6px);
     border-color: var(--accent);
 }
 
 .service-card .service-icon {
-    width: 70px;
-    height: 70px;
+    width: 76px;
+    height: 76px;
     background: rgba(37, 99, 235, 0.08);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 15px;
-    font-size: 1.8em;
+    margin: 0 auto 16px;
+    font-size: 2em;
     color: var(--accent);
     transition: var(--transition);
+    border: 2px solid transparent;
 }
 
 .service-card:hover .service-icon {
     background: var(--accent);
     color: white;
-    transform: scale(1.1);
+    transform: scale(1.1) rotate(4deg);
+    border-color: var(--accent);
+    box-shadow: 0 0 30px var(--accent-glow);
 }
 
 body.dark-mode .service-card .service-icon {
@@ -946,9 +975,9 @@ body.dark-mode .service-card:hover .service-icon {
 
 .service-card h3 {
     color: var(--primary);
-    font-size: 1.15em;
+    font-size: 1.2em;
     font-weight: 700;
-    margin: 0 0 12px 0;
+    margin: 0 0 14px 0;
 }
 
 body.dark-mode .service-card h3 {
@@ -958,7 +987,7 @@ body.dark-mode .service-card h3 {
 .service-card ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 18px 0;
+    margin: 0 0 20px 0;
     width: 100%;
     text-align: right;
 }
@@ -968,12 +997,12 @@ body.lang-en .service-card ul {
 }
 
 .service-card ul li {
-    padding: 6px 0;
-    font-size: 0.9em;
+    padding: 7px 0;
+    font-size: 0.92em;
     color: var(--text);
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     position: relative;
-    padding-inline-start: 20px;
+    padding-inline-start: 22px;
 }
 
 body.dark-mode .service-card ul li {
@@ -986,7 +1015,7 @@ body.dark-mode .service-card ul li {
     color: var(--accent);
     font-weight: bold;
     position: absolute;
-    top: 6px;
+    top: 7px;
 }
 
 body.lang-fa .service-card ul li::before {
@@ -1003,14 +1032,14 @@ body.lang-en .service-card ul li::before {
     border-bottom: none;
 }
 
-/* ---- دکمه انتخاب خدمت ---- */
+/* ---- دکمه انتخاب خدمت (حالت تبلیغاتی) ---- */
 .service-select-btn {
     background: linear-gradient(135deg, var(--accent), var(--primary-light));
     color: white;
     border: none;
-    padding: 10px 22px;
+    padding: 12px 26px;
     border-radius: 30px;
-    font-size: 0.85em;
+    font-size: 0.9em;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -1018,11 +1047,30 @@ body.lang-en .service-card ul li::before {
     max-width: 220px;
     font-family: inherit;
     margin-top: auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+}
+
+.service-select-btn::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.service-select-btn:hover::after {
+    opacity: 1;
 }
 
 .service-select-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 28px rgba(37, 99, 235, 0.25);
 }
 
 body.dark-mode .service-select-btn {
@@ -1041,9 +1089,9 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card .service-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.5em;
+        width: 64px;
+        height: 64px;
+        font-size: 1.6em;
     }
     
     .service-card h3 {
@@ -1056,8 +1104,8 @@ body.dark-mode .service-select-btn {
     }
     
     .service-select-btn {
-        font-size: 0.8em;
-        padding: 8px 18px;
+        font-size: 0.82em;
+        padding: 10px 20px;
         max-width: 100%;
     }
 }
@@ -1074,9 +1122,9 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card .service-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2em;
+        width: 54px;
+        height: 54px;
+        font-size: 1.3em;
         margin-bottom: 10px;
     }
     
@@ -1092,8 +1140,8 @@ body.dark-mode .service-select-btn {
     }
     
     .service-select-btn {
-        font-size: 0.72em;
-        padding: 6px 14px;
+        font-size: 0.75em;
+        padding: 8px 16px;
         border-radius: 20px;
     }
 }
@@ -1109,9 +1157,9 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card .service-icon {
-        width: 55px;
-        height: 55px;
-        font-size: 1.3em;
+        width: 58px;
+        height: 58px;
+        font-size: 1.4em;
     }
 }
 
