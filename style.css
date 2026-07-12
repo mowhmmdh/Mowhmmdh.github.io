@@ -248,7 +248,7 @@ body.dark-mode #sidebar-info {
 }
 
 /* ================================================= */
-/* ---- دکمه زبان (دسکتاپ) - اصلاح شده ---- */
+/* ---- دکمه زبان (دسکتاپ) ---- */
 /* ================================================= */
 .lang-switcher {
     z-index: 250;
@@ -319,7 +319,7 @@ body.dark-mode .lang-switcher .active-lang {
 }
 
 /* ================================================= */
-/* ---- عکس پروفایل (دسکتاپ) - اصلاح شده ---- */
+/* ---- عکس پروفایل (دسکتاپ) ---- */
 /* ================================================= */
 .profile-wrapper {
     width: 110px;
@@ -413,7 +413,7 @@ h2 {
     font-weight: 700;
     padding-inline-start: 20px;
     border-inline-start: 6px solid var(--accent);
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     position: relative;
     transition: var(--transition);
 }
@@ -511,7 +511,9 @@ body.lang-en .summary {
     box-shadow: var(--shadow-hover);
 }
 
-/* ---- آیتم‌های شغلی ---- */
+/* ================================================= */
+/* ---- سوابق شغلی ---- */
+/* ================================================= */
 .job-item {
     margin-bottom: 22px;
     padding: 24px 30px;
@@ -644,178 +646,6 @@ body.lang-en .job-item.current-position {
 }
 
 /* ================================================= */
-/* ---- مهارت‌ها با اسکرول افقی و ۴ ستونه ---- */
-/* ================================================= */
-.skills-wrapper {
-    width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-    scrollbar-color: var(--accent) transparent;
-    padding-bottom: 10px;
-    position: relative;
-}
-
-.skills-wrapper::-webkit-scrollbar {
-    height: 6px;
-}
-
-.skills-wrapper::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.skills-wrapper::-webkit-scrollbar-thumb {
-    background: var(--accent);
-    border-radius: 10px;
-}
-
-/* ---- ۴ ستونه در دسکتاپ ---- */
-.skills-list {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 25px;
-    min-width: max-content;
-}
-
-.skill-category {
-    padding: 25px 22px 22px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--bg-card);
-    transition: var(--transition);
-    opacity: 1;
-    transform: translateY(0);
-    animation: none;
-    box-shadow: var(--shadow);
-}
-
-.skill-category:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-4px);
-    border-color: var(--accent);
-}
-
-.skill-category h4 {
-    color: var(--primary);
-    font-size: 1.1em;
-    font-weight: 700;
-    padding-bottom: 14px;
-    border-bottom: 2px solid var(--accent);
-    margin-top: 0;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.skill-level-item {
-    margin-bottom: 18px;
-    opacity: 0;
-    transform: translateX(-20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-body.lang-fa .skill-level-item {
-    transform: translateX(20px);
-}
-
-.skill-level-item.show {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.skill-level-item:nth-child(2) { transition-delay: 0.05s; }
-.skill-level-item:nth-child(3) { transition-delay: 0.1s; }
-.skill-level-item:nth-child(4) { transition-delay: 0.15s; }
-.skill-level-item:nth-child(5) { transition-delay: 0.2s; }
-.skill-level-item:nth-child(6) { transition-delay: 0.25s; }
-.skill-level-item:nth-child(7) { transition-delay: 0.3s; }
-
-.skill-level-item:last-child {
-    margin-bottom: 0;
-}
-
-.skill-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.9em;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: var(--text);
-}
-
-.skill-percent {
-    color: var(--accent);
-    font-weight: 700;
-}
-
-.skill-bar-container {
-    height: 8px;
-    background: var(--border);
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.skill-bar {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, var(--accent), var(--primary-light));
-    border-radius: 10px;
-    transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.skill-level-item.show .skill-bar {
-    width: var(--skill-width, 0%) !important;
-}
-
-/* ---- ریسپانسیو مهارت‌ها ---- */
-@media (max-width: 992px) {
-    .skills-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
-        min-width: max-content;
-        padding-right: 10px;
-        padding-left: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .skills-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
-        min-width: max-content;
-        padding-right: 8px;
-        padding-left: 8px;
-    }
-    
-    .skill-category {
-        min-width: 160px;
-        max-width: 220px;
-        padding: 16px 14px;
-    }
-    
-    .skill-category h4 {
-        font-size: 0.9em;
-    }
-    
-    .skill-label {
-        font-size: 0.75em;
-    }
-}
-
-@media (max-width: 360px) {
-    .skills-list {
-        grid-template-columns: 1fr;
-        min-width: 100%;
-    }
-    
-    .skill-category {
-        min-width: 100%;
-        max-width: 100%;
-    }
-}
-
-/* ================================================= */
 /* ---- منو ---- */
 /* ================================================= */
 #navbar {
@@ -886,12 +716,12 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- خدمات (۲ ستونه در دسکتاپ) ---- */
+/* ---- خدمات (۳ ستونه در دسکتاپ با طراحی مدرن) ---- */
 /* ================================================= */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 28px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
     margin-top: 10px;
 }
 
@@ -899,8 +729,8 @@ body.lang-fa #navbar a:hover {
     background: var(--bg-card);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    padding: 30px 26px 26px;
-    border-radius: var(--radius);
+    padding: 28px 20px 22px;
+    border-radius: 20px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -930,14 +760,14 @@ body.lang-fa #navbar a:hover {
 
 .service-card:hover {
     box-shadow: var(--shadow-hover);
-    transform: translateY(-6px);
+    transform: translateY(-8px);
     border-color: var(--accent);
 }
 
 .service-card .service-icon {
-    width: 76px;
-    height: 76px;
-    background: rgba(37, 99, 235, 0.08);
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02));
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -947,6 +777,28 @@ body.lang-fa #navbar a:hover {
     color: var(--accent);
     transition: var(--transition);
     border: 2px solid transparent;
+    position: relative;
+}
+
+.service-card .service-icon::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, var(--accent), transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: var(--transition);
+    z-index: -1;
+}
+
+.service-card:hover .service-icon::after {
+    opacity: 1;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 .service-card:hover .service-icon {
@@ -968,9 +820,28 @@ body.dark-mode .service-card:hover .service-icon {
 
 .service-card h3 {
     color: var(--primary);
-    font-size: 1.2em;
+    font-size: 1.15em;
     font-weight: 700;
-    margin: 0 0 14px 0;
+    margin: 0 0 12px 0;
+    position: relative;
+    display: inline-block;
+}
+
+.service-card h3::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+.service-card:hover h3::after {
+    width: 60px;
 }
 
 body.dark-mode .service-card h3 {
@@ -980,7 +851,7 @@ body.dark-mode .service-card h3 {
 .service-card ul {
     list-style: none;
     padding: 0;
-    margin: 0 0 20px 0;
+    margin: 12px 0 18px 0;
     width: 100%;
     text-align: right;
 }
@@ -990,12 +861,22 @@ body.lang-en .service-card ul {
 }
 
 .service-card ul li {
-    padding: 7px 0;
-    font-size: 0.92em;
+    padding: 6px 0;
+    font-size: 0.85em;
     color: var(--text);
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     position: relative;
-    padding-inline-start: 22px;
+    padding-inline-start: 18px;
+    transition: var(--transition);
+}
+
+.service-card ul li:hover {
+    color: var(--accent);
+    transform: translateX(4px);
+}
+
+body.lang-fa .service-card ul li:hover {
+    transform: translateX(-4px);
 }
 
 body.dark-mode .service-card ul li {
@@ -1008,7 +889,7 @@ body.dark-mode .service-card ul li {
     color: var(--accent);
     font-weight: bold;
     position: absolute;
-    top: 7px;
+    top: 6px;
 }
 
 body.lang-fa .service-card ul li::before {
@@ -1025,24 +906,25 @@ body.lang-en .service-card ul li::before {
     border-bottom: none;
 }
 
-/* ---- دکمه انتخاب خدمت (حالت تبلیغاتی) ---- */
+/* ---- دکمه انتخاب خدمت (حالت مدرن) ---- */
 .service-select-btn {
     background: linear-gradient(135deg, var(--accent), var(--primary-light));
     color: white;
     border: none;
-    padding: 12px 26px;
-    border-radius: 30px;
-    font-size: 0.9em;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 0.82em;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
     width: 100%;
-    max-width: 220px;
+    max-width: 200px;
     font-family: inherit;
     margin-top: auto;
     position: relative;
     overflow: hidden;
     box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
+    letter-spacing: 0.3px;
 }
 
 .service-select-btn::after {
@@ -1073,12 +955,12 @@ body.dark-mode .service-select-btn {
 /* ---- ریسپانسیو خدمات ---- */
 @media (max-width: 992px) {
     .services-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 18px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
     
     .service-card {
-        padding: 22px 18px;
+        padding: 24px 18px;
     }
     
     .service-card .service-icon {
@@ -1092,13 +974,13 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card ul li {
-        font-size: 0.85em;
+        font-size: 0.82em;
         padding: 5px 0;
     }
     
     .service-select-btn {
-        font-size: 0.82em;
-        padding: 10px 20px;
+        font-size: 0.78em;
+        padding: 8px 18px;
         max-width: 100%;
     }
 }
@@ -1110,49 +992,303 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card {
-        padding: 18px 14px;
-        border-radius: 12px;
+        padding: 18px 12px;
+        border-radius: 14px;
     }
     
     .service-card .service-icon {
-        width: 54px;
-        height: 54px;
-        font-size: 1.3em;
+        width: 52px;
+        height: 52px;
+        font-size: 1.2em;
         margin-bottom: 10px;
     }
     
     .service-card h3 {
-        font-size: 0.95em;
+        font-size: 0.9em;
         margin-bottom: 8px;
     }
     
+    .service-card h3::after {
+        width: 20px;
+        bottom: -2px;
+    }
+    
+    .service-card:hover h3::after {
+        width: 40px;
+    }
+    
+    .service-card ul {
+        margin: 6px 0 12px 0;
+    }
+    
     .service-card ul li {
-        font-size: 0.78em;
+        font-size: 0.72em;
         padding: 4px 0;
-        padding-inline-start: 16px;
+        padding-inline-start: 14px;
     }
     
     .service-select-btn {
-        font-size: 0.75em;
-        padding: 8px 16px;
-        border-radius: 20px;
+        font-size: 0.7em;
+        padding: 6px 14px;
+        border-radius: 30px;
     }
 }
 
 @media (max-width: 400px) {
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 14px;
+        gap: 16px;
     }
     
     .service-card {
-        padding: 20px 16px;
+        padding: 22px 18px;
+        max-width: 320px;
+        margin: 0 auto;
     }
     
     .service-card .service-icon {
-        width: 58px;
-        height: 58px;
+        width: 60px;
+        height: 60px;
         font-size: 1.4em;
+    }
+}
+
+/* ================================================= */
+/* ---- مهارت‌های فنی (چیدمان شبکه‌ای و مدرن) ---- */
+/* ================================================= */
+.skills-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+    padding-bottom: 10px;
+    position: relative;
+}
+
+.skills-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+
+.skills-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.skills-wrapper::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+}
+
+/* ---- ۳ ستونه در دسکتاپ (نه ۴ تا) ---- */
+.skills-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    min-width: max-content;
+}
+
+.skill-category {
+    padding: 24px 20px 20px;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: var(--bg-card);
+    transition: var(--transition);
+    opacity: 1;
+    transform: translateY(0);
+    animation: none;
+    box-shadow: var(--shadow);
+    min-width: 200px;
+    max-width: 320px;
+}
+
+.skill-category:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-6px);
+    border-color: var(--accent);
+}
+
+.skill-category h4 {
+    color: var(--primary);
+    font-size: 1em;
+    font-weight: 700;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--accent);
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.skill-category h4 i {
+    color: var(--accent);
+    font-size: 1.1em;
+    background: rgba(37, 99, 235, 0.08);
+    padding: 6px;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.skill-category:hover h4 i {
+    background: var(--accent);
+    color: white;
+    transform: rotate(8deg);
+}
+
+.skill-level-item {
+    margin-bottom: 14px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+body.lang-fa .skill-level-item {
+    transform: translateX(20px);
+}
+
+.skill-level-item.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.skill-level-item:nth-child(2) { transition-delay: 0.05s; }
+.skill-level-item:nth-child(3) { transition-delay: 0.1s; }
+.skill-level-item:nth-child(4) { transition-delay: 0.15s; }
+.skill-level-item:nth-child(5) { transition-delay: 0.2s; }
+.skill-level-item:nth-child(6) { transition-delay: 0.25s; }
+.skill-level-item:nth-child(7) { transition-delay: 0.3s; }
+
+.skill-level-item:last-child {
+    margin-bottom: 0;
+}
+
+.skill-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.82em;
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--text);
+}
+
+.skill-percent {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 0.85em;
+    background: rgba(37, 99, 235, 0.06);
+    padding: 0 10px;
+    border-radius: 12px;
+}
+
+.skill-bar-container {
+    height: 6px;
+    background: var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.skill-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--primary-light));
+    border-radius: 10px;
+    transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+
+.skill-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
+.skill-level-item.show .skill-bar {
+    width: var(--skill-width, 0%) !important;
+}
+
+/* ---- ریسپانسیو مهارت‌ها ---- */
+@media (max-width: 992px) {
+    .skills-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 18px;
+        min-width: max-content;
+        padding-right: 10px;
+        padding-left: 10px;
+    }
+    
+    .skill-category {
+        min-width: 180px;
+        max-width: 280px;
+        padding: 20px 16px;
+    }
+}
+
+@media (max-width: 600px) {
+    .skills-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+    
+    .skill-category {
+        min-width: 150px;
+        max-width: 220px;
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+    
+    .skill-category h4 {
+        font-size: 0.85em;
+        padding-bottom: 10px;
+    }
+    
+    .skill-category h4 i {
+        font-size: 0.9em;
+        padding: 4px;
+    }
+    
+    .skill-label {
+        font-size: 0.72em;
+    }
+    
+    .skill-percent {
+        font-size: 0.75em;
+        padding: 0 8px;
+    }
+    
+    .skill-bar-container {
+        height: 5px;
+    }
+    
+    .skill-level-item {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    .skills-list {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        min-width: 100%;
+        padding: 0 4px;
+    }
+    
+    .skill-category {
+        min-width: 100%;
+        max-width: 100%;
+        padding: 20px 16px;
     }
 }
 
@@ -1622,11 +1758,6 @@ body.dark-mode .project-actions .badge {
 .footer-logo-wrapper:hover::before {
     opacity: 1;
     animation: spin 3s linear infinite;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
 }
 
 .footer-logo-wrapper:hover {
@@ -2139,10 +2270,10 @@ body.dark-mode .share-copy {
         transform: none;
     }
 
-    /* ---- ۴ ستونه در تبلت به ۲ ستونه تبدیل می‌شود ---- */
+    /* ---- ۳ ستونه در تبلت به ۲ ستونه ---- */
     .skills-list {
         grid-template-columns: repeat(2, 1fr);
-        gap: 15px;
+        gap: 18px;
         min-width: max-content;
         padding-right: 10px;
         padding-left: 10px;
@@ -2170,6 +2301,96 @@ body.dark-mode .share-copy {
     }
 }
 
+@media (max-width: 600px) {
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+    
+    .service-card {
+        padding: 18px 12px;
+        border-radius: 14px;
+    }
+    
+    .service-card .service-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    
+    .service-card h3 {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+    
+    .service-card h3::after {
+        width: 20px;
+        bottom: -2px;
+    }
+    
+    .service-card:hover h3::after {
+        width: 40px;
+    }
+    
+    .service-card ul {
+        margin: 6px 0 12px 0;
+    }
+    
+    .service-card ul li {
+        font-size: 0.72em;
+        padding: 4px 0;
+        padding-inline-start: 14px;
+    }
+    
+    .service-select-btn {
+        font-size: 0.7em;
+        padding: 6px 14px;
+        border-radius: 30px;
+    }
+
+    .skills-list {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        padding-right: 8px;
+        padding-left: 8px;
+    }
+    
+    .skill-category {
+        min-width: 150px;
+        max-width: 220px;
+        padding: 16px 14px;
+        border-radius: 14px;
+    }
+    
+    .skill-category h4 {
+        font-size: 0.85em;
+        padding-bottom: 10px;
+    }
+    
+    .skill-category h4 i {
+        font-size: 0.9em;
+        padding: 4px;
+    }
+    
+    .skill-label {
+        font-size: 0.72em;
+    }
+    
+    .skill-percent {
+        font-size: 0.75em;
+        padding: 0 8px;
+    }
+    
+    .skill-bar-container {
+        height: 5px;
+    }
+    
+    .skill-level-item {
+        margin-bottom: 10px;
+    }
+}
+
 @media (max-width: 480px) {
     .profile-wrapper {
         width: 100px;
@@ -2190,7 +2411,6 @@ body.dark-mode .share-copy {
         font-size: 0.85em;
     }
 
-    /* ---- دکمه‌های اشتراک‌گذاری در موبایل کوچک ---- */
     .share-buttons {
         padding: 6px 14px;
         gap: 8px;
@@ -2323,39 +2543,57 @@ body.dark-mode .share-copy {
         border-radius: 12px;
     }
 
-    /* ---- ۴ ستونه در موبایل به ۲ ستونه با اسکرول افقی تبدیل می‌شود ---- */
     .skills-list {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
-        min-width: max-content;
         padding-right: 8px;
         padding-left: 8px;
     }
     
     .skill-category {
-        min-width: 160px;
-        max-width: 220px;
-        padding: 16px 14px;
+        min-width: 150px;
+        max-width: 200px;
+        padding: 14px 12px;
     }
     
     .skill-category h4 {
-        font-size: 0.9em;
+        font-size: 0.8em;
     }
     
     .skill-label {
-        font-size: 0.75em;
+        font-size: 0.7em;
     }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 400px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .service-card {
+        padding: 22px 18px;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+    
+    .service-card .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.4em;
+    }
+
     .skills-list {
         grid-template-columns: 1fr;
+        gap: 16px;
         min-width: 100%;
+        padding: 0 4px;
     }
     
     .skill-category {
         min-width: 100%;
         max-width: 100%;
+        padding: 20px 16px;
     }
 }
 
