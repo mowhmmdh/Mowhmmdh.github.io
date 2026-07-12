@@ -684,12 +684,12 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- خدمات من (۲ ستونه مینیمال و حرفه‌ای) ---- */
+/* ---- خدمات من (طراحی کشویی و حرفه‌ای) ---- */
 /* ================================================= */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
+    gap: 16px;
     margin-top: 10px;
 }
 
@@ -697,13 +697,10 @@ body.lang-fa #navbar a:hover {
     background: var(--bg-card);
     border-radius: 14px;
     border: 1px solid var(--border);
-    padding: 18px 16px 16px;
-    transition: all 0.3s ease;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+    padding: 16px 18px 14px;
     box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
     position: relative;
     overflow: hidden;
 }
@@ -720,27 +717,33 @@ body.lang-fa #navbar a:hover {
     transition: var(--transition);
 }
 
-.service-card:hover::before {
-    opacity: 1;
-}
-
 .service-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-3px);
     box-shadow: var(--shadow-hover);
     border-color: var(--accent);
 }
 
+.service-card:hover::before {
+    opacity: 1;
+}
+
+.service-card .service-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+}
+
 .service-card .service-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
     background: rgba(37, 99, 235, 0.06);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.3em;
+    font-size: 1.1em;
     color: var(--accent);
-    margin-bottom: 8px;
     transition: var(--transition);
     flex-shrink: 0;
 }
@@ -748,69 +751,106 @@ body.lang-fa #navbar a:hover {
 .service-card:hover .service-icon {
     background: var(--accent);
     color: white;
-    transform: scale(1.05);
 }
 
-.service-card h3 {
+.service-card .service-title {
     font-size: 0.9em;
     font-weight: 700;
     color: var(--primary);
-    margin: 0 0 4px 0;
+    margin: 0;
 }
 
-body.dark-mode .service-card h3 {
+body.dark-mode .service-card .service-title {
     color: #f1f5f9;
 }
 
-.service-card .service-items {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 4px 10px;
-    margin: 4px 0 10px 0;
+.service-card .service-subtitle {
     font-size: 0.7em;
     color: var(--text-muted);
+    margin: 0;
+    padding-right: 52px;
 }
 
-.service-card .service-items span {
-    background: var(--border);
-    padding: 2px 10px;
-    border-radius: 12px;
-    font-size: 0.65em;
+body.lang-en .service-card .service-subtitle {
+    padding-right: 0;
+    padding-left: 52px;
+}
+
+.service-card .service-items {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease, margin 0.3s ease;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.service-card.active .service-items {
+    max-height: 300px;
+    opacity: 1;
+    margin-top: 10px;
+}
+
+.service-card .service-items ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.service-card .service-items ul li {
+    font-size: 0.7em;
     color: var(--text);
+    background: var(--bg);
+    padding: 3px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
     transition: var(--transition);
 }
 
-.service-card:hover .service-items span {
+.service-card .service-items ul li:hover {
     background: rgba(37, 99, 235, 0.06);
+    border-color: var(--accent);
     color: var(--accent);
 }
 
-body.dark-mode .service-card .service-items span {
-    background: rgba(255, 255, 255, 0.05);
+.service-card .service-toggle {
+    position: absolute;
+    bottom: 14px;
+    left: 18px;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 0.75em;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-family: inherit;
+    padding: 0;
+}
+
+body.lang-en .service-card .service-toggle {
+    left: auto;
+    right: 18px;
+}
+
+.service-card .service-toggle:hover {
+    color: var(--accent);
+}
+
+.service-card .service-toggle i {
+    transition: transform 0.3s ease;
+}
+
+.service-card.active .service-toggle i {
+    transform: rotate(180deg);
 }
 
 .service-select-btn {
-    background: linear-gradient(135deg, var(--accent), var(--primary-light));
-    color: white;
-    border: none;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-size: 0.68em;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: inherit;
-    box-shadow: 0 2px 10px rgba(37, 99, 235, 0.12);
-}
-
-.service-select-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
-}
-
-body.dark-mode .service-select-btn {
-    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    display: none;
 }
 
 /* ---- ریسپانسیو خدمات ---- */
@@ -820,34 +860,43 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card {
-        padding: 14px 12px;
-        border-radius: 12px;
+        padding: 14px 16px 12px;
     }
     
     .service-card .service-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 1.1em;
-        border-radius: 10px;
+        width: 36px;
+        height: 36px;
+        font-size: 0.95em;
     }
     
-    .service-card h3 {
-        font-size: 0.8em;
+    .service-card .service-title {
+        font-size: 0.82em;
     }
     
-    .service-card .service-items {
-        font-size: 0.6em;
-        gap: 3px 8px;
+    .service-card .service-subtitle {
+        font-size: 0.65em;
+        padding-right: 48px;
     }
     
-    .service-card .service-items span {
-        padding: 1px 8px;
-        font-size: 0.6em;
+    body.lang-en .service-card .service-subtitle {
+        padding-right: 0;
+        padding-left: 48px;
     }
     
-    .service-select-btn {
-        font-size: 0.6em;
-        padding: 5px 14px;
+    .service-card .service-items ul li {
+        font-size: 0.65em;
+        padding: 2px 10px;
+    }
+    
+    .service-card .service-toggle {
+        font-size: 0.65em;
+        bottom: 12px;
+        left: 16px;
+    }
+    
+    body.lang-en .service-card .service-toggle {
+        left: auto;
+        right: 16px;
     }
 }
 
@@ -857,36 +906,45 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card {
-        padding: 12px 10px;
-        border-radius: 10px;
+        padding: 12px 14px 10px;
+        border-radius: 12px;
     }
     
     .service-card .service-icon {
-        width: 34px;
-        height: 34px;
-        font-size: 0.9em;
+        width: 32px;
+        height: 32px;
+        font-size: 0.85em;
         border-radius: 8px;
-        margin-bottom: 6px;
     }
     
-    .service-card h3 {
-        font-size: 0.72em;
+    .service-card .service-title {
+        font-size: 0.75em;
     }
     
-    .service-card .service-items {
-        font-size: 0.55em;
-        gap: 2px 6px;
-        margin: 2px 0 6px 0;
+    .service-card .service-subtitle {
+        font-size: 0.6em;
+        padding-right: 44px;
     }
     
-    .service-card .service-items span {
-        padding: 1px 6px;
-        font-size: 0.55em;
+    body.lang-en .service-card .service-subtitle {
+        padding-right: 0;
+        padding-left: 44px;
     }
     
-    .service-select-btn {
-        font-size: 0.55em;
-        padding: 4px 12px;
+    .service-card .service-items ul li {
+        font-size: 0.6em;
+        padding: 2px 8px;
+    }
+    
+    .service-card .service-toggle {
+        font-size: 0.6em;
+        bottom: 10px;
+        left: 14px;
+    }
+    
+    body.lang-en .service-card .service-toggle {
+        left: auto;
+        right: 14px;
     }
 }
 
@@ -897,20 +955,24 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card {
-        padding: 14px 12px;
-        max-width: 280px;
+        padding: 14px 16px 12px;
+        max-width: 320px;
         margin: 0 auto;
     }
     
     .service-card .service-icon {
-        width: 38px;
-        height: 38px;
-        font-size: 1em;
+        width: 36px;
+        height: 36px;
+        font-size: 0.95em;
+    }
+    
+    .service-card .service-title {
+        font-size: 0.82em;
     }
 }
 
 /* ================================================= */
-/* ---- مهارت‌های فنی (۴ ستونه مینیمال با متن کامل) ---- */
+/* ---- مهارت‌های فنی ---- */
 /* ================================================= */
 .skills-wrapper {
     width: 100%;
