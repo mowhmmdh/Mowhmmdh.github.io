@@ -138,37 +138,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     updateJobDuration();
-// ===============================================
-// انیمیشن نوارهای مهارت - نسخه اصلاح شده با پشتیبانی از فارسی
-// ===============================================
-const skillItems = document.querySelectorAll('.skill-level-item');
 
-function animateSkills() {
-    skillItems.forEach(item => {
-        const bar = item.querySelector('.skill-bar');
-        const percent = item.querySelector('.skill-percent');
-        if (bar && percent) {
-            // استخراج عدد از درصد (پشتیبانی از فارسی و انگلیسی)
-            let text = percent.textContent.trim();
-            // حذف کاراکترهای غیرعددی (به جز اعداد فارسی)
-            let val = text.replace(/[^۰-۹0-9]/g, '');
-            // تبدیل اعداد فارسی به انگلیسی
-            const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
-            const englishNumbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
-            persianNumbers.forEach((p, i) => {
-                val = val.replace(new RegExp(p, 'g'), englishNumbers[i]);
-            });
-            let num = parseInt(val);
-            if (isNaN(num)) num = 0;
-            num = Math.min(num, 100);
-            
-            // تنظیم عرض نوار
-            bar.style.width = num + '%';
-            item.style.setProperty('--skill-width', num + '%');
-            item.classList.add('show');
-        }
-    });
-}
+    // ===============================================
+    // انیمیشن نوارهای مهارت
+    // ===============================================
+    const skillItems = document.querySelectorAll('.skill-level-item');
+    function animateSkills() {
+        skillItems.forEach(item => {
+            const bar = item.querySelector('.skill-bar');
+            const percent = item.querySelector('.skill-percent');
+            if (bar && percent) {
+                const val = parseInt(percent.textContent);
+                item.style.setProperty('--skill-width', val + '%');
+                bar.style.width = val + '%';
+                item.classList.add('show');
+            }
+        });
+    }
+
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
         const observer = new IntersectionObserver((entries) => {
@@ -196,20 +183,6 @@ function animateSkills() {
         });
     }, { threshold: 0.08 });
     sections.forEach(section => sectionObserver.observe(section));
-
-    // ===============================================
-    // انیمیشن کارت‌های خدمات
-    // ===============================================
-    const serviceCards = document.querySelectorAll('.service-card');
-    const serviceObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('show');
-                serviceObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-    serviceCards.forEach(card => serviceObserver.observe(card));
 
     // ===============================================
     // دکمه بازگشت به بالا
@@ -269,213 +242,4 @@ function animateSkills() {
     jobItems.forEach((item) => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(20px)';
-        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        jobObserver.observe(item);
-    });
-
-    // ===============================================
-    // تایپ‌رایتر پیشرفته
-    // ===============================================
-    function initAdvancedTyping() {
-        const typingElement = document.querySelector('.typing-text');
-        if (!typingElement) return;
-        
-        const words = JSON.parse(typingElement.getAttribute('data-words') || '["IT Specialist"]');
-        let wordIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        let speed = 80;
-        let isTypingPaused = false;
-        
-        function typeEffect() {
-            if (isTypingPaused) {
-                setTimeout(typeEffect, 100);
-                return;
-            }
-            
-            const currentWord = words[wordIndex];
-            
-            if (isDeleting) {
-                typingElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-                speed = 40;
-            } else {
-                typingElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-                speed = 80 + Math.random() * 40;
-            }
-            
-            if (!isDeleting && charIndex === currentWord.length) {
-                isTypingPaused = true;
-                setTimeout(() => {
-                    isTypingPaused = false;
-                    isDeleting = true;
-                    setTimeout(typeEffect, 100);
-                }, 2000);
-                return;
-            }
-            
-            if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-                isTypingPaused = true;
-                setTimeout(() => {
-                    isTypingPaused = false;
-                    setTimeout(typeEffect, 100);
-                }, 300);
-                return;
-            }
-            
-            setTimeout(typeEffect, speed);
-        }
-        
-        setTimeout(typeEffect, 500);
-    }
-    initAdvancedTyping();
-
-    // ===============================================
-    // نمایش تاریخ به‌روزرسانی خودکار
-    // ===============================================
-    function updateDate() {
-        const now = new Date();
-        
-        const updateFa = document.getElementById('update-date-fa');
-        if (updateFa) {
-            const persianDate = new Intl.DateTimeFormat('fa-IR', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            }).format(now);
-            updateFa.textContent = `آخرین به‌روزرسانی: ${persianDate}`;
-        }
-        
-        const updateEn = document.getElementById('update-date-en');
-        if (updateEn) {
-            const englishDate = new Intl.DateTimeFormat('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            }).format(now);
-            updateEn.textContent = `Last Updated: ${englishDate}`;
-        }
-    }
-    updateDate();
-
-    // ===============================================
-    // دارک مود
-    // ===============================================
-    const darkToggle = document.getElementById('dark-toggle');
-    const body = document.body;
-    if (localStorage.getItem('dark-mode') === 'true') {
-        body.classList.add('dark-mode');
-        darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-    darkToggle.addEventListener('click', function() {
-        body.classList.toggle('dark-mode');
-        const isDark = body.classList.contains('dark-mode');
-        localStorage.setItem('dark-mode', isDark);
-        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-    });
-
-    // ===============================================
-    // بخش خدمات - نمایش فرم و انتخاب نوع خدمت
-    // ===============================================
-    const serviceButtons = document.querySelectorAll('.service-select-btn');
-    const serviceForm = document.getElementById('service-request-form');
-    const selectedServiceInput = document.getElementById('selected-service');
-
-    serviceButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const serviceName = this.getAttribute('data-service');
-            selectedServiceInput.value = serviceName;
-            if (serviceForm) {
-                serviceForm.style.display = 'block';
-                serviceForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // ===============================================
-    // بستن فرم با دکمه لغو
-    // ===============================================
-    const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const form = document.getElementById('service-request-form');
-            if (form) {
-                form.style.display = 'none';
-                const formElement = document.getElementById('service-form');
-                if (formElement) {
-                    formElement.reset();
-                }
-            }
-        });
-    }
-
-    // ===============================================
-    // ارسال فرم خدمات - اضافه کردن نوع خدمت به توضیحات
-    // ===============================================
-    const serviceRequestForm = document.getElementById('service-form');
-    if (serviceRequestForm) {
-        serviceRequestForm.addEventListener('submit', function(e) {
-            const service = selectedServiceInput.value;
-            if (service) {
-                const descField = document.getElementById('client-description');
-                if (descField) {
-                    const currentValue = descField.value;
-                    const isPersian = document.body.classList.contains('lang-fa');
-                    const prefix = isPersian ? 'نوع خدمت درخواستی:' : 'Requested Service:';
-                    descField.value = `${prefix} ${service}\n\n${currentValue}`;
-                }
-            }
-        });
-    }
-
-    // ===============================================
-    // دکمه‌های اشتراک‌گذاری
-    // ===============================================
-    const shareButtons = document.querySelectorAll('.share-btn');
-    const currentURL = window.location.href;
-    const currentTitle = document.title;
-
-    shareButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
-            const shareType = this.getAttribute('data-share');
-            let shareURL = '';
-            
-            switch(shareType) {
-                case 'linkedin':
-                    shareURL = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentURL)}`;
-                    break;
-                case 'twitter':
-                    shareURL = `https://twitter.com/intent/tweet?url=${encodeURIComponent(currentURL)}&text=${encodeURIComponent(currentTitle)}`;
-                    break;
-                case 'whatsapp':
-                    shareURL = `https://api.whatsapp.com/send?text=${encodeURIComponent(currentTitle + ' - ' + currentURL)}`;
-                    break;
-                case 'email':
-                    shareURL = `mailto:?subject=${encodeURIComponent(currentTitle)}&body=${encodeURIComponent('من این رزومه حرفه‌ای را دیدم. لینک: ' + currentURL)}`;
-                    break;
-                case 'copy':
-                    navigator.clipboard.writeText(currentURL).then(() => {
-                        const originalText = this.innerHTML;
-                        this.innerHTML = '<i class="fas fa-check"></i>';
-                        this.style.background = '#28a745';
-                        setTimeout(() => {
-                            this.innerHTML = originalText;
-                            this.style.background = '#6c757d';
-                        }, 2000);
-                    }).catch(() => {
-                        alert('لینک کپی نشد. لطفاً دستی کپی کنید.');
-                    });
-                    return;
-            }
-            
-            if (shareURL) {
-                window.open(shareURL, '_blank', 'width=600,height=500');
-            }
-        });
-    });
-});
+        item.style.transition =
