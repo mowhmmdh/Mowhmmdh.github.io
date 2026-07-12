@@ -18,9 +18,14 @@
     --shadow-hover: 0 16px 48px rgba(37, 99, 235, 0.12);
     --radius: 16px;
     --transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* رنگ‌های خاص برای دسته‌های مهارت */
+    --color-network: #2563eb;
+    --color-security: #7c3aed;
+    --color-os: #059669;
+    --color-management: #d97706;
 }
 
-/* حالت تاریک (Dark Mode) */
 body.dark-mode {
     --primary: #e2e8f0;
     --primary-light: #94a3b8;
@@ -716,24 +721,24 @@ body.lang-fa #navbar a:hover {
 }
 
 /* ================================================= */
-/* ---- خدمات (۳ ستونه در دسکتاپ با طراحی مدرن) ---- */
+/* ---- خدمات من (طراحی مدرن با کارت‌های شیشه‌ای) ---- */
 /* ================================================= */
 .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    gap: 28px;
     margin-top: 10px;
 }
 
 .service-card {
     background: var(--bg-card);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    padding: 28px 20px 22px;
-    border-radius: 20px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 32px 22px 26px;
+    border-radius: 24px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow);
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -745,11 +750,8 @@ body.lang-fa #navbar a:hover {
 .service-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--accent));
+    inset: 0;
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(37, 99, 235, 0.01));
     opacity: 0;
     transition: var(--transition);
 }
@@ -758,29 +760,54 @@ body.lang-fa #navbar a:hover {
     opacity: 1;
 }
 
+.service-card::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+                rgba(37, 99, 235, 0.06) 0%, 
+                transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.service-card:hover::after {
+    opacity: 1;
+}
+
 .service-card:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(-8px);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 24px 60px rgba(37, 99, 235, 0.15);
     border-color: var(--accent);
 }
 
 .service-card .service-icon {
-    width: 72px;
-    height: 72px;
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, rgba(37, 99, 235, 0.08), rgba(37, 99, 235, 0.02));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 16px;
-    font-size: 2em;
+    margin: 0 auto 18px;
+    font-size: 2.2em;
     color: var(--accent);
     transition: var(--transition);
     border: 2px solid transparent;
     position: relative;
+    animation: floatIcon 4s ease-in-out infinite;
 }
 
-.service-card .service-icon::after {
+@keyframes floatIcon {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+.service-card .service-icon::before {
     content: '';
     position: absolute;
     inset: -4px;
@@ -791,9 +818,9 @@ body.lang-fa #navbar a:hover {
     z-index: -1;
 }
 
-.service-card:hover .service-icon::after {
+.service-card:hover .service-icon::before {
     opacity: 1;
-    animation: spin 2s linear infinite;
+    animation: spin 3s linear infinite;
 }
 
 @keyframes spin {
@@ -804,9 +831,9 @@ body.lang-fa #navbar a:hover {
 .service-card:hover .service-icon {
     background: var(--accent);
     color: white;
-    transform: scale(1.1) rotate(4deg);
+    transform: scale(1.1);
     border-color: var(--accent);
-    box-shadow: 0 0 30px var(--accent-glow);
+    box-shadow: 0 0 40px var(--accent-glow);
 }
 
 body.dark-mode .service-card .service-icon {
@@ -820,9 +847,9 @@ body.dark-mode .service-card:hover .service-icon {
 
 .service-card h3 {
     color: var(--primary);
-    font-size: 1.15em;
+    font-size: 1.2em;
     font-weight: 700;
-    margin: 0 0 12px 0;
+    margin: 0 0 14px 0;
     position: relative;
     display: inline-block;
 }
@@ -830,18 +857,18 @@ body.dark-mode .service-card:hover .service-icon {
 .service-card h3::after {
     content: '';
     position: absolute;
-    bottom: -4px;
+    bottom: -6px;
     left: 50%;
     transform: translateX(-50%);
-    width: 30px;
-    height: 2px;
-    background: var(--accent);
-    border-radius: 2px;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--primary-light));
+    border-radius: 3px;
     transition: var(--transition);
 }
 
 .service-card:hover h3::after {
-    width: 60px;
+    width: 80px;
 }
 
 body.dark-mode .service-card h3 {
@@ -851,7 +878,7 @@ body.dark-mode .service-card h3 {
 .service-card ul {
     list-style: none;
     padding: 0;
-    margin: 12px 0 18px 0;
+    margin: 16px 0 20px 0;
     width: 100%;
     text-align: right;
 }
@@ -861,22 +888,22 @@ body.lang-en .service-card ul {
 }
 
 .service-card ul li {
-    padding: 6px 0;
-    font-size: 0.85em;
+    padding: 7px 0;
+    font-size: 0.88em;
     color: var(--text);
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     position: relative;
-    padding-inline-start: 18px;
+    padding-inline-start: 22px;
     transition: var(--transition);
 }
 
 .service-card ul li:hover {
     color: var(--accent);
-    transform: translateX(4px);
+    transform: translateX(6px);
 }
 
 body.lang-fa .service-card ul li:hover {
-    transform: translateX(-4px);
+    transform: translateX(-6px);
 }
 
 body.dark-mode .service-card ul li {
@@ -885,11 +912,11 @@ body.dark-mode .service-card ul li {
 }
 
 .service-card ul li::before {
-    content: "▹";
+    content: "✦";
     color: var(--accent);
     font-weight: bold;
     position: absolute;
-    top: 6px;
+    top: 7px;
 }
 
 body.lang-fa .service-card ul li::before {
@@ -906,14 +933,14 @@ body.lang-en .service-card ul li::before {
     border-bottom: none;
 }
 
-/* ---- دکمه انتخاب خدمت (حالت مدرن) ---- */
+/* ---- دکمه انتخاب خدمت (طراحی شیشه‌ای) ---- */
 .service-select-btn {
     background: linear-gradient(135deg, var(--accent), var(--primary-light));
     color: white;
     border: none;
-    padding: 10px 22px;
+    padding: 12px 28px;
     border-radius: 50px;
-    font-size: 0.82em;
+    font-size: 0.85em;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -923,29 +950,41 @@ body.lang-en .service-card ul li::before {
     margin-top: auto;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 4px 16px rgba(37, 99, 235, 0.15);
-    letter-spacing: 0.3px;
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.2);
+    letter-spacing: 0.5px;
+}
+
+.service-select-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.service-select-btn:hover::before {
+    opacity: 1;
 }
 
 .service-select-btn::after {
     content: '';
     position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s ease;
 }
 
 .service-select-btn:hover::after {
-    opacity: 1;
+    left: 100%;
 }
 
 .service-select-btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    box-shadow: 0 8px 28px rgba(37, 99, 235, 0.25);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(37, 99, 235, 0.3);
 }
 
 body.dark-mode .service-select-btn {
@@ -960,13 +999,14 @@ body.dark-mode .service-select-btn {
     }
     
     .service-card {
-        padding: 24px 18px;
+        padding: 26px 18px;
+        border-radius: 20px;
     }
     
     .service-card .service-icon {
-        width: 64px;
-        height: 64px;
-        font-size: 1.6em;
+        width: 68px;
+        height: 68px;
+        font-size: 1.8em;
     }
     
     .service-card h3 {
@@ -980,7 +1020,7 @@ body.dark-mode .service-select-btn {
     
     .service-select-btn {
         font-size: 0.78em;
-        padding: 8px 18px;
+        padding: 10px 20px;
         max-width: 100%;
     }
 }
@@ -988,48 +1028,48 @@ body.dark-mode .service-select-btn {
 @media (max-width: 600px) {
     .services-grid {
         grid-template-columns: 1fr 1fr;
-        gap: 14px;
+        gap: 16px;
     }
     
     .service-card {
-        padding: 18px 12px;
-        border-radius: 14px;
+        padding: 20px 14px;
+        border-radius: 16px;
     }
     
     .service-card .service-icon {
-        width: 52px;
-        height: 52px;
-        font-size: 1.2em;
-        margin-bottom: 10px;
+        width: 56px;
+        height: 56px;
+        font-size: 1.4em;
+        margin-bottom: 12px;
     }
     
     .service-card h3 {
         font-size: 0.9em;
-        margin-bottom: 8px;
+        margin-bottom: 10px;
     }
     
     .service-card h3::after {
-        width: 20px;
-        bottom: -2px;
+        width: 30px;
+        bottom: -4px;
     }
     
     .service-card:hover h3::after {
-        width: 40px;
+        width: 50px;
     }
     
     .service-card ul {
-        margin: 6px 0 12px 0;
+        margin: 10px 0 14px 0;
     }
     
     .service-card ul li {
-        font-size: 0.72em;
+        font-size: 0.75em;
         padding: 4px 0;
-        padding-inline-start: 14px;
+        padding-inline-start: 18px;
     }
     
     .service-select-btn {
-        font-size: 0.7em;
-        padding: 6px 14px;
+        font-size: 0.72em;
+        padding: 8px 16px;
         border-radius: 30px;
     }
 }
@@ -1037,24 +1077,25 @@ body.dark-mode .service-select-btn {
 @media (max-width: 400px) {
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 18px;
     }
     
     .service-card {
-        padding: 22px 18px;
-        max-width: 320px;
+        padding: 24px 18px;
+        max-width: 340px;
         margin: 0 auto;
+        border-radius: 20px;
     }
     
     .service-card .service-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.4em;
+        width: 64px;
+        height: 64px;
+        font-size: 1.6em;
     }
 }
 
 /* ================================================= */
-/* ---- مهارت‌های فنی (چیدمان شبکه‌ای و مدرن) ---- */
+/* ---- مهارت‌های فنی (طراحی مدرن با رنگ‌های خاص) ---- */
 /* ================================================= */
 .skills-wrapper {
     width: 100%;
@@ -1080,7 +1121,7 @@ body.dark-mode .service-select-btn {
     border-radius: 10px;
 }
 
-/* ---- ۳ ستونه در دسکتاپ (نه ۴ تا) ---- */
+/* ---- ۳ ستونه در دسکتاپ ---- */
 .skills-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1091,15 +1132,38 @@ body.dark-mode .service-select-btn {
 .skill-category {
     padding: 24px 20px 20px;
     border: 1px solid var(--border);
-    border-radius: 18px;
+    border-radius: 20px;
     background: var(--bg-card);
-    transition: var(--transition);
-    opacity: 1;
-    transform: translateY(0);
-    animation: none;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     box-shadow: var(--shadow);
     min-width: 200px;
     max-width: 320px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-category::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--primary-light));
+    opacity: 0.6;
+}
+
+.skill-category:nth-child(1)::before {
+    background: linear-gradient(90deg, #2563eb, #60a5fa);
+}
+.skill-category:nth-child(2)::before {
+    background: linear-gradient(90deg, #7c3aed, #a78bfa);
+}
+.skill-category:nth-child(3)::before {
+    background: linear-gradient(90deg, #059669, #34d399);
+}
+.skill-category:nth-child(4)::before {
+    background: linear-gradient(90deg, #d97706, #fbbf24);
 }
 
 .skill-category:hover {
@@ -1112,27 +1176,28 @@ body.dark-mode .service-select-btn {
     color: var(--primary);
     font-size: 1em;
     font-weight: 700;
-    padding-bottom: 12px;
-    border-bottom: 2px solid var(--accent);
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--border);
     margin-top: 0;
     display: flex;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 
 .skill-category h4 i {
     color: var(--accent);
     font-size: 1.1em;
     background: rgba(37, 99, 235, 0.08);
-    padding: 6px;
-    border-radius: 8px;
+    padding: 6px 8px;
+    border-radius: 10px;
     transition: var(--transition);
 }
 
 .skill-category:hover h4 i {
     background: var(--accent);
     color: white;
-    transform: rotate(8deg);
+    transform: rotate(8deg) scale(1.1);
 }
 
 .skill-level-item {
@@ -1165,19 +1230,37 @@ body.lang-fa .skill-level-item {
 .skill-label {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 0.82em;
     margin-bottom: 4px;
     font-weight: 500;
     color: var(--text);
 }
 
+.skill-label .skill-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.skill-label .skill-name i {
+    font-size: 0.7em;
+    color: var(--accent);
+    opacity: 0.5;
+}
+
 .skill-percent {
     color: var(--accent);
     font-weight: 700;
-    font-size: 0.85em;
+    font-size: 0.8em;
     background: rgba(37, 99, 235, 0.06);
-    padding: 0 10px;
-    border-radius: 12px;
+    padding: 0 12px;
+    border-radius: 20px;
+    transition: var(--transition);
+}
+
+.skill-category:hover .skill-percent {
+    background: rgba(37, 99, 235, 0.12);
 }
 
 .skill-bar-container {
@@ -1193,7 +1276,7 @@ body.lang-fa .skill-level-item {
     height: 100%;
     background: linear-gradient(90deg, var(--accent), var(--primary-light));
     border-radius: 10px;
-    transition: width 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 1.8s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
 }
 
@@ -1201,16 +1284,16 @@ body.lang-fa .skill-level-item {
     content: '';
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100%;
+    left: -100%;
+    width: 200%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-    animation: shimmer 2s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    animation: shimmer 2.5s infinite;
 }
 
 @keyframes shimmer {
-    0% { transform: translateX(-100%); }
-    100% { transform: translateX(100%); }
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(50%); }
 }
 
 .skill-level-item.show .skill-bar {
@@ -1231,6 +1314,7 @@ body.lang-fa .skill-level-item {
         min-width: 180px;
         max-width: 280px;
         padding: 20px 16px;
+        border-radius: 16px;
     }
 }
 
@@ -1256,7 +1340,7 @@ body.lang-fa .skill-level-item {
     
     .skill-category h4 i {
         font-size: 0.9em;
-        padding: 4px;
+        padding: 4px 6px;
     }
     
     .skill-label {
@@ -1264,7 +1348,7 @@ body.lang-fa .skill-level-item {
     }
     
     .skill-percent {
-        font-size: 0.75em;
+        font-size: 0.7em;
         padding: 0 8px;
     }
     
@@ -2178,7 +2262,6 @@ body.dark-mode .share-copy {
         color: #0f172a !important;
     }
 
-    /* ---- دکمه‌های اشتراک‌گذاری در موبایل ---- */
     .share-buttons {
         padding: 8px 18px;
         gap: 10px;
@@ -2269,15 +2352,6 @@ body.dark-mode .share-copy {
     #sidebar-info:hover {
         transform: none;
     }
-
-    /* ---- ۳ ستونه در تبلت به ۲ ستونه ---- */
-    .skills-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 18px;
-        min-width: max-content;
-        padding-right: 10px;
-        padding-left: 10px;
-    }
 }
 
 @media (max-width: 768px) {
@@ -2298,96 +2372,6 @@ body.dark-mode .share-copy {
     #service-request-form .form-actions .cancel-btn {
         flex: 1;
         width: 100%;
-    }
-}
-
-@media (max-width: 600px) {
-    .services-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 14px;
-    }
-    
-    .service-card {
-        padding: 18px 12px;
-        border-radius: 14px;
-    }
-    
-    .service-card .service-icon {
-        width: 52px;
-        height: 52px;
-        font-size: 1.2em;
-        margin-bottom: 10px;
-    }
-    
-    .service-card h3 {
-        font-size: 0.9em;
-        margin-bottom: 8px;
-    }
-    
-    .service-card h3::after {
-        width: 20px;
-        bottom: -2px;
-    }
-    
-    .service-card:hover h3::after {
-        width: 40px;
-    }
-    
-    .service-card ul {
-        margin: 6px 0 12px 0;
-    }
-    
-    .service-card ul li {
-        font-size: 0.72em;
-        padding: 4px 0;
-        padding-inline-start: 14px;
-    }
-    
-    .service-select-btn {
-        font-size: 0.7em;
-        padding: 6px 14px;
-        border-radius: 30px;
-    }
-
-    .skills-list {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-        padding-right: 8px;
-        padding-left: 8px;
-    }
-    
-    .skill-category {
-        min-width: 150px;
-        max-width: 220px;
-        padding: 16px 14px;
-        border-radius: 14px;
-    }
-    
-    .skill-category h4 {
-        font-size: 0.85em;
-        padding-bottom: 10px;
-    }
-    
-    .skill-category h4 i {
-        font-size: 0.9em;
-        padding: 4px;
-    }
-    
-    .skill-label {
-        font-size: 0.72em;
-    }
-    
-    .skill-percent {
-        font-size: 0.75em;
-        padding: 0 8px;
-    }
-    
-    .skill-bar-container {
-        height: 5px;
-    }
-    
-    .skill-level-item {
-        margin-bottom: 10px;
     }
 }
 
@@ -2543,44 +2527,112 @@ body.dark-mode .share-copy {
         border-radius: 12px;
     }
 
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+    }
+    
+    .service-card {
+        padding: 18px 12px;
+        border-radius: 14px;
+    }
+    
+    .service-card .service-icon {
+        width: 52px;
+        height: 52px;
+        font-size: 1.2em;
+        margin-bottom: 10px;
+    }
+    
+    .service-card h3 {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+    
+    .service-card h3::after {
+        width: 30px;
+        bottom: -4px;
+    }
+    
+    .service-card:hover h3::after {
+        width: 50px;
+    }
+    
+    .service-card ul {
+        margin: 10px 0 14px 0;
+    }
+    
+    .service-card ul li {
+        font-size: 0.75em;
+        padding: 4px 0;
+        padding-inline-start: 18px;
+    }
+    
+    .service-select-btn {
+        font-size: 0.72em;
+        padding: 8px 16px;
+        border-radius: 30px;
+    }
+
     .skills-list {
         grid-template-columns: repeat(2, 1fr);
-        gap: 12px;
+        gap: 14px;
         padding-right: 8px;
         padding-left: 8px;
     }
     
     .skill-category {
         min-width: 150px;
-        max-width: 200px;
-        padding: 14px 12px;
+        max-width: 220px;
+        padding: 16px 14px;
+        border-radius: 14px;
     }
     
     .skill-category h4 {
-        font-size: 0.8em;
+        font-size: 0.85em;
+        padding-bottom: 10px;
+    }
+    
+    .skill-category h4 i {
+        font-size: 0.9em;
+        padding: 4px 6px;
     }
     
     .skill-label {
+        font-size: 0.72em;
+    }
+    
+    .skill-percent {
         font-size: 0.7em;
+        padding: 0 8px;
+    }
+    
+    .skill-bar-container {
+        height: 5px;
+    }
+    
+    .skill-level-item {
+        margin-bottom: 10px;
     }
 }
 
 @media (max-width: 400px) {
     .services-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 18px;
     }
     
     .service-card {
-        padding: 22px 18px;
-        max-width: 320px;
+        padding: 24px 18px;
+        max-width: 340px;
         margin: 0 auto;
+        border-radius: 20px;
     }
     
     .service-card .service-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.4em;
+        width: 64px;
+        height: 64px;
+        font-size: 1.6em;
     }
 
     .skills-list {
