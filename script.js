@@ -242,4 +242,99 @@ document.addEventListener('DOMContentLoaded', function() {
     jobItems.forEach((item) => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(20px)';
-        item.style.transition =
+        item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        jobObserver.observe(item);
+    });
+
+    // ===============================================
+    // افکت تایپ‌رایتر
+    // ===============================================
+    function initTypingEffect() {
+        const typingElements = document.querySelectorAll('.typing-text');
+        typingElements.forEach(element => {
+            const text = element.textContent;
+            element.textContent = '';
+            let index = 0;
+            function typeChar() {
+                if (index < text.length) {
+                    element.textContent += text.charAt(index);
+                    index++;
+                    setTimeout(typeChar, 50 + Math.random() * 50);
+                }
+            }
+            setTimeout(typeChar, 500);
+        });
+    }
+    initTypingEffect();
+
+    // ===============================================
+    // دارک مود
+    // ===============================================
+    const darkToggle = document.getElementById('dark-toggle');
+    const body = document.body;
+    if (localStorage.getItem('dark-mode') === 'true') {
+        body.classList.add('dark-mode');
+        darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+    darkToggle.addEventListener('click', function() {
+        body.classList.toggle('dark-mode');
+        const isDark = body.classList.contains('dark-mode');
+        localStorage.setItem('dark-mode', isDark);
+        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+    });
+
+    // ===============================================
+    // بخش خدمات - نمایش فرم و انتخاب نوع خدمت
+    // ===============================================
+    const serviceButtons = document.querySelectorAll('.service-select-btn');
+    const serviceForm = document.getElementById('service-request-form');
+    const selectedServiceInput = document.getElementById('selected-service');
+
+    serviceButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const serviceName = this.getAttribute('data-service');
+            selectedServiceInput.value = serviceName;
+            if (serviceForm) {
+                serviceForm.style.display = 'block';
+                serviceForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        });
+    });
+
+    // ===============================================
+    // بستن فرم با دکمه لغو
+    // ===============================================
+    const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const form = document.getElementById('service-request-form');
+            if (form) {
+                form.style.display = 'none';
+                // ریست کردن فرم
+                const formElement = document.getElementById('service-form');
+                if (formElement) {
+                    formElement.reset();
+                }
+            }
+        });
+    }
+
+    // ===============================================
+    // ارسال فرم خدمات - اضافه کردن نوع خدمت به توضیحات
+    // ===============================================
+    const serviceRequestForm = document.getElementById('service-form');
+    if (serviceRequestForm) {
+        serviceRequestForm.addEventListener('submit', function(e) {
+            const service = selectedServiceInput.value;
+            if (service) {
+                const descField = document.getElementById('client-description');
+                if (descField) {
+                    const currentValue = descField.value;
+                    descField.value = `نوع خدمت درخواستی: ${service}\n\n${currentValue}`;
+                }
+            }
+        });
+    }
+});
