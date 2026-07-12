@@ -760,25 +760,6 @@ body.lang-fa #navbar a:hover {
     opacity: 1;
 }
 
-.service-card::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                rgba(37, 99, 235, 0.06) 0%, 
-                transparent 60%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    pointer-events: none;
-}
-
-.service-card:hover::after {
-    opacity: 1;
-}
-
 .service-card:hover {
     transform: translateY(-12px) scale(1.02);
     box-shadow: 0 24px 60px rgba(37, 99, 235, 0.15);
@@ -1095,7 +1076,7 @@ body.dark-mode .service-select-btn {
 }
 
 /* ================================================= */
-/* ---- مهارت‌های فنی (۴ ستونه با اسکرول افقی) ---- */
+/* ---- مهارت‌های فنی (۴ ستونه ثابت با اسکرول افقی در همه دستگاه‌ها) ---- */
 /* ================================================= */
 .skills-wrapper {
     width: 100%;
@@ -1107,6 +1088,8 @@ body.dark-mode .service-select-btn {
     scrollbar-color: var(--accent) transparent;
     padding-bottom: 15px;
     padding-top: 5px;
+    padding-left: 4px;
+    padding-right: 4px;
     position: relative;
     cursor: grab;
 }
@@ -1115,6 +1098,7 @@ body.dark-mode .service-select-btn {
     cursor: grabbing;
 }
 
+/* اسکرول‌بار زیبا */
 .skills-wrapper::-webkit-scrollbar {
     height: 8px;
 }
@@ -1122,6 +1106,7 @@ body.dark-mode .service-select-btn {
 .skills-wrapper::-webkit-scrollbar-track {
     background: var(--border);
     border-radius: 10px;
+    margin: 0 10px;
 }
 
 .skills-wrapper::-webkit-scrollbar-thumb {
@@ -1133,48 +1118,7 @@ body.dark-mode .service-select-btn {
     background: var(--accent);
 }
 
-/* فلش‌های اسکرول (دسکتاپ) */
-.skills-scroll-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-    margin-top: 12px;
-}
-
-.skills-scroll-indicators button {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: var(--transition);
-    color: var(--text);
-    font-size: 1em;
-    box-shadow: var(--shadow);
-}
-
-.skills-scroll-indicators button:hover {
-    background: var(--accent);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-body.dark-mode .skills-scroll-indicators button {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.05);
-}
-
-body.dark-mode .skills-scroll-indicators button:hover {
-    background: #60a5fa;
-    color: #0f172a;
-}
-
-/* ---- ۴ ستونه در دسکتاپ (اسکرول افقی) ---- */
+/* ---- ۴ ستونه در تمام دستگاه‌ها (با اسکرول افقی) ---- */
 .skills-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1355,10 +1299,54 @@ body.lang-fa .skill-level-item {
     width: var(--skill-width, 0%) !important;
 }
 
-/* ---- ریسپانسیو مهارت‌ها ---- */
+/* ---- فلش‌های راهنما برای اسکرول (فقط دسکتاپ) ---- */
+.skills-scroll-hint {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 8px;
+}
+
+.skills-scroll-hint span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75em;
+    color: var(--text-muted);
+    opacity: 0.6;
+    animation: pulseHint 2s ease-in-out infinite;
+}
+
+.skills-scroll-hint span i {
+    color: var(--accent);
+    font-size: 1.2em;
+}
+
+.skills-scroll-hint span:first-child {
+    animation-delay: 0s;
+}
+.skills-scroll-hint span:last-child {
+    animation-delay: 1s;
+}
+
+@keyframes pulseHint {
+    0%, 100% { opacity: 0.4; transform: translateX(0); }
+    50% { opacity: 0.8; transform: translateX(4px); }
+}
+
+body.lang-fa .skills-scroll-hint span:last-child {
+    animation-delay: 0s;
+}
+body.lang-fa .skills-scroll-hint span:first-child {
+    animation-delay: 1s;
+}
+
+/* ---- ریسپانسیو مهارت‌ها (۴ ستونه در همه دستگاه‌ها) ---- */
+/* در موبایل و تبلت هم ۴ ستونه با اسکرول افقی */
 @media (max-width: 992px) {
     .skills-list {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 18px;
         min-width: max-content;
         padding-right: 10px;
@@ -1366,28 +1354,29 @@ body.lang-fa .skill-level-item {
     }
     
     .skill-category {
-        min-width: 180px;
-        max-width: 260px;
+        min-width: 170px;
+        max-width: 240px;
         padding: 20px 16px;
         border-radius: 16px;
     }
     
-    .skills-scroll-indicators {
+    .skills-scroll-hint {
         display: none;
     }
 }
 
 @media (max-width: 600px) {
     .skills-list {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 14px;
+        min-width: max-content;
         padding-right: 8px;
         padding-left: 8px;
     }
     
     .skill-category {
         min-width: 150px;
-        max-width: 210px;
+        max-width: 200px;
         padding: 16px 14px;
         border-radius: 14px;
     }
@@ -1419,14 +1408,14 @@ body.lang-fa .skill-level-item {
         margin-bottom: 10px;
     }
     
-    .skills-scroll-indicators {
+    .skills-scroll-hint {
         display: none;
     }
 }
 
 @media (max-width: 400px) {
     .skills-list {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(4, 1fr);
         gap: 12px;
         min-width: max-content;
         padding-right: 6px;
@@ -1434,24 +1423,41 @@ body.lang-fa .skill-level-item {
     }
     
     .skill-category {
-        min-width: 140px;
-        max-width: 180px;
+        min-width: 130px;
+        max-width: 170px;
         padding: 14px 12px;
         border-radius: 12px;
     }
     
     .skill-category h4 {
-        font-size: 0.75em;
+        font-size: 0.72em;
         padding-bottom: 8px;
+        gap: 6px;
+    }
+    
+    .skill-category h4 i {
+        font-size: 0.75em;
+        padding: 3px 4px;
     }
     
     .skill-label {
-        font-size: 0.65em;
+        font-size: 0.6em;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2px;
     }
     
     .skill-percent {
         font-size: 0.6em;
         padding: 0 6px;
+    }
+    
+    .skill-bar-container {
+        height: 4px;
+    }
+    
+    .skill-level-item {
+        margin-bottom: 8px;
     }
 }
 
