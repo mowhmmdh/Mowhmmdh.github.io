@@ -185,6 +185,20 @@ document.addEventListener('DOMContentLoaded', function() {
     sections.forEach(section => sectionObserver.observe(section));
 
     // ===============================================
+    // انیمیشن کارت‌های خدمات
+    // ===============================================
+    const serviceCards = document.querySelectorAll('.service-card');
+    const serviceObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                serviceObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    serviceCards.forEach(card => serviceObserver.observe(card));
+
+    // ===============================================
     // دکمه بازگشت به بالا
     // ===============================================
     const backBtn = document.getElementById('back-to-top');
@@ -247,25 +261,64 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // افکت تایپ‌رایتر
+    // تایپ‌رایتر پیشرفته
     // ===============================================
-    function initTypingEffect() {
-        const typingElements = document.querySelectorAll('.typing-text');
-        typingElements.forEach(element => {
-            const text = element.textContent;
-            element.textContent = '';
-            let index = 0;
-            function typeChar() {
-                if (index < text.length) {
-                    element.textContent += text.charAt(index);
-                    index++;
-                    setTimeout(typeChar, 50 + Math.random() * 50);
-                }
+    function initAdvancedTyping() {
+        const typingElement = document.querySelector('.typing-text');
+        if (!typingElement) return;
+        
+        const words = JSON.parse(typingElement.getAttribute('data-words') || '["IT Specialist"]');
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        let speed = 80;
+        let isTypingPaused = false;
+        
+        function typeEffect() {
+            if (isTypingPaused) {
+                setTimeout(typeEffect, 100);
+                return;
             }
-            setTimeout(typeChar, 500);
-        });
+            
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+                speed = 40;
+            } else {
+                typingElement.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+                speed = 80 + Math.random() * 40;
+            }
+            
+            if (!isDeleting && charIndex === currentWord.length) {
+                isTypingPaused = true;
+                setTimeout(() => {
+                    isTypingPaused = false;
+                    isDeleting = true;
+                    setTimeout(typeEffect, 100);
+                }, 2000);
+                return;
+            }
+            
+            if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                isTypingPaused = true;
+                setTimeout(() => {
+                    isTypingPaused = false;
+                    setTimeout(typeEffect, 100);
+                }, 300);
+                return;
+            }
+            
+            setTimeout(typeEffect, speed);
+        }
+        
+        setTimeout(typeEffect, 500);
     }
-    initTypingEffect();
+    initAdvancedTyping();
 
     // ===============================================
     // دارک مود
@@ -312,7 +365,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('service-request-form');
             if (form) {
                 form.style.display = 'none';
-                // ریست کردن فرم
                 const formElement = document.getElementById('service-form');
                 if (formElement) {
                     formElement.reset();
