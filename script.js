@@ -140,21 +140,18 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت - اصلاح‌شده با data-width
+    // انیمیشن نوارهای مهارت
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
     function animateSkills() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
-            if (bar) {
-                // خواندن مقدار از ویژگی data-width
-                const val = parseInt(bar.getAttribute('data-width'));
-                if (!isNaN(val)) {
-                    // تنظیم عرض نوار
-                    bar.style.width = val + '%';
-                    // اضافه کردن کلاس show برای انیمیشن
-                    item.classList.add('show');
-                }
+            const percent = item.querySelector('.skill-percent');
+            if (bar && percent) {
+                const val = parseInt(percent.textContent);
+                item.style.setProperty('--skill-width', val + '%');
+                bar.style.width = val + '%';
+                item.classList.add('show');
             }
         });
     }
@@ -392,30 +389,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // ===============================================
-    // نمایش تاریخ به‌روزرسانی در فوتر
-    // ===============================================
-    function updateFooterDate() {
-        const now = new Date();
-        const options = { year: 'numeric', month: 'long', day: 'numeric' };
-        const persianOptions = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'persian' };
-        
-        const faSpan = document.getElementById('update-date-fa');
-        const enSpan = document.getElementById('update-date-en');
-        
-        if (faSpan) {
-            try {
-                const persianDate = new Intl.DateTimeFormat('fa-IR', persianOptions).format(now);
-                faSpan.textContent = persianDate;
-            } catch (e) {
-                faSpan.textContent = now.toLocaleDateString('fa-IR');
-            }
-        }
-        
-        if (enSpan) {
-            enSpan.textContent = now.toLocaleDateString('en-US', options);
-        }
-    }
-    updateFooterDate();
 });
