@@ -1495,101 +1495,33 @@ body.dark-mode .project-actions .badge {
 }
 
 /* ================================================= */
-/* ---- فوتر جدید با شبکه‌های اجتماعی و تاریخ پویا ---- */
+/* ---- فوتر ---- */
 /* ================================================= */
+footer {
+    padding: 20px 0 0 0;
+}
+
 .footer-branding {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 30px 0 20px;
+    padding-top: 22px;
     border-top: 2px solid var(--border);
     margin-top: 40px;
-    gap: 20px;
+    gap: 18px;
+}
+
+.copyright-text {
+    font-size: 0.85em;
+    color: var(--text-muted);
     text-align: center;
+    line-height: 1.8;
 }
 
-.footer-info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-}
-
-.footer-made-with {
-    font-size: 0.95em;
-    color: var(--text-muted);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.footer-made-with strong {
-    color: var(--primary);
+.copyright-text span {
     font-weight: 700;
-}
-
-@keyframes heartbeat {
-    0%, 100% { transform: scale(1); }
-    14% { transform: scale(1.3); }
-    28% { transform: scale(1); }
-    42% { transform: scale(1.3); }
-    70% { transform: scale(1); }
-}
-
-.footer-social {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.footer-social a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    color: var(--text-muted);
-    font-size: 1.1em;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    text-decoration: none;
-}
-
-.footer-social a:hover {
-    transform: translateY(-4px) scale(1.05);
-    background: var(--accent);
-    color: #fff;
-    border-color: var(--accent);
-    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15);
-}
-
-body.dark-mode .footer-social a:hover {
-    background: #60a5fa;
-    color: #0f172a;
-}
-
-.footer-update {
-    font-size: 0.8em;
-    color: var(--text-muted);
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.footer-update i {
-    color: var(--accent);
-    font-size: 0.9em;
+    color: var(--primary);
 }
 
 /* ================================================= */
@@ -2109,20 +2041,6 @@ body.dark-mode .footer-social a:hover {
     .footer-logo-img {
         height: 44px;
         width: 44px;
-    }
-
-    .footer-made-with {
-        font-size: 0.8em;
-    }
-
-    .footer-social a {
-        width: 38px;
-        height: 38px;
-        font-size: 0.95em;
-    }
-
-    .footer-update {
-        font-size: 0.7em;
     }
 
     #back-to-top {
