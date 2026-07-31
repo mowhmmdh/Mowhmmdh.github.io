@@ -389,4 +389,131 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // ===============================================
+    // دکمه‌های اشتراک‌گذاری حرفه‌ای
+    // ===============================================
+    (function initShareButtons() {
+        const shareBtns = document.querySelectorAll('.share-btn');
+        const toastContainer = document.getElementById('toast-container');
+
+        // آدرس و متن اشتراک‌گذاری
+        const shareUrl = window.location.href;
+        const shareText = document.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+
+        // تابع نمایش Toast
+        function showToast(message) {
+            if (!toastContainer) return;
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('hide');
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // تابع اشتراک‌گذاری در لینکدین
+        function shareLinkedIn() {
+            const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+            window.open(url, '_blank', 'width=600,height=500');
+        }
+
+        // تابع اشتراک‌گذاری در توییتر (X)
+        function shareTwitter() {
+            const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`;
+            window.open(url, '_blank', 'width=600,height=500');
+        }
+
+        // تابع اشتراک‌گذاری در واتساپ
+        function shareWhatsApp() {
+            const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`;
+            window.open(url, '_blank', 'width=600,height=500');
+        }
+
+        // تابع اشتراک‌گذاری از طریق ایمیل
+        function shareEmail() {
+            const subject = encodeURIComponent('معرفی صفحه حرفه‌ای');
+            const body = encodeURIComponent(`${shareText}\n\nمشاهده در: ${shareUrl}`);
+            window.location.href = `mailto:?subject=${subject}&body=${body}`;
+        }
+
+        // تابع کپی لینک
+        function copyLink() {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(shareUrl).then(() => {
+                    const msg = document.documentElement.lang === 'fa' ? '✅ لینک کپی شد!' : '✅ Link copied!';
+                    showToast(msg);
+                }).catch(() => fallbackCopy());
+            } else {
+                fallbackCopy();
+            }
+        }
+
+        // روش جایگزین برای کپی (در صورت عدم پشتیبانی Clipboard API)
+        function fallbackCopy() {
+            const textarea = document.createElement('textarea');
+            textarea.value = shareUrl;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                const msg = document.documentElement.lang === 'fa' ? '✅ لینک کپی شد!' : '✅ Link copied!';
+                showToast(msg);
+            } catch (err) {
+                const msg = document.documentElement.lang === 'fa' ? '❌ کپی ناموفق' : '❌ Copy failed';
+                showToast(msg);
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // تابع ایجاد ریپل افکت
+        function createRipple(e, btn) {
+            const rect = btn.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size/2;
+            const y = e.clientY - rect.top - size/2;
+            const ripple = document.createElement('span');
+            ripple.className = 'ripple';
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            btn.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // رویدادهای دکمه‌ها
+        shareBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                createRipple(e, this);
+                const type = this.dataset.share;
+                switch (type) {
+                    case 'linkedin': shareLinkedIn(); break;
+                    case 'twitter': shareTwitter(); break;
+                    case 'whatsapp': shareWhatsApp(); break;
+                    case 'email': shareEmail(); break;
+                    case 'copy': copyLink(); break;
+                    default: break;
+                }
+            });
+
+            // دسترسی با کیبورد (Enter/Space)
+            btn.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // اگر toast-container وجود نداشت، بساز
+        if (!toastContainer) {
+            const container = document.createElement('div');
+            container.id = 'toast-container';
+            document.body.appendChild(container);
+        }
+    })();
 });
