@@ -547,16 +547,17 @@ body.lang-en .summary {
 }
 
 /* ================================================= */
-/* ---- آیتم‌های شغلی با تایم‌لاین ---- */
+/* ---- آیتم‌های شغلی با تایم‌لاین (اصلاح‌شده) ---- */
 /* ================================================= */
+
 #experience .job-item {
     position: relative;
     padding-left: 30px;
     border-left: 3px solid var(--accent);
     border-radius: 0 var(--radius) var(--radius) 0;
     margin-left: 15px;
-    padding-top: 18px;
-    padding-bottom: 18px;
+    padding-top: 22px;
+    padding-bottom: 22px;
 }
 
 #experience .job-item::before {
@@ -592,33 +593,19 @@ body.lang-fa #experience .job-item::before {
     right: -9px;
 }
 
-/* ---- استایل‌های عمومی job-item ---- */
+/* ---- استایل‌های عمومی job-item (اصلاح‌شده) ---- */
 .job-item {
     margin-bottom: 22px;
-    padding: 22px 28px;
+    padding: 22px 28px 22px 28px;
     border-radius: var(--radius);
     background: var(--bg-card);
     border-right: 5px solid var(--accent);
     transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
     overflow: hidden;
-}
-
-.job-item::after {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(37, 99, 235, 0.03) 0%, transparent 70%);
-    opacity: 0;
-    transition: opacity 0.6s ease;
-    pointer-events: none;
-}
-
-.job-item:hover::after {
-    opacity: 1;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 body.lang-en .job-item {
@@ -633,21 +620,27 @@ body.lang-en .job-item {
 
 .job-item h3 {
     color: var(--primary);
-    font-size: 1.15em;
+    font-size: 1.1em;
     font-weight: 700;
-    margin: 0 0 6px 0;
+    margin: 0 0 8px 0;
+    line-height: 1.5;
+}
+
+body.lang-fa .job-item h3 {
+    font-size: 1.05em;
 }
 
 .job-item .duration,
 .job-item .institution {
     color: var(--text-muted);
-    font-size: 0.88em;
+    font-size: 0.85em;
     font-weight: 500;
     background: rgba(37, 99, 235, 0.08);
     padding: 2px 16px;
     border-radius: 20px;
     display: inline-block;
     margin: 0 0 12px 0;
+    line-height: 1.6;
 }
 
 .job-item ul {
@@ -660,7 +653,16 @@ body.lang-en .job-item {
     position: relative;
     padding-inline-start: 26px;
     margin-bottom: 8px;
-    line-height: 1.7;
+    line-height: 1.8;
+    font-size: 0.95em;
+    color: var(--text);
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+body.lang-fa .job-item ul li {
+    font-size: 0.95em;
+    line-height: 2;
 }
 
 .job-item ul li::before {
@@ -681,7 +683,7 @@ body.lang-fa .job-item ul li::before {
     left: auto;
 }
 
-/* ---- شغل فعلی ---- */
+/* ---- شغل فعلی (اصلاح‌شده) ---- */
 .job-item.current-position {
     background: linear-gradient(135deg, #eff6ff, var(--bg-card));
     border-right-color: #f59e0b;
@@ -701,26 +703,30 @@ body.lang-en .job-item.current-position {
 .job-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     flex-wrap: wrap;
     gap: 8px;
-    margin-bottom: 2px;
+    margin-bottom: 4px;
 }
 
 .job-header h3 {
     margin: 0;
+    flex: 1;
+    min-width: 180px;
 }
 
 .badge-current {
     background: linear-gradient(135deg, #f59e0b, #d97706);
     color: #fff;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: 700;
-    padding: 3px 16px;
+    padding: 3px 14px;
     border-radius: 20px;
     text-transform: uppercase;
     white-space: nowrap;
     box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25);
+    flex-shrink: 0;
+    margin-top: 2px;
 }
 
 /* ================================================= */
@@ -1737,7 +1743,7 @@ footer {
 }
 
 /* ================================================= */
-/* ---- ریسپانسیو (اصلاح شده برای رفع مشکل نقطه‌ها) ---- */
+/* ---- ریسپانسیو (کامل و اصلاح‌شده) ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
@@ -1851,19 +1857,53 @@ footer {
 
     /* ===== اصلاحات موبایل برای لیست‌ها (رفع تداخل نقطه‌ها) ===== */
     .job-item ul li {
-        padding-inline-start: 30px;
+        padding-inline-start: 30px !important;
+        font-size: 0.88em !important;
+        line-height: 1.8 !important;
+    }
+
+    body.lang-fa .job-item ul li {
+        font-size: 0.88em !important;
+        line-height: 2 !important;
     }
 
     .service-card ul li {
-        padding-inline-start: 30px;
+        padding-inline-start: 30px !important;
+    }
+
+    /* ===== اصلاحات بخش سوابق شغلی در موبایل ===== */
+    .job-item {
+        padding: 16px 18px !important;
+        border-radius: 14px;
+        background: var(--bg-card);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow);
+    }
+
+    .job-item h3 {
+        font-size: 0.95em !important;
+        line-height: 1.6;
+    }
+
+    .job-item .duration,
+    .job-item .institution {
+        font-size: 0.78em !important;
+        padding: 2px 12px;
+    }
+
+    .badge-current {
+        font-size: 0.6rem !important;
+        padding: 2px 12px;
     }
 
     #experience .job-item {
-        padding-left: 20px;
+        padding-left: 20px !important;
         border-left-width: 2px;
         margin-left: 5px;
         border-radius: 0 var(--radius) var(--radius) 0;
-        padding-right: 20px;
+        padding-right: 18px !important;
     }
     #experience .job-item::before {
         left: -7px;
@@ -1872,8 +1912,8 @@ footer {
         height: 12px;
     }
     body.lang-fa #experience .job-item {
-        padding-left: 0;
-        padding-right: 20px;
+        padding-left: 0 !important;
+        padding-right: 20px !important;
         border-right-width: 2px;
         margin-right: 5px;
         border-radius: var(--radius) 0 0 var(--radius);
@@ -1881,6 +1921,10 @@ footer {
     body.lang-fa #experience .job-item::before {
         left: auto;
         right: -7px;
+    }
+
+    .job-item::after {
+        display: none;
     }
 
     .header {
@@ -1994,24 +2038,6 @@ footer {
         color: #0f172a !important;
     }
 
-    .job-item {
-        padding: 16px 18px;
-        border-radius: 14px;
-        background: var(--bg-card);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: var(--shadow);
-    }
-
-    .job-item h3 {
-        font-size: 1em;
-    }
-
-    .job-item::after {
-        display: none;
-    }
-
     .skill-category {
         background: var(--bg-card);
         backdrop-filter: blur(8px);
@@ -2040,7 +2066,6 @@ footer {
     .service-card ul li {
         font-size: 0.85em;
         padding: 5px 0;
-        padding-inline-start: 30px;
     }
 
     .service-select-btn {
@@ -2149,6 +2174,11 @@ footer {
     /* افزایش بیشتر فاصله در موبایل کوچک */
     .job-item ul li {
         padding-inline-start: 32px !important;
+        font-size: 0.85em !important;
+    }
+
+    body.lang-fa .job-item ul li {
+        font-size: 0.85em !important;
     }
 
     .service-card ul li {
@@ -2208,16 +2238,35 @@ footer {
     }
 
     .job-item {
-        padding: 12px 14px;
+        padding: 14px 14px !important;
     }
 
     .job-item h3 {
-        font-size: 0.9em;
+        font-size: 0.85em !important;
+        line-height: 1.5;
     }
 
     .job-item ul li {
         padding-inline-start: 32px !important;
-        font-size: 0.9em;
+        font-size: 0.82em !important;
+        line-height: 1.7 !important;
+        margin-bottom: 5px;
+    }
+
+    body.lang-fa .job-item ul li {
+        font-size: 0.82em !important;
+        line-height: 1.9 !important;
+    }
+
+    .job-item .duration,
+    .job-item .institution {
+        font-size: 0.72em !important;
+        padding: 1px 10px;
+    }
+
+    .badge-current {
+        font-size: 0.55rem !important;
+        padding: 2px 10px;
     }
 
     .contact-info p {
