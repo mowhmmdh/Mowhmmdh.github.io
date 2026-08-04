@@ -1,54 +1,99 @@
 <div align="center">
 
 <!-- ============================================================ -->
-<!-- ANIMATED HEADER WITH TYPING EFFECT & GLOW                    -->
+<!-- ANIMATED HEADER WITH MULTI-LINE TYPING                       -->
 <!-- ============================================================ -->
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=800&size=38&duration=2800&pause=500&color=2563EB&center=true&vCenter=true&width=800&lines=%F0%9F%9A%80+Mohammad+Hossein+Asgari+Somarin;%F0%9F%92%BB+IT+Specialist+%26+Network+Expert;%F0%9F%94%92+Cybersecurity+Enthusiast;%F0%9F%8C%8D+Bilingual+Professional+(FA%2FEN);%F0%9F%92%AA+2%2B+Years+of+Experience" alt="Typing SVG" />
-
-<br>
-
-<!-- ============================================================ -->
-<!-- GLOWING BADGES - SOCIAL & PROFESSIONAL                       -->
-<!-- ============================================================ -->
-
-<a href="https://mowhmmdh.github.io/">
-  <img src="https://img.shields.io/badge/🌐_Live_Demo-2563EB?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=0A1628" alt="Website">
-</a>
-<a href="https://linkedin.com/in/mohammadhosseinasgari">
-  <img src="https://img.shields.io/badge/💼_LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0A1628" alt="LinkedIn">
-</a>
-<a href="https://instagram.com/mowhmmdh">
-  <img src="https://img.shields.io/badge/📸_Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=0A1628" alt="Instagram">
-</a>
-<a href="https://github.com/mowhmmdh">
-  <img src="https://img.shields.io/badge/🐙_GitHub-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=0A1628" alt="GitHub">
-</a>
-<a href="mailto:mohammedhasgari@gmail.com">
-  <img src="https://img.shields.io/badge/✉️_Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0A1628" alt="Gmail">
-</a>
-<a href="https://mowhmmdh.github.io/">
-  <img src="https://img.shields.io/badge/📄_Resume-0A66C2?style=for-the-badge&logo=adobeacrobatreader&logoColor=white&labelColor=0A1628" alt="Resume">
-</a>
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=800&size=40&duration=2800&pause=500&color=2563EB&center=true&vCenter=true&width=900&height=120&lines=%F0%9F%8C%9F+Mohammad+Hossein+Asgari+Somarin;%F0%9F%92%BB+IT+Specialist+%26+Network+Expert;%F0%9F%94%92+Cybersecurity+%7C+Infrastructure+%7C+Support;%F0%9F%8C%8D+Bilingual+Professional+(FA%2FEN);%F0%9F%92%AA+2%2B+Years+of+Hands-On+Experience" alt="Typing SVG" />
 
 <br><br>
 
 <!-- ============================================================ -->
-<!-- ANIMATED GITHUB STATS BADGES                                -->
+<!-- SOCIAL BADGES - ROW 1                                       -->
 <!-- ============================================================ -->
 
-<img src="https://img.shields.io/github/stars/mowhmmdh/mowhmmdh.github.io?style=social&label=⭐%20Stars&color=gold" alt="Stars">
-<img src="https://img.shields.io/github/forks/mowhmmdh/mowhmmdh.github.io?style=social&label=🍴%20Forks&color=orange" alt="Forks">
-<img src="https://img.shields.io/github/watchers/mowhmmdh/mowhmmdh.github.io?style=social&label=👀%20Watchers&color=blue" alt="Watchers">
-<img src="https://img.shields.io/github/last-commit/mowhmmdh/mowhmmdh.github.io?style=flat-square&color=blue&label=📅%20Last%20Commit" alt="Last Commit">
-<img src="https://img.shields.io/github/repo-size/mowhmmdh/mowhmmdh.github.io?style=flat-square&color=blueviolet&label=📦%20Size" alt="Repo Size">
+<table align="center">
+<tr>
+<td align="center" width="120">
+  <a href="https://mowhmmdh.github.io/">
+    <img src="https://img.shields.io/badge/🌐_Live_Demo-2563EB?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=0A1628" width="140" alt="Website">
+  </a>
+</td>
+<td align="center" width="120">
+  <a href="https://linkedin.com/in/mohammadhosseinasgari">
+    <img src="https://img.shields.io/badge/💼_LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0A1628" width="140" alt="LinkedIn">
+  </a>
+</td>
+<td align="center" width="120">
+  <a href="https://instagram.com/mowhmmdh">
+    <img src="https://img.shields.io/badge/📸_Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=0A1628" width="140" alt="Instagram">
+  </a>
+</td>
+</tr>
+<tr>
+<td align="center" width="120">
+  <a href="https://github.com/mowhmmdh">
+    <img src="https://img.shields.io/badge/🐙_GitHub-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=0A1628" width="140" alt="GitHub">
+  </a>
+</td>
+<td align="center" width="120">
+  <a href="mailto:mohammedhasgari@gmail.com">
+    <img src="https://img.shields.io/badge/✉️_Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0A1628" width="140" alt="Gmail">
+  </a>
+</td>
+<td align="center" width="120">
+  <a href="https://mowhmmdh.github.io/">
+    <img src="https://img.shields.io/badge/📄_Resume-0A66C2?style=for-the-badge&logo=adobeacrobatreader&logoColor=white&labelColor=0A1628" width="140" alt="Resume">
+  </a>
+</td>
+</tr>
+</table>
+
+<br>
+
+<!-- ============================================================ -->
+<!-- GITHUB STATS BADGES - ROW 2                                 -->
+<!-- ============================================================ -->
+
+<table align="center">
+<tr>
+<td align="center">
+  <img src="https://img.shields.io/github/stars/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=gold&color=gold&label=⭐%20Stars" alt="Stars">
+</td>
+<td align="center">
+  <img src="https://img.shields.io/github/forks/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=orange&color=orange&label=🍴%20Forks" alt="Forks">
+</td>
+<td align="center">
+  <img src="https://img.shields.io/github/watchers/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=blue&color=blue&label=👀%20Watchers" alt="Watchers">
+</td>
+</tr>
+<tr>
+<td align="center">
+  <img src="https://img.shields.io/github/last-commit/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=purple&color=purple&label=📅%20Last%20Commit" alt="Last Commit">
+</td>
+<td align="center">
+  <img src="https://img.shields.io/github/repo-size/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=teal&color=teal&label=📦%20Repo%20Size" alt="Repo Size">
+</td>
+<td align="center">
+  <img src="https://img.shields.io/github/languages/top/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=green&color=green&label=🔤%20Top%20Lang" alt="Top Language">
+</td>
+</tr>
+</table>
+
+<br>
+
+<!-- ============================================================ -->
+<!-- DIVIDER WITH ANIMATED WAVE                                  -->
+<!-- ============================================================ -->
+
+<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
 </div>
 
 ---
 
 <!-- ============================================================ -->
-<!-- ABOUT ME SECTION - WITH VISUAL CARDS                         -->
+<!-- ABOUT ME SECTION - VISUAL CARDS                               -->
 <!-- ============================================================ -->
 
 ## <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="35" /> About Me
