@@ -12,6 +12,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
+    // تبدیل اعداد فارسی به لاتین
+    // ===============================================
+    function persianToEnglishNumber(str) {
+        if (!str) return str;
+        return str.replace(/[۰-۹]/g, function(d) {
+            return String.fromCharCode(d.charCodeAt(0) - 1728);
+        });
+    }
+
+    // ===============================================
     // افکت ذرات
     // ===============================================
     function initParticles() {
@@ -139,10 +149,10 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت (نسخه نهایی با data-width)
+    // انیمیشن نوارهای مهارت (اصلاح شده)
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
-
+    
     function animateSkills() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
@@ -177,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!anyShown) {
                 animateSkills();
             }
-        }, 2000);
+        }, 3000);
     } else {
         animateSkills();
     }
@@ -488,5 +498,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // ================================================================
+    // به‌روزرسانی خودکار تاریخ در فوتر
+    // ================================================================
+    const updateDateFa = document.getElementById('update-date-fa');
+    const updateDateEn = document.getElementById('update-date-en');
+    const now = new Date();
+    const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+    const englishMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    if (updateDateFa) {
+        // تاریخ شمسی ساده
+        const faDate = `به‌روزرسانی: ${now.getFullYear()} ${persianMonths[now.getMonth()]} ${now.getDate()}`;
+        updateDateFa.textContent = faDate;
+    }
+    
+    if (updateDateEn) {
+        const enDate = `Last Updated: ${englishMonths[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+        updateDateEn.textContent = enDate;
+    }
 
 });
