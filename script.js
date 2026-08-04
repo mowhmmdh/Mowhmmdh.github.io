@@ -12,15 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // تبدیل اعداد فارسی به لاتین
-    // ===============================================
-    function persianToEnglishNumber(str) {
-        return str.replace(/[۰-۹]/g, function(d) {
-            return String.fromCharCode(d.charCodeAt(0) - 1728);
-        });
-    }
-
-    // ===============================================
     // افکت ذرات
     // ===============================================
     function initParticles() {
@@ -148,19 +139,16 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت (اصلاح شده با تبدیل اعداد فارسی)
+    // انیمیشن نوارهای مهارت (نسخه نهایی با data-width)
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
-    
+
     function animateSkills() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
-            const percent = item.querySelector('.skill-percent');
-            if (bar && percent) {
-                // تبدیل اعداد فارسی به لاتین قبل از parseInt
-                const englishNumber = persianToEnglishNumber(percent.textContent);
-                const val = parseInt(englishNumber);
-                if (!isNaN(val)) {
+            if (bar) {
+                const val = parseInt(bar.getAttribute('data-width'));
+                if (!isNaN(val) && val > 0) {
                     item.style.setProperty('--skill-width', val + '%');
                     bar.style.width = val + '%';
                     item.classList.add('show');
@@ -174,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const skillsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    setTimeout(animateSkills, 100);
+                    setTimeout(animateSkills, 150);
                     skillsObserver.unobserve(entry.target);
                 }
             });
@@ -189,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!anyShown) {
                 animateSkills();
             }
-        }, 3000);
+        }, 2000);
     } else {
         animateSkills();
     }
