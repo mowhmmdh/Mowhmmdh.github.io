@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // ===============================================
-    // ابزار Debounce
+    // ابزار Debounce برای بهینه‌سازی عملکرد
     // ===============================================
     function debounce(func, delay) {
         let timeout;
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت ذرات
+    // افکت پس‌زمینه با ذرات (Particles)
     // ===============================================
     function initParticles() {
         const canvas = document.createElement('canvas');
@@ -134,12 +134,13 @@ document.addEventListener('DOMContentLoaded', function() {
         animateParticles();
     }
 
+    // اجرای ذرات فقط در صفحه‌های بزرگ (دسکتاپ)
     if (window.innerWidth > 992) {
         initParticles();
     }
 
     // ===============================================
-    // نوار پیشرفت
+    // نوار پیشرفت مطالعه (Progress Bar)
     // ===============================================
     function updateProgressBar() {
         const scrollTop = window.scrollY;
@@ -154,10 +155,12 @@ document.addEventListener('DOMContentLoaded', function() {
     updateProgressBar();
 
     // ===============================================
-    // محاسبه مدت زمان شغل
+    // محاسبه مدت زمان اشتغال در شغل فعلی
     // ===============================================
     function updateJobDuration() {
         const now = new Date();
+        
+        // نسخه فارسی
         const startFa = document.getElementById('start-date-fa');
         const displayFa = document.getElementById('duration-display-fa');
         if (startFa && displayFa) {
@@ -173,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
+        // نسخه انگلیسی
         const startEn = document.getElementById('start-date-en');
         const displayEn = document.getElementById('duration-display-en');
         if (startEn && displayEn) {
@@ -191,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت
+    // انیمیشن نوارهای مهارت (Skills)
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
     
@@ -199,6 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
             if (bar) {
+                // استفاده از data-width برای جلوگیری از مشکل اعداد فارسی
                 const val = parseInt(bar.getAttribute('data-width'));
                 if (!isNaN(val) && val > 0) {
                     item.style.setProperty('--skill-width', val + '%');
@@ -224,6 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         skillsObserver.observe(skillsSection);
         
+        // Fallback: اگر observer به هر دلیلی کار نکرد، بعد از 3 ثانیه اجرا کن
         setTimeout(() => {
             const anyShown = document.querySelector('.skill-level-item.show');
             if (!anyShown) {
@@ -235,7 +241,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت محو شدن بخش‌ها
+    // افکت محو شدن بخش‌ها هنگام اسکرول
     // ===============================================
     const sections = document.querySelectorAll('.section');
     const sectionObserver = new IntersectionObserver((entries) => {
@@ -262,7 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
     serviceCards.forEach(card => serviceObserver.observe(card));
 
     // ===============================================
-    // دکمه بازگشت به بالا
+    // دکمه بازگشت به بالا (Back to Top)
     // ===============================================
     const backBtn = document.getElementById('back-to-top');
     function toggleBackBtn() {
@@ -279,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // منو فعال
+    // برجسته‌سازی آیتم منوی فعال
     // ===============================================
     const navLinks = document.querySelectorAll('#navbar a');
     function updateActiveNav() {
@@ -324,7 +330,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // تایپ‌رایتر
+    // تایپ‌رایتر پیشرفته (Typing Effect)
     // ===============================================
     function initAdvancedTyping() {
         const typingElement = document.querySelector('.typing-text');
@@ -384,7 +390,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initAdvancedTyping();
 
     // ===============================================
-    // دارک مود
+    // دارک مود (ذخیره‌سازی در localStorage)
     // ===============================================
     const darkToggle = document.getElementById('dark-toggle');
     const body = document.body;
@@ -400,7 +406,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // بخش خدمات - فرم
+    // بخش خدمات - نمایش فرم و انتخاب نوع خدمت
     // ===============================================
     const serviceButtons = document.querySelectorAll('.service-select-btn');
     const serviceForm = document.getElementById('service-request-form');
@@ -419,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // بستن فرم
+    // بستن فرم با دکمه لغو
     // ===============================================
     const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
     if (cancelBtn) {
@@ -437,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // ارسال فرم خدمات
+    // ارسال فرم خدمات - اضافه کردن نوع خدمت به توضیحات
     // ===============================================
     const serviceRequestForm = document.getElementById('service-form');
     if (serviceRequestForm) {
@@ -454,7 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت ریپل روی دکمه‌ها
+    // افکت ریپل روی دکمه‌ها (Ripple Effect)
     // ===============================================
     document.querySelectorAll('.cta-button, .service-select-btn, .contact-form button[type="submit"]').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -502,6 +508,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     shareUrl = `mailto:?subject=${pageTitle}&body=مشاهده این صفحه: ${pageUrl}`;
                     break;
                 case 'copy':
+                    // کپی لینک در کلیپ‌بورد
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(window.location.href).then(() => {
                             const tooltip = this.querySelector('.tooltip');
@@ -518,6 +525,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             alert('لینک: ' + window.location.href);
                         });
                     } else {
+                        // Fallback برای مرورگرهای قدیمی
                         const textArea = document.createElement('textarea');
                         textArea.value = window.location.href;
                         document.body.appendChild(textArea);
