@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // ===============================================
-    // ابزار Debounce برای بهینه‌سازی
+    // ابزار Debounce
     // ===============================================
     function debounce(func, delay) {
         let timeout;
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت پس‌زمینه با ذرات (Particles)
+    // افکت ذرات
     // ===============================================
     function initParticles() {
         const canvas = document.createElement('canvas');
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // نوار پیشرفت مطالعه
+    // نوار پیشرفت
     // ===============================================
     function updateProgressBar() {
         const scrollTop = window.scrollY;
@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', function() {
             progressBar.style.width = scrollPercent + '%';
         }
     }
-
     window.addEventListener('scroll', debounce(updateProgressBar, 10), { passive: true });
     updateProgressBar();
 
@@ -140,34 +139,52 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت
+    // انیمیشن نوارهای مهارت (اصلاح شده)
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
+    
     function animateSkills() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
             const percent = item.querySelector('.skill-percent');
             if (bar && percent) {
                 const val = parseInt(percent.textContent);
+                // تنظیم متغیر CSS برای عرض
                 item.style.setProperty('--skill-width', val + '%');
+                // تنظیم مستقیم width برای اطمینان
                 bar.style.width = val + '%';
                 item.classList.add('show');
             }
         });
     }
 
+    // استفاده از IntersectionObserver با تنظیمات دقیق‌تر
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
-        const observer = new IntersectionObserver((entries) => {
+        // ابتدا یک observer برای بخش skills
+        const skillsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    animateSkills();
-                    observer.unobserve(entry.target);
+                    // با تاخیر کم برای اطمینان از رندر شدن DOM
+                    setTimeout(animateSkills, 100);
+                    skillsObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.1 });
-        observer.observe(skillsSection);
+        }, { 
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        });
+        skillsObserver.observe(skillsSection);
+        
+        // fallback: اگر observer به هر دلیلی کار نکرد، بعد از 3 ثانیه اجرا کن
+        setTimeout(() => {
+            const anyShown = document.querySelector('.skill-level-item.show');
+            if (!anyShown) {
+                animateSkills();
+            }
+        }, 3000);
     } else {
+        // اگر بخش skills وجود نداشت، مستقیماً اجرا کن
         animateSkills();
     }
 
@@ -261,7 +278,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // تایپ‌رایتر پیشرفته
+    // تایپ‌رایتر
     // ===============================================
     function initAdvancedTyping() {
         const typingElement = document.querySelector('.typing-text');
@@ -337,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // بخش خدمات - نمایش فرم و انتخاب نوع خدمت
+    // بخش خدمات - فرم
     // ===============================================
     const serviceButtons = document.querySelectorAll('.service-select-btn');
     const serviceForm = document.getElementById('service-request-form');
@@ -356,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // بستن فرم با دکمه لغو
+    // بستن فرم
     // ===============================================
     const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
     if (cancelBtn) {
@@ -374,7 +391,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // ارسال فرم خدمات - اضافه کردن نوع خدمت به توضیحات
+    // ارسال فرم خدمات
     // ===============================================
     const serviceRequestForm = document.getElementById('service-form');
     if (serviceRequestForm) {
@@ -391,11 +408,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت ریپل روی دکمه‌ها (افکت موج)
+    // افکت ریپل روی دکمه‌ها
     // ===============================================
     document.querySelectorAll('.cta-button, .service-select-btn, .contact-form button[type="submit"]').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            // جلوگیری از اجرای ریپل روی دکمه‌های لغو یا reset
             if (this.type === 'reset') return;
             
             const rect = this.getBoundingClientRect();
@@ -407,6 +423,79 @@ document.addEventListener('DOMContentLoaded', function() {
             ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
             this.appendChild(ripple);
             setTimeout(() => ripple.remove(), 600);
+        });
+    });
+
+    // ================================================================
+    // دکمه‌های اشتراک‌گذاری (Share Buttons) - کاملاً فعال و حرفه‌ای
+    // ================================================================
+    const shareButtons = document.querySelectorAll('.share-btn');
+    const pageUrl = encodeURIComponent(window.location.href);
+    const pageTitle = encodeURIComponent(document.title);
+    
+    shareButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const type = this.getAttribute('data-share');
+            let shareUrl = '';
+            
+            switch(type) {
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`;
+                    break;
+                case 'email':
+                    shareUrl = `mailto:?subject=${pageTitle}&body=مشاهده این صفحه: ${pageUrl}`;
+                    break;
+                case 'copy':
+                    // کپی لینک در کلیپ‌بورد
+                    if (navigator.clipboard) {
+                        navigator.clipboard.writeText(window.location.href).then(() => {
+                            // نمایش پیام موقت
+                            const tooltip = this.querySelector('.tooltip');
+                            if (tooltip) {
+                                const originalText = tooltip.textContent;
+                                tooltip.textContent = '✅ کپی شد!';
+                                setTimeout(() => {
+                                    tooltip.textContent = originalText;
+                                }, 2000);
+                            } else {
+                                alert('✅ لینک کپی شد!');
+                            }
+                        }).catch(() => {
+                            alert('لینک: ' + window.location.href);
+                        });
+                    } else {
+                        // fallback برای مرورگرهای قدیمی
+                        const textArea = document.createElement('textarea');
+                        textArea.value = window.location.href;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        try {
+                            document.execCommand('copy');
+                            alert('✅ لینک کپی شد!');
+                        } catch (err) {
+                            alert('لینک: ' + window.location.href);
+                        }
+                        document.body.removeChild(textArea);
+                    }
+                    return; // جلوگیری از باز شدن پنجره جدید
+                default:
+                    return;
+            }
+            
+            // باز کردن لینک در پنجره یا تب جدید
+            if (shareUrl) {
+                window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes');
+            }
         });
     });
 
