@@ -186,13 +186,18 @@
         <aside id="sidebar-info">
             
             <div id="top-area">
+                <!-- Language Toggle Switch -->
                 <div class="lang-switcher">
-                    <button class="active-lang" id="lang-en-btn" aria-label="Change language to English">English</button>
-                    |
-                    <a href="index.html" class="lang-link" id="lang-fa-btn" aria-label="تغییر زبان به فارسی">فارسی</a>
+                    <label class="lang-toggle" aria-label="Change language">
+                        <input type="checkbox" id="lang-checkbox" checked>
+                        <span class="lang-slider">
+                            <span class="lang-option fa">فا</span>
+                            <span class="lang-option en">En</span>
+                        </span>
+                    </label>
                 </div>
                 <div class="profile-wrapper">
-                    <img src="images/profile.jpg" alt="Profile Photo" class="profile-icon" loading="lazy">
+                    <img src="images/profile.jpg" alt="Mohammad Hossein Asgari Somarin profile photo" class="profile-icon" loading="lazy">
                 </div>
             </div>
 
@@ -686,7 +691,9 @@
                         <img src="images/mha-logo.png" alt="Logo" class="footer-logo-img" loading="lazy">
                     </div>
                     <p class="copyright-text">
-                        <span>Designed & Developed by: Mohammad Hossein Asgari Somarin</span>
+                        <span class="copyright-label">© All rights reserved for</span>
+                        <span class="copyright-name">Mohammad Hossein Asgari Somarin</span>
+                        <span class="copyright-label">.</span>
                         <br>
                         <span id="update-date-en"></span>
                     </p>
