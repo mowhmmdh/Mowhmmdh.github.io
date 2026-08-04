@@ -167,7 +167,7 @@ body.lang-fa .lang-switcher {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 4px;
+    padding: 3px;
 }
 
 .lang-toggle input:checked + .lang-slider {
@@ -177,36 +177,39 @@ body.lang-fa .lang-switcher {
 .lang-option {
     font-size: 0.7rem;
     font-weight: 700;
-    padding: 3px 6px;
+    padding: 3px 8px;
     border-radius: 20px;
     transition: all 0.4s ease;
     color: #64748b;
     user-select: none;
+    flex: 1;
+    text-align: center;
+    z-index: 1;
 }
 
 .lang-option.fa {
-    margin-right: 4px;
+    margin-right: 2px;
 }
 .lang-option.en {
-    margin-left: 4px;
-}
-
-.lang-toggle input:checked + .lang-slider .lang-option.fa {
-    color: white;
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.lang-toggle input:not(:checked) + .lang-slider .lang-option.en {
-    color: white;
-    background: rgba(255, 255, 255, 0.2);
+    margin-left: 2px;
 }
 
 .lang-toggle input:checked + .lang-slider .lang-option.en {
+    color: white;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.lang-toggle input:checked + .lang-slider .lang-option.fa {
     color: #94a3b8;
     background: transparent;
 }
 
 .lang-toggle input:not(:checked) + .lang-slider .lang-option.fa {
+    color: white;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.lang-toggle input:not(:checked) + .lang-slider .lang-option.en {
     color: #94a3b8;
     background: transparent;
 }
@@ -224,9 +227,7 @@ body.lang-fa .lang-switcher {
     pointer-events: none;
 }
 
-/* ================================================= */
 /* ---- ریست و تنظیمات ---- */
-/* ================================================= */
 * {
     margin: 0;
     padding: 0;
@@ -1666,7 +1667,7 @@ body.dark-mode .project-actions .badge {
 }
 
 /* ================================================= */
-/* ---- فوتر (با نام متمایز) ---- */
+/* ---- فوتر ---- */
 /* ================================================= */
 footer {
     padding: 20px 0 0 0;
@@ -1860,7 +1861,6 @@ body.dark-mode .copyright-name {
         position: relative;
     }
 
-    /* ===== تنظیم سوییچ زبان در موبایل ===== */
     .lang-switcher {
         position: absolute;
         top: 10px;
@@ -1901,6 +1901,7 @@ body.dark-mode .copyright-name {
 
     .lang-option {
         font-size: 0.6rem;
+        padding: 2px 6px;
     }
 
     .profile-wrapper {
@@ -1929,12 +1930,10 @@ body.dark-mode .copyright-name {
         border: 3px solid rgba(255, 255, 255, 0.95);
     }
 
-    /* ذرات در موبایل با شفافیت کمتر */
     #particles-canvas {
         opacity: 0.4;
     }
 
-    /* ---- اصلاحات موبایل برای لیست‌ها ---- */
     .job-item ul li {
         padding-inline-start: 30px !important;
         font-size: 0.88em !important;
@@ -2494,10 +2493,9 @@ body.dark-mode .copyright-name {
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
-    .lang-switcher a,
-    .lang-switcher button {
-        padding: 3px 10px;
-        font-size: 0.65em;
+    .lang-option {
+        font-size: 0.6rem;
+        padding: 2px 6px;
     }
 
     #navbar a {
