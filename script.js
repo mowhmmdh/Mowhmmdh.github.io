@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // ===============================================
-    // ابزار Debounce برای بهینه‌سازی عملکرد
+    // ابزار Debounce
     // ===============================================
     function debounce(func, delay) {
         let timeout;
@@ -64,16 +64,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت پس‌زمینه با ذرات (Particles)
+    // افکت پس‌زمینه با ذرات (فعال در همه دستگاه‌ها)
     // ===============================================
     function initParticles() {
+        const isMobile = window.innerWidth <= 768;
+        const particleCount = isMobile ? 25 : 50;
+        
         const canvas = document.createElement('canvas');
         canvas.id = 'particles-canvas';
         document.body.prepend(canvas);
         
         const ctx = canvas.getContext('2d');
         let particles = [];
-        const particleCount = 50;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 this.size = Math.random() * 2 + 1;
                 this.speedX = (Math.random() - 0.5) * 0.5;
                 this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = Math.random() * 0.5 + 0.2;
+                this.opacity = isMobile ? (Math.random() * 0.3 + 0.1) : (Math.random() * 0.5 + 0.2);
             }
 
             update() {
@@ -119,10 +121,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    if (distance < 150) {
+                    const maxDist = isMobile ? 100 : 150;
+                    if (distance < maxDist) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(37, 99, 235, ${0.1 * (1 - distance / 150)})`;
-                        ctx.lineWidth = 0.5;
+                        const opacity = isMobile ? 0.05 * (1 - distance / maxDist) : 0.1 * (1 - distance / maxDist);
+                        ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`;
+                        ctx.lineWidth = isMobile ? 0.3 : 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
                         ctx.lineTo(particles[j].x, particles[j].y);
                         ctx.stroke();
@@ -134,13 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
         animateParticles();
     }
 
-    // اجرای ذرات فقط در صفحه‌های بزرگ (دسکتاپ)
-    if (window.innerWidth > 992) {
-        initParticles();
-    }
+    // اجرای ذرات در همه دستگاه‌ها (با تعداد کمتر در موبایل)
+    initParticles();
 
     // ===============================================
-    // نوار پیشرفت مطالعه (Progress Bar)
+    // نوار پیشرفت
     // ===============================================
     function updateProgressBar() {
         const scrollTop = window.scrollY;
@@ -155,12 +157,10 @@ document.addEventListener('DOMContentLoaded', function() {
     updateProgressBar();
 
     // ===============================================
-    // محاسبه مدت زمان اشتغال در شغل فعلی
+    // محاسبه مدت زمان شغل
     // ===============================================
     function updateJobDuration() {
         const now = new Date();
-        
-        // نسخه فارسی
         const startFa = document.getElementById('start-date-fa');
         const displayFa = document.getElementById('duration-display-fa');
         if (startFa && displayFa) {
@@ -176,7 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        // نسخه انگلیسی
         const startEn = document.getElementById('start-date-en');
         const displayEn = document.getElementById('duration-display-en');
         if (startEn && displayEn) {
@@ -195,7 +194,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت (Skills)
+    // انیمیشن نوارهای مهارت
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
     
@@ -203,7 +202,6 @@ document.addEventListener('DOMContentLoaded', function() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
             if (bar) {
-                // استفاده از data-width برای جلوگیری از مشکل اعداد فارسی
                 const val = parseInt(bar.getAttribute('data-width'));
                 if (!isNaN(val) && val > 0) {
                     item.style.setProperty('--skill-width', val + '%');
@@ -229,7 +227,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         skillsObserver.observe(skillsSection);
         
-        // Fallback: اگر observer به هر دلیلی کار نکرد، بعد از 3 ثانیه اجرا کن
         setTimeout(() => {
             const anyShown = document.querySelector('.skill-level-item.show');
             if (!anyShown) {
@@ -241,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت محو شدن بخش‌ها هنگام اسکرول
+    // افکت محو شدن بخش‌ها
     // ===============================================
     const sections = document.querySelectorAll('.section');
     const sectionObserver = new IntersectionObserver((entries) => {
@@ -268,7 +265,7 @@ document.addEventListener('DOMContentLoaded', function() {
     serviceCards.forEach(card => serviceObserver.observe(card));
 
     // ===============================================
-    // دکمه بازگشت به بالا (Back to Top)
+    // دکمه بازگشت به بالا
     // ===============================================
     const backBtn = document.getElementById('back-to-top');
     function toggleBackBtn() {
@@ -285,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // برجسته‌سازی آیتم منوی فعال
+    // منو فعال
     // ===============================================
     const navLinks = document.querySelectorAll('#navbar a');
     function updateActiveNav() {
@@ -330,7 +327,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // تایپ‌رایتر پیشرفته (Typing Effect)
+    // تایپ‌رایتر
     // ===============================================
     function initAdvancedTyping() {
         const typingElement = document.querySelector('.typing-text');
@@ -390,7 +387,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initAdvancedTyping();
 
     // ===============================================
-    // دارک مود (ذخیره‌سازی در localStorage)
+    // دارک مود
     // ===============================================
     const darkToggle = document.getElementById('dark-toggle');
     const body = document.body;
@@ -406,7 +403,25 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // بخش خدمات - نمایش فرم و انتخاب نوع خدمت
+    // کلید تبدیل زبان (سوییچ دو حالته)
+    // ===============================================
+    const langCheckbox = document.getElementById('lang-checkbox');
+    if (langCheckbox) {
+        const currentLang = document.documentElement.lang || 'fa';
+        if (currentLang === 'en') {
+            langCheckbox.checked = true;
+        }
+        langCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                window.location.href = '/en.html';
+            } else {
+                window.location.href = '/index.html';
+            }
+        });
+    }
+
+    // ===============================================
+    // بخش خدمات - فرم
     // ===============================================
     const serviceButtons = document.querySelectorAll('.service-select-btn');
     const serviceForm = document.getElementById('service-request-form');
@@ -425,7 +440,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // بستن فرم با دکمه لغو
+    // بستن فرم
     // ===============================================
     const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
     if (cancelBtn) {
@@ -443,7 +458,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // ارسال فرم خدمات - اضافه کردن نوع خدمت به توضیحات
+    // ارسال فرم خدمات
     // ===============================================
     const serviceRequestForm = document.getElementById('service-form');
     if (serviceRequestForm) {
@@ -460,7 +475,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت ریپل روی دکمه‌ها (Ripple Effect)
+    // افکت ریپل روی دکمه‌ها
     // ===============================================
     document.querySelectorAll('.cta-button, .service-select-btn, .contact-form button[type="submit"]').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -479,7 +494,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ================================================================
-    // دکمه‌های اشتراک‌گذاری (Share Buttons)
+    // دکمه‌های اشتراک‌گذاری
     // ================================================================
     const shareButtons = document.querySelectorAll('.share-btn');
     const pageUrl = encodeURIComponent(window.location.href);
@@ -508,7 +523,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     shareUrl = `mailto:?subject=${pageTitle}&body=مشاهده این صفحه: ${pageUrl}`;
                     break;
                 case 'copy':
-                    // کپی لینک در کلیپ‌بورد
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(window.location.href).then(() => {
                             const tooltip = this.querySelector('.tooltip');
@@ -525,7 +539,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             alert('لینک: ' + window.location.href);
                         });
                     } else {
-                        // Fallback برای مرورگرهای قدیمی
                         const textArea = document.createElement('textarea');
                         textArea.value = window.location.href;
                         document.body.appendChild(textArea);
@@ -550,7 +563,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ================================================================
-    // به‌روزرسانی خودکار تاریخ در فوتر (شمسی در فارسی، میلادی در انگلیسی)
+    // به‌روزرسانی خودکار تاریخ در فوتر
     // ================================================================
     const updateDateFa = document.getElementById('update-date-fa');
     const updateDateEn = document.getElementById('update-date-en');
