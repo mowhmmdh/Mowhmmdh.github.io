@@ -316,6 +316,6 @@ I'm **Mohammad Hossein Asgari Somarin**, an **IT Specialist** with a passion for
 
 **Last Updated:** August 2026
 
-*Made with ❤️ by Mohammad Hossein Asgari Somarin*
+*Created by Mohammad Hossein Asgari Somarin*
 
 </div>
