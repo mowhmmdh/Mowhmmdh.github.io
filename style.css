@@ -269,7 +269,7 @@ body.dark-mode #sidebar-info {
 }
 
 /* ================================================= */
-/* ---- بالای صفحه (اصلاح شده با فلکس) ---- */
+/* ---- بالای صفحه ---- */
 /* ================================================= */
 #top-area {
     display: flex;
@@ -283,7 +283,7 @@ body.dark-mode #sidebar-info {
     gap: 15px;
 }
 
-/* ---- دکمه زبان (حذف absolute) ---- */
+/* ---- دکمه زبان ---- */
 .lang-switcher {
     z-index: 250;
     display: flex;
@@ -304,7 +304,6 @@ body.dark-mode .lang-switcher {
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* چیدمان هوشمند با order */
 body.lang-en .lang-switcher {
     order: 2;
     margin-left: auto;
@@ -346,7 +345,7 @@ body.dark-mode .lang-switcher .active-lang {
     color: #0f172a;
 }
 
-/* ---- عکس پروفایل (حذف absolute) ---- */
+/* ---- عکس پروفایل ---- */
 .profile-wrapper {
     position: relative;
     top: auto;
@@ -659,7 +658,7 @@ body.lang-en .job-item {
 
 .job-item ul li {
     position: relative;
-    padding-inline-start: 22px;
+    padding-inline-start: 26px;
     margin-bottom: 8px;
     line-height: 1.7;
 }
@@ -971,7 +970,7 @@ body.lang-en .service-card ul {
     color: var(--text);
     border-bottom: 1px solid rgba(0, 0, 0, 0.03);
     position: relative;
-    padding-inline-start: 20px;
+    padding-inline-start: 26px;
 }
 
 body.dark-mode .service-card ul li {
@@ -1323,7 +1322,7 @@ body.dark-mode .cta-button {
 }
 
 /* ================================================= */
-/* ---- دکمه‌های اشتراک‌گذاری حرفه‌ای ---- */
+/* ---- دکمه‌های اشتراک‌گذاری ---- */
 /* ================================================= */
 .share-buttons {
     display: flex;
@@ -1358,7 +1357,6 @@ body.dark-mode .cta-button {
     transform: scale(0.92);
 }
 
-/* رنگ‌های هر شبکه */
 .share-linkedin {
     background: #0077b5;
 }
@@ -1401,7 +1399,6 @@ body.dark-mode .cta-button {
     background: #5a6268;
 }
 
-/* حالت دارک مود برای دکمه‌ها */
 body.dark-mode .share-btn {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
@@ -1413,7 +1410,6 @@ body.dark-mode .share-twitter:hover {
     background: #2a2a4e;
 }
 
-/* تگ‌های کمکی (tooltip) روی دکمه‌ها */
 .share-btn .tooltip {
     position: absolute;
     bottom: calc(100% + 12px);
@@ -1741,7 +1737,7 @@ footer {
 }
 
 /* ================================================= */
-/* ---- ریسپانسیو (اصلاح شده برای هدر جدید) ---- */
+/* ---- ریسپانسیو (اصلاح شده برای رفع مشکل نقطه‌ها) ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
@@ -1774,7 +1770,6 @@ footer {
         border: none;
     }
 
-    /* ===== تنظیم مجدد هدر در موبایل ===== */
     #top-area {
         display: flex;
         flex-direction: column;
@@ -1787,7 +1782,6 @@ footer {
         position: relative;
     }
 
-    /* دکمه زبان در موبایل با absolute در گوشه */
     .lang-switcher {
         position: absolute;
         top: 5px;
@@ -1829,7 +1823,6 @@ footer {
         border: 1px solid var(--border);
     }
 
-    /* عکس پروفایل در موبایل */
     .profile-wrapper {
         position: relative;
         top: auto;
@@ -1856,12 +1849,21 @@ footer {
         border: 3px solid rgba(255, 255, 255, 0.95);
     }
 
-    /* ریست تایم‌لاین برای موبایل */
+    /* ===== اصلاحات موبایل برای لیست‌ها (رفع تداخل نقطه‌ها) ===== */
+    .job-item ul li {
+        padding-inline-start: 30px;
+    }
+
+    .service-card ul li {
+        padding-inline-start: 30px;
+    }
+
     #experience .job-item {
         padding-left: 20px;
         border-left-width: 2px;
         margin-left: 5px;
         border-radius: 0 var(--radius) var(--radius) 0;
+        padding-right: 20px;
     }
     #experience .job-item::before {
         left: -7px;
@@ -2038,6 +2040,7 @@ footer {
     .service-card ul li {
         font-size: 0.85em;
         padding: 5px 0;
+        padding-inline-start: 30px;
     }
 
     .service-select-btn {
@@ -2142,6 +2145,15 @@ footer {
         flex: 1;
         width: 100%;
     }
+
+    /* افزایش بیشتر فاصله در موبایل کوچک */
+    .job-item ul li {
+        padding-inline-start: 32px !important;
+    }
+
+    .service-card ul li {
+        padding-inline-start: 32px !important;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2178,6 +2190,12 @@ footer {
         font-size: 1.1em;
     }
 
+    .service-card ul li {
+        font-size: 0.82em;
+        padding: 5px 0;
+        padding-inline-start: 32px !important;
+    }
+
     .service-select-btn {
         max-width: 100%;
         font-size: 0.8em;
@@ -2194,6 +2212,11 @@ footer {
     }
 
     .job-item h3 {
+        font-size: 0.9em;
+    }
+
+    .job-item ul li {
+        padding-inline-start: 32px !important;
         font-size: 0.9em;
     }
 
