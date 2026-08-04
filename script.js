@@ -149,23 +149,18 @@ document.addEventListener('DOMContentLoaded', function() {
             const percent = item.querySelector('.skill-percent');
             if (bar && percent) {
                 const val = parseInt(percent.textContent);
-                // تنظیم متغیر CSS برای عرض
                 item.style.setProperty('--skill-width', val + '%');
-                // تنظیم مستقیم width برای اطمینان
                 bar.style.width = val + '%';
                 item.classList.add('show');
             }
         });
     }
 
-    // استفاده از IntersectionObserver با تنظیمات دقیق‌تر
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
-        // ابتدا یک observer برای بخش skills
         const skillsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    // با تاخیر کم برای اطمینان از رندر شدن DOM
                     setTimeout(animateSkills, 100);
                     skillsObserver.unobserve(entry.target);
                 }
@@ -176,7 +171,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         skillsObserver.observe(skillsSection);
         
-        // fallback: اگر observer به هر دلیلی کار نکرد، بعد از 3 ثانیه اجرا کن
         setTimeout(() => {
             const anyShown = document.querySelector('.skill-level-item.show');
             if (!anyShown) {
@@ -184,7 +178,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 3000);
     } else {
-        // اگر بخش skills وجود نداشت، مستقیماً اجرا کن
         animateSkills();
     }
 
@@ -427,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ================================================================
-    // دکمه‌های اشتراک‌گذاری (Share Buttons) - کاملاً فعال و حرفه‌ای
+    // دکمه‌های اشتراک‌گذاری (Share Buttons)
     // ================================================================
     const shareButtons = document.querySelectorAll('.share-btn');
     const pageUrl = encodeURIComponent(window.location.href);
@@ -456,10 +449,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     shareUrl = `mailto:?subject=${pageTitle}&body=مشاهده این صفحه: ${pageUrl}`;
                     break;
                 case 'copy':
-                    // کپی لینک در کلیپ‌بورد
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(window.location.href).then(() => {
-                            // نمایش پیام موقت
                             const tooltip = this.querySelector('.tooltip');
                             if (tooltip) {
                                 const originalText = tooltip.textContent;
@@ -474,7 +465,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             alert('لینک: ' + window.location.href);
                         });
                     } else {
-                        // fallback برای مرورگرهای قدیمی
                         const textArea = document.createElement('textarea');
                         textArea.value = window.location.href;
                         document.body.appendChild(textArea);
@@ -487,12 +477,11 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         document.body.removeChild(textArea);
                     }
-                    return; // جلوگیری از باز شدن پنجره جدید
+                    return;
                 default:
                     return;
             }
             
-            // باز کردن لینک در پنجره یا تب جدید
             if (shareUrl) {
                 window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes');
             }
