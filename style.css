@@ -133,7 +133,6 @@ body.dark-mode .dark-toggle {
     position: relative;
     z-index: 250;
     user-select: none;
-    background: rgba(255, 255, 255, 0.9);
 }
 
 .lang-toggle-btn:hover {
@@ -1846,7 +1845,6 @@ body.dark-mode .copyright-name {
         position: relative;
     }
 
-    /* کلید تغییر زبان در موبایل */
     .lang-toggle-btn {
         position: absolute;
         top: 10px;
