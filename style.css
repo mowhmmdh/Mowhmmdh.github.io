@@ -547,7 +547,7 @@ body.lang-en .summary {
 }
 
 /* ================================================= */
-/* ---- آیتم‌های شغلی با تایم‌لاین ---- */
+/* ---- آیتم‌های شغلی با تایم‌لاین (اصلاح‌شده ویژه فارسی) ---- */
 /* ================================================= */
 
 #experience .job-item {
@@ -556,15 +556,15 @@ body.lang-en .summary {
     border-left: 3px solid var(--accent);
     border-radius: 0 var(--radius) var(--radius) 0;
     margin-left: 15px;
-    padding-top: 22px;
-    padding-bottom: 22px;
+    padding-top: 24px;
+    padding-bottom: 24px;
 }
 
 #experience .job-item::before {
     content: '';
     position: absolute;
     left: -9px;
-    top: 28px;
+    top: 30px;
     width: 15px;
     height: 15px;
     background: var(--accent);
@@ -578,9 +578,10 @@ body.lang-en .summary {
     box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.25);
 }
 
+/* ===== اصلاح ویژه نسخه فارسی ===== */
 body.lang-fa #experience .job-item {
-    padding-left: 0;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 48px;
     border-left: none;
     border-right: 3px solid var(--accent);
     border-radius: var(--radius) 0 0 var(--radius);
@@ -595,7 +596,7 @@ body.lang-fa #experience .job-item::before {
 
 /* ---- استایل‌های عمومی job-item ---- */
 .job-item {
-    margin-bottom: 22px;
+    margin-bottom: 24px;
     padding: 22px 28px 22px 28px;
     border-radius: var(--radius);
     background: var(--bg-card);
@@ -612,6 +613,11 @@ body.lang-en .job-item {
     border-left: 5px solid var(--accent);
 }
 
+/* ===== اصلاح padding در نسخه فارسی (برای هماهنگی) ===== */
+body.lang-fa .job-item {
+    padding: 24px 48px 24px 20px;
+}
+
 .job-item:hover {
     transform: translateY(-6px) scale(1.01);
     box-shadow: 0 15px 50px rgba(37, 99, 235, 0.12);
@@ -621,7 +627,7 @@ body.lang-en .job-item {
     color: var(--primary);
     font-size: 1.1em;
     font-weight: 700;
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
     line-height: 1.5;
 }
 
@@ -638,20 +644,20 @@ body.lang-fa .job-item h3 {
     padding: 2px 16px;
     border-radius: 20px;
     display: inline-block;
-    margin: 0 0 12px 0;
+    margin: 0 0 14px 0;
     line-height: 1.6;
 }
 
 .job-item ul {
     list-style: none;
     padding: 0;
-    margin: 8px 0 0 0;
+    margin: 10px 0 0 0;
 }
 
 .job-item ul li {
     position: relative;
-    padding-inline-start: 26px;
-    margin-bottom: 8px;
+    padding-inline-start: 28px;
+    margin-bottom: 10px;
     line-height: 1.8;
     font-size: 0.95em;
     color: var(--text);
@@ -664,8 +670,8 @@ body.lang-fa .job-item ul li {
     text-align: justify;
     hyphens: none;
     font-size: 0.95em;
-    line-height: 2;
-    padding-inline-start: 28px;
+    line-height: 2.1;
+    padding-inline-start: 30px;
 }
 
 body.lang-en .job-item ul li {
@@ -712,7 +718,7 @@ body.lang-en .job-item.current-position {
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 10px;
     margin-bottom: 4px;
 }
 
@@ -727,7 +733,7 @@ body.lang-en .job-item.current-position {
     color: #fff;
     font-size: 0.65rem;
     font-weight: 700;
-    padding: 3px 14px;
+    padding: 4px 16px;
     border-radius: 20px;
     text-transform: uppercase;
     white-space: nowrap;
@@ -1892,6 +1898,10 @@ footer {
         box-shadow: var(--shadow);
     }
 
+    body.lang-fa .job-item {
+        padding: 18px 28px 18px 16px !important;
+    }
+
     .job-item h3 {
         font-size: 0.95em !important;
         line-height: 1.6;
@@ -1915,18 +1925,20 @@ footer {
         border-radius: 0 var(--radius) var(--radius) 0;
         padding-right: 18px !important;
     }
-    #experience .job-item::before {
-        left: -7px;
-        top: 24px;
-        width: 12px;
-        height: 12px;
-    }
+
     body.lang-fa #experience .job-item {
-        padding-left: 0 !important;
-        padding-right: 20px !important;
+        padding-left: 16px !important;
+        padding-right: 28px !important;
         border-right-width: 2px;
         margin-right: 5px;
         border-radius: var(--radius) 0 0 var(--radius);
+    }
+
+    #experience .job-item::before {
+        left: -7px;
+        top: 26px;
+        width: 12px;
+        height: 12px;
     }
     body.lang-fa #experience .job-item::before {
         left: auto;
@@ -2253,6 +2265,10 @@ footer {
         padding: 14px 14px !important;
     }
 
+    body.lang-fa .job-item {
+        padding: 16px 22px 16px 12px !important;
+    }
+
     .job-item h3 {
         font-size: 0.85em !important;
         line-height: 1.5;
@@ -2262,7 +2278,7 @@ footer {
         padding-inline-start: 32px !important;
         font-size: 0.82em !important;
         line-height: 1.7 !important;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
     }
 
     body.lang-fa .job-item ul li {
