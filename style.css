@@ -547,7 +547,7 @@ body.lang-en .summary {
 }
 
 /* ================================================= */
-/* ---- آیتم‌های شغلی با تایم‌لاین (اصلاح‌شده) ---- */
+/* ---- آیتم‌های شغلی با تایم‌لاین ---- */
 /* ================================================= */
 
 #experience .job-item {
@@ -593,7 +593,7 @@ body.lang-fa #experience .job-item::before {
     right: -9px;
 }
 
-/* ---- استایل‌های عمومی job-item (اصلاح‌شده) ---- */
+/* ---- استایل‌های عمومی job-item ---- */
 .job-item {
     margin-bottom: 22px;
     padding: 22px 28px 22px 28px;
@@ -605,7 +605,6 @@ body.lang-fa #experience .job-item::before {
     overflow: hidden;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    hyphens: auto;
 }
 
 body.lang-en .job-item {
@@ -660,9 +659,17 @@ body.lang-fa .job-item h3 {
     overflow-wrap: break-word;
 }
 
+/* ===== اصلاح ویژه برای نسخه فارسی (تراز کامل و جلوگیری از خط‌فاصله) ===== */
 body.lang-fa .job-item ul li {
+    text-align: justify;
+    hyphens: none;
     font-size: 0.95em;
     line-height: 2;
+    padding-inline-start: 28px;
+}
+
+body.lang-en .job-item ul li {
+    text-align: left;
 }
 
 .job-item ul li::before {
@@ -683,7 +690,7 @@ body.lang-fa .job-item ul li::before {
     left: auto;
 }
 
-/* ---- شغل فعلی (اصلاح‌شده) ---- */
+/* ---- شغل فعلی ---- */
 .job-item.current-position {
     background: linear-gradient(135deg, #eff6ff, var(--bg-card));
     border-right-color: #f59e0b;
@@ -1743,7 +1750,7 @@ footer {
 }
 
 /* ================================================= */
-/* ---- ریسپانسیو (کامل و اصلاح‌شده) ---- */
+/* ---- ریسپانسیو ---- */
 /* ================================================= */
 @media (max-width: 992px) {
     #main-wrapper {
@@ -1855,7 +1862,7 @@ footer {
         border: 3px solid rgba(255, 255, 255, 0.95);
     }
 
-    /* ===== اصلاحات موبایل برای لیست‌ها (رفع تداخل نقطه‌ها) ===== */
+    /* ===== اصلاحات موبایل برای لیست‌ها ===== */
     .job-item ul li {
         padding-inline-start: 30px !important;
         font-size: 0.88em !important;
@@ -1863,8 +1870,11 @@ footer {
     }
 
     body.lang-fa .job-item ul li {
+        text-align: justify !important;
+        hyphens: none !important;
         font-size: 0.88em !important;
         line-height: 2 !important;
+        padding-inline-start: 32px !important;
     }
 
     .service-card ul li {
@@ -2171,7 +2181,6 @@ footer {
         width: 100%;
     }
 
-    /* افزایش بیشتر فاصله در موبایل کوچک */
     .job-item ul li {
         padding-inline-start: 32px !important;
         font-size: 0.85em !important;
@@ -2179,6 +2188,9 @@ footer {
 
     body.lang-fa .job-item ul li {
         font-size: 0.85em !important;
+        padding-inline-start: 34px !important;
+        text-align: justify !important;
+        hyphens: none !important;
     }
 
     .service-card ul li {
@@ -2256,6 +2268,9 @@ footer {
     body.lang-fa .job-item ul li {
         font-size: 0.82em !important;
         line-height: 1.9 !important;
+        padding-inline-start: 34px !important;
+        text-align: justify !important;
+        hyphens: none !important;
     }
 
     .job-item .duration,
