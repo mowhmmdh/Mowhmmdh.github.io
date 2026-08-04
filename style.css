@@ -113,6 +113,105 @@ body.dark-mode .dark-toggle {
 }
 
 /* ================================================= */
+/* ---- دکمه تبدیل زبان (سوییچ مدرن) ---- */
+/* ================================================= */
+.lang-switcher {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 12px;
+    border-radius: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 250;
+}
+
+body.dark-mode .lang-switcher {
+    background: rgba(30, 41, 59, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.lang-en .lang-switcher {
+    order: 2;
+    margin-left: auto;
+}
+body.lang-fa .lang-switcher {
+    order: 2;
+    margin-right: auto;
+}
+
+.lang-toggle {
+    position: relative;
+    width: 70px;
+    height: 34px;
+    cursor: pointer;
+    display: block;
+}
+
+.lang-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.lang-slider {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+    border-radius: 34px;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px;
+}
+
+.lang-toggle input:checked + .lang-slider {
+    background: linear-gradient(135deg, var(--accent), var(--primary-light));
+}
+
+.lang-option {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 3px 6px;
+    border-radius: 20px;
+    transition: all 0.4s ease;
+    color: #64748b;
+    user-select: none;
+}
+
+.lang-option.fa {
+    margin-right: 4px;
+}
+.lang-option.en {
+    margin-left: 4px;
+}
+
+.lang-toggle input:checked + .lang-slider .lang-option.fa {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lang-toggle input:not(:checked) + .lang-slider .lang-option.en {
+    color: white;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.lang-toggle input:checked + .lang-slider .lang-option.en {
+    color: #94a3b8;
+    background: transparent;
+}
+
+.lang-toggle input:not(:checked) + .lang-slider .lang-option.fa {
+    color: #94a3b8;
+    background: transparent;
+}
+
+/* ================================================= */
 /* ---- افکت پس‌زمینه با ذرات ---- */
 /* ================================================= */
 #particles-canvas {
@@ -125,7 +224,9 @@ body.dark-mode .dark-toggle {
     pointer-events: none;
 }
 
+/* ================================================= */
 /* ---- ریست و تنظیمات ---- */
+/* ================================================= */
 * {
     margin: 0;
     padding: 0;
@@ -281,68 +382,6 @@ body.dark-mode #sidebar-info {
     padding: 10px 0 20px;
     width: 100%;
     gap: 15px;
-}
-
-/* ---- دکمه زبان ---- */
-.lang-switcher {
-    z-index: 250;
-    display: flex;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.9);
-    padding: 4px 10px;
-    border-radius: 30px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    position: relative;
-    top: auto;
-    right: auto;
-    left: auto;
-}
-
-body.dark-mode .lang-switcher {
-    background: rgba(30, 41, 59, 0.9);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-body.lang-en .lang-switcher {
-    order: 2;
-    margin-left: auto;
-}
-body.lang-fa .lang-switcher {
-    order: 2;
-    margin-right: auto;
-}
-
-.lang-switcher a,
-.lang-switcher button {
-    text-decoration: none;
-    border: 1px solid var(--border);
-    padding: 5px 14px;
-    border-radius: 20px;
-    font-size: 0.75em;
-    font-weight: 600;
-    transition: var(--transition);
-    background: transparent;
-    cursor: pointer;
-    color: var(--text);
-}
-
-.lang-switcher a:hover,
-.lang-switcher button:hover {
-    background: var(--accent);
-    color: white;
-    border-color: var(--accent);
-}
-
-.lang-switcher .active-lang {
-    background: linear-gradient(135deg, var(--primary), var(--primary-light));
-    color: white;
-    border-color: var(--primary);
-}
-
-body.dark-mode .lang-switcher .active-lang {
-    background: linear-gradient(135deg, #60a5fa, #3b82f6);
-    color: #0f172a;
 }
 
 /* ---- عکس پروفایل ---- */
@@ -547,7 +586,7 @@ body.lang-en .summary {
 }
 
 /* ================================================= */
-/* ---- آیتم‌های شغلی با تایم‌لاین (اصلاح‌شده ویژه فارسی) ---- */
+/* ---- آیتم‌های شغلی با تایم‌لاین ---- */
 /* ================================================= */
 
 #experience .job-item {
@@ -578,7 +617,6 @@ body.lang-en .summary {
     box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.25);
 }
 
-/* ===== اصلاح ویژه نسخه فارسی ===== */
 body.lang-fa #experience .job-item {
     padding-left: 20px;
     padding-right: 48px;
@@ -613,7 +651,6 @@ body.lang-en .job-item {
     border-left: 5px solid var(--accent);
 }
 
-/* ===== اصلاح padding در نسخه فارسی (برای هماهنگی) ===== */
 body.lang-fa .job-item {
     padding: 24px 48px 24px 20px;
 }
@@ -665,7 +702,6 @@ body.lang-fa .job-item h3 {
     overflow-wrap: break-word;
 }
 
-/* ===== اصلاح ویژه برای نسخه فارسی (تراز کامل و جلوگیری از خط‌فاصله) ===== */
 body.lang-fa .job-item ul li {
     text-align: justify;
     hyphens: none;
@@ -1341,7 +1377,7 @@ body.dark-mode .cta-button {
 }
 
 /* ================================================= */
-/* ---- دکمه‌های اشتراک‌گذاری (حرفه‌ای) ---- */
+/* ---- دکمه‌های اشتراک‌گذاری ---- */
 /* ================================================= */
 .share-buttons {
     display: flex;
@@ -1377,7 +1413,6 @@ body.dark-mode .cta-button {
     transform: scale(0.92);
 }
 
-/* رنگ‌های هر شبکه */
 .share-linkedin {
     background: #0077b5;
 }
@@ -1420,7 +1455,6 @@ body.dark-mode .cta-button {
     background: #5a6268;
 }
 
-/* حالت دارک مود برای دکمه‌ها */
 body.dark-mode .share-btn {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
@@ -1432,7 +1466,6 @@ body.dark-mode .share-twitter:hover {
     background: #2a2a4e;
 }
 
-/* تگ‌های کمکی (tooltip) روی دکمه‌ها */
 .share-btn .tooltip {
     position: absolute;
     bottom: calc(100% + 12px);
@@ -1633,8 +1666,23 @@ body.dark-mode .project-actions .badge {
 }
 
 /* ================================================= */
-/* ---- لوگو و فوتر ---- */
+/* ---- فوتر (با نام متمایز) ---- */
 /* ================================================= */
+footer {
+    padding: 20px 0 0 0;
+}
+
+.footer-branding {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 22px;
+    border-top: 2px solid var(--border);
+    margin-top: 40px;
+    gap: 18px;
+}
+
 .footer-logo-wrapper {
     display: flex;
     align-items: center;
@@ -1704,31 +1752,38 @@ body.dark-mode .project-actions .badge {
     transform: scale(1.06);
 }
 
-footer {
-    padding: 20px 0 0 0;
-}
-
-.footer-branding {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-top: 22px;
-    border-top: 2px solid var(--border);
-    margin-top: 40px;
-    gap: 18px;
-}
-
 .copyright-text {
     font-size: 0.85em;
     color: var(--text-muted);
     text-align: center;
-    line-height: 1.8;
+    line-height: 2;
 }
 
-.copyright-text span {
+.copyright-label {
+    color: var(--text-muted);
+}
+
+.copyright-name {
     font-weight: 700;
-    color: var(--primary);
+    color: var(--accent);
+    background: linear-gradient(135deg, var(--accent), var(--primary-light));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    padding: 0 4px;
+    transition: all 0.3s ease;
+}
+
+.copyright-name:hover {
+    letter-spacing: 0.5px;
+    filter: brightness(1.2);
+}
+
+body.dark-mode .copyright-name {
+    background: linear-gradient(135deg, #60a5fa, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* ================================================= */
@@ -1805,13 +1860,14 @@ footer {
         position: relative;
     }
 
+    /* ===== تنظیم سوییچ زبان در موبایل ===== */
     .lang-switcher {
         position: absolute;
-        top: 5px;
-        right: 5px;
+        top: 10px;
+        right: 10px;
         left: auto !important;
         margin: 0 !important;
-        padding: 3px 8px;
+        padding: 4px 8px;
         border-radius: 30px;
         background: rgba(255, 255, 255, 0.92);
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
@@ -1825,11 +1881,11 @@ footer {
     }
 
     body.lang-en .lang-switcher {
-        right: 5px !important;
+        right: 10px !important;
         left: auto !important;
     }
     body.lang-fa .lang-switcher {
-        right: 5px !important;
+        right: 10px !important;
         left: auto !important;
     }
 
@@ -1838,12 +1894,13 @@ footer {
         border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .lang-switcher a,
-    .lang-switcher button {
-        padding: 2px 8px;
-        font-size: 0.6em;
-        border-radius: 14px;
-        border: 1px solid var(--border);
+    .lang-toggle {
+        width: 60px;
+        height: 30px;
+    }
+
+    .lang-option {
+        font-size: 0.6rem;
     }
 
     .profile-wrapper {
@@ -1872,6 +1929,12 @@ footer {
         border: 3px solid rgba(255, 255, 255, 0.95);
     }
 
+    /* ذرات در موبایل با شفافیت کمتر */
+    #particles-canvas {
+        opacity: 0.4;
+    }
+
+    /* ---- اصلاحات موبایل برای لیست‌ها ---- */
     .job-item ul li {
         padding-inline-start: 30px !important;
         font-size: 0.88em !important;
@@ -2216,6 +2279,10 @@ footer {
         height: 44px;
         font-size: 1.05em;
     }
+
+    #particles-canvas {
+        opacity: 0.3;
+    }
 }
 
 @media (max-width: 480px) {
@@ -2401,16 +2468,14 @@ footer {
         left: 15px;
     }
 
-    .lang-switcher {
-        top: 3px;
-        right: 3px;
-        padding: 2px 6px;
+    .lang-toggle {
+        width: 54px;
+        height: 26px;
     }
 
-    .lang-switcher a,
-    .lang-switcher button {
-        padding: 1px 6px;
-        font-size: 0.55em;
+    .lang-option {
+        font-size: 0.5rem;
+        padding: 2px 4px;
     }
 
     .share-btn {
@@ -2421,6 +2486,10 @@ footer {
 
     .share-btn .tooltip {
         display: none;
+    }
+
+    #particles-canvas {
+        opacity: 0.2;
     }
 }
 
