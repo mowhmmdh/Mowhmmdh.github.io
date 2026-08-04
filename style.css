@@ -113,105 +113,70 @@ body.dark-mode .dark-toggle {
 }
 
 /* ================================================= */
-/* ---- دکمه تبدیل زبان (سوییچ مدرن) ---- */
+/* ---- کلید تغییر زبان حرفه‌ای (دکمه) ---- */
 /* ================================================= */
-.lang-switcher {
+.lang-toggle-btn {
     display: flex;
     align-items: center;
+    gap: 8px;
     background: rgba(255, 255, 255, 0.9);
-    padding: 6px 12px;
-    border-radius: 30px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
     position: relative;
     z-index: 250;
+    user-select: none;
+    background: rgba(255, 255, 255, 0.9);
 }
 
-body.dark-mode .lang-switcher {
+.lang-toggle-btn:hover {
+    background: rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.lang-toggle-btn:active {
+    transform: scale(0.95);
+}
+
+.lang-toggle-btn .lang-icon {
+    display: inline-flex;
+    color: var(--accent);
+    font-size: 1em;
+    transition: transform 0.3s ease;
+}
+
+.lang-toggle-btn:hover .lang-icon {
+    transform: rotate(30deg);
+}
+
+.lang-toggle-btn .lang-text {
+    color: var(--text);
+    font-weight: 600;
+}
+
+body.dark-mode .lang-toggle-btn {
     background: rgba(30, 41, 59, 0.9);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-body.lang-en .lang-switcher {
-    order: 2;
-    margin-left: auto;
-}
-body.lang-fa .lang-switcher {
-    order: 2;
-    margin-right: auto;
+body.dark-mode .lang-toggle-btn:hover {
+    background: rgba(96, 165, 250, 0.1);
 }
 
-.lang-toggle {
-    position: relative;
-    width: 70px;
-    height: 34px;
-    cursor: pointer;
-    display: block;
+body.dark-mode .lang-toggle-btn .lang-text {
+    color: #f1f5f9;
 }
 
-.lang-toggle input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-}
-
-.lang-slider {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
-    border-radius: 34px;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 3px;
-}
-
-.lang-toggle input:checked + .lang-slider {
-    background: linear-gradient(135deg, var(--accent), var(--primary-light));
-}
-
-.lang-option {
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 20px;
-    transition: all 0.4s ease;
-    color: #64748b;
-    user-select: none;
-    flex: 1;
-    text-align: center;
-    z-index: 1;
-}
-
-.lang-option.fa {
-    margin-right: 2px;
-}
-.lang-option.en {
-    margin-left: 2px;
-}
-
-.lang-toggle input:checked + .lang-slider .lang-option.en {
-    color: white;
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.lang-toggle input:checked + .lang-slider .lang-option.fa {
-    color: #94a3b8;
-    background: transparent;
-}
-
-.lang-toggle input:not(:checked) + .lang-slider .lang-option.fa {
-    color: white;
-    background: rgba(255, 255, 255, 0.25);
-}
-
-.lang-toggle input:not(:checked) + .lang-slider .lang-option.en {
-    color: #94a3b8;
-    background: transparent;
+body.dark-mode .lang-toggle-btn .lang-icon {
+    color: #60a5fa;
 }
 
 /* ================================================= */
@@ -385,6 +350,14 @@ body.dark-mode #sidebar-info {
     gap: 15px;
 }
 
+body.lang-en #top-area {
+    flex-direction: row;
+}
+
+body.lang-fa #top-area {
+    flex-direction: row;
+}
+
 /* ---- عکس پروفایل ---- */
 .profile-wrapper {
     position: relative;
@@ -403,10 +376,12 @@ body.dark-mode #sidebar-info {
 }
 
 body.lang-en .profile-wrapper {
-    order: 1;
+    order: 2;
+    margin-left: auto;
 }
 body.lang-fa .profile-wrapper {
-    order: 1;
+    order: 2;
+    margin-right: auto;
 }
 
 .profile-wrapper:hover {
@@ -420,6 +395,16 @@ body.lang-fa .profile-wrapper {
     object-fit: cover;
     display: block;
     border: 3px solid rgba(255, 255, 255, 0.9);
+}
+
+/* ---- کلید تغییر زبان در هدر ---- */
+body.lang-en .lang-toggle-btn {
+    order: 1;
+    margin-right: auto;
+}
+body.lang-fa .lang-toggle-btn {
+    order: 1;
+    margin-left: auto;
 }
 
 /* ================================================= */
@@ -1861,47 +1846,36 @@ body.dark-mode .copyright-name {
         position: relative;
     }
 
-    .lang-switcher {
+    /* کلید تغییر زبان در موبایل */
+    .lang-toggle-btn {
         position: absolute;
         top: 10px;
         right: 10px;
         left: auto !important;
         margin: 0 !important;
-        padding: 4px 8px;
+        padding: 6px 12px;
         border-radius: 30px;
         background: rgba(255, 255, 255, 0.92);
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         z-index: 50;
         border: 1px solid rgba(255, 255, 255, 0.5);
-        display: flex;
-        gap: 4px;
-        align-items: center;
+        font-size: 0.75rem;
+        gap: 6px;
         order: 0 !important;
-        width: auto;
     }
 
-    body.lang-en .lang-switcher {
+    body.lang-en .lang-toggle-btn {
         right: 10px !important;
         left: auto !important;
     }
-    body.lang-fa .lang-switcher {
+    body.lang-fa .lang-toggle-btn {
         right: 10px !important;
         left: auto !important;
     }
 
-    body.dark-mode .lang-switcher {
+    body.dark-mode .lang-toggle-btn {
         background: rgba(30, 41, 59, 0.92);
         border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    .lang-toggle {
-        width: 60px;
-        height: 30px;
-    }
-
-    .lang-option {
-        font-size: 0.6rem;
-        padding: 2px 6px;
     }
 
     .profile-wrapper {
@@ -2467,14 +2441,16 @@ body.dark-mode .copyright-name {
         left: 15px;
     }
 
-    .lang-toggle {
-        width: 54px;
-        height: 26px;
+    .lang-toggle-btn {
+        padding: 4px 10px;
+        font-size: 0.65rem;
+        gap: 4px;
+        top: 5px;
+        right: 5px;
     }
 
-    .lang-option {
-        font-size: 0.5rem;
-        padding: 2px 4px;
+    .lang-toggle-btn .lang-icon {
+        font-size: 0.8em;
     }
 
     .share-btn {
@@ -2493,9 +2469,9 @@ body.dark-mode .copyright-name {
 }
 
 @media (min-width: 768px) and (max-width: 992px) {
-    .lang-option {
-        font-size: 0.6rem;
-        padding: 2px 6px;
+    .lang-toggle-btn {
+        font-size: 0.7rem;
+        padding: 5px 12px;
     }
 
     #navbar a {
