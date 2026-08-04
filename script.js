@@ -404,22 +404,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // کلید تبدیل زبان (سوییچ دو حالته)
+    // کلید تغییر زبان (دکمه) - حرفه‌ای
     // ===============================================
-    const langCheckbox = document.getElementById('lang-checkbox');
-    if (langCheckbox) {
-        const currentPath = window.location.pathname;
-        if (currentPath.includes('en.html')) {
-            langCheckbox.checked = true;
-        } else {
-            langCheckbox.checked = false;
-        }
-        
-        langCheckbox.addEventListener('change', function() {
-            if (this.checked) {
-                window.location.href = '/en.html';
-            } else {
+    const langToggleBtn = document.getElementById('lang-toggle-btn');
+    if (langToggleBtn) {
+        langToggleBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            const currentPath = window.location.pathname;
+            if (currentPath.includes('en.html')) {
                 window.location.href = '/index.html';
+            } else {
+                window.location.href = '/en.html';
             }
         });
     }
