@@ -327,13 +327,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const body = document.body;
     if (localStorage.getItem('dark-mode') === 'true') {
         body.classList.add('dark-mode');
-        darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        darkToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
     }
     darkToggle.addEventListener('click', function() {
         body.classList.toggle('dark-mode');
         const isDark = body.classList.contains('dark-mode');
         localStorage.setItem('dark-mode', isDark);
-        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        this.innerHTML = isDark ? '<i class="fas fa-sun" aria-hidden="true"></i>' : '<i class="fas fa-moon" aria-hidden="true"></i>';
     });
 
     // ===============================================
@@ -389,4 +389,25 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // ===============================================
+    // افکت ریپل روی دکمه‌ها (افکت موج)
+    // ===============================================
+    document.querySelectorAll('.cta-button, .service-select-btn, .contact-form button[type="submit"]').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            // جلوگیری از اجرای ریپل روی دکمه‌های لغو یا reset
+            if (this.type === 'reset') return;
+            
+            const rect = this.getBoundingClientRect();
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple-effect');
+            const size = Math.max(rect.width, rect.height);
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+            ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+
 });
