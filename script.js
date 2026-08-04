@@ -12,13 +12,55 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // تبدیل اعداد فارسی به لاتین
+    // تبدیل تاریخ میلادی به شمسی (الگوریتم دقیق)
     // ===============================================
-    function persianToEnglishNumber(str) {
-        if (!str) return str;
-        return str.replace(/[۰-۹]/g, function(d) {
-            return String.fromCharCode(d.charCodeAt(0) - 1728);
-        });
+    function gregorianToJalali(gy, gm, gd) {
+        var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+        var jy, jm, jd;
+        var gy2 = (gm > 2) ? (gy + 1) : gy;
+        var days = 355666 + (365 * gy) + ~~((gy2 + 3) / 4) - ~~((gy2 + 99) / 100) + ~~((gy2 + 399) / 400) + gd + g_d_m[gm - 1];
+        jy = -1595 + (33 * ~~(days / 12053));
+        days %= 12053;
+        jy += 4 * ~~(days / 1461);
+        days %= 1461;
+        if (days > 365) {
+            jy += ~~((days - 1) / 365);
+            days = (days - 1) % 365;
+        }
+        if (days < 0) {
+            jy -= 1;
+            days += 365;
+        }
+        jm = (days < 186) ? 1 + ~~(days / 31) : 7 + ~~((days - 186) / 30);
+        jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
+        return [jy, jm, jd];
+    }
+
+    // ===============================================
+    // تبدیل تاریخ میلادی به رشته شمسی با نام ماه
+    // ===============================================
+    function toPersianDate(date) {
+        const [year, month, day] = gregorianToJalali(
+            date.getFullYear(),
+            date.getMonth() + 1,
+            date.getDate()
+        );
+        const persianMonths = [
+            'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد',
+            'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+        ];
+        return `${year} ${persianMonths[month - 1]} ${day}`;
+    }
+
+    // ===============================================
+    // تبدیل تاریخ میلادی به رشته میلادی با نام ماه
+    // ===============================================
+    function toEnglishDate(date) {
+        const englishMonths = [
+            'January', 'February', 'March', 'April', 'May', 'June',
+            'July', 'August', 'September', 'October', 'November', 'December'
+        ];
+        return `${englishMonths[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
     }
 
     // ===============================================
@@ -149,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت (اصلاح شده)
+    // انیمیشن نوارهای مهارت
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
     
@@ -500,23 +542,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ================================================================
-    // به‌روزرسانی خودکار تاریخ در فوتر
+    // به‌روزرسانی خودکار تاریخ در فوتر (شمسی در فارسی، میلادی در انگلیسی)
     // ================================================================
     const updateDateFa = document.getElementById('update-date-fa');
     const updateDateEn = document.getElementById('update-date-en');
     const now = new Date();
-    const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
-    const englishMonths = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     
     if (updateDateFa) {
-        // تاریخ شمسی ساده
-        const faDate = `به‌روزرسانی: ${now.getFullYear()} ${persianMonths[now.getMonth()]} ${now.getDate()}`;
-        updateDateFa.textContent = faDate;
+        const persianDate = toPersianDate(now);
+        updateDateFa.textContent = `به‌روزرسانی: ${persianDate}`;
     }
     
     if (updateDateEn) {
-        const enDate = `Last Updated: ${englishMonths[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
-        updateDateEn.textContent = enDate;
+        const englishDate = toEnglishDate(now);
+        updateDateEn.textContent = `Last Updated: ${englishDate}`;
     }
 
 });
