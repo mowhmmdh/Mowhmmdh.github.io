@@ -37,7 +37,51 @@ body.dark-mode {
     --shadow-hover: 0 10px 40px rgba(96, 165, 250, 0.08);
 }
 
+/* ================================================= */
+/* ---- پس‌زمینه پویا با گرادیان متحرک ---- */
+/* ================================================= */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background: linear-gradient(-45deg, #0f2b4d, #1a4a7a, #2563eb, #0f2b4d);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite;
+    opacity: 0.07;
+    pointer-events: none;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ================================================= */
+/* ---- اسکرول بار اختصاصی ---- */
+/* ================================================= */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 10px;
+    border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-light);
+}
+
+/* ================================================= */
 /* ---- دکمه دارک مود ---- */
+/* ================================================= */
 .dark-toggle {
     position: fixed;
     bottom: 30px;
@@ -170,19 +214,19 @@ body.lang-en {
     align-items: flex-start;
 }
 
-/* ---- سایدبار ---- */
+/* ---- سایدبار با گلس‌مورفیسم قوی ---- */
 #sidebar-info {
     position: sticky;
     top: 30px;
     width: 30%;
     min-width: 250px;
     background: var(--bg-sidebar);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     padding: 25px 20px 30px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     transition: var(--transition);
     z-index: 2;
     transform-style: preserve-3d;
@@ -206,12 +250,12 @@ body.dark-mode #sidebar-info {
 #main-content {
     width: 70%;
     background: var(--bg-main);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
     padding: 35px 35px 25px;
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: var(--transition);
 }
 
@@ -310,19 +354,29 @@ body.dark-mode .lang-switcher .active-lang {
 }
 
 /* ================================================= */
-/* ---- عکس پروفایل (دسکتاپ) ---- */
+/* ---- عکس پروفایل با حلقه نئونی و افکت شناور ---- */
 /* ================================================= */
 .profile-wrapper {
     position: absolute;
-    top: 50%;
-    width: 100px;
+    width: 120px;
     height: 120px;
-    border-radius: 20%;
-    padding: 4px;
-    background: linear-gradient(135deg, var(--accent), var(--primary-light));
-    box-shadow: 0 8px 30px var(--accent-glow);
-    transition: var(--transition);
+    border-radius: 50%;
+    padding: 5px;
+    background: conic-gradient(from 0deg, var(--accent), #a78bfa, var(--accent));
+    box-shadow: 0 0 40px rgba(37, 99, 235, 0.4);
+    animation: spinGlow 6s linear infinite, floatProfile 4s ease-in-out infinite;
+    transition: all 0.4s ease;
     will-change: transform;
+}
+
+@keyframes spinGlow {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes floatProfile {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50% { transform: translate(-50%, -50%) translateY(-8px); }
 }
 
 body.lang-fa .profile-wrapper {
@@ -336,16 +390,17 @@ body.lang-en .profile-wrapper {
 }
 
 .profile-wrapper:hover {
-    transform: translate(-50%, -50%) scale(1.03);
+    animation-play-state: paused;
+    transform: translate(-50%, -50%) scale(1.05);
 }
 
 .profile-icon {
     width: 100%;
     height: 100%;
-    border-radius: 20%;
+    border-radius: 50%;
     object-fit: cover;
     display: block;
-    border: 3px solid rgba(255, 255, 255, 0.9);
+    border: 3px solid rgba(255, 255, 255, 0.95);
 }
 
 /* ================================================= */
@@ -512,7 +567,53 @@ body.lang-en .summary {
     border-left: 5px solid var(--accent);
 }
 
-/* ---- آیتم‌های شغلی ---- */
+/* ================================================= */
+/* ---- آیتم‌های شغلی با استایل تایم‌لاین ---- */
+/* ================================================= */
+#experience .job-item {
+    position: relative;
+    padding-left: 30px;
+    border-left: 3px solid var(--accent);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    margin-left: 15px;
+    padding-top: 18px;
+    padding-bottom: 18px;
+}
+
+#experience .job-item::before {
+    content: '';
+    position: absolute;
+    left: -9px;
+    top: 28px;
+    width: 15px;
+    height: 15px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.15);
+    z-index: 1;
+}
+
+#experience .job-item.current-position::before {
+    background: #f59e0b;
+    box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.25);
+}
+
+body.lang-fa #experience .job-item {
+    padding-left: 0;
+    padding-right: 30px;
+    border-left: none;
+    border-right: 3px solid var(--accent);
+    border-radius: var(--radius) 0 0 var(--radius);
+    margin-left: 0;
+    margin-right: 15px;
+}
+
+body.lang-fa #experience .job-item::before {
+    left: auto;
+    right: -9px;
+}
+
+/* ---- استایل‌های عمومی job-item ---- */
 .job-item {
     margin-bottom: 22px;
     padding: 22px 28px;
@@ -1127,6 +1228,20 @@ body.dark-mode .cta-button {
     box-shadow: 0 4px 20px rgba(96, 165, 250, 0.15);
 }
 
+/* ---- افکت ریپل برای دکمه‌ها ---- */
+.ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    animation: rippleAnim 0.6s linear;
+    pointer-events: none;
+}
+
+@keyframes rippleAnim {
+    to { transform: scale(4); opacity: 0; }
+}
+
 /* ================================================= */
 /* ---- فرم تماس ---- */
 /* ================================================= */
@@ -1633,6 +1748,7 @@ footer {
         border: 1px solid var(--border);
     }
 
+    /* برطرف کردن مشکل انیمیشن عکس در موبایل */
     .profile-wrapper {
         position: relative;
         top: auto;
@@ -1640,27 +1756,59 @@ footer {
         right: auto !important;
         transform: none !important;
         width: 120px;
-        height: 140px;
-        border-radius: 24px;
-        padding: 4px;
+        height: 120px;
+        border-radius: 50%;
+        padding: 5px;
         margin: 25px auto 10px;
-        background: linear-gradient(135deg, var(--accent), var(--primary-light), var(--accent));
-        background-size: 300% 300%;
-        animation: gradientMove 4s ease-in-out infinite;
-        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.2);
-        will-change: transform, background-position;
+        background: conic-gradient(from 0deg, var(--accent), #a78bfa, var(--accent));
+        box-shadow: 0 0 40px rgba(37, 99, 235, 0.3);
+        animation: spinGlowMobile 6s linear infinite, floatProfileMobile 4s ease-in-out infinite;
+        will-change: transform;
         z-index: 1;
     }
 
-    @keyframes gradientMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    @keyframes spinGlowMobile {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    @keyframes floatProfileMobile {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+    }
+
+    .profile-wrapper:hover {
+        animation-play-state: paused;
+        transform: scale(1.05);
     }
 
     .profile-icon {
-        border-radius: 20px;
+        border-radius: 50%;
         border: 3px solid rgba(255, 255, 255, 0.95);
+    }
+
+    /* ریست کردن تایم‌لاین در موبایل برای جلوگیری از بهم‌ریختگی */
+    #experience .job-item {
+        padding-left: 20px;
+        border-left-width: 2px;
+        margin-left: 5px;
+        border-radius: 0 var(--radius) var(--radius) 0;
+    }
+    #experience .job-item::before {
+        left: -7px;
+        top: 24px;
+        width: 12px;
+        height: 12px;
+    }
+    body.lang-fa #experience .job-item {
+        padding-left: 0;
+        padding-right: 20px;
+        border-right-width: 2px;
+        margin-right: 5px;
+        border-radius: var(--radius) 0 0 var(--radius);
+    }
+    body.lang-fa #experience .job-item::before {
+        left: auto;
+        right: -7px;
     }
 
     .header {
@@ -1930,8 +2078,8 @@ footer {
 @media (max-width: 480px) {
     .profile-wrapper {
         width: 100px;
-        height: 118px;
-        padding: 3px;
+        height: 100px;
+        padding: 4px;
         margin: 20px auto 8px;
     }
 
@@ -2100,7 +2248,7 @@ footer {
 
     .profile-wrapper {
         width: 130px;
-        height: 150px;
+        height: 130px;
         margin: 30px auto 12px;
     }
 
