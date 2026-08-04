@@ -177,6 +177,7 @@
 
     <div id="progress-bar"></div>
 
+    <!-- دکمه دارک مود -->
     <button id="dark-toggle" class="dark-toggle" aria-label="تغییر حالت تاریک/روشن">
         <i class="fas fa-moon" aria-hidden="true"></i>
     </button>
@@ -186,13 +187,18 @@
         <aside id="sidebar-info">
             
             <div id="top-area">
+                <!-- سوییچ زبان مدرن -->
                 <div class="lang-switcher">
-                    <button class="active-lang" id="lang-fa-btn" aria-label="تغییر زبان به فارسی">فارسی</button>
-                    |
-                    <a href="en.html" class="lang-link" id="lang-en-btn" aria-label="Change language to English">English</a>
+                    <label class="lang-toggle" aria-label="تغییر زبان">
+                        <input type="checkbox" id="lang-checkbox">
+                        <span class="lang-slider">
+                            <span class="lang-option fa">فا</span>
+                            <span class="lang-option en">En</span>
+                        </span>
+                    </label>
                 </div>
                 <div class="profile-wrapper">
-                    <img src="images/profile.jpg" alt="عکس پروفایل" class="profile-icon" loading="lazy">
+                    <img src="images/profile.jpg" alt="عکس محمدحسین عسگری ثمرین" class="profile-icon" loading="lazy">
                 </div>
             </div>
 
@@ -682,7 +688,9 @@
                         <img src="images/mha-logo.png" alt="لوگو" class="footer-logo-img" loading="lazy">
                     </div>
                     <p class="copyright-text">
-                        <span>طراحی و توسعه: محمدحسین عسگری ثمرین</span>
+                        <span class="copyright-label">© کلیه حقوق این وبسایت محفوظ و متعلق به</span>
+                        <span class="copyright-name">محمدحسین عسگری ثمرین</span>
+                        <span class="copyright-label">است.</span>
                         <br>
                         <span id="update-date-fa"></span>
                     </p>
