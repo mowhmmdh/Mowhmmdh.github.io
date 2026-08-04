@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // ===============================================
-    // ابزار Debounce
+    // ابزار Debounce برای بهینه‌سازی عملکرد
     // ===============================================
     function debounce(func, delay) {
         let timeout;
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت پس‌زمینه با ذرات (فعال در همه دستگاه‌ها)
+    // افکت پس‌زمینه با ذرات (فعال در همه دستگاه‌ها با تعداد متغیر)
     // ===============================================
     function initParticles() {
         const isMobile = window.innerWidth <= 768;
@@ -138,11 +138,11 @@ document.addEventListener('DOMContentLoaded', function() {
         animateParticles();
     }
 
-    // اجرای ذرات در همه دستگاه‌ها (با تعداد کمتر در موبایل)
+    // اجرای ذرات در همه دستگاه‌ها
     initParticles();
 
     // ===============================================
-    // نوار پیشرفت
+    // نوار پیشرفت مطالعه
     // ===============================================
     function updateProgressBar() {
         const scrollTop = window.scrollY;
@@ -157,10 +157,11 @@ document.addEventListener('DOMContentLoaded', function() {
     updateProgressBar();
 
     // ===============================================
-    // محاسبه مدت زمان شغل
+    // محاسبه مدت زمان اشتغال در شغل فعلی
     // ===============================================
     function updateJobDuration() {
         const now = new Date();
+        
         const startFa = document.getElementById('start-date-fa');
         const displayFa = document.getElementById('duration-display-fa');
         if (startFa && displayFa) {
@@ -238,7 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت محو شدن بخش‌ها
+    // افکت محو شدن بخش‌ها هنگام اسکرول
     // ===============================================
     const sections = document.querySelectorAll('.section');
     const sectionObserver = new IntersectionObserver((entries) => {
@@ -282,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // منو فعال
+    // برجسته‌سازی آیتم منوی فعال
     // ===============================================
     const navLinks = document.querySelectorAll('#navbar a');
     function updateActiveNav() {
@@ -327,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // تایپ‌رایتر
+    // تایپ‌رایتر پیشرفته
     // ===============================================
     function initAdvancedTyping() {
         const typingElement = document.querySelector('.typing-text');
@@ -387,7 +388,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initAdvancedTyping();
 
     // ===============================================
-    // دارک مود
+    // دارک مود (ذخیره‌سازی در localStorage)
     // ===============================================
     const darkToggle = document.getElementById('dark-toggle');
     const body = document.body;
@@ -407,10 +408,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // ===============================================
     const langCheckbox = document.getElementById('lang-checkbox');
     if (langCheckbox) {
-        const currentLang = document.documentElement.lang || 'fa';
-        if (currentLang === 'en') {
+        const currentPath = window.location.pathname;
+        if (currentPath.includes('en.html')) {
             langCheckbox.checked = true;
+        } else {
+            langCheckbox.checked = false;
         }
+        
         langCheckbox.addEventListener('change', function() {
             if (this.checked) {
                 window.location.href = '/en.html';
@@ -421,7 +425,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // بخش خدمات - فرم
+    // بخش خدمات - نمایش فرم و انتخاب نوع خدمت
     // ===============================================
     const serviceButtons = document.querySelectorAll('.service-select-btn');
     const serviceForm = document.getElementById('service-request-form');
@@ -440,7 +444,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ===============================================
-    // بستن فرم
+    // بستن فرم با دکمه لغو
     // ===============================================
     const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
     if (cancelBtn) {
@@ -458,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // ارسال فرم خدمات
+    // ارسال فرم خدمات - اضافه کردن نوع خدمت به توضیحات
     // ===============================================
     const serviceRequestForm = document.getElementById('service-form');
     if (serviceRequestForm) {
@@ -475,7 +479,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت ریپل روی دکمه‌ها
+    // افکت ریپل روی دکمه‌ها (Ripple Effect)
     // ===============================================
     document.querySelectorAll('.cta-button, .service-select-btn, .contact-form button[type="submit"]').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -494,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ================================================================
-    // دکمه‌های اشتراک‌گذاری
+    // دکمه‌های اشتراک‌گذاری (Share Buttons)
     // ================================================================
     const shareButtons = document.querySelectorAll('.share-btn');
     const pageUrl = encodeURIComponent(window.location.href);
@@ -563,7 +567,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ================================================================
-    // به‌روزرسانی خودکار تاریخ در فوتر
+    // به‌روزرسانی خودکار تاریخ در فوتر (شمسی در فارسی، میلادی در انگلیسی)
     // ================================================================
     const updateDateFa = document.getElementById('update-date-fa');
     const updateDateEn = document.getElementById('update-date-en');
