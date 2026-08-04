@@ -1,106 +1,51 @@
 <div align="center">
 
 <!-- ============================================================ -->
-<!-- ANIMATED HEADER WITH MULTI-LINE TYPING                       -->
+<!-- HEADER WITH TYPING EFFECT                                    -->
 <!-- ============================================================ -->
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=800&size=40&duration=2800&pause=500&color=2563EB&center=true&vCenter=true&width=900&height=120&lines=%F0%9F%8C%9F+Mohammad+Hossein+Asgari+Somarin;%F0%9F%92%BB+IT+Specialist+%26+Network+Expert;%F0%9F%94%92+Cybersecurity+%7C+Infrastructure+%7C+Support;%F0%9F%8C%8D+Bilingual+Professional+(FA%2FEN);%F0%9F%92%AA+2%2B+Years+of+Hands-On+Experience" alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=32&duration=3000&pause=500&color=2563EB&center=true&vCenter=true&width=700&lines=Mohammad+Hossein+Asgari+Somarin;IT+Specialist+%26+Network+Expert;Cybersecurity+Enthusiast;Bilingual+Professional+(FA%2FEN)" alt="Typing SVG" />
 
 <br><br>
 
 <!-- ============================================================ -->
-<!-- SOCIAL BADGES - ROW 1                                       -->
+<!-- SOCIAL BADGES - SIMPLE VERSION                               -->
 <!-- ============================================================ -->
 
-<table align="center">
-<tr>
-<td align="center" width="120">
-  <a href="https://mowhmmdh.github.io/">
-    <img src="https://img.shields.io/badge/🌐_Live_Demo-2563EB?style=for-the-badge&logo=google-chrome&logoColor=white&labelColor=0A1628" width="140" alt="Website">
-  </a>
-</td>
-<td align="center" width="120">
-  <a href="https://linkedin.com/in/mohammadhosseinasgari">
-    <img src="https://img.shields.io/badge/💼_LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white&labelColor=0A1628" width="140" alt="LinkedIn">
-  </a>
-</td>
-<td align="center" width="120">
-  <a href="https://instagram.com/mowhmmdh">
-    <img src="https://img.shields.io/badge/📸_Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white&labelColor=0A1628" width="140" alt="Instagram">
-  </a>
-</td>
-</tr>
-<tr>
-<td align="center" width="120">
-  <a href="https://github.com/mowhmmdh">
-    <img src="https://img.shields.io/badge/🐙_GitHub-181717?style=for-the-badge&logo=github&logoColor=white&labelColor=0A1628" width="140" alt="GitHub">
-  </a>
-</td>
-<td align="center" width="120">
-  <a href="mailto:mohammedhasgari@gmail.com">
-    <img src="https://img.shields.io/badge/✉️_Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white&labelColor=0A1628" width="140" alt="Gmail">
-  </a>
-</td>
-<td align="center" width="120">
-  <a href="https://mowhmmdh.github.io/">
-    <img src="https://img.shields.io/badge/📄_Resume-0A66C2?style=for-the-badge&logo=adobeacrobatreader&logoColor=white&labelColor=0A1628" width="140" alt="Resume">
-  </a>
-</td>
-</tr>
-</table>
+<a href="https://mowhmmdh.github.io/">
+  <img src="https://img.shields.io/badge/Website-2563EB?style=flat-square&logo=google-chrome&logoColor=white" alt="Website">
+</a>
+<a href="https://linkedin.com/in/mohammadhosseinasgari">
+  <img src="https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn">
+</a>
+<a href="https://instagram.com/mowhmmdh">
+  <img src="https://img.shields.io/badge/Instagram-E4405F?style=flat-square&logo=instagram&logoColor=white" alt="Instagram">
+</a>
+<a href="https://github.com/mowhmmdh">
+  <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=github&logoColor=white" alt="GitHub">
+</a>
+<a href="mailto:mohammedhasgari@gmail.com">
+  <img src="https://img.shields.io/badge/Gmail-D14836?style=flat-square&logo=gmail&logoColor=white" alt="Gmail">
+</a>
 
-<br>
+<br><br>
 
 <!-- ============================================================ -->
-<!-- GITHUB STATS BADGES - ROW 2                                 -->
+<!-- SIMPLE STATS BADGES - NO DEPENDENCY ON GITHUB API            -->
 <!-- ============================================================ -->
 
-<table align="center">
-<tr>
-<td align="center">
-  <img src="https://img.shields.io/github/stars/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=gold&color=gold&label=⭐%20Stars" alt="Stars">
-</td>
-<td align="center">
-  <img src="https://img.shields.io/github/forks/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=orange&color=orange&label=🍴%20Forks" alt="Forks">
-</td>
-<td align="center">
-  <img src="https://img.shields.io/github/watchers/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=blue&color=blue&label=👀%20Watchers" alt="Watchers">
-</td>
-</tr>
-<tr>
-<td align="center">
-  <img src="https://img.shields.io/github/last-commit/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=purple&color=purple&label=📅%20Last%20Commit" alt="Last Commit">
-</td>
-<td align="center">
-  <img src="https://img.shields.io/github/repo-size/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=teal&color=teal&label=📦%20Repo%20Size" alt="Repo Size">
-</td>
-<td align="center">
-  <img src="https://img.shields.io/github/languages/top/mowhmmdh/mowhmmdh.github.io?style=for-the-badge&logo=github&logoColor=green&color=green&label=🔤%20Top%20Lang" alt="Top Language">
-</td>
-</tr>
-</table>
-
-<br>
-
-<!-- ============================================================ -->
-<!-- DIVIDER WITH ANIMATED WAVE                                  -->
-<!-- ============================================================ -->
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
+<img src="https://img.shields.io/badge/⭐_Stars-0-ffd700?style=flat-square" alt="Stars">
+<img src="https://img.shields.io/badge/🍴_Forks-0-orange?style=flat-square" alt="Forks">
+<img src="https://img.shields.io/badge/👀_Watchers-0-blue?style=flat-square" alt="Watchers">
+<img src="https://img.shields.io/badge/📅_Last_Commit-Aug%202026-purple?style=flat-square" alt="Last Commit">
+<img src="https://img.shields.io/badge/📦_Repo_Size-~1.5%20MB-teal?style=flat-square" alt="Repo Size">
+<img src="https://img.shields.io/badge/🔤_Top_Lang-HTML/CSS-green?style=flat-square" alt="Top Language">
 
 </div>
 
 ---
 
-<!-- ============================================================ -->
-<!-- ABOUT ME SECTION - VISUAL CARDS                               -->
-<!-- ============================================================ -->
-
-## <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="35" /> About Me
-
-<table>
-<tr>
-<td width="65%" valign="top">
+## 👨‍💻 About Me
 
 I'm **Mohammad Hossein Asgari Somarin**, an **IT Specialist** with a passion for building robust, scalable, and secure network infrastructures. With over **2 years of hands-on experience**, I've successfully delivered end-to-end IT solutions for organizations across various industries — from government agencies to private enterprises.
 
@@ -141,196 +86,236 @@ I'm **Mohammad Hossein Asgari Somarin**, an **IT Specialist** with a passion for
 </tr>
 </table>
 
-</td>
-<td width="35%" align="center">
+<br>
 
 <!-- ============================================================ -->
-<!-- ANIMATED GITHUB STATS CARDS                                  -->
+<!-- GITHUB STATS CARDS - THESE ALWAYS WORK                       -->
 <!-- ============================================================ -->
 
-<img src="https://github-readme-stats.vercel.app/api?username=mowhmmdh&show_icons=true&theme=radical&hide_border=true&bg_color=0D1117&icon_color=2563EB&title_color=2563EB&ring_color=2563EB&text_color=FFFFFF" width="100%" alt="GitHub Stats" />
-
-<br><br>
-
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=mowhmmdh&theme=radical&hide_border=true&background=0D1117&ring=2563EB&fire=2563EB&currStreakLabel=2563EB" width="100%" alt="GitHub Streak" />
-
-</td>
-</tr>
-</table>
+<img src="https://github-readme-stats.vercel.app/api?username=mowhmmdh&show_icons=true&theme=dark&hide_border=true&bg_color=0D1117&icon_color=2563EB&title_color=2563EB&text_color=FFFFFF" width="48%" alt="GitHub Stats">
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=mowhmmdh&theme=dark&hide_border=true&background=0D1117&ring=2563EB&fire=2563EB&currStreakLabel=2563EB" width="48%" alt="GitHub Streak">
 
 ---
-
-<!-- ============================================================ -->
-<!-- PROFESSIONAL HIGHLIGHTS - KEY METRICS                        -->
-<!-- ============================================================ -->
 
 ## 📊 Professional Highlights
 
-<div align="center">
-
 <table>
 <tr>
-<td align="center" width="25%">
-<h2>🏢</h2>
-<h3>5+</h3>
-<p>Branches Supported</p>
-</td>
-<td align="center" width="25%">
-<h2>📡</h2>
-<h3>99.9%</h3>
-<p>System Uptime</p>
-</td>
-<td align="center" width="25%">
-<h2>🌐</h2>
-<h3>2</h3>
-<p>Websites Developed</p>
-</td>
-<td align="center" width="25%">
-<h2>🏅</h2>
-<h3>2</h3>
-<p>Professional Certifications</p>
-</td>
+<td align="center"><h2>🏢</h2><h3>5+</h3><p>Branches Supported</p></td>
+<td align="center"><h2>📡</h2><h3>99.9%</h3><p>System Uptime</p></td>
+<td align="center"><h2>🌐</h2><h3>2</h3><p>Websites Developed</p></td>
+<td align="center"><h2>🏅</h2><h3>2</h3><p>Certifications</p></td>
 </tr>
 <tr>
-<td align="center" width="25%">
-<h2>⏳</h2>
-<h3>2+</h3>
-<p>Years of Experience</p>
-</td>
-<td align="center" width="25%">
-<h2>🖥️</h2>
-<h3>4</h3>
-<p>Organizations Served</p>
-</td>
-<td align="center" width="25%">
-<h2>🔒</h2>
-<h3>5+</h3>
-<p>Security Audits</p>
-</td>
-<td align="center" width="25%">
-<h2>📚</h2>
-<h3>10+</h3>
-<p>Technical Projects</p>
-</td>
+<td align="center"><h2>⏳</h2><h3>2+</h3><p>Years Experience</p></td>
+<td align="center"><h2>🖥️</h2><h3>4</h3><p>Organizations Served</p></td>
+<td align="center"><h2>🔒</h2><h3>5+</h3><p>Security Audits</p></td>
+<td align="center"><h2>📚</h2><h3>10+</h3><p>Technical Projects</p></td>
 </tr>
 </table>
 
-</div>
-
 ---
 
-<!-- ============================================================ -->
-<!-- TECHNICAL SKILLS - WITH VISUAL PROGRESS BARS                 -->
-<!-- ============================================================ -->
+<!-- ادامه بخش‌های دیگر با همین رویکرد ساده و مطمئن -->
 
 ## 🛠️ Technical Skills
 
-### 🌐 Network & Infrastructure
-
 <details>
-<summary><b>Click to expand</b></summary>
+<summary><b>🌐 Network & Infrastructure</b></summary>
 
 | Skill | Level |
 |:---|:---:|
-| Active Directory & Windows Server | <img src="https://progress-bar.dev/70" width="160" height="22" alt="70%"> |
-| CCNA (Routing & Switching) | <img src="https://progress-bar.dev/65" width="160" height="22" alt="65%"> |
-| Network+ (TCP/IP, OSI Model) | <img src="https://progress-bar.dev/65" width="160" height="22" alt="65%"> |
-| DHCP, DNS & Network Services | <img src="https://progress-bar.dev/70" width="160" height="22" alt="70%"> |
-| Mikrotik (RouterOS) | <img src="https://progress-bar.dev/45" width="160" height="22" alt="45%"> |
-| VoIP & SIP Trunking | <img src="https://progress-bar.dev/60" width="160" height="22" alt="60%"> |
-| Structured Cabling (Cat6, Fiber) | <img src="https://progress-bar.dev/55" width="160" height="22" alt="55%"> |
+| Active Directory & Windows Server | ████████░░ 70% |
+| CCNA (Routing & Switching) | ███████░░░ 65% |
+| Network+ (TCP/IP, OSI Model) | ███████░░░ 65% |
+| DHCP, DNS & Network Services | ████████░░ 70% |
+| Mikrotik (RouterOS) | ██████░░░░ 45% |
+| VoIP & SIP Trunking | ███████░░░ 60% |
+| Structured Cabling (Cat6, Fiber) | ██████░░░░ 55% |
 
 </details>
 
-### 🔒 Security & Virtualization
-
 <details>
-<summary><b>Click to expand</b></summary>
+<summary><b>🔒 Security & Virtualization</b></summary>
 
 | Skill | Level |
 |:---|:---:|
-| Ethical Hacking & Penetration Testing | <img src="https://progress-bar.dev/60" width="160" height="22" alt="60%"> |
-| CEH (Certified Ethical Hacker) | <img src="https://progress-bar.dev/35" width="160" height="22" alt="35%"> |
-| Wireshark & Network Analysis | <img src="https://progress-bar.dev/55" width="160" height="22" alt="55%"> |
-| VMware ESXi, vSphere | <img src="https://progress-bar.dev/40" width="160" height="22" alt="40%"> |
-| Firewall & Security Policies | <img src="https://progress-bar.dev/50" width="160" height="22" alt="50%"> |
-| VPN (IPSec, OpenVPN) | <img src="https://progress-bar.dev/40" width="160" height="22" alt="40%"> |
+| Ethical Hacking & Penetration Testing | ███████░░░ 60% |
+| CEH (Certified Ethical Hacker) | ████░░░░░░ 35% |
+| Wireshark & Network Analysis | ██████░░░░ 55% |
+| VMware ESXi, vSphere | █████░░░░░ 40% |
+| Firewall & Security Policies | ██████░░░░ 50% |
+| VPN (IPSec, OpenVPN) | █████░░░░░ 40% |
 
 </details>
 
-### 💻 OS & Software
-
 <details>
-<summary><b>Click to expand</b></summary>
+<summary><b>💻 OS & Software</b></summary>
 
 | Skill | Level |
 |:---|:---:|
-| Windows Administration | <img src="https://progress-bar.dev/90" width="160" height="22" alt="90%"> |
-| Linux Administration | <img src="https://progress-bar.dev/60" width="160" height="22" alt="60%"> |
-| Mac OS Support | <img src="https://progress-bar.dev/40" width="160" height="22" alt="40%"> |
-| Microsoft Office 365 | <img src="https://progress-bar.dev/85" width="160" height="22" alt="85%"> |
-| HTML5 & CSS3 | <img src="https://progress-bar.dev/55" width="160" height="22" alt="55%"> |
-| PowerShell & Scripting | <img src="https://progress-bar.dev/45" width="160" height="22" alt="45%"> |
-| SQL & Database | <img src="https://progress-bar.dev/35" width="160" height="22" alt="35%"> |
+| Windows Administration | ██████████ 90% |
+| Linux Administration | ███████░░░ 60% |
+| Mac OS Support | █████░░░░░ 40% |
+| Microsoft Office 365 | █████████░ 85% |
+| HTML5 & CSS3 | ██████░░░░ 55% |
+| PowerShell & Scripting | ██████░░░░ 45% |
+| SQL & Database | ████░░░░░░ 35% |
 
 </details>
 
-### 📋 IT Management & Support
-
 <details>
-<summary><b>Click to expand</b></summary>
+<summary><b>📋 IT Management & Support</b></summary>
 
 | Skill | Level |
 |:---|:---:|
-| IT Service Management (ITSM) | <img src="https://progress-bar.dev/90" width="160" height="22" alt="90%"> |
-| Advanced HelpDesk | <img src="https://progress-bar.dev/95" width="160" height="22" alt="95%"> |
-| System & Infrastructure Maintenance | <img src="https://progress-bar.dev/90" width="160" height="22" alt="90%"> |
-| IT Asset Management (ITAM) | <img src="https://progress-bar.dev/70" width="160" height="22" alt="70%"> |
-| Technical Documentation | <img src="https://progress-bar.dev/75" width="160" height="22" alt="75%"> |
-| End-User Training | <img src="https://progress-bar.dev/85" width="160" height="22" alt="85%"> |
-| IT Project Management | <img src="https://progress-bar.dev/60" width="160" height="22" alt="60%"> |
+| IT Service Management (ITSM) | ██████████ 90% |
+| Advanced HelpDesk | ██████████ 95% |
+| System & Infrastructure Maintenance | ██████████ 90% |
+| IT Asset Management (ITAM) | ████████░░ 70% |
+| Technical Documentation | ████████░░ 75% |
+| End-User Training | █████████░ 85% |
+| IT Project Management | ██████░░░░ 60% |
 
 </details>
 
 ---
 
-<!-- ============================================================ -->
-<!-- WORK EXPERIENCE - PROFESSIONAL TABLE                         -->
-<!-- ============================================================ -->
-
 ## 💼 Work Experience
-
-<div align="center">
 
 | Position | Organization | Duration | Key Contributions |
 |:---|:---|:---|:---|
-| 🚀 **IT Specialist** | **Mahex Air Cargo Services** | Jan 2026 – Present | • Led HelpDesk across 5+ branches & 3 airports<br>• Designed & developed mahexservices.ir & mahexcrm.ir<br>• Managed network infrastructure (Cat6/Fiber)<br>• CCTV maintenance & troubleshooting |
-| 💻 **Site Support Expert** | **Kimiamehr Espadana Tadbir** | Nov 2022 – Dec 2023 | • Provided technical support for websites & internal systems<br>• Managed order processes & content updates<br>• Conducted hardware/software troubleshooting |
-| 🔧 **Technical Support Expert** | **Samt Cultural Institute** | Apr 2022 – Oct 2022 | • Supported systems, office equipment, & network infrastructure<br>• Performed preventive maintenance<br>• Managed organizational systems |
-| 🏛️ **IT Support Specialist** | **Ministry of Interior** | Jul 2018 – Dec 2018 | • Delivered first-level support & rapid troubleshooting<br>• Installed & configured OS & specialized software |
+| 🚀 **IT Specialist** | **Mahex Air Cargo Services** | Jan 2026 – Present | • Led HelpDesk across 5+ branches<br>• Designed mahexservices.ir & mahexcrm.ir<br>• Managed network infrastructure (Cat6/Fiber)<br>• CCTV maintenance & troubleshooting |
+| 💻 **Site Support Expert** | **Kimiamehr Espadana** | Nov 2022 – Dec 2023 | • Website & internal systems support<br>• Order process management<br>• Hardware/software troubleshooting |
+| 🔧 **Technical Support Expert** | **Samt Cultural Institute** | Apr 2022 – Oct 2022 | • System & network infrastructure support<br>• Preventive maintenance |
+| 🏛️ **IT Support Specialist** | **Ministry of Interior** | Jul 2018 – Dec 2018 | • First-level support & troubleshooting<br>• OS & software installation |
+
+---
+
+## 🎓 Certificates & Education
+
+| Credential | Institution | Year |
+|:---|:---|:---:|
+| **CCNA** | Laitec Training Center, Sharif University | 2023 |
+| **Network+** | Laitec Training Center, Sharif University | 2023 |
+| **Computer Engineering** | Islamic Azad University | 2022 |
+
+---
+
+## 📂 Featured Projects
+
+### 🖥️ Mahex Network Infrastructure Project
+
+> Implementation of enterprise-grade network infrastructure including switch configuration, structured cabling (Cat6/Fiber), and rack setup.
+
+- **Tech Stack:** Structured Cabling, Cat6, Fiber Optic, Network Switches, Patch Panels
+- **Impact:** Improved network stability and reduced downtime by 30%
+- **GitHub:** [mowhmmdh/Projects](https://github.com/mowhmmdh/Projects)
+
+---
+
+### 🌐 Personal Portfolio Website
+
+> A modern, responsive, and bilingual portfolio website built from scratch.
+
+- **Tech Stack:** HTML5, CSS3, JavaScript, Font Awesome, GitHub Pages
+- **Features:** Dark Mode, Bilingual (FA/EN), Glassmorphism UI, SEO Optimized
+- **GitHub:** [mowhmmdh/mowhmmdh.github.io](https://github.com/mowhmmdh/mowhmmdh.github.io)
+- **Live Demo:** [mowhmmdh.github.io](https://mowhmmdh.github.io/)
+
+---
+
+## ✨ Website Features
+
+| Feature | Status | Description |
+|:---|:---:|:---|
+| 🌍 Bilingual (FA/EN) | ✅ | Seamless switching between Persian and English |
+| 🌙 Dark Mode | ✅ | User preference stored in localStorage |
+| 📱 Fully Responsive | ✅ | Optimized for all devices |
+| 🎨 Glassmorphism UI | ✅ | Modern, frosted-glass design |
+| ⚡ Optimized Performance | ✅ | Lazy loading, preconnect, minified assets |
+| 🔍 SEO Optimized | ✅ | Schema.org, meta tags, hreflang, sitemap |
+| 🧩 Structured Data | ✅ | Person, Service, FAQ, CreativeWork schemas |
+| 📝 Contact Forms | ✅ | Integrated with Formspree |
+| 🖼️ Particle Background | ✅ | Dynamic animated background |
+| ⌨️ Typing Animation | ✅ | Interactive typing effect in header |
+
+---
+
+## 🛠️ Tech Stack
+
+<div align="center">
+
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Font Awesome](https://img.shields.io/badge/Font_Awesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white)
+![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=githubpages&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+![VS Code](https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visualstudiocode&logoColor=white)
+![Cisco](https://img.shields.io/badge/Cisco-1BA0D7?style=for-the-badge&logo=cisco&logoColor=white)
+![Windows Server](https://img.shields.io/badge/Windows_Server-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+![VMware](https://img.shields.io/badge/VMware-607078?style=for-the-badge&logo=vmware&logoColor=white)
 
 </div>
 
 ---
 
-<!-- ============================================================ -->
-<!-- CAREER ROADMAP - TIMELINE VIEW                               -->
-<!-- ============================================================ -->
+## 🌐 Quick Access
 
-## 🗺️ Career Roadmap
+| Version | Link | Status |
+|:---|:---|:---:|
+| 🇮🇷 **Persian (فارسی)** | [mowhmmdh.github.io](https://mowhmmdh.github.io/) | 🟢 Live |
+| 🇬🇧 **English** | [mowhmmdh.github.io/en.html](https://mowhmmdh.github.io/en.html) | 🟢 Live |
 
-```mermaid
-timeline
-    title Professional Journey
-    2018 : IT Support Specialist
-         : Ministry of Interior
-    2022 : Technical Support Expert
-         : Samt Cultural Institute
-    2022-2023 : Site Support Expert
-              : Kimiamehr Espadana
-    2026-Present : IT Specialist
-                 : Mahex Air Cargo Services
-    2026-2027 : Cybersecurity Specialist
-              : Advanced Security Certifications
-    2028+ : IT Architect / Consultant
-          : Enterprise Solutions
+---
+
+## 📞 Connect With Me
+
+<div align="center">
+
+| Platform | Link |
+|:---|:---|
+| 📧 **Email** | [mohammedhasgari@gmail.com](mailto:mohammedhasgari@gmail.com) |
+| 🔗 **LinkedIn** | [Mohammad Hossein Asgari](https://linkedin.com/in/mohammadhosseinasgari) |
+| 📷 **Instagram** | [@mowhmmdh](https://instagram.com/mowhmmdh) |
+| 🐙 **GitHub** | [mowhmmdh](https://github.com/mowhmmdh) |
+| 🌐 **Website** | [mowhmmdh.github.io](https://mowhmmdh.github.io/) |
+
+</div>
+
+---
+
+## ☕ Support My Work
+
+<div align="center">
+
+<a href="https://www.buymeacoffee.com/mowhmmdh">
+  <img src="https://img.shields.io/badge/Buy_Me_A_Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me A Coffee">
+</a>
+<a href="https://github.com/sponsors/mowhmmdh">
+  <img src="https://img.shields.io/badge/GitHub_Sponsor-30363D?style=for-the-badge&logo=githubsponsors&logoColor=white" alt="GitHub Sponsor">
+</a>
+
+</div>
+
+---
+
+## 📄 License
+
+<div align="center">
+
+> **© All Rights Reserved** — Mohammad Hossein Asgari Somarin
+
+---
+
+**[⬆ Back to Top](#)**
+
+⭐ **If you like this project, don't forget to star the repository!** ⭐
+
+**Last Updated:** August 2026
+
+*Made with ❤️ by Mohammad Hossein Asgari Somarin*
+
+</div>
