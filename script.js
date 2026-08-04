@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
+    // تبدیل اعداد فارسی به لاتین
+    // ===============================================
+    function persianToEnglishNumber(str) {
+        return str.replace(/[۰-۹]/g, function(d) {
+            return String.fromCharCode(d.charCodeAt(0) - 1728);
+        });
+    }
+
+    // ===============================================
     // افکت ذرات
     // ===============================================
     function initParticles() {
@@ -139,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateJobDuration();
 
     // ===============================================
-    // انیمیشن نوارهای مهارت (اصلاح شده)
+    // انیمیشن نوارهای مهارت (اصلاح شده با تبدیل اعداد فارسی)
     // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
     
@@ -148,10 +157,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const bar = item.querySelector('.skill-bar');
             const percent = item.querySelector('.skill-percent');
             if (bar && percent) {
-                const val = parseInt(percent.textContent);
-                item.style.setProperty('--skill-width', val + '%');
-                bar.style.width = val + '%';
-                item.classList.add('show');
+                // تبدیل اعداد فارسی به لاتین قبل از parseInt
+                const englishNumber = persianToEnglishNumber(percent.textContent);
+                const val = parseInt(englishNumber);
+                if (!isNaN(val)) {
+                    item.style.setProperty('--skill-width', val + '%');
+                    bar.style.width = val + '%';
+                    item.classList.add('show');
+                }
             }
         });
     }
