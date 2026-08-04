@@ -1,169 +1,159 @@
 <div align="center">
-  
-# <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=28&duration=3000&pause=500&color=2563EB&center=true&vCenter=true&width=500&lines=%D9%85%D8%AD%D9%85%D8%AF%D8%AD%D8%B3%DB%8C%D9%86+%D8%B9%D8%B3%DA%AF%D8%B1%DB%8C+%D8%AB%D9%85%D8%B1%DB%8C%D9%86;Mohammad+Hossein+Asgari+Somarin;IT+Specialist+%26+Network+Expert" alt="Typing SVG" />
 
-[![Website](https://img.shields.io/badge/Website-mowhmmdh.github.io-blue?style=for-the-badge&logo=google-chrome&logoColor=white&color=2563EB)](https://mowhmmdh.github.io/)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/mohammadhosseinasgari)
-[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/mowhmmdh)
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mowhmmdh)
-[![Gmail](https://img.shields.io/badge/Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:mohammedhasgari@gmail.com)
+<!-- ============================================== -->
+<!-- HEADER WITH ANIMATED TYPING AND SOCIAL BADGES  -->
+<!-- ============================================== -->
 
-</div>
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=32&duration=3500&pause=500&color=2563EB&center=true&vCenter=true&width=600&lines=%F0%9F%91%8B+%D8%AE%D9%88%D8%B4+%D8%A2%D9%85%D8%AF%DB%8C%D8%AF!;Welcome+to+my+Portfolio!;%D9%85%D8%AD%D9%85%D8%AF%D8%AD%D8%B3%DB%8C%D9%86+%D8%B9%D8%B3%DA%AF%D8%B1%DB%8C+%D8%AB%D9%85%D8%B1%DB%8C%D9%86;Mohammad+Hossein+Asgari+Somarin;IT+Specialist+%26+Network+Expert" alt="Typing SVG" />
 
----
+<!-- ============================================== -->
+<!-- BADGES - Social & Professional                 -->
+<!-- ============================================== -->
 
-## 🌐 دسترسی سریع به وب‌سایت
+[![Website](https://img.shields.io/badge/🌐_Website-mowhmmdh.github.io-2563EB?style=for-the-badge&logo=google-chrome&logoColor=white)](https://mowhmmdh.github.io/)
+[![LinkedIn](https://img.shields.io/badge/🔗_LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/mohammadhosseinasgari)
+[![Instagram](https://img.shields.io/badge/📷_Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://instagram.com/mowhmmdh)
+[![GitHub](https://img.shields.io/badge/🐙_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/mowhmmdh)
+[![Gmail](https://img.shields.io/badge/✉️_Gmail-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:mohammedhasgari@gmail.com)
+[![Resume](https://img.shields.io/badge/📄_Resume-0A66C2?style=for-the-badge&logo=adobeacrobatreader&logoColor=white)](https://mowhmmdh.github.io/)
 
-| نسخه | لینک مستقیم | وضعیت |
-|------|-------------|--------|
-| 🇮🇷 **فارسی** | [mowhmmdh.github.io](https://mowhmmdh.github.io/) | ✅ فعال |
-| 🇬🇧 **English** | [mowhmmdh.github.io/en.html](https://mowhmmdh.github.io/en.html) | ✅ فعال |
+<!-- ============================================== -->
+<!-- STATS BADGES                                   -->
+<!-- ============================================== -->
 
----
+![GitHub stars](https://img.shields.io/github/stars/mowhmmdh/mowhmmdh.github.io?style=social)
+![GitHub forks](https://img.shields.io/github/forks/mowhmmdh/mowhmmdh.github.io?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/mowhmmdh/mowhmmdh.github.io?style=social)
+![GitHub last commit](https://img.shields.io/github/last-commit/mowhmmdh/mowhmmdh.github.io?style=flat-square&color=blue)
+![GitHub repo size](https://img.shields.io/github/repo-size/mowhmmdh/mowhmmdh.github.io?style=flat-square&color=blueviolet)
 
-## 👨‍💻 درباره من
-
-من **محمدحسین عسگری ثمرین** هستم، یک **متخصص فناوری اطلاعات** با بیش از **۲ سال تجربه** در زمینه **پشتیبانی شبکه، مدیریت زیرساخت، هلپ‌دسک و امنیت سایبری**. همواره به دنبال ارتقاء دانش فنی و ارائه راهکارهای عملی و پایدار برای سازمان‌ها هستم.
-
-این وب‌سایت، **رزومه آنلاین و پورتفولیوی حرفه‌ای** من است که به‌صورت دو زبانه (فارسی و انگلیسی) طراحی شده و تمامی سوابق شغلی، مهارت‌ها، پروژه‌ها و راه‌های ارتباطی را در خود جای داده است.
-
----
-
-## ✨ ویژگی‌های وب‌سایت
-
-| ویژگی | توضیح |
-|-------|--------|
-| 🌍 **دو زبانه** | پشتیبانی کامل از زبان‌های فارسی و انگلیسی با قابلیت جابجایی یک‌کلیک |
-| 🌙 **حالت تاریک/روشن** | دارک مود هوشمند با ذخیره‌سازی در مرورگر |
-| 🎨 **طراحی مدرن** | استفاده از گلس‌مورفیسم، انیمیشن‌های روان و ذرات متحرک پس‌زمینه |
-| 📱 **واکنش‌گرا** | نمایش کاملاً بهینه در تمام دستگاه‌ها (موبایل، تبلت، دسکتاپ) |
-| 🔍 **بهینه‌سازی سئو** | ساختار داده Schema.org، متا تگ‌های کامل و hreflang برای رتبه‌گیری بالا |
-| ⚡ **سرعت بالا** | استفاده از preconnect، lazy-loading و کدهای بهینه |
-| 📝 **فرم‌های تعاملی** | فرم تماس و درخواست خدمات متصل به Formspree |
+<br>
 
 ---
 
-## 🛠️ مهارت‌های تخصصی
+<!-- ============================================== -->
+<!-- ABOUT SECTION - Professional Banner            -->
+<!-- ============================================== -->
 
-### شبکه و زیرساخت
-| مهارت | سطح |
-|-------|------|
-| Active Directory & Windows Server | ████████░░ ۷۰٪ |
-| CCNA (Routing & Switching) | ███████░░░ ۶۵٪ |
-| Network+ (TCP/IP, OSI Model) | ███████░░░ ۶۵٪ |
-| DHCP, DNS & Network Services | ████████░░ ۷۰٪ |
-| Mikrotik (RouterOS) | ██████░░░░ ۴۵٪ |
-| VoIP & SIP Trunking | ███████░░░ ۶۰٪ |
-| Structured Cabling (Cat6, Fiber) | ██████░░░░ ۵۵٪ |
+## 🚀 About Me
 
-### امنیت و مجازی‌سازی
-| مهارت | سطح |
-|-------|------|
-| Ethical Hacking & Penetration Testing | ███████░░░ ۶۰٪ |
-| CEH (Certified Ethical Hacker) | ████░░░░░░ ۳۵٪ |
-| Wireshark & Network Analysis | ██████░░░░ ۵۵٪ |
-| VMware ESXi, vSphere | █████░░░░░ ۴۰٪ |
-| Firewall & Security Policies | ██████░░░░ ۵۰٪ |
-| VPN (IPSec, OpenVPN) | █████░░░░░ ۴۰٪ |
+<table>
+<tr>
+<td width="60%">
 
-### سیستم‌عامل و نرم‌افزار
-| مهارت | سطح |
-|-------|------|
-| Windows Administration | ██████████ ۹۰٪ |
-| Linux Administration | ███████░░░ ۶۰٪ |
-| Mac OS Support | █████░░░░░ ۴۰٪ |
-| Microsoft Office 365 | █████████░ ۸۵٪ |
-| HTML5 & CSS3 | ██████░░░░ ۵۵٪ |
-| PowerShell & Scripting | ██████░░░░ ۴۵٪ |
-| SQL & Database | ████░░░░░░ ۳۵٪ |
+### <img src="https://media.giphy.com/media/hvRJCLFzcasrR4ia7z/giphy.gif" width="28"> **Mohammad Hossein Asgari Somarin**
 
-### مدیریت و پشتیبانی IT
-| مهارت | سطح |
-|-------|------|
-| IT Service Management (ITSM) | ██████████ ۹۰٪ |
-| Advanced HelpDesk | ██████████ ۹۵٪ |
-| System & Infrastructure Maintenance | ██████████ ۹۰٪ |
-| IT Asset Management (ITAM) | ████████░░ ۷۰٪ |
-| Technical Documentation | ████████░░ ۷۵٪ |
-| End-User Training | █████████░ ۸۵٪ |
-| IT Project Management | ██████░░░░ ۶۰٪ |
+> **IT Specialist | Network & Infrastructure Expert | Cybersecurity Enthusiast**
+
+I'm a passionate **IT Specialist** with **2+ years of experience** in network support, infrastructure management, Helpdesk operations, and cybersecurity. I thrive on solving complex technical challenges and delivering robust, scalable solutions that drive business continuity.
+
+🔹 **Core Competencies:** Network Design & Implementation | CCTV Installation | Hardware & Software Repair | IT Service Management | HelpDesk Leadership
+
+🔹 **Mission:** To leverage my technical expertise to build secure, efficient, and future-ready IT ecosystems for organizations.
+
+🔹 **Open To:** New collaborations, challenging projects, and roles where I can make a tangible impact.
+
+</td>
+<td width="40%" align="center">
+
+<img src="https://github-readme-stats.vercel.app/api?username=mowhmmdh&show_icons=true&theme=react&hide_border=true&bg_color=0D1117" width="100%" alt="GitHub Stats" />
+<br><br>
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=mowhmmdh&theme=react&hide_border=true&background=0D1117" width="100%" alt="GitHub Streak" />
+
+</td>
+</tr>
+</table>
 
 ---
 
-## 💼 سوابق شغلی
+<!-- ============================================== -->
+<!-- PROFESSIONAL SUMMARY CARDS                     -->
+<!-- ============================================== -->
 
-| موقعیت | سازمان | مدت زمان |
-|--------|--------|----------|
-| **کارشناس IT** | خدمات بار هوایی سریع‌ترابر ماهان (ماهکس) | دی ۱۴۰۴ - تاکنون |
-| **کارشناس پشتیبانی سایت** | کیمیامهر اسپادانا تدبیر | آبان ۱۴۰۱ - آذر ۱۴۰۲ |
-| **کارشناس پشتیبانی فنی** | مؤسسه فرهنگی و مطبوعاتی صمت | فروردین ۱۴۰۱ - مهر ۱۴۰۱ |
-| **متخصص پشتیبانی IT** | وزارت کشور | تیر ۱۳۹۷ - آذر ۱۳۹۷ |
-
----
-
-## 📜 مدارک و گواهینامه‌ها
-
-| گواهینامه | مرکز آموزشی |
-|-----------|-------------|
-| ✅ **CCNA** | مرکز آموزشی لایتک، دانشگاه صنعتی شریف |
-| ✅ **Network+** | مرکز آموزشی لایتک، دانشگاه صنعتی شریف |
-
----
-
-## 🎓 تحصیلات
-
-| مقطع | رشته | دانشگاه |
-|-------|------|----------|
-| **کارشناسی** | مهندسی کامپیوتر | دانشگاه آزاد اسلامی واحد یادگار امام خمینی (ره) - شهر ری |
-
----
-
-## 📂 پروژه‌های شاخص
-
-### 🔹 پروژه زیرساخت شبکه ماهکس
-> پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.
-
-- 📅 **تاریخ:** اردیبهشت ۱۴۰۵
-- 🛠️ **فناوری‌ها:** شبکه، کابل‌کشی Cat6، تجهیزات فعال
-- 🔗 **مشاهده پروژه:** [GitHub - Projects](https://github.com/mowhmmdh/Projects)
-
----
-
-## 🛠️ تکنولوژی‌های استفاده‌شده در این وب‌سایت
+## 📊 Professional Snapshot
 
 <div align="center">
 
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![Font Awesome](https://img.shields.io/badge/Font_Awesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white)
-![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-222222?style=for-the-badge&logo=githubpages&logoColor=white)
+| 🎯 **Focus Area** | 📈 **Experience** | 🏆 **Certifications** |
+|:---:|:---:|:---:|
+| Network Infrastructure | 2+ Years | CCNA |
+| HelpDesk & Support | 2+ Years | Network+ |
+| Cybersecurity | 1+ Years | CEH (In Progress) |
+| IT Service Management | 2+ Years | — |
 
 </div>
 
 ---
 
-## 📞 ارتباط با من
+<!-- ============================================== -->
+<!-- SKILLS SECTION - Visual Progress Bars          -->
+<!-- ============================================== -->
 
-| پلتفرم | لینک |
-|--------|------|
-| 📧 **ایمیل** | [mohammedhasgari@gmail.com](mailto:mohammedhasgari@gmail.com) |
-| 🔗 **لینکدین** | [Mohammad Hossein Asgari](https://linkedin.com/in/mohammadhosseinasgari) |
-| 📷 **اینستاگرام** | [@mowhmmdh](https://instagram.com/mowhmmdh) |
-| 🐙 **گیت‌هاب** | [mowhmmdh](https://github.com/mowhmmdh) |
+## 🛠️ Technical Skills
+
+### 🌐 Network & Infrastructure
+
+| Skill | Level |
+|-------|-------|
+| Active Directory & Windows Server | <img src="https://progress-bar.dev/70" width="150" height="20" alt="70%"> |
+| CCNA (Routing & Switching) | <img src="https://progress-bar.dev/65" width="150" height="20" alt="65%"> |
+| Network+ (TCP/IP, OSI Model) | <img src="https://progress-bar.dev/65" width="150" height="20" alt="65%"> |
+| DHCP, DNS & Network Services | <img src="https://progress-bar.dev/70" width="150" height="20" alt="70%"> |
+| Mikrotik (RouterOS) | <img src="https://progress-bar.dev/45" width="150" height="20" alt="45%"> |
+| VoIP & SIP Trunking | <img src="https://progress-bar.dev/60" width="150" height="20" alt="60%"> |
+| Structured Cabling (Cat6, Fiber) | <img src="https://progress-bar.dev/55" width="150" height="20" alt="55%"> |
+
+### 🔒 Security & Virtualization
+
+| Skill | Level |
+|-------|-------|
+| Ethical Hacking & Penetration Testing | <img src="https://progress-bar.dev/60" width="150" height="20" alt="60%"> |
+| CEH (Certified Ethical Hacker) | <img src="https://progress-bar.dev/35" width="150" height="20" alt="35%"> |
+| Wireshark & Network Analysis | <img src="https://progress-bar.dev/55" width="150" height="20" alt="55%"> |
+| VMware ESXi, vSphere | <img src="https://progress-bar.dev/40" width="150" height="20" alt="40%"> |
+| Firewall & Security Policies | <img src="https://progress-bar.dev/50" width="150" height="20" alt="50%"> |
+| VPN (IPSec, OpenVPN) | <img src="https://progress-bar.dev/40" width="150" height="20" alt="40%"> |
+
+### 💻 OS & Software
+
+| Skill | Level |
+|-------|-------|
+| Windows Administration | <img src="https://progress-bar.dev/90" width="150" height="20" alt="90%"> |
+| Linux Administration | <img src="https://progress-bar.dev/60" width="150" height="20" alt="60%"> |
+| Mac OS Support | <img src="https://progress-bar.dev/40" width="150" height="20" alt="40%"> |
+| Microsoft Office 365 | <img src="https://progress-bar.dev/85" width="150" height="20" alt="85%"> |
+| HTML5 & CSS3 | <img src="https://progress-bar.dev/55" width="150" height="20" alt="55%"> |
+| PowerShell & Scripting | <img src="https://progress-bar.dev/45" width="150" height="20" alt="45%"> |
+| SQL & Database | <img src="https://progress-bar.dev/35" width="150" height="20" alt="35%"> |
+
+### 📋 IT Management & Support
+
+| Skill | Level |
+|-------|-------|
+| IT Service Management (ITSM) | <img src="https://progress-bar.dev/90" width="150" height="20" alt="90%"> |
+| Advanced HelpDesk | <img src="https://progress-bar.dev/95" width="150" height="20" alt="95%"> |
+| System & Infrastructure Maintenance | <img src="https://progress-bar.dev/90" width="150" height="20" alt="90%"> |
+| IT Asset Management (ITAM) | <img src="https://progress-bar.dev/70" width="150" height="20" alt="70%"> |
+| Technical Documentation | <img src="https://progress-bar.dev/75" width="150" height="20" alt="75%"> |
+| End-User Training | <img src="https://progress-bar.dev/85" width="150" height="20" alt="85%"> |
+| IT Project Management | <img src="https://progress-bar.dev/60" width="150" height="20" alt="60%"> |
 
 ---
 
-## 📄 مجوز
+<!-- ============================================== -->
+<!-- WORK EXPERIENCE - Timeline Style              -->
+<!-- ============================================== -->
 
-> © کلیه حقوق این وبسایت محفوظ و متعلق به **محمدحسین عسگری ثمرین** است.
+## 💼 Work Experience
 
----
-
-<div align="center">
-
-**⭐ اگر از این پروژه خوشتان آمد، به آن ستاره دهید! ⭐**
-
-**آخرین به‌روزرسانی:** مرداد ۱۴۰۵
-
-</div>
+```mermaid
+timeline
+    title Career Journey
+    2018 : Ministry of Interior
+         : IT Support Specialist
+    2022 : Samt Cultural Institute
+         : Technical Support Expert
+    2022-2023 : Kimiamehr Espadana
+              : Site Support Expert
+    2026-Present : Mahex Air Cargo Services
+                 : IT Specialist
