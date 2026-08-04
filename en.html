@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="google-site-verification" content="w1K0ObPBkDyumGF71kjJyBwGvPFh1rhb6PBLBd-RC90" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 
     <title>Mohammad Hossein Asgari Somarin | IT Specialist & Network Expert</title>
     <meta name="description" content="Mohammad Hossein Asgari Somarin - IT specialist with 2+ years of experience in network support, Helpdesk, and infrastructure. Professional services in networking, CCTV, hardware & software repair." />
     <meta name="keywords" content="Mohammad Hossein Asgari Somarin, Mohammad Hossein Asgari, Asgari Somarin, Asgari, Somarin, محمدحسین عسگری ثمرین, محمدحسین عسگری, عسگری ثمرین" />
 
-    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+    <meta name="robots" content="index, follow, max-snippet:150, max-image-preview:large, max-video-preview:-1" />
 
     <link rel="canonical" href="https://mowhmmdh.github.io/en.html" />
     <link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/index.html" />
     <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en.html" />
     <link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/en.html" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="icon" href="/favicon.png" sizes="48x48" type="image/png">
 
     <!-- Open Graph -->
@@ -23,8 +24,11 @@
     <meta property="og:description" content="IT specialist with hands-on experience in networking, CCTV, hardware/software repair, and support." />
     <meta property="og:url" content="https://mowhmmdh.github.io/en.html" />
     <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="fa_IR" />
+    <meta property="og:site_name" content="Mohammad Hossein Asgari Somarin" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -44,6 +48,8 @@
 
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preload" href="style.css" as="style" />
+    <link rel="preload" href="script.js" as="script" />
 
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -102,6 +108,15 @@
                 "award": ["CCNA Certification", "Network+ Certification"]
             },
             {
+                "@type": "WebSite",
+                "@id": "https://mowhmmdh.github.io/#website",
+                "url": "https://mowhmmdh.github.io/",
+                "name": "Mohammad Hossein Asgari Somarin | IT Specialist",
+                "description": "Official website of Mohammad Hossein Asgari Somarin - IT Specialist, Network & Infrastructure Expert",
+                "inLanguage": ["en-US", "fa-IR"],
+                "publisher": { "@id": "https://mowhmmdh.github.io/#person" }
+            },
+            {
                 "@type": "Service",
                 "name": "IT & Network Services",
                 "description": "Professional services in network design and implementation, CCTV installation, hardware and software repair, and technical support for organizations.",
@@ -155,6 +170,23 @@
                 "datePublished": "2026-05-01",
                 "dateModified": "2026-08-04",
                 "author": { "@id": "https://mowhmmdh.github.io/#person" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {
+                        "@type": "ListItem",
+                        "position": 1,
+                        "name": "Home",
+                        "item": "https://mowhmmdh.github.io/"
+                    },
+                    {
+                        "@type": "ListItem",
+                        "position": 2,
+                        "name": "Mohammad Hossein Asgari Somarin",
+                        "item": "https://mowhmmdh.github.io/en.html"
+                    }
+                ]
             }
         ]
     }
@@ -213,7 +245,6 @@
 
         <main id="main-content">
 
-            <!-- About - name mentioned only once -->
             <section id="about" class="section">
                 <h2 class="section-title">About Me</h2>
                 <div class="summary">
@@ -223,7 +254,7 @@
                 </div>
             </section>
 
-            <!-- Services - no name repetition -->
+            <!-- Services -->
             <section class="section" id="services">
                 <h2 class="section-title">Professional Services</h2>
                 <div style="text-align: center; margin-bottom: 30px; padding: 20px 25px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(26, 54, 93, 0.05)); border-radius: var(--radius); border: 1px solid rgba(37, 99, 235, 0.1);">
@@ -237,7 +268,6 @@
                     </p>
                 </div>
                 <div class="services-grid">
-                    <!-- Service cards (same as before, without name) -->
                     <div class="service-card" data-service="Network & Infrastructure">
                         <div class="service-icon"><i class="fas fa-network-wired" aria-hidden="true"></i></div>
                         <h3>Network & Infrastructure</h3>
@@ -297,7 +327,6 @@
                         Request a Consultation
                     </a>
                 </div>
-                <!-- Service request form (no name repetition) -->
                 <div id="service-request-form" style="display: none; margin-top: 40px; background: var(--bg-card); border-radius: var(--radius); padding: 30px 35px; box-shadow: var(--shadow); border: 1px solid var(--border);">
                     <h3 style="color: var(--primary); font-size: 1.4em; margin-bottom: 5px; text-align: center;">
                         <i class="fas fa-pen" style="color: var(--accent);" aria-hidden="true"></i>
@@ -346,8 +375,7 @@
                 </div>
             </section>
 
-            <!-- Work Experience, Skills, Certificates, Education, Projects, FAQ, Contact -->
-            <!-- (All sections without unnecessary name repetition, similar to Persian version) -->
+            <!-- Experience -->
             <section id="experience" class="section">
                 <h2 class="section-title">Work Experience</h2>
                 <div class="job-item current-position">
@@ -399,22 +427,140 @@
                 </div>
             </section>
 
-            <!-- Skills section (no name) -->
+            <!-- Skills -->
             <section id="skills" class="section">
                 <h2 class="section-title">Technical Skills</h2>
                 <div class="skills-wrapper">
                     <div class="skills-list">
-                        <!-- Same skill categories as Persian, without name -->
                         <div class="skill-category">
                             <h4><i class="fas fa-network-wired" aria-hidden="true"></i> Network &amp; Infrastructure</h4>
-                            <!-- ... skill items ... -->
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Active Directory &amp; Windows Server</span><span class="skill-percent">70%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="70" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>CCNA (Routing &amp; Switching)</span><span class="skill-percent">65%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="65" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Network+ (TCP/IP, OSI Model)</span><span class="skill-percent">65%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="65" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>DHCP, DNS &amp; Network Services</span><span class="skill-percent">70%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="70" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Mikrotik (RouterOS)</span><span class="skill-percent">45%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="45" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>VoIP &amp; SIP Trunking</span><span class="skill-percent">60%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="60" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Structured Cabling (Cat6, Fiber)</span><span class="skill-percent">55%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="55" style="width: 0%;"></div></div>
+                            </div>
                         </div>
-                        <!-- ... other categories ... -->
+                        <div class="skill-category">
+                            <h4><i class="fas fa-shield-alt" aria-hidden="true"></i> Security &amp; Virtualization</h4>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Ethical Hacking &amp; Penetration Testing</span><span class="skill-percent">60%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="60" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>CEH (Certified Ethical Hacker)</span><span class="skill-percent">35%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="35" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Wireshark &amp; Network Analysis</span><span class="skill-percent">55%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="55" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Server Virtualization (VMware ESXi, vSphere)</span><span class="skill-percent">40%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="40" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Firewall &amp; Security Policies</span><span class="skill-percent">50%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="50" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>VPN &amp; Secure Tunneling (IPSec, OpenVPN)</span><span class="skill-percent">40%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="40" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Network Security &amp; Threat Management</span><span class="skill-percent">45%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="45" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4><i class="fas fa-desktop" aria-hidden="true"></i> OS &amp; Software</h4>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Windows Administration &amp; Troubleshooting</span><span class="skill-percent">90%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="90" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Linux Administration</span><span class="skill-percent">60%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="60" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Mac OS Support &amp; Maintenance</span><span class="skill-percent">40%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="40" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Microsoft Office 365 &amp; Collaboration</span><span class="skill-percent">85%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="85" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>HTML5 &amp; CSS3 (Web Design)</span><span class="skill-percent">55%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="55" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>PowerShell &amp; Command Line Scripting</span><span class="skill-percent">45%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="45" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>SQL &amp; Database Management</span><span class="skill-percent">35%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="35" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4><i class="fas fa-tasks" aria-hidden="true"></i> IT Management &amp; Support</h4>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>IT Service Management (ITSM)</span><span class="skill-percent">90%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="90" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Advanced HelpDesk &amp; Troubleshooting</span><span class="skill-percent">95%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="95" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>System &amp; Infrastructure Maintenance</span><span class="skill-percent">90%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="90" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>IT Asset Management (ITAM)</span><span class="skill-percent">70%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="70" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Technical Documentation &amp; Reporting</span><span class="skill-percent">75%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="75" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>End-User Training &amp; Support</span><span class="skill-percent">85%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="85" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>IT Project Management</span><span class="skill-percent">60%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="60" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Certificates, Education, Projects, FAQ, Contact (without name repetition) -->
+            <!-- Certificates, Education, Projects, FAQ, Contact -->
             <section id="certificates" class="section">
                 <h2 class="section-title">Certificates and Training</h2>
                 <div class="job-item"><h3>CCNA Certification</h3><p class="institution">Laitec Training Center, Sharif University of Technology</p></div>
