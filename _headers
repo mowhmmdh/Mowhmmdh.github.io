@@ -20,13 +20,13 @@
 /*.woff2
   Cache-Control: public, max-age=31536000, immutable
 
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.png
   Cache-Control: public, max-age=31536000, immutable
 
 /*.jpg
-  Cache-Control: public, max-age=31536000, immutable
-
-/*.webp
   Cache-Control: public, max-age=31536000, immutable
 
 # کش فایل‌های HTML (۱ ساعت)
@@ -40,6 +40,6 @@
 /*.json
   Cache-Control: public, max-age=86400
 
-# کش فایل‌های تصویری در پوشه images (۱ هفته)
+# کش تصاویر (۱ هفته)
 /images/*
   Cache-Control: public, max-age=604800
