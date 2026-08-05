@@ -340,14 +340,18 @@ document.addEventListener('DOMContentLoaded', function() {
         langToggleBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const currentPath = window.location.pathname;
-            const target = currentPath.includes('en.html') ? '/index.html' : '/en.html';
+            // اگر در صفحه اصلی هستیم یا index.html، به en.html برو
+            if (currentPath === '/' || currentPath === '/index.html' || currentPath === '') {
+                window.location.href = '/en.html';
+            } else {
+                window.location.href = '/index.html';
+            }
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'language_switch', {
                     'event_category': 'engagement',
                     'event_label': target.includes('en') ? 'English' : 'Persian'
                 });
             }
-            window.location.href = target;
         });
     }
 
@@ -383,6 +387,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (formElement) {
                     formElement.reset();
                 }
+                // حذف پیام‌های قبلی
+                const oldMsg = formElement.querySelector('.form-message');
+                if (oldMsg) oldMsg.remove();
             }
         });
     }
@@ -508,3 +515,166 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 });
+
+// ================================================
+// ---- مدیریت کوکی (Cookie Consent) ----
+// ================================================
+(function() {
+    const banner = document.getElementById('cookie-banner');
+    const details = document.getElementById('cookie-details');
+    if (!banner) return;
+    
+    const consent = localStorage.getItem('cookie-consent');
+    if (consent === 'accepted' || consent === 'rejected') {
+        banner.style.display = 'none';
+        banner.style.transform = 'translateY(100%)';
+        if (consent === 'accepted' && typeof gtag !== 'undefined') {
+            gtag('consent', 'update', { 'analytics_storage': 'granted' });
+        }
+    } else {
+        banner.style.display = 'block';
+        setTimeout(() => { banner.style.transform = 'translateY(0)'; }, 100);
+    }
+    
+    window.acceptCookies = function() {
+        localStorage.setItem('cookie-consent', 'accepted');
+        banner.style.transform = 'translateY(100%)';
+        setTimeout(() => { banner.style.display = 'none'; }, 400);
+        if (typeof gtag !== 'undefined') {
+            gtag('consent', 'update', { 'analytics_storage': 'granted' });
+            gtag('event', 'cookie_consent', { 'event_category': 'engagement', 'event_label': 'accepted' });
+        }
+    };
+    
+    window.rejectCookies = function() {
+        localStorage.setItem('cookie-consent', 'rejected');
+        banner.style.transform = 'translateY(100%)';
+        setTimeout(() => { banner.style.display = 'none'; }, 400);
+        if (typeof gtag !== 'undefined') {
+            gtag('consent', 'update', { 'analytics_storage': 'denied' });
+            gtag('event', 'cookie_consent', { 'event_category': 'engagement', 'event_label': 'rejected' });
+        }
+    };
+    
+    window.toggleCookieDetails = function() {
+        if (details) {
+            const isVisible = details.style.display === 'block';
+            details.style.display = isVisible ? 'none' : 'block';
+        }
+    };
+})();
+
+// ================================================
+// ---- مدیریت ارسال فرم (AJAX) ----
+// ================================================
+(function() {
+    // فرم تماس
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> در حال ارسال...';
+            submitBtn.disabled = true;
+            
+            const oldMsg = this.querySelector('.form-message');
+            if (oldMsg) oldMsg.remove();
+            
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                const msg = document.createElement('div');
+                msg.className = 'form-message';
+                
+                if (response.ok) {
+                    submitBtn.innerHTML = '✅ ارسال شد!';
+                    this.reset();
+                    msg.style.cssText = 'padding:15px 20px;background:rgba(34,197,94,0.12);border-radius:12px;color:#22c55e;text-align:center;margin-top:15px;border:1px solid rgba(34,197,94,0.25);font-weight:500;';
+                    msg.textContent = '✅ پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهم گرفت.';
+                    this.appendChild(msg);
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'contact_form_submit', { 'event_category': 'conversion' });
+                    }
+                } else {
+                    throw new Error('خطا در ارسال');
+                }
+            } catch (error) {
+                submitBtn.innerHTML = '❌ خطا!';
+                const msg = document.createElement('div');
+                msg.className = 'form-message';
+                msg.style.cssText = 'padding:15px 20px;background:rgba(239,68,68,0.12);border-radius:12px;color:#ef4444;text-align:center;margin-top:15px;border:1px solid rgba(239,68,68,0.25);font-weight:500;';
+                msg.textContent = '❌ متأسفانه ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید یا از ایمیل استفاده کنید.';
+                this.appendChild(msg);
+            } finally {
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+        });
+    }
+    
+    // فرم درخواست خدمات
+    const serviceForm = document.getElementById('service-form');
+    if (serviceForm) {
+        serviceForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('.cta-button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> در حال ارسال...';
+            submitBtn.disabled = true;
+            
+            const oldMsg = this.querySelector('.form-message');
+            if (oldMsg) oldMsg.remove();
+            
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                const msg = document.createElement('div');
+                msg.className = 'form-message';
+                
+                if (response.ok) {
+                    submitBtn.innerHTML = '✅ ارسال شد!';
+                    this.reset();
+                    msg.style.cssText = 'padding:15px 20px;background:rgba(34,197,94,0.12);border-radius:12px;color:#22c55e;text-align:center;margin-top:15px;border:1px solid rgba(34,197,94,0.25);font-weight:500;';
+                    msg.textContent = '✅ درخواست شما با موفقیت ارسال شد. به زودی با شما تماس خواهم گرفت.';
+                    this.appendChild(msg);
+                    const formContainer = document.getElementById('service-request-form');
+                    if (formContainer) {
+                        setTimeout(() => { formContainer.style.display = 'none'; }, 5000);
+                    }
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'service_form_submit', { 'event_category': 'conversion' });
+                    }
+                } else {
+                    throw new Error('خطا در ارسال');
+                }
+            } catch (error) {
+                submitBtn.innerHTML = '❌ خطا!';
+                const msg = document.createElement('div');
+                msg.className = 'form-message';
+                msg.style.cssText = 'padding:15px 20px;background:rgba(239,68,68,0.12);border-radius:12px;color:#ef4444;text-align:center;margin-top:15px;border:1px solid rgba(239,68,68,0.25);font-weight:500;';
+                msg.textContent = '❌ متأسفانه ارسال درخواست با خطا مواجه شد. لطفاً دوباره تلاش کنید.';
+                this.appendChild(msg);
+            } finally {
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
+            }
+        });
+    }
+})();
