@@ -1,6 +1,6 @@
 # ==================================================
 # robots.txt - Mohammad Hossein Asgari Somarin
-# Allow full crawl for all search engines
+# Fully optimized for all search engines
 # ==================================================
 
 User-agent: *
@@ -10,9 +10,6 @@ Disallow: /fonts/
 Disallow: /tmp/
 Disallow: /backup/
 Disallow: /README.md
-# Disallow: /*.json$   <-- حذف شد
-# Disallow: /*.xml$    <-- حذف شد
-# Disallow: /*.txt$    <-- حذف شد
 Disallow: /*.log$
 Disallow: /index.html?*
 
