@@ -7,7 +7,6 @@
     --secondary: #1e293b;
     --accent: #2563eb;
     --accent-glow: rgba(37, 99, 235, 0.2);
-    /* رنگ تاکیدی جدید (طلایی) برای جذابیت بیشتر */
     --accent-gold: #f59e0b;
     --accent-gold-glow: rgba(245, 158, 11, 0.3);
     --bg: #f0f4f8;
@@ -84,7 +83,7 @@ body::before {
 }
 
 /* ================================================= */
-/* ---- دکمه دارک مود ---- */
+/* ---- دکمه دارک مود (اصلاح‌شده برای موبایل) ---- */
 /* ================================================= */
 .dark-toggle {
     position: fixed;
@@ -104,7 +103,9 @@ body::before {
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 44px;
+    min-height: 50px;
+    min-width: 50px;
+    flex-shrink: 0;
 }
 
 .dark-toggle:hover {
@@ -118,7 +119,7 @@ body.dark-mode .dark-toggle {
 }
 
 /* ================================================= */
-/* ---- کلید تغییر زبان ---- */
+/* ---- کلید تغییر زبان (اصلاح‌شده) ---- */
 /* ================================================= */
 .lang-toggle-btn {
     display: flex;
@@ -140,6 +141,8 @@ body.dark-mode .dark-toggle {
     user-select: none;
     min-height: 44px;
     min-width: 44px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 .lang-toggle-btn:hover {
     background: rgba(37, 99, 235, 0.08);
@@ -185,7 +188,7 @@ html {
     -webkit-tap-highlight-color: transparent;
 }
 
-/* ---- فونت‌ها (وزیرمتن جدید) ---- */
+/* ---- فونت‌ها ---- */
 @font-face {
     font-family: 'Vazirmatn';
     src: url('fonts/Vazirmatn-Medium.woff2') format('woff2');
@@ -193,7 +196,6 @@ html {
     font-style: normal;
     font-display: swap;
 }
-
 @font-face {
     font-family: 'Vazirmatn';
     src: url('fonts/Vazirmatn-Regular.woff2') format('woff2');
@@ -201,7 +203,6 @@ html {
     font-style: normal;
     font-display: swap;
 }
-
 @font-face {
     font-family: 'BNazanin';
     src: url('fonts/BNazanin.woff2') format('woff2');
@@ -221,20 +222,18 @@ body {
     -webkit-font-smoothing: antialiased;
     transition: background .5s ease, color .5s ease;
 }
-
 body.lang-fa {
     direction: rtl;
     text-align: right;
     font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
-
 body.lang-en {
     direction: ltr;
     text-align: left;
     font-family: 'Vazirmatn', Tahoma, sans-serif;
 }
 
-/* ---- کانتینر (افزایش فضای خالی) ---- */
+/* ---- کانتینر ---- */
 .container {
     width: 92%;
     max-width: 1240px;
@@ -302,7 +301,7 @@ body.dark-mode #sidebar-info { border: 1px solid rgba(255, 255, 255, 0.05); }
 }
 
 /* ================================================= */
-/* ---- بخش‌ها (افزایش فضای خالی) ---- */
+/* ---- بخش‌ها ---- */
 /* ================================================= */
 .section {
     padding: 40px 0;
@@ -364,9 +363,7 @@ body.lang-fa .profile-wrapper { order: 2; margin-right: auto; }
 body.lang-en .lang-toggle-btn { order: 1; margin-right: auto; }
 body.lang-fa .lang-toggle-btn { order: 1; margin-left: auto; }
 
-/* ================================================= */
 /* ---- تایپ‌رایتر ---- */
-/* ================================================= */
 .typing-text {
     display: inline-block;
     overflow: hidden;
@@ -413,7 +410,6 @@ h1 {
 }
 h2 { font-size: 1.15em; font-weight: 500; }
 
-/* ---- عناوین بخش‌ها ---- */
 .section-title {
     font-size: 1.7em;
     color: var(--primary);
@@ -478,7 +474,6 @@ body.lang-fa .contact-info a::after { left: auto; right: 0; }
 .contact-info a:hover { color: var(--accent); }
 .contact-info a:hover::after { width: 100%; }
 
-/* ---- درباره من ---- */
 .summary {
     padding: 30px 35px;
     background: var(--bg-card);
@@ -494,7 +489,7 @@ body.lang-en .summary {
 }
 
 /* ================================================= */
-/* ---- آیتم‌های شغلی (تایم‌لاین) ---- */
+/* ---- آیتم‌های شغلی ---- */
 /* ================================================= */
 #experience .job-item {
     position: relative;
@@ -546,12 +541,10 @@ body.lang-fa #experience .job-item::before { left: auto; right: -9px; }
 }
 body.lang-en .job-item { border-right: none; border-left: 5px solid var(--accent); }
 body.lang-fa .job-item { padding: 26px 48px 26px 32px; }
-
 .job-item:hover {
     transform: translateY(-6px) scale(1.01);
     box-shadow: var(--shadow-hover);
 }
-
 .job-item h3 {
     color: var(--primary);
     font-size: 1.15em;
@@ -560,7 +553,6 @@ body.lang-fa .job-item { padding: 26px 48px 26px 32px; }
     line-height: 1.5;
 }
 body.lang-fa .job-item h3 { font-size: 1.1em; }
-
 .job-item .duration,
 .job-item .institution {
     color: var(--text-muted);
@@ -750,7 +742,7 @@ body.lang-fa #navbar a:hover { padding-right: 18px; padding-left: 22px; }
 }
 
 /* ================================================= */
-/* ---- خدمات (آیکون‌های بزرگ‌تر) ---- */
+/* ---- خدمات ---- */
 /* ================================================= */
 .services-grid {
     display: grid;
@@ -788,8 +780,6 @@ body.lang-fa #navbar a:hover { padding-right: 18px; padding-left: 22px; }
     transform: translateY(-6px);
     border-color: var(--accent);
 }
-
-/* آیکون‌ها بزرگ‌تر */
 .service-card .service-icon {
     width: 75px;
     height: 75px;
@@ -810,7 +800,6 @@ body.lang-fa #navbar a:hover { padding-right: 18px; padding-left: 22px; }
 }
 body.dark-mode .service-card .service-icon { background: rgba(96, 165, 250, 0.08); }
 body.dark-mode .service-card:hover .service-icon { background: #60a5fa; color: #0f172a; }
-
 .service-card h3 {
     color: var(--primary);
     font-size: 1.15em;
@@ -849,7 +838,6 @@ body.lang-fa .service-card ul li::before { right: 0; left: auto; }
 body.lang-en .service-card ul li::before { left: 0; right: auto; }
 .service-card ul li:last-child { border-bottom: none; }
 
-/* ---- دکمه انتخاب خدمت ---- */
 .service-select-btn {
     background: linear-gradient(135deg, var(--accent), var(--primary-light));
     color: #fff;
@@ -938,7 +926,7 @@ body.dark-mode #service-request-form input,
 body.dark-mode #service-request-form textarea { background: rgba(255, 255, 255, 0.03); color: #f1f5f9; }
 
 /* ================================================= */
-/* ---- دکمه دعوت به اقدام (با رنگ طلایی) ---- */
+/* ---- دکمه دعوت به اقدام ---- */
 /* ================================================= */
 .cta-button {
     display: inline-flex;
@@ -1283,7 +1271,7 @@ body.dark-mode .project-actions .badge { background: rgba(96, 165, 250, 0.05); b
 .project-actions .badge i { color: var(--accent); }
 
 /* ================================================= */
-/* ---- فوتر (با لوگوی بهبودیافته) ---- */
+/* ---- فوتر ---- */
 /* ================================================= */
 footer { padding: 20px 0 0 0; }
 .footer-branding {
@@ -1396,140 +1384,866 @@ body.dark-mode .copyright-name { background: linear-gradient(135deg, #60a5fa, #a
 }
 
 /* ================================================= */
-/* ---- ریسپانسیو ---- */
+/* ---- ریسپانسیو (کاملاً بهینه‌شده) ---- */
 /* ================================================= */
-@media(max-width: 992px) {
-    #main-wrapper { flex-direction: column; padding-top: 0; gap: 0; background: var(--bg); }
-    #sidebar-info { position: static; width: 100%; padding: 20px; border-radius: 0 0 28px 28px; background: var(--bg-sidebar); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.05); box-shadow: var(--shadow); }
-    #main-content { width: 100%; padding: 20px 16px 30px; border-radius: 0; background: transparent; backdrop-filter: none; box-shadow: none; border: none; }
-    #top-area { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: auto; padding: 10px 0 15px; gap: 0; width: 100%; position: relative; }
-    .lang-toggle-btn { position: absolute; top: 10px; right: 10px; left: auto!important; margin: 0!important; padding: 6px 12px; border-radius: 30px; background: rgba(255, 255, 255, 0.92); box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04); z-index: 50; border: 1px solid rgba(255, 255, 255, 0.5); font-size: .75rem; gap: 6px; order: 0!important; min-height: 40px; }
-    body.lang-en .lang-toggle-btn, body.lang-fa .lang-toggle-btn { right: 10px!important; left: auto!important; }
-    body.dark-mode .lang-toggle-btn { background: rgba(30, 41, 59, 0.92); border: 1px solid rgba(255, 255, 255, 0.05); }
-    .profile-wrapper { position: relative; top: auto; left: auto!important; right: auto!important; transform: none!important; width: 120px; height: 140px; border-radius: 20%; padding: 4px; margin: 25px auto 10px; background: linear-gradient(135deg, var(--accent), var(--primary-light)); box-shadow: 0 8px 30px var(--accent-glow); order: 0!important; flex-shrink: 0; }
-    .profile-wrapper:hover { transform: scale(1.03)!important; }
-    .profile-icon { border-radius: 20%; border: 3px solid rgba(255, 255, 255, 0.95); object-fit: cover; }
-    #particles-canvas { opacity: .4; }
-    .job-item ul li { padding-inline-start: 30px!important; font-size: .88em!important; line-height: 1.8!important; }
-    body.lang-fa .job-item ul li { text-align: justify!important; hyphens: none!important; font-size: .88em!important; line-height: 2!important; padding-inline-start: 32px!important; }
-    .service-card ul li { padding-inline-start: 30px!important; }
-    .job-item { padding: 16px 18px!important; border-radius: 14px; background: var(--bg-card); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: var(--shadow); }
-    body.lang-fa .job-item { padding: 18px 28px 18px 16px!important; }
-    .job-item h3 { font-size: .95em!important; line-height: 1.6; }
-    .job-item .duration, .job-item .institution { font-size: .78em!important; padding: 2px 12px; }
-    .badge-current { font-size: .6rem!important; padding: 2px 12px; }
-    #experience .job-item { padding-left: 20px!important; border-left-width: 2px; margin-left: 5px; border-radius: 0 var(--radius) var(--radius) 0; padding-right: 18px!important; }
-    body.lang-fa #experience .job-item { padding-left: 16px!important; padding-right: 28px!important; border-right-width: 2px; margin-right: 5px; border-radius: var(--radius) 0 0 var(--radius); }
-    #experience .job-item::before { left: -7px; top: 28px; width: 12px; height: 12px; }
-    body.lang-fa #experience .job-item::before { left: auto; right: -7px; }
-    .job-item::after { display: none; }
-    .header { margin-top: 0; text-align: center; border-bottom: none; padding-bottom: 0; position: relative; z-index: 1; width: 100%; }
-    h1 { font-size: 2em; margin-top: 4px; }
-    h2 { font-size: 1em; }
-    .typing-text { white-space: normal; border: none; animation: none; -webkit-text-fill-color: var(--accent); }
-    body.dark-mode .typing-text { -webkit-text-fill-color: #60a5fa; }
-    .contact-info { align-items: center!important; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 10px 16px; margin-top: 10px; width: 100%; }
-    .contact-info p { font-size: .82em; background: rgba(37, 99, 235, 0.06); padding: 3px 12px; border-radius: 20px; }
-    .contact-info a::after { display: none; }
-    #navbar { margin-top: 16px; background: transparent; border-radius: 0; padding: 0; width: 100%; }
-    #navbar ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; padding: 0; }
-    #navbar li { flex-basis: auto; margin: 0; }
-    #navbar a { color: var(--text)!important; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); padding: 6px 16px; font-size: .78em; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.4); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02); transition: all .25s ease; white-space: nowrap; font-weight: 600; will-change: transform; min-height: 36px; }
-    body.dark-mode #navbar a { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.05); color: var(--text)!important; }
-    #navbar a:hover { background: rgba(37, 99, 235, 0.06); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.06); }
-    #navbar a.active { color: #fff!important; background: linear-gradient(135deg, var(--accent), var(--primary-light)); border-color: var(--accent); box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2); }
-    body.dark-mode #navbar a.active { color: #0f172a!important; }
-    .skill-category { background: var(--bg-card); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.05); }
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .service-card { padding: 20px 16px; }
-    .service-card .service-icon { width: 60px; height: 60px; font-size: 1.6em; }
-    .service-card h3 { font-size: 1em; }
-    .service-card ul li { font-size: .85em; padding: 5px 0; }
-    .service-select-btn { font-size: .8em; padding: 8px 16px; max-width: 100%; }
-    .project-card { padding: 20px 18px; flex-direction: column; }
-    .project-image-wrapper { flex: 0 0 auto; width: 100%; max-height: 200px; }
-    .project-image-wrapper img { min-height: 120px; max-height: 200px; }
-    .project-content h3 { font-size: 1.05em; }
-    .project-actions .github-link { padding: 8px 16px; font-size: .8em; }
-    .project-actions .badge { padding: 6px 12px; font-size: .75em; }
-    #service-request-form { padding: 20px; }
-    #service-request-form .form-group { margin-bottom: 15px; }
-    .cta-button { padding: 12px 24px; font-size: .95em; }
-    .footer-logo-wrapper { width: 80px; height: 80px; padding: 10px; }
-    .footer-logo-img { height: 50px; width: 50px; object-fit: contain; }
-    .copyright-text { font-size: .72em; }
-    .dark-toggle { bottom: 20px; left: 20px; width: 44px; height: 44px; font-size: 1.1em; }
-    #sidebar-info:hover { transform: none; }
-    .share-btn { width: 46px; height: 46px; font-size: 1.1em; }
+
+/* ===== تبلت و موبایل بزرگ (تا 992px) ===== */
+@media (max-width: 992px) {
+    /* ساختار کلی */
+    #main-wrapper {
+        flex-direction: column;
+        padding-top: 0;
+        gap: 0;
+        background: var(--bg);
+    }
+
+    #sidebar-info {
+        position: static;
+        width: 100%;
+        padding: 20px 18px 24px;
+        border-radius: 0 0 28px 28px;
+        background: var(--bg-sidebar);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow);
+    }
+
+    #main-content {
+        width: 100%;
+        padding: 20px 16px 30px;
+        border-radius: 0;
+        background: transparent;
+        backdrop-filter: none;
+        box-shadow: none;
+        border: none;
+    }
+
+    /* ===== هدر و نوار بالا ===== */
+    #top-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: auto;
+        padding: 10px 0 15px;
+        gap: 0;
+        width: 100%;
+        position: relative;
+    }
+
+    /* دکمه دارک مود در موبایل - اصلاح کشیدگی */
+    .dark-toggle {
+        bottom: 20px;
+        left: 20px;
+        width: 46px;
+        height: 46px;
+        font-size: 1.15em;
+        min-height: 46px;
+        min-width: 46px;
+    }
+
+    /* کلید تغییر زبان در موبایل */
+    .lang-toggle-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        left: auto !important;
+        margin: 0 !important;
+        padding: 6px 12px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.92);
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+        z-index: 50;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        font-size: 0.7rem;
+        gap: 5px;
+        order: 0 !important;
+        min-height: 36px;
+        min-width: 36px;
+    }
+    body.lang-en .lang-toggle-btn,
+    body.lang-fa .lang-toggle-btn {
+        right: 8px !important;
+        left: auto !important;
+    }
+    body.dark-mode .lang-toggle-btn {
+        background: rgba(30, 41, 59, 0.92);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* عکس پروفایل */
+    .profile-wrapper {
+        position: relative;
+        top: auto;
+        left: auto !important;
+        right: auto !important;
+        transform: none !important;
+        width: 120px;
+        height: 140px;
+        border-radius: 20%;
+        padding: 4px;
+        margin: 30px auto 12px;
+        background: linear-gradient(135deg, var(--accent), var(--primary-light));
+        box-shadow: 0 8px 30px var(--accent-glow);
+        order: 0 !important;
+        flex-shrink: 0;
+    }
+    .profile-wrapper:hover {
+        transform: scale(1.03) !important;
+    }
+    .profile-icon {
+        border-radius: 20%;
+        border: 3px solid rgba(255, 255, 255, 0.95);
+        object-fit: cover;
+    }
+
+    /* هدر */
+    .header {
+        margin-top: 0;
+        text-align: center;
+        border-bottom: none;
+        padding-bottom: 0;
+        position: relative;
+        z-index: 1;
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.9em;
+        margin-top: 4px;
+        line-height: 1.3;
+    }
+
+    h2 {
+        font-size: 0.95em;
+    }
+
+    .typing-text {
+        white-space: normal;
+        border: none;
+        animation: none;
+        -webkit-text-fill-color: var(--accent);
+        font-size: 0.9em;
+        display: inline;
+    }
+    body.dark-mode .typing-text {
+        -webkit-text-fill-color: #60a5fa;
+    }
+
+    /* اطلاعات تماس */
+    .contact-info {
+        align-items: center !important;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 12px;
+        margin-top: 10px;
+        width: 100%;
+    }
+    .contact-info p {
+        font-size: 0.78em;
+        background: rgba(37, 99, 235, 0.06);
+        padding: 3px 12px;
+        border-radius: 20px;
+        margin: 0;
+    }
+    .contact-info a::after {
+        display: none;
+    }
+
+    /* منو */
+    #navbar {
+        margin-top: 16px;
+        background: transparent;
+        border-radius: 0;
+        padding: 0;
+        width: 100%;
+    }
+    #navbar ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        padding: 0;
+    }
+    #navbar li {
+        flex-basis: auto;
+        margin: 0;
+    }
+    #navbar a {
+        color: var(--text) !important;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 5px 12px;
+        font-size: 0.72em;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+        transition: all .25s ease;
+        white-space: nowrap;
+        font-weight: 600;
+        will-change: transform;
+        min-height: 34px;
+    }
+    body.dark-mode #navbar a {
+        background: rgba(30, 41, 59, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        color: var(--text) !important;
+    }
+    #navbar a:hover {
+        background: rgba(37, 99, 235, 0.06);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.06);
+    }
+    #navbar a.active {
+        color: #fff !important;
+        background: linear-gradient(135deg, var(--accent), var(--primary-light));
+        border-color: var(--accent);
+        box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+    }
+    body.dark-mode #navbar a.active {
+        color: #0f172a !important;
+    }
+
+    /* بخش‌ها */
+    .section {
+        padding: 30px 0;
+    }
+    .section-title {
+        font-size: 1.4em;
+        padding-inline-start: 14px;
+        margin-bottom: 20px;
+    }
+
+    /* سوابق شغلی */
+    .job-item {
+        padding: 16px 18px !important;
+        border-radius: 14px;
+        background: var(--bg-card);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow);
+        margin-bottom: 20px;
+    }
+    body.lang-fa .job-item {
+        padding: 18px 28px 18px 16px !important;
+    }
+    .job-item h3 {
+        font-size: 0.95em !important;
+        line-height: 1.6;
+    }
+    .job-item .duration,
+    .job-item .institution {
+        font-size: 0.75em !important;
+        padding: 2px 12px;
+    }
+    .job-item ul li {
+        padding-inline-start: 30px !important;
+        font-size: 0.85em !important;
+        line-height: 1.8 !important;
+        margin-bottom: 8px;
+    }
+    body.lang-fa .job-item ul li {
+        font-size: 0.85em !important;
+        line-height: 2 !important;
+        padding-inline-start: 32px !important;
+        text-align: justify !important;
+        hyphens: none !important;
+    }
+
+    #experience .job-item {
+        padding-left: 18px !important;
+        border-left-width: 2px;
+        margin-left: 5px;
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding-right: 18px !important;
+    }
+    body.lang-fa #experience .job-item {
+        padding-left: 16px !important;
+        padding-right: 26px !important;
+        border-right-width: 2px;
+        margin-right: 5px;
+        border-radius: var(--radius) 0 0 var(--radius);
+    }
+    #experience .job-item::before {
+        left: -7px;
+        top: 28px;
+        width: 12px;
+        height: 12px;
+    }
+    body.lang-fa #experience .job-item::before {
+        left: auto;
+        right: -7px;
+    }
+    .badge-current {
+        font-size: 0.55rem !important;
+        padding: 2px 12px;
+    }
+
+    /* مهارت‌ها */
+    .skills-list {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 18px;
+    }
+    .skill-category {
+        padding: 20px 18px 18px;
+    }
+    .skill-category h4 {
+        font-size: 1em;
+    }
+    .skill-label {
+        font-size: 0.82em;
+    }
+
+    /* خدمات */
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+    }
+    .service-card {
+        padding: 22px 16px 18px;
+    }
+    .service-card .service-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6em;
+        margin: 0 auto 15px;
+    }
+    .service-card h3 {
+        font-size: 1em;
+    }
+    .service-card ul li {
+        font-size: 0.82em;
+        padding: 5px 0;
+        padding-inline-start: 26px;
+    }
+    .service-select-btn {
+        font-size: 0.75em;
+        padding: 8px 14px;
+        max-width: 100%;
+        min-height: 38px;
+    }
+
+    /* پروژه‌ها */
+    .project-card {
+        padding: 18px 18px;
+        flex-direction: column;
+        gap: 18px;
+    }
+    .project-image-wrapper {
+        flex: 0 0 auto;
+        width: 100%;
+        max-height: 180px;
+    }
+    .project-image-wrapper img {
+        min-height: 120px;
+        max-height: 180px;
+    }
+    .project-content h3 {
+        font-size: 1.05em;
+    }
+    .project-actions .github-link {
+        padding: 8px 16px;
+        font-size: 0.75em;
+    }
+    .project-actions .badge {
+        padding: 5px 12px;
+        font-size: 0.7em;
+    }
+
+    /* فرم‌ها */
+    #service-request-form {
+        padding: 20px;
+    }
+    #service-request-form .form-group {
+        margin-bottom: 15px;
+    }
+    #service-request-form input,
+    #service-request-form textarea {
+        padding: 10px 14px;
+        font-size: 0.9em;
+    }
+
+    .cta-button {
+        padding: 12px 24px;
+        font-size: 0.9em;
+        min-height: 44px;
+    }
+
+    /* فوتر */
+    .footer-logo-wrapper {
+        width: 75px;
+        height: 75px;
+        padding: 10px;
+    }
+    .footer-logo-img {
+        height: 48px;
+        width: 48px;
+        object-fit: contain;
+    }
+    .copyright-text {
+        font-size: 0.7em;
+    }
+
+    /* اشتراک‌گذاری */
+    .share-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1.1em;
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* ذرات */
+    #particles-canvas {
+        opacity: 0.4;
+    }
+
+    /* سایدبار hover */
+    #sidebar-info:hover {
+        transform: none;
+    }
 }
 
-@media(max-width: 768px) {
-    #service-request-form .form-row { grid-template-columns: 1fr; gap: 0; }
-    #service-request-form .form-actions { flex-direction: column; }
-    #service-request-form .form-actions .cta-button { min-width: auto; width: 100%; }
-    #service-request-form .form-actions .cancel-btn { flex: 1; width: 100%; }
-    .job-item ul li { padding-inline-start: 32px!important; font-size: .85em!important; }
-    body.lang-fa .job-item ul li { font-size: .85em!important; padding-inline-start: 34px!important; text-align: justify!important; hyphens: none!important; }
-    .service-card ul li { padding-inline-start: 32px!important; }
-    .share-btn { width: 44px; height: 44px; font-size: 1.05em; }
-    #particles-canvas { opacity: .3; }
-    .footer-logo-wrapper { width: 70px; height: 70px; padding: 8px; }
-    .footer-logo-img { height: 44px; width: 44px; object-fit: contain; }
+/* ===== موبایل متوسط (تا 768px) ===== */
+@media (max-width: 768px) {
+    /* فرم‌ها */
+    #service-request-form .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+    #service-request-form .form-actions {
+        flex-direction: column;
+    }
+    #service-request-form .form-actions .cta-button {
+        min-width: auto;
+        width: 100%;
+    }
+    #service-request-form .form-actions .cancel-btn {
+        flex: 1;
+        width: 100%;
+    }
+
+    /* لیست‌ها */
+    .job-item ul li {
+        padding-inline-start: 32px !important;
+        font-size: 0.82em !important;
+    }
+    body.lang-fa .job-item ul li {
+        font-size: 0.82em !important;
+        padding-inline-start: 34px !important;
+        text-align: justify !important;
+        hyphens: none !important;
+    }
+    .service-card ul li {
+        padding-inline-start: 30px !important;
+    }
+
+    /* اشتراک‌گذاری */
+    .share-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 1em;
+        min-height: 42px;
+        min-width: 42px;
+    }
+
+    /* ذرات */
+    #particles-canvas {
+        opacity: 0.3;
+    }
+
+    /* دارک مود */
+    .dark-toggle {
+        width: 42px;
+        height: 42px;
+        font-size: 1.05em;
+        min-height: 42px;
+        min-width: 42px;
+        bottom: 18px;
+        left: 18px;
+    }
+
+    /* کلید زبان */
+    .lang-toggle-btn {
+        padding: 5px 10px;
+        font-size: 0.6rem;
+        gap: 4px;
+        min-height: 32px;
+        min-width: 32px;
+        top: 6px;
+        right: 6px;
+    }
+    .lang-toggle-btn .lang-icon {
+        font-size: 0.75em;
+    }
 }
 
-@media(max-width: 480px) {
-    .profile-wrapper { width: 100px; height: 120px; padding: 3px; margin: 20px auto 8px; }
-    .profile-icon { border-width: 2px; object-fit: cover; }
-    h1 { font-size: 1.6em; }
-    h2 { font-size: .85em; }
-    .services-grid { grid-template-columns: 1fr; }
-    .service-card { padding: 16px 14px; }
-    .service-card .service-icon { width: 55px; height: 55px; font-size: 1.4em; }
-    .service-card ul li { font-size: .82em; padding: 5px 0; padding-inline-start: 32px!important; }
-    .service-select-btn { max-width: 100%; font-size: .8em; padding: 8px 16px; }
-    #navbar a { font-size: .68em!important; padding: 5px 12px!important; }
-    .job-item { padding: 14px 14px!important; }
-    body.lang-fa .job-item { padding: 16px 22px 16px 12px!important; }
-    .job-item h3 { font-size: .85em!important; line-height: 1.5; }
-    .job-item ul li { padding-inline-start: 32px!important; font-size: .82em!important; line-height: 1.7!important; margin-bottom: 6px; }
-    body.lang-fa .job-item ul li { font-size: .82em!important; line-height: 1.9!important; padding-inline-start: 34px!important; text-align: justify!important; hyphens: none!important; }
-    .job-item .duration, .job-item .institution { font-size: .72em!important; padding: 1px 10px; }
-    .badge-current { font-size: .55rem!important; padding: 2px 10px; }
-    .contact-info p { font-size: .72em; padding: 2px 10px; }
-    .project-card { padding: 14px 16px; }
-    .project-image-wrapper { max-height: 150px; }
-    .project-image-wrapper img { min-height: 100px; max-height: 150px; }
-    .project-content h3 { font-size: .95em; }
-    .project-content .project-description { font-size: .85em; }
-    .project-actions .github-link { padding: 6px 14px; font-size: .75em; }
-    .project-actions .badge { padding: 4px 10px; font-size: .7em; }
-    #service-request-form { padding: 15px; }
-    #service-request-form input, #service-request-form textarea { padding: 10px 14px; font-size: .9em; }
-    .cta-button { padding: 10px 20px; font-size: .85em; gap: 6px; }
-    .footer-logo-wrapper { width: 60px; height: 60px; padding: 6px; margin: 0 auto; }
-    .footer-logo-img { height: 40px; width: 40px; object-fit: contain; }
-    #back-to-top { width: 42px; height: 42px; font-size: 1.1em; bottom: 18px; right: 18px; }
-    .section-title { font-size: 1.2em; padding-inline-start: 12px; }
-    .summary { padding: 16px 18px; font-size: .92em; }
-    .contact-form { padding: 18px 14px; }
-    .dark-toggle { width: 38px; height: 38px; font-size: .95em; bottom: 15px; left: 15px; }
-    .lang-toggle-btn { padding: 4px 10px; font-size: .65rem; gap: 4px; top: 5px; right: 5px; }
-    .lang-toggle-btn .lang-icon { font-size: .8em; }
-    .share-btn { width: 40px; height: 40px; font-size: .95em; }
-    .share-btn .tooltip { display: none; }
-    #particles-canvas { opacity: .2; }
-    .footer-branding { margin-top: 20px; padding-top: 14px; }
-    .copyright-text { font-size: .7em; line-height: 1.8; }
+/* ===== موبایل کوچک (تا 480px) ===== */
+@media (max-width: 480px) {
+    /* پروفایل */
+    .profile-wrapper {
+        width: 100px;
+        height: 120px;
+        padding: 3px;
+        margin: 25px auto 8px;
+    }
+    .profile-icon {
+        border-width: 2px;
+        object-fit: cover;
+    }
+
+    /* تایپوگرافی */
+    h1 {
+        font-size: 1.5em;
+        margin-top: 2px;
+    }
+    h2 {
+        font-size: 0.8em;
+    }
+    .typing-text {
+        font-size: 0.8em;
+    }
+    .section-title {
+        font-size: 1.2em;
+        padding-inline-start: 12px;
+        margin-bottom: 16px;
+    }
+
+    /* خلاصه */
+    .summary {
+        padding: 16px 18px;
+        font-size: 0.88em;
+        line-height: 2;
+    }
+
+    /* خدمات */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .service-card {
+        padding: 18px 14px 16px;
+    }
+    .service-card .service-icon {
+        width: 55px;
+        height: 55px;
+        font-size: 1.4em;
+        margin: 0 auto 12px;
+    }
+    .service-card ul li {
+        font-size: 0.78em;
+        padding: 4px 0;
+        padding-inline-start: 28px !important;
+    }
+    .service-select-btn {
+        font-size: 0.72em;
+        padding: 8px 12px;
+        min-height: 36px;
+    }
+
+    /* منو */
+    #navbar a {
+        font-size: 0.62em !important;
+        padding: 4px 10px !important;
+        min-height: 30px;
+    }
+    #navbar ul {
+        gap: 4px;
+    }
+
+    /* سوابق شغلی */
+    .job-item {
+        padding: 12px 14px !important;
+        margin-bottom: 16px;
+    }
+    body.lang-fa .job-item {
+        padding: 14px 20px 14px 10px !important;
+    }
+    .job-item h3 {
+        font-size: 0.82em !important;
+        line-height: 1.5;
+    }
+    .job-item .duration,
+    .job-item .institution {
+        font-size: 0.65em !important;
+        padding: 1px 10px;
+    }
+    .job-item ul li {
+        padding-inline-start: 28px !important;
+        font-size: 0.78em !important;
+        line-height: 1.7 !important;
+        margin-bottom: 5px;
+    }
+    body.lang-fa .job-item ul li {
+        font-size: 0.78em !important;
+        line-height: 1.9 !important;
+        padding-inline-start: 30px !important;
+        text-align: justify !important;
+        hyphens: none !important;
+    }
+
+    /* مهارت‌ها */
+    .skills-list {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+    .skill-category {
+        padding: 16px 14px 14px;
+    }
+    .skill-category h4 {
+        font-size: 0.9em;
+        padding-bottom: 10px;
+    }
+    .skill-label {
+        font-size: 0.78em;
+    }
+    .skill-percent {
+        font-size: 0.9em;
+    }
+
+    /* پروژه‌ها */
+    .project-card {
+        padding: 14px 16px;
+        gap: 14px;
+    }
+    .project-image-wrapper {
+        max-height: 140px;
+    }
+    .project-image-wrapper img {
+        min-height: 100px;
+        max-height: 140px;
+    }
+    .project-content h3 {
+        font-size: 0.9em;
+    }
+    .project-content .project-description {
+        font-size: 0.82em;
+        line-height: 1.7;
+    }
+    .project-actions .github-link {
+        padding: 6px 12px;
+        font-size: 0.7em;
+    }
+    .project-actions .badge {
+        padding: 4px 10px;
+        font-size: 0.65em;
+    }
+
+    /* فرم‌ها */
+    #service-request-form {
+        padding: 14px;
+    }
+    #service-request-form h3 {
+        font-size: 1.1em;
+    }
+    #service-request-form input,
+    #service-request-form textarea {
+        padding: 8px 12px;
+        font-size: 0.85em;
+    }
+    #service-request-form label {
+        font-size: 0.85em;
+    }
+
+    .contact-form {
+        padding: 16px 14px;
+    }
+    .contact-form label {
+        font-size: 0.85em;
+    }
+    .contact-form input[type="email"],
+    .contact-form textarea {
+        padding: 10px 14px;
+        font-size: 0.85em;
+    }
+    .contact-form button[type="submit"] {
+        padding: 12px 20px;
+        font-size: 0.9em;
+        min-height: 42px;
+    }
+
+    .cta-button {
+        padding: 10px 18px;
+        font-size: 0.82em;
+        gap: 6px;
+        min-height: 40px;
+        min-width: 40px;
+    }
+
+    /* فوتر */
+    .footer-logo-wrapper {
+        width: 60px;
+        height: 60px;
+        padding: 6px;
+        margin: 0 auto;
+    }
+    .footer-logo-img {
+        height: 40px;
+        width: 40px;
+        object-fit: contain;
+    }
+    .copyright-text {
+        font-size: 0.65em;
+        line-height: 1.8;
+    }
+    .footer-branding {
+        margin-top: 20px;
+        padding-top: 14px;
+        gap: 12px;
+    }
+
+    /* دارک مود */
+    .dark-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 0.95em;
+        min-height: 38px;
+        min-width: 38px;
+        bottom: 15px;
+        left: 15px;
+    }
+
+    /* کلید زبان */
+    .lang-toggle-btn {
+        padding: 3px 8px;
+        font-size: 0.55rem;
+        gap: 3px;
+        min-height: 28px;
+        min-width: 28px;
+        top: 5px;
+        right: 5px;
+        border-radius: 20px;
+    }
+    .lang-toggle-btn .lang-icon {
+        font-size: 0.65em;
+    }
+
+    /* اشتراک‌گذاری */
+    .share-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 0.9em;
+        min-height: 38px;
+        min-width: 38px;
+        gap: 8px;
+    }
+    .share-btn .tooltip {
+        display: none;
+    }
+    .share-buttons {
+        gap: 8px;
+    }
+
+    /* ذرات */
+    #particles-canvas {
+        opacity: 0.2;
+    }
+
+    /* بازگشت به بالا */
+    #back-to-top {
+        width: 38px;
+        height: 38px;
+        font-size: 1em;
+        bottom: 18px;
+        right: 18px;
+    }
+
+    /* سایدبار */
+    #sidebar-info {
+        padding: 14px 12px 18px;
+    }
+    #main-content {
+        padding: 14px 12px 24px;
+    }
+
+    /* هدر */
+    .header {
+        margin-bottom: 16px;
+    }
+    .contact-info {
+        gap: 6px 10px;
+        margin-top: 8px;
+    }
+    .contact-info p {
+        font-size: 0.7em;
+        padding: 2px 10px;
+    }
 }
 
-@media(min-width: 768px) and (max-width: 992px) {
-    .lang-toggle-btn { font-size: .7rem; padding: 5px 12px; }
-    #navbar a { font-size: .85em!important; padding: 8px 18px!important; }
-    .profile-wrapper { width: 130px; height: 150px; margin: 30px auto 12px; }
-    h1 { font-size: 2.2em; }
-    .project-card { padding: 20px 24px; }
-    .services-grid { grid-template-columns: 1fr 1fr; }
-    .share-btn { width: 48px; height: 48px; font-size: 1.15em; }
-    .footer-logo-wrapper { width: 80px; height: 80px; }
-    .footer-logo-img { height: 50px; width: 50px; object-fit: contain; }
+/* ===== تبلت عمودی (بین 768 تا 992px) ===== */
+@media (min-width: 768px) and (max-width: 992px) {
+    /* کلید زبان */
+    .lang-toggle-btn {
+        font-size: 0.65rem;
+        padding: 5px 12px;
+        min-height: 36px;
+        min-width: 36px;
+    }
+
+    /* منو */
+    #navbar a {
+        font-size: 0.78em !important;
+        padding: 6px 16px !important;
+        min-height: 36px;
+    }
+
+    /* پروفایل */
+    .profile-wrapper {
+        width: 130px;
+        height: 150px;
+        margin: 30px auto 12px;
+    }
+
+    h1 {
+        font-size: 2.1em;
+    }
+
+    /* پروژه‌ها */
+    .project-card {
+        padding: 20px 22px;
+    }
+
+    /* خدمات */
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+    .service-card {
+        padding: 24px 18px 20px;
+    }
+
+    /* اشتراک‌گذاری */
+    .share-btn {
+        width: 46px;
+        height: 46px;
+        font-size: 1.1em;
+        min-height: 46px;
+        min-width: 46px;
+    }
+
+    /* فوتر */
+    .footer-logo-wrapper {
+        width: 80px;
+        height: 80px;
+        padding: 10px;
+    }
+    .footer-logo-img {
+        height: 50px;
+        width: 50px;
+        object-fit: contain;
+    }
+
+    /* دارک مود */
+    .dark-toggle {
+        width: 46px;
+        height: 46px;
+        font-size: 1.1em;
+        min-height: 46px;
+        min-width: 46px;
+    }
 }
