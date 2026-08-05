@@ -1,8 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ===============================================
-    // Debounce
-    // ===============================================
     function debounce(func, delay) {
         let timeout;
         return function() {
@@ -11,9 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
 
-    // ===============================================
-    // تبدیل تاریخ
-    // ===============================================
     function gregorianToJalali(gy, gm, gd) {
         var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
         var jy, jm, jd;
@@ -47,9 +41,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return `${englishMonths[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
     }
 
-    // ===============================================
-    // ذرات
-    // ===============================================
     function initParticles() {
         const isMobile = window.innerWidth <= 768;
         const particleCount = isMobile ? 25 : 50;
@@ -119,9 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     initParticles();
 
-    // ===============================================
-    // نوار پیشرفت
-    // ===============================================
     function updateProgressBar() {
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -134,9 +122,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', debounce(updateProgressBar, 10), { passive: true });
     updateProgressBar();
 
-    // ===============================================
-    // مدت زمان شغل
-    // ===============================================
     function updateJobDuration() {
         const now = new Date();
         const startFa = document.getElementById('start-date-fa');
@@ -170,9 +155,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     updateJobDuration();
 
-    // ===============================================
-    // انیمیشن مهارت‌ها
-    // ===============================================
     const skillItems = document.querySelectorAll('.skill-level-item');
     function animateSkills() {
         skillItems.forEach(item => {
@@ -206,9 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
         animateSkills();
     }
 
-    // ===============================================
-    // افکت محو شدن بخش‌ها + رویداد GA
-    // ===============================================
     const sections = document.querySelectorAll('.section');
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -225,9 +204,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { threshold: 0.08 });
     sections.forEach(section => sectionObserver.observe(section));
 
-    // ===============================================
-    // انیمیشن کارت‌های خدمات
-    // ===============================================
     const serviceCards = document.querySelectorAll('.service-card');
     const serviceObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -239,9 +215,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { threshold: 0.1 });
     serviceCards.forEach(card => serviceObserver.observe(card));
 
-    // ===============================================
-    // دکمه بازگشت به بالا
-    // ===============================================
     const backBtn = document.getElementById('back-to-top');
     function toggleBackBtn() {
         if (backBtn) {
@@ -259,9 +232,6 @@ document.addEventListener('DOMContentLoaded', function() {
         toggleBackBtn();
     }
 
-    // ===============================================
-    // منو فعال
-    // ===============================================
     const navLinks = document.querySelectorAll('#navbar a');
     function updateActiveNav() {
         let current = '';
@@ -282,9 +252,6 @@ document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', debounce(updateActiveNav, 50), { passive: true });
     updateActiveNav();
 
-    // ===============================================
-    // کارت‌های شغلی
-    // ===============================================
     const jobItems = document.querySelectorAll('.job-item');
     const jobObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry, index) => {
@@ -304,9 +271,6 @@ document.addEventListener('DOMContentLoaded', function() {
         jobObserver.observe(item);
     });
 
-    // ===============================================
-    // تایپ‌رایتر
-    // ===============================================
     function initAdvancedTyping() {
         const typingElement = document.querySelector('.typing-text');
         if (!typingElement) return;
@@ -352,9 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     initAdvancedTyping();
 
-    // ===============================================
-    // دارک مود
-    // ===============================================
     const darkToggle = document.getElementById('dark-toggle');
     const body = document.body;
     if (localStorage.getItem('dark-mode') === 'true') {
@@ -374,9 +335,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // ===============================================
-    // کلید تغییر زبان
-    // ===============================================
     const langToggleBtn = document.getElementById('lang-toggle-btn');
     if (langToggleBtn) {
         langToggleBtn.addEventListener('click', function(e) {
@@ -393,9 +351,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ===============================================
-    // بخش خدمات - فرم
-    // ===============================================
     const serviceButtons = document.querySelectorAll('.service-select-btn');
     const serviceForm = document.getElementById('service-request-form');
     const selectedServiceInput = document.getElementById('selected-service');
@@ -417,9 +372,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===============================================
-    // بستن فرم
-    // ===============================================
     const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
     if (cancelBtn) {
         cancelBtn.addEventListener('click', function(e) {
@@ -435,9 +387,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ===============================================
-    // ارسال فرم خدمات
-    // ===============================================
     const serviceRequestForm = document.getElementById('service-form');
     if (serviceRequestForm) {
         serviceRequestForm.addEventListener('submit', function(e) {
@@ -458,9 +407,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // ===============================================
-    // افکت ریپل
-    // ===============================================
     document.querySelectorAll('.cta-button, .service-select-btn, .contact-form button[type="submit"]').forEach(btn => {
         btn.addEventListener('click', function(e) {
             if (this.type === 'reset') return;
@@ -476,9 +422,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===============================================
-    // دکمه‌های اشتراک‌گذاری
-    // ===============================================
     const shareButtons = document.querySelectorAll('.share-btn');
     const pageUrl = encodeURIComponent(window.location.href);
     const pageTitle = encodeURIComponent(document.title);
@@ -554,9 +497,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ===============================================
-    // تاریخ به‌روزرسانی
-    // ===============================================
     const updateDateFa = document.getElementById('update-date-fa');
     const updateDateEn = document.getElementById('update-date-en');
     const now = new Date();
