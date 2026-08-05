@@ -10,12 +10,16 @@
     <meta name="keywords" content="محمدحسین عسگری ثمرین, محمدحسین عسگری, عسگری ثمرین, عسگری, ثمرین, Mohammad Hossein Asgari Somarin, Mohammad Hossein Asgari, Asgari Somarin, Asgari, Somarin" />
     <meta name="robots" content="index, follow, max-snippet:150, max-image-preview:large, max-video-preview:-1" />
     
+    <!-- هدرهای امنیتی -->
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     
-    <link rel="canonical" href="https://mowhmmdh.github.io/index.html" />
+    <!-- ================================================ -->
+    <!-- CANONICAL اصلاح‌شده (به ریشه)                   -->
+    <!-- ================================================ -->
+    <link rel="canonical" href="https://mowhmmdh.github.io/" />
     <link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/index.html" />
     <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en.html" />
     <link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/" />
@@ -23,10 +27,11 @@
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.png" sizes="48x48" type="image/png">
 
+    <!-- Open Graph -->
     <meta property="og:type" content="profile" />
     <meta property="og:title" content="محمدحسین عسگری ثمرین | متخصص IT، شبکه و زیرساخت" />
     <meta property="og:description" content="متخصص فناوری اطلاعات با تجربه در شبکه، CCTV، تعمیرات و پشتیبانی." />
-    <meta property="og:url" content="https://mowhmmdh.github.io/index.html" />
+    <meta property="og:url" content="https://mowhmmdh.github.io/" />
     <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -35,6 +40,7 @@
     <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="محمدحسین عسگری ثمرین" />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="محمدحسین عسگری ثمرین | متخصص IT، شبکه و زیرساخت" />
     <meta name="twitter:description" content="متخصص فناوری اطلاعات با تجربه در شبکه، CCTV، تعمیرات و پشتیبانی." />
@@ -45,7 +51,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <!-- Google Analytics 4 -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6369793553"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -64,16 +70,26 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5D7JHSFN');</script>
 
+    <!-- ================================================ -->
+    <!-- بارگذاری غیرهمگام CSS (رفع Render-Blocking)     -->
+    <!-- ================================================ -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preload" href="style.css" as="style" />
+    
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
     <link rel="preload" href="script.js" as="script" />
     <link rel="preload" href="fonts/BNazanin.woff2" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <!-- Structured Data -->
+    <!-- ================================================ -->
+    <!-- داده‌های ساختاریافته (بهبود AI Visibility)      -->
+    <!-- ================================================ -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -99,7 +115,7 @@
                 ],
                 "jobTitle": "متخصص پشتیبانی فناوری اطلاعات",
                 "description": "متخصص فناوری اطلاعات با بیش از ۲ سال تجربه در شبکه، پشتیبانی و زیرساخت",
-                "url": "https://mowhmmdh.github.io/index.html",
+                "url": "https://mowhmmdh.github.io/",
                 "image": {
                     "@type": "ImageObject",
                     "url": "https://mowhmmdh.github.io/images/profile.jpg",
@@ -145,7 +161,8 @@
                 "description": "سایت رسمی محمدحسین عسگری ثمرین - متخصص فناوری اطلاعات، شبکه و زیرساخت",
                 "inLanguage": ["fa-IR", "en-US"],
                 "publisher": { "@id": "https://mowhmmdh.github.io/#person" },
-                "mainEntityOfPage": { "@id": "https://mowhmmdh.github.io/#website" }
+                "mainEntityOfPage": { "@id": "https://mowhmmdh.github.io/#person" },
+                "about": { "@id": "https://mowhmmdh.github.io/#person" }
             },
             {
                 "@type": "Service",
@@ -158,6 +175,14 @@
             {
                 "@type": "FAQPage",
                 "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "محمدحسین عسگری ثمرین کیست و چه تخصصی دارد؟",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "محمدحسین عسگری ثمرین یک متخصص فناوری اطلاعات با بیش از ۲ سال تجربه در شبکه، زیرساخت، امنیت سایبری و پشتیبانی فنی است. ایشان با سازمان‌هایی مانند وزارت کشور، مؤسسه صمت و شرکت ماهکس همکاری داشته است."
+                        }
+                    },
                     {
                         "@type": "Question",
                         "name": "چه خدماتی در حوزه شبکه ارائه می‌شود؟",
@@ -184,15 +209,7 @@
                     },
                     {
                         "@type": "Question",
-                        "name": "چه مدت سابقه کار در حوزه IT دارید؟",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "بیش از ۲ سال سابقه کار حرفه‌ای در پشتیبانی شبکه، هلپ‌دسک و مدیریت زیرساخت در سازمان‌هایی مانند وزارت کشور، مؤسسه صمت و شرکت ماهکس."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "چگونه می‌توانم با شما تماس بگیرم؟",
+                        "name": "چگونه می‌توانم با محمدحسین عسگری ثمرین تماس بگیرم؟",
                         "acceptedAnswer": {
                             "@type": "Answer",
                             "text": "از طریق فرم تماس در این وب‌سایت، ایمیل mohammedhasgari@gmail.com، یا از طریق لینکدین و اینستاگرام."
@@ -227,7 +244,7 @@
                         "@type": "ListItem",
                         "position": 2,
                         "name": "محمدحسین عسگری ثمرین",
-                        "item": "https://mowhmmdh.github.io/index.html"
+                        "item": "https://mowhmmdh.github.io/"
                     }
                 ]
             }
@@ -235,7 +252,6 @@
     }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="lang-fa">
@@ -243,6 +259,15 @@
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5D7JHSFN"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <!-- ================================================ -->
+    <!-- هدایت به ریشه برای جلوگیری از محتوای تکراری    -->
+    <!-- ================================================ -->
+    <script>
+        if (window.location.pathname === '/index.html') {
+            window.location.href = '/';
+        }
+    </script>
 
     <div id="progress-bar" role="progressbar" aria-label="نوار پیشرفت مطالعه"></div>
 
@@ -260,7 +285,11 @@
                     <span class="lang-icon"><i class="fas fa-globe" aria-hidden="true"></i></span>
                 </button>
                 <div class="profile-wrapper">
-                    <img src="images/profile.jpg" alt="محمدحسین عسگری ثمرین - عکس پروفایل" class="profile-icon" loading="lazy" width="120" height="140" decoding="async">
+                    <!-- تصویر WebP با fallback به JPG -->
+                    <picture>
+                        <source srcset="images/profile.webp" type="image/webp">
+                        <img src="images/profile.jpg" alt="محمدحسین عسگری ثمرین - عکس پروفایل" class="profile-icon" loading="lazy" width="120" height="140" decoding="async">
+                    </picture>
                 </div>
             </div>
 
@@ -392,26 +421,26 @@
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-name"><i class="fas fa-user" aria-hidden="true"></i> نام و نام خانوادگی</label>
-                                <input type="text" id="client-name" name="نام" required placeholder="مثال: علی محمدی">
+                                <input type="text" id="client-name" name="نام" required placeholder="مثال: علی محمدی" aria-required="true">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-phone"><i class="fas fa-phone" aria-hidden="true"></i> شماره تماس</label>
-                                <input type="tel" id="client-phone" name="شماره تماس" required placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹">
+                                <input type="tel" id="client-phone" name="شماره تماس" required placeholder="مثال: ۰۹۱۲۳۴۵۶۷۸۹" aria-required="true">
                             </div>
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-email"><i class="fas fa-envelope" aria-hidden="true"></i> ایمیل</label>
-                                <input type="email" id="client-email" name="ایمیل" placeholder="example@gmail.com">
+                                <input type="email" id="client-email" name="ایمیل" placeholder="example@gmail.com" aria-required="false">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-budget"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> بودجه تقریبی (اختیاری)</label>
-                                <input type="text" id="client-budget" name="بودجه تقریبی" placeholder="مثال: ۵۰ میلیون تومان">
+                                <input type="text" id="client-budget" name="بودجه تقریبی" placeholder="مثال: ۵۰ میلیون تومان" aria-required="false">
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
                             <label for="client-description"><i class="fas fa-align-left" aria-hidden="true"></i> توضیحات پروژه یا نیاز شما</label>
-                            <textarea id="client-description" name="توضیحات" rows="4" required placeholder="لطفاً توضیح دهید که چه خدمتی نیاز دارید..."></textarea>
+                            <textarea id="client-description" name="توضیحات" rows="4" required placeholder="لطفاً توضیح دهید که چه خدمتی نیاز دارید..." aria-required="true"></textarea>
                         </div>
                         <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
                             <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
@@ -652,6 +681,10 @@
                 <h2 id="faq-title" class="section-title">پرسش‌های متداول</h2>
                 <div style="display: grid; gap: 18px;">
                     <div class="job-item" style="border-right-color: var(--accent);">
+                        <h3>محمدحسین عسگری ثمرین کیست و چه تخصصی دارد؟</h3>
+                        <p>محمدحسین عسگری ثمرین یک متخصص فناوری اطلاعات با بیش از ۲ سال تجربه در شبکه، زیرساخت، امنیت سایبری و پشتیبانی فنی است. ایشان با سازمان‌هایی مانند وزارت کشور، مؤسسه صمت و شرکت ماهکس همکاری داشته است.</p>
+                    </div>
+                    <div class="job-item" style="border-right-color: var(--accent);">
                         <h3>چه خدماتی در حوزه شبکه ارائه می‌دهید؟</h3>
                         <p>طراحی و پیاده‌سازی شبکه، کابل‌کشی ساختاریافته (Cat6 و فیبر نوری)، راه‌اندازی پچ‌پنل و رک، پیکربندی تجهیزات فعال شبکه (سوییچ، روتر، فایروال) و عیب‌یابی شبکه.</p>
                     </div>
@@ -664,8 +697,8 @@
                         <p>تعمیر و ارتقاء کامپیوترهای شخصی و لپ‌تاپ، تعویض قطعات (رم، هارد، پردازنده، مادربرد)، اسمبل سیستم، و تعمیر منبع تغذیه.</p>
                     </div>
                     <div class="job-item" style="border-right-color: var(--accent);">
-                        <h3>چه مدت سابقه کار دارید؟</h3>
-                        <p>بیش از ۲ سال سابقه کار حرفه‌ای در پشتیبانی شبکه، هلپ‌دسک و مدیریت زیرساخت در سازمان‌هایی مانند وزارت کشور، مؤسسه صمت و شرکت ماهکس.</p>
+                        <h3>چگونه می‌توانم با شما تماس بگیرم؟</h3>
+                        <p>از طریق فرم تماس در این وب‌سایت، ایمیل mohammedhasgari@gmail.com، یا از طریق لینکدین و اینستاگرام.</p>
                     </div>
                 </div>
             </section>
@@ -678,11 +711,11 @@
                     <div id="contact-form-desc" style="display:none;">فرم تماس برای ارسال پیام</div>
                     <div class="form-group">
                         <label for="email"><i class="fas fa-envelope-open-text" aria-hidden="true"></i> ایمیل شما:</label>
-                        <input type="email" id="email" name="email" required placeholder="example@gmail.com">
+                        <input type="email" id="email" name="email" required placeholder="example@gmail.com" aria-required="true">
                     </div>
                     <div class="form-group">
                         <label for="message"><i class="fas fa-comment-dots" aria-hidden="true"></i> پیام:</label>
-                        <textarea id="message" name="message" rows="5" required placeholder="موضوع همکاری یا سوال خود را در اینجا بنویسید..."></textarea>
+                        <textarea id="message" name="message" rows="5" required placeholder="موضوع همکاری یا سوال خود را در اینجا بنویسید..." aria-required="true"></textarea>
                     </div>
                     <button type="submit">ارسال پیام</button>
                     <div class="quick-contact-info">
@@ -719,7 +752,11 @@
             <footer>
                 <div class="footer-branding">
                     <div class="footer-logo-wrapper">
-                        <img src="images/mha-logo.png" alt="لوگوی محمدحسین عسگری ثمرین" class="footer-logo-img" loading="lazy" width="58" height="58" decoding="async">
+                        <!-- تصویر WebP با fallback به PNG -->
+                        <picture>
+                            <source srcset="images/mha-logo.webp" type="image/webp">
+                            <img src="images/mha-logo.png" alt="لوگوی محمدحسین عسگری ثمرین" class="footer-logo-img" loading="lazy" width="58" height="58" decoding="async">
+                        </picture>
                     </div>
                     <p class="copyright-text">
                         <span class="copyright-label">© کلیه حقوق این وبسایت محفوظ و متعلق به</span>
