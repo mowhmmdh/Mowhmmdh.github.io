@@ -1,20 +1,27 @@
 # ================================================
-# هدرهای امنیتی و کش - GitHub Pages
+# Headers for Security & Caching - GitHub Pages
 # ================================================
 
-# هدرهای امنیتی
+# Security Headers
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
-# کش فایل‌های استاتیک (۱ سال)
+# Cache static files (1 year)
 /*.css
   Cache-Control: public, max-age=31536000, immutable
 
+/*.min.css
+  Cache-Control: public, max-age=31536000, immutable
+
 /*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.min.js
   Cache-Control: public, max-age=31536000, immutable
 
 /*.woff2
@@ -29,17 +36,20 @@
 /*.jpg
   Cache-Control: public, max-age=31536000, immutable
 
-# کش فایل‌های HTML (۱ ساعت)
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache HTML files (1 hour)
 /*.html
   Cache-Control: public, max-age=3600
 
-# کش فایل‌های XML و JSON (۱ روز)
+# Cache XML & JSON (1 day)
 /*.xml
   Cache-Control: public, max-age=86400
 
 /*.json
   Cache-Control: public, max-age=86400
 
-# کش تصاویر (۱ هفته)
+# Cache images (1 week)
 /images/*
   Cache-Control: public, max-age=604800
