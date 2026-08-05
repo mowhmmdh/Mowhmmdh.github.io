@@ -75,7 +75,7 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     
-    <link rel="stylesheet" href="style.min.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script type="application/ld+json">
@@ -97,7 +97,6 @@
                     "caption": "محمدحسین عسگری ثمرین - عکس پروفایل"
                 },
                 "email": "mailto:mohammedhasgari@gmail.com",
-                "telephone": "+989123456789",
                 "address": {
                     "@type": "PostalAddress",
                     "addressCountry": "IR"
@@ -124,18 +123,7 @@
                     "@type": "Organization",
                     "name": "خدمات بار هوایی سریع‌ترابر ماهان (ماهکس)"
                 },
-                "award": ["گواهینامه CCNA", "گواهینامه Network+"],
-                "aggregateRating": {
-                    "@type": "AggregateRating",
-                    "ratingValue": "4.9",
-                    "reviewCount": "15",
-                    "bestRating": "5",
-                    "worstRating": "1"
-                },
-                "potentialAction": {
-                    "@type": "ContactAction",
-                    "target": "mailto:mohammedhasgari@gmail.com"
-                }
+                "award": ["گواهینامه CCNA", "گواهینامه Network+"]
             },
             {
                 "@type": "WebSite",
@@ -145,14 +133,6 @@
                 "description": "سایت رسمی محمدحسین عسگری ثمرین - متخصص فناوری اطلاعات، شبکه و زیرساخت",
                 "inLanguage": ["fa-IR", "en-US"],
                 "publisher": { "@id": "https://mowhmmdh.github.io/#person" }
-            },
-            {
-                "@type": "Service",
-                "name": "خدمات فناوری اطلاعات و شبکه",
-                "description": "ارائه خدمات حرفه‌ای در زمینه طراحی و پیاده‌سازی شبکه، نصب دوربین‌های مداربسته، تعمیرات سخت‌افزاری و نرم‌افزاری، و پشتیبانی فنی سازمان‌ها.",
-                "provider": { "@id": "https://mowhmmdh.github.io/#person" },
-                "serviceType": "خدمات IT",
-                "areaServed": "ایران"
             },
             {
                 "@type": "FAQPage",
@@ -198,15 +178,6 @@
                         }
                     }
                 ]
-            },
-            {
-                "@type": "CreativeWork",
-                "name": "پروژه زیرساخت شبکه ماهکس",
-                "description": "پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.",
-                "url": "https://github.com/mowhmmdh/Projects",
-                "datePublished": "2026-05-01",
-                "dateModified": "2026-08-05",
-                "author": { "@id": "https://mowhmmdh.github.io/#person" }
             }
         ]
     }
@@ -218,8 +189,6 @@
 
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5D7JHSFN"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-
-    <a href="#main-content" class="skip-link" style="position:absolute;left:-9999px;top:0;background:#fff;padding:10px 20px;z-index:9999;">پرش به محتوای اصلی</a>
 
     <div id="progress-bar" role="progressbar" aria-label="نوار پیشرفت مطالعه"></div>
 
@@ -705,48 +674,109 @@
 
     <button id="back-to-top" title="بازگشت به بالا" aria-label="بازگشت به بالای صفحه"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
 
-    <!-- ================================================ -->
-    <!-- بنر کوکی (Cookie Consent)                       -->
-    <!-- ================================================ -->
-    <div id="cookie-banner" role="dialog" aria-label="رضایت کوکی" style="position:fixed;bottom:0;left:0;right:0;z-index:99999;display:none;padding:20px 24px;background:var(--bg-card);border-top:4px solid var(--accent);box-shadow:0 -8px 40px rgba(0,0,0,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);transform:translateY(100%);">
-        <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;">
-            <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:200px;">
-                <div style="width:44px;height:44px;border-radius:50%;background:rgba(37,99,235,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                    <i class="fas fa-cookie-bite" style="color:var(--accent);font-size:1.3em;" aria-hidden="true"></i>
+    <!-- بنر کوکی -->
+    <div id="cookie-banner" role="dialog" aria-label="رضایت کوکی" style="position:fixed;bottom:0;left:0;right:0;z-index:99999;display:none;padding:16px 20px;background:var(--bg-card);border-top:4px solid var(--accent);box-shadow:0 -8px 40px rgba(0,0,0,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);transform:translateY(100%);">
+        <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;flex:1;min-width:160px;">
+                <div style="width:36px;height:36px;border-radius:50%;background:rgba(37,99,235,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-cookie-bite" style="color:var(--accent);font-size:1.1em;" aria-hidden="true"></i>
                 </div>
-                <div style="color:var(--text);font-size:0.92em;line-height:1.7;">
-                    <strong style="display:block;font-size:1.05em;margin-bottom:2px;">🍪 مدیریت کوکی‌ها</strong>
-                    <span style="color:var(--text-muted);">این وب‌سایت از کوکی برای بهبود تجربه کاربری و تحلیل بازدید استفاده می‌کند.</span>
+                <div style="color:var(--text);font-size:0.85em;line-height:1.6;">
+                    <span style="color:var(--text-muted);">این وب‌سایت از کوکی برای بهبود تجربه کاربری استفاده می‌کند.</span>
                 </div>
             </div>
-            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;flex-shrink:0;">
-                <button onclick="acceptCookies()" class="cookie-btn-accept" style="background:linear-gradient(135deg,var(--accent),var(--primary-light));color:#fff;border:none;padding:10px 28px;border-radius:30px;cursor:pointer;font-weight:700;font-size:0.85em;font-family:inherit;transition:all 0.3s ease;min-height:44px;box-shadow:0 4px 15px rgba(37,99,235,0.15);">
-                    <i class="fas fa-check" aria-hidden="true"></i> قبول می‌کنم
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;flex-shrink:0;">
+                <button onclick="acceptCookies()" class="cookie-btn-accept" style="background:linear-gradient(135deg,var(--accent),var(--primary-light));color:#fff;border:none;padding:8px 20px;border-radius:30px;cursor:pointer;font-weight:700;font-size:0.8em;font-family:inherit;transition:all 0.3s ease;min-height:36px;box-shadow:0 4px 15px rgba(37,99,235,0.15);">
+                    <i class="fas fa-check" aria-hidden="true"></i> قبول
                 </button>
-                <button onclick="rejectCookies()" class="cookie-btn-reject" style="background:var(--border);color:var(--text);border:none;padding:10px 24px;border-radius:30px;cursor:pointer;font-weight:600;font-size:0.85em;font-family:inherit;transition:all 0.3s ease;min-height:44px;">
-                    <i class="fas fa-times" aria-hidden="true"></i> رد می‌کنم
-                </button>
-                <button onclick="toggleCookieDetails()" class="cookie-btn-details" style="background:transparent;color:var(--text-muted);border:none;cursor:pointer;font-size:0.8em;font-family:inherit;text-decoration:underline;padding:6px 10px;transition:color 0.3s ease;">
-                    جزئیات بیشتر
+                <button onclick="rejectCookies()" class="cookie-btn-reject" style="background:var(--border);color:var(--text);border:none;padding:8px 18px;border-radius:30px;cursor:pointer;font-weight:600;font-size:0.8em;font-family:inherit;transition:all 0.3s ease;min-height:36px;">
+                    <i class="fas fa-times" aria-hidden="true"></i> رد
                 </button>
             </div>
-        </div>
-        <div id="cookie-details" style="display:none;max-width:1200px;margin:16px auto 0;padding-top:16px;border-top:1px solid var(--border);font-size:0.85em;color:var(--text-muted);line-height:1.8;">
-            <p><strong>🔍 کوکی‌های استفاده‌شده:</strong></p>
-            <ul style="list-style:none;padding:0;margin:6px 0 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;">
-                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>Google Analytics</strong> – تحلیل بازدید</li>
-                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>Google Tag Manager</strong> – مدیریت تگ‌ها</li>
-                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>LocalStorage</strong> – ذخیره تنظیمات (دارک مود، زبان)</li>
-                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>SessionStorage</strong> – بهبود تجربه کاربری</li>
-            </ul>
-            <p style="margin-top:10px;font-size:0.9em;">
-                <i class="fas fa-shield-alt" style="color:var(--accent);" aria-hidden="true"></i>
-                کوکی‌ها برای بهبود عملکرد و شخصی‌سازی تجربه شما استفاده می‌شوند.
-                <a href="#" style="color:var(--accent);text-decoration:underline;">سیاست حفظ حریم خصوصی</a>
-            </p>
         </div>
     </div>
 
-    <script src="script.min.js" defer></script>
+    <script src="script.js" defer></script>
+    <script>
+        // ====== مدیریت کوکی ======
+        (function() {
+            const banner = document.getElementById('cookie-banner');
+            if (!banner) return;
+            const consent = localStorage.getItem('cookie-consent');
+            if (consent === 'accepted' || consent === 'rejected') {
+                banner.style.display = 'none';
+                banner.style.transform = 'translateY(100%)';
+                if (consent === 'accepted' && typeof gtag !== 'undefined') {
+                    gtag('consent', 'update', { 'analytics_storage': 'granted' });
+                }
+            } else {
+                banner.style.display = 'block';
+                setTimeout(() => { banner.style.transform = 'translateY(0)'; }, 100);
+            }
+            window.acceptCookies = function() {
+                localStorage.setItem('cookie-consent', 'accepted');
+                banner.style.transform = 'translateY(100%)';
+                setTimeout(() => { banner.style.display = 'none'; }, 400);
+                if (typeof gtag !== 'undefined') {
+                    gtag('consent', 'update', { 'analytics_storage': 'granted' });
+                }
+            };
+            window.rejectCookies = function() {
+                localStorage.setItem('cookie-consent', 'rejected');
+                banner.style.transform = 'translateY(100%)';
+                setTimeout(() => { banner.style.display = 'none'; }, 400);
+                if (typeof gtag !== 'undefined') {
+                    gtag('consent', 'update', { 'analytics_storage': 'denied' });
+                }
+            };
+        })();
+
+        // ====== مدیریت ارسال فرم (AJAX) ======
+        (function() {
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm) {
+                contactForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const formData = new FormData(this);
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> در حال ارسال...';
+                    submitBtn.disabled = true;
+                    const oldMsg = this.querySelector('.form-message');
+                    if (oldMsg) oldMsg.remove();
+                    try {
+                        const response = await fetch(this.action, {
+                            method: 'POST',
+                            body: formData,
+                            headers: { 'Accept': 'application/json' }
+                        });
+                        const msg = document.createElement('div');
+                        msg.className = 'form-message';
+                        if (response.ok) {
+                            submitBtn.innerHTML = '✅ ارسال شد!';
+                            this.reset();
+                            msg.style.cssText = 'padding:12px 16px;background:rgba(34,197,94,0.12);border-radius:10px;color:#22c55e;text-align:center;margin-top:12px;border:1px solid rgba(34,197,94,0.25);font-weight:500;font-size:0.9em;';
+                            msg.textContent = '✅ پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهم گرفت.';
+                            this.appendChild(msg);
+                        } else {
+                            throw new Error('خطا در ارسال');
+                        }
+                    } catch (error) {
+                        submitBtn.innerHTML = '❌ خطا!';
+                        const msg = document.createElement('div');
+                        msg.className = 'form-message';
+                        msg.style.cssText = 'padding:12px 16px;background:rgba(239,68,68,0.12);border-radius:10px;color:#ef4444;text-align:center;margin-top:12px;border:1px solid rgba(239,68,68,0.25);font-weight:500;font-size:0.9em;';
+                        msg.textContent = '❌ متأسفانه ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید.';
+                        this.appendChild(msg);
+                    } finally {
+                        setTimeout(() => {
+                            submitBtn.innerHTML = originalText;
+                            submitBtn.disabled = false;
+                        }, 3000);
+                    }
+                });
+            }
+        })();
+    </script>
 </body>
 </html>
