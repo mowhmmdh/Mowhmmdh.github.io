@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // ===============================================
-    // ابزار Debounce
+    // Debounce
     // ===============================================
     function debounce(func, delay) {
         let timeout;
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // تبدیل تاریخ میلادی به شمسی
+    // تبدیل تاریخ
     // ===============================================
     function gregorianToJalali(gy, gm, gd) {
         var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
@@ -37,11 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function toPersianDate(date) {
-        const [year, month, day] = gregorianToJalali(
-            date.getFullYear(),
-            date.getMonth() + 1,
-            date.getDate()
-        );
+        const [year, month, day] = gregorianToJalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
         const persianMonths = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
         return `${year} ${persianMonths[month - 1]} ${day}`;
     }
@@ -52,16 +48,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت ذرات
+    // ذرات
     // ===============================================
     function initParticles() {
         const isMobile = window.innerWidth <= 768;
         const particleCount = isMobile ? 25 : 50;
-        
         const canvas = document.createElement('canvas');
         canvas.id = 'particles-canvas';
         document.body.prepend(canvas);
-        
         const ctx = canvas.getContext('2d');
         let particles = [];
 
@@ -123,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         animateParticles();
     }
-
     initParticles();
 
     // ===============================================
@@ -214,13 +207,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ===============================================
-    // افکت محو شدن بخش‌ها
+    // افکت محو شدن بخش‌ها + رویداد GA
     // ===============================================
     const sections = document.querySelectorAll('.section');
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'section_view', {
+                        'event_category': 'engagement',
+                        'event_label': entry.target.id || 'section'
+                    });
+                }
             }
         });
     }, { threshold: 0.08 });
@@ -252,6 +251,9 @@ document.addEventListener('DOMContentLoaded', function() {
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'back_to_top', { 'event_category': 'engagement' });
+            }
         });
         window.addEventListener('scroll', debounce(toggleBackBtn, 50), { passive: true });
         toggleBackBtn();
@@ -281,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateActiveNav();
 
     // ===============================================
-    // انیمیشن کارت‌های شغلی
+    // کارت‌های شغلی
     // ===============================================
     const jobItems = document.querySelectorAll('.job-item');
     const jobObserver = new IntersectionObserver((entries) => {
@@ -364,6 +366,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const isDark = body.classList.contains('dark-mode');
         localStorage.setItem('dark-mode', isDark);
         this.innerHTML = isDark ? '<i class="fas fa-sun" aria-hidden="true"></i>' : '<i class="fas fa-moon" aria-hidden="true"></i>';
+        if (typeof gtag !== 'undefined') {
+            gtag('event', 'dark_mode_toggle', {
+                'event_category': 'engagement',
+                'event_label': isDark ? 'dark' : 'light'
+            });
+        }
     });
 
     // ===============================================
@@ -374,11 +382,14 @@ document.addEventListener('DOMContentLoaded', function() {
         langToggleBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const currentPath = window.location.pathname;
-            if (currentPath.includes('en.html')) {
-                window.location.href = '/index.html';
-            } else {
-                window.location.href = '/en.html';
+            const target = currentPath.includes('en.html') ? '/index.html' : '/en.html';
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'language_switch', {
+                    'event_category': 'engagement',
+                    'event_label': target.includes('en') ? 'English' : 'Persian'
+                });
             }
+            window.location.href = target;
         });
     }
 
@@ -396,6 +407,12 @@ document.addEventListener('DOMContentLoaded', function() {
             if (serviceForm) {
                 serviceForm.style.display = 'block';
                 serviceForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'service_request_open', {
+                        'event_category': 'conversion',
+                        'event_label': serviceName
+                    });
+                }
             }
         });
     });
@@ -430,6 +447,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (descField) {
                     const currentValue = descField.value;
                     descField.value = `نوع خدمت درخواستی: ${service}\n\n${currentValue}`;
+                }
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'service_form_submit', {
+                        'event_category': 'conversion',
+                        'event_label': service
+                    });
                 }
             }
         });
@@ -509,12 +532,24 @@ document.addEventListener('DOMContentLoaded', function() {
                         }
                         document.body.removeChild(textArea);
                     }
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'share', {
+                            'event_category': 'engagement',
+                            'event_label': type
+                        });
+                    }
                     return;
                 default:
                     return;
             }
             if (shareUrl) {
                 window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes');
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'share', {
+                        'event_category': 'engagement',
+                        'event_label': type
+                    });
+                }
             }
         });
     });
