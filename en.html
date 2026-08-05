@@ -11,23 +11,26 @@
 
     <meta name="robots" content="index, follow, max-snippet:150, max-image-preview:large, max-video-preview:-1" />
 
+    <!-- Security Headers -->
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
 
-    <link rel="canonical" href="https://mowhmmdh.github.io/en.html" />
+    <!-- Canonical to root -->
+    <link rel="canonical" href="https://mowhmmdh.github.io/" />
     <link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/index.html" />
     <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en.html" />
-    <link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/en.html" />
+    <link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.png" sizes="48x48" type="image/png">
 
+    <!-- Open Graph -->
     <meta property="og:type" content="profile" />
     <meta property="og:title" content="Mohammad Hossein Asgari Somarin | IT Specialist & Network Expert" />
     <meta property="og:description" content="IT specialist with hands-on experience in networking, CCTV, hardware/software repair, and support." />
-    <meta property="og:url" content="https://mowhmmdh.github.io/en.html" />
+    <meta property="og:url" content="https://mowhmmdh.github.io/" />
     <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -36,6 +39,7 @@
     <meta property="og:locale:alternate" content="fa_IR" />
     <meta property="og:site_name" content="Mohammad Hossein Asgari Somarin" />
 
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Mohammad Hossein Asgari Somarin | IT Specialist & Network Expert" />
     <meta name="twitter:description" content="IT specialist with hands-on experience in networking, CCTV, hardware/software repair, and support." />
@@ -46,7 +50,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
-    <!-- Google Analytics 4 -->
+    <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6369793553"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -65,15 +69,22 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-5D7JHSFN');</script>
 
+    <!-- Non-blocking CSS loading -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preload" href="style.css" as="style" />
+    
+    <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="style.css"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+    
     <link rel="preload" href="script.js" as="script" />
     <link rel="preload" href="fonts/Vazirmatn-Medium.woff2" as="font" type="font/woff2" crossorigin />
 
-    <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="/favicon.png">
 
+    <!-- Structured Data with improved AI Visibility -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -99,7 +110,7 @@
                 ],
                 "jobTitle": "Information Technology Support Specialist",
                 "description": "IT specialist with over 2 years of experience in networking, support, and infrastructure",
-                "url": "https://mowhmmdh.github.io/en.html",
+                "url": "https://mowhmmdh.github.io/",
                 "image": {
                     "@type": "ImageObject",
                     "url": "https://mowhmmdh.github.io/images/profile.jpg",
@@ -145,7 +156,8 @@
                 "description": "Official website of Mohammad Hossein Asgari Somarin - IT Specialist, Network & Infrastructure Expert",
                 "inLanguage": ["en-US", "fa-IR"],
                 "publisher": { "@id": "https://mowhmmdh.github.io/#person" },
-                "mainEntityOfPage": { "@id": "https://mowhmmdh.github.io/#website" }
+                "mainEntityOfPage": { "@id": "https://mowhmmdh.github.io/#person" },
+                "about": { "@id": "https://mowhmmdh.github.io/#person" }
             },
             {
                 "@type": "Service",
@@ -158,6 +170,14 @@
             {
                 "@type": "FAQPage",
                 "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "Who is Mohammad Hossein Asgari Somarin and what is his expertise?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Mohammad Hossein Asgari Somarin is an IT specialist with over 2 years of experience in networking, infrastructure, cybersecurity, and technical support. He has collaborated with organizations such as the Ministry of Interior, Samat Institute, and Mahex Company."
+                        }
+                    },
                     {
                         "@type": "Question",
                         "name": "What network services do you offer?",
@@ -184,15 +204,7 @@
                     },
                     {
                         "@type": "Question",
-                        "name": "How many years of experience do you have?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Over 2 years of professional experience in network support, Helpdesk, and infrastructure management with organizations such as the Ministry of Interior, Samat Institute, and Mahex Company."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "name": "How can I contact you?",
+                        "name": "How can I contact Mohammad Hossein Asgari Somarin?",
                         "acceptedAnswer": {
                             "@type": "Answer",
                             "text": "Through the contact form on this website, email mohammedhasgari@gmail.com, or via LinkedIn and Instagram."
@@ -227,7 +239,7 @@
                         "@type": "ListItem",
                         "position": 2,
                         "name": "Mohammad Hossein Asgari Somarin",
-                        "item": "https://mowhmmdh.github.io/en.html"
+                        "item": "https://mowhmmdh.github.io/"
                     }
                 ]
             }
@@ -235,13 +247,20 @@
     }
     </script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="lang-en">
 
+    <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5D7JHSFN"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <!-- Redirect from en.html to root (avoid duplicate content) -->
+    <script>
+        if (window.location.pathname === '/en.html') {
+            window.location.href = '/';
+        }
+    </script>
 
     <div id="progress-bar" role="progressbar" aria-label="Reading progress bar"></div>
 
@@ -259,7 +278,11 @@
                     <span class="lang-icon"><i class="fas fa-globe" aria-hidden="true"></i></span>
                 </button>
                 <div class="profile-wrapper">
-                    <img src="images/profile.jpg" alt="Mohammad Hossein Asgari Somarin - Profile Photo" class="profile-icon" loading="lazy" width="120" height="140" decoding="async">
+                    <!-- WebP image with JPG fallback -->
+                    <picture>
+                        <source srcset="images/profile.webp" type="image/webp">
+                        <img src="images/profile.jpg" alt="Mohammad Hossein Asgari Somarin - Profile Photo" class="profile-icon" loading="lazy" width="120" height="140" decoding="async">
+                    </picture>
                 </div>
             </div>
 
@@ -385,26 +408,26 @@
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-name"><i class="fas fa-user" aria-hidden="true"></i> Full Name</label>
-                                <input type="text" id="client-name" name="Name" required placeholder="Example: John Doe">
+                                <input type="text" id="client-name" name="Name" required placeholder="Example: John Doe" aria-required="true">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-phone"><i class="fas fa-phone" aria-hidden="true"></i> Phone Number</label>
-                                <input type="tel" id="client-phone" name="Phone Number" required placeholder="Example: +98 912 345 6789">
+                                <input type="tel" id="client-phone" name="Phone Number" required placeholder="Example: +98 912 345 6789" aria-required="true">
                             </div>
                         </div>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-email"><i class="fas fa-envelope" aria-hidden="true"></i> Email</label>
-                                <input type="email" id="client-email" name="Email" placeholder="example@gmail.com">
+                                <input type="email" id="client-email" name="Email" placeholder="example@gmail.com" aria-required="false">
                             </div>
                             <div class="form-group" style="margin-bottom: 0;">
                                 <label for="client-budget"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Estimated Budget (Optional)</label>
-                                <input type="text" id="client-budget" name="Estimated Budget" placeholder="Example: 50 million IRR">
+                                <input type="text" id="client-budget" name="Estimated Budget" placeholder="Example: 50 million IRR" aria-required="false">
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom: 0;">
                             <label for="client-description"><i class="fas fa-align-left" aria-hidden="true"></i> Project Description</label>
-                            <textarea id="client-description" name="Description" rows="4" required placeholder="Please describe what service you need..."></textarea>
+                            <textarea id="client-description" name="Description" rows="4" required placeholder="Please describe what service you need..." aria-required="true"></textarea>
                         </div>
                         <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 10px;">
                             <button type="submit" class="cta-button" style="flex: 1; justify-content: center; min-width: 150px;">
@@ -475,7 +498,6 @@
                 <h2 id="skills-title" class="section-title">Technical Skills</h2>
                 <div class="skills-wrapper">
                     <div class="skills-list">
-                        <!-- همانند نسخه فارسی -->
                         <div class="skill-category">
                             <h4><i class="fas fa-network-wired" aria-hidden="true"></i> Network &amp; Infrastructure</h4>
                             <div class="skill-level-item">
@@ -507,7 +529,99 @@
                                 <div class="skill-bar-container"><div class="skill-bar" data-width="55" style="width: 0%;"></div></div>
                             </div>
                         </div>
-                        <!-- سایر بخش‌های مهارت -->
+                        <div class="skill-category">
+                            <h4><i class="fas fa-shield-alt" aria-hidden="true"></i> Security &amp; Virtualization</h4>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Ethical Hacking &amp; Penetration Testing</span><span class="skill-percent">60%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="60" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>CEH (Certified Ethical Hacker)</span><span class="skill-percent">35%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="35" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Wireshark &amp; Network Analysis</span><span class="skill-percent">55%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="55" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Server Virtualization (VMware ESXi, vSphere)</span><span class="skill-percent">40%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="40" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Firewall &amp; Security Policies</span><span class="skill-percent">50%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="50" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>VPN &amp; Secure Tunneling (IPSec, OpenVPN)</span><span class="skill-percent">40%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="40" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Network Security &amp; Threat Management</span><span class="skill-percent">45%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="45" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4><i class="fas fa-desktop" aria-hidden="true"></i> OS &amp; Software</h4>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Windows Administration &amp; Troubleshooting</span><span class="skill-percent">90%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="90" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Linux Administration</span><span class="skill-percent">60%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="60" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Mac OS Support &amp; Maintenance</span><span class="skill-percent">40%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="40" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Microsoft Office 365 &amp; Collaboration</span><span class="skill-percent">85%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="85" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>HTML5 &amp; CSS3 (Web Design)</span><span class="skill-percent">55%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="55" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>PowerShell &amp; Command Line Scripting</span><span class="skill-percent">45%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="45" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>SQL &amp; Database Management</span><span class="skill-percent">35%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="35" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+                        <div class="skill-category">
+                            <h4><i class="fas fa-tasks" aria-hidden="true"></i> IT Management &amp; Support</h4>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>IT Service Management (ITSM)</span><span class="skill-percent">90%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="90" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Advanced HelpDesk &amp; Troubleshooting</span><span class="skill-percent">95%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="95" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>System &amp; Infrastructure Maintenance</span><span class="skill-percent">90%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="90" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>IT Asset Management (ITAM)</span><span class="skill-percent">70%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="70" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>Technical Documentation &amp; Reporting</span><span class="skill-percent">75%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="75" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>End-User Training &amp; Support</span><span class="skill-percent">85%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="85" style="width: 0%;"></div></div>
+                            </div>
+                            <div class="skill-level-item">
+                                <div class="skill-label"><span>IT Project Management</span><span class="skill-percent">60%</span></div>
+                                <div class="skill-bar-container"><div class="skill-bar" data-width="60" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -548,6 +662,10 @@
                 <h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
                 <div style="display: grid; gap: 18px;">
                     <div class="job-item" style="border-left-color: var(--accent);">
+                        <h3>Who is Mohammad Hossein Asgari Somarin and what is his expertise?</h3>
+                        <p>Mohammad Hossein Asgari Somarin is an IT specialist with over 2 years of experience in networking, infrastructure, cybersecurity, and technical support. He has collaborated with organizations such as the Ministry of Interior, Samat Institute, and Mahex Company.</p>
+                    </div>
+                    <div class="job-item" style="border-left-color: var(--accent);">
                         <h3>What network services do you offer?</h3>
                         <p>Network design and implementation, structured cabling (Cat6 and fiber optics), patch panel and rack setup, configuration of active network equipment (switches, routers, firewalls), and network troubleshooting.</p>
                     </div>
@@ -560,8 +678,8 @@
                         <p>Repair and upgrade of PCs and laptops, component replacement (RAM, HDD, CPU, motherboard), system assembly, and power supply repairs.</p>
                     </div>
                     <div class="job-item" style="border-left-color: var(--accent);">
-                        <h3>How many years of experience do you have?</h3>
-                        <p>Over 2 years of professional experience in network support, Helpdesk, and infrastructure management with organizations such as the Ministry of Interior, Samat Institute, and Mahex Company.</p>
+                        <h3>How can I contact Mohammad Hossein Asgari Somarin?</h3>
+                        <p>Through the contact form on this website, email mohammedhasgari@gmail.com, or via LinkedIn and Instagram.</p>
                     </div>
                 </div>
             </section>
@@ -573,11 +691,11 @@
                     <div id="contact-form-desc" style="display:none;">Contact form to send message</div>
                     <div class="form-group">
                         <label for="email"><i class="fas fa-envelope-open-text" aria-hidden="true"></i> Your Email:</label>
-                        <input type="email" id="email" name="email" required placeholder="example@gmail.com">
+                        <input type="email" id="email" name="email" required placeholder="example@gmail.com" aria-required="true">
                     </div>
                     <div class="form-group">
                         <label for="message"><i class="fas fa-comment-dots" aria-hidden="true"></i> Message:</label>
-                        <textarea id="message" name="message" rows="5" required placeholder="Write your collaboration topic or question here..."></textarea>
+                        <textarea id="message" name="message" rows="5" required placeholder="Write your collaboration topic or question here..." aria-required="true"></textarea>
                     </div>
                     <button type="submit">Send Message</button>
                     <div class="quick-contact-info">
@@ -612,7 +730,11 @@
             <footer>
                 <div class="footer-branding">
                     <div class="footer-logo-wrapper">
-                        <img src="images/mha-logo.png" alt="Mohammad Hossein Asgari Somarin Logo" class="footer-logo-img" loading="lazy" width="58" height="58" decoding="async">
+                        <!-- WebP image with PNG fallback -->
+                        <picture>
+                            <source srcset="images/mha-logo.webp" type="image/webp">
+                            <img src="images/mha-logo.png" alt="Mohammad Hossein Asgari Somarin Logo" class="footer-logo-img" loading="lazy" width="58" height="58" decoding="async">
+                        </picture>
                     </div>
                     <p class="copyright-text">
                         <span class="copyright-label">© All rights reserved for</span>
