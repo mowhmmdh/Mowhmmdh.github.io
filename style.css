@@ -20,6 +20,7 @@
     --shadow-hover: 0 12px 48px rgba(37, 99, 235, 0.12);
     --radius: 16px;
     --transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    --header-height: 70px;
 }
 
 /* حالت تاریک */
@@ -41,7 +42,7 @@ body.dark-mode {
 }
 
 /* ================================================= */
-/* ---- پس‌زمینه پویا با گرادیان متحرک ---- */
+/* ---- پس‌زمینه پویا ---- */
 /* ================================================= */
 body::before {
     content: '';
@@ -59,13 +60,12 @@ body::before {
 }
 
 @keyframes gradientMove {
-    0% { background-position: 0% 50%; }
+    0%, 100% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
 }
 
 /* ================================================= */
-/* ---- اسکرول بار اختصاصی ---- */
+/* ---- اسکرول بار ---- */
 /* ================================================= */
 ::-webkit-scrollbar {
     width: 8px;
@@ -1708,23 +1708,100 @@ body.lang-fa .post-nav .next-post i {
     transform: rotate(180deg);
 }
 
+/* ===== بخش نویسنده در وبلاگ ===== */
+.author-note {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 24px 28px;
+    border-right: 4px solid var(--accent-gold);
+    margin: 30px 0;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+body.lang-en .author-note {
+    border-right: none;
+    border-left: 4px solid var(--accent-gold);
+}
+.author-note .avatar-wrapper {
+    flex-shrink: 0;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.15);
+}
+.author-note .avatar-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.author-note .content {
+    flex: 1;
+}
+.author-note .content strong {
+    color: var(--primary);
+    font-size: 1.05em;
+    display: block;
+}
+body.dark-mode .author-note .content strong {
+    color: #f1f5f9;
+}
+.author-note .content p {
+    margin: 4px 0 0 0;
+    font-size: 0.92em;
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+.author-note .content .author-role {
+    font-size: 0.8em;
+    color: var(--accent);
+    font-weight: 600;
+}
+
 /* ================================================= */
-/* ---- ریسپانسیو (کاملاً بهینه‌شده) ---- */
+/* ---- ریسپانسیو کامل ---- */
 /* ================================================= */
 
-/* ===== تبلت و موبایل بزرگ (تا 992px) ===== */
-@media (max-width: 992px) {
+/* ===== تبلت و موبایل بزرگ (تا 1024px) ===== */
+@media (max-width: 1024px) {
+    .container {
+        width: 95%;
+        padding: 0 10px;
+    }
+    #sidebar-info {
+        min-width: 220px;
+        padding: 25px 20px 25px;
+    }
+    #main-content {
+        padding: 30px 25px 25px;
+    }
+    h1 {
+        font-size: 2.2em;
+    }
+    .section-title {
+        font-size: 1.5em;
+    }
+}
+
+/* ===== موبایل و تبلت عمودی (تا 768px) ===== */
+@media (max-width: 768px) {
+    /* تغییر ساختار به تک ستونی */
     #main-wrapper {
         flex-direction: column;
         padding-top: 0;
         gap: 0;
         background: var(--bg);
     }
+
     #sidebar-info {
         position: static;
         width: 100%;
-        padding: 20px 18px 24px;
-        border-radius: 0 0 28px 28px;
+        min-width: unset;
+        padding: 16px 14px 20px;
+        border-radius: 0 0 24px 24px;
         background: var(--bg-sidebar);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
@@ -1732,75 +1809,90 @@ body.lang-fa .post-nav .next-post i {
         border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         box-shadow: var(--shadow);
     }
+
     #main-content {
         width: 100%;
-        padding: 20px 16px 30px;
+        padding: 16px 12px 24px;
         border-radius: 0;
         background: transparent;
         backdrop-filter: none;
         box-shadow: none;
         border: none;
     }
+
+    /* هدر موبایل */
     #top-area {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         min-height: auto;
-        padding: 10px 0 15px;
+        padding: 8px 0 12px;
         gap: 0;
         width: 100%;
         position: relative;
     }
+
+    /* دکمه دارک مود */
     .dark-toggle {
-        bottom: 20px;
-        left: 20px;
-        width: 46px;
-        height: 46px;
-        font-size: 1.15em;
-        min-height: 46px;
-        min-width: 46px;
+        bottom: 16px;
+        left: 16px;
+        width: 44px;
+        height: 44px;
+        font-size: 1.1em;
+        min-height: 44px;
+        min-width: 44px;
     }
+
+    /* کلید تغییر زبان */
     .lang-toggle-btn {
         position: absolute;
-        top: 8px;
-        right: 8px;
+        top: 6px;
+        right: 6px;
         left: auto !important;
         margin: 0 !important;
-        padding: 6px 12px;
-        border-radius: 30px;
+        padding: 5px 10px;
+        border-radius: 20px;
         background: rgba(255, 255, 255, 0.92);
         box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
         z-index: 50;
         border: 1px solid rgba(255, 255, 255, 0.5);
-        font-size: 0.7rem;
-        gap: 5px;
+        font-size: 0.65rem;
+        gap: 4px;
         order: 0 !important;
-        min-height: 36px;
-        min-width: 36px;
+        min-height: 32px;
+        min-width: 32px;
     }
     body.lang-en .lang-toggle-btn,
     body.lang-fa .lang-toggle-btn {
-        right: 8px !important;
+        right: 6px !important;
         left: auto !important;
     }
     body.dark-mode .lang-toggle-btn {
         background: rgba(30, 41, 59, 0.92);
         border: 1px solid rgba(255, 255, 255, 0.05);
     }
+    .lang-toggle-btn .lang-icon {
+        font-size: 0.7em;
+    }
+    .lang-toggle-btn .lang-text {
+        font-size: 0.7rem;
+    }
+
+    /* عکس پروفایل */
     .profile-wrapper {
         position: relative;
         top: auto;
         left: auto !important;
         right: auto !important;
         transform: none !important;
-        width: 120px;
-        height: 140px;
+        width: 100px;
+        height: 120px;
         border-radius: 20%;
         padding: 4px;
-        margin: 30px auto 12px;
+        margin: 28px auto 10px;
         background: linear-gradient(135deg, var(--accent), var(--primary-light));
-        box-shadow: 0 8px 30px var(--accent-glow);
+        box-shadow: 0 6px 24px var(--accent-glow);
         order: 0 !important;
         flex-shrink: 0;
     }
@@ -1812,6 +1904,8 @@ body.lang-fa .post-nav .next-post i {
         border: 3px solid rgba(255, 255, 255, 0.95);
         object-fit: cover;
     }
+
+    /* هدر */
     .header {
         margin-top: 0;
         text-align: center;
@@ -1821,46 +1915,54 @@ body.lang-fa .post-nav .next-post i {
         z-index: 1;
         width: 100%;
     }
+
     h1 {
-        font-size: 1.9em;
-        margin-top: 4px;
+        font-size: 1.6em;
+        margin-top: 2px;
         line-height: 1.3;
     }
+
     h2 {
-        font-size: 0.95em;
+        font-size: 0.85em;
     }
+
     .typing-text {
         white-space: normal;
-        border: none;
+        border: none !important;
         animation: none;
         -webkit-text-fill-color: var(--accent);
-        font-size: 0.9em;
+        font-size: 0.85em;
         display: inline;
+        min-height: auto;
     }
     body.dark-mode .typing-text {
         -webkit-text-fill-color: #60a5fa;
     }
+
+    /* اطلاعات تماس */
     .contact-info {
         align-items: center !important;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 8px 12px;
-        margin-top: 10px;
+        gap: 6px 10px;
+        margin-top: 8px;
         width: 100%;
     }
     .contact-info p {
-        font-size: 0.78em;
+        font-size: 0.72em;
         background: rgba(37, 99, 235, 0.06);
-        padding: 3px 12px;
-        border-radius: 20px;
+        padding: 2px 10px;
+        border-radius: 16px;
         margin: 0;
     }
     .contact-info a::after {
         display: none;
     }
+
+    /* منو */
     #navbar {
-        margin-top: 16px;
+        margin-top: 12px;
         background: transparent;
         border-radius: 0;
         padding: 0;
@@ -1870,7 +1972,7 @@ body.lang-fa .post-nav .next-post i {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 5px;
+        gap: 4px;
         padding: 0;
     }
     #navbar li {
@@ -1882,16 +1984,18 @@ body.lang-fa .post-nav .next-post i {
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
-        padding: 5px 12px;
-        font-size: 0.72em;
-        border-radius: 30px;
+        padding: 4px 10px;
+        font-size: 0.65em;
+        border-radius: 20px;
         border: 1px solid rgba(255, 255, 255, 0.4);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         transition: all .25s ease;
         white-space: nowrap;
         font-weight: 600;
         will-change: transform;
-        min-height: 34px;
+        min-height: 30px;
+        min-width: auto;
+        display: inline-block;
     }
     body.dark-mode #navbar a {
         background: rgba(30, 41, 59, 0.7);
@@ -1912,376 +2016,99 @@ body.lang-fa .post-nav .next-post i {
     body.dark-mode #navbar a.active {
         color: #0f172a !important;
     }
+
+    /* بخش‌ها */
     .section {
-        padding: 30px 0;
-    }
-    .section-title {
-        font-size: 1.4em;
-        padding-inline-start: 14px;
-        margin-bottom: 20px;
-    }
-    .job-item {
-        padding: 16px 18px !important;
-        border-radius: 14px;
-        background: var(--bg-card);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        border: 1px solid rgba(255, 255, 255, 0.05);
-        box-shadow: var(--shadow);
-        margin-bottom: 20px;
-    }
-    body.lang-fa .job-item {
-        padding: 18px 28px 18px 16px !important;
-    }
-    .job-item h3 {
-        font-size: 0.95em !important;
-        line-height: 1.6;
-    }
-    .job-item .duration,
-    .job-item .institution {
-        font-size: 0.75em !important;
-        padding: 2px 12px;
-    }
-    .job-item ul li {
-        padding-inline-start: 30px !important;
-        font-size: 0.85em !important;
-        line-height: 1.8 !important;
-        margin-bottom: 8px;
-    }
-    body.lang-fa .job-item ul li {
-        font-size: 0.85em !important;
-        line-height: 2 !important;
-        padding-inline-start: 32px !important;
-        text-align: justify !important;
-        hyphens: none !important;
-    }
-    #experience .job-item {
-        padding-left: 18px !important;
-        border-left-width: 2px;
-        margin-left: 5px;
-        border-radius: 0 var(--radius) var(--radius) 0;
-        padding-right: 18px !important;
-    }
-    body.lang-fa #experience .job-item {
-        padding-left: 16px !important;
-        padding-right: 26px !important;
-        border-right-width: 2px;
-        margin-right: 5px;
-        border-radius: var(--radius) 0 0 var(--radius);
-    }
-    #experience .job-item::before {
-        left: -7px;
-        top: 28px;
-        width: 12px;
-        height: 12px;
-    }
-    body.lang-fa #experience .job-item::before {
-        left: auto;
-        right: -7px;
-    }
-    .badge-current {
-        font-size: 0.55rem !important;
-        padding: 2px 12px;
-    }
-    .skills-list {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-        gap: 18px;
-    }
-    .skill-category {
-        padding: 20px 18px 18px;
-    }
-    .skill-category h4 {
-        font-size: 1em;
-    }
-    .skill-label {
-        font-size: 0.82em;
-    }
-    .services-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 18px;
-    }
-    .service-card {
-        padding: 22px 16px 18px;
-    }
-    .service-card .service-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 1.6em;
-        margin: 0 auto 15px;
-    }
-    .service-card h3 {
-        font-size: 1em;
-    }
-    .service-card ul li {
-        font-size: 0.82em;
-        padding: 5px 0;
-        padding-inline-start: 26px;
-    }
-    .service-select-btn {
-        font-size: 0.75em;
-        padding: 8px 14px;
-        max-width: 100%;
-        min-height: 38px;
-    }
-    .project-card {
-        padding: 18px 18px;
-        flex-direction: column;
-        gap: 18px;
-    }
-    .project-image-wrapper {
-        flex: 0 0 auto;
-        width: 100%;
-        max-height: 180px;
-    }
-    .project-image-wrapper img {
-        min-height: 120px;
-        max-height: 180px;
-    }
-    .project-content h3 {
-        font-size: 1.05em;
-    }
-    .project-actions .github-link {
-        padding: 8px 16px;
-        font-size: 0.75em;
-    }
-    .project-actions .badge {
-        padding: 5px 12px;
-        font-size: 0.7em;
-    }
-    #service-request-form {
-        padding: 20px;
-    }
-    #service-request-form .form-group {
-        margin-bottom: 15px;
-    }
-    #service-request-form input,
-    #service-request-form textarea {
-        padding: 10px 14px;
-        font-size: 0.9em;
-    }
-    .cta-button {
-        padding: 12px 24px;
-        font-size: 0.9em;
-        min-height: 44px;
-    }
-    .footer-logo-wrapper {
-        width: 75px;
-        height: 75px;
-        padding: 10px;
-    }
-    .footer-logo-img {
-        height: 48px;
-        width: 48px;
-        object-fit: contain;
-    }
-    .copyright-text {
-        font-size: 0.7em;
-    }
-    .share-btn {
-        width: 44px;
-        height: 44px;
-        font-size: 1.1em;
-        min-height: 44px;
-        min-width: 44px;
-    }
-    #particles-canvas {
-        opacity: 0.4;
-    }
-    #sidebar-info:hover {
-        transform: none;
-    }
-
-    /* ===== ریسپانسیو وبلاگ ===== */
-    .blog-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-    .blog-card-image {
-        height: 160px;
-    }
-    .blog-card-content {
-        padding: 16px 18px 18px;
-    }
-    .blog-card-content h3 {
-        font-size: 1em;
-    }
-    .post-header h1 {
-        font-size: 1.6em;
-    }
-    .post-body {
-        font-size: 0.95em;
-    }
-}
-
-/* ===== موبایل متوسط (تا 768px) ===== */
-@media (max-width: 768px) {
-    #service-request-form .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-    }
-    #service-request-form .form-actions {
-        flex-direction: column;
-    }
-    #service-request-form .form-actions .cta-button {
-        min-width: auto;
-        width: 100%;
-    }
-    #service-request-form .form-actions .cancel-btn {
-        flex: 1;
-        width: 100%;
-    }
-    .job-item ul li {
-        padding-inline-start: 32px !important;
-        font-size: 0.82em !important;
-    }
-    body.lang-fa .job-item ul li {
-        font-size: 0.82em !important;
-        padding-inline-start: 34px !important;
-        text-align: justify !important;
-        hyphens: none !important;
-    }
-    .service-card ul li {
-        padding-inline-start: 30px !important;
-    }
-    .share-btn {
-        width: 42px;
-        height: 42px;
-        font-size: 1em;
-        min-height: 42px;
-        min-width: 42px;
-    }
-    #particles-canvas {
-        opacity: 0.3;
-    }
-    .dark-toggle {
-        width: 42px;
-        height: 42px;
-        font-size: 1.05em;
-        min-height: 42px;
-        min-width: 42px;
-        bottom: 18px;
-        left: 18px;
-    }
-    .lang-toggle-btn {
-        padding: 5px 10px;
-        font-size: 0.6rem;
-        gap: 4px;
-        min-height: 32px;
-        min-width: 32px;
-        top: 6px;
-        right: 6px;
-    }
-    .lang-toggle-btn .lang-icon {
-        font-size: 0.75em;
-    }
-    .blog-grid {
-        grid-template-columns: 1fr;
-        gap: 20px;
-    }
-    .blog-card-image {
-        height: 180px;
-    }
-    .post-meta-large {
-        gap: 10px;
-        font-size: 0.8em;
-    }
-    .post-body h2 {
-        font-size: 1.3em;
-    }
-}
-
-/* ===== موبایل کوچک (تا 480px) ===== */
-@media (max-width: 480px) {
-    .profile-wrapper {
-        width: 100px;
-        height: 120px;
-        padding: 3px;
-        margin: 25px auto 8px;
-    }
-    .profile-icon {
-        border-width: 2px;
-        object-fit: cover;
-    }
-    h1 {
-        font-size: 1.5em;
-        margin-top: 2px;
-    }
-    h2 {
-        font-size: 0.8em;
-    }
-    .typing-text {
-        font-size: 0.8em;
+        padding: 24px 0;
     }
     .section-title {
         font-size: 1.2em;
         padding-inline-start: 12px;
         margin-bottom: 16px;
     }
+
+    /* خلاصه */
     .summary {
         padding: 16px 18px;
-        font-size: 0.88em;
+        font-size: 0.9em;
         line-height: 2;
+        border-width: 4px;
     }
-    .services-grid {
-        grid-template-columns: 1fr;
-        gap: 16px;
-    }
-    .service-card {
-        padding: 18px 14px 16px;
-    }
-    .service-card .service-icon {
-        width: 55px;
-        height: 55px;
-        font-size: 1.4em;
-        margin: 0 auto 12px;
-    }
-    .service-card ul li {
-        font-size: 0.78em;
-        padding: 4px 0;
-        padding-inline-start: 28px !important;
-    }
-    .service-select-btn {
-        font-size: 0.72em;
-        padding: 8px 12px;
-        min-height: 36px;
-    }
-    #navbar a {
-        font-size: 0.62em !important;
-        padding: 4px 10px !important;
-        min-height: 30px;
-    }
-    #navbar ul {
-        gap: 4px;
-    }
+
+    /* سوابق شغلی */
     .job-item {
-        padding: 12px 14px !important;
+        padding: 14px 16px !important;
+        border-radius: 12px;
+        background: var(--bg-card);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: var(--shadow);
         margin-bottom: 16px;
+        border-right-width: 4px !important;
+    }
+    body.lang-en .job-item {
+        border-right: none !important;
+        border-left-width: 4px !important;
     }
     body.lang-fa .job-item {
-        padding: 14px 20px 14px 10px !important;
+        padding: 14px 20px 14px 12px !important;
+        border-right-width: 4px !important;
     }
     .job-item h3 {
-        font-size: 0.82em !important;
+        font-size: 0.9em !important;
         line-height: 1.5;
     }
     .job-item .duration,
     .job-item .institution {
-        font-size: 0.65em !important;
-        padding: 1px 10px;
+        font-size: 0.7em !important;
+        padding: 2px 10px;
     }
     .job-item ul li {
         padding-inline-start: 28px !important;
-        font-size: 0.78em !important;
+        font-size: 0.82em !important;
         line-height: 1.7 !important;
-        margin-bottom: 5px;
+        margin-bottom: 6px;
     }
     body.lang-fa .job-item ul li {
-        font-size: 0.78em !important;
+        font-size: 0.82em !important;
         line-height: 1.9 !important;
         padding-inline-start: 30px !important;
         text-align: justify !important;
         hyphens: none !important;
     }
+
+    #experience .job-item {
+        padding-left: 16px !important;
+        border-left-width: 2px;
+        margin-left: 4px;
+        border-radius: 0 var(--radius) var(--radius) 0;
+        padding-right: 16px !important;
+    }
+    body.lang-fa #experience .job-item {
+        padding-left: 12px !important;
+        padding-right: 20px !important;
+        border-right-width: 2px;
+        margin-right: 4px;
+        border-radius: var(--radius) 0 0 var(--radius);
+    }
+    #experience .job-item::before {
+        left: -6px;
+        top: 24px;
+        width: 10px;
+        height: 10px;
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+    }
+    body.lang-fa #experience .job-item::before {
+        left: auto;
+        right: -6px;
+    }
+    .badge-current {
+        font-size: 0.5rem !important;
+        padding: 2px 10px;
+    }
+
+    /* مهارت‌ها */
     .skills-list {
         grid-template-columns: 1fr;
         gap: 14px;
@@ -2297,36 +2124,73 @@ body.lang-fa .post-nav .next-post i {
         font-size: 0.78em;
     }
     .skill-percent {
-        font-size: 0.9em;
+        font-size: 0.85em;
     }
-    .project-card {
-        padding: 14px 16px;
+
+    /* خدمات */
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
         gap: 14px;
     }
+    .service-card {
+        padding: 18px 14px 16px;
+    }
+    .service-card .service-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.4em;
+        margin: 0 auto 12px;
+    }
+    .service-card h3 {
+        font-size: 0.95em;
+    }
+    .service-card ul li {
+        font-size: 0.78em;
+        padding: 4px 0;
+        padding-inline-start: 24px;
+    }
+    .service-select-btn {
+        font-size: 0.7em;
+        padding: 6px 12px;
+        max-width: 100%;
+        min-height: 36px;
+    }
+
+    /* پروژه‌ها */
+    .project-card {
+        padding: 14px 16px;
+        flex-direction: column;
+        gap: 14px;
+        border-width: 4px !important;
+    }
     .project-image-wrapper {
-        max-height: 140px;
+        flex: 0 0 auto;
+        width: 100%;
+        max-height: 160px;
     }
     .project-image-wrapper img {
         min-height: 100px;
-        max-height: 140px;
+        max-height: 160px;
     }
     .project-content h3 {
-        font-size: 0.9em;
+        font-size: 0.95em;
     }
     .project-content .project-description {
-        font-size: 0.82em;
+        font-size: 0.85em;
         line-height: 1.7;
     }
     .project-actions .github-link {
-        padding: 6px 12px;
+        padding: 6px 14px;
         font-size: 0.7em;
     }
     .project-actions .badge {
         padding: 4px 10px;
         font-size: 0.65em;
     }
+
+    /* فرم‌ها */
     #service-request-form {
-        padding: 14px;
+        padding: 16px;
     }
     #service-request-form h3 {
         font-size: 1.1em;
@@ -2337,13 +2201,17 @@ body.lang-fa .post-nav .next-post i {
         font-size: 0.85em;
     }
     #service-request-form label {
-        font-size: 0.85em;
+        font-size: 0.82em;
     }
+    #service-request-form .form-group {
+        margin-bottom: 12px;
+    }
+
     .contact-form {
         padding: 16px 14px;
     }
     .contact-form label {
-        font-size: 0.85em;
+        font-size: 0.82em;
     }
     .contact-form input[type="email"],
     .contact-form textarea {
@@ -2355,6 +2223,7 @@ body.lang-fa .post-nav .next-post i {
         font-size: 0.9em;
         min-height: 42px;
     }
+
     .cta-button {
         padding: 10px 18px;
         font-size: 0.82em;
@@ -2362,6 +2231,8 @@ body.lang-fa .post-nav .next-post i {
         min-height: 40px;
         min-width: 40px;
     }
+
+    /* فوتر */
     .footer-logo-wrapper {
         width: 60px;
         height: 60px;
@@ -2378,76 +2249,50 @@ body.lang-fa .post-nav .next-post i {
         line-height: 1.8;
     }
     .footer-branding {
-        margin-top: 20px;
-        padding-top: 14px;
-        gap: 12px;
+        margin-top: 16px;
+        padding-top: 12px;
+        gap: 10px;
     }
-    .dark-toggle {
-        width: 38px;
-        height: 38px;
-        font-size: 0.95em;
-        min-height: 38px;
-        min-width: 38px;
-        bottom: 15px;
-        left: 15px;
-    }
-    .lang-toggle-btn {
-        padding: 3px 8px;
-        font-size: 0.55rem;
-        gap: 3px;
-        min-height: 28px;
-        min-width: 28px;
-        top: 5px;
-        right: 5px;
-        border-radius: 20px;
-    }
-    .lang-toggle-btn .lang-icon {
-        font-size: 0.65em;
-    }
+
+    /* اشتراک‌گذاری */
     .share-btn {
-        width: 38px;
-        height: 38px;
-        font-size: 0.9em;
-        min-height: 38px;
-        min-width: 38px;
-        gap: 8px;
+        width: 40px;
+        height: 40px;
+        font-size: 1em;
+        min-height: 40px;
+        min-width: 40px;
     }
     .share-btn .tooltip {
         display: none;
     }
     .share-buttons {
         gap: 8px;
+        margin: 20px 0 10px;
     }
+
+    /* ذرات */
     #particles-canvas {
-        opacity: 0.2;
+        opacity: 0.25;
     }
+
+    /* بازگشت به بالا */
     #back-to-top {
-        width: 38px;
-        height: 38px;
+        width: 40px;
+        height: 40px;
         font-size: 1em;
-        bottom: 18px;
-        right: 18px;
+        bottom: 16px;
+        right: 16px;
     }
-    #sidebar-info {
-        padding: 14px 12px 18px;
+
+    /* سایدبار */
+    #sidebar-info:hover {
+        transform: none;
     }
-    #main-content {
-        padding: 14px 12px 24px;
-    }
-    .header {
-        margin-bottom: 16px;
-    }
-    .contact-info {
-        gap: 6px 10px;
-        margin-top: 8px;
-    }
-    .contact-info p {
-        font-size: 0.7em;
-        padding: 2px 10px;
-    }
+
+    /* ===== وبلاگ در موبایل ===== */
     .blog-grid {
         grid-template-columns: 1fr;
-        gap: 16px;
+        gap: 18px;
     }
     .blog-card-image {
         height: 170px;
@@ -2460,74 +2305,394 @@ body.lang-fa .post-nav .next-post i {
     }
     .blog-card-content p {
         font-size: 0.85em;
+        line-height: 1.7;
     }
+    .blog-meta {
+        font-size: 0.7rem;
+        gap: 10px;
+    }
+    .blog-sidebar-section {
+        padding: 16px 18px;
+        margin-top: 24px;
+    }
+    .blog-sidebar-section h3 {
+        font-size: 1em;
+    }
+    .tag-cloud-item {
+        font-size: 0.75em;
+        padding: 4px 12px;
+    }
+
+    /* ===== صفحه مقاله در موبایل ===== */
     .post-header h1 {
         font-size: 1.3em;
     }
+    .post-meta-large {
+        font-size: 0.75em;
+        gap: 10px;
+    }
     .post-body {
         font-size: 0.9em;
+        line-height: 1.9;
     }
     .post-body h2 {
-        font-size: 1.1em;
+        font-size: 1.15em;
+        padding-right: 12px;
+        border-width: 4px;
+    }
+    body.lang-en .post-body h2 {
+        padding-right: 0;
+        padding-left: 12px;
     }
     .post-body h3 {
-        font-size: 1em;
+        font-size: 1.05em;
+    }
+    .post-body ul,
+    .post-body ol {
+        padding-right: 20px;
+    }
+    body.lang-en .post-body ul,
+    body.lang-en .post-body ol {
+        padding-right: 0;
+        padding-left: 20px;
+    }
+    .post-nav {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    .post-nav a {
+        font-size: 0.9em;
+    }
+
+    /* ===== بخش نویسنده ===== */
+    .author-note {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 18px;
+        gap: 14px;
+        border-width: 4px;
+    }
+    body.lang-en .author-note {
+        border-width: 4px;
+    }
+    .author-note .avatar-wrapper {
+        width: 60px;
+        height: 60px;
+    }
+    .author-note .content p {
+        font-size: 0.85em;
     }
 }
 
-/* ===== تبلت عمودی (بین 768 تا 992px) ===== */
-@media (min-width: 768px) and (max-width: 992px) {
-    .lang-toggle-btn {
-        font-size: 0.65rem;
-        padding: 5px 12px;
+/* ===== موبایل کوچک (تا 480px) ===== */
+@media (max-width: 480px) {
+    .container {
+        width: 98%;
+        padding: 0 8px;
+    }
+
+    #sidebar-info {
+        padding: 12px 10px 16px;
+        border-radius: 0 0 16px 16px;
+    }
+
+    #main-content {
+        padding: 12px 8px 18px;
+    }
+
+    .profile-wrapper {
+        width: 80px;
+        height: 96px;
+        padding: 3px;
+        margin: 20px auto 8px;
+    }
+    .profile-icon {
+        border-width: 2px;
+    }
+
+    h1 {
+        font-size: 1.3em;
+    }
+    h2 {
+        font-size: 0.75em;
+    }
+    .typing-text {
+        font-size: 0.75em;
+    }
+
+    .section-title {
+        font-size: 1.05em;
+        padding-inline-start: 10px;
+        border-width: 4px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+    .service-card {
+        padding: 14px 12px 12px;
+    }
+    .service-card .service-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1.2em;
+        margin: 0 auto 10px;
+    }
+    .service-card ul li {
+        font-size: 0.74em;
+        padding: 3px 0;
+        padding-inline-start: 22px;
+    }
+    .service-select-btn {
+        font-size: 0.65em;
+        padding: 6px 10px;
+        min-height: 32px;
+    }
+
+    #navbar a {
+        font-size: 0.58em !important;
+        padding: 3px 8px !important;
+        min-height: 26px;
+        border-radius: 16px;
+    }
+    #navbar ul {
+        gap: 3px;
+    }
+
+    .job-item {
+        padding: 10px 12px !important;
+        margin-bottom: 12px;
+        border-radius: 10px;
+    }
+    body.lang-fa .job-item {
+        padding: 10px 16px 10px 8px !important;
+    }
+    .job-item h3 {
+        font-size: 0.78em !important;
+    }
+    .job-item .duration,
+    .job-item .institution {
+        font-size: 0.6em !important;
+        padding: 1px 8px;
+    }
+    .job-item ul li {
+        padding-inline-start: 24px !important;
+        font-size: 0.72em !important;
+        line-height: 1.6 !important;
+        margin-bottom: 4px;
+    }
+    body.lang-fa .job-item ul li {
+        font-size: 0.72em !important;
+        line-height: 1.8 !important;
+        padding-inline-start: 26px !important;
+    }
+
+    .skill-category {
+        padding: 12px 10px 10px;
+    }
+    .skill-category h4 {
+        font-size: 0.8em;
+    }
+    .skill-label {
+        font-size: 0.7em;
+    }
+    .skill-percent {
+        font-size: 0.8em;
+    }
+
+    .project-card {
+        padding: 10px 12px;
+        gap: 10px;
+    }
+    .project-image-wrapper {
+        max-height: 120px;
+    }
+    .project-image-wrapper img {
+        min-height: 80px;
+        max-height: 120px;
+    }
+    .project-content h3 {
+        font-size: 0.85em;
+    }
+    .project-content .project-description {
+        font-size: 0.78em;
+    }
+    .project-actions .github-link {
+        padding: 4px 10px;
+        font-size: 0.62em;
+    }
+    .project-actions .badge {
+        padding: 3px 8px;
+        font-size: 0.58em;
+    }
+
+    .contact-form {
+        padding: 12px 10px;
+    }
+    .contact-form label {
+        font-size: 0.75em;
+    }
+    .contact-form input[type="email"],
+    .contact-form textarea {
+        padding: 8px 10px;
+        font-size: 0.8em;
+    }
+    .contact-form button[type="submit"] {
+        padding: 10px 16px;
+        font-size: 0.82em;
+        min-height: 38px;
+    }
+
+    .cta-button {
+        padding: 8px 14px;
+        font-size: 0.75em;
+        gap: 4px;
         min-height: 36px;
         min-width: 36px;
     }
-    #navbar a {
-        font-size: 0.78em !important;
-        padding: 6px 16px !important;
-        min-height: 36px;
-    }
-    .profile-wrapper {
-        width: 130px;
-        height: 150px;
-        margin: 30px auto 12px;
-    }
-    h1 {
-        font-size: 2.1em;
-    }
-    .project-card {
-        padding: 20px 22px;
-    }
-    .services-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
-    .service-card {
-        padding: 24px 18px 20px;
-    }
-    .share-btn {
-        width: 46px;
-        height: 46px;
-        font-size: 1.1em;
-        min-height: 46px;
-        min-width: 46px;
-    }
+
     .footer-logo-wrapper {
-        width: 80px;
-        height: 80px;
-        padding: 10px;
+        width: 50px;
+        height: 50px;
+        padding: 5px;
     }
     .footer-logo-img {
-        height: 50px;
-        width: 50px;
-        object-fit: contain;
+        height: 34px;
+        width: 34px;
     }
+    .copyright-text {
+        font-size: 0.55em;
+    }
+
     .dark-toggle {
-        width: 46px;
-        height: 46px;
+        width: 36px;
+        height: 36px;
+        font-size: 0.9em;
+        min-height: 36px;
+        min-width: 36px;
+        bottom: 12px;
+        left: 12px;
+    }
+
+    .lang-toggle-btn {
+        padding: 3px 8px;
+        font-size: 0.5rem;
+        gap: 3px;
+        min-height: 28px;
+        min-width: 28px;
+        top: 4px;
+        right: 4px;
+        border-radius: 16px;
+    }
+    .lang-toggle-btn .lang-icon {
+        font-size: 0.6em;
+    }
+    .lang-toggle-btn .lang-text {
+        font-size: 0.6rem;
+    }
+
+    .share-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85em;
+        min-height: 36px;
+        min-width: 36px;
+    }
+    .share-buttons {
+        gap: 6px;
+    }
+
+    #back-to-top {
+        width: 36px;
+        height: 36px;
+        font-size: 0.85em;
+        bottom: 14px;
+        right: 14px;
+    }
+
+    #particles-canvas {
+        opacity: 0.15;
+    }
+
+    /* وبلاگ موبایل کوچک */
+    .blog-card-image {
+        height: 140px;
+    }
+    .blog-card-content {
+        padding: 10px 12px 12px;
+    }
+    .blog-card-content h3 {
+        font-size: 0.85em;
+    }
+    .blog-card-content p {
+        font-size: 0.78em;
+        line-height: 1.6;
+    }
+    .blog-meta {
+        font-size: 0.6rem;
+        gap: 8px;
+    }
+    .tag {
+        font-size: 0.55rem;
+        padding: 1px 10px;
+    }
+    .read-more {
+        font-size: 0.75em;
+    }
+    .blog-sidebar-section {
+        padding: 12px 14px;
+        margin-top: 18px;
+    }
+    .blog-sidebar-section h3 {
+        font-size: 0.9em;
+    }
+    .tag-cloud-item {
+        font-size: 0.65em;
+        padding: 3px 10px;
+    }
+
+    /* مقاله موبایل کوچک */
+    .post-header h1 {
         font-size: 1.1em;
-        min-height: 46px;
-        min-width: 46px;
+    }
+    .post-meta-large {
+        font-size: 0.65em;
+        gap: 8px;
+    }
+    .post-body {
+        font-size: 0.82em;
+        line-height: 1.8;
+    }
+    .post-body h2 {
+        font-size: 1em;
+    }
+    .post-body h3 {
+        font-size: 0.92em;
+    }
+    .post-body ul,
+    .post-body ol {
+        padding-right: 16px;
+    }
+    body.lang-en .post-body ul,
+    body.lang-en .post-body ol {
+        padding-right: 0;
+        padding-left: 16px;
+    }
+
+    .author-note {
+        padding: 14px 12px;
+        gap: 10px;
+    }
+    .author-note .avatar-wrapper {
+        width: 48px;
+        height: 48px;
+    }
+    .author-note .content strong {
+        font-size: 0.9em;
+    }
+    .author-note .content p {
+        font-size: 0.78em;
     }
 }
