@@ -6,24 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     
     <!-- ================================================ -->
-    <!-- TITLE - یک بار با نام کامل                       -->
+    <!-- TITLE - با کلمات کلیدی اصلی                      -->
     <!-- ================================================ -->
     <title>محمدحسین عسگری ثمرین | متخصص IT، شبکه و زیرساخت</title>
     
     <!-- ================================================ -->
-    <!-- META DESCRIPTION - یک بار با نام کامل            -->
+    <!-- META DESCRIPTION - جذاب و کامل                   -->
     <!-- ================================================ -->
     <meta name="description" content="محمدحسین عسگری ثمرین - متخصص فناوری اطلاعات، شبکه و زیرساخت با بیش از ۲ سال سابقه. ارائه خدمات حرفه‌ای شبکه، CCTV، تعمیرات سخت‌افزار و نرم‌افزار." />
     
     <!-- ================================================ -->
-    <!-- META KEYWORDS - تمام تغییرات اسم                 -->
+    <!-- META KEYWORDS                                     -->
     <!-- ================================================ -->
     <meta name="keywords" content="محمدحسین عسگری ثمرین, محمدحسین عسگری, عسگری ثمرین, عسگری, ثمرین, Mohammad Hossein Asgari Somarin, Mohammad Hossein Asgari, Asgari Somarin, Asgari, Somarin" />
     
     <!-- ================================================ -->
-    <!-- META ROBOTS کامل                                 -->
+    <!-- META ROBOTS - کامل                                -->
     <!-- ================================================ -->
     <meta name="robots" content="index, follow, max-snippet:150, max-image-preview:large, max-video-preview:-1" />
+    
+    <!-- ================================================ -->
+    <!-- هدرهای امنیتی (از طریق متا تگ)                  -->
+    <!-- ================================================ -->
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     
     <!-- ================================================ -->
     <!-- CANONICAL & HREFLANG                             -->
@@ -33,10 +41,11 @@
     <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en.html" />
     <link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.png" sizes="48x48" type="image/png">
 
     <!-- ================================================ -->
-    <!-- OPEN GRAPH                                       -->
+    <!-- OPEN GRAPH - کامل                               -->
     <!-- ================================================ -->
     <meta property="og:type" content="profile" />
     <meta property="og:title" content="محمدحسین عسگری ثمرین | متخصص IT، شبکه و زیرساخت" />
@@ -45,6 +54,7 @@
     <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="محمدحسین عسگری ثمرین - عکس پروفایل" />
     <meta property="og:locale" content="fa_IR" />
     <meta property="og:locale:alternate" content="en_US" />
     <meta property="og:site_name" content="محمدحسین عسگری ثمرین" />
@@ -56,31 +66,46 @@
     <meta name="twitter:title" content="محمدحسین عسگری ثمرین | متخصص IT، شبکه و زیرساخت" />
     <meta name="twitter:description" content="متخصص فناوری اطلاعات با تجربه در شبکه، CCTV، تعمیرات و پشتیبانی." />
     <meta name="twitter:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
+    <meta name="twitter:image:alt" content="محمدحسین عسگری ثمرین - عکس پروفایل" />
 
     <!-- ================================================ -->
     <!-- THEME COLOR                                      -->
     <!-- ================================================ -->
     <meta name="theme-color" content="#0f2b4d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
     <!-- ================================================ -->
-    <!-- GOOGLE ANALYTICS                                -->
+    <!-- GOOGLE ANALYTICS 4 - کامل                       -->
     <!-- ================================================ -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7W5WP27ZH"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-Q7W5WP27ZH');
+        gtag('config', 'G-Q7W5WP27ZH', {
+            'send_page_view': true,
+            'cookie_flags': 'SameSite=None;Secure'
+        });
     </script>
 
     <!-- ================================================ -->
-    <!-- PRECONNECT & PRELOAD - بهبود سرعت بارگذاری      -->
+    <!-- GOOGLE TAG MANAGER                              -->
     <!-- ================================================ -->
-    <link rel="manifest" href="/manifest.json">
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+
+    <!-- ================================================ -->
+    <!-- PRECONNECT & PRELOAD - بهبود سرعت              -->
+    <!-- ================================================ -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preload" href="style.css" as="style" />
     <link rel="preload" href="script.js" as="script" />
+    <link rel="preload" href="fonts/BNazanin.woff2" as="font" type="font/woff2" crossorigin />
 
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -112,8 +137,15 @@
                     "mowhmmdh"
                 ],
                 "jobTitle": "متخصص پشتیبانی فناوری اطلاعات",
+                "description": "متخصص فناوری اطلاعات با بیش از ۲ سال تجربه در شبکه، پشتیبانی و زیرساخت",
                 "url": "https://mowhmmdh.github.io/index.html",
-                "image": "https://mowhmmdh.github.io/images/profile.jpg",
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "https://mowhmmdh.github.io/images/profile.jpg",
+                    "width": 1200,
+                    "height": 630,
+                    "caption": "محمدحسین عسگری ثمرین - عکس پروفایل"
+                },
                 "email": "mailto:mohammedhasgari@gmail.com",
                 "sameAs": [
                     "https://linkedin.com/in/mohammadhosseinasgari",
@@ -138,7 +170,11 @@
                     "@type": "Organization",
                     "name": "خدمات بار هوایی سریع‌ترابر ماهان (ماهکس)"
                 },
-                "award": ["گواهینامه CCNA", "گواهینامه Network+"]
+                "award": ["گواهینامه CCNA", "گواهینامه Network+"],
+                "speakable": {
+                    "@type": "SpeakableSpecification",
+                    "cssSelector": ["#about", ".summary", "#contact"]
+                }
             },
             {
                 "@type": "WebSite",
@@ -147,7 +183,8 @@
                 "name": "محمدحسین عسگری ثمرین | متخصص IT",
                 "description": "سایت رسمی محمدحسین عسگری ثمرین - متخصص فناوری اطلاعات، شبکه و زیرساخت",
                 "inLanguage": ["fa-IR", "en-US"],
-                "publisher": { "@id": "https://mowhmmdh.github.io/#person" }
+                "publisher": { "@id": "https://mowhmmdh.github.io/#person" },
+                "mainEntityOfPage": { "@id": "https://mowhmmdh.github.io/#website" }
             },
             {
                 "@type": "Service",
@@ -191,6 +228,14 @@
                             "@type": "Answer",
                             "text": "بیش از ۲ سال سابقه کار حرفه‌ای در پشتیبانی شبکه، هلپ‌دسک و مدیریت زیرساخت در سازمان‌هایی مانند وزارت کشور، مؤسسه صمت و شرکت ماهکس."
                         }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "چگونه می‌توانم با شما تماس بگیرم؟",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "از طریق فرم تماس در این وب‌سایت، ایمیل mohammedhasgari@gmail.com، یا از طریق لینکدین و اینستاگرام."
+                        }
                     }
                 ]
             },
@@ -199,7 +244,11 @@
                 "name": "پروژه زیرساخت شبکه ماهکس",
                 "description": "پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.",
                 "url": "https://github.com/mowhmmdh/Projects",
-                "image": "https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg",
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg",
+                    "caption": "رک شبکه ماهکس - پروژه زیرساخت"
+                },
                 "datePublished": "2026-05-01",
                 "dateModified": "2026-08-04",
                 "author": { "@id": "https://mowhmmdh.github.io/#person" }
@@ -230,7 +279,11 @@
 
 <body class="lang-fa">
 
-    <div id="progress-bar"></div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div id="progress-bar" role="progressbar" aria-label="نوار پیشرفت مطالعه"></div>
 
     <!-- دکمه دارک مود -->
     <button id="dark-toggle" class="dark-toggle" aria-label="تغییر حالت تاریک/روشن">
@@ -239,16 +292,18 @@
 
     <div id="main-wrapper" class="container">
 
-        <aside id="sidebar-info">
+        <aside id="sidebar-info" role="complementary" aria-label="اطلاعات جانبی">
 
             <div id="top-area">
-                <!-- کلید تغییر زبان -->
                 <button id="lang-toggle-btn" class="lang-toggle-btn" aria-label="تغییر زبان">
                     <span class="lang-text">English</span>
                     <span class="lang-icon"><i class="fas fa-globe" aria-hidden="true"></i></span>
                 </button>
                 <div class="profile-wrapper">
-                    <img src="images/profile.jpg" alt="عکس پروفایل" class="profile-icon" loading="lazy" width="120" height="140">
+                    <picture>
+                        <source srcset="images/profile.webp" type="image/webp">
+                        <img src="images/profile.jpg" alt="محمدحسین عسگری ثمرین - عکس پروفایل" class="profile-icon" loading="lazy" width="120" height="140" decoding="async">
+                    </picture>
                 </div>
             </div>
 
@@ -257,9 +312,9 @@
                 <h2 class="typing-text" data-words='["متخصص فناوری اطلاعات", "کارشناس شبکه و زیرساخت", "متخصص دوربین مداربسته (CCTV)", "کارشناس تعمیرات سخت‌افزار و نرم‌افزار"]'></h2>
 
                 <div class="contact-info">
-                    <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:mohammedhasgari@gmail.com">ایمیل</a></p>
-                    <p><i class="fab fa-linkedin" aria-hidden="true"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener">لینکدین</a></p>
-                    <p><i class="fab fa-instagram" aria-hidden="true"></i> <a href="https://instagram.com/mowhmmdh" target="_blank" rel="noopener">اینستاگرام</a></p>
+                    <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:mohammedhasgari@gmail.com" aria-label="ارسال ایمیل به محمدحسین عسگری ثمرین">ایمیل</a></p>
+                    <p><i class="fab fa-linkedin" aria-hidden="true"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener" aria-label="مشاهده پروفایل لینکدین">لینکدین</a></p>
+                    <p><i class="fab fa-instagram" aria-hidden="true"></i> <a href="https://instagram.com/mowhmmdh" target="_blank" rel="noopener" aria-label="مشاهده پروفایل اینستاگرام">اینستاگرام</a></p>
                 </div>
             </header>
 
@@ -278,13 +333,13 @@
             </nav>
         </aside>
 
-        <main id="main-content">
+        <main id="main-content" role="main">
 
             <!-- ================================================ -->
             <!-- درباره من                                       -->
             <!-- ================================================ -->
-            <section id="about" class="section">
-                <h2 class="section-title">درباره من</h2>
+            <section id="about" class="section" aria-labelledby="about-title">
+                <h2 id="about-title" class="section-title">درباره من</h2>
                 <div class="summary">
                     <p>من <strong>محمدحسین عسگری ثمرین</strong> هستم، یک متخصص فناوری اطلاعات با تجربه عملی در عیب‌یابی سیستم‌ها، پشتیبانی از کاربران، راه‌اندازی شبکه‌های کامپیوتری و نگهداری زیرساخت‌های سازمانی.</p>
                     <p>با سازمان‌هایی نظیر وزارت کشور، مؤسسه فرهنگی و مطبوعاتی صمت، کیمیا مهر اسپادانا (سایت‌های Kimiaonline و HiAsus) و در حال حاضر شرکت خدمات بار هوایی سریع‌ترابر ماهان (ماهکس) همکاری داشته‌ام و همواره به دنبال ارتقاء دانش فنی و ارائه خدمات باکیفیت در حوزه <strong>شبکه، امنیت سایبری و پشتیبانی فنی</strong> هستم.</p>
@@ -295,8 +350,8 @@
             <!-- ================================================ -->
             <!-- خدمات فنی و تخصصی                                -->
             <!-- ================================================ -->
-            <section class="section" id="services">
-                <h2 class="section-title">خدمات فنی و تخصصی</h2>
+            <section class="section" id="services" aria-labelledby="services-title">
+                <h2 id="services-title" class="section-title">خدمات فنی و تخصصی</h2>
 
                 <div style="text-align: center; margin-bottom: 30px; padding: 20px 25px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(26, 54, 93, 0.05)); border-radius: var(--radius); border: 1px solid rgba(37, 99, 235, 0.1);">
                     <p style="font-size: 1.05em; color: var(--text); line-height: 2; margin: 0;">
@@ -422,8 +477,8 @@
             <!-- ================================================ -->
             <!-- سوابق شغلی                                       -->
             <!-- ================================================ -->
-            <section id="experience" class="section">
-                <h2 class="section-title">سوابق شغلی</h2>
+            <section id="experience" class="section" aria-labelledby="experience-title">
+                <h2 id="experience-title" class="section-title">سوابق شغلی</h2>
                 <div class="job-item current-position">
                     <div class="job-header">
                         <h3>کارشناس IT | خدمات بارهوایی سریع‌ترابر ماهان (مجموعه ماهکس)</h3>
@@ -474,10 +529,10 @@
             </section>
 
             <!-- ================================================ -->
-            <!-- مهارت‌های فنی (با data-width برای سئو)            -->
+            <!-- مهارت‌های فنی                                    -->
             <!-- ================================================ -->
-            <section id="skills" class="section">
-                <h2 class="section-title">مهارت‌های فنی</h2>
+            <section id="skills" class="section" aria-labelledby="skills-title">
+                <h2 id="skills-title" class="section-title">مهارت‌های فنی</h2>
                 <div class="skills-wrapper">
                     <div class="skills-list">
                         <div class="skill-category">
@@ -609,21 +664,27 @@
             </section>
 
             <!-- ================================================ -->
-            <!-- مدارک، تحصیلات، پروژه‌ها، پرسش‌های متداول و تماس -->
+            <!-- مدارک                                            -->
             <!-- ================================================ -->
-            <section id="certificates" class="section">
-                <h2 class="section-title">مدارک و دوره‌های آموزشی</h2>
+            <section id="certificates" class="section" aria-labelledby="certificates-title">
+                <h2 id="certificates-title" class="section-title">مدارک و دوره‌های آموزشی</h2>
                 <div class="job-item"><h3>گواهینامه CCNA</h3><p class="institution">مرکز آموزشی لایتک، دانشگاه صنعتی شریف</p></div>
                 <div class="job-item"><h3>گواهینامه Network+</h3><p class="institution">مرکز آموزشی لایتک، دانشگاه صنعتی شریف</p></div>
             </section>
 
-            <section id="education" class="section">
-                <h2 class="section-title">تحصیلات</h2>
+            <!-- ================================================ -->
+            <!-- تحصیلات                                          -->
+            <!-- ================================================ -->
+            <section id="education" class="section" aria-labelledby="education-title">
+                <h2 id="education-title" class="section-title">تحصیلات</h2>
                 <div class="job-item"><h3>مهندسی کامپیوتر</h3><p class="institution">دانشگاه آزاد اسلامی واحد یادگار امام خمینی (ره) - شهر ری</p></div>
             </section>
 
-            <section id="projects" class="section">
-                <h2 class="section-title">پروژه‌های زیرساختی</h2>
+            <!-- ================================================ -->
+            <!-- پروژه‌ها                                         -->
+            <!-- ================================================ -->
+            <section id="projects" class="section" aria-labelledby="projects-title">
+                <h2 id="projects-title" class="section-title">پروژه‌های زیرساختی</h2>
                 <div class="project-card">
                     <div class="project-image-wrapper">
                         <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" alt="رک شبکه ماهکس" loading="lazy">
@@ -643,8 +704,11 @@
                 </div>
             </section>
 
-            <section id="faq" class="section">
-                <h2 class="section-title">پرسش‌های متداول</h2>
+            <!-- ================================================ -->
+            <!-- پرسش‌های متداول                                   -->
+            <!-- ================================================ -->
+            <section id="faq" class="section" aria-labelledby="faq-title">
+                <h2 id="faq-title" class="section-title">پرسش‌های متداول</h2>
                 <div style="display: grid; gap: 18px;">
                     <div class="job-item" style="border-right-color: var(--accent);">
                         <h3>چه خدماتی در حوزه شبکه ارائه می‌دهید؟</h3>
@@ -665,8 +729,11 @@
                 </div>
             </section>
 
-            <section id="contact" class="section">
-                <h2 class="section-title">تماس با من</h2>
+            <!-- ================================================ -->
+            <!-- تماس با من                                       -->
+            <!-- ================================================ -->
+            <section id="contact" class="section" aria-labelledby="contact-title">
+                <h2 id="contact-title" class="section-title">تماس با من</h2>
                 <p class="contact-intro-text">آماده شروع همکاری و دریافت پیشنهادات کاری هستم. لطفاً برای ارتباط سریع، از فرم زیر استفاده کنید:</p>
                 <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form" aria-describedby="contact-form-desc">
                     <div id="contact-form-desc" style="display:none;">فرم تماس برای ارسال پیام</div>
@@ -687,7 +754,9 @@
                 </form>
             </section>
 
-            <!-- دکمه‌های اشتراک‌گذاری -->
+            <!-- ================================================ -->
+            <!-- دکمه‌های اشتراک‌گذاری                            -->
+            <!-- ================================================ -->
             <div class="share-buttons">
                 <button class="share-btn share-linkedin" data-share="linkedin" aria-label="اشتراک‌گذاری در لینکدین" title="اشتراک‌گذاری در لینکدین">
                     <i class="fab fa-linkedin-in" aria-hidden="true"></i>
@@ -709,10 +778,16 @@
                 </button>
             </div>
 
+            <!-- ================================================ -->
+            <!-- فوتر                                            -->
+            <!-- ================================================ -->
             <footer>
                 <div class="footer-branding">
                     <div class="footer-logo-wrapper">
-                        <img src="images/mha-logo.png" alt="لوگو" class="footer-logo-img" loading="lazy">
+                        <picture>
+                            <source srcset="images/mha-logo.webp" type="image/webp">
+                            <img src="images/mha-logo.png" alt="لوگوی محمدحسین عسگری ثمرین" class="footer-logo-img" loading="lazy" width="58" height="58" decoding="async">
+                        </picture>
                     </div>
                     <p class="copyright-text">
                         <span class="copyright-label">© کلیه حقوق این وبسایت محفوظ و متعلق به</span>
@@ -729,6 +804,6 @@
 
     <button id="back-to-top" title="بازگشت به بالا" aria-label="بازگشت به بالای صفحه"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
