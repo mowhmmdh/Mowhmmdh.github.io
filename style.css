@@ -6,7 +6,7 @@ body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;z-ind
 .dark-toggle{position:fixed;bottom:30px;left:30px;z-index:9999;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;border-radius:50%;width:50px;height:50px;font-size:1.3em;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.15);transition:var(--transition);display:flex;align-items:center;justify-content:center;min-height:44px}
 .dark-toggle:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 8px 30px rgba(0,0,0,0.2)}
 body.dark-mode .dark-toggle{background:linear-gradient(135deg,#fbbf24,#f59e0b);color:#0f172a}
-.lang-toggle-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.9);border:1px solid rgba(255,255,255,0.5);border-radius:30px;padding:8px 16px;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 15px rgba(0,0,0,0.06);font-family:inherit;font-size:.85rem;font-weight:600;color:var(--text);position:relative;z-index:250;user-select:none;min-height:44px}
+.lang-toggle-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,0.9);border:1px solid rgba(255,255,255,0.5);border-radius:30px;padding:8px 16px;cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 4px 15px rgba(0,0,0,0.06);font-family:inherit;font-size:.85rem;font-weight:600;color:var(--text);position:relative;z-index:250;user-select:none;min-height:44px;min-width:44px}
 .lang-toggle-btn:hover{background:rgba(37,99,235,0.08);transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.1)}
 .lang-toggle-btn:active{transform:scale(.95)}
 .lang-toggle-btn .lang-icon{display:inline-flex;color:var(--accent);font-size:1em;transition:transform .3s ease}
@@ -236,6 +236,9 @@ footer{padding:20px 0 0 0}
 body.dark-mode .copyright-name{background:linear-gradient(135deg,#60a5fa,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 #back-to-top{position:fixed;bottom:30px;right:30px;z-index:999;background:linear-gradient(135deg,var(--primary),var(--primary-light));color:#fff;border:none;border-radius:50%;width:50px;height:50px;font-size:1.4em;cursor:pointer;box-shadow:0 4px 20px rgba(0,0,0,0.15);transition:var(--transition);display:none;align-items:center;justify-content:center}
 #back-to-top:hover{transform:translateY(-4px) scale(1.05);box-shadow:0 8px 30px rgba(0,0,0,0.2)}
+/* ================================================= */
+/* ---- ریسپانسیو (بهبود ویژه موبایل) ---- */
+/* ================================================= */
 @media(max-width:992px){#main-wrapper{flex-direction:column;padding-top:0;gap:0;background:var(--bg)}
 #sidebar-info{position:static;width:100%;padding:16px 16px 24px;border-radius:0 0 28px 28px;background:var(--bg-sidebar);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:none;border-bottom:1px solid rgba(255,255,255,0.05);box-shadow:var(--shadow)}
 #main-content{width:100%;padding:16px 14px 30px;border-radius:0;background:transparent;backdrop-filter:none;box-shadow:none;border:none}
@@ -308,6 +311,8 @@ body.lang-fa .job-item ul li{font-size:.85em!important;padding-inline-start:34px
 .service-card ul li{padding-inline-start:32px!important}
 .share-btn{width:44px;height:44px;font-size:1.05em}
 #particles-canvas{opacity:.3}
+.footer-logo-wrapper{width:70px;height:70px;padding:8px}
+.footer-logo-img{height:44px;width:44px}
 }
 @media(max-width:480px){.profile-wrapper{width:100px;height:120px;padding:3px;margin:20px auto 8px}
 .profile-icon{border-width:2px}
@@ -337,8 +342,8 @@ body.lang-fa .job-item ul li{font-size:.82em!important;line-height:1.9!important
 #service-request-form{padding:15px}
 #service-request-form input,#service-request-form textarea{padding:10px 14px;font-size:.9em}
 .cta-button{padding:10px 20px;font-size:.85em;gap:6px}
-.footer-logo-wrapper{width:70px;height:70px;padding:8px}
-.footer-logo-img{height:44px;width:44px}
+.footer-logo-wrapper{width:60px;height:60px;padding:6px;margin:0 auto}
+.footer-logo-img{height:40px;width:40px}
 #back-to-top{width:42px;height:42px;font-size:1.1em;bottom:18px;right:18px}
 .section-title{font-size:1.2em;padding-inline-start:12px}
 .summary{padding:16px 18px;font-size:.92em}
@@ -349,6 +354,8 @@ body.lang-fa .job-item ul li{font-size:.82em!important;line-height:1.9!important
 .share-btn{width:40px;height:40px;font-size:.95em}
 .share-btn .tooltip{display:none}
 #particles-canvas{opacity:.2}
+.footer-branding{margin-top:20px;padding-top:14px}
+.copyright-text{font-size:.7em;line-height:1.8}
 }
 @media(min-width:768px)and(max-width:992px){.lang-toggle-btn{font-size:.7rem;padding:5px 12px}
 #navbar a{font-size:.85em!important;padding:8px 18px!important}
@@ -357,4 +364,6 @@ h1{font-size:2.2em}
 .project-card{padding:20px 24px}
 .services-grid{grid-template-columns:1fr 1fr}
 .share-btn{width:48px;height:48px;font-size:1.15em}
+.footer-logo-wrapper{width:80px;height:80px}
+.footer-logo-img{height:50px;width:50px}
 }
