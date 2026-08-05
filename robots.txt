@@ -10,9 +10,9 @@ Disallow: /fonts/
 Disallow: /tmp/
 Disallow: /backup/
 Disallow: /README.md
-Disallow: /*.json$
-Disallow: /*.xml$
-Disallow: /*.txt$
+# Disallow: /*.json$   <-- حذف شد
+# Disallow: /*.xml$    <-- حذف شد
+# Disallow: /*.txt$    <-- حذف شد
 Disallow: /*.log$
 Disallow: /index.html?*
 
