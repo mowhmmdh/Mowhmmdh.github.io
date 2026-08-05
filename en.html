@@ -76,7 +76,7 @@
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com" />
     <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <script type="application/ld+json">
@@ -393,7 +393,6 @@
                                 <i class="fas fa-paper-plane" aria-hidden="true"></i>
                                 Send Request
                             </button>
-                            <!-- ====== Adding cancel-btn class ====== -->
                             <button type="reset" class="cta-button cancel-btn" style="flex: 0 0 auto; background: var(--border); color: var(--text); box-shadow: none; min-width: 100px;">
                                 <i class="fas fa-times" aria-hidden="true"></i>
                                 Cancel
@@ -707,6 +706,48 @@
 
     <button id="back-to-top" title="Back to Top" aria-label="Back to top of page"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
 
-    <script src="script.js" defer></script>
+    <!-- ================================================ -->
+    <!-- Cookie Consent Banner                           -->
+    <!-- ================================================ -->
+    <div id="cookie-banner" role="dialog" aria-label="Cookie Consent" style="position:fixed;bottom:0;left:0;right:0;z-index:99999;display:none;padding:20px 24px;background:var(--bg-card);border-top:4px solid var(--accent);box-shadow:0 -8px 40px rgba(0,0,0,0.08);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);transform:translateY(100%);">
+        <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px;">
+            <div style="display:flex;align-items:center;gap:16px;flex:1;min-width:200px;">
+                <div style="width:44px;height:44px;border-radius:50%;background:rgba(37,99,235,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-cookie-bite" style="color:var(--accent);font-size:1.3em;" aria-hidden="true"></i>
+                </div>
+                <div style="color:var(--text);font-size:0.92em;line-height:1.7;">
+                    <strong style="display:block;font-size:1.05em;margin-bottom:2px;">🍪 Cookie Management</strong>
+                    <span style="color:var(--text-muted);">This website uses cookies to improve user experience and analyze visits.</span>
+                </div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;flex-shrink:0;">
+                <button onclick="acceptCookies()" class="cookie-btn-accept" style="background:linear-gradient(135deg,var(--accent),var(--primary-light));color:#fff;border:none;padding:10px 28px;border-radius:30px;cursor:pointer;font-weight:700;font-size:0.85em;font-family:inherit;transition:all 0.3s ease;min-height:44px;box-shadow:0 4px 15px rgba(37,99,235,0.15);">
+                    <i class="fas fa-check" aria-hidden="true"></i> Accept
+                </button>
+                <button onclick="rejectCookies()" class="cookie-btn-reject" style="background:var(--border);color:var(--text);border:none;padding:10px 24px;border-radius:30px;cursor:pointer;font-weight:600;font-size:0.85em;font-family:inherit;transition:all 0.3s ease;min-height:44px;">
+                    <i class="fas fa-times" aria-hidden="true"></i> Reject
+                </button>
+                <button onclick="toggleCookieDetails()" class="cookie-btn-details" style="background:transparent;color:var(--text-muted);border:none;cursor:pointer;font-size:0.8em;font-family:inherit;text-decoration:underline;padding:6px 10px;transition:color 0.3s ease;">
+                    More Details
+                </button>
+            </div>
+        </div>
+        <div id="cookie-details" style="display:none;max-width:1200px;margin:16px auto 0;padding-top:16px;border-top:1px solid var(--border);font-size:0.85em;color:var(--text-muted);line-height:1.8;">
+            <p><strong>🔍 Cookies Used:</strong></p>
+            <ul style="list-style:none;padding:0;margin:6px 0 0 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;">
+                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>Google Analytics</strong> – Visit analysis</li>
+                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>Google Tag Manager</strong> – Tag management</li>
+                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>LocalStorage</strong> – Save settings (dark mode, language)</li>
+                <li style="display:flex;align-items:center;gap:8px;"><span style="color:var(--accent);">▹</span> <strong>SessionStorage</strong> – Improve user experience</li>
+            </ul>
+            <p style="margin-top:10px;font-size:0.9em;">
+                <i class="fas fa-shield-alt" style="color:var(--accent);" aria-hidden="true"></i>
+                Cookies are used to improve performance and personalize your experience.
+                <a href="#" style="color:var(--accent);text-decoration:underline;">Privacy Policy</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="script.min.js" defer></script>
 </body>
 </html>
