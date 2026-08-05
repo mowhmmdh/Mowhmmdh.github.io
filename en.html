@@ -11,11 +11,18 @@
 
     <meta name="robots" content="index, follow, max-snippet:150, max-image-preview:large, max-video-preview:-1" />
 
+    <!-- Security Headers -->
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <link rel="canonical" href="https://mowhmmdh.github.io/en.html" />
     <link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/index.html" />
     <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en.html" />
     <link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/en.html" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    <link rel="manifest" href="/manifest.json" />
     <link rel="icon" href="/favicon.png" sizes="48x48" type="image/png">
 
     <!-- Open Graph -->
@@ -26,6 +33,7 @@
     <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Mohammad Hossein Asgari Somarin - Profile Photo" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="fa_IR" />
     <meta property="og:site_name" content="Mohammad Hossein Asgari Somarin" />
@@ -35,26 +43,42 @@
     <meta name="twitter:title" content="Mohammad Hossein Asgari Somarin | IT Specialist & Network Expert" />
     <meta name="twitter:description" content="IT specialist with hands-on experience in networking, CCTV, hardware/software repair, and support." />
     <meta name="twitter:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
+    <meta name="twitter:image:alt" content="Mohammad Hossein Asgari Somarin - Profile Photo" />
 
     <meta name="theme-color" content="#0f2b4d" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
+    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q7W5WP27ZH"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        gtag('config', 'G-Q7W5WP27ZH');
+        gtag('config', 'G-Q7W5WP27ZH', {
+            'send_page_view': true,
+            'cookie_flags': 'SameSite=None;Secure'
+        });
     </script>
-    <link rel="manifest" href="/manifest.json">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');</script>
+
+    <!-- Preconnect & Preload -->
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
     <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preload" href="style.css" as="style" />
     <link rel="preload" href="script.js" as="script" />
+    <link rel="preload" href="fonts/Vazirmatn-Medium.woff2" as="font" type="font/woff2" crossorigin />
 
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <!-- Schema.org with all name variations -->
+    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -79,8 +103,15 @@
                     "mowhmmdh"
                 ],
                 "jobTitle": "Information Technology Support Specialist",
+                "description": "IT specialist with over 2 years of experience in networking, support, and infrastructure",
                 "url": "https://mowhmmdh.github.io/en.html",
-                "image": "https://mowhmmdh.github.io/images/profile.jpg",
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "https://mowhmmdh.github.io/images/profile.jpg",
+                    "width": 1200,
+                    "height": 630,
+                    "caption": "Mohammad Hossein Asgari Somarin - Profile Photo"
+                },
                 "email": "mailto:mohammedhasgari@gmail.com",
                 "sameAs": [
                     "https://linkedin.com/in/mohammadhosseinasgari",
@@ -105,7 +136,11 @@
                     "@type": "Organization",
                     "name": "Mahex Air Cargo Services"
                 },
-                "award": ["CCNA Certification", "Network+ Certification"]
+                "award": ["CCNA Certification", "Network+ Certification"],
+                "speakable": {
+                    "@type": "SpeakableSpecification",
+                    "cssSelector": ["#about", ".summary", "#contact"]
+                }
             },
             {
                 "@type": "WebSite",
@@ -114,7 +149,8 @@
                 "name": "Mohammad Hossein Asgari Somarin | IT Specialist",
                 "description": "Official website of Mohammad Hossein Asgari Somarin - IT Specialist, Network & Infrastructure Expert",
                 "inLanguage": ["en-US", "fa-IR"],
-                "publisher": { "@id": "https://mowhmmdh.github.io/#person" }
+                "publisher": { "@id": "https://mowhmmdh.github.io/#person" },
+                "mainEntityOfPage": { "@id": "https://mowhmmdh.github.io/#website" }
             },
             {
                 "@type": "Service",
@@ -158,6 +194,14 @@
                             "@type": "Answer",
                             "text": "Over 2 years of professional experience in network support, Helpdesk, and infrastructure management with organizations such as the Ministry of Interior, Samat Institute, and Mahex Company."
                         }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How can I contact you?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Through the contact form on this website, email mohammedhasgari@gmail.com, or via LinkedIn and Instagram."
+                        }
                     }
                 ]
             },
@@ -166,7 +210,11 @@
                 "name": "Mahex Network Infrastructure Project",
                 "description": "Implementation and setup of network infrastructure including switches, patch panels, and accessories in an organizational rack.",
                 "url": "https://github.com/mowhmmdh/Projects",
-                "image": "https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg",
+                "image": {
+                    "@type": "ImageObject",
+                    "url": "https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg",
+                    "caption": "Mahex Network Rack - Infrastructure Project"
+                },
                 "datePublished": "2026-05-01",
                 "dateModified": "2026-08-04",
                 "author": { "@id": "https://mowhmmdh.github.io/#person" }
@@ -197,7 +245,10 @@
 
 <body class="lang-en">
 
-    <div id="progress-bar"></div>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-XXXXXXX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <div id="progress-bar" role="progressbar" aria-label="Reading progress bar"></div>
 
     <button id="dark-toggle" class="dark-toggle" aria-label="Toggle dark/light mode">
         <i class="fas fa-moon" aria-hidden="true"></i>
@@ -205,7 +256,7 @@
 
     <div id="main-wrapper" class="container">
 
-        <aside id="sidebar-info">
+        <aside id="sidebar-info" role="complementary" aria-label="Sidebar information">
 
             <div id="top-area">
                 <button id="lang-toggle-btn" class="lang-toggle-btn" aria-label="Change language">
@@ -213,7 +264,10 @@
                     <span class="lang-icon"><i class="fas fa-globe" aria-hidden="true"></i></span>
                 </button>
                 <div class="profile-wrapper">
-                    <img src="images/profile.jpg" alt="Profile photo" class="profile-icon" loading="lazy" width="120" height="140">
+                    <picture>
+                        <source srcset="images/profile.webp" type="image/webp">
+                        <img src="images/profile.jpg" alt="Mohammad Hossein Asgari Somarin - Profile Photo" class="profile-icon" loading="lazy" width="120" height="140" decoding="async">
+                    </picture>
                 </div>
             </div>
 
@@ -222,9 +276,9 @@
                 <h2 class="typing-text" data-words='["IT Specialist", "Network & Infrastructure Expert", "CCTV Expert", "Hardware & Software Repair Specialist"]'></h2>
 
                 <div class="contact-info">
-                    <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:mohammedhasgari@gmail.com">Email</a></p>
-                    <p><i class="fab fa-linkedin" aria-hidden="true"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener">LinkedIn</a></p>
-                    <p><i class="fab fa-instagram" aria-hidden="true"></i> <a href="https://instagram.com/mowhmmdh" target="_blank" rel="noopener">Instagram</a></p>
+                    <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:mohammedhasgari@gmail.com" aria-label="Send email to Mohammad Hossein Asgari Somarin">Email</a></p>
+                    <p><i class="fab fa-linkedin" aria-hidden="true"></i> <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank" rel="noopener" aria-label="View LinkedIn profile">LinkedIn</a></p>
+                    <p><i class="fab fa-instagram" aria-hidden="true"></i> <a href="https://instagram.com/mowhmmdh" target="_blank" rel="noopener" aria-label="View Instagram profile">Instagram</a></p>
                 </div>
             </header>
 
@@ -243,10 +297,10 @@
             </nav>
         </aside>
 
-        <main id="main-content">
+        <main id="main-content" role="main">
 
-            <section id="about" class="section">
-                <h2 class="section-title">About Me</h2>
+            <section id="about" class="section" aria-labelledby="about-title">
+                <h2 id="about-title" class="section-title">About Me</h2>
                 <div class="summary">
                     <p>I am <strong>Mohammad Hossein Asgari Somarin</strong>, an IT specialist with practical experience in system troubleshooting, user support, network implementation, and maintaining organizational infrastructure.</p>
                     <p>I have worked with organizations such as the Ministry of Interior, Samat Newspaper, Kimia Mehr Espadana (Kimiaonline and HiAsus shopping sites), and currently at Mahex Air Cargo Services. I am passionate about <strong>networking, cybersecurity, and delivering high-quality technical solutions</strong>.</p>
@@ -254,9 +308,8 @@
                 </div>
             </section>
 
-            <!-- Services -->
-            <section class="section" id="services">
-                <h2 class="section-title">Professional Services</h2>
+            <section class="section" id="services" aria-labelledby="services-title">
+                <h2 id="services-title" class="section-title">Professional Services</h2>
                 <div style="text-align: center; margin-bottom: 30px; padding: 20px 25px; background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(26, 54, 93, 0.05)); border-radius: var(--radius); border: 1px solid rgba(37, 99, 235, 0.1);">
                     <p style="font-size: 1.05em; color: var(--text); line-height: 2; margin: 0;">
                         <i class="fas fa-rocket" style="color: var(--accent); font-size: 1.3em; margin-right: 10px;" aria-hidden="true"></i>
@@ -375,9 +428,8 @@
                 </div>
             </section>
 
-            <!-- Experience -->
-            <section id="experience" class="section">
-                <h2 class="section-title">Work Experience</h2>
+            <section id="experience" class="section" aria-labelledby="experience-title">
+                <h2 id="experience-title" class="section-title">Work Experience</h2>
                 <div class="job-item current-position">
                     <div class="job-header">
                         <h3>IT Specialist | Mahex Air Cargo Services</h3>
@@ -427,9 +479,8 @@
                 </div>
             </section>
 
-            <!-- Skills -->
-            <section id="skills" class="section">
-                <h2 class="section-title">Technical Skills</h2>
+            <section id="skills" class="section" aria-labelledby="skills-title">
+                <h2 id="skills-title" class="section-title">Technical Skills</h2>
                 <div class="skills-wrapper">
                     <div class="skills-list">
                         <div class="skill-category">
@@ -560,20 +611,19 @@
                 </div>
             </section>
 
-            <!-- Certificates, Education, Projects, FAQ, Contact -->
-            <section id="certificates" class="section">
-                <h2 class="section-title">Certificates and Training</h2>
+            <section id="certificates" class="section" aria-labelledby="certificates-title">
+                <h2 id="certificates-title" class="section-title">Certificates and Training</h2>
                 <div class="job-item"><h3>CCNA Certification</h3><p class="institution">Laitec Training Center, Sharif University of Technology</p></div>
                 <div class="job-item"><h3>Network+ Certification</h3><p class="institution">Laitec Training Center, Sharif University of Technology</p></div>
             </section>
 
-            <section id="education" class="section">
-                <h2 class="section-title">Education</h2>
+            <section id="education" class="section" aria-labelledby="education-title">
+                <h2 id="education-title" class="section-title">Education</h2>
                 <div class="job-item"><h3>Computer Engineering</h3><p class="institution">Islamic Azad University Yadegar-e-Imam Khomeini (RAH) - Shahr-e Rey</p></div>
             </section>
 
-            <section id="projects" class="section">
-                <h2 class="section-title">Infrastructure Projects</h2>
+            <section id="projects" class="section" aria-labelledby="projects-title">
+                <h2 id="projects-title" class="section-title">Infrastructure Projects</h2>
                 <div class="project-card">
                     <div class="project-image-wrapper">
                         <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" alt="Mahex Network Rack" loading="lazy">
@@ -593,8 +643,8 @@
                 </div>
             </section>
 
-            <section id="faq" class="section">
-                <h2 class="section-title">Frequently Asked Questions</h2>
+            <section id="faq" class="section" aria-labelledby="faq-title">
+                <h2 id="faq-title" class="section-title">Frequently Asked Questions</h2>
                 <div style="display: grid; gap: 18px;">
                     <div class="job-item" style="border-left-color: var(--accent);">
                         <h3>What network services do you offer?</h3>
@@ -615,8 +665,8 @@
                 </div>
             </section>
 
-            <section id="contact" class="section">
-                <h2 class="section-title">Contact Me</h2>
+            <section id="contact" class="section" aria-labelledby="contact-title">
+                <h2 id="contact-title" class="section-title">Contact Me</h2>
                 <p class="contact-intro-text">I'm ready to start collaboration and receive job offers. Please use the form below for quick contact:</p>
                 <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form" aria-describedby="contact-form-desc">
                     <div id="contact-form-desc" style="display:none;">Contact form to send message</div>
@@ -637,7 +687,6 @@
                 </form>
             </section>
 
-            <!-- Share Buttons -->
             <div class="share-buttons">
                 <button class="share-btn share-linkedin" data-share="linkedin" aria-label="Share on LinkedIn" title="Share on LinkedIn">
                     <i class="fab fa-linkedin-in" aria-hidden="true"></i>
@@ -662,7 +711,10 @@
             <footer>
                 <div class="footer-branding">
                     <div class="footer-logo-wrapper">
-                        <img src="images/mha-logo.png" alt="Logo" class="footer-logo-img" loading="lazy">
+                        <picture>
+                            <source srcset="images/mha-logo.webp" type="image/webp">
+                            <img src="images/mha-logo.png" alt="Mohammad Hossein Asgari Somarin Logo" class="footer-logo-img" loading="lazy" width="58" height="58" decoding="async">
+                        </picture>
                     </div>
                     <p class="copyright-text">
                         <span class="copyright-label">© All rights reserved for</span>
@@ -679,6 +731,6 @@
 
     <button id="back-to-top" title="Back to Top" aria-label="Back to top of page"><i class="fas fa-arrow-up" aria-hidden="true"></i></button>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </body>
 </html>
