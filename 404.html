@@ -235,4 +235,10 @@
         if (localStorage.getItem('dark-mode') === 'true') {
             document.body.classList.add('dark-mode');
         }
-        document.addEventListener('
+        document.addEventListener('DOMContentLoaded', function() {
+            const isDark = localStorage.getItem('dark-mode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+        });
+    </script>
+</body>
+</html>
