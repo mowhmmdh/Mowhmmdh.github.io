@@ -8,7 +8,6 @@
     "theme_color": "#0f2b4d",
     "orientation": "any",
     "scope": "/",
-    "categories": ["technology", "business", "networking"],
     "icons": [
         {
             "src": "/images/mha-logo.png",
