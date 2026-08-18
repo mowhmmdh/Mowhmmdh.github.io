@@ -38,12 +38,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toPersianDate(date) {
         const [year, month, day] = gregorianToJalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
-        const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
-        return `${day} ${months[month-1]} ${year}`;
+        const months = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
+        return `${day} ${months[month - 1]} ${year}`;
     }
 
     function toEnglishDate(date) {
-        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
+            'November', 'December'
+        ];
         return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
     }
 
@@ -93,7 +95,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
+            particles.forEach(p => { p.update();
+                p.draw(); });
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
@@ -158,7 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
             if (months >= 12) {
                 const years = Math.floor(months / 12);
                 const rem = months % 12;
-                displayEn.textContent = rem === 0 ? years + ' year' + (years > 1 ? 's' : '') : years + ' year' + (years > 1 ? 's' : '') + ' and ' + rem + ' month' + (rem > 1 ? 's' : '');
+                displayEn.textContent = rem === 0 ? years + ' year' + (years > 1 ? 's' : '') : years + ' year' + (years > 1 ?
+                    's' : '') + ' and ' + rem + ' month' + (rem > 1 ? 's' : '');
             } else {
                 displayEn.textContent = months + ' month' + (months > 1 ? 's' : '');
             }
@@ -170,6 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // SKILLS ANIMATION
     // ============================================================
     const skillItems = document.querySelectorAll('.skill-level-item');
+
     function animateSkills() {
         skillItems.forEach(item => {
             const bar = item.querySelector('.skill-bar');
@@ -238,6 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // BACK TO TOP
     // ============================================================
     const backBtn = document.getElementById('back-to-top');
+
     function toggleBackBtn() {
         if (backBtn) backBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
     }
@@ -254,6 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ACTIVE NAV
     // ============================================================
     const navLinks = document.querySelectorAll('#navbar a');
+
     function updateActiveNav() {
         let current = '';
         const scrollY = window.scrollY;
@@ -297,7 +304,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const typingEl = document.querySelector('.typing-text');
     if (typingEl) {
         const words = JSON.parse(typingEl.getAttribute('data-words') || '["متخصص IT"]');
-        let wordIdx = 0, charIdx = 0, isDeleting = false, speed = 80, isPaused = false;
+        let wordIdx = 0,
+            charIdx = 0,
+            isDeleting = false,
+            speed = 80,
+            isPaused = false;
+
         function type() {
             if (isPaused) { setTimeout(type, 100); return; }
             const current = words[wordIdx];
@@ -312,14 +324,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             if (!isDeleting && charIdx === current.length) {
                 isPaused = true;
-                setTimeout(() => { isPaused = false; isDeleting = true; setTimeout(type, 100); }, 2200);
+                setTimeout(() => { isPaused = false;
+                    isDeleting = true;
+                    setTimeout(type, 100); }, 2200);
                 return;
             }
             if (isDeleting && charIdx === 0) {
                 isDeleting = false;
                 wordIdx = (wordIdx + 1) % words.length;
                 isPaused = true;
-                setTimeout(() => { isPaused = false; setTimeout(type, 100); }, 300);
+                setTimeout(() => { isPaused = false;
+                    setTimeout(type, 100); }, 300);
                 return;
             }
             setTimeout(type, speed);
@@ -340,7 +355,8 @@ document.addEventListener('DOMContentLoaded', function() {
         body.classList.toggle('dark-mode');
         const isDark = body.classList.contains('dark-mode');
         localStorage.setItem('dark-mode', isDark);
-        this.innerHTML = isDark ? '<i class="fas fa-sun" aria-hidden="true"></i>' : '<i class="fas fa-moon" aria-hidden="true"></i>';
+        this.innerHTML = isDark ? '<i class="fas fa-sun" aria-hidden="true"></i>' :
+            '<i class="fas fa-moon" aria-hidden="true"></i>';
         if (typeof gtag !== 'undefined') {
             gtag('event', 'dark_mode_toggle', {
                 event_category: 'engagement',
@@ -408,11 +424,19 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const type = this.getAttribute('data-share');
             let shareUrl = '';
-            switch(type) {
-                case 'linkedin': shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`; break;
-                case 'twitter': shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`; break;
-                case 'whatsapp': shareUrl = `https://api.whatsapp.com/send?text=${title}%20${url}`; break;
-                case 'telegram': shareUrl = `https://t.me/share/url?url=${url}&text=${title}`; break;
+            switch (type) {
+                case 'linkedin':
+                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                    break;
+                case 'twitter':
+                    shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                    break;
+                case 'whatsapp':
+                    shareUrl = `https://api.whatsapp.com/send?text=${title}%20${url}`;
+                    break;
+                case 'telegram':
+                    shareUrl = `https://t.me/share/url?url=${url}&text=${title}`;
+                    break;
                 case 'copy':
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(window.location.href).then(() => {
@@ -423,16 +447,20 @@ document.addEventListener('DOMContentLoaded', function() {
                         ta.value = window.location.href;
                         document.body.appendChild(ta);
                         ta.select();
-                        try { document.execCommand('copy'); alert('✅ لینک کپی شد!'); } catch(e) { alert('لینک: ' + window.location.href); }
+                        try { document.execCommand('copy');
+                            alert('✅ لینک کپی شد!'); } catch (e) { alert('لینک: ' + window.location.href); }
                         document.body.removeChild(ta);
                     }
-                    if (typeof gtag !== 'undefined') gtag('event', 'share', { event_category: 'engagement', event_label: type });
+                    if (typeof gtag !== 'undefined') gtag('event', 'share', { event_category: 'engagement',
+                        event_label: type });
                     return;
-                default: return;
+                default:
+                    return;
             }
             if (shareUrl) {
                 window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes');
-                if (typeof gtag !== 'undefined') gtag('event', 'share', { event_category: 'engagement', event_label: type });
+                if (typeof gtag !== 'undefined') gtag('event', 'share', { event_category: 'engagement',
+                    event_label: type });
             }
         });
     });
@@ -471,7 +499,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (res.ok) {
                     btn.innerHTML = '✅ ارسال شد!';
                     this.reset();
-                    msg.style.cssText = 'padding:14px 18px;background:rgba(34,197,94,0.12);border-radius:10px;color:#22c55e;text-align:center;margin-top:16px;border:1px solid rgba(34,197,94,0.2);font-weight:500;';
+                    msg.style.cssText =
+                        'padding:14px 18px;background:rgba(34,197,94,0.12);border-radius:10px;color:#22c55e;text-align:center;margin-top:16px;border:1px solid rgba(34,197,94,0.2);font-weight:500;';
                     msg.textContent = '✅ پیام شما با موفقیت ارسال شد. به زودی پاسخ می‌دهم.';
                     this.appendChild(msg);
                     if (typeof gtag !== 'undefined') gtag('event', 'contact_form_submit', { event_category: 'conversion' });
@@ -482,11 +511,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.innerHTML = '❌ خطا!';
                 const msg = document.createElement('div');
                 msg.className = 'form-message';
-                msg.style.cssText = 'padding:14px 18px;background:rgba(239,68,68,0.12);border-radius:10px;color:#ef4444;text-align:center;margin-top:16px;border:1px solid rgba(239,68,68,0.2);font-weight:500;';
+                msg.style.cssText =
+                    'padding:14px 18px;background:rgba(239,68,68,0.12);border-radius:10px;color:#ef4444;text-align:center;margin-top:16px;border:1px solid rgba(239,68,68,0.2);font-weight:500;';
                 msg.textContent = '❌ ارسال ناموفق بود. لطفاً دوباره تلاش کنید.';
                 this.appendChild(msg);
             } finally {
-                setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
+                setTimeout(() => { btn.innerHTML = orig;
+                    btn.disabled = false; }, 3000);
             }
         });
     }
@@ -516,7 +547,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (res.ok) {
                     btn.innerHTML = '✅ ارسال شد!';
                     this.reset();
-                    msg.style.cssText = 'padding:14px 18px;background:rgba(34,197,94,0.12);border-radius:10px;color:#22c55e;text-align:center;margin-top:16px;border:1px solid rgba(34,197,94,0.2);font-weight:500;';
+                    msg.style.cssText =
+                        'padding:14px 18px;background:rgba(34,197,94,0.12);border-radius:10px;color:#22c55e;text-align:center;margin-top:16px;border:1px solid rgba(34,197,94,0.2);font-weight:500;';
                     msg.textContent = '✅ درخواست شما ثبت شد. به زودی تماس می‌گیرم.';
                     this.appendChild(msg);
                     const container = document.getElementById('service-request-form');
@@ -529,11 +561,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 btn.innerHTML = '❌ خطا!';
                 const msg = document.createElement('div');
                 msg.className = 'form-message';
-                msg.style.cssText = 'padding:14px 18px;background:rgba(239,68,68,0.12);border-radius:10px;color:#ef4444;text-align:center;margin-top:16px;border:1px solid rgba(239,68,68,0.2);font-weight:500;';
+                msg.style.cssText =
+                    'padding:14px 18px;background:rgba(239,68,68,0.12);border-radius:10px;color:#ef4444;text-align:center;margin-top:16px;border:1px solid rgba(239,68,68,0.2);font-weight:500;';
                 msg.textContent = '❌ ارسال ناموفق بود. لطفاً دوباره تلاش کنید.';
                 this.appendChild(msg);
             } finally {
-                setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
+                setTimeout(() => { btn.innerHTML = orig;
+                    btn.disabled = false; }, 3000);
             }
         });
     }
