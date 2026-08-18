@@ -1,13 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    function debounce(func, delay) {
-        let timeout;
+    // ============================================================
+    // DEBOUNCE
+    // ============================================================
+    function debounce(fn, delay) {
+        let timer;
         return function() {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, arguments), delay);
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, arguments), delay);
         };
     }
 
+    // ============================================================
+    // DATE CONVERTERS
+    // ============================================================
     function gregorianToJalali(gy, gm, gd) {
         var g_d_m = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
         var jy, jm, jd;
@@ -32,39 +38,42 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function toPersianDate(date) {
         const [year, month, day] = gregorianToJalali(date.getFullYear(), date.getMonth() + 1, date.getDate());
-        const persianMonths = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
-        return `${year} ${persianMonths[month - 1]} ${day}`;
+        const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+        return `${day} ${months[month-1]} ${year}`;
     }
 
     function toEnglishDate(date) {
-        const englishMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        return `${englishMonths[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
+        const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        return `${months[date.getMonth()]} ${date.getDate()}, ${date.getFullYear()}`;
     }
 
+    // ============================================================
+    // PARTICLES BACKGROUND
+    // ============================================================
     function initParticles() {
         const isMobile = window.innerWidth <= 768;
-        const particleCount = isMobile ? 25 : 50;
+        const count = isMobile ? 20 : 40;
         const canvas = document.createElement('canvas');
         canvas.id = 'particles-canvas';
         document.body.prepend(canvas);
         const ctx = canvas.getContext('2d');
         let particles = [];
 
-        function resizeCanvas() {
+        function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
+        resize();
+        window.addEventListener('resize', resize);
 
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
                 this.size = Math.random() * 2 + 1;
-                this.speedX = (Math.random() - 0.5) * 0.5;
-                this.speedY = (Math.random() - 0.5) * 0.5;
-                this.opacity = isMobile ? (Math.random() * 0.3 + 0.1) : (Math.random() * 0.5 + 0.2);
+                this.speedX = (Math.random() - 0.5) * 0.4;
+                this.speedY = (Math.random() - 0.5) * 0.4;
+                this.opacity = isMobile ? Math.random() * 0.2 + 0.05 : Math.random() * 0.35 + 0.1;
             }
             update() {
                 this.x += this.speedX;
@@ -80,22 +89,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
 
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
+        for (let i = 0; i < count; i++) particles.push(new Particle());
 
-        function animateParticles() {
+        function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
-                    const distance = Math.sqrt(dx * dx + dy * dy);
-                    const maxDist = isMobile ? 100 : 150;
-                    if (distance < maxDist) {
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const maxDist = isMobile ? 80 : 120;
+                    if (dist < maxDist) {
                         ctx.beginPath();
-                        const opacity = isMobile ? 0.05 * (1 - distance / maxDist) : 0.1 * (1 - distance / maxDist);
+                        const opacity = isMobile ? 0.03 * (1 - dist / maxDist) : 0.06 * (1 - dist / maxDist);
                         ctx.strokeStyle = `rgba(37, 99, 235, ${opacity})`;
                         ctx.lineWidth = isMobile ? 0.3 : 0.5;
                         ctx.moveTo(particles[i].x, particles[i].y);
@@ -104,24 +111,28 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 }
             }
-            requestAnimationFrame(animateParticles);
+            requestAnimationFrame(animate);
         }
-        animateParticles();
+        animate();
     }
     initParticles();
 
+    // ============================================================
+    // PROGRESS BAR
+    // ============================================================
     function updateProgressBar() {
         const scrollTop = window.scrollY;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        const progressBar = document.getElementById('progress-bar');
-        if (progressBar) {
-            progressBar.style.width = scrollPercent + '%';
-        }
+        const percent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        const bar = document.getElementById('progress-bar');
+        if (bar) bar.style.width = percent + '%';
     }
     window.addEventListener('scroll', debounce(updateProgressBar, 10), { passive: true });
     updateProgressBar();
 
+    // ============================================================
+    // JOB DURATION
+    // ============================================================
     function updateJobDuration() {
         const now = new Date();
         const startFa = document.getElementById('start-date-fa');
@@ -155,6 +166,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     updateJobDuration();
 
+    // ============================================================
+    // SKILLS ANIMATION
+    // ============================================================
     const skillItems = document.querySelectorAll('.skill-level-item');
     function animateSkills() {
         skillItems.forEach(item => {
@@ -171,23 +185,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     const skillsSection = document.getElementById('skills');
     if (skillsSection) {
-        const skillsObserver = new IntersectionObserver((entries) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    setTimeout(animateSkills, 150);
-                    skillsObserver.unobserve(entry.target);
+                    setTimeout(animateSkills, 200);
+                    observer.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-        skillsObserver.observe(skillsSection);
+        }, { threshold: 0.15 });
+        observer.observe(skillsSection);
         setTimeout(() => {
-            const anyShown = document.querySelector('.skill-level-item.show');
-            if (!anyShown) { animateSkills(); }
+            if (!document.querySelector('.skill-level-item.show')) animateSkills();
         }, 3000);
     } else {
         animateSkills();
     }
 
+    // ============================================================
+    // SECTIONS VISIBILITY
+    // ============================================================
     const sections = document.querySelectorAll('.section');
     const sectionObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -195,15 +211,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 entry.target.classList.add('visible');
                 if (typeof gtag !== 'undefined') {
                     gtag('event', 'section_view', {
-                        'event_category': 'engagement',
-                        'event_label': entry.target.id || 'section'
+                        event_category: 'engagement',
+                        event_label: entry.target.id || 'section'
                     });
                 }
             }
         });
-    }, { threshold: 0.08 });
-    sections.forEach(section => sectionObserver.observe(section));
+    }, { threshold: 0.06 });
+    sections.forEach(s => sectionObserver.observe(s));
 
+    // ============================================================
+    // SERVICE CARDS ANIMATION
+    // ============================================================
     const serviceCards = document.querySelectorAll('.service-card');
     const serviceObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -212,110 +231,105 @@ document.addEventListener('DOMContentLoaded', function() {
                 serviceObserver.unobserve(entry.target);
             }
         });
-    }, { threshold: 0.1 });
-    serviceCards.forEach(card => serviceObserver.observe(card));
+    }, { threshold: 0.08 });
+    serviceCards.forEach(c => serviceObserver.observe(c));
 
+    // ============================================================
+    // BACK TO TOP
+    // ============================================================
     const backBtn = document.getElementById('back-to-top');
     function toggleBackBtn() {
-        if (backBtn) {
-            backBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
-        }
+        if (backBtn) backBtn.style.display = window.scrollY > 400 ? 'flex' : 'none';
     }
     if (backBtn) {
         backBtn.addEventListener('click', () => {
             window.scrollTo({ top: 0, behavior: 'smooth' });
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'back_to_top', { 'event_category': 'engagement' });
-            }
+            if (typeof gtag !== 'undefined') gtag('event', 'back_to_top', { event_category: 'engagement' });
         });
         window.addEventListener('scroll', debounce(toggleBackBtn, 50), { passive: true });
         toggleBackBtn();
     }
 
+    // ============================================================
+    // ACTIVE NAV
+    // ============================================================
     const navLinks = document.querySelectorAll('#navbar a');
     function updateActiveNav() {
         let current = '';
         const scrollY = window.scrollY;
         sections.forEach(section => {
-            const top = section.offsetTop - 200;
-            if (scrollY >= top) {
-                current = section.getAttribute('id');
-            }
+            const top = section.offsetTop - 180;
+            if (scrollY >= top) current = section.getAttribute('id');
         });
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
+            if (link.getAttribute('href') === '#' + current) link.classList.add('active');
         });
     }
     window.addEventListener('scroll', debounce(updateActiveNav, 50), { passive: true });
     updateActiveNav();
 
+    // ============================================================
+    // JOB ITEMS FADE-IN
+    // ============================================================
     const jobItems = document.querySelectorAll('.job-item');
     const jobObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry, i) => {
             if (entry.isIntersecting) {
                 setTimeout(() => {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
-                }, index * 80);
+                }, i * 60);
                 jobObserver.unobserve(entry.target);
             }
         });
     }, { threshold: 0.05 });
-    jobItems.forEach((item) => {
+    jobItems.forEach(item => {
         item.style.opacity = '0';
         item.style.transform = 'translateY(20px)';
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         jobObserver.observe(item);
     });
 
-    function initAdvancedTyping() {
-        const typingElement = document.querySelector('.typing-text');
-        if (!typingElement) return;
-        const words = JSON.parse(typingElement.getAttribute('data-words') || '["IT Specialist"]');
-        let wordIndex = 0, charIndex = 0, isDeleting = false, speed = 80, isTypingPaused = false;
-        function typeEffect() {
-            if (isTypingPaused) {
-                setTimeout(typeEffect, 100);
-                return;
-            }
-            const currentWord = words[wordIndex];
+    // ============================================================
+    // TYPING EFFECT
+    // ============================================================
+    const typingEl = document.querySelector('.typing-text');
+    if (typingEl) {
+        const words = JSON.parse(typingEl.getAttribute('data-words') || '["متخصص IT"]');
+        let wordIdx = 0, charIdx = 0, isDeleting = false, speed = 80, isPaused = false;
+        function type() {
+            if (isPaused) { setTimeout(type, 100); return; }
+            const current = words[wordIdx];
             if (isDeleting) {
-                typingElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-                speed = 40;
+                typingEl.textContent = current.substring(0, charIdx - 1);
+                charIdx--;
+                speed = 35;
             } else {
-                typingElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
+                typingEl.textContent = current.substring(0, charIdx + 1);
+                charIdx++;
                 speed = 80 + Math.random() * 40;
             }
-            if (!isDeleting && charIndex === currentWord.length) {
-                isTypingPaused = true;
-                setTimeout(() => {
-                    isTypingPaused = false;
-                    isDeleting = true;
-                    setTimeout(typeEffect, 100);
-                }, 2000);
+            if (!isDeleting && charIdx === current.length) {
+                isPaused = true;
+                setTimeout(() => { isPaused = false; isDeleting = true; setTimeout(type, 100); }, 2200);
                 return;
             }
-            if (isDeleting && charIndex === 0) {
+            if (isDeleting && charIdx === 0) {
                 isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-                isTypingPaused = true;
-                setTimeout(() => {
-                    isTypingPaused = false;
-                    setTimeout(typeEffect, 100);
-                }, 300);
+                wordIdx = (wordIdx + 1) % words.length;
+                isPaused = true;
+                setTimeout(() => { isPaused = false; setTimeout(type, 100); }, 300);
                 return;
             }
-            setTimeout(typeEffect, speed);
+            setTimeout(type, speed);
         }
-        setTimeout(typeEffect, 500);
+        setTimeout(type, 600);
     }
-    initAdvancedTyping();
 
+    // ============================================================
+    // DARK MODE
+    // ============================================================
     const darkToggle = document.getElementById('dark-toggle');
     const body = document.body;
     if (localStorage.getItem('dark-mode') === 'true') {
@@ -329,352 +343,199 @@ document.addEventListener('DOMContentLoaded', function() {
         this.innerHTML = isDark ? '<i class="fas fa-sun" aria-hidden="true"></i>' : '<i class="fas fa-moon" aria-hidden="true"></i>';
         if (typeof gtag !== 'undefined') {
             gtag('event', 'dark_mode_toggle', {
-                'event_category': 'engagement',
-                'event_label': isDark ? 'dark' : 'light'
+                event_category: 'engagement',
+                event_label: isDark ? 'dark' : 'light'
             });
         }
     });
 
-    const langToggleBtn = document.getElementById('lang-toggle-btn');
-    if (langToggleBtn) {
-        langToggleBtn.addEventListener('click', function(e) {
+    // ============================================================
+    // LANGUAGE TOGGLE
+    // ============================================================
+    const langBtn = document.getElementById('lang-toggle-btn');
+    if (langBtn) {
+        langBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            const currentPath = window.location.pathname;
-            // اگر در صفحه اصلی هستیم یا index.html، به en.html برو
-            if (currentPath === '/' || currentPath === '/index.html' || currentPath === '') {
+            const path = window.location.pathname;
+            if (path === '/' || path === '/index.html' || path === '') {
                 window.location.href = '/en.html';
             } else {
                 window.location.href = '/index.html';
             }
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'language_switch', {
-                    'event_category': 'engagement',
-                    'event_label': target.includes('en') ? 'English' : 'Persian'
-                });
-            }
         });
     }
 
-    const serviceButtons = document.querySelectorAll('.service-select-btn');
+    // ============================================================
+    // SERVICE REQUEST FORM
+    // ============================================================
+    const serviceBtns = document.querySelectorAll('.service-select-btn');
     const serviceForm = document.getElementById('service-request-form');
-    const selectedServiceInput = document.getElementById('selected-service');
-    serviceButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const serviceName = this.getAttribute('data-service');
-            selectedServiceInput.value = serviceName;
-            if (serviceForm) {
+    const selectedService = document.getElementById('selected-service');
+    if (serviceBtns.length && serviceForm) {
+        serviceBtns.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const service = this.getAttribute('data-service');
+                if (selectedService) selectedService.value = service;
                 serviceForm.style.display = 'block';
-                serviceForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                serviceForm.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 if (typeof gtag !== 'undefined') {
-                    gtag('event', 'service_request_open', {
-                        'event_category': 'conversion',
-                        'event_label': serviceName
-                    });
+                    gtag('event', 'service_request_open', { event_category: 'conversion', event_label: service });
                 }
-            }
+            });
         });
-    });
-
-    const cancelBtn = document.querySelector('#service-request-form .cancel-btn');
-    if (cancelBtn) {
-        cancelBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const form = document.getElementById('service-request-form');
-            if (form) {
-                form.style.display = 'none';
-                const formElement = document.getElementById('service-form');
-                if (formElement) {
-                    formElement.reset();
-                }
-                // حذف پیام‌های قبلی
-                const oldMsg = formElement.querySelector('.form-message');
-                if (oldMsg) oldMsg.remove();
-            }
-        });
+        const cancelBtn = document.querySelector('.btn-cancel');
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                serviceForm.style.display = 'none';
+                const form = document.getElementById('service-form');
+                if (form) form.reset();
+                const msg = form.querySelector('.form-message');
+                if (msg) msg.remove();
+            });
+        }
     }
 
-    const serviceRequestForm = document.getElementById('service-form');
-    if (serviceRequestForm) {
-        serviceRequestForm.addEventListener('submit', function(e) {
-            const service = selectedServiceInput.value;
-            if (service) {
-                const descField = document.getElementById('client-description');
-                if (descField) {
-                    const currentValue = descField.value;
-                    descField.value = `نوع خدمت درخواستی: ${service}\n\n${currentValue}`;
-                }
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'service_form_submit', {
-                        'event_category': 'conversion',
-                        'event_label': service
-                    });
-                }
-            }
-        });
-    }
-
-    document.querySelectorAll('.cta-button, .service-select-btn, .contact-form button[type="submit"]').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            if (this.type === 'reset') return;
-            const rect = this.getBoundingClientRect();
-            const ripple = document.createElement('span');
-            ripple.classList.add('ripple-effect');
-            const size = Math.max(rect.width, rect.height);
-            ripple.style.width = ripple.style.height = size + 'px';
-            ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
-            ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
-            this.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
-        });
-    });
-
-    const shareButtons = document.querySelectorAll('.share-btn');
-    const pageUrl = encodeURIComponent(window.location.href);
-    const pageTitle = encodeURIComponent(document.title);
-    shareButtons.forEach(btn => {
+    // ============================================================
+    // SHARE BUTTONS
+    // ============================================================
+    const shareBtns = document.querySelectorAll('.share-btn');
+    const url = encodeURIComponent(window.location.href);
+    const title = encodeURIComponent(document.title);
+    shareBtns.forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             const type = this.getAttribute('data-share');
             let shareUrl = '';
             switch(type) {
-                case 'linkedin':
-                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
-                    break;
-                case 'twitter':
-                    shareUrl = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
-                    break;
-                case 'whatsapp':
-                    shareUrl = `https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
-                    break;
-                case 'telegram':
-                    shareUrl = `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`;
-                    break;
-                case 'email':
-                    shareUrl = `mailto:?subject=${pageTitle}&body=مشاهده این صفحه: ${pageUrl}`;
-                    break;
+                case 'linkedin': shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`; break;
+                case 'twitter': shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`; break;
+                case 'whatsapp': shareUrl = `https://api.whatsapp.com/send?text=${title}%20${url}`; break;
+                case 'telegram': shareUrl = `https://t.me/share/url?url=${url}&text=${title}`; break;
                 case 'copy':
                     if (navigator.clipboard) {
                         navigator.clipboard.writeText(window.location.href).then(() => {
-                            const tooltip = this.querySelector('.tooltip');
-                            if (tooltip) {
-                                const originalText = tooltip.textContent;
-                                tooltip.textContent = '✅ کپی شد!';
-                                setTimeout(() => {
-                                    tooltip.textContent = originalText;
-                                }, 2000);
-                            } else {
-                                alert('✅ لینک کپی شد!');
-                            }
-                        }).catch(() => {
-                            alert('لینک: ' + window.location.href);
-                        });
-                    } else {
-                        const textArea = document.createElement('textarea');
-                        textArea.value = window.location.href;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        try {
-                            document.execCommand('copy');
                             alert('✅ لینک کپی شد!');
-                        } catch (err) {
-                            alert('لینک: ' + window.location.href);
-                        }
-                        document.body.removeChild(textArea);
+                        }).catch(() => alert('لینک: ' + window.location.href));
+                    } else {
+                        const ta = document.createElement('textarea');
+                        ta.value = window.location.href;
+                        document.body.appendChild(ta);
+                        ta.select();
+                        try { document.execCommand('copy'); alert('✅ لینک کپی شد!'); } catch(e) { alert('لینک: ' + window.location.href); }
+                        document.body.removeChild(ta);
                     }
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'share', {
-                            'event_category': 'engagement',
-                            'event_label': type
-                        });
-                    }
+                    if (typeof gtag !== 'undefined') gtag('event', 'share', { event_category: 'engagement', event_label: type });
                     return;
-                default:
-                    return;
+                default: return;
             }
             if (shareUrl) {
                 window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes');
-                if (typeof gtag !== 'undefined') {
-                    gtag('event', 'share', {
-                        'event_category': 'engagement',
-                        'event_label': type
-                    });
-                }
+                if (typeof gtag !== 'undefined') gtag('event', 'share', { event_category: 'engagement', event_label: type });
             }
         });
     });
 
-    const updateDateFa = document.getElementById('update-date-fa');
-    const updateDateEn = document.getElementById('update-date-en');
+    // ============================================================
+    // UPDATE DATE
+    // ============================================================
+    const updateFa = document.getElementById('update-date-fa');
+    const updateEn = document.getElementById('update-date-en');
     const now = new Date();
-    if (updateDateFa) {
-        updateDateFa.textContent = `به‌روزرسانی: ${toPersianDate(now)}`;
-    }
-    if (updateDateEn) {
-        updateDateEn.textContent = `Last Updated: ${toEnglishDate(now)}`;
-    }
+    if (updateFa) updateFa.textContent = 'به‌روزرسانی: ' + toPersianDate(now);
+    if (updateEn) updateEn.textContent = 'Last Updated: ' + toEnglishDate(now);
 
-});
-
-// ================================================
-// ---- مدیریت کوکی (Cookie Consent) ----
-// ================================================
-(function() {
-    const banner = document.getElementById('cookie-banner');
-    const details = document.getElementById('cookie-details');
-    if (!banner) return;
-    
-    const consent = localStorage.getItem('cookie-consent');
-    if (consent === 'accepted' || consent === 'rejected') {
-        banner.style.display = 'none';
-        banner.style.transform = 'translateY(100%)';
-        if (consent === 'accepted' && typeof gtag !== 'undefined') {
-            gtag('consent', 'update', { 'analytics_storage': 'granted' });
-        }
-    } else {
-        banner.style.display = 'block';
-        setTimeout(() => { banner.style.transform = 'translateY(0)'; }, 100);
-    }
-    
-    window.acceptCookies = function() {
-        localStorage.setItem('cookie-consent', 'accepted');
-        banner.style.transform = 'translateY(100%)';
-        setTimeout(() => { banner.style.display = 'none'; }, 400);
-        if (typeof gtag !== 'undefined') {
-            gtag('consent', 'update', { 'analytics_storage': 'granted' });
-            gtag('event', 'cookie_consent', { 'event_category': 'engagement', 'event_label': 'accepted' });
-        }
-    };
-    
-    window.rejectCookies = function() {
-        localStorage.setItem('cookie-consent', 'rejected');
-        banner.style.transform = 'translateY(100%)';
-        setTimeout(() => { banner.style.display = 'none'; }, 400);
-        if (typeof gtag !== 'undefined') {
-            gtag('consent', 'update', { 'analytics_storage': 'denied' });
-            gtag('event', 'cookie_consent', { 'event_category': 'engagement', 'event_label': 'rejected' });
-        }
-    };
-    
-    window.toggleCookieDetails = function() {
-        if (details) {
-            const isVisible = details.style.display === 'block';
-            details.style.display = isVisible ? 'none' : 'block';
-        }
-    };
-})();
-
-// ================================================
-// ---- مدیریت ارسال فرم (AJAX) ----
-// ================================================
-(function() {
-    // فرم تماس
+    // ============================================================
+    // CONTACT FORM (AJAX)
+    // ============================================================
     const contactForm = document.querySelector('.contact-form');
     if (contactForm) {
         contactForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(this);
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> در حال ارسال...';
-            submitBtn.disabled = true;
-            
+            const btn = this.querySelector('.cta-button');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> در حال ارسال...';
+            btn.disabled = true;
             const oldMsg = this.querySelector('.form-message');
             if (oldMsg) oldMsg.remove();
-            
             try {
-                const response = await fetch(this.action, {
+                const res = await fetch(this.action, {
                     method: 'POST',
                     body: formData,
                     headers: { 'Accept': 'application/json' }
                 });
-                
                 const msg = document.createElement('div');
                 msg.className = 'form-message';
-                
-                if (response.ok) {
-                    submitBtn.innerHTML = '✅ ارسال شد!';
+                if (res.ok) {
+                    btn.innerHTML = '✅ ارسال شد!';
                     this.reset();
-                    msg.style.cssText = 'padding:15px 20px;background:rgba(34,197,94,0.12);border-radius:12px;color:#22c55e;text-align:center;margin-top:15px;border:1px solid rgba(34,197,94,0.25);font-weight:500;';
-                    msg.textContent = '✅ پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهم گرفت.';
+                    msg.style.cssText = 'padding:14px 18px;background:rgba(34,197,94,0.12);border-radius:10px;color:#22c55e;text-align:center;margin-top:16px;border:1px solid rgba(34,197,94,0.2);font-weight:500;';
+                    msg.textContent = '✅ پیام شما با موفقیت ارسال شد. به زودی پاسخ می‌دهم.';
                     this.appendChild(msg);
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'contact_form_submit', { 'event_category': 'conversion' });
-                    }
+                    if (typeof gtag !== 'undefined') gtag('event', 'contact_form_submit', { event_category: 'conversion' });
                 } else {
-                    throw new Error('خطا در ارسال');
+                    throw new Error('خطا');
                 }
-            } catch (error) {
-                submitBtn.innerHTML = '❌ خطا!';
+            } catch (err) {
+                btn.innerHTML = '❌ خطا!';
                 const msg = document.createElement('div');
                 msg.className = 'form-message';
-                msg.style.cssText = 'padding:15px 20px;background:rgba(239,68,68,0.12);border-radius:12px;color:#ef4444;text-align:center;margin-top:15px;border:1px solid rgba(239,68,68,0.25);font-weight:500;';
-                msg.textContent = '❌ متأسفانه ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید یا از ایمیل استفاده کنید.';
+                msg.style.cssText = 'padding:14px 18px;background:rgba(239,68,68,0.12);border-radius:10px;color:#ef4444;text-align:center;margin-top:16px;border:1px solid rgba(239,68,68,0.2);font-weight:500;';
+                msg.textContent = '❌ ارسال ناموفق بود. لطفاً دوباره تلاش کنید.';
                 this.appendChild(msg);
             } finally {
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                }, 3000);
+                setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
             }
         });
     }
-    
-    // فرم درخواست خدمات
-    const serviceForm = document.getElementById('service-form');
-    if (serviceForm) {
-        serviceForm.addEventListener('submit', async function(e) {
+
+    // ============================================================
+    // SERVICE FORM (AJAX)
+    // ============================================================
+    const serviceFormEl = document.getElementById('service-form');
+    if (serviceFormEl) {
+        serviceFormEl.addEventListener('submit', async function(e) {
             e.preventDefault();
             const formData = new FormData(this);
-            const submitBtn = this.querySelector('.cta-button[type="submit"]');
-            const originalText = submitBtn.innerHTML;
-            
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> در حال ارسال...';
-            submitBtn.disabled = true;
-            
+            const btn = this.querySelector('.cta-button');
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> در حال ارسال...';
+            btn.disabled = true;
             const oldMsg = this.querySelector('.form-message');
             if (oldMsg) oldMsg.remove();
-            
             try {
-                const response = await fetch(this.action, {
+                const res = await fetch(this.action, {
                     method: 'POST',
                     body: formData,
                     headers: { 'Accept': 'application/json' }
                 });
-                
                 const msg = document.createElement('div');
                 msg.className = 'form-message';
-                
-                if (response.ok) {
-                    submitBtn.innerHTML = '✅ ارسال شد!';
+                if (res.ok) {
+                    btn.innerHTML = '✅ ارسال شد!';
                     this.reset();
-                    msg.style.cssText = 'padding:15px 20px;background:rgba(34,197,94,0.12);border-radius:12px;color:#22c55e;text-align:center;margin-top:15px;border:1px solid rgba(34,197,94,0.25);font-weight:500;';
-                    msg.textContent = '✅ درخواست شما با موفقیت ارسال شد. به زودی با شما تماس خواهم گرفت.';
+                    msg.style.cssText = 'padding:14px 18px;background:rgba(34,197,94,0.12);border-radius:10px;color:#22c55e;text-align:center;margin-top:16px;border:1px solid rgba(34,197,94,0.2);font-weight:500;';
+                    msg.textContent = '✅ درخواست شما ثبت شد. به زودی تماس می‌گیرم.';
                     this.appendChild(msg);
-                    const formContainer = document.getElementById('service-request-form');
-                    if (formContainer) {
-                        setTimeout(() => { formContainer.style.display = 'none'; }, 5000);
-                    }
-                    if (typeof gtag !== 'undefined') {
-                        gtag('event', 'service_form_submit', { 'event_category': 'conversion' });
-                    }
+                    const container = document.getElementById('service-request-form');
+                    if (container) setTimeout(() => container.style.display = 'none', 5000);
+                    if (typeof gtag !== 'undefined') gtag('event', 'service_form_submit', { event_category: 'conversion' });
                 } else {
-                    throw new Error('خطا در ارسال');
+                    throw new Error('خطا');
                 }
-            } catch (error) {
-                submitBtn.innerHTML = '❌ خطا!';
+            } catch (err) {
+                btn.innerHTML = '❌ خطا!';
                 const msg = document.createElement('div');
                 msg.className = 'form-message';
-                msg.style.cssText = 'padding:15px 20px;background:rgba(239,68,68,0.12);border-radius:12px;color:#ef4444;text-align:center;margin-top:15px;border:1px solid rgba(239,68,68,0.25);font-weight:500;';
-                msg.textContent = '❌ متأسفانه ارسال درخواست با خطا مواجه شد. لطفاً دوباره تلاش کنید.';
+                msg.style.cssText = 'padding:14px 18px;background:rgba(239,68,68,0.12);border-radius:10px;color:#ef4444;text-align:center;margin-top:16px;border:1px solid rgba(239,68,68,0.2);font-weight:500;';
+                msg.textContent = '❌ ارسال ناموفق بود. لطفاً دوباره تلاش کنید.';
                 this.appendChild(msg);
             } finally {
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                }, 3000);
+                setTimeout(() => { btn.innerHTML = orig; btn.disabled = false; }, 3000);
             }
         });
     }
-})();
+
+});
