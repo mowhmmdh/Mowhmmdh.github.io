@@ -1,0 +1,32 @@
+# ==================================================
+# robots.txt - Mohammad Hossein Asgari Somarin
+# Fully optimized for all search engines
+# ==================================================
+
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /fonts/
+Disallow: /tmp/
+Disallow: /backup/
+Disallow: /README.md
+Disallow: /*.log$
+Disallow: /index.html?*
+
+User-agent: Googlebot
+Crawl-delay: 5
+Allow: /
+
+User-agent: bingbot
+Crawl-delay: 5
+Allow: /
+
+User-agent: Yandex
+Crawl-delay: 5
+Allow: /
+
+User-agent: DuckDuckBot
+Crawl-delay: 5
+Allow: /
+
+Sitemap: https://mowhmmdh.github.io/sitemap.xml

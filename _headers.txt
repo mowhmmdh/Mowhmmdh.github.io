@@ -1,0 +1,55 @@
+# ================================================
+# Headers for Security & Caching - GitHub Pages
+# ================================================
+
+# Security Headers
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+
+# Cache static files (1 year)
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.min.css
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.min.js
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+# Cache HTML files (1 hour)
+/*.html
+  Cache-Control: public, max-age=3600
+
+# Cache XML & JSON (1 day)
+/*.xml
+  Cache-Control: public, max-age=86400
+
+/*.json
+  Cache-Control: public, max-age=86400
+
+# Cache images (1 week)
+/images/*
+  Cache-Control: public, max-age=604800

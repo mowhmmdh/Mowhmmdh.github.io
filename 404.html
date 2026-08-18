@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه پیدا نشد - محمدحسین عسگری ثمرین</title>
+    <meta name="description" content="صفحه مورد نظر در سایت محمدحسین عسگری ثمرین یافت نشد. لطفاً از صفحه اصلی دیدن کنید." />
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        .error-page {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .error-page::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(-45deg, #0f2b4d, #1a4a7a, #2563eb, #0f2b4d);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            opacity: 0.06;
+            pointer-events: none;
+        }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .error-container {
+            max-width: 650px;
+            width: 100%;
+            padding: 60px 50px;
+            background: var(--bg-card);
+            border-radius: 24px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 1px solid var(--border);
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            transition: transform 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+        }
+        .error-container:hover {
+            transform: translateY(-4px);
+        }
+        .error-animation {
+            font-size: 8em;
+            font-weight: 900;
+            line-height: 1;
+            margin: 0;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite, float 4s ease-in-out infinite;
+            display: block;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .error-404-icon {
+            font-size: 3em;
+            color: var(--accent);
+            opacity: 0.3;
+            margin-bottom: 10px;
+            display: block;
+            animation: spin 10s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-title {
+            font-size: 2em;
+            color: var(--primary);
+            margin: 16px 0 10px;
+            font-weight: 700;
+            animation: fadeInUp 1s ease;
+        }
+        .error-text {
+            color: var(--text-muted);
+            font-size: 1.05em;
+            margin-bottom: 30px;
+            line-height: 2;
+            animation: fadeInUp 1.2s ease;
+        }
+        .error-text i {
+            color: var(--accent);
+            margin: 0 6px;
+        }
+        .error-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 10px;
+            animation: fadeInUp 1.4s ease;
+        }
+        .error-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            font-family: inherit;
+            border: none;
+            cursor: pointer;
+            min-height: 50px;
+            box-shadow: 0 4px 20px rgba(37,99,235,0.2);
+        }
+        .error-btn:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 8px 35px rgba(37,99,235,0.3);
+        }
+        .error-btn-secondary {
+            background: var(--bg-card);
+            color: var(--text);
+            border: 2px solid var(--border);
+            box-shadow: none;
+        }
+        .error-btn-secondary:hover {
+            border-color: var(--accent);
+            box-shadow: 0 8px 35px rgba(0,0,0,0.05);
+        }
+        .error-search {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px dashed var(--border);
+            animation: fadeInUp 1.6s ease;
+        }
+        .error-search input {
+            width: 100%;
+            max-width: 380px;
+            padding: 12px 20px;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 0.95em;
+            background: var(--bg);
+            color: var(--text);
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        .error-search input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(37,99,235,0.08);
+        }
+        .error-search input::placeholder {
+            color: var(--text-muted);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body.dark-mode .error-container {
+            background: rgba(30, 41, 59, 0.9);
+        }
+        body.dark-mode .error-btn-secondary {
+            background: rgba(30, 41, 59, 0.5);
+            border-color: var(--border);
+        }
+        body.dark-mode .error-btn-secondary:hover {
+            border-color: var(--accent);
+        }
+        @media (max-width: 768px) {
+            .error-container { padding: 40px 25px; }
+            .error-animation { font-size: 5em; }
+            .error-title { font-size: 1.5em; }
+            .error-text { font-size: 0.95em; }
+            .error-btn { padding: 12px 24px; font-size: 0.9em; min-height: 44px; width: 100%; justify-content: center; }
+            .error-actions { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .error-container { padding: 30px 18px; }
+            .error-animation { font-size: 4em; }
+            .error-title { font-size: 1.2em; }
+        }
+    </style>
+</head>
+<body class="lang-fa">
+    <div class="error-page">
+        <div class="error-container">
+            <span class="error-404-icon">
+                <i class="fas fa-compass" aria-hidden="true"></i>
+            </span>
+            <span class="error-animation">۴۰۴</span>
+            <h1 class="error-title">صفحه پیدا نشد!</h1>
+            <p class="error-text">
+                <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                متأسفیم، صفحه‌ای که به دنبال آن هستید وجود ندارد یا حذف شده است.
+                <br>
+                ممکن است آدرس را اشتباه وارد کرده باشید یا صفحه به آدرس دیگری منتقل شده باشد.
+            </p>
+            <div class="error-actions">
+                <a href="/" class="error-btn">
+                    <i class="fas fa-home" aria-hidden="true"></i>
+                    بازگشت به صفحه اصلی
+                </a>
+                <a href="#" onclick="history.back(); return false;" class="error-btn error-btn-secondary">
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    بازگشت به صفحه قبل
+                </a>
+            </div>
+            <div class="error-search">
+                <input type="text" placeholder="جستجو در سایت..." id="error-search-input" onkeydown="if(event.key==='Enter'){window.location.href='/?s='+this.value}">
+            </div>
+        </div>
+    </div>
+    <script>
+        if (localStorage.getItem('dark-mode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const isDark = localStorage.getItem('dark-mode') === 'true';
+            if (isDark) document.body.classList.add('dark-mode');
+        });
+    </script>
+</body>
+</html>
