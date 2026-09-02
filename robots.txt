@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /fonts/
+Disallow: /tmp/
+Disallow: /backup/
+Disallow: /README.md
+Disallow: /*.log$
+Disallow: /index.html?*
+
+User-agent: Googlebot
+Crawl-delay: 3
+Allow: /
+
+User-agent: Bingbot
+Crawl-delay: 3
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+Sitemap: https://mowhmmdh.github.io/sitemap.xml

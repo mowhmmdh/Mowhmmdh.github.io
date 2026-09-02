@@ -1,0 +1,34 @@
+# ================================================
+# humans.txt - محمدحسین عسگری ثمرین
+# ================================================
+
+/* تیم */
+توسعه‌دهنده: محمدحسین عسگری ثمرین
+وب‌سایت: https://mowhmmdh.github.io/
+ایمیل: mohammedhasgari@gmail.com
+موقعیت: تهران، ایران
+نقش: متخصص IT و توسعه‌دهنده وب
+
+/* سایت */
+آخرین به‌روزرسانی: پویا
+استانداردها: HTML5, CSS3, JavaScript ES6+, JSON-LD
+امنیت: HSTS, X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy
+میزبانی: GitHub Pages
+
+/* ابزارها */
+ویرایشگر: Visual Studio Code
+کنترل نسخه: Git / GitHub
+فونت‌ها: Vazirmatn, BNazanin
+آیکون‌ها: Font Awesome 6
+تحلیل: Google Analytics, Google Tag Manager
+
+/* پروژه */
+نام: نمونه کار و رزومه شخصی
+مخزن: https://github.com/mowhmmdh/mowhmmdh.github.io
+ویژگی‌ها: RTL/LTR, دارک‌مود, واکنش‌گرا, انیمیشن اسکرول, چت‌بات هوش مصنوعی, فرم درخواست, اشتراک‌گذاری اجتماعی, بنر کوکی
+
+/* تماس */
+ایمیل: mohammedhasgari@gmail.com
+لینکدین: https://linkedin.com/in/mohammadhosseinasgari
+گیت‌هاب: https://github.com/mowhmmdh
+اینستاگرام: https://instagram.com/mowhmmdh
