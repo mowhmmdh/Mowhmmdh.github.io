@@ -9,14 +9,10 @@
   Cross-Origin-Embedder-Policy: require-corp
   Cross-Origin-Opener-Policy: same-origin
 
-# کش
+# کش فایل‌های استاتیک
 /*.css
   Cache-Control: public, max-age=31536000, immutable
-/*.min.css
-  Cache-Control: public, max-age=31536000, immutable
 /*.js
-  Cache-Control: public, max-age=31536000, immutable
-/*.min.js
   Cache-Control: public, max-age=31536000, immutable
 /*.woff2
   Cache-Control: public, max-age=31536000, immutable
@@ -26,11 +22,17 @@
   Cache-Control: public, max-age=31536000, immutable
 /*.jpg
   Cache-Control: public, max-age=31536000, immutable
+
+# HTMLها (بدون کش)
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+
+# XML و JSON
 /*.xml
   Cache-Control: public, max-age=86400
 /*.json
   Cache-Control: public, max-age=86400
+
+# تصاویر
 /images/*
   Cache-Control: public, max-age=604800
