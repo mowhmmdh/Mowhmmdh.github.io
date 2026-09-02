@@ -1,95 +1,150 @@
 document.addEventListener('DOMContentLoaded', function() {
 
-    // ===== اسپات‌لایت ماوس =====
-    const spotlight = document.createElement('div');
-    spotlight.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        pointer-events: none; z-index: 0;
-        background: radial-gradient(circle 250px at var(--x, 50%) var(--y, 50%), rgba(79, 140, 140, 0.07) 0%, transparent 70%);
-        transition: background 0.15s ease;
-    `;
-    document.body.prepend(spotlight);
-    document.addEventListener('mousemove', (e) => {
-        spotlight.style.setProperty('--x', e.clientX + 'px');
-        spotlight.style.setProperty('--y', e.clientY + 'px');
+    // ===== ناوبری =====
+    const navbar = document.getElementById('navbar');
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    const navItems = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('.section');
+
+    // منوی موبایل
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+    }
+
+    // بستن منو با کلیک روی لینک
+    navItems.forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('open');
+            navItems.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+        });
     });
 
-    // ===== تایپوگرافی پویا =====
-    const heroText = document.querySelector('h1');
-    document.addEventListener('mousemove', (e) => {
-        if (!heroText) return;
-        const x = (e.clientX / window.innerWidth) * 100;
-        heroText.style.fontVariationSettings = `'wght' ${600 + (x/100) * 300}`;
-        heroText.style.letterSpacing = (x/100) * 1.5 + 'px';
-    });
+    // اسکرول برای هایلایت نوار
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+            const top = section.offsetTop - 150;
+            if (window.scrollY >= top) {
+                current = section.getAttribute('id');
+            }
+        });
+        navItems.forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
 
-    // ===== پارالاکس 3D =====
-    const profile = document.querySelector('.profile-wrapper');
-    const sidebar = document.querySelector('#sidebar-info');
-    document.addEventListener('mousemove', (e) => {
-        if (!profile || !sidebar) return;
-        const x = (e.clientX / window.innerWidth - 0.5) * 20;
-        const y = (e.clientY / window.innerHeight - 0.5) * 20;
-        profile.style.transform = `translate(${x * 0.5}px, ${y * 0.5}px) scale(1.04)`;
-        sidebar.style.transform = `translate(${x * 0.2}px, ${y * 0.2}px)`;
+        if (navbar) {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        }
     });
 
     // ===== دارک‌مود =====
-    const darkToggle = document.getElementById('dark-toggle');
+    const darkToggle = document.getElementById('darkToggle');
     const body = document.body;
-    if (localStorage.getItem('dark-mode') === 'true') {
-        body.classList.add('dark-mode');
-        darkToggle.innerHTML = '<i class="fas fa-sun" aria-hidden="true"></i>';
+
+    if (localStorage.getItem('dark-mode') === 'false') {
+        body.classList.add('light-mode');
+        if (darkToggle) darkToggle.innerHTML = '<i class="fas fa-sun"></i>';
     }
-    darkToggle.addEventListener('click', function() {
-        body.classList.toggle('dark-mode');
-        const isDark = body.classList.contains('dark-mode');
-        localStorage.setItem('dark-mode', isDark);
-        this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+
+    if (darkToggle) {
+        darkToggle.addEventListener('click', function() {
+            const isLight = body.classList.toggle('light-mode');
+            localStorage.setItem('dark-mode', isLight ? 'false' : 'true');
+            this.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+    }
+
+    // ===== تغییر زبان =====
+    const langToggle = document.getElementById('langToggle');
+    if (langToggle) {
+        langToggle.addEventListener('click', function() {
+            const current = window.location.pathname;
+            if (current.includes('en')) {
+                window.location.href = '/index.html';
+            } else {
+                window.location.href = '/en.html';
+            }
+        });
+    }
+
+    // ===== مهارت‌ها (انیمیشن بار) =====
+    const skillItems = document.querySelectorAll('.skill-item');
+    const skillObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, { threshold: 0.2 });
+
+    skillItems.forEach(item => skillObserver.observe(item));
+
+    // ===== FAQ =====
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.addEventListener('click', function() {
+            this.classList.toggle('open');
+        });
     });
 
     // ===== چت‌بات هوش مصنوعی =====
-    const chatToggle = document.getElementById('chat-toggle');
-    const chatWindow = document.getElementById('chat-window');
-    const chatClose = document.getElementById('chat-close');
-    const chatInput = document.getElementById('chat-input');
-    const chatSend = document.getElementById('chat-send');
-    const chatMessages = document.getElementById('chat-messages');
+    const chatToggle = document.getElementById('chatToggle');
+    const chatWindow = document.getElementById('chatWindow');
+    const chatClose = document.getElementById('chatClose');
+    const chatInput = document.getElementById('chatInput');
+    const chatSend = document.getElementById('chatSend');
+    const chatMessages = document.getElementById('chatMessages');
 
     let isChatOpen = false;
 
-    chatToggle.addEventListener('click', () => {
-        isChatOpen = !isChatOpen;
-        chatWindow.style.display = isChatOpen ? 'flex' : 'none';
-    });
+    if (chatToggle) {
+        chatToggle.addEventListener('click', () => {
+            isChatOpen = !isChatOpen;
+            chatWindow.classList.toggle('open', isChatOpen);
+        });
+    }
 
-    chatClose.addEventListener('click', () => {
-        isChatOpen = false;
-        chatWindow.style.display = 'none';
-    });
+    if (chatClose) {
+        chatClose.addEventListener('click', () => {
+            isChatOpen = false;
+            chatWindow.classList.remove('open');
+        });
+    }
 
     function addMessage(text, sender) {
         const msg = document.createElement('div');
-        msg.className = `chat-message ${sender}`;
+        msg.className = `msg ${sender}`;
         msg.textContent = text;
         chatMessages.appendChild(msg);
         chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    // دانش پایه هوش مصنوعی
+    // دانش پایه هوش مصنوعی (کامل)
     const knowledgeBase = {
-        'تخصص': 'من محمدحسین عسگری ثمرین، متخصص شبکه و زیرساخت هستم. تخصص من شامل طراحی شبکه، کابل‌کشی، دوربین مداربسته، تعمیرات سخت‌افزار و نرم‌افزار است.',
-        'خدمات': 'خدمات من شامل: ۱- طراحی و پیاده‌سازی شبکه ۲- نصب و پشتیبانی CCTV ۳- تعمیرات نرم‌افزاری ۴- تعمیرات سخت‌افزاری',
+        'تخصص': 'من محمدحسین عسگری ثمرین، متخصص ارشد شبکه و زیرساخت هستم. تخصص من شامل طراحی شبکه، کابل‌کشی، دوربین مداربسته، تعمیرات سخت‌افزار و نرم‌افزار است.',
+        'خدمات': 'خدمات من شامل: ۱- طراحی و پیاده‌سازی شبکه ۲- نصب و پشتیبانی CCTV ۳- تعمیرات نرم‌افزاری ۴- تعمیرات سخت‌افزاری ۵- امنیت شبکه',
         'تماس': 'برای تماس با من می‌توانید از فرم تماس در سایت، ایمیل mohammedhasgari@gmail.com، یا لینکدین و اینستاگرام استفاده کنید.',
         'همکاری': 'برای همکاری کافی است از بخش خدمات، خدمت مورد نظر را انتخاب کرده و فرم درخواست را پر کنید. در اسرع وقت با شما تماس می‌گیرم.',
         'سابقه': 'من سابقه همکاری با وزارت کشور، مؤسسه صمت، کیمیا مهر اسپادانا و در حال حاضر شرکت ماهکس را دارم.',
         'مدارک': 'من دارای گواهینامه‌های CCNA، Network+ و CEH هستم.',
         'سلام': 'سلام! وقت بخیر. چطور می‌توانم به شما کمک کنم؟',
         'network': 'I specialize in network design, structured cabling, switch/router configuration, and troubleshooting.',
-        'service': 'My services include: 1- Network Design 2- CCTV Installation 3- Software Repair 4- Hardware Repair',
+        'service': 'My services include: 1- Network Design 2- CCTV Installation 3- Software Repair 4- Hardware Repair 5- Network Security',
         'contact': 'You can contact me via the contact form, email mohammedhasgari@gmail.com, or LinkedIn/Instagram.',
         'experience': 'I have experience with the Ministry of Interior, Samat Institute, Kimia Mehr Espadana, and currently Mahex Air Cargo Services.',
-        'certificate': 'I hold CCNA, Network+, and CEH certifications.'
+        'certificate': 'I hold CCNA, Network+, and CEH certifications.',
+        'who': 'Mohammad Hossein Asgari Somarin is a Senior Network & Infrastructure specialist with 2+ years of experience.',
+        'expertise': 'My expertise includes network design, structured cabling, CCTV, hardware repair, software repair, and network security.'
     };
 
     function getAIResponse(query) {
@@ -97,255 +152,128 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const [key, value] of Object.entries(knowledgeBase)) {
             if (lower.includes(key)) return value;
         }
+        if (lower.includes('؟') || lower.includes('?')) {
+            return 'سوال خوبی پرسیدید! برای پاسخ دقیق‌تر، لطفاً سوال خود را واضح‌تر بپرسید یا از بخش "تماس با من" استفاده کنید.';
+        }
         return 'متأسفم، پاسخ دقیقی برای این سوال ندارم. لطفاً سوال خود را واضح‌تر بپرسید یا از بخش تماس با من استفاده کنید.';
     }
-
-    chatSend.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage(); });
 
     function sendMessage() {
         const text = chatInput.value.trim();
         if (!text) return;
         addMessage(text, 'user');
         chatInput.value = '';
+
+        const typingMsg = document.createElement('div');
+        typingMsg.className = 'msg bot';
+        typingMsg.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
+        chatMessages.appendChild(typingMsg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+
         setTimeout(() => {
+            chatMessages.removeChild(typingMsg);
             const response = getAIResponse(text);
             addMessage(response, 'bot');
-        }, 400);
+        }, 800 + Math.random() * 400);
     }
 
-    // ===== تایپ‌رایتر =====
-    const typingElement = document.querySelector('.typing-text');
-    if (typingElement) {
-        const words = JSON.parse(typingElement.getAttribute('data-words') || '["متخصص شبکه و زیرساخت"]');
-        let wordIndex = 0, charIndex = 0, isDeleting = false, speed = 80;
-        function typeEffect() {
-            const currentWord = words[wordIndex];
-            if (isDeleting) {
-                typingElement.textContent = currentWord.substring(0, charIndex - 1);
-                charIndex--;
-                speed = 40;
-            } else {
-                typingElement.textContent = currentWord.substring(0, charIndex + 1);
-                charIndex++;
-                speed = 80 + Math.random() * 40;
-            }
-            if (!isDeleting && charIndex === currentWord.length) {
-                setTimeout(() => { isDeleting = true; setTimeout(typeEffect, 100); }, 2000);
-                return;
-            }
-            if (isDeleting && charIndex === 0) {
-                isDeleting = false;
-                wordIndex = (wordIndex + 1) % words.length;
-                setTimeout(typeEffect, 300);
-                return;
-            }
-            setTimeout(typeEffect, speed);
+    if (chatSend) {
+        chatSend.addEventListener('click', sendMessage);
+    }
+    if (chatInput) {
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    }
+
+    // ===== بنر کوکی =====
+    const cookieBanner = document.getElementById('cookieBanner');
+    if (cookieBanner) {
+        const consent = localStorage.getItem('cookie-consent');
+        if (consent === 'accepted' || consent === 'rejected') {
+            cookieBanner.classList.remove('show');
+        } else {
+            setTimeout(() => cookieBanner.classList.add('show'), 500);
         }
-        setTimeout(typeEffect, 500);
-    }
 
-    // ===== نوار پیشرفت =====
-    function updateProgressBar() {
-        const scrollTop = window.scrollY;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        const progressBar = document.getElementById('progress-bar');
-        if (progressBar) {
-            progressBar.style.width = scrollPercent + '%';
-        }
-    }
-    window.addEventListener('scroll', updateProgressBar);
-    updateProgressBar();
+        window.acceptCookies = function() {
+            localStorage.setItem('cookie-consent', 'accepted');
+            cookieBanner.classList.remove('show');
+            if (typeof gtag !== 'undefined') {
+                gtag('consent', 'update', { 'analytics_storage': 'granted' });
+            }
+        };
 
-    // ===== نمایان شدن بخش‌ها =====
-    const sections = document.querySelectorAll('.section');
-    const sectionObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+        window.rejectCookies = function() {
+            localStorage.setItem('cookie-consent', 'rejected');
+            cookieBanner.classList.remove('show');
+            if (typeof gtag !== 'undefined') {
+                gtag('consent', 'update', { 'analytics_storage': 'denied' });
             }
-        });
-    }, { threshold: 0.08 });
-    sections.forEach(section => sectionObserver.observe(section));
-
-    // ===== انیمیشن مهارت‌ها =====
-    const skillItems = document.querySelectorAll('.skill-level-item');
-    function animateSkills() {
-        skillItems.forEach(item => {
-            const bar = item.querySelector('.skill-bar');
-            if (bar) {
-                const val = parseInt(bar.getAttribute('data-width'));
-                if (!isNaN(val) && val > 0) {
-                    item.style.setProperty('--skill-width', val + '%');
-                    bar.style.width = val + '%';
-                    item.classList.add('show');
-                }
-            }
-        });
+        };
     }
-    const skillsSection = document.getElementById('skills');
-    if (skillsSection) {
-        const skillsObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    setTimeout(animateSkills, 150);
-                    skillsObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-        skillsObserver.observe(skillsSection);
-    } else {
-        animateSkills();
-    }
-
-    // ===== دکمه بازگشت به بالا =====
-    const backBtn = document.getElementById('back-to-top');
-    function toggleBackBtn() {
-        if (backBtn) {
-            backBtn.style.display = window.scrollY > 300 ? 'flex' : 'none';
-        }
-    }
-    if (backBtn) {
-        backBtn.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-        window.addEventListener('scroll', toggleBackBtn);
-        toggleBackBtn();
-    }
-
-    // ===== ناوبری فعال =====
-    const navLinks = document.querySelectorAll('#navbar a');
-    function updateActiveNav() {
-        let current = '';
-        const scrollY = window.scrollY;
-        sections.forEach(section => {
-            const top = section.offsetTop - 200;
-            if (scrollY >= top) {
-                current = section.getAttribute('id');
-            }
-        });
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
-        });
-    }
-    window.addEventListener('scroll', updateActiveNav);
-    updateActiveNav();
-
-    // ===== دکمه‌های خدمات =====
-    const serviceButtons = document.querySelectorAll('.service-select-btn');
-    const serviceForm = document.getElementById('service-request-form');
-    const selectedServiceInput = document.getElementById('selected-service');
-    serviceButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const serviceName = this.getAttribute('data-service');
-            selectedServiceInput.value = serviceName;
-            if (serviceForm) {
-                serviceForm.style.display = 'block';
-                serviceForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // ===== اشتراک‌گذاری =====
-    const shareButtons = document.querySelectorAll('.share-btn');
-    const pageUrl = encodeURIComponent(window.location.href);
-    const pageTitle = encodeURIComponent(document.title);
-    shareButtons.forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            const type = this.getAttribute('data-share');
-            let shareUrl = '';
-            switch(type) {
-                case 'linkedin':
-                    shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${pageUrl}`;
-                    break;
-                case 'twitter':
-                    shareUrl = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${pageTitle}`;
-                    break;
-                case 'whatsapp':
-                    shareUrl = `https://api.whatsapp.com/send?text=${pageTitle}%20${pageUrl}`;
-                    break;
-                case 'telegram':
-                    shareUrl = `https://t.me/share/url?url=${pageUrl}&text=${pageTitle}`;
-                    break;
-                case 'email':
-                    shareUrl = `mailto:?subject=${pageTitle}&body=مشاهده این صفحه: ${pageUrl}`;
-                    break;
-                case 'copy':
-                    if (navigator.clipboard) {
-                        navigator.clipboard.writeText(window.location.href).then(() => {
-                            alert('✅ لینک کپی شد!');
-                        });
-                    } else {
-                        const textArea = document.createElement('textarea');
-                        textArea.value = window.location.href;
-                        document.body.appendChild(textArea);
-                        textArea.select();
-                        document.execCommand('copy');
-                        document.body.removeChild(textArea);
-                        alert('✅ لینک کپی شد!');
-                    }
-                    return;
-                default:
-                    return;
-            }
-            if (shareUrl) {
-                window.open(shareUrl, '_blank', 'width=600,height=500,scrollbars=yes');
-            }
-        });
-    });
 
     // ===== به‌روزرسانی تاریخ =====
     const now = new Date();
     const updateFa = document.getElementById('update-date-fa');
+    const updateEn = document.getElementById('update-date-en');
+
     if (updateFa) {
-        const persianMonths = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+        const persianMonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
         const year = now.getFullYear() - 621;
         updateFa.textContent = `به‌روزرسانی: ${now.getDate()} ${persianMonths[now.getMonth()]} ${year}`;
     }
-    const updateEn = document.getElementById('update-date-en');
+
     if (updateEn) {
-        const englishMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        updateEn.textContent = `Last Updated: ${englishMonths[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+        const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        updateEn.textContent = `Last Updated: ${months[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
     }
 
-    // ===== مدت زمان شغلی =====
-    function updateJobDuration() {
-        const now = new Date();
-        const startFa = document.getElementById('start-date-fa');
-        const displayFa = document.getElementById('duration-display-fa');
-        if (startFa && displayFa) {
-            const start = new Date(startFa.getAttribute('data-start'));
-            let months = (now.getFullYear() - start.getFullYear()) * 12 + now.getMonth() - start.getMonth();
-            if (now.getDate() < start.getDate()) months--;
-            if (months >= 12) {
-                const years = Math.floor(months / 12);
-                const rem = months % 12;
-                displayFa.textContent = rem === 0 ? years + ' سال' : years + ' سال و ' + rem + ' ماه';
-            } else {
-                displayFa.textContent = months + ' ماه';
+    // ===== فرم تماس (AJAX) =====
+    const contactForm = document.querySelector('.contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const submitBtn = this.querySelector('.btn-submit');
+            const originalText = submitBtn.innerHTML;
+
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ارسال...';
+            submitBtn.disabled = true;
+
+            try {
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'Accept': 'application/json' }
+                });
+
+                if (response.ok) {
+                    submitBtn.innerHTML = '✅ ارسال شد!';
+                    this.reset();
+                    const msg = document.createElement('div');
+                    msg.style.cssText = 'padding:16px;background:rgba(0,212,255,0.08);border-radius:16px;color:var(--accent-1);text-align:center;margin-top:16px;border:1px solid rgba(0,212,255,0.1);font-weight:600;';
+                    msg.textContent = '✅ پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهم گرفت.';
+                    this.appendChild(msg);
+                    if (typeof gtag !== 'undefined') {
+                        gtag('event', 'contact_form_submit', { 'event_category': 'conversion' });
+                    }
+                } else {
+                    throw new Error('خطا در ارسال');
+                }
+            } catch (error) {
+                submitBtn.innerHTML = '❌ خطا!';
+                const msg = document.createElement('div');
+                msg.style.cssText = 'padding:16px;background:rgba(244,63,94,0.08);border-radius:16px;color:#f43f5e;text-align:center;margin-top:16px;border:1px solid rgba(244,63,94,0.1);font-weight:600;';
+                msg.textContent = '❌ متأسفانه ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید.';
+                this.appendChild(msg);
+            } finally {
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
             }
-        }
-        const startEn = document.getElementById('start-date-en');
-        const displayEn = document.getElementById('duration-display-en');
-        if (startEn && displayEn) {
-            const start = new Date(startEn.getAttribute('data-start'));
-            let months = (now.getFullYear() - start.getFullYear()) * 12 + now.getMonth() - start.getMonth();
-            if (now.getDate() < start.getDate()) months--;
-            if (months >= 12) {
-                const years = Math.floor(months / 12);
-                const rem = months % 12;
-                displayEn.textContent = rem === 0 ? years + ' year' + (years > 1 ? 's' : '') : years + ' year' + (years > 1 ? 's' : '') + ' and ' + rem + ' month' + (rem > 1 ? 's' : '');
-            } else {
-                displayEn.textContent = months + ' month' + (months > 1 ? 's' : '');
-            }
-        }
+        });
     }
-    updateJobDuration();
 
 });
