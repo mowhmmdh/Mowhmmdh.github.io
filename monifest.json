@@ -4,8 +4,8 @@
     "description": "متخصص شبکه و زیرساخت با جدیدترین فناوری‌های IT",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#0a0e17",
-    "theme_color": "#00d4ff",
+    "background_color": "#1a2a3a",
+    "theme_color": "#c9a84c",
     "orientation": "any",
     "scope": "/",
     "icons": [
