@@ -14,14 +14,14 @@
     <meta name="theme-color" content="#0a0e17" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
 
-    <!-- امنیت -->
+    <!-- Security -->
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="permissions-policy" content="geolocation=(), microphone=(), camera=()" />
 
-    <!-- متعارف و چندزبانه -->
+    <!-- Canonical & Multi-language -->
     <link rel="canonical" href="https://mowhmmdh.github.io/" />
     <link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/index.html" />
     <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en.html" />
@@ -51,7 +51,7 @@
     <meta name="twitter:description" content="سایت رسمی محمدحسین عسگری ثمرین، متخصص ارشد شبکه و زیرساخت." />
     <meta name="twitter:image" content="https://mowhmmdh.github.io/images/profile.jpg" />
 
-    <!-- Google Analytics & GTM -->
+    <!-- Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6369793553"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -61,19 +61,18 @@
     </script>
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-5D7JHSFN');</script>
 
-    <!-- Preconnect & Fonts (استفاده از فونت‌های موجود) -->
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
-    <!-- Preload فونت‌های فارسی -->
+    <!-- Preload Persian Fonts -->
     <link rel="preload" href="fonts/Vazirmatn-Regular.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/Vazirmatn-Medium.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="preload" href="fonts/Vazirmatn-Bold.woff2" as="font" type="font/woff2" crossorigin>
 
     <style>
-        /* ===== تعریف فونت‌های فارسی ===== */
         @font-face {
             font-family: 'Vazirmatn';
             src: url('fonts/Vazirmatn-Regular.woff2') format('woff2');
@@ -92,20 +91,6 @@
             font-family: 'Vazirmatn';
             src: url('fonts/Vazirmatn-Bold.woff2') format('woff2');
             font-weight: 700;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Vazirmatn';
-            src: url('fonts/Vazirmatn-ExtraBold.woff2') format('woff2');
-            font-weight: 800;
-            font-style: normal;
-            font-display: swap;
-        }
-        @font-face {
-            font-family: 'Vazirmatn';
-            src: url('fonts/Vazirmatn-Light.woff2') format('woff2');
-            font-weight: 300;
             font-style: normal;
             font-display: swap;
         }
@@ -133,7 +118,6 @@
                 "url": "https://mowhmmdh.github.io/",
                 "image": "https://mowhmmdh.github.io/images/profile.jpg",
                 "email": "mailto:mohammedhasgari@gmail.com",
-                "telephone": "+989123456789",
                 "address": { "@type": "PostalAddress", "addressCountry": "IR" },
                 "sameAs": [
                     "https://linkedin.com/in/mohammadhosseinasgari",
@@ -141,11 +125,9 @@
                     "https://github.com/mowhmmdh"
                 ],
                 "alumniOf": { "@type": "EducationalOrganization", "name": "دانشگاه آزاد اسلامی واحد یادگار امام (ره)" },
-                "knowsAbout": ["شبکه و زیرساخت", "پشتیبانی IT", "دوربین مداربسته", "کابل‌کشی شبکه", "امنیت شبکه", "مجازی‌سازی سرور", "CCNA", "Network+"],
+                "knowsAbout": ["شبکه و زیرساخت", "پشتیبانی IT", "دوربین مداربسته", "کابل‌کشی شبکه", "امنیت شبکه", "CCNA", "Network+"],
                 "worksFor": { "@type": "Organization", "name": "خدمات بار هوایی سریع‌ترابر ماهان (ماهکس)" },
-                "award": ["گواهینامه CCNA", "گواهینامه Network+", "گواهینامه CEH"],
-                "nationality": "ایرانی",
-                "gender": "مرد"
+                "award": ["گواهینامه CCNA", "گواهینامه Network+", "گواهینامه CEH"]
             },
             {
                 "@type": "WebSite",
@@ -154,12 +136,7 @@
                 "name": "محمدحسین عسگری ثمرین | متخصص ارشد شبکه و زیرساخت",
                 "description": "سایت رسمی محمدحسین عسگری ثمرین - متخصص ارشد شبکه و زیرساخت",
                 "inLanguage": ["fa-IR", "en-US"],
-                "publisher": { "@id": "https://mowhmmdh.github.io/#person" },
-                "potentialAction": {
-                    "@type": "SearchAction",
-                    "target": "https://mowhmmdh.github.io/?s={search_term_string}",
-                    "query-input": "required name=search_term_string"
-                }
+                "publisher": { "@id": "https://mowhmmdh.github.io/#person" }
             },
             {
                 "@type": "BreadcrumbList",
@@ -175,519 +152,499 @@
                     {
                         "@type": "Question",
                         "name": "محمدحسین عسگری ثمرین کیست و چه تخصصی دارد؟",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "محمدحسین عسگری ثمرین متخصص ارشد شبکه و زیرساخت با ۲ سال تجربه در طراحی شبکه، دوربین مداربسته، تعمیرات سخت‌افزار و نرم‌افزار است."
-                        }
+                        "acceptedAnswer": { "@type": "Answer", "text": "محمدحسین عسگری ثمرین متخصص ارشد شبکه و زیرساخت با ۲ سال تجربه در طراحی شبکه، دوربین مداربسته، تعمیرات سخت‌افزار و نرم‌افزار است." }
                     },
                     {
                         "@type": "Question",
                         "name": "چه خدماتی در حوزه شبکه ارائه می‌شود؟",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "طراحی و پیاده‌سازی شبکه، کابل‌کشی ساختاریافته Cat6 و فیبر نوری، راه‌اندازی پچ‌پنل و رک، پیکربندی سوییچ‌ها و روترها، عیب‌یابی شبکه."
-                        }
+                        "acceptedAnswer": { "@type": "Answer", "text": "طراحی و پیاده‌سازی شبکه، کابل‌کشی ساختاریافته Cat6 و فیبر نوری، راه‌اندازی پچ‌پنل و رک، پیکربندی سوییچ‌ها و روترها، عیب‌یابی شبکه." }
                     },
                     {
                         "@type": "Question",
                         "name": "آیا نصب و پشتیبانی دوربین مداربسته انجام می‌شود؟",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "بله، نصب دوربین‌های آنالوگ و IP، کابل‌کشی، پیکربندی DVR/NVR، طراحی سیستم نظارتی، تعمیرات و ارائه دسترسی از راه دور."
-                        }
+                        "acceptedAnswer": { "@type": "Answer", "text": "بله، نصب دوربین‌های آنالوگ و IP، کابل‌کشی، پیکربندی DVR/NVR، طراحی سیستم نظارتی، تعمیرات و ارائه دسترسی از راه دور." }
                     },
                     {
                         "@type": "Question",
                         "name": "چگونه می‌توانم با محمدحسین عسگری ثمرین تماس بگیرم؟",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "از طریق فرم تماس در این وب‌سایت، ایمیل mohammedhasgari@gmail.com، یا از طریق لینکدین و اینستاگرام."
-                        }
+                        "acceptedAnswer": { "@type": "Answer", "text": "از طریق فرم تماس در این وب‌سایت، ایمیل mohammedhasgari@gmail.com، یا از طریق لینکدین و اینستاگرام." }
                     }
                 ]
             },
             {
                 "@type": "HowTo",
                 "name": "چگونه با محمدحسین عسگری ثمرین همکاری کنم؟",
-                "description": "مراحل همکاری با محمدحسین عسگری ثمرین، متخصص ارشد شبکه و زیرساخت",
                 "step": [
-                    {
-                        "@type": "HowToStep",
-                        "position": 1,
-                        "name": "بازدید از بخش خدمات",
-                        "text": "خدمات مورد نیاز خود را از بخش خدمات انتخاب کنید."
-                    },
-                    {
-                        "@type": "HowToStep",
-                        "position": 2,
-                        "name": "تکمیل فرم درخواست",
-                        "text": "فرم مربوط به آن خدمت را به دقت پر کنید."
-                    },
-                    {
-                        "@type": "HowToStep",
-                        "position": 3,
-                        "name": "ارسال درخواست",
-                        "text": "پس از ارسال، در اسرع وقت با شما تماس گرفته می‌شود."
-                    }
+                    { "@type": "HowToStep", "position": 1, "name": "بازدید از بخش خدمات", "text": "خدمات مورد نیاز خود را انتخاب کنید." },
+                    { "@type": "HowToStep", "position": 2, "name": "تکمیل فرم درخواست", "text": "فرم مربوطه را پر کنید." },
+                    { "@type": "HowToStep", "position": 3, "name": "ارسال درخواست", "text": "پس از ارسال، در اسرع وقت با شما تماس گرفته می‌شود." }
                 ]
             }
         ]
     }
     </script>
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.min.css">
 
-    <style>
-        /* ===== تنظیمات اختصاصی نسخه فارسی ===== */
-        body.lang-fa .exp-item {
-            border-right: 3px solid var(--accent-1) !important;
-            border-left: none !important;
-        }
-        body.lang-fa .exp-item:hover {
-            transform: translateX(-4px) !important;
-        }
-        body.lang-fa .btn-primary i,
-        body.lang-fa .btn-secondary i {
-            margin-left: 8px;
-            margin-right: 0;
-        }
-        body.lang-fa .hero .badge i {
-            margin-left: 8px;
-            margin-right: 0;
-        }
-        body.lang-fa .contact-form label i {
-            margin-left: 8px;
-            margin-right: 0;
-        }
-        body.lang-fa .contact-form .quick-links a i {
-            margin-left: 6px;
-            margin-right: 0;
-        }
-        body.lang-fa .chat-messages .msg.user {
-            margin-right: auto;
-            margin-left: 0;
-        }
-    </style>
 </head>
 
-<body class="lang-fa">
+<body>
 
-    <!-- ===== پس‌زمینه پویا ===== -->
-    <div class="bg-animation">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
+    <!-- ===== Preloader ===== -->
+    <div id="preloader">
+        <div class="loader"></div>
     </div>
 
-    <!-- ===== نوار ناوبری ===== -->
+    <!-- ===== Navbar ===== -->
     <nav class="navbar" id="navbar">
-        <div class="logo">
-            <img src="images/mha-logo.webp" alt="لوگو" style="height:32px; width:auto; display:inline-block; margin-left:10px;">
-            MH<span>.</span>Asgari
-        </div>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#about" class="active">درباره</a></li>
-            <li><a href="#services">خدمات</a></li>
-            <li><a href="#experience">سوابق</a></li>
-            <li><a href="#skills">مهارت‌ها</a></li>
-            <li><a href="#projects">پروژه‌ها</a></li>
-            <li><a href="#faq">پرسش‌ها</a></li>
-            <li><a href="#contact">تماس</a></li>
-        </ul>
-        <div class="actions">
-            <button class="lang-btn" id="langToggle"><i class="fas fa-globe"></i> EN</button>
-            <button class="dark-toggle" id="darkToggle"><i class="fas fa-moon"></i></button>
-            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+        <div class="container nav-container">
+            <div class="logo">
+                <img src="images/mha-logo.webp" alt="لوگو" class="logo-img">
+                <span class="logo-text">MH<span>.</span>Asgari</span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#hero" class="active">خانه</a></li>
+                <li><a href="#about">درباره</a></li>
+                <li><a href="#services">خدمات</a></li>
+                <li><a href="#experience">سوابق</a></li>
+                <li><a href="#skills">مهارت‌ها</a></li>
+                <li><a href="#projects">پروژه‌ها</a></li>
+                <li><a href="#faq">پرسش‌ها</a></li>
+                <li><a href="#contact">تماس</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="lang-btn" id="langToggle"><i class="fas fa-globe"></i> EN</button>
+                <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+                <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            </div>
         </div>
     </nav>
 
-    <!-- ===== بخش هیرو ===== -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="badge"><i class="fas fa-crown"></i> متخصص ارشد شبکه و زیرساخت</div>
-            <h1>
-                محمدحسین<br>
-                <span class="highlight">عسگری ثمرین</span>
-            </h1>
-            <p class="subtitle">
-                <i class="fas fa-network-wired"></i> طراحی شبکه ·
-                <i class="fas fa-video"></i> CCTV ·
-                <i class="fas fa-microchip"></i> تعمیرات تخصصی
-            </p>
-            <div class="cta-group">
-                <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> شروع همکاری</a>
-                <a href="#services" class="btn-secondary"><i class="fas fa-arrow-left"></i> مشاهده خدمات</a>
+    <!-- ===== Hero Section ===== -->
+    <section id="hero" class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <i class="fas fa-crown"></i> متخصص ارشد شبکه و زیرساخت
+                </div>
+                <h1 class="hero-title">
+                    محمدحسین<br>
+                    <span class="highlight">عسگری ثمرین</span>
+                </h1>
+                <p class="hero-subtitle">
+                    <i class="fas fa-network-wired"></i> طراحی شبکه ·
+                    <i class="fas fa-video"></i> CCTV ·
+                    <i class="fas fa-microchip"></i> تعمیرات تخصصی
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn-primary"><i class="fas fa-paper-plane"></i> شروع همکاری</a>
+                    <a href="#services" class="btn-secondary"><i class="fas fa-arrow-left"></i> مشاهده خدمات</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="number">۲+</span>
+                        <span class="label">سال تجربه</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">۴+</span>
+                        <span class="label">سازمان همکار</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">۱۰۰%</span>
+                        <span class="label">رضایت مشتری</span>
+                    </div>
+                </div>
             </div>
+            <div class="hero-profile">
+                <img src="images/profile.webp" alt="محمدحسین عسگری ثمرین" class="profile-image">
+            </div>
+        </div>
+    </section>
 
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="number">۲+</span>
-                    <span class="label">سال تجربه</span>
+    <!-- ===== About Section ===== -->
+    <section id="about" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">درباره من</span>
+                <h2 class="section-title">معرفی <span class="highlight">محمدحسین عسگری ثمرین</span></h2>
+            </div>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p class="about-intro">
+                        <strong>محمدحسین عسگری ثمرین</strong> متخصص ارشد شبکه و زیرساخت با <strong>۲ سال تجربه</strong> عملی در طراحی شبکه، عیب‌یابی سیستم‌ها، پشتیبانی از کاربران و نگهداری زیرساخت‌های سازمانی.
+                    </p>
+                    <p>
+                        با سازمان‌هایی نظیر وزارت کشور، مؤسسه فرهنگی و مطبوعاتی صمت، کیمیا مهر اسپادانا و در حال حاضر شرکت خدمات بار هوایی سریع‌ترابر ماهان (ماهکس) همکاری داشته‌ام.
+                    </p>
+                    <p>
+                        مهارت‌های من شامل <strong>مدیریت شبکه، پیکربندی تجهیزات فعال و غیرفعال، نصب دوربین‌های مداربسته، تعمیرات سخت‌افزاری و نرم‌افزاری</strong> است.
+                    </p>
+                    <div class="about-info">
+                        <div><i class="fas fa-building"></i> ۴ سازمان همکار</div>
+                        <div><i class="fas fa-certificate"></i> CCNA · Network+ · CEH</div>
+                        <div><i class="fas fa-graduation-cap"></i> مهندسی کامپیوتر</div>
+                    </div>
                 </div>
-                <div class="stat-item">
-                    <span class="number">۴+</span>
-                    <span class="label">سازمان همکار</span>
-                </div>
-                <div class="stat-item">
-                    <span class="number">۱۰۰%</span>
-                    <span class="label">رضایت مشتری</span>
+                <div class="about-image">
+                    <img src="images/profile.jpg" alt="محمدحسین عسگری ثمرین">
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ===== محتوای اصلی ===== -->
-    <div class="main-content">
-
-        <!-- بخش درباره -->
-        <section id="about" class="section">
-            <h2 class="section-title">
-                <span class="icon"><i class="fas fa-user-astronaut"></i></span>
-                درباره من
-            </h2>
-            <p class="section-desc">
-                <strong style="color:#fff;">محمدحسین عسگری ثمرین</strong> متخصص ارشد شبکه و زیرساخت با ۲ سال تجربه عملی در طراحی شبکه، عیب‌یابی سیستم‌ها، پشتیبانی از کاربران و نگهداری زیرساخت‌های سازمانی در ایران.
-            </p>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:20px;">
-                <div style="background:var(--bg-glass); padding:24px; border-radius:var(--radius); border:1px solid var(--border-glass);">
-                    <div style="font-size:2rem; color:var(--accent-1); margin-bottom:8px;"><i class="fas fa-building"></i></div>
-                    <h4 style="font-size:0.9rem; font-weight:700;">سازمان‌های همکار</h4>
-                    <p style="color:var(--text-secondary); font-size:0.85rem;">وزارت کشور، مؤسسه صمت، کیمیا مهر اسپادانا، ماهکس</p>
-                </div>
-                <div style="background:var(--bg-glass); padding:24px; border-radius:var(--radius); border:1px solid var(--border-glass);">
-                    <div style="font-size:2rem; color:var(--accent-1); margin-bottom:8px;"><i class="fas fa-certificate"></i></div>
-                    <h4 style="font-size:0.9rem; font-weight:700;">مدارک حرفه‌ای</h4>
-                    <p style="color:var(--text-secondary); font-size:0.85rem;">CCNA · Network+ · CEH</p>
-                </div>
+    <!-- ===== Services Section ===== -->
+    <section id="services" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">خدمات</span>
+                <h2 class="section-title">خدمات <span class="highlight">تخصصی</span></h2>
+                <p class="section-desc">راهکارهای جامع و حرفه‌ای در حوزه شبکه، امنیت و پشتیبانی فنی</p>
             </div>
-            <div class="atomic-answer" style="display:none;">
-                <p>محمدحسین عسگری ثمرین متخصص ارشد شبکه و زیرساخت با ۲ سال تجربه در طراحی شبکه، CCTV و تعمیرات است.</p>
-            </div>
-        </section>
-
-        <!-- بخش خدمات (Bento Grid) -->
-        <section id="services" class="section">
-            <h2 class="section-title">
-                <span class="icon"><i class="fas fa-cogs"></i></span>
-                خدمات تخصصی
-            </h2>
-            <p class="section-desc">راهکارهای جامع و حرفه‌ای در حوزه شبکه، امنیت و پشتیبانی فنی</p>
-
-            <div class="bento-grid">
-                <div class="bento-item col-span-2">
-                    <span class="icon"><i class="fas fa-network-wired"></i></span>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-network-wired"></i></div>
                     <h3>طراحی و پیاده‌سازی شبکه</h3>
-                    <p>کابل‌کشی ساختاریافته Cat6 و فیبر نوری، راه‌اندازی پچ‌پنل و رک، پیکربندی سوییچ‌ها، روترها و فایروال</p>
-                    <span class="tag">شبکه</span>
+                    <p>کابل‌کشی ساختاریافته Cat6 و فیبر نوری، راه‌اندازی پچ‌پنل و رک، پیکربندی تجهیزات فعال</p>
+                    <span class="service-tag">شبکه</span>
                 </div>
-                <div class="bento-item">
-                    <span class="icon"><i class="fas fa-video"></i></span>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-video"></i></div>
                     <h3>دوربین مداربسته (CCTV)</h3>
-                    <p>نصب و راه‌اندازی دوربین‌های آنالوگ و IP، کابل‌کشی، پیکربندی DVR/NVR</p>
-                    <span class="tag">امنیت</span>
+                    <p>نصب و راه‌اندازی دوربین‌های آنالوگ و IP، کابل‌کشی، پیکربندی DVR/NVR، دسترسی از راه دور</p>
+                    <span class="service-tag">امنیت</span>
                 </div>
-                <div class="bento-item">
-                    <span class="icon"><i class="fas fa-microchip"></i></span>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-microchip"></i></div>
                     <h3>تعمیرات سخت‌افزاری</h3>
                     <p>تعمیر لپ‌تاپ و کامپیوتر، ارتقاء رم و پردازنده، تعویض مادربرد و منبع تغذیه</p>
-                    <span class="tag">سخت‌افزار</span>
+                    <span class="service-tag">سخت‌افزار</span>
                 </div>
-                <div class="bento-item">
-                    <span class="icon"><i class="fas fa-code"></i></span>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
                     <h3>تعمیرات نرم‌افزاری</h3>
                     <p>رفع بدافزار، بازیابی اطلاعات، نصب و پیکربندی سیستم‌عامل و نرم‌افزارهای تخصصی</p>
-                    <span class="tag">نرم‌افزار</span>
+                    <span class="service-tag">نرم‌افزار</span>
                 </div>
-                <div class="bento-item">
-                    <span class="icon"><i class="fas fa-shield-alt"></i></span>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
                     <h3>امنیت شبکه</h3>
                     <p>تست نفوذ، پیکربندی فایروال، VPN، سیاست‌های امنیتی و مدیریت تهدیدات</p>
-                    <span class="tag">امنیت</span>
+                    <span class="service-tag">امنیت</span>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- بخش سوابق شغلی -->
-        <section id="experience" class="section">
-            <h2 class="section-title">
-                <span class="icon"><i class="fas fa-briefcase"></i></span>
-                سوابق شغلی
-            </h2>
-            <div class="experience-timeline">
-                <div class="exp-item">
-                    <div class="header">
-                        <h3>کارشناس IT | خدمات بار هوایی سریع‌ترابر ماهان (ماهکس)</h3>
-                        <span class="date"><span class="current">حال حاضر</span></span>
+    <!-- ===== Experience Section ===== -->
+    <section id="experience" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">سوابق شغلی</span>
+                <h2 class="section-title">تجربه <span class="highlight">کاری</span></h2>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item current">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>کارشناس IT | خدمات بار هوایی سریع‌ترابر ماهان (ماهکس)</h3>
+                            <span class="timeline-date"><span class="current-badge">حال حاضر</span></span>
+                        </div>
+                        <p class="timeline-period">دی ۱۴۰۴ - تاکنون</p>
+                        <ul>
+                            <li>مدیریت و راهبری HelpDesk و پشتیبانی فنی در شعبه مرکزی و چندین شعبه</li>
+                            <li>پشتیبانی و نگهداری شبکه و زیرساخت غیرفعال (کابل‌کشی Cat6 و فیبر نوری)</li>
+                            <li>عیب‌یابی، تعمیر و نگهداری پیشگیرانه دوربین‌های مداربسته (CCTV)</li>
+                            <li>طراحی و توسعه وب‌سایت‌های mahexservices.ir و mahexcrm.ir</li>
+                        </ul>
                     </div>
-                    <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:8px;">دی ۱۴۰۴ - تاکنون</p>
-                    <ul>
-                        <li>مدیریت و راهبری HelpDesk و پشتیبانی فنی در شعبه مرکزی و چندین شعبه</li>
-                        <li>پشتیبانی و نگهداری شبکه و زیرساخت غیرفعال (کابل‌کشی Cat6 و فیبر نوری)</li>
-                        <li>عیب‌یابی، تعمیر و نگهداری پیشگیرانه دوربین‌های مداربسته (CCTV)</li>
-                        <li>طراحی و توسعه وب‌سایت‌های mahexservices.ir و mahexcrm.ir</li>
-                    </ul>
                 </div>
-                <div class="exp-item">
-                    <div class="header">
-                        <h3>کارشناس پشتیبانی سایت | کیمیامهر اسپادانا تدبیر</h3>
-                        <span class="date">آبان ۱۴۰۱ - آذر ۱۴۰۲</span>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>کارشناس پشتیبانی سایت | کیمیامهر اسپادانا تدبیر</h3>
+                            <span class="timeline-date">آبان ۱۴۰۱ - آذر ۱۴۰۲</span>
+                        </div>
+                        <ul>
+                            <li>ارائه پشتیبانی فنی جامع برای وب‌سایت و سیستم‌های داخلی</li>
+                            <li>مدیریت دقیق فرآیندهای سفارش‌گذاری و هماهنگی مؤثر با تیم فنی</li>
+                            <li>مسئولیت آپلود، ویرایش و به‌روزرسانی محتوا</li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li>ارائه پشتیبانی فنی جامع برای وب‌سایت و سیستم‌های داخلی</li>
-                        <li>مدیریت دقیق فرآیندهای سفارش‌گذاری و هماهنگی مؤثر با تیم فنی</li>
-                        <li>مسئولیت آپلود، ویرایش و به‌روزرسانی محتوا</li>
-                    </ul>
                 </div>
-                <div class="exp-item">
-                    <div class="header">
-                        <h3>کارشناس پشتیبانی فنی | مؤسسه فرهنگی و مطبوعاتی صمت</h3>
-                        <span class="date">فروردین ۱۴۰۱ - مهر ۱۴۰۱</span>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>کارشناس پشتیبانی فنی | مؤسسه فرهنگی و مطبوعاتی صمت</h3>
+                            <span class="timeline-date">فروردین ۱۴۰۱ - مهر ۱۴۰۱</span>
+                        </div>
+                        <ul>
+                            <li>مدیریت و پشتیبانی از سیستم‌ها، تجهیزات اداری و زیرساخت شبکه داخلی</li>
+                            <li>انجام تعمیرات و نگهداری پیشگیرانه برای سخت‌افزار و نرم‌افزارهای حیاتی</li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li>مدیریت و پشتیبانی از سیستم‌ها، تجهیزات اداری و زیرساخت شبکه داخلی</li>
-                        <li>انجام تعمیرات و نگهداری پیشگیرانه برای سخت‌افزار و نرم‌افزارهای حیاتی</li>
-                    </ul>
                 </div>
-                <div class="exp-item">
-                    <div class="header">
-                        <h3>متخصص پشتیبانی IT | وزارت کشور</h3>
-                        <span class="date">تیر ۱۳۹۷ - آذر ۱۳۹۷</span>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3>متخصص پشتیبانی IT | وزارت کشور</h3>
+                            <span class="timeline-date">تیر ۱۳۹۷ - آذر ۱۳۹۷</span>
+                        </div>
+                        <ul>
+                            <li>ارائه پشتیبانی سطح اول و عیب‌یابی سریع برای سیستم‌های داخلی و شبکه</li>
+                            <li>نصب و پیکربندی سیستم عامل‌ها و نرم‌افزارهای تخصصی سازمانی</li>
+                        </ul>
                     </div>
-                    <ul>
-                        <li>ارائه پشتیبانی سطح اول و عیب‌یابی سریع برای سیستم‌های داخلی و شبکه</li>
-                        <li>نصب و پیکربندی سیستم عامل‌ها و نرم‌افزارهای تخصصی سازمانی</li>
-                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- بخش مهارت‌ها -->
-        <section id="skills" class="section">
-            <h2 class="section-title">
-                <span class="icon"><i class="fas fa-chart-bar"></i></span>
-                مهارت‌های فنی
-            </h2>
+    <!-- ===== Skills Section ===== -->
+    <section id="skills" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">مهارت‌ها</span>
+                <h2 class="section-title">مهارت‌های <span class="highlight">فنی</span></h2>
+            </div>
             <div class="skills-grid">
-                <div class="skill-card">
+                <div class="skill-category">
                     <h4><i class="fas fa-network-wired"></i> شبکه و زیرساخت</h4>
                     <div class="skill-item">
-                        <div class="label"><span>اکتیو دایرکتوری و ویندوز سرور</span><span class="percent">۷۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="70"></div></div>
+                        <div class="skill-label"><span>اکتیو دایرکتوری و ویندوز سرور</span><span>۷۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>CCNA (مسیریابی و سوئیچینگ)</span><span class="percent">۶۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="65"></div></div>
+                        <div class="skill-label"><span>CCNA (مسیریابی و سوئیچینگ)</span><span>۶۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>Network+ (TCP/IP، OSI)</span><span class="percent">۶۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="65"></div></div>
+                        <div class="skill-label"><span>Network+ (TCP/IP، OSI)</span><span>۶۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="65"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>DHCP، DNS و سرویس‌های شبکه</span><span class="percent">۷۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="70"></div></div>
+                        <div class="skill-label"><span>DHCP، DNS و سرویس‌های شبکه</span><span>۷۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="70"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>میکروتیک (RouterOS)</span><span class="percent">۴۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="45"></div></div>
+                        <div class="skill-label"><span>میکروتیک (RouterOS)</span><span>۴۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="45"></div></div>
                     </div>
                 </div>
-                <div class="skill-card">
+                <div class="skill-category">
                     <h4><i class="fas fa-shield-alt"></i> امنیت و مجازی‌سازی</h4>
                     <div class="skill-item">
-                        <div class="label"><span>هک اخلاقی و تست نفوذ</span><span class="percent">۶۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="60"></div></div>
+                        <div class="skill-label"><span>هک اخلاقی و تست نفوذ</span><span>۶۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>CEH (هک اخلاقی معتبر)</span><span class="percent">۳۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="35"></div></div>
+                        <div class="skill-label"><span>CEH (هک اخلاقی معتبر)</span><span>۳۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="35"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>وایرشارک و تحلیل شبکه</span><span class="percent">۵۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="55"></div></div>
+                        <div class="skill-label"><span>وایرشارک و تحلیل شبکه</span><span>۵۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="55"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>مجازی‌سازی سرور (VMware ESXi)</span><span class="percent">۴۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="40"></div></div>
+                        <div class="skill-label"><span>مجازی‌سازی سرور (VMware ESXi)</span><span>۴۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="40"></div></div>
                     </div>
                 </div>
-                <div class="skill-card">
+                <div class="skill-category">
                     <h4><i class="fas fa-desktop"></i> سیستم عامل و نرم‌افزار</h4>
                     <div class="skill-item">
-                        <div class="label"><span>مدیریت و عیب‌یابی ویندوز</span><span class="percent">۹۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="90"></div></div>
+                        <div class="skill-label"><span>مدیریت و عیب‌یابی ویندوز</span><span>۹۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>مدیریت لینوکس</span><span class="percent">۶۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="60"></div></div>
+                        <div class="skill-label"><span>مدیریت لینوکس</span><span>۶۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="60"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>مایکروسافت آفیس ۳۶۵</span><span class="percent">۸۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="85"></div></div>
+                        <div class="skill-label"><span>مایکروسافت آفیس ۳۶۵</span><span>۸۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="85"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>HTML5 و CSS3</span><span class="percent">۵۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="55"></div></div>
+                        <div class="skill-label"><span>HTML5 و CSS3</span><span>۵۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="55"></div></div>
                     </div>
                 </div>
-                <div class="skill-card">
+                <div class="skill-category">
                     <h4><i class="fas fa-tasks"></i> مدیریت و پشتیبانی IT</h4>
                     <div class="skill-item">
-                        <div class="label"><span>مدیریت خدمات IT (ITSM)</span><span class="percent">۹۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="90"></div></div>
+                        <div class="skill-label"><span>مدیریت خدمات IT (ITSM)</span><span>۹۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>هلپ‌دسک و عیب‌یابی پیشرفته</span><span class="percent">۹۵٪</span></div>
-                        <div class="bar"><div class="fill" data-width="95"></div></div>
+                        <div class="skill-label"><span>هلپ‌دسک و عیب‌یابی پیشرفته</span><span>۹۵٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="95"></div></div>
                     </div>
                     <div class="skill-item">
-                        <div class="label"><span>نگهداری سیستم و زیرساخت</span><span class="percent">۹۰٪</span></div>
-                        <div class="bar"><div class="fill" data-width="90"></div></div>
+                        <div class="skill-label"><span>نگهداری سیستم و زیرساخت</span><span>۹۰٪</span></div>
+                        <div class="skill-bar"><div class="skill-fill" data-width="90"></div></div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- بخش پروژه‌ها -->
-        <section id="projects" class="section">
-            <h2 class="section-title">
-                <span class="icon"><i class="fas fa-folder-open"></i></span>
-                پروژه‌های زیرساختی
-            </h2>
-            <div class="project-card">
-                <div class="image">
-                    <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" alt="رک شبکه ماهکس" loading="lazy">
-                </div>
-                <div class="info">
-                    <h3>پروژه زیرساخت شبکه ماهکس</h3>
-                    <div class="date">اردیبهشت ۱۴۰۵</div>
-                    <p>پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.</p>
-                    <div class="tags">
-                        <span><i class="fas fa-images"></i> ۵ تصویر</span>
-                        <span><i class="fas fa-tag"></i> زیرساخت</span>
-                        <a href="https://github.com/mowhmmdh/Projects" target="_blank" class="link"><i class="fab fa-github"></i> مشاهده پروژه</a>
+    <!-- ===== Projects Section ===== -->
+    <section id="projects" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">پروژه‌ها</span>
+                <h2 class="section-title">پروژه‌های <span class="highlight">زیرساختی</span></h2>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="https://raw.githubusercontent.com/mowhmmdh/Projects/main/image_2026-05-01_16-18-47.jpg" alt="رک شبکه ماهکس" loading="lazy">
+                    </div>
+                    <div class="project-info">
+                        <h3>پروژه زیرساخت شبکه ماهکس</h3>
+                        <div class="project-date">اردیبهشت ۱۴۰۵</div>
+                        <p>پیاده‌سازی و راه‌اندازی زیرساخت شبکه شامل نصب و پیکربندی سوییچ‌ها، پچ‌پنل‌ها و تجهیزات جانبی در رک سازمانی.</p>
+                        <div class="project-tags">
+                            <span><i class="fas fa-images"></i> ۵ تصویر</span>
+                            <span><i class="fas fa-tag"></i> زیرساخت</span>
+                            <a href="https://github.com/mowhmmdh/Projects" target="_blank"><i class="fab fa-github"></i> مشاهده</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- بخش FAQ -->
-        <section id="faq" class="section">
-            <h2 class="section-title">
-                <span class="icon"><i class="fas fa-question-circle"></i></span>
-                پرسش‌های متداول
-            </h2>
+    <!-- ===== FAQ Section ===== -->
+    <section id="faq" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">پرسش‌های متداول</span>
+                <h2 class="section-title">سوالات <span class="highlight">متداول</span></h2>
+            </div>
             <div class="faq-grid">
-                <div class="faq-item open">
-                    <div class="question">
+                <div class="faq-item">
+                    <div class="faq-question">
                         <span>محمدحسین عسگری ثمرین کیست و چه تخصصی دارد؟</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="answer">محمدحسین عسگری ثمرین متخصص ارشد شبکه و زیرساخت با ۲ سال تجربه در طراحی شبکه، دوربین مداربسته، تعمیرات سخت‌افزار و نرم‌افزار است.</div>
+                    <div class="faq-answer">محمدحسین عسگری ثمرین متخصص ارشد شبکه و زیرساخت با ۲ سال تجربه در طراحی شبکه، دوربین مداربسته، تعمیرات سخت‌افزار و نرم‌افزار است.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="question">
+                    <div class="faq-question">
                         <span>چه خدماتی در حوزه شبکه ارائه می‌شود؟</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="answer">طراحی و پیاده‌سازی شبکه، کابل‌کشی ساختاریافته Cat6 و فیبر نوری، راه‌اندازی پچ‌پنل و رک، پیکربندی سوییچ‌ها و روترها، عیب‌یابی شبکه.</div>
+                    <div class="faq-answer">طراحی و پیاده‌سازی شبکه، کابل‌کشی ساختاریافته Cat6 و فیبر نوری، راه‌اندازی پچ‌پنل و رک، پیکربندی سوییچ‌ها و روترها، عیب‌یابی شبکه.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="question">
+                    <div class="faq-question">
                         <span>آیا نصب و پشتیبانی دوربین مداربسته انجام می‌شود؟</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="answer">بله، نصب دوربین‌های آنالوگ و IP، کابل‌کشی، پیکربندی DVR/NVR، طراحی سیستم نظارتی، تعمیرات و ارائه دسترسی از راه دور.</div>
+                    <div class="faq-answer">بله، نصب دوربین‌های آنالوگ و IP، کابل‌کشی، پیکربندی DVR/NVR، طراحی سیستم نظارتی، تعمیرات و ارائه دسترسی از راه دور.</div>
                 </div>
                 <div class="faq-item">
-                    <div class="question">
+                    <div class="faq-question">
                         <span>چگونه می‌توانم با محمدحسین عسگری ثمرین تماس بگیرم؟</span>
                         <i class="fas fa-chevron-down"></i>
                     </div>
-                    <div class="answer">از طریق فرم تماس در این وب‌سایت، ایمیل mohammedhasgari@gmail.com، یا از طریق لینکدین و اینستاگرام.</div>
+                    <div class="faq-answer">از طریق فرم تماس در این وب‌سایت، ایمیل mohammedhasgari@gmail.com، یا از طریق لینکدین و اینستاگرام.</div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- بخش تماس -->
-        <section id="contact" class="section">
-            <h2 class="section-title">
-                <span class="icon"><i class="fas fa-envelope"></i></span>
-                تماس با من
-            </h2>
-            <p class="section-desc">آماده همکاری با شما هستم. لطفاً از فرم زیر یا راه‌های ارتباطی استفاده کنید.</p>
-
-            <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form">
-                <div class="form-group">
-                    <label><i class="fas fa-envelope-open-text"></i> ایمیل شما</label>
-                    <input type="email" name="email" required placeholder="example@gmail.com">
-                </div>
-                <div class="form-group">
-                    <label><i class="fas fa-comment-dots"></i> پیام</label>
-                    <textarea name="message" rows="5" required placeholder="موضوع همکاری یا سوال خود را بنویسید..."></textarea>
-                </div>
-                <button type="submit" class="btn-submit"><i class="fas fa-paper-plane"></i> ارسال پیام</button>
-                <div class="quick-links">
-                    <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank"><i class="fab fa-linkedin"></i> لینکدین</a>
-                    <a href="mailto:mohammedhasgari@gmail.com"><i class="fas fa-envelope"></i> ایمیل مستقیم</a>
-                    <a href="https://instagram.com/mowhmmdh" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>
-                </div>
-            </form>
-        </section>
-
-        <!-- ===== فوتر ===== -->
-        <footer class="footer">
-            <div class="logo-circle">
-                <img src="images/mha-logo.webp" alt="لوگو" style="width:50px; height:50px; border-radius:50%;">
+    <!-- ===== Contact Section ===== -->
+    <section id="contact" class="section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">تماس</span>
+                <h2 class="section-title">ارتباط با <span class="highlight">من</span></h2>
+                <p class="section-desc">آماده همکاری با شما هستم. از فرم زیر یا راه‌های ارتباطی استفاده کنید.</p>
             </div>
-            <p>
-                <span class="name">محمدحسین عسگری ثمرین</span>
-                <span style="color:var(--text-muted);"> · متخصص ارشد شبکه و زیرساخت</span>
-            </p>
-            <p style="font-size:0.75rem; margin-top:6px;">
-                <span id="update-date-fa"></span>
-            </p>
-            <p style="font-size:0.65rem; margin-top:12px; color:var(--text-muted);">
-                © کلیه حقوق این وبسایت محفوظ و متعلق به محمدحسین عسگری ثمرین است.
-            </p>
-        </footer>
+            <div class="contact-wrapper">
+                <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form">
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope-open-text"></i> ایمیل شما</label>
+                        <input type="email" name="email" required placeholder="example@gmail.com">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-comment-dots"></i> پیام</label>
+                        <textarea name="message" rows="5" required placeholder="موضوع همکاری یا سوال خود را بنویسید..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary btn-block"><i class="fas fa-paper-plane"></i> ارسال پیام</button>
+                    <div class="contact-links">
+                        <a href="https://linkedin.com/in/mohammadhosseinasgari" target="_blank"><i class="fab fa-linkedin"></i> لینکدین</a>
+                        <a href="mailto:mohammedhasgari@gmail.com"><i class="fas fa-envelope"></i> ایمیل مستقیم</a>
+                        <a href="https://instagram.com/mowhmmdh" target="_blank"><i class="fab fa-instagram"></i> اینستاگرام</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
 
-    </div>
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="images/mha-logo.webp" alt="لوگو">
+                    <span>محمدحسین عسگری ثمرین</span>
+                </div>
+                <p class="footer-text">متخصص ارشد شبکه و زیرساخت</p>
+                <p class="footer-copy">© کلیه حقوق این وبسایت محفوظ و متعلق به محمدحسین عسگری ثمرین است.</p>
+                <p class="footer-update" id="update-date-fa"></p>
+            </div>
+        </div>
+    </footer>
 
-    <!-- ===== دکمه چت‌بات ===== -->
+    <!-- ===== Chat Button ===== -->
     <button class="chat-toggle" id="chatToggle" aria-label="گفتگو با دستیار هوشمند">
         <i class="fas fa-robot"></i>
-        <span class="badge-dot"></span>
+        <span class="chat-dot"></span>
     </button>
 
-    <!-- ===== پنجره چت‌بات ===== -->
+    <!-- ===== Chat Window ===== -->
     <div class="chat-window" id="chatWindow">
         <div class="chat-header">
-            <div class="title"><i class="fas fa-robot"></i> دستیار هوشمند</div>
-            <button class="close-btn" id="chatClose"><i class="fas fa-times"></i></button>
+            <div class="chat-title"><i class="fas fa-robot"></i> دستیار هوشمند</div>
+            <button class="chat-close" id="chatClose"><i class="fas fa-times"></i></button>
         </div>
         <div class="chat-messages" id="chatMessages">
-            <div class="msg bot">سلام! 👋 من دستیار هوشمند <strong>محمدحسین عسگری ثمرین</strong> هستم. هر سوالی درباره تخصص، خدمات یا همکاری دارید، بپرسید.</div>
+            <div class="chat-msg bot">سلام! 👋 من دستیار هوشمند <strong>محمدحسین عسگری ثمرین</strong> هستم. هر سوالی دارید بپرسید.</div>
         </div>
-        <div class="chat-input-area">
-            <input type="text" id="chatInput" placeholder="سوال خود را بپرسید..." aria-label="متن پیام">
-            <button class="send-btn" id="chatSend"><i class="fas fa-paper-plane"></i></button>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="سوال خود را بپرسید...">
+            <button class="chat-send" id="chatSend"><i class="fas fa-paper-plane"></i></button>
         </div>
     </div>
 
-    <!-- ===== بنر کوکی ===== -->
+    <!-- ===== Cookie Banner ===== -->
     <div class="cookie-banner" id="cookieBanner">
-        <div class="inner">
-            <p><i class="fas fa-cookie-bite" style="color:var(--accent-1); margin-left:8px;"></i> این وب‌سایت از کوکی برای بهبود تجربه کاربری استفاده می‌کند.</p>
-            <div class="actions">
-                <button class="accept" onclick="acceptCookies()">قبول</button>
-                <button class="reject" onclick="rejectCookies()">رد</button>
+        <div class="cookie-inner">
+            <p><i class="fas fa-cookie-bite"></i> این وب‌سایت از کوکی برای بهبود تجربه کاربری استفاده می‌کند.</p>
+            <div class="cookie-actions">
+                <button class="cookie-accept" onclick="acceptCookies()">قبول</button>
+                <button class="cookie-reject" onclick="rejectCookies()">رد</button>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- ===== Scroll to Top ===== -->
+    <button class="scroll-top" id="scrollTop"><i class="fas fa-arrow-up"></i></button>
+
+    <script src="script.min.js"></script>
     <script>
-        // کوکی‌ها
+        // Preloader
+        window.addEventListener('load', function() {
+            document.getElementById('preloader').classList.add('hidden');
+        });
+
+        // Cookies
         (function() {
             const banner = document.getElementById('cookieBanner');
             const consent = localStorage.getItem('cookie-consent');
@@ -712,16 +669,16 @@
             };
         })();
 
-        // تاریخ
+        // Date
         const now = new Date();
         const updateFa = document.getElementById('update-date-fa');
         if (updateFa) {
-            const persianMonths = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
+            const months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند'];
             const year = now.getFullYear() - 621;
-            updateFa.textContent = `به‌روزرسانی: ${now.getDate()} ${persianMonths[now.getMonth()]} ${year}`;
+            updateFa.textContent = `به‌روزرسانی: ${now.getDate()} ${months[now.getMonth()]} ${year}`;
         }
 
-        // تغییر زبان
+        // Language toggle
         document.getElementById('langToggle').addEventListener('click', function() {
             const current = window.location.pathname;
             if (current.includes('en')) {
@@ -729,14 +686,6 @@
             } else {
                 window.location.href = '/en.html';
             }
-        });
-
-        // ناوبری
-        const menuToggle = document.getElementById('menuToggle');
-        const navLinks = document.getElementById('navLinks');
-        menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => navLinks.classList.remove('open'));
         });
     </script>
 
