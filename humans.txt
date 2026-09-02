@@ -7,7 +7,7 @@ Developer: Mohammad Hossein Asgari Somarin
 Website: https://mowhmmdh.github.io/
 Email: mohammedhasgari@gmail.com
 Location: Tehran, Iran
-Role: Senior IT Specialist & Full-Stack Web Developer
+Role: IT Specialist & Full-Stack Web Developer
 
 /* Site */
 Last Update: Dynamic
