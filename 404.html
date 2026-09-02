@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صفحه پیدا نشد - محمدحسین عسگری ثمرین</title>
-    <link rel="stylesheet" href="style.min.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <style>
         body {
@@ -13,54 +13,68 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: var(--bg);
-            font-family: 'Vazirmatn', Tahoma, sans-serif;
+            background: var(--bg-primary);
+            font-family: 'Vazirmatn', 'Plus Jakarta Sans', Tahoma, sans-serif;
             padding: 20px;
         }
         .error-container {
             max-width: 600px;
-            padding: 50px 40px;
-            background: var(--bg-card);
-            border-radius: 24px;
-            box-shadow: var(--shadow);
-            text-align: center;
+            padding: 60px 50px;
+            background: var(--bg-glass);
             backdrop-filter: blur(20px);
-            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-glass);
+            box-shadow: var(--shadow-glass);
+            text-align: center;
         }
         .error-container h1 {
-            font-size: 6em;
+            font-size: 6rem;
             margin: 0;
-            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-weight: 800;
         }
         .error-container p {
-            color: var(--text-muted);
-            font-size: 1.1em;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
             margin: 20px 0;
+        }
+        .error-container .icon {
+            font-size: 4rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: block;
         }
         .error-container a {
             display: inline-block;
-            background: linear-gradient(135deg, var(--accent), var(--primary-light));
+            background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
             color: #fff;
-            padding: 14px 32px;
-            border-radius: 50px;
+            padding: 16px 40px;
+            border-radius: 60px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             transition: var(--transition);
+            margin-top: 10px;
         }
         .error-container a:hover {
             transform: translateY(-3px);
-            box-shadow: var(--shadow-hover);
+            box-shadow: 0 12px 40px -8px rgba(0, 212, 255, 0.2);
+        }
+        .error-container .sub {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
     <div class="error-container">
+        <span class="icon"><i class="fas fa-compass"></i></span>
         <h1>۴۰۴</h1>
         <p>صفحه‌ای که به دنبال آن هستید وجود ندارد.</p>
         <a href="/"><i class="fas fa-home"></i> بازگشت به خانه</a>
+        <p class="sub">محمدحسین عسگری ثمرین | متخصص ارشد شبکه و زیرساخت</p>
     </div>
 </body>
 </html>
