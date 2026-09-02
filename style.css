@@ -23,26 +23,21 @@
 }
 
 /* ============================================================
-   متغیرها - پالت رسمی (Executive Palette)
+   متغیرها - حالت روشن (پیش‌فرض)
    ============================================================ */
 :root {
-    /* رنگ‌های اصلی */
     --navy: #1a2a3a;
     --navy-light: #2c4a6a;
     --navy-dark: #0f1a2a;
     --gold: #c9a84c;
     --gold-light: #e8d5a8;
     --gold-glow: rgba(201, 168, 76, 0.06);
-    
-    /* پس‌زمینه و متن */
     --bg: #f5f6f8;
     --bg2: #ffffff;
     --bg-glass: rgba(255, 255, 255, 0.35);
     --text: #1a1a2e;
     --text2: #4a5a6a;
     --text3: #8a9aaa;
-    
-    /* حاشیه و سایه */
     --border: rgba(26, 42, 58, 0.02);
     --shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
     --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.04);
@@ -92,9 +87,6 @@ body {
     padding: 20px;
 }
 
-/* ============================================================
-   کانتینر اصلی
-   ============================================================ */
 .container {
     max-width: 1240px;
     margin: 0 auto;
@@ -116,12 +108,10 @@ body {
     justify-content: center;
     transition: opacity 0.8s, visibility 0.8s;
 }
-
 #preloader.hidden {
     opacity: 0;
     visibility: hidden;
 }
-
 .loader {
     width: 50px;
     height: 50px;
@@ -130,11 +120,8 @@ body {
     border-radius: 50%;
     animation: spin 0.8s linear infinite;
 }
-
 @keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
 
 /* ============================================================
@@ -151,7 +138,6 @@ body {
     transform: translate(-50%, -50%);
     mix-blend-mode: difference;
 }
-
 .cursor-ring {
     position: fixed;
     width: 40px;
@@ -164,21 +150,14 @@ body {
     backdrop-filter: blur(2px);
     transition: width 0.5s, height 0.5s, border-color 0.5s;
 }
-
 .cursor-ring.hover {
     width: 70px;
     height: 70px;
     border-color: var(--gold);
 }
-
 @media (max-width: 768px) {
-    .cursor-dot,
-    .cursor-ring {
-        display: none;
-    }
-    body {
-        cursor: auto;
-    }
+    .cursor-dot, .cursor-ring { display: none; }
+    body { cursor: auto; }
 }
 
 /* ============================================================
@@ -213,13 +192,11 @@ body {
     transition: var(--transition);
     box-shadow: var(--shadow);
 }
-
 .navbar.scrolled {
     top: 12px;
     padding: 10px 24px;
     box-shadow: var(--shadow-hover);
 }
-
 .nav-container {
     display: flex;
     justify-content: space-between;
@@ -227,9 +204,6 @@ body {
     width: 100%;
 }
 
-/* ============================================================
-   لوگو با حاشیه طلایی
-   ============================================================ */
 .logo {
     display: flex;
     align-items: center;
@@ -241,7 +215,6 @@ body {
     transition: var(--transition);
     position: relative;
 }
-
 .logo::before {
     content: '';
     position: absolute;
@@ -255,29 +228,20 @@ body {
     opacity: 0;
     transition: var(--transition);
 }
-
 .logo:hover::before {
     opacity: 1;
     animation: spinBorder 4s linear infinite;
 }
-
 @keyframes spinBorder {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
-
 .logo img {
     height: 34px;
     width: auto;
     transition: var(--transition);
     border-radius: 50%;
 }
-
-.logo:hover img {
-    transform: scale(1.04);
-}
-
+.logo:hover img { transform: scale(1.04); }
 .logo-text {
     font-family: 'Orbitron', 'Inter', sans-serif;
     font-weight: 700;
@@ -287,26 +251,20 @@ body {
     -webkit-text-fill-color: transparent;
     letter-spacing: 0.5px;
 }
-
 body.dark .logo-text {
     background: linear-gradient(135deg, var(--gold), #4a7a9a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 .logo-text span {
     -webkit-text-fill-color: rgba(255, 255, 255, 0.05);
 }
 
-/* ============================================================
-   لینک‌های ناوبری
-   ============================================================ */
 .nav-links {
     display: flex;
     gap: 2px;
     list-style: none;
 }
-
 .nav-links a {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     color: var(--text2);
@@ -318,22 +276,17 @@ body.dark .logo-text {
     transition: var(--transition);
     letter-spacing: 0.3px;
 }
-
 .nav-links a:hover,
 .nav-links a.active {
     color: var(--text);
     background: var(--gold-glow);
 }
 
-/* ============================================================
-   دکمه‌های نوار ناوبری
-   ============================================================ */
 .nav-actions {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-
 .nav-actions button {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     background: none;
@@ -348,13 +301,11 @@ body.dark .logo-text {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
 .nav-actions button:hover {
     border-color: var(--gold);
     color: var(--text);
     background: var(--gold-glow);
 }
-
 .nav-actions .theme-toggle {
     width: 38px;
     height: 38px;
@@ -364,7 +315,6 @@ body.dark .logo-text {
     padding: 0;
     font-size: 0.8rem;
 }
-
 .nav-actions .menu-toggle {
     display: none;
     font-size: 1.1rem;
@@ -372,7 +322,7 @@ body.dark .logo-text {
 }
 
 /* ============================================================
-   بخش هیرو (Hero)
+   هیرو (Hero)
    ============================================================ */
 .hero {
     min-height: 100vh;
@@ -382,25 +332,19 @@ body.dark .logo-text {
     position: relative;
     z-index: 1;
 }
-
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 60px;
     align-items: center;
 }
-
 .hero-content {
     text-align: right;
 }
-
 body.lang-en .hero-content {
     text-align: left;
 }
 
-/* ============================================================
-   نشان هیرو (Badge)
-   ============================================================ */
 .hero-badge {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: inline-block;
@@ -416,9 +360,6 @@ body.lang-en .hero-content {
     background: var(--gold-glow);
 }
 
-/* ============================================================
-   عنوان هیرو (با فونت Playfair Display)
-   ============================================================ */
 .hero-title {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-size: clamp(2.8rem, 8vw, 4.5rem);
@@ -428,7 +369,6 @@ body.lang-en .hero-content {
     letter-spacing: -1px;
     color: var(--text);
 }
-
 .hero-title .highlight {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-style: italic;
@@ -436,16 +376,12 @@ body.lang-en .hero-content {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 body.dark .hero-title .highlight {
     background: linear-gradient(135deg, var(--gold), #4a7a9a);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-/* ============================================================
-   زیرنویس هیرو
-   ============================================================ */
 .hero-subtitle {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: clamp(1rem, 1.4vw, 1.2rem);
@@ -453,22 +389,17 @@ body.dark .hero-title .highlight {
     font-weight: 400;
     margin-bottom: 32px;
 }
-
 .hero-subtitle i {
     color: var(--gold);
     margin: 0 6px;
 }
 
-/* ============================================================
-   دکمه‌های هیرو
-   ============================================================ */
 .hero-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
     margin-bottom: 32px;
 }
-
 .btn-primary {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: inline-flex;
@@ -486,17 +417,14 @@ body.dark .hero-title .highlight {
     text-decoration: none;
     box-shadow: 0 8px 30px rgba(26, 42, 58, 0.04);
 }
-
 body.dark .btn-primary {
     background: linear-gradient(135deg, var(--gold), var(--navy-light));
     color: var(--navy-dark);
 }
-
 .btn-primary:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 40px rgba(26, 42, 58, 0.08);
 }
-
 body.dark .btn-primary:hover {
     box-shadow: 0 12px 40px rgba(212, 184, 90, 0.08);
 }
@@ -517,16 +445,12 @@ body.dark .btn-primary:hover {
     transition: var(--transition);
     text-decoration: none;
 }
-
 .btn-secondary:hover {
     border-color: var(--gold);
     background: var(--gold-glow);
     transform: translateY(-3px);
 }
 
-/* ============================================================
-   آمار هیرو
-   ============================================================ */
 .hero-stats {
     display: flex;
     gap: 40px;
@@ -534,11 +458,9 @@ body.dark .btn-primary:hover {
     border-top: 1px solid var(--border);
     margin-top: 16px;
 }
-
 .hero-stats .stat {
     text-align: center;
 }
-
 .hero-stats .stat .number {
     font-family: 'Orbitron', 'Inter', sans-serif;
     font-size: 1.6rem;
@@ -547,11 +469,9 @@ body.dark .btn-primary:hover {
     display: block;
     line-height: 1.2;
 }
-
 body.dark .hero-stats .stat .number {
     color: var(--gold);
 }
-
 .hero-stats .stat .label {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.55rem;
@@ -562,7 +482,7 @@ body.dark .hero-stats .stat .number {
 }
 
 /* ============================================================
-   پروفایل (بیضی شکل با افکت سه‌بعدی)
+   پروفایل (بیضی شکل)
    ============================================================ */
 .profile-container {
     display: flex;
@@ -570,7 +490,6 @@ body.dark .hero-stats .stat .number {
     align-items: center;
     perspective: 1000px;
 }
-
 .profile-card {
     position: relative;
     width: 340px;
@@ -582,21 +501,18 @@ body.dark .hero-stats .stat .number {
     transition: var(--transition);
     transform-style: preserve-3d;
 }
-
 @media (max-width: 768px) {
     .profile-card {
         width: 220px;
         height: 270px;
     }
 }
-
 @media (max-width: 480px) {
     .profile-card {
         width: 170px;
         height: 210px;
     }
 }
-
 .profile-card::before {
     content: '';
     position: absolute;
@@ -608,13 +524,9 @@ body.dark .hero-stats .stat .number {
     filter: blur(30px);
     z-index: 0;
 }
-
 @keyframes spinGlow {
-    to {
-        transform: rotate(360deg);
-    }
+    to { transform: rotate(360deg); }
 }
-
 .profile-card::after {
     content: '';
     position: absolute;
@@ -628,19 +540,10 @@ body.dark .hero-stats .stat .number {
     animation: pulseRing 3s ease-in-out infinite;
     z-index: 1;
 }
-
 @keyframes pulseRing {
-    0%,
-    100% {
-        transform: scale(1);
-        opacity: 0.15;
-    }
-    50% {
-        transform: scale(1.04);
-        opacity: 0.5;
-    }
+    0%,100% { transform: scale(1); opacity: 0.15; }
+    50% { transform: scale(1.04); opacity: 0.5; }
 }
-
 .profile-card .shine {
     position: absolute;
     inset: -15px;
@@ -650,19 +553,11 @@ body.dark .hero-stats .stat .number {
     pointer-events: none;
     z-index: 2;
 }
-
 @keyframes shineMove {
-    0% {
-        transform: rotate(0deg) scale(1);
-    }
-    50% {
-        transform: rotate(180deg) scale(1.06);
-    }
-    100% {
-        transform: rotate(360deg) scale(1);
-    }
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.06); }
+    100% { transform: rotate(360deg) scale(1); }
 }
-
 .profile-card img {
     width: 100%;
     height: 100%;
@@ -672,18 +567,16 @@ body.dark .hero-stats .stat .number {
     transition: var(--transition);
     border-radius: 40% / 60%;
 }
-
 .profile-card:hover img {
     transform: scale(1.04);
 }
-
 .profile-card:hover {
     border-color: var(--gold);
     box-shadow: var(--shadow-hover);
 }
 
 /* ============================================================
-   بخش‌های عمومی (Sections)
+   بخش‌های عمومی
    ============================================================ */
 .section {
     padding: 80px 0;
@@ -692,9 +585,8 @@ body.dark .hero-stats .stat .number {
     opacity: 0;
     transform: translateY(60px);
     transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1),
-        transform 1s cubic-bezier(0.23, 1, 0.32, 1);
+                transform 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
-
 .section.visible {
     opacity: 1;
     transform: translateY(0);
@@ -704,7 +596,6 @@ body.dark .hero-stats .stat .number {
     text-align: center;
     margin-bottom: 50px;
 }
-
 .section-tag {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: inline-block;
@@ -718,7 +609,6 @@ body.dark .hero-stats .stat .number {
     padding: 4px 18px;
     border-radius: 40px;
 }
-
 .section-title {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-size: clamp(2rem, 4vw, 2.8rem);
@@ -727,13 +617,11 @@ body.dark .hero-stats .stat .number {
     margin-bottom: 12px;
     color: var(--text);
 }
-
 .section-title .highlight {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-style: italic;
     color: var(--gold);
 }
-
 .section-desc {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 1rem;
@@ -751,7 +639,6 @@ body.dark .hero-stats .stat .number {
     grid-template-columns: repeat(3, 1fr);
     gap: 24px;
 }
-
 .service-card {
     padding: 32px 28px;
     background: var(--bg2);
@@ -760,13 +647,11 @@ body.dark .hero-stats .stat .number {
     text-align: center;
     transition: var(--transition);
 }
-
 .service-card:hover {
     transform: translateY(-6px);
     box-shadow: var(--shadow-hover);
     border-color: var(--gold-glow);
 }
-
 .service-card .icon {
     font-size: 2.2rem;
     color: var(--gold);
@@ -774,18 +659,15 @@ body.dark .hero-stats .stat .number {
     display: block;
     transition: var(--transition);
 }
-
 .service-card:hover .icon {
     transform: scale(1.08);
 }
-
 .service-card h3 {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-size: 1.05rem;
     font-weight: 700;
     margin-bottom: 10px;
 }
-
 .service-card p {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.85rem;
@@ -793,7 +675,6 @@ body.dark .hero-stats .stat .number {
     font-weight: 400;
     line-height: 1.7;
 }
-
 .service-card .tag {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: inline-block;
@@ -807,11 +688,9 @@ body.dark .hero-stats .stat .number {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
-
 .service-card:nth-child(1) {
     grid-column: span 2;
 }
-
 @media (max-width: 992px) {
     .services-grid {
         grid-template-columns: 1fr 1fr;
@@ -820,7 +699,6 @@ body.dark .hero-stats .stat .number {
         grid-column: span 1;
     }
 }
-
 @media (max-width: 768px) {
     .services-grid {
         grid-template-columns: 1fr;
@@ -828,7 +706,7 @@ body.dark .hero-stats .stat .number {
 }
 
 /* ============================================================
-   سوابق شغلی (Experience - Timeline)
+   سوابق شغلی (Experience)
    ============================================================ */
 .timeline {
     display: flex;
@@ -837,7 +715,6 @@ body.dark .hero-stats .stat .number {
     max-width: 800px;
     margin: 0 auto;
 }
-
 .timeline-item {
     display: flex;
     gap: 24px;
@@ -848,21 +725,17 @@ body.dark .hero-stats .stat .number {
     transition: var(--transition);
     border-right: 4px solid var(--gold);
 }
-
 body.lang-en .timeline-item {
     border-right: none;
     border-left: 4px solid var(--gold);
 }
-
 .timeline-item:hover {
     box-shadow: var(--shadow-hover);
     transform: translateX(-4px);
 }
-
 body.lang-en .timeline-item:hover {
     transform: translateX(4px);
 }
-
 .timeline-item .dot {
     width: 8px;
     height: 8px;
@@ -871,18 +744,15 @@ body.lang-en .timeline-item:hover {
     flex-shrink: 0;
     margin-top: 8px;
 }
-
 .timeline-item .dot.current {
     box-shadow: 0 0 20px var(--gold-glow);
 }
-
 .timeline-item .content h3 {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 2px;
 }
-
 .timeline-item .content .date {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.6rem;
@@ -890,16 +760,13 @@ body.lang-en .timeline-item:hover {
     font-weight: 400;
     margin-bottom: 8px;
 }
-
 .timeline-item .content .date .current {
     color: var(--gold);
     font-weight: 600;
 }
-
 .timeline-item .content ul {
     list-style: none;
 }
-
 .timeline-item .content ul li {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.82rem;
@@ -909,12 +776,10 @@ body.lang-en .timeline-item:hover {
     padding-right: 18px;
     position: relative;
 }
-
 body.lang-en .timeline-item .content ul li {
     padding-right: 0;
     padding-left: 18px;
 }
-
 .timeline-item .content ul li::before {
     content: '—';
     color: var(--gold);
@@ -922,7 +787,6 @@ body.lang-en .timeline-item .content ul li {
     right: 0;
     top: 3px;
 }
-
 body.lang-en .timeline-item .content ul li::before {
     right: auto;
     left: 0;
@@ -936,7 +800,6 @@ body.lang-en .timeline-item .content ul li::before {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 24px;
 }
-
 .skill-category {
     padding: 24px 22px;
     background: var(--bg2);
@@ -944,11 +807,9 @@ body.lang-en .timeline-item .content ul li::before {
     border-radius: var(--radius);
     transition: var(--transition);
 }
-
 .skill-category:hover {
     box-shadow: var(--shadow-hover);
 }
-
 .skill-category h4 {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.75rem;
@@ -960,19 +821,15 @@ body.lang-en .timeline-item .content ul li::before {
     align-items: center;
     gap: 8px;
 }
-
 .skill-category h4 i {
     color: var(--gold);
 }
-
 .skill-item {
     margin-bottom: 12px;
 }
-
 .skill-item:last-child {
     margin-bottom: 0;
 }
-
 .skill-item .label {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: flex;
@@ -982,19 +839,16 @@ body.lang-en .timeline-item .content ul li::before {
     margin-bottom: 3px;
     color: var(--text2);
 }
-
 .skill-item .label span:last-child {
     color: var(--gold);
     font-weight: 600;
 }
-
 .skill-item .bar {
     height: 3px;
     background: var(--border);
     border-radius: 4px;
     overflow: hidden;
 }
-
 .skill-item .bar .fill {
     height: 100%;
     border-radius: 4px;
@@ -1002,11 +856,9 @@ body.lang-en .timeline-item .content ul li::before {
     width: 0;
     transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 body.dark .skill-item .bar .fill {
     background: linear-gradient(90deg, var(--gold), var(--navy-light));
 }
-
 .skill-item.visible .bar .fill {
     width: var(--skill-width, 0%) !important;
 }
@@ -1018,7 +870,6 @@ body.dark .skill-item .bar .fill {
     display: grid;
     gap: 24px;
 }
-
 .project-card {
     display: flex;
     gap: 28px;
@@ -1029,19 +880,16 @@ body.dark .skill-item .bar .fill {
     transition: var(--transition);
     align-items: center;
 }
-
 .project-card:hover {
     box-shadow: var(--shadow-hover);
     transform: translateY(-4px);
 }
-
 .project-card .image {
     flex: 0 0 160px;
     border-radius: var(--radius);
     overflow: hidden;
     min-height: 100px;
 }
-
 .project-card .image img {
     width: 100%;
     height: 100%;
@@ -1050,18 +898,15 @@ body.dark .skill-item .bar .fill {
     display: block;
     transition: var(--transition);
 }
-
 .project-card:hover .image img {
     transform: scale(1.04);
 }
-
 .project-card .info h3 {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 2px;
 }
-
 .project-card .info .date {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.6rem;
@@ -1069,7 +914,6 @@ body.dark .skill-item .bar .fill {
     font-weight: 400;
     margin-bottom: 8px;
 }
-
 .project-card .info p {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.82rem;
@@ -1077,14 +921,12 @@ body.dark .skill-item .bar .fill {
     font-weight: 400;
     line-height: 1.7;
 }
-
 .project-card .info .tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
     margin-top: 12px;
 }
-
 .project-card .info .tags span {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.5rem;
@@ -1093,7 +935,6 @@ body.dark .skill-item .bar .fill {
     padding: 2px 14px;
     border-radius: 20px;
 }
-
 .project-card .info .tags a {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.5rem;
@@ -1104,7 +945,6 @@ body.dark .skill-item .bar .fill {
     border-radius: 20px;
     transition: var(--transition);
 }
-
 .project-card .info .tags a:hover {
     background: var(--gold-glow);
 }
@@ -1118,7 +958,6 @@ body.dark .skill-item .bar .fill {
     max-width: 800px;
     margin: 0 auto;
 }
-
 .faq-item {
     padding: 16px 24px;
     background: var(--bg2);
@@ -1127,11 +966,9 @@ body.dark .skill-item .bar .fill {
     cursor: pointer;
     transition: var(--transition);
 }
-
 .faq-item:hover {
     border-color: var(--gold-glow);
 }
-
 .faq-item .q {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     display: flex;
@@ -1140,12 +977,10 @@ body.dark .skill-item .bar .fill {
     font-weight: 600;
     font-size: 0.9rem;
 }
-
 .faq-item .q i {
     color: var(--gold);
     transition: var(--transition);
 }
-
 .faq-item .a {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     color: var(--text2);
@@ -1156,12 +991,10 @@ body.dark .skill-item .bar .fill {
     overflow: hidden;
     transition: max-height 0.4s ease, padding 0.4s ease;
 }
-
 .faq-item.open .a {
     max-height: 200px;
     padding-top: 14px;
 }
-
 .faq-item.open .q i {
     transform: rotate(180deg);
 }
@@ -1173,13 +1006,11 @@ body.dark .skill-item .bar .fill {
     max-width: 520px;
     margin: 0 auto;
 }
-
 .contact-form {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
-
 .contact-form input,
 .contact-form textarea {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
@@ -1193,21 +1024,16 @@ body.dark .skill-item .bar .fill {
     transition: var(--transition);
     outline: none;
 }
-
 .contact-form input:focus,
 .contact-form textarea:focus {
     border-color: var(--gold);
     box-shadow: 0 0 0 4px var(--gold-glow);
 }
-
 .contact-form textarea {
     resize: vertical;
     min-height: 120px;
 }
 
-/* ============================================================
-   لینک‌های تماس
-   ============================================================ */
 .contact-links {
     display: flex;
     justify-content: center;
@@ -1215,7 +1041,6 @@ body.dark .skill-item .bar .fill {
     flex-wrap: wrap;
     margin-top: 24px;
 }
-
 .contact-links a {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     color: var(--text2);
@@ -1227,18 +1052,15 @@ body.dark .skill-item .bar .fill {
     border-radius: 40px;
     transition: var(--transition);
 }
-
 .contact-links a:hover {
     border-color: var(--gold);
     color: var(--text);
     background: var(--gold-glow);
 }
-
 .contact-links a i {
     color: var(--gold);
     margin-left: 6px;
 }
-
 body.lang-en .contact-links a i {
     margin-left: 0;
     margin-right: 6px;
@@ -1251,7 +1073,6 @@ body.lang-en .contact-links a i {
     text-align: center;
     margin-top: 30px;
 }
-
 .share-section p {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.6rem;
@@ -1261,14 +1082,12 @@ body.lang-en .contact-links a i {
     letter-spacing: 1px;
     margin-bottom: 12px;
 }
-
 .share-buttons {
     display: flex;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
 }
-
 .share-btn {
     width: 40px;
     height: 40px;
@@ -1283,7 +1102,6 @@ body.lang-en .contact-links a i {
     justify-content: center;
     font-size: 0.8rem;
 }
-
 .share-btn:hover {
     border-color: var(--gold);
     color: var(--text);
@@ -1299,7 +1117,6 @@ body.lang-en .contact-links a i {
     text-align: center;
     margin-top: 40px;
 }
-
 .footer .logo-footer {
     display: flex;
     align-items: center;
@@ -1307,19 +1124,16 @@ body.lang-en .contact-links a i {
     gap: 12px;
     margin-bottom: 6px;
 }
-
 .footer .logo-footer img {
     height: 32px;
     opacity: 0.3;
     transition: var(--transition);
     filter: grayscale(1);
 }
-
 .footer .logo-footer img:hover {
     opacity: 0.6;
     filter: grayscale(0);
 }
-
 .footer .logo-footer span {
     font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-weight: 700;
@@ -1327,44 +1141,37 @@ body.lang-en .contact-links a i {
     color: var(--text);
     opacity: 0.6;
 }
-
 .footer .sub {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.65rem;
     color: var(--text3);
     font-weight: 400;
 }
-
 .footer .stats {
     display: flex;
     justify-content: center;
     gap: 30px;
     margin: 12px 0;
 }
-
 .footer .stats span {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.65rem;
     color: var(--text3);
 }
-
 .footer .stats i {
     color: var(--gold);
     opacity: 0.2;
     margin-left: 6px;
 }
-
 body.lang-en .footer .stats i {
     margin-left: 0;
     margin-right: 6px;
 }
-
 .footer .copy {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.55rem;
     color: var(--text3);
 }
-
 .footer .update {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.5rem;
@@ -1394,16 +1201,13 @@ body.lang-en .footer .stats i {
     align-items: center;
     justify-content: center;
 }
-
 body.dark .chat-toggle {
     background: linear-gradient(135deg, var(--gold), var(--navy-light));
     color: var(--navy-dark);
 }
-
 .chat-toggle:hover {
     transform: scale(1.06);
 }
-
 .chat-toggle .dot {
     position: absolute;
     top: 6px;
@@ -1415,20 +1219,11 @@ body.dark .chat-toggle {
     border: 2px solid var(--bg2);
     animation: pulse 2s infinite;
 }
-
 @keyframes pulse {
-    0%,
-    100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.3;
-    }
+    0%,100% { opacity: 1; }
+    50% { opacity: 0.3; }
 }
 
-/* ============================================================
-   پنجره چت
-   ============================================================ */
 .chat-window {
     position: fixed;
     bottom: 90px;
@@ -1445,12 +1240,10 @@ body.dark .chat-toggle {
     flex-direction: column;
     overflow: hidden;
 }
-
 .chat-window.open {
     display: flex;
     animation: chatIn 0.3s ease;
 }
-
 @keyframes chatIn {
     from {
         opacity: 0;
@@ -1461,7 +1254,6 @@ body.dark .chat-toggle {
         transform: translateY(0) scale(1);
     }
 }
-
 .chat-header {
     padding: 12px 16px;
     border-bottom: 1px solid var(--border);
@@ -1473,7 +1265,6 @@ body.dark .chat-toggle {
     font-size: 0.8rem;
     color: var(--text);
 }
-
 .chat-header .close {
     background: none;
     border: none;
@@ -1482,11 +1273,9 @@ body.dark .chat-toggle {
     font-size: 0.9rem;
     transition: var(--transition);
 }
-
 .chat-header .close:hover {
     color: var(--text);
 }
-
 .chat-messages {
     flex: 1;
     padding: 14px 16px;
@@ -1494,7 +1283,6 @@ body.dark .chat-toggle {
     max-height: 300px;
     min-height: 140px;
 }
-
 .chat-msg {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     padding: 8px 14px;
@@ -1504,31 +1292,26 @@ body.dark .chat-toggle {
     font-weight: 400;
     font-size: 0.8rem;
 }
-
 .chat-msg.user {
     background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: #fff;
     margin-left: auto;
 }
-
 body.dark .chat-msg.user {
     background: linear-gradient(135deg, var(--gold), var(--navy-light));
     color: var(--navy-dark);
 }
-
 .chat-msg.bot {
     background: var(--bg);
     color: var(--text2);
     border: 1px solid var(--border);
 }
-
 .chat-input {
     display: flex;
     padding: 10px 12px;
     border-top: 1px solid var(--border);
     gap: 8px;
 }
-
 .chat-input input {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     flex: 1;
@@ -1540,11 +1323,9 @@ body.dark .chat-msg.user {
     font-size: 0.8rem;
     outline: none;
 }
-
 .chat-input input:focus {
     border-color: var(--gold);
 }
-
 .chat-input .send {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     padding: 8px 16px;
@@ -1556,12 +1337,10 @@ body.dark .chat-msg.user {
     transition: var(--transition);
     font-size: 0.8rem;
 }
-
 body.dark .chat-input .send {
     background: linear-gradient(135deg, var(--gold), var(--navy-light));
     color: var(--navy-dark);
 }
-
 .chat-input .send:hover {
     transform: scale(1.04);
 }
@@ -1582,12 +1361,10 @@ body.dark .chat-input .send {
     transform: translateY(100%);
     transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
-
 .cookie-banner.show {
     display: block;
     transform: translateY(0);
 }
-
 .cookie-inner {
     max-width: 1200px;
     margin: 0 auto;
@@ -1597,7 +1374,6 @@ body.dark .chat-input .send {
     justify-content: space-between;
     gap: 12px;
 }
-
 .cookie-inner p {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     font-size: 0.7rem;
@@ -1607,16 +1383,13 @@ body.dark .chat-input .send {
     align-items: center;
     gap: 8px;
 }
-
 .cookie-inner p i {
     color: var(--gold);
 }
-
 .cookie-actions {
     display: flex;
     gap: 8px;
 }
-
 .cookie-actions button {
     font-family: 'Inter', 'Vazirmatn', sans-serif;
     padding: 6px 20px;
@@ -1627,21 +1400,17 @@ body.dark .chat-input .send {
     cursor: pointer;
     transition: var(--transition);
 }
-
 .cookie-actions .accept {
     background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: #fff;
 }
-
 body.dark .cookie-actions .accept {
     background: linear-gradient(135deg, var(--gold), var(--navy-light));
     color: var(--navy-dark);
 }
-
 .cookie-actions .accept:hover {
     transform: translateY(-2px);
 }
-
 .cookie-actions .reject {
     background: var(--bg);
     color: var(--text2);
@@ -1670,7 +1439,6 @@ body.dark .cookie-actions .accept {
     justify-content: center;
     box-shadow: var(--shadow);
 }
-
 .scroll-top:hover {
     border-color: var(--gold);
     color: var(--text);
@@ -1679,59 +1447,33 @@ body.dark .cookie-actions .accept {
 /* ============================================================
    واکنش‌گرایی (Responsive)
    ============================================================ */
-
-/* --- تبلت و کوچکتر --- */
 @media (max-width: 992px) {
-    body {
-        padding: 12px;
-    }
-
-    .container {
-        padding: 0 16px;
-    }
-
+    body { padding: 12px; }
+    .container { padding: 0 16px; }
     .navbar {
         width: calc(100% - 24px);
         padding: 10px 18px;
         border-radius: 60px;
         top: 12px;
     }
-
     .hero-container {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 40px;
     }
-
-    .hero-content {
-        text-align: center;
-    }
-
-    .hero-buttons {
-        justify-content: center;
-    }
-
-    .hero-stats {
-        justify-content: center;
-    }
-
-    .profile-card {
-        width: 260px;
-        height: 320px;
-    }
-
+    .hero-content { text-align: center; }
+    .hero-buttons { justify-content: center; }
+    .hero-stats { justify-content: center; }
+    .profile-card { width: 260px; height: 320px; }
     .services-grid {
         grid-template-columns: 1fr 1fr;
     }
-
     .service-card:nth-child(1) {
         grid-column: span 1;
     }
-
     .project-card {
         flex-direction: column;
     }
-
     .project-card .image {
         flex: 0 0 auto;
         width: 100%;
@@ -1739,23 +1481,15 @@ body.dark .cookie-actions .accept {
     }
 }
 
-/* --- موبایل --- */
 @media (max-width: 768px) {
-    body {
-        padding: 8px;
-    }
-
-    .container {
-        padding: 0 12px;
-    }
-
+    body { padding: 8px; }
+    .container { padding: 0 12px; }
     .navbar {
         width: calc(100% - 16px);
         padding: 8px 14px;
         border-radius: 40px;
         top: 8px;
     }
-
     .navbar .nav-links {
         display: none;
         flex-direction: column;
@@ -1770,69 +1504,54 @@ body.dark .cookie-actions .accept {
         margin-top: 8px;
         box-shadow: var(--shadow);
     }
-
     .navbar .nav-links.open {
         display: flex;
     }
-
     .navbar .menu-toggle {
         display: block;
     }
-
     .hero {
         padding-top: 90px;
     }
-
     .hero-title {
         font-size: clamp(2rem, 8vw, 2.8rem);
     }
-
     .hero-stats {
         gap: 20px;
         flex-wrap: wrap;
     }
-
     .hero-stats .stat .number {
         font-size: 1.3rem;
     }
-
     .profile-card {
         width: 200px;
         height: 250px;
     }
-
     .section {
         padding: 50px 0;
     }
-
     .section-title {
         font-size: clamp(1.6rem, 5vw, 2rem);
     }
-
     .services-grid {
         grid-template-columns: 1fr;
     }
-
     .skills-grid {
         grid-template-columns: 1fr;
     }
-
     .timeline-item {
         padding: 16px 18px;
         gap: 16px;
     }
-
     .timeline-item .content ul li {
         font-size: 0.75rem;
     }
-
     .chat-window {
         width: 92vw;
         right: 4vw;
         bottom: 80px;
         max-height: 400px;
     }
-
     .chat-toggle {
         width: 42px;
         height: 42px;
@@ -1840,7 +1559,6 @@ body.dark .cookie-actions .accept {
         bottom: 20px;
         right: 20px;
     }
-
     .scroll-top {
         width: 34px;
         height: 34px;
@@ -1848,112 +1566,85 @@ body.dark .cookie-actions .accept {
         bottom: 20px;
         left: 20px;
     }
-
     .footer .stats {
         flex-direction: column;
         gap: 6px;
     }
-
     .logo img {
         height: 28px;
     }
-
     .logo-text {
         font-size: 0.85rem;
     }
-
     .logo {
         padding: 2px 14px 2px 6px;
         gap: 8px;
     }
 }
 
-/* --- موبایل کوچک --- */
 @media (max-width: 480px) {
-    body {
-        padding: 4px;
-    }
-
-    .container {
-        padding: 0 8px;
-    }
-
+    body { padding: 4px; }
+    .container { padding: 0 8px; }
     .navbar {
         width: calc(100% - 8px);
         padding: 6px 10px;
         border-radius: 30px;
         top: 4px;
     }
-
     .hero-stats {
         flex-direction: column;
         gap: 12px;
         border-top: none;
     }
-
     .hero-stats .stat {
         display: flex;
         justify-content: space-between;
         padding: 4px 0;
         border-bottom: 1px solid var(--border);
     }
-
     .hero-stats .stat:last-child {
         border-bottom: none;
     }
-
     .hero-stats .stat .number {
         font-size: 1rem;
     }
-
     .hero-stats .stat .label {
         font-size: 0.5rem;
     }
-
     .hero-buttons {
         flex-direction: column;
         align-items: center;
     }
-
-    .btn-primary,
-    .btn-secondary {
+    .btn-primary, .btn-secondary {
         width: 100%;
         justify-content: center;
     }
-
     .profile-card {
         width: 160px;
         height: 200px;
     }
-
     .contact-wrapper {
         padding: 0 4px;
     }
-
     .cookie-inner {
         flex-direction: column;
         text-align: center;
     }
-
     .logo img {
         height: 24px;
     }
-
     .logo-text {
         font-size: 0.7rem;
     }
-
     .nav-actions button {
         font-size: 0.45rem;
         padding: 4px 8px;
     }
-
     .nav-actions .theme-toggle {
         width: 30px;
         height: 30px;
         font-size: 0.6rem;
     }
-
     .hero-title {
         font-size: clamp(1.6rem, 6vw, 2.2rem);
     }
