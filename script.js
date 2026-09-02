@@ -220,7 +220,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         themeToggle.addEventListener('click', function() {
-            const isLight = body.classList.toggle('light');
+            const isLight = body.classList.toggle('dark');
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
             this.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
         });
