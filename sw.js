@@ -3,9 +3,7 @@ const urlsToCache = [
     '/',
     '/index.html',
     '/en.html',
-    '/style.css',
     '/style.min.css',
-    '/script.js',
     '/script.min.js',
     '/images/profile.webp',
     '/images/profile.jpg',
@@ -14,8 +12,6 @@ const urlsToCache = [
     '/fonts/Vazirmatn-Regular.woff2',
     '/fonts/Vazirmatn-Medium.woff2',
     '/fonts/Vazirmatn-Bold.woff2',
-    '/fonts/Vazirmatn-ExtraBold.woff2',
-    '/fonts/Vazirmatn-Light.woff2',
     '/fonts/BNazanin.woff2',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css'
 ];
