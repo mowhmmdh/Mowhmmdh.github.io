@@ -10,9 +10,7 @@ const urlsToCache = [
     '/images/mha-logo.webp',
     '/images/mha-logo.png',
     '/fonts/Vazirmatn-Regular.woff2',
-    '/fonts/Vazirmatn-Medium.woff2',
     '/fonts/Vazirmatn-Bold.woff2',
-    '/fonts/BNazanin.woff2',
     'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css'
 ];
 
