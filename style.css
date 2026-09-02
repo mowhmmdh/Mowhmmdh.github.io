@@ -1,39 +1,75 @@
-/* ================================================
-   طراحی فوق‌پیشرفته ۲۰۲۶ - محمدحسین عسگری ثمرین
-   با پشتیبانی کامل از فونت‌های Vazirmatn
-   ================================================ */
+/* ============================================================
+   style.css - طراحی کامل و رسمی
+   محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت
+   ============================================================ */
 
-/* ----- متغیرها ----- */
+/* ============================================================
+   فونت فارسی (Vazirmatn)
+   ============================================================ */
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('fonts/Vazirmatn-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Vazirmatn';
+    src: url('fonts/Vazirmatn-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ============================================================
+   متغیرها - پالت رسمی (Executive Palette)
+   ============================================================ */
 :root {
-    --bg-primary: #0a0e17;
-    --bg-secondary: rgba(255, 255, 255, 0.02);
-    --bg-card: rgba(255, 255, 255, 0.03);
-    --bg-glass: rgba(255, 255, 255, 0.04);
-    --border-glass: rgba(255, 255, 255, 0.06);
-    --text-primary: #f0f4ff;
-    --text-secondary: rgba(255, 255, 255, 0.6);
-    --text-muted: rgba(255, 255, 255, 0.3);
-    --accent-1: #00d4ff;
-    --accent-2: #7c3aed;
-    --accent-3: #f43f5e;
-    --shadow-glass: 0 20px 60px rgba(0, 0, 0, 0.4);
-    --radius: 24px;
-    --transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+    /* رنگ‌های اصلی */
+    --navy: #1a2a3a;
+    --navy-light: #2c4a6a;
+    --navy-dark: #0f1a2a;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a8;
+    --gold-glow: rgba(201, 168, 76, 0.06);
+    
+    /* پس‌زمینه و متن */
+    --bg: #f5f6f8;
+    --bg2: #ffffff;
+    --bg-glass: rgba(255, 255, 255, 0.35);
+    --text: #1a1a2e;
+    --text2: #4a5a6a;
+    --text3: #8a9aaa;
+    
+    /* حاشیه و سایه */
+    --border: rgba(26, 42, 58, 0.02);
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.02);
+    --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.04);
+    --radius: 16px;
+    --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* ----- حالت روشن ----- */
-body.light-mode {
-    --bg-primary: #f0f4ff;
-    --text-primary: #1a1a2e;
-    --text-secondary: rgba(26, 26, 46, 0.7);
-    --text-muted: rgba(26, 26, 46, 0.4);
-    --bg-glass: rgba(255, 255, 255, 0.7);
-    --bg-secondary: rgba(0, 0, 0, 0.02);
-    --border-glass: rgba(0, 0, 0, 0.06);
-    --shadow-glass: 0 20px 60px rgba(0, 0, 0, 0.06);
+/* ============================================================
+   حالت تاریک (Dark Mode)
+   ============================================================ */
+body.dark {
+    --bg: #0f1a2a;
+    --bg2: #1a2a3a;
+    --bg-glass: rgba(26, 42, 58, 0.4);
+    --text: #f0f4ff;
+    --text2: #8a9aaa;
+    --text3: #4a5a6a;
+    --border: rgba(255, 255, 255, 0.02);
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+    --shadow-hover: 0 12px 48px rgba(0, 0, 0, 0.3);
+    --gold: #d4b85a;
+    --gold-glow: rgba(212, 184, 90, 0.04);
 }
 
-/* ----- ریست و پایه ----- */
+/* ============================================================
+   ریست و پایه
+   ============================================================ */
 * {
     margin: 0;
     padding: 0;
@@ -46,29 +82,109 @@ html {
 }
 
 body {
-    font-family: 'Vazirmatn', 'Plus Jakarta Sans', Tahoma, sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
+    font-family: 'Vazirmatn', 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
-    line-height: 1.8;
-    transition: background 0.5s ease, color 0.5s ease;
+    line-height: 1.7;
+    transition: background 0.6s, color 0.6s;
+    padding: 20px;
 }
 
-/* ----- اسکرول بار ----- */
-::-webkit-scrollbar {
-    width: 6px;
-}
-::-webkit-scrollbar-track {
-    background: var(--bg-primary);
-}
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-    border-radius: 20px;
+/* ============================================================
+   کانتینر اصلی
+   ============================================================ */
+.container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 30px;
+    position: relative;
+    z-index: 1;
 }
 
-/* ----- انیمیشن پس‌زمینه ----- */
-.bg-animation {
+/* ============================================================
+   پیش‌بارگذاری (Preloader)
+   ============================================================ */
+#preloader {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s, visibility 0.8s;
+}
+
+#preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 2px solid var(--border);
+    border-top: 2px solid var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================================
+   کرسر سفارشی (Cursor)
+   ============================================================ */
+.cursor-dot {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+}
+
+.cursor-ring {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(201, 168, 76, 0.1);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 99998;
+    transform: translate(-50%, -50%);
+    backdrop-filter: blur(2px);
+    transition: width 0.5s, height 0.5s, border-color 0.5s;
+}
+
+.cursor-ring.hover {
+    width: 70px;
+    height: 70px;
+    border-color: var(--gold);
+}
+
+@media (max-width: 768px) {
+    .cursor-dot,
+    .cursor-ring {
+        display: none;
+    }
+    body {
+        cursor: auto;
+    }
+}
+
+/* ============================================================
+   پس‌زمینه شبکه عصبی (Neural Network Background)
+   ============================================================ */
+#neural-bg {
     position: fixed;
     top: 0;
     left: 0;
@@ -76,711 +192,889 @@ body {
     height: 100%;
     z-index: 0;
     pointer-events: none;
-    overflow: hidden;
+    opacity: 0.04;
 }
 
-.bg-animation .orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    animation: orbFloat 20s ease-in-out infinite alternate;
-}
-
-.bg-animation .orb:nth-child(1) {
-    width: 500px;
-    height: 500px;
-    background: rgba(0, 212, 255, 0.04);
-    top: -10%;
-    left: -10%;
-    animation-delay: 0s;
-}
-.bg-animation .orb:nth-child(2) {
-    width: 400px;
-    height: 400px;
-    background: rgba(124, 58, 237, 0.05);
-    bottom: -10%;
-    right: -10%;
-    animation-delay: -5s;
-}
-.bg-animation .orb:nth-child(3) {
-    width: 300px;
-    height: 300px;
-    background: rgba(244, 63, 94, 0.03);
-    top: 50%;
-    left: 50%;
-    animation-delay: -10s;
-}
-
-@keyframes orbFloat {
-    0% { transform: translate(0, 0) scale(1); }
-    33% { transform: translate(10%, -10%) scale(1.1); }
-    66% { transform: translate(-10%, 15%) scale(0.9); }
-    100% { transform: translate(5%, -5%) scale(1.05); }
-}
-
-/* ----- نوار ناوبری ----- */
+/* ============================================================
+   نوار ناوبری (Navbar)
+   ============================================================ */
 .navbar {
     position: fixed;
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 92%;
-    max-width: 1200px;
-    padding: 12px 28px;
-    background: rgba(10, 14, 23, 0.75);
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border: 1px solid var(--border-glass);
-    border-radius: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     z-index: 999;
-    box-shadow: var(--shadow-glass);
+    width: calc(100% - 40px);
+    max-width: 1240px;
+    padding: 12px 28px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 80px;
     transition: var(--transition);
-}
-
-body.light-mode .navbar {
-    background: rgba(240, 244, 255, 0.85);
+    box-shadow: var(--shadow);
 }
 
 .navbar.scrolled {
-    background: rgba(10, 14, 23, 0.92);
-    border-color: rgba(255, 255, 255, 0.04);
+    top: 12px;
+    padding: 10px 24px;
+    box-shadow: var(--shadow-hover);
 }
 
-body.light-mode .navbar.scrolled {
-    background: rgba(240, 244, 255, 0.95);
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
-.navbar .logo {
-    font-weight: 800;
-    font-size: 1.2rem;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+/* ============================================================
+   لوگو با حاشیه طلایی
+   ============================================================ */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    padding: 4px 18px 4px 8px;
+    border-radius: 60px;
+    border: 1px solid var(--border);
+    transition: var(--transition);
+    position: relative;
+}
+
+.logo::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 60px;
+    padding: 2px;
+    background: conic-gradient(from 0deg, var(--gold), var(--navy-light), var(--gold));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.logo:hover::before {
+    opacity: 1;
+    animation: spinBorder 4s linear infinite;
+}
+
+@keyframes spinBorder {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.logo img {
+    height: 34px;
+    width: auto;
+    transition: var(--transition);
+    border-radius: 50%;
+}
+
+.logo:hover img {
+    transform: scale(1.04);
+}
+
+.logo-text {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: -0.5px;
+    letter-spacing: 0.5px;
+}
+
+body.dark .logo-text {
+    background: linear-gradient(135deg, var(--gold), #4a7a9a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-text span {
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================================
+   لینک‌های ناوبری
+   ============================================================ */
+.nav-links {
+    display: flex;
+    gap: 2px;
+    list-style: none;
+}
+
+.nav-links a {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 40px;
+    transition: var(--transition);
+    letter-spacing: 0.3px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--text);
+    background: var(--gold-glow);
+}
+
+/* ============================================================
+   دکمه‌های نوار ناوبری
+   ============================================================ */
+.nav-actions {
     display: flex;
     align-items: center;
     gap: 8px;
 }
 
-.navbar .logo img {
-    -webkit-text-fill-color: initial;
-}
-
-.navbar .nav-links {
-    display: flex;
-    gap: 4px;
-    list-style: none;
-}
-
-.navbar .nav-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 8px 18px;
-    border-radius: 40px;
-    transition: var(--transition);
-    position: relative;
-}
-
-.navbar .nav-links a::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 40px;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-    opacity: 0;
-    transition: var(--transition);
-    z-index: -1;
-}
-
-.navbar .nav-links a:hover,
-.navbar .nav-links a.active {
-    color: #fff;
-}
-
-.navbar .nav-links a:hover::before,
-.navbar .nav-links a.active::before {
-    opacity: 0.12;
-}
-
-.navbar .nav-links a.active {
-    color: var(--accent-1);
-}
-
-.navbar .actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.navbar .lang-btn {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border-glass);
-    color: var(--text-secondary);
+.nav-actions button {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text2);
     padding: 8px 16px;
     border-radius: 40px;
     cursor: pointer;
-    font-weight: 600;
-    font-size: 0.75rem;
+    font-weight: 500;
+    font-size: 0.6rem;
     transition: var(--transition);
-    font-family: inherit;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.navbar .lang-btn:hover {
-    background: rgba(0, 212, 255, 0.06);
-    border-color: rgba(0, 212, 255, 0.15);
-    color: #fff;
+.nav-actions button:hover {
+    border-color: var(--gold);
+    color: var(--text);
+    background: var(--gold-glow);
 }
 
-.navbar .dark-toggle {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border-glass);
-    color: var(--text-secondary);
+.nav-actions .theme-toggle {
     width: 38px;
     height: 38px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
+    padding: 0;
+    font-size: 0.8rem;
 }
 
-.navbar .dark-toggle:hover {
-    background: rgba(0, 212, 255, 0.06);
-    border-color: rgba(0, 212, 255, 0.15);
-    color: #fff;
-}
-
-.navbar .menu-toggle {
+.nav-actions .menu-toggle {
     display: none;
-    background: none;
-    border: none;
-    color: var(--text-secondary);
-    font-size: 1.4rem;
-    cursor: pointer;
+    font-size: 1.1rem;
+    padding: 8px 12px;
 }
 
-/* ----- هیرو ----- */
+/* ============================================================
+   بخش هیرو (Hero)
+   ============================================================ */
 .hero {
-    position: relative;
-    z-index: 1;
     min-height: 100vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 120px 20px 60px;
-    text-align: center;
+    padding: 120px 0 60px;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
 }
 
 .hero-content {
-    max-width: 900px;
-    animation: heroFadeIn 1.2s ease forwards;
+    text-align: right;
 }
 
-@keyframes heroFadeIn {
-    from { opacity: 0; transform: translateY(40px) scale(0.98); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+body.lang-en .hero-content {
+    text-align: left;
 }
 
-.hero .badge {
+/* ============================================================
+   نشان هیرو (Badge)
+   ============================================================ */
+.hero-badge {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: inline-block;
-    padding: 6px 24px;
-    border: 1px solid rgba(0, 212, 255, 0.12);
-    border-radius: 60px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--accent-1);
-    letter-spacing: 1.5px;
+    padding: 4px 18px;
+    border: 1px solid var(--gold);
+    border-radius: 40px;
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--gold);
     text-transform: uppercase;
-    margin-bottom: 28px;
-    background: rgba(0, 212, 255, 0.04);
-    backdrop-filter: blur(10px);
+    letter-spacing: 2px;
+    margin-bottom: 24px;
+    background: var(--gold-glow);
 }
 
-.hero h1 {
-    font-size: clamp(3rem, 10vw, 6.5rem);
-    font-weight: 800;
+/* ============================================================
+   عنوان هیرو (با فونت Playfair Display)
+   ============================================================ */
+.hero-title {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
+    font-size: clamp(2.8rem, 8vw, 4.5rem);
+    font-weight: 700;
     line-height: 1.05;
     margin-bottom: 16px;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
+    color: var(--text);
 }
 
-.hero h1 .highlight {
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+.hero-title .highlight {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
+    font-style: italic;
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.hero .subtitle {
-    font-size: clamp(1.1rem, 1.8vw, 1.6rem);
-    font-weight: 400;
-    color: var(--text-secondary);
-    margin-bottom: 32px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
+body.dark .hero-title .highlight {
+    background: linear-gradient(135deg, var(--gold), #4a7a9a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
-.hero .subtitle i {
-    color: var(--accent-1);
+/* ============================================================
+   زیرنویس هیرو
+   ============================================================ */
+.hero-subtitle {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    color: var(--text2);
+    font-weight: 400;
+    margin-bottom: 32px;
+}
+
+.hero-subtitle i {
+    color: var(--gold);
     margin: 0 6px;
 }
 
-.hero .cta-group {
+/* ============================================================
+   دکمه‌های هیرو
+   ============================================================ */
+.hero-buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 14px;
-    justify-content: center;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 }
 
 .btn-primary {
-    padding: 16px 44px;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 36px;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: #fff;
     border: none;
     border-radius: 60px;
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 0.85rem;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 12px 40px -8px rgba(0, 212, 255, 0.2);
     text-decoration: none;
-    font-family: inherit;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    box-shadow: 0 8px 30px rgba(26, 42, 58, 0.04);
+}
+
+body.dark .btn-primary {
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
+    color: var(--navy-dark);
 }
 
 .btn-primary:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 20px 60px -8px rgba(0, 212, 255, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(26, 42, 58, 0.08);
+}
+
+body.dark .btn-primary:hover {
+    box-shadow: 0 12px 40px rgba(212, 184, 90, 0.08);
 }
 
 .btn-secondary {
-    padding: 16px 44px;
-    background: var(--bg-glass);
-    color: var(--text-primary);
-    border: 1px solid var(--border-glass);
-    border-radius: 60px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition);
-    text-decoration: none;
-    font-family: inherit;
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    backdrop-filter: blur(10px);
+    padding: 14px 36px;
+    background: none;
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 60px;
+    font-weight: 500;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: var(--transition);
+    text-decoration: none;
 }
 
 .btn-secondary:hover {
-    background: rgba(255, 255, 255, 0.04);
-    border-color: rgba(0, 212, 255, 0.15);
-    transform: translateY(-4px);
+    border-color: var(--gold);
+    background: var(--gold-glow);
+    transform: translateY(-3px);
 }
 
-/* ----- آمار ----- */
-.stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 20px 30px;
-    background: var(--bg-glass);
-    border-radius: 80px;
-    border: 1px solid var(--border-glass);
-    backdrop-filter: blur(10px);
+/* ============================================================
+   آمار هیرو
+   ============================================================ */
+.hero-stats {
+    display: flex;
+    gap: 40px;
+    padding: 16px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
 }
 
-.stat-item {
+.hero-stats .stat {
     text-align: center;
 }
 
-.stat-item .number {
-    font-size: 2.2rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.hero-stats .stat .number {
+    font-family: 'Orbitron', 'Inter', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--navy);
     display: block;
     line-height: 1.2;
 }
 
-.stat-item .label {
-    font-size: 0.75rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    letter-spacing: 0.5px;
+body.dark .hero-stats .stat .number {
+    color: var(--gold);
 }
 
-/* ----- محتوای اصلی ----- */
-.main-content {
+.hero-stats .stat .label {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.55rem;
+    color: var(--text3);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* ============================================================
+   پروفایل (بیضی شکل با افکت سه‌بعدی)
+   ============================================================ */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000px;
+}
+
+.profile-card {
+    position: relative;
+    width: 340px;
+    height: 400px;
+    border-radius: 40% / 60%;
+    overflow: hidden;
+    border: 3px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    transform-style: preserve-3d;
+}
+
+@media (max-width: 768px) {
+    .profile-card {
+        width: 220px;
+        height: 270px;
+    }
+}
+
+@media (max-width: 480px) {
+    .profile-card {
+        width: 170px;
+        height: 210px;
+    }
+}
+
+.profile-card::before {
+    content: '';
+    position: absolute;
+    inset: -10px;
+    border-radius: 40% / 60%;
+    background: conic-gradient(from 0deg, var(--gold), var(--navy-light), var(--gold));
+    opacity: 0.06;
+    animation: spinGlow 8s linear infinite;
+    filter: blur(30px);
+    z-index: 0;
+}
+
+@keyframes spinGlow {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.profile-card::after {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 40% / 60%;
+    border: 2px solid transparent;
+    background: linear-gradient(135deg, var(--gold), var(--navy-light)) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    animation: pulseRing 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes pulseRing {
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.15;
+    }
+    50% {
+        transform: scale(1.04);
+        opacity: 0.5;
+    }
+}
+
+.profile-card .shine {
+    position: absolute;
+    inset: -15px;
+    border-radius: 40% / 60%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.04), transparent 70%);
+    animation: shineMove 12s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 2;
+}
+
+@keyframes shineMove {
+    0% {
+        transform: rotate(0deg) scale(1);
+    }
+    50% {
+        transform: rotate(180deg) scale(1.06);
+    }
+    100% {
+        transform: rotate(360deg) scale(1);
+    }
+}
+
+.profile-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    z-index: 3;
+    transition: var(--transition);
+    border-radius: 40% / 60%;
+}
+
+.profile-card:hover img {
+    transform: scale(1.04);
+}
+
+.profile-card:hover {
+    border-color: var(--gold);
+    box-shadow: var(--shadow-hover);
+}
+
+/* ============================================================
+   بخش‌های عمومی (Sections)
+   ============================================================ */
+.section {
+    padding: 80px 0;
     position: relative;
     z-index: 1;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 40px 20px 80px;
-}
-
-/* ----- بخش‌ها ----- */
-.section {
-    margin-bottom: 100px;
     opacity: 0;
     transform: translateY(60px);
-    animation: sectionFadeUp 0.8s ease forwards;
+    transition: opacity 1s cubic-bezier(0.23, 1, 0.32, 1),
+        transform 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.section:nth-child(1) { animation-delay: 0.1s; }
-.section:nth-child(2) { animation-delay: 0.2s; }
-.section:nth-child(3) { animation-delay: 0.3s; }
-.section:nth-child(4) { animation-delay: 0.4s; }
+.section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
 
-@keyframes sectionFadeUp {
-    to { opacity: 1; transform: translateY(0); }
+.section-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-tag {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    display: inline-block;
+    font-size: 0.55rem;
+    font-weight: 600;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    border: 1px solid var(--gold-glow);
+    padding: 4px 18px;
+    border-radius: 40px;
 }
 
 .section-title {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
     font-size: clamp(2rem, 4vw, 2.8rem);
     font-weight: 700;
-    margin-bottom: 40px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+    color: var(--text);
 }
 
-.section-title .icon {
-    color: var(--accent-1);
-    font-size: 2rem;
-    width: 48px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 212, 255, 0.04);
-    border-radius: 16px;
-    border: 1px solid rgba(0, 212, 255, 0.06);
-}
-
-.section-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(0, 212, 255, 0.1), transparent);
+.section-title .highlight {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
+    font-style: italic;
+    color: var(--gold);
 }
 
 .section-desc {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    max-width: 700px;
-    margin-bottom: 40px;
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 1rem;
+    color: var(--text2);
+    font-weight: 400;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* ----- شبکه بنتوی (Bento Grid) ----- */
-.bento-grid {
+/* ============================================================
+   خدمات (Services)
+   ============================================================ */
+.services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 24px;
 }
 
-.bento-item {
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
+.service-card {
     padding: 32px 28px;
-    transition: var(--transition);
-    cursor: default;
-    position: relative;
-    overflow: hidden;
-}
-
-.bento-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(0, 212, 255, 0.02), transparent);
-    opacity: 0;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: center;
     transition: var(--transition);
 }
 
-.bento-item:hover::before {
-    opacity: 1;
+.service-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--gold-glow);
 }
 
-.bento-item:hover {
-    transform: translateY(-8px);
-    border-color: rgba(0, 212, 255, 0.08);
-    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.5);
-}
-
-.bento-item .icon {
+.service-card .icon {
     font-size: 2.2rem;
-    color: var(--accent-1);
+    color: var(--gold);
     margin-bottom: 16px;
     display: block;
+    transition: var(--transition);
 }
 
-.bento-item h3 {
-    font-size: 1.15rem;
+.service-card:hover .icon {
+    transform: scale(1.08);
+}
+
+.service-card h3 {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
+    font-size: 1.05rem;
     font-weight: 700;
     margin-bottom: 10px;
 }
 
-.bento-item p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+.service-card p {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.85rem;
+    color: var(--text2);
+    font-weight: 400;
     line-height: 1.7;
 }
 
-.bento-item .tag {
+.service-card .tag {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: inline-block;
-    margin-top: 16px;
-    font-size: 0.7rem;
+    margin-top: 14px;
+    font-size: 0.5rem;
     font-weight: 600;
-    color: var(--accent-1);
-    background: rgba(0, 212, 255, 0.04);
+    color: var(--gold);
+    background: var(--gold-glow);
     padding: 4px 14px;
     border-radius: 20px;
-    border: 1px solid rgba(0, 212, 255, 0.04);
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.bento-item.col-span-2 {
+.service-card:nth-child(1) {
     grid-column: span 2;
 }
-.bento-item.row-span-2 {
-    grid-row: span 2;
+
+@media (max-width: 992px) {
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .service-card:nth-child(1) {
+        grid-column: span 1;
+    }
 }
 
-/* ----- کارت‌های تجربه ----- */
-.experience-timeline {
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   سوابق شغلی (Experience - Timeline)
+   ============================================================ */
+.timeline {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
-.exp-item {
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-glass);
+.timeline-item {
+    display: flex;
+    gap: 24px;
+    padding: 24px 28px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 28px 32px;
     transition: var(--transition);
-    position: relative;
-    border-right: 3px solid var(--accent-1);
+    border-right: 4px solid var(--gold);
 }
 
-.exp-item:hover {
-    transform: translateX(-4px);
-    border-color: rgba(0, 212, 255, 0.15);
-    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.4);
-}
-
-body.lang-en .exp-item {
+body.lang-en .timeline-item {
     border-right: none;
-    border-left: 3px solid var(--accent-1);
+    border-left: 4px solid var(--gold);
 }
-body.lang-en .exp-item:hover {
+
+.timeline-item:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateX(-4px);
+}
+
+body.lang-en .timeline-item:hover {
     transform: translateX(4px);
 }
 
-.exp-item .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 12px;
+.timeline-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 8px;
+}
+
+.timeline-item .dot.current {
+    box-shadow: 0 0 20px var(--gold-glow);
+}
+
+.timeline-item .content h3 {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.timeline-item .content .date {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.6rem;
+    color: var(--text3);
+    font-weight: 400;
     margin-bottom: 8px;
 }
 
-.exp-item h3 {
-    font-size: 1.1rem;
-    font-weight: 700;
+.timeline-item .content .date .current {
+    color: var(--gold);
+    font-weight: 600;
 }
 
-.exp-item .date {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.02);
-    padding: 4px 16px;
-    border-radius: 20px;
-    border: 1px solid var(--border-glass);
-}
-
-.exp-item .date .current {
-    color: var(--accent-1);
-}
-
-.exp-item ul {
+.timeline-item .content ul {
     list-style: none;
-    margin-top: 12px;
 }
 
-.exp-item ul li {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    padding: 4px 0;
-    padding-inline-start: 24px;
+.timeline-item .content ul li {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text2);
+    font-weight: 400;
+    padding: 3px 0;
+    padding-right: 18px;
     position: relative;
 }
 
-.exp-item ul li::before {
-    content: '▹';
-    color: var(--accent-1);
-    position: absolute;
-    right: 0;
-    top: 4px;
+body.lang-en .timeline-item .content ul li {
+    padding-right: 0;
+    padding-left: 18px;
 }
 
-body.lang-en .exp-item ul li::before {
+.timeline-item .content ul li::before {
+    content: '—';
+    color: var(--gold);
+    position: absolute;
+    right: 0;
+    top: 3px;
+}
+
+body.lang-en .timeline-item .content ul li::before {
     right: auto;
     left: 0;
 }
 
-/* ----- مهارت‌ها ----- */
+/* ============================================================
+   مهارت‌ها (Skills)
+   ============================================================ */
 .skills-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 24px;
 }
 
-.skill-card {
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
+.skill-category {
     padding: 24px 22px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     transition: var(--transition);
 }
 
-.skill-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(0, 212, 255, 0.08);
+.skill-category:hover {
+    box-shadow: var(--shadow-hover);
 }
 
-.skill-card h4 {
-    font-size: 0.95rem;
-    font-weight: 700;
+.skill-category h4 {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
     margin-bottom: 16px;
+    color: var(--text);
+    letter-spacing: 0.5px;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
 }
 
-.skill-card h4 i {
-    color: var(--accent-1);
+.skill-category h4 i {
+    color: var(--gold);
 }
 
 .skill-item {
     margin-bottom: 12px;
 }
+
 .skill-item:last-child {
     margin-bottom: 0;
 }
 
 .skill-item .label {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
     display: flex;
     justify-content: space-between;
-    font-size: 0.82rem;
-    margin-bottom: 4px;
-    color: var(--text-secondary);
+    font-size: 0.7rem;
+    font-weight: 400;
+    margin-bottom: 3px;
+    color: var(--text2);
 }
 
-.skill-item .label .percent {
-    color: var(--accent-1);
+.skill-item .label span:last-child {
+    color: var(--gold);
     font-weight: 600;
 }
 
 .skill-item .bar {
-    height: 4px;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 10px;
+    height: 3px;
+    background: var(--border);
+    border-radius: 4px;
     overflow: hidden;
 }
 
 .skill-item .bar .fill {
     height: 100%;
-    border-radius: 10px;
-    background: linear-gradient(90deg, var(--accent-1), var(--accent-2));
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--navy), var(--gold));
     width: 0;
-    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: width 2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.dark .skill-item .bar .fill {
+    background: linear-gradient(90deg, var(--gold), var(--navy-light));
 }
 
 .skill-item.visible .bar .fill {
     width: var(--skill-width, 0%) !important;
 }
 
-/* ----- پروژه‌ها ----- */
+/* ============================================================
+   پروژه‌ها (Projects)
+   ============================================================ */
+.projects-grid {
+    display: grid;
+    gap: 24px;
+}
+
 .project-card {
     display: flex;
     gap: 28px;
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-glass);
+    padding: 24px 28px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 28px 32px;
     transition: var(--transition);
     align-items: center;
 }
 
 .project-card:hover {
+    box-shadow: var(--shadow-hover);
     transform: translateY(-4px);
-    border-color: rgba(0, 212, 255, 0.08);
-    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.4);
 }
 
 .project-card .image {
-    flex: 0 0 200px;
-    border-radius: 16px;
+    flex: 0 0 160px;
+    border-radius: var(--radius);
     overflow: hidden;
-    min-height: 140px;
-    background: rgba(255, 255, 255, 0.02);
+    min-height: 100px;
 }
 
 .project-card .image img {
     width: 100%;
     height: 100%;
-    min-height: 140px;
+    min-height: 100px;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s ease;
+    transition: var(--transition);
 }
 
 .project-card:hover .image img {
     transform: scale(1.04);
 }
 
-.project-card .info {
-    flex: 1;
-}
-
 .project-card .info h3 {
-    font-size: 1.1rem;
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
+    font-size: 1rem;
     font-weight: 700;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
 }
 
 .project-card .info .date {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-bottom: 10px;
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.6rem;
+    color: var(--text3);
+    font-weight: 400;
+    margin-bottom: 8px;
 }
 
 .project-card .info p {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.82rem;
+    color: var(--text2);
+    font-weight: 400;
     line-height: 1.7;
 }
 
@@ -788,136 +1082,122 @@ body.lang-en .exp-item ul li::before {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
-    margin-top: 14px;
+    margin-top: 12px;
 }
 
 .project-card .info .tags span {
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    background: rgba(255, 255, 255, 0.02);
-    padding: 4px 14px;
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.5rem;
+    color: var(--text3);
+    border: 1px solid var(--border);
+    padding: 2px 14px;
     border-radius: 20px;
-    border: 1px solid var(--border-glass);
 }
 
-.project-card .info .tags .link {
-    color: var(--accent-1);
+.project-card .info .tags a {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.5rem;
+    color: var(--gold);
     text-decoration: none;
-    border-color: rgba(0, 212, 255, 0.06);
+    border: 1px solid var(--gold-glow);
+    padding: 2px 14px;
+    border-radius: 20px;
     transition: var(--transition);
 }
 
-.project-card .info .tags .link:hover {
-    background: rgba(0, 212, 255, 0.04);
-    border-color: rgba(0, 212, 255, 0.12);
+.project-card .info .tags a:hover {
+    background: var(--gold-glow);
 }
 
-/* ----- FAQ ----- */
+/* ============================================================
+   پرسش‌های متداول (FAQ)
+   ============================================================ */
 .faq-grid {
     display: grid;
-    gap: 14px;
+    gap: 10px;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .faq-item {
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    padding: 20px 28px;
-    transition: var(--transition);
+    padding: 16px 24px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
     cursor: pointer;
+    transition: var(--transition);
 }
 
 .faq-item:hover {
-    border-color: rgba(0, 212, 255, 0.06);
+    border-color: var(--gold-glow);
 }
 
-.faq-item .question {
+.faq-item .q {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
-.faq-item .question i {
-    color: var(--accent-1);
+.faq-item .q i {
+    color: var(--gold);
     transition: var(--transition);
 }
 
-.faq-item .answer {
-    color: var(--text-secondary);
-    font-size: 0.9rem;
+.faq-item .a {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    color: var(--text2);
+    font-size: 0.8rem;
+    font-weight: 400;
     line-height: 1.7;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.4s ease, padding 0.4s ease;
 }
 
-.faq-item.open .answer {
+.faq-item.open .a {
     max-height: 200px;
     padding-top: 14px;
 }
 
-.faq-item.open .question i {
+.faq-item.open .q i {
     transform: rotate(180deg);
 }
 
-/* ----- فرم تماس ----- */
+/* ============================================================
+   تماس (Contact)
+   ============================================================ */
+.contact-wrapper {
+    max-width: 520px;
+    margin: 0 auto;
+}
+
 .contact-form {
-    max-width: 600px;
-    background: var(--bg-glass);
-    backdrop-filter: blur(12px);
-    border: 1px solid var(--border-glass);
-    border-radius: var(--radius);
-    padding: 40px 36px;
-}
-
-.contact-form .form-group {
-    margin-bottom: 20px;
-}
-
-.contact-form label {
-    display: block;
-    font-weight: 600;
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    color: var(--text-secondary);
-}
-
-.contact-form label i {
-    color: var(--accent-1);
-    margin-left: 8px;
-}
-
-body.lang-en .contact-form label i {
-    margin-left: 0;
-    margin-right: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
 .contact-form input,
 .contact-form textarea {
-    width: 100%;
-    padding: 14px 18px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-glass);
-    border-radius: 16px;
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 0.95rem;
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    padding: 14px 20px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 400;
     transition: var(--transition);
     outline: none;
 }
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-    border-color: rgba(0, 212, 255, 0.15);
-    background: rgba(255, 255, 255, 0.03);
-}
-
-.contact-form input::placeholder,
-.contact-form textarea::placeholder {
-    color: var(--text-muted);
+    border-color: var(--gold);
+    box-shadow: 0 0 0 4px var(--gold-glow);
 }
 
 .contact-form textarea {
@@ -925,329 +1205,382 @@ body.lang-en .contact-form label i {
     min-height: 120px;
 }
 
-.contact-form .btn-submit {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
-    color: #fff;
-    border: none;
-    border-radius: 16px;
-    font-weight: 700;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: var(--transition);
-    font-family: inherit;
-}
-
-.contact-form .btn-submit:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 40px -8px rgba(0, 212, 255, 0.2);
-}
-
-.contact-form .quick-links {
+/* ============================================================
+   لینک‌های تماس
+   ============================================================ */
+.contact-links {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
-    gap: 12px;
+    gap: 14px;
+    flex-wrap: wrap;
     margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid var(--border-glass);
 }
 
-.contact-form .quick-links a {
-    color: var(--text-secondary);
+.contact-links a {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    color: var(--text2);
     text-decoration: none;
-    font-size: 0.85rem;
+    font-size: 0.65rem;
     font-weight: 500;
     padding: 8px 20px;
+    border: 1px solid var(--border);
     border-radius: 40px;
-    border: 1px solid var(--border-glass);
     transition: var(--transition);
 }
 
-.contact-form .quick-links a:hover {
-    color: #fff;
-    border-color: rgba(0, 212, 255, 0.15);
-    background: rgba(0, 212, 255, 0.04);
+.contact-links a:hover {
+    border-color: var(--gold);
+    color: var(--text);
+    background: var(--gold-glow);
 }
 
-.contact-form .quick-links a i {
-    color: var(--accent-1);
+.contact-links a i {
+    color: var(--gold);
     margin-left: 6px;
 }
 
-body.lang-en .contact-form .quick-links a i {
+body.lang-en .contact-links a i {
     margin-left: 0;
     margin-right: 6px;
 }
 
-/* ----- چت‌بات ----- */
+/* ============================================================
+   اشتراک‌گذاری (Share)
+   ============================================================ */
+.share-section {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.share-section p {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.6rem;
+    color: var(--text3);
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.share-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg2);
+    color: var(--text2);
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+}
+
+.share-btn:hover {
+    border-color: var(--gold);
+    color: var(--text);
+    transform: translateY(-3px);
+}
+
+/* ============================================================
+   فوتر (Footer)
+   ============================================================ */
+.footer {
+    padding: 50px 0 30px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    margin-top: 40px;
+}
+
+.footer .logo-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 6px;
+}
+
+.footer .logo-footer img {
+    height: 32px;
+    opacity: 0.3;
+    transition: var(--transition);
+    filter: grayscale(1);
+}
+
+.footer .logo-footer img:hover {
+    opacity: 0.6;
+    filter: grayscale(0);
+}
+
+.footer .logo-footer span {
+    font-family: 'Playfair Display', 'Vazirmatn', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text);
+    opacity: 0.6;
+}
+
+.footer .sub {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.65rem;
+    color: var(--text3);
+    font-weight: 400;
+}
+
+.footer .stats {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 12px 0;
+}
+
+.footer .stats span {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.65rem;
+    color: var(--text3);
+}
+
+.footer .stats i {
+    color: var(--gold);
+    opacity: 0.2;
+    margin-left: 6px;
+}
+
+body.lang-en .footer .stats i {
+    margin-left: 0;
+    margin-right: 6px;
+}
+
+.footer .copy {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.55rem;
+    color: var(--text3);
+}
+
+.footer .update {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.5rem;
+    color: var(--text3);
+    margin-top: 4px;
+}
+
+/* ============================================================
+   چت‌بات (Chat)
+   ============================================================ */
 .chat-toggle {
     position: fixed;
     bottom: 30px;
     right: 30px;
     z-index: 9998;
-    width: 60px;
-    height: 60px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: #fff;
     border: none;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     cursor: pointer;
-    box-shadow: 0 12px 40px -8px rgba(0, 212, 255, 0.25);
+    box-shadow: 0 8px 30px rgba(26, 42, 58, 0.08);
     transition: var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.chat-toggle:hover {
-    transform: scale(1.08);
+body.dark .chat-toggle {
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
+    color: var(--navy-dark);
 }
 
-.chat-toggle .badge-dot {
+.chat-toggle:hover {
+    transform: scale(1.06);
+}
+
+.chat-toggle .dot {
     position: absolute;
     top: 6px;
     right: 6px;
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
     background: #22c55e;
     border-radius: 50%;
-    border: 2px solid var(--bg-primary);
-    animation: pulse-dot 2s infinite;
+    border: 2px solid var(--bg2);
+    animation: pulse 2s infinite;
 }
 
-@keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
 }
 
+/* ============================================================
+   پنجره چت
+   ============================================================ */
 .chat-window {
     position: fixed;
-    bottom: 100px;
+    bottom: 90px;
     right: 30px;
-    width: 400px;
+    width: 360px;
     max-width: 92vw;
-    max-height: 560px;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-glass);
-    border-radius: 24px;
-    box-shadow: var(--shadow-glass);
+    max-height: 480px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-hover);
     z-index: 9999;
     display: none;
     flex-direction: column;
     overflow: hidden;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
 }
 
 .chat-window.open {
     display: flex;
-    animation: chatOpen 0.3s ease forwards;
+    animation: chatIn 0.3s ease;
 }
 
-@keyframes chatOpen {
-    from { opacity: 0; transform: translateY(20px) scale(0.96); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes chatIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .chat-header {
-    padding: 16px 22px;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: var(--text);
 }
 
-.chat-header .title {
-    font-weight: 700;
-    font-size: 0.95rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.chat-header .title i {
-    font-size: 1.1rem;
-}
-
-.chat-header .close-btn {
+.chat-header .close {
     background: none;
     border: none;
-    color: #fff;
-    font-size: 1.2rem;
+    color: var(--text3);
     cursor: pointer;
-    opacity: 0.6;
+    font-size: 0.9rem;
     transition: var(--transition);
 }
 
-.chat-header .close-btn:hover {
-    opacity: 1;
+.chat-header .close:hover {
+    color: var(--text);
 }
 
 .chat-messages {
     flex: 1;
-    padding: 16px 20px;
+    padding: 14px 16px;
     overflow-y: auto;
-    max-height: 360px;
-    min-height: 200px;
+    max-height: 300px;
+    min-height: 140px;
 }
 
-.chat-messages .msg {
-    padding: 10px 16px;
-    border-radius: 16px;
-    margin-bottom: 10px;
+.chat-msg {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    padding: 8px 14px;
+    border-radius: var(--radius);
+    margin-bottom: 8px;
     max-width: 85%;
-    word-wrap: break-word;
-    animation: msgIn 0.3s ease forwards;
+    font-weight: 400;
+    font-size: 0.8rem;
 }
 
-@keyframes msgIn {
-    from { opacity: 0; transform: translateY(10px) scale(0.96); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-.chat-messages .msg.user {
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+.chat-msg.user {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: #fff;
     margin-left: auto;
 }
 
-.chat-messages .msg.bot {
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    color: var(--text-secondary);
+body.dark .chat-msg.user {
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
+    color: var(--navy-dark);
 }
 
-.chat-messages .msg.bot .typing-indicator {
-    display: inline-flex;
-    gap: 4px;
+.chat-msg.bot {
+    background: var(--bg);
+    color: var(--text2);
+    border: 1px solid var(--border);
 }
 
-.chat-messages .msg.bot .typing-indicator span {
-    width: 8px;
-    height: 8px;
-    background: var(--text-muted);
-    border-radius: 50%;
-    animation: typingDot 1.2s infinite;
-}
-
-.chat-messages .msg.bot .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-.chat-messages .msg.bot .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-
-@keyframes typingDot {
-    0%, 60%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-8px); }
-}
-
-.chat-input-area {
+.chat-input {
     display: flex;
-    padding: 12px 16px;
-    border-top: 1px solid var(--border-glass);
-    gap: 10px;
-    background: var(--bg-secondary);
+    padding: 10px 12px;
+    border-top: 1px solid var(--border);
+    gap: 8px;
 }
 
-.chat-input-area input {
+.chat-input input {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
     flex: 1;
-    padding: 10px 16px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid var(--border-glass);
-    border-radius: 40px;
-    color: var(--text-primary);
-    font-family: inherit;
-    font-size: 0.9rem;
+    padding: 8px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text);
+    font-size: 0.8rem;
     outline: none;
-    transition: var(--transition);
 }
 
-.chat-input-area input:focus {
-    border-color: rgba(0, 212, 255, 0.15);
+.chat-input input:focus {
+    border-color: var(--gold);
 }
 
-.chat-input-area input::placeholder {
-    color: var(--text-muted);
-}
-
-.chat-input-area .send-btn {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+.chat-input .send {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: #fff;
     border: none;
+    border-radius: var(--radius);
     cursor: pointer;
     transition: var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.chat-input-area .send-btn:hover {
-    transform: scale(1.05);
-}
-
-/* ----- فوتر ----- */
-.footer {
-    position: relative;
-    z-index: 1;
-    text-align: center;
-    padding: 40px 20px 30px;
-    border-top: 1px solid var(--border-glass);
-    margin-top: 40px;
-}
-
-.footer .logo-circle {
-    width: 72px;
-    height: 72px;
-    border-radius: 50%;
-    background: var(--bg-glass);
-    border: 1px solid var(--border-glass);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 16px;
-    overflow: hidden;
-}
-
-.footer .logo-circle img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-}
-
-.footer p {
-    color: var(--text-muted);
     font-size: 0.8rem;
 }
 
-.footer p .name {
-    color: var(--text-secondary);
-    font-weight: 600;
+body.dark .chat-input .send {
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
+    color: var(--navy-dark);
 }
 
-.footer .update-date {
-    color: var(--text-muted);
-    font-size: 0.7rem;
-    margin-top: 6px;
+.chat-input .send:hover {
+    transform: scale(1.04);
 }
 
-/* ----- بنر کوکی ----- */
+/* ============================================================
+   بنر کوکی (Cookie)
+   ============================================================ */
 .cookie-banner {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 99999;
-    padding: 16px 24px;
-    background: rgba(10, 14, 23, 0.92);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border-glass);
+    padding: 12px 20px;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
     display: none;
     transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .cookie-banner.show {
@@ -1255,7 +1588,7 @@ body.lang-en .contact-form .quick-links a i {
     transform: translateY(0);
 }
 
-.cookie-banner .inner {
+.cookie-inner {
     max-width: 1200px;
     margin: 0 auto;
     display: flex;
@@ -1265,175 +1598,363 @@ body.lang-en .contact-form .quick-links a i {
     gap: 12px;
 }
 
-.cookie-banner .inner p {
-    color: var(--text-secondary);
-    font-size: 0.85rem;
-}
-
-.cookie-banner .inner .actions {
+.cookie-inner p {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    font-size: 0.7rem;
+    color: var(--text2);
+    font-weight: 400;
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
 }
 
-.cookie-banner .inner .actions button {
-    padding: 8px 24px;
+.cookie-inner p i {
+    color: var(--gold);
+}
+
+.cookie-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.cookie-actions button {
+    font-family: 'Inter', 'Vazirmatn', sans-serif;
+    padding: 6px 20px;
     border-radius: 40px;
     border: none;
     font-weight: 600;
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     cursor: pointer;
     transition: var(--transition);
-    font-family: inherit;
 }
 
-.cookie-banner .inner .actions .accept {
-    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+.cookie-actions .accept {
+    background: linear-gradient(135deg, var(--navy), var(--navy-light));
     color: #fff;
 }
 
-.cookie-banner .inner .actions .accept:hover {
+body.dark .cookie-actions .accept {
+    background: linear-gradient(135deg, var(--gold), var(--navy-light));
+    color: var(--navy-dark);
+}
+
+.cookie-actions .accept:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px -8px rgba(0, 212, 255, 0.2);
 }
 
-.cookie-banner .inner .actions .reject {
-    background: var(--bg-glass);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-glass);
+.cookie-actions .reject {
+    background: var(--bg);
+    color: var(--text2);
+    border: 1px solid var(--border);
 }
 
-.cookie-banner .inner .actions .reject:hover {
-    background: rgba(255, 255, 255, 0.02);
+/* ============================================================
+   دکمه بازگشت به بالا (Scroll Top)
+   ============================================================ */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    z-index: 999;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
 }
 
-/* ===== ریسپانسیو ===== */
+.scroll-top:hover {
+    border-color: var(--gold);
+    color: var(--text);
+}
+
+/* ============================================================
+   واکنش‌گرایی (Responsive)
+   ============================================================ */
+
+/* --- تبلت و کوچکتر --- */
 @media (max-width: 992px) {
-    .bento-grid {
-        grid-template-columns: repeat(2, 1fr);
+    body {
+        padding: 12px;
     }
-    .bento-item.col-span-2 {
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .navbar {
+        width: calc(100% - 24px);
+        padding: 10px 18px;
+        border-radius: 60px;
+        top: 12px;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .hero-content {
+        text-align: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-stats {
+        justify-content: center;
+    }
+
+    .profile-card {
+        width: 260px;
+        height: 320px;
+    }
+
+    .services-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .service-card:nth-child(1) {
         grid-column: span 1;
     }
-    .bento-item.row-span-2 {
-        grid-row: span 1;
-    }
+
     .project-card {
         flex-direction: column;
     }
+
     .project-card .image {
         flex: 0 0 auto;
         width: 100%;
-        max-height: 200px;
+        max-height: 180px;
     }
 }
 
+/* --- موبایل --- */
 @media (max-width: 768px) {
-    .navbar {
-        padding: 10px 16px;
-        border-radius: 40px;
-        width: 96%;
-        top: 12px;
+    body {
+        padding: 8px;
     }
+
+    .container {
+        padding: 0 12px;
+    }
+
+    .navbar {
+        width: calc(100% - 16px);
+        padding: 8px 14px;
+        border-radius: 40px;
+        top: 8px;
+    }
+
     .navbar .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: calc(100% + 12px);
-        left: 50%;
-        transform: translateX(-50%);
-        width: 90%;
-        background: rgba(10, 14, 23, 0.96);
-        backdrop-filter: blur(24px);
-        border: 1px solid var(--border-glass);
-        border-radius: 24px;
-        padding: 16px;
-        gap: 4px;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg2);
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border);
+        border-radius: 20px;
+        margin-top: 8px;
+        box-shadow: var(--shadow);
     }
+
     .navbar .nav-links.open {
         display: flex;
     }
-    .navbar .nav-links a {
-        padding: 10px 16px;
-        font-size: 0.9rem;
-    }
+
     .navbar .menu-toggle {
         display: block;
     }
-    .stats {
-        grid-template-columns: repeat(3, 1fr);
-        padding: 16px 20px;
-        border-radius: 40px;
-        gap: 8px;
+
+    .hero {
+        padding-top: 90px;
     }
-    .stat-item .number {
-        font-size: 1.6rem;
+
+    .hero-title {
+        font-size: clamp(2rem, 8vw, 2.8rem);
     }
-    .stat-item .label {
-        font-size: 0.65rem;
+
+    .hero-stats {
+        gap: 20px;
+        flex-wrap: wrap;
     }
-    .hero h1 {
-        font-size: clamp(2.2rem, 8vw, 3.5rem);
+
+    .hero-stats .stat .number {
+        font-size: 1.3rem;
     }
-    .hero .subtitle {
-        font-size: 1rem;
+
+    .profile-card {
+        width: 200px;
+        height: 250px;
     }
-    .btn-primary,
-    .btn-secondary {
-        padding: 14px 28px;
-        font-size: 0.9rem;
+
+    .section {
+        padding: 50px 0;
     }
+
     .section-title {
-        font-size: 1.6rem;
+        font-size: clamp(1.6rem, 5vw, 2rem);
     }
-    .section-title .icon {
-        font-size: 1.4rem;
-        width: 40px;
-        height: 40px;
-    }
-    .bento-grid {
+
+    .services-grid {
         grid-template-columns: 1fr;
     }
+
     .skills-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
     }
+
+    .timeline-item {
+        padding: 16px 18px;
+        gap: 16px;
+    }
+
+    .timeline-item .content ul li {
+        font-size: 0.75rem;
+    }
+
     .chat-window {
         width: 92vw;
         right: 4vw;
-        bottom: 90px;
-        max-height: 460px;
+        bottom: 80px;
+        max-height: 400px;
     }
+
     .chat-toggle {
-        width: 52px;
-        height: 52px;
-        font-size: 1.3rem;
-        bottom: 24px;
-        right: 24px;
+        width: 42px;
+        height: 42px;
+        font-size: 1rem;
+        bottom: 20px;
+        right: 20px;
     }
-    .contact-form {
-        padding: 28px 20px;
+
+    .scroll-top {
+        width: 34px;
+        height: 34px;
+        font-size: 0.7rem;
+        bottom: 20px;
+        left: 20px;
     }
-    .exp-item .header {
+
+    .footer .stats {
         flex-direction: column;
+        gap: 6px;
+    }
+
+    .logo img {
+        height: 28px;
+    }
+
+    .logo-text {
+        font-size: 0.85rem;
+    }
+
+    .logo {
+        padding: 2px 14px 2px 6px;
+        gap: 8px;
     }
 }
 
+/* --- موبایل کوچک --- */
 @media (max-width: 480px) {
-    .stats {
-        grid-template-columns: 1fr;
+    body {
+        padding: 4px;
+    }
+
+    .container {
+        padding: 0 8px;
+    }
+
+    .navbar {
+        width: calc(100% - 8px);
+        padding: 6px 10px;
         border-radius: 30px;
-        padding: 16px;
+        top: 4px;
+    }
+
+    .hero-stats {
+        flex-direction: column;
         gap: 12px;
+        border-top: none;
     }
-    .skills-grid {
-        grid-template-columns: 1fr;
+
+    .hero-stats .stat {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px solid var(--border);
     }
-    .hero .cta-group {
+
+    .hero-stats .stat:last-child {
+        border-bottom: none;
+    }
+
+    .hero-stats .stat .number {
+        font-size: 1rem;
+    }
+
+    .hero-stats .stat .label {
+        font-size: 0.5rem;
+    }
+
+    .hero-buttons {
         flex-direction: column;
         align-items: center;
     }
+
     .btn-primary,
     .btn-secondary {
         width: 100%;
         justify-content: center;
+    }
+
+    .profile-card {
+        width: 160px;
+        height: 200px;
+    }
+
+    .contact-wrapper {
+        padding: 0 4px;
+    }
+
+    .cookie-inner {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .logo img {
+        height: 24px;
+    }
+
+    .logo-text {
+        font-size: 0.7rem;
+    }
+
+    .nav-actions button {
+        font-size: 0.45rem;
+        padding: 4px 8px;
+    }
+
+    .nav-actions .theme-toggle {
+        width: 30px;
+        height: 30px;
+        font-size: 0.6rem;
+    }
+
+    .hero-title {
+        font-size: clamp(1.6rem, 6vw, 2.2rem);
     }
 }
