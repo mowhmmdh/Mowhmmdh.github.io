@@ -1,11 +1,11 @@
 {
-    "name": "محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت",
+    "name": "محمدحسین عسگری ثمرین | متخصص ارشد شبکه و زیرساخت",
     "short_name": "عسگری ثمرین",
-    "description": "متخصص شبکه و زیرساخت با جدیدترین فناوری‌های IT",
+    "description": "متخصص ارشد شبکه و زیرساخت با جدیدترین فناوری‌های IT",
     "start_url": "/index.html",
     "display": "standalone",
-    "background_color": "#1a2a3a",
-    "theme_color": "#4f8c8c",
+    "background_color": "#0a0e17",
+    "theme_color": "#00d4ff",
     "orientation": "any",
     "scope": "/",
     "icons": [
