@@ -2,37 +2,37 @@
 # humans.txt - محمدحسین عسگری ثمرین
 # ================================================
 
-/* تیم */
-توسعه‌دهنده: محمدحسین عسگری ثمرین
-وب‌سایت: https://mowhmmdh.github.io/
-ایمیل: mohammedhasgari@gmail.com
-موقعیت: تهران، ایران
-نقش: متخصص ارشد IT و توسعه‌دهنده وب
+/* Team */
+Developer: Mohammad Hossein Asgari Somarin
+Website: https://mowhmmdh.github.io/
+Email: mohammedhasgari@gmail.com
+Location: Tehran, Iran
+Role: Senior IT Specialist & Full-Stack Web Developer
 
-/* سایت */
-آخرین به‌روزرسانی: پویا
-استانداردها: HTML5, CSS3, JavaScript ES6+, JSON-LD
-امنیت: HSTS, X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy
-میزبانی: GitHub Pages
+/* Site */
+Last Update: Dynamic
+Standards: HTML5, CSS3, JavaScript ES6+, JSON-LD
+Security: HSTS, X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy
+Hosting: GitHub Pages
 
-/* ابزارها */
-ویرایشگر: Visual Studio Code
-کنترل نسخه: Git / GitHub
-فونت‌ها: Vazirmatn (همه وزن‌ها), BNazanin, Plus Jakarta Sans
-آیکون‌ها: Font Awesome 6
-تحلیل: Google Analytics, Google Tag Manager
+/* Tools */
+Code Editor: Visual Studio Code
+Version Control: Git / GitHub
+Fonts: Vazirmatn (All Weights), BNazanin, Inter
+Icons: Font Awesome 6
+Analytics: Google Analytics, Google Tag Manager
 
-/* پروژه */
-نام: نمونه کار و رزومه شخصی حرفه‌ای
-مخزن: https://github.com/mowhmmdh/mowhmmdh.github.io
-ویژگی‌ها: RTL/LTR, دارک/روشن مود, واکنش‌گرا, انیمیشن اسکرول, چت‌بات هوش مصنوعی, فرم درخواست, اشتراک‌گذاری اجتماعی, بنر کوکی, PWA
+/* Project */
+Name: Professional Portfolio & Resume
+Repository: https://github.com/mowhmmdh/mowhmmdh.github.io
+Features: RTL/LTR, Dark/Light Mode, Responsive, Scroll Animations, AI Chatbot, Contact Form, Social Sharing, Cookie Banner, PWA
 
-/* تماس */
-ایمیل: mohammedhasgari@gmail.com
-لینکدین: https://linkedin.com/in/mohammadhosseinasgari
-گیت‌هاب: https://github.com/mowhmmdh
-اینستاگرام: https://instagram.com/mowhmmdh
+/* Contact */
+Email: mohammedhasgari@gmail.com
+LinkedIn: https://linkedin.com/in/mohammadhosseinasgari
+GitHub: https://github.com/mowhmmdh
+Instagram: https://instagram.com/mowhmmdh
 
-/* آخرین کلمات */
-"کیفیت برتر، تعهد حرفه‌ای، نتایج قابل لمس"
-- محمدحسین عسگری ثمرین
+/* Last Words */
+"Quality first, professional commitment, tangible results"
+- Mohammad Hossein Asgari Somarin
