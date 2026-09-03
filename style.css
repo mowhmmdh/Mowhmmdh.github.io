@@ -1649,23 +1649,43 @@ body.dark .cookie-actions .accept {
         font-size: clamp(1.6rem, 6vw, 2.2rem);
     }
 
-   /* ===== لینک برند وین‌تک – متمایز ===== */
+   /* ===== VinTech Brand Link ===== */
 .nav-brand-link {
-    background: linear-gradient(135deg, var(--gold), var(--gold-light)) !important;
-    color: #0a0a0a !important;
-    padding: 8px 20px !important;
-    border-radius: 100px !important;
-    font-weight: 700 !important;
-    box-shadow: 0 4px 20px rgba(212, 160, 48, 0.3) !important;
-    border: none !important;
-    transition: var(--transition);
+    background: linear-gradient(135deg, #f7971e, #ffd200) !important;
+    color: #1a1a2e !important;
+    font-weight: 800 !important;
+    border-radius: 40px !important;
+    padding: 8px 22px !important;
+    box-shadow: 0 0 20px rgba(247, 151, 30, 0.3) !important;
+    transition: all 0.4s ease !important;
+    border: 1px solid transparent !important;
+    position: relative;
+    overflow: hidden;
 }
+
+.nav-brand-link::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    transform: rotate(20deg);
+}
+
+.nav-brand-link:hover::after {
+    opacity: 1;
+}
+
 .nav-brand-link:hover {
     transform: scale(1.05) !important;
-    box-shadow: 0 8px 30px rgba(212, 160, 48, 0.5) !important;
-    color: #0a0a0a !important;
+    box-shadow: 0 0 40px rgba(247, 151, 30, 0.5) !important;
+    border-color: #ffd200 !important;
 }
-.nav-brand-link::after {
-    display: none !important;  /* خط زیرین را حذف می‌کند */
+
+body.dark .nav-brand-link {
+    background: linear-gradient(135deg, #f7971e, #ffd200) !important;
+    color: #0f1a2a !important;
 }
+
 }
