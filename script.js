@@ -1,5 +1,5 @@
 /* ============================================================
-   script.js - جاوااسکریپت کامل
+   script.js - جاوااسکریپت کامل با اصلاح دارک مود
    محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت
    ============================================================ */
 
@@ -48,19 +48,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 ctx.clearRect(0, 0, width, height);
 
                 for (const n of neurons) {
-                    // حرکت ذرات
                     n.x += n.vx;
                     n.y += n.vy;
                     if (n.x < 0 || n.x > width) n.vx *= -1;
                     if (n.y < 0 || n.y > height) n.vy *= -1;
 
-                    // رسم ذره
                     ctx.beginPath();
                     ctx.arc(n.x, n.y, n.radius, 0, Math.PI * 2);
                     ctx.fillStyle = n.color;
                     ctx.fill();
 
-                    // رسم خطوط بین ذرات نزدیک
                     for (const n2 of neurons) {
                         const dx = n.x - n2.x,
                             dy = n.y - n2.y;
@@ -79,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             animateNeural();
 
-            // تنظیم مجدد در تغییر اندازه پنجره
             window.addEventListener('resize', () => {
                 width = window.innerWidth;
                 height = window.innerHeight;
@@ -114,7 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         animRing();
 
-        // تغییر حالت حلقه هنگام هاور روی المان‌های قابل کلیک
         document.querySelectorAll('a, button, .service-card, .project-card, .faq-item, .timeline-item')
             .forEach(el => {
                 el.addEventListener('mouseenter', () => ring.classList.add('hover'));
@@ -164,12 +159,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const navItems = document.querySelectorAll('.nav-links a');
         const allSections = document.querySelectorAll('.section, .hero');
 
-        // منوی موبایل
         if (menuToggle) {
             menuToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
         }
 
-        // کلیک روی لینک‌های ناوبری
         navItems.forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -184,7 +177,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
 
-        // هایلایت لینک فعال هنگام اسکرول
         window.addEventListener('scroll', function() {
             let current = '';
             allSections.forEach(section => {
@@ -200,29 +192,36 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            // افکت اسکرول روی نوار
             navbar.classList.toggle('scrolled', window.scrollY > 50);
-
-            // نمایش دکمه بازگشت به بالا
             document.getElementById('scrollTop').style.display = window.scrollY > 300 ? 'flex' : 'none';
         });
 
         /* ==========================================================
-           7. تغییر تم (Dark/Light Mode)
+           7. تغییر تم (Dark/Light Mode) - اصلاح‌شده
            ========================================================== */
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
         // بازیابی تم ذخیره‌شده
-        if (localStorage.getItem('theme') === 'light') {
-            body.classList.add('light');
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
             themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            body.classList.remove('dark');
+            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
         }
 
         themeToggle.addEventListener('click', function() {
-            const isLight = body.classList.toggle('dark');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            this.innerHTML = isLight ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            const isDark = body.classList.toggle('dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            this.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'theme_toggle', {
+                    'event_category': 'engagement',
+                    'event_label': isDark ? 'dark' : 'light'
+                });
+            }
         });
 
         /* ==========================================================
@@ -248,7 +247,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const chatMessages = document.getElementById('chatMessages');
         let chatOpen = false;
 
-        // باز/بسته کردن چت
         if (chatToggle) {
             chatToggle.addEventListener('click', () => {
                 chatOpen = !chatOpen;
@@ -263,7 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
 
-        // افزودن پیام به چت
         function addMsg(text, sender) {
             const msg = document.createElement('div');
             msg.className = `chat-msg ${sender}`;
@@ -272,7 +269,6 @@ document.addEventListener('DOMContentLoaded', function() {
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        // دانش پایه هوش مصنوعی
         const knowledge = {
             'تخصص': 'من محمدحسین عسگری ثمرین، متخصص شبکه و زیرساخت هستم.',
             'خدمات': 'خدمات من: طراحی شبکه، CCTV، تعمیرات سخت‌افزار و نرم‌افزار، امنیت شبکه',
@@ -284,7 +280,6 @@ document.addEventListener('DOMContentLoaded', function() {
             'hello': 'Hello! How can I help you?'
         };
 
-        // پاسخ‌دهی هوش مصنوعی
         function getAIResponse(query) {
             const lower = query.toLowerCase();
             for (const [key, value] of Object.entries(knowledge)) {
@@ -293,7 +288,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return 'سوال خوبی است! لطفاً از بخش "تماس با من" استفاده کنید. / Good question! Please use the "Contact" section.';
         }
 
-        // ارسال پیام
         function sendChat() {
             const text = chatInput.value.trim();
             if (!text) return;
@@ -301,7 +295,6 @@ document.addEventListener('DOMContentLoaded', function() {
             addMsg(text, 'user');
             chatInput.value = '';
 
-            // نمایش علامت تایپ
             const typing = document.createElement('div');
             typing.className = 'chat-msg bot';
             typing.innerHTML = `
@@ -426,7 +419,6 @@ document.addEventListener('DOMContentLoaded', function() {
         /* ==========================================================
            12. آمار بازدید و امتیاز (Views & Rating)
            ========================================================== */
-        // شمارش بازدید
         let count = parseInt(localStorage.getItem('viewCount') || '0');
         if (!sessionStorage.getItem('viewed')) {
             count++;
@@ -435,7 +427,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         document.getElementById('viewCount').textContent = count.toLocaleString('fa-IR');
 
-        // نمایش امتیاز
         const rating = localStorage.getItem('siteRating');
         document.getElementById('ratingDisplay').textContent = rating ? '⭐ ' + rating + '/5' : '--';
 
@@ -473,7 +464,6 @@ document.addEventListener('DOMContentLoaded', function() {
            ========================================================== */
         const now = new Date();
 
-        // تاریخ شمسی
         const updateFa = document.getElementById('update-date-fa');
         if (updateFa) {
             const months = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'];
@@ -481,7 +471,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 `به‌روزرسانی: ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear() - 621}`;
         }
 
-        // تاریخ میلادی
         const updateEn = document.getElementById('update-date-en');
         if (updateEn) {
             const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
