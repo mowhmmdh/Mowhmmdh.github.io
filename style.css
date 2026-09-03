@@ -1648,4 +1648,24 @@ body.dark .cookie-actions .accept {
     .hero-title {
         font-size: clamp(1.6rem, 6vw, 2.2rem);
     }
+
+   /* ===== لینک برند وین‌تک – متمایز ===== */
+.nav-brand-link {
+    background: linear-gradient(135deg, var(--gold), var(--gold-light)) !important;
+    color: #0a0a0a !important;
+    padding: 8px 20px !important;
+    border-radius: 100px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 4px 20px rgba(212, 160, 48, 0.3) !important;
+    border: none !important;
+    transition: var(--transition);
+}
+.nav-brand-link:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 8px 30px rgba(212, 160, 48, 0.5) !important;
+    color: #0a0a0a !important;
+}
+.nav-brand-link::after {
+    display: none !important;  /* خط زیرین را حذف می‌کند */
+}
 }
