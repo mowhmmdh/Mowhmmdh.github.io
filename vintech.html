@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- ============================================================
-    سئوی جامع و قدرتمند – پوشش تمام کلمات کلیدی مرتبط
+    سئوی جامع و قدرتمند – پوشش تمام کلمات کلیدی
     ============================================================ -->
     <title>وین‌تک | محمدحسین عسگری ثمرین | راه‌حل‌های حرفه‌ای شبکه، امنیت و طراحی وب</title>
     <meta name="description" content="وین‌تک برندی از محمدحسین عسگری ثمرین (Mohammad Hossein Asgari Somarin) – ارائه‌دهنده خدمات تخصصی شبکه، امنیت سایبری، دوربین مداربسته، طراحی وب و پشتیبانی فنی با بالاترین کیفیت. متخصص IT، شبکه، امنیت و توسعه وب." />
@@ -38,7 +38,7 @@
     <meta name="twitter:description" content="وین‌تک برندی از محمدحسین عسگری ثمرین – خدمات تخصصی شبکه، امنیت سایبری، طراحی وب و پشتیبانی فنی." />
 
     <!-- ============================================================
-    JSON-LD (ساختار داده جامع برای موتورهای جستجو)
+    JSON-LD – ساختار داده جامع (Organization + Service + FAQ)
     ============================================================ -->
     <script type="application/ld+json">
         {
@@ -48,7 +48,7 @@
             "alternateName": "VinTech",
             "url": "https://mowhmmdh.github.io/vintech.html",
             "logo": "https://mowhmmdh.github.io/logo-vintech.png",
-            "description": "وین‌تک برندی از محمدحسین عسگری ثمرین (Mohammad Hossein Asgari Somarin) – ارائه‌دهنده خدمات تخصصی شبکه، امنیت سایبری، دوربین مداربسته، طراحی وب و پشتیبانی فنی.",
+            "description": "وین‌تک برندی از محمدحسین عسگری ثمرین – ارائه‌دهنده خدمات تخصصی شبکه، امنیت سایبری، دوربین مداربسته، طراحی وب و پشتیبانی فنی.",
             "founder": {
                 "@type": "Person",
                 "name": "محمدحسین عسگری ثمرین",
@@ -81,6 +81,45 @@
                 "https://instagram.com/mowhmmdh",
                 "https://mowhmmdh.github.io"
             ]
+        }
+    </script>
+
+    <!-- ============================================================
+    FAQ Schema (سوالات متداول)
+    ============================================================ -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [{
+                "@type": "Question",
+                "name": "وین‌تک چه خدماتی ارائه می‌دهد؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "وین‌تک خدمات تخصصی در حوزه‌های شبکه و زیرساخت، دوربین مداربسته، امنیت سایبری، طراحی وب‌سایت، تعمیرات سخت‌افزاری و نرم‌افزاری و مشاوره IT ارائه می‌دهد."
+                }
+            }, {
+                "@type": "Question",
+                "name": "چگونه می‌توانم با وین‌تک تماس بگیرم؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "شما می‌توانید از طریق ایمیل mohammedhasgari@gmail.com، یا شبکه‌های اجتماعی لینکدین، تلگرام، اینستاگرام و گیت‌هاب با وین‌تک در ارتباط باشید."
+                }
+            }, {
+                "@type": "Question",
+                "name": "محمدحسین عسگری ثمرین کیست؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "محمدحسین عسگری ثمرین بنیان‌گذار و مدیر ارشد وین‌تک، مهندس شبکه و توسعه‌دهنده وب با بیش از ۲ سال تجربه عملی در حوزه فناوری اطلاعات است."
+                }
+            }, {
+                "@type": "Question",
+                "name": "آیا وین‌تک خدمات طراحی وب‌سایت هم دارد؟",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "بله، وین‌تک خدمات طراحی وب‌سایت‌های شرکتی، فروشگاهی و شخصی را با کدنویسی اختصاصی، ریسپانسیو و بهینه‌سازی شده برای سئو ارائه می‌دهد."
+                }
+            }]
         }
     </script>
 
@@ -159,7 +198,7 @@
         }
 
         /* ============================================================
-           BACKGROUND CANVAS
+           BACKGROUND CANVAS + PARALLAX
            ============================================================ */
         .bg-canvas {
             position: fixed;
@@ -175,6 +214,7 @@
             opacity: 0.08;
             animation: floatOrb 25s infinite alternate ease-in-out;
             will-change: transform;
+            transition: transform 0.1s ease-out;
         }
         .bg-canvas .orb:nth-child(1) {
             width: 800px;
@@ -421,7 +461,7 @@
         }
 
         /* ============================================================
-           HERO
+           HERO + TYPEWRITER
            ============================================================ */
         .hero {
             min-height: 100vh;
@@ -484,6 +524,35 @@
             margin-bottom: 10px;
             font-weight: 500;
         }
+
+        /* ---- Typewriter ---- */
+        .typewriter-wrapper {
+            display: inline-block;
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            font-weight: 600;
+            margin-bottom: 20px;
+            min-height: 2.5rem;
+        }
+        .typewriter-wrapper .cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2rem;
+            background: var(--gold-light);
+            margin-right: 2px;
+            animation: blink 0.8s step-end infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
         .hero-content .desc {
             font-size: 1.05rem;
             color: var(--text-secondary);
@@ -498,6 +567,7 @@
             flex-wrap: wrap;
         }
 
+        /* ---- Micro-interactions on buttons ---- */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -526,14 +596,18 @@
             opacity: 1;
         }
 
+        /* Neumorphic + Glassmorphism hybrid */
         .btn-primary {
             background: linear-gradient(135deg, var(--gold), var(--gold-light));
             color: #0a0a0a;
-            box-shadow: 0 8px 32px rgba(212, 160, 48, 0.3);
+            box-shadow: 0 8px 32px rgba(212, 160, 48, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
         }
         .btn-primary:hover {
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 16px 48px rgba(212, 160, 48, 0.5);
+            box-shadow: 0 16px 48px rgba(212, 160, 48, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+        .btn-primary:active {
+            transform: scale(0.97);
         }
 
         .btn-outline {
@@ -545,6 +619,9 @@
             background: var(--bg-card);
             border-color: var(--gold);
             transform: translateY(-4px);
+        }
+        .btn-outline:active {
+            transform: scale(0.97);
         }
 
         /* Hero Visual - Bento Grid */
@@ -570,6 +647,8 @@
             align-items: center;
             position: relative;
             overflow: hidden;
+            transform-style: preserve-3d;
+            perspective: 800px;
         }
         .hero-visual .bento-item::before {
             content: '';
@@ -583,7 +662,7 @@
             opacity: 0.06;
         }
         .hero-visual .bento-item:hover {
-            transform: translateY(-6px) scale(1.02);
+            transform: translateY(-6px) scale(1.02) rotateX(2deg) rotateY(2deg);
             border-color: var(--gold);
             box-shadow: 0 20px 50px rgba(212, 160, 48, 0.1);
             background: var(--bg-card-hover);
@@ -601,7 +680,7 @@
             transition: var(--transition);
         }
         .hero-visual .bento-item:hover .icon {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(-8deg);
         }
         .hero-visual .bento-item .label {
             font-size: 0.85rem;
@@ -804,6 +883,73 @@
         }
 
         /* ============================================================
+           BLOG (مقالات)
+           ============================================================ */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .blog-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px) saturate(1.2);
+            -webkit-backdrop-filter: blur(16px) saturate(1.2);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 28px 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .blog-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-glow);
+            background: var(--bg-card-hover);
+        }
+        .blog-card .icon {
+            font-size: 2.8rem;
+            color: var(--gold-light);
+            margin-bottom: 12px;
+            display: block;
+        }
+        .blog-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .blog-card p {
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+        .blog-card .tag {
+            display: inline-block;
+            background: rgba(212, 160, 48, 0.15);
+            color: var(--gold-light);
+            padding: 2px 12px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            margin-top: 8px;
+        }
+        .blog-card .btn-read {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 8px 24px;
+            border-radius: 100px;
+            background: transparent;
+            color: var(--gold-light);
+            border: 1px solid rgba(212, 160, 48, 0.2);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .blog-card .btn-read:hover {
+            background: rgba(212, 160, 48, 0.1);
+            border-color: var(--gold);
+        }
+
+        /* ============================================================
            PORTFOLIO
            ============================================================ */
         .portfolio-grid {
@@ -905,6 +1051,60 @@
         .testimonial-item .role {
             color: var(--text-muted);
             font-size: 0.8rem;
+        }
+
+        /* ============================================================
+           FAQ (سوالات متداول)
+           ============================================================ */
+        .faq-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: var(--bg-card);
+            backdrop-filter: blur(16px) saturate(1.2);
+            -webkit-backdrop-filter: blur(16px) saturate(1.2);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 20px 28px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .faq-item:hover {
+            border-color: rgba(212, 160, 48, 0.2);
+            box-shadow: var(--shadow-glow);
+        }
+        .faq-item .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+            gap: 16px;
+        }
+        .faq-item .question .arrow {
+            color: var(--gold-light);
+            transition: var(--transition);
+            font-size: 1.2rem;
+        }
+        .faq-item.active .question .arrow {
+            transform: rotate(180deg);
+        }
+        .faq-item .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+        .faq-item.active .answer {
+            max-height: 300px;
+            padding-top: 14px;
         }
 
         /* ============================================================
@@ -1387,8 +1587,8 @@
 </head>
 <body>
 
-    <!-- ===== BACKGROUND CANVAS ===== -->
-    <div class="bg-canvas">
+    <!-- ===== BACKGROUND CANVAS (Parallax Ready) ===== -->
+    <div class="bg-canvas" id="bgCanvas">
         <div class="orb"></div>
         <div class="orb"></div>
         <div class="orb"></div>
@@ -1408,7 +1608,9 @@
                 <li><a href="#about">درباره ما</a></li>
                 <li><a href="#services">خدمات</a></li>
                 <li><a href="#portfolio">نمونه کارها</a></li>
+                <li><a href="#blog">مقالات</a></li>
                 <li><a href="#testimonials">نظرات</a></li>
+                <li><a href="#faq">سوالات</a></li>
                 <li><a href="#experience">سوابق</a></li>
                 <li><a href="#skills">مهارت‌ها</a></li>
                 <li><a href="#contact" class="nav-cta">تماس با ما</a></li>
@@ -1437,6 +1639,12 @@
                         <span class="highlight">وین‌تک</span>
                     </h1>
                     <p class="subtitle">فناوری روشن‌گر برای کسب‌وکار شما</p>
+
+                    <!-- ===== TYPEWRITER ===== -->
+                    <div class="typewriter-wrapper" id="typewriter">
+                        <span id="typewriterText"></span><span class="cursor"></span>
+                    </div>
+
                     <p class="desc">
                         <strong>وین‌تک</strong> برندی از <strong>محمدحسین عسگری ثمرین</strong>
                         ارائه‌دهنده راه‌حل‌های یکپارچه در حوزه شبکه، امنیت سایبری، دوربین مداربسته،
@@ -1482,7 +1690,7 @@
         <div class="container">
             <div class="about-grid reveal">
                 <div class="about-avatar">
-                    <img src="/images/profile.jpg" alt="محمدحسین عسگری ثمرین - Mohammad Hossein Asgari Somarin" />
+                    <img src="/images/profile.jpg" alt="محمدحسین عسگری ثمرین - Mohammad Hossein Asgari Somarin" loading="lazy" />
                 </div>
                 <div class="about-text">
                     <span class="tag" style="display:inline-flex;margin-bottom:10px;">
@@ -1594,8 +1802,42 @@
         </div>
     </section>
 
+    <!-- ===== BLOG (مقالات) ===== -->
+    <section class="section section-alt" id="blog">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tag"><i class="fas fa-pen-fancy"></i> مجله</span>
+                <h2>مقالات <span class="highlight">تخصصی</span></h2>
+                <p>مطالب آموزشی و به‌روز در حوزه فناوری اطلاعات</p>
+            </div>
+            <div class="blog-grid">
+                <div class="blog-card reveal">
+                    <i class="fas fa-shield-halved icon"></i>
+                    <h4>۱۰ نکته کلیدی برای امنیت شبکه</h4>
+                    <p>راهکارهای عملی برای افزایش امنیت شبکه سازمانی و جلوگیری از حملات سایبری.</p>
+                    <span class="tag">امنیت</span>
+                    <a href="#" class="btn-read">مطالعه بیشتر</a>
+                </div>
+                <div class="blog-card reveal">
+                    <i class="fas fa-laptop-code icon"></i>
+                    <h4>سئو فنی چیست و چرا مهم است؟</h4>
+                    <p>آشنایی با اصول سئو فنی و تأثیر آن در بهبود رتبه وب‌سایت در موتورهای جستجو.</p>
+                    <span class="tag">طراحی وب</span>
+                    <a href="#" class="btn-read">مطالعه بیشتر</a>
+                </div>
+                <div class="blog-card reveal">
+                    <i class="fas fa-network-wired icon"></i>
+                    <h4>آینده شبکه‌های کامپیوتری</h4>
+                    <p>بررسی روندهای جدید در دنیای شبکه از 5G تا SDN و تأثیر آن بر کسب‌وکارها.</p>
+                    <span class="tag">شبکه</span>
+                    <a href="#" class="btn-read">مطالعه بیشتر</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ===== TESTIMONIALS ===== -->
-    <section class="section section-alt" id="testimonials">
+    <section class="section" id="testimonials">
         <div class="container">
             <div class="section-header reveal">
                 <span class="tag"><i class="fas fa-star"></i> نظرات مشتریان</span>
@@ -1620,6 +1862,47 @@
                     <blockquote>امنیت شبکه‌مان را به وین‌تک سپردیم و از نتیجه فوق‌العاده راضی هستیم.</blockquote>
                     <div class="author">مهدی نوری</div>
                     <div class="role">مدیر IT سازمان صمت</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="section section-alt" id="faq">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="tag"><i class="fas fa-question-circle"></i> سوالات متداول</span>
+                <h2>پرسش‌های <span class="highlight">رایج</span></h2>
+                <p>پاسخ به سوالاتی که ممکن است برای شما پیش بیاید</p>
+            </div>
+            <div class="faq-grid" id="faqGrid">
+                <div class="faq-item active">
+                    <div class="question">
+                        <span>وین‌تک چه خدماتی ارائه می‌دهد؟</span>
+                        <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="answer">وین‌تک خدمات تخصصی در حوزه‌های شبکه و زیرساخت، دوربین مداربسته، امنیت سایبری، طراحی وب‌سایت، تعمیرات سخت‌افزاری و نرم‌افزاری و مشاوره IT ارائه می‌دهد.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>چگونه می‌توانم با وین‌تک تماس بگیرم؟</span>
+                        <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="answer">شما می‌توانید از طریق ایمیل mohammedhasgari@gmail.com، یا شبکه‌های اجتماعی لینکدین، تلگرام، اینستاگرام و گیت‌هاب با وین‌تک در ارتباط باشید.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>محمدحسین عسگری ثمرین کیست؟</span>
+                        <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="answer">محمدحسین عسگری ثمرین بنیان‌گذار و مدیر ارشد وین‌تک، مهندس شبکه و توسعه‌دهنده وب با بیش از ۲ سال تجربه عملی در حوزه فناوری اطلاعات است.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="question">
+                        <span>آیا وین‌تک خدمات طراحی وب‌سایت هم دارد؟</span>
+                        <span class="arrow"><i class="fas fa-chevron-down"></i></span>
+                    </div>
+                    <div class="answer">بله، وین‌تک خدمات طراحی وب‌سایت‌های شرکتی، فروشگاهی و شخصی را با کدنویسی اختصاصی، ریسپانسیو و بهینه‌سازی شده برای سئو ارائه می‌دهد.</div>
                 </div>
             </div>
         </div>
@@ -1784,7 +2067,6 @@
                     </a>
                 </div>
 
-                <!-- ===== فرم تماس با آدرس درست ===== -->
                 <form action="https://formspree.io/f/mblnnwvk" method="POST" class="contact-form" id="contactForm">
                     <div class="form-group">
                         <label for="name"><i class="fas fa-user"></i> نام و نام خانوادگی</label>
@@ -1832,7 +2114,66 @@
     JAVASCRIPT
     ============================================================ -->
     <script>
-        // ===== Hamburger Menu =====
+        // ============================================================
+        // 1. TYPEWRITER EFFECT
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const texts = [
+                'متخصص شبکه و امنیت',
+                'طراح وب‌سایت حرفه‌ای',
+                'مشاور فناوری اطلاعات',
+                'توسعه‌دهنده خلاق'
+            ];
+            let textIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+            const typewriterElement = document.getElementById('typewriterText');
+
+            function typeWriter() {
+                const currentText = texts[textIndex];
+                if (isDeleting) {
+                    typewriterElement.textContent = currentText.substring(0, charIndex - 1);
+                    charIndex--;
+                } else {
+                    typewriterElement.textContent = currentText.substring(0, charIndex + 1);
+                    charIndex++;
+                }
+
+                let speed = isDeleting ? 50 : 80;
+
+                if (!isDeleting && charIndex === currentText.length) {
+                    speed = 2000;
+                    isDeleting = true;
+                } else if (isDeleting && charIndex === 0) {
+                    isDeleting = false;
+                    textIndex = (textIndex + 1) % texts.length;
+                    speed = 500;
+                }
+
+                setTimeout(typeWriter, speed);
+            }
+
+            typeWriter();
+        });
+
+        // ============================================================
+        // 2. PARALLAX EFFECT ON BACKGROUND ORBS
+        // ============================================================
+        document.addEventListener('mousemove', function(e) {
+            const orbs = document.querySelectorAll('.bg-canvas .orb');
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+
+            orbs.forEach((orb, index) => {
+                const speed = 1 + index * 0.3;
+                orb.style.transform =
+                    `translate(${x * speed * 0.5}px, ${y * speed * 0.3}px) scale(1)`;
+            });
+        });
+
+        // ============================================================
+        // 3. HAMBURGER MENU
+        // ============================================================
         const hamburger = document.getElementById('hamburger');
         const navLinks = document.getElementById('navLinks');
 
@@ -1846,7 +2187,9 @@
             });
         });
 
-        // ===== Theme Toggle =====
+        // ============================================================
+        // 4. THEME TOGGLE
+        // ============================================================
         const themeToggle = document.getElementById('themeToggle');
         const body = document.body;
 
@@ -1859,7 +2202,9 @@
             localStorage.setItem('theme', body.classList.contains('light-mode') ? 'light' : 'dark');
         });
 
-        // ===== Active link on scroll =====
+        // ============================================================
+        // 5. ACTIVE LINK ON SCROLL
+        // ============================================================
         const sections = document.querySelectorAll('section[id]');
         const navLinkItems = document.querySelectorAll('.nav-links a:not(.nav-cta):not(.nav-main-link)');
 
@@ -1879,7 +2224,9 @@
             });
         });
 
-        // ===== Reveal animations with Intersection Observer =====
+        // ============================================================
+        // 6. REVEAL ANIMATIONS (Intersection Observer)
+        // ============================================================
         const revealElements = document.querySelectorAll('.reveal');
 
         const revealObserver = new IntersectionObserver((entries) => {
@@ -1895,7 +2242,9 @@
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // ===== Skill bars reveal =====
+        // ============================================================
+        // 7. SKILL BARS REVEAL
+        // ============================================================
         const skillFills = document.querySelectorAll('.skill-bar .fill');
 
         const revealSkills = () => {
@@ -1918,6 +2267,25 @@
             setTimeout(revealSkills, 400);
         });
         window.addEventListener('scroll', revealSkills);
+
+        // ============================================================
+        // 8. FAQ ACCORDION
+        // ============================================================
+        const faqItems = document.querySelectorAll('.faq-item');
+
+        faqItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const isActive = this.classList.contains('active');
+
+                // Close all
+                faqItems.forEach(i => i.classList.remove('active'));
+
+                // Toggle current
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
     </script>
 
 </body>
