@@ -193,6 +193,45 @@
     STYLES
     ============================================================= -->
     <style>
+
+        /* ===== VinTech Brand Link ===== */
+.nav-brand-link {
+    background: linear-gradient(135deg, #f7971e, #ffd200) !important;
+    color: #1a1a2e !important;
+    font-weight: 800 !important;
+    border-radius: 40px !important;
+    padding: 8px 22px !important;
+    box-shadow: 0 0 20px rgba(247, 151, 30, 0.3) !important;
+    transition: all 0.4s ease !important;
+    border: 1px solid transparent !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-brand-link::after {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+    transform: rotate(20deg);
+}
+
+.nav-brand-link:hover::after {
+    opacity: 1;
+}
+
+.nav-brand-link:hover {
+    transform: scale(1.05) !important;
+    box-shadow: 0 0 40px rgba(247, 151, 30, 0.5) !important;
+    border-color: #ffd200 !important;
+}
+
+body.dark .nav-brand-link {
+    background: linear-gradient(135deg, #f7971e, #ffd200) !important;
+    color: #0f1a2a !important;
+}
         /* ===== Persian Font for compatibility ===== */
         @font-face {
             font-family: 'Vazirmatn';
