@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN | محمدحسین عسگری</title>
+<meta name="description" content="چک‌لیست عملی عیب‌یابی شبکه برای پیدا کردن سریع علت قطعی اینترنت، DNS، DHCP، VLAN، Gateway و مشکلات ارتباطی؛ از لایه فیزیکی تا سرویس‌های شبکه.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
+<link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
+<link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-blog/network-troubleshooting-checklist.html">
+<link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
+<meta property="og:title" content="چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN">
+<meta property="og:description" content="یک روش مرحله‌ای و عملی برای پیدا کردن ریشه مشکلات شبکه بدون حدس‌زدن و تغییرات بی‌هدف.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
+<meta property="og:locale" content="fa_IR">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN","description":"روش مرحله‌ای عیب‌یابی شبکه از لایه فیزیکی تا DNS و سرویس‌ها.","author":{"@type":"Person","name":"محمدحسین عسگری ثمرین","url":"https://mowhmmdh.github.io/"},"mainEntityOfPage":"https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html","inLanguage":"fa-IR"}</script>
+<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.9}pre{overflow:auto;padding:16px;background:#111;color:#eee;border-radius:12px}a{color:inherit}</style>
+</head>
+<body>
+<main>
+<nav><a href="/">خانه</a> / <a href="/blog/">مقالات</a></nav>
+<article>
+<p>NETWORK • TROUBLESHOOTING</p>
+<h1>چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN</h1>
+<p>وقتی یک کاربر می‌گوید «اینترنت قطع است»، مشکل لزوماً اینترنت نیست. ممکن است کابل، لینک سوئیچ، VLAN، DHCP، Gateway، DNS، فایروال یا حتی یک سرویس خاص خراب باشد. عیب‌یابی حرفه‌ای یعنی از پایین‌ترین لایه شروع کنیم و هر مرحله را با یک تست قابل اندازه‌گیری رد یا تأیید کنیم.</p>
+<h2>۱. اول دامنه مشکل را مشخص کن</h2>
+<ul><li>فقط یک کاربر مشکل دارد یا چند کاربر؟</li><li>یک VLAN مشکل دارد یا کل شبکه؟</li><li>ارتباط داخلی قطع است یا فقط اینترنت؟</li><li>مشکل دائمی است یا مقطعی؟</li></ul>
+<p>اگر چند سیستم در یک زمان و در یک VLAN مشکل دارند، احتمالاً باید سراغ زیرساخت مشترک بروی؛ نه اینکه تک‌تک کلاینت‌ها را تغییر دهی.</p>
+<h2>۲. لایه فیزیکی و لینک</h2>
+<p>چراغ کارت شبکه، پورت سوئیچ، کابل، پچ‌پنل و وضعیت لینک را بررسی کن. در صورت امکان یک کلاینت سالم را با همان پورت یا کابل آزمایش کن. هدف این مرحله جدا کردن مشکل فیزیکی از مشکل منطقی است.</p>
+<h2>۳. IP و Gateway</h2>
+<pre>ipconfig /all
+ping 127.0.0.1
+ping &lt;default-gateway&gt;</pre>
+<p>اگر IP معتبر نداری، DHCP را بررسی کن. اگر Gateway پاسخ نمی‌دهد، قبل از بررسی DNS سراغ VLAN، ARP، سوئیچ، ACL و مسیر محلی برو.</p>
+<h2>۴. DNS را از اینترنت جدا کن</h2>
+<pre>nslookup example.com
+nslookup example.com &lt;dns-server&gt;</pre>
+<p>اگر ping به IP کار می‌کند اما نام دامنه resolve نمی‌شود، مشکل احتمالاً DNS است؛ نه خود اینترنت. این تفکیک ساده جلوی تغییرات بی‌هدف در فایروال و روتر را می‌گیرد.</p>
+<h2>۵. VLAN و DHCP</h2>
+<p>در شبکه‌های VLAN-based، بررسی کن پورت Access در VLAN صحیح است، Trunk اجازه VLAN موردنظر را دارد و DHCP Scope مربوط به همان شبکه فعال و دارای ظرفیت است. مقاله‌های <a href="/blog/vlan-segmentation.html">VLAN Segmentation</a> و <a href="/blog/dhcp-snooping-dai-network-security.html">DHCP Snooping و DAI</a> برای ادامه این موضوع مفیدند.</p>
+<h2>۶. مسیر و فایروال</h2>
+<pre>tracert 1.1.1.1
+ping 1.1.1.1</pre>
+<p>اگر Gateway سالم است ولی مقصد بیرونی در دسترس نیست، routing، NAT، policy فایروال، VPN و upstream را بررسی کن. در این مرحله بهتر است هر تغییر را مستند کنی تا چند متغیر هم‌زمان عوض نشوند.</p>
+<h2>۷. وقتی مشکل امنیتی محتمل است</h2>
+<p>قطع ارتباط، ARP غیرعادی، DHCP ناشناس یا تغییرات ناگهانی ترافیک می‌تواند نشانه یک مشکل امنیتی باشد. در چنین شرایطی قبل از پاک‌کردن شواهد، لاگ سوئیچ، DHCP، DNS و فایروال را حفظ کن. برای اصول سخت‌سازی، <a href="/blog/network-hardening.html">Network Hardening</a> و <a href="/blog/active-directory-hardening.html">Active Directory Hardening</a> را ببین.</p>
+<h2>۸. قانون طلایی عیب‌یابی</h2>
+<p><strong>هر بار فقط یک فرضیه را تست کن.</strong> نتیجه هر تست را ثبت کن، سپس به لایه بعد برو. این روش هم سریع‌تر است و هم باعث می‌شود بعداً دقیقاً بدانی چه چیزی مشکل را حل کرده است.</p>
+<h2>مطالعه مرتبط</h2>
+<ul><li><a href="/vintech/network-infrastructure.html">خدمات Network Infrastructure در VinTech</a></li><li><a href="/vintech/cybersecurity.html">خدمات Cybersecurity در VinTech</a></li><li><a href="/blog/dns-troubleshooting.html">عیب‌یابی DNS</a></li><li><a href="/blog/vlan-segmentation.html">VLAN Segmentation</a></li></ul>
+</article>
+</main>
+</body>
+</html>
