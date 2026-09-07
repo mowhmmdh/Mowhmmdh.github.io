@@ -1,0 +1,32 @@
+name: Apply responsive layer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - 'assets/responsive-fix-2026.css'
+      - 'scripts/apply-responsive-layer.py'
+      - '.github/workflows/apply-responsive.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  responsive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inject responsive stylesheet into all HTML pages
+        run: python3 scripts/apply-responsive-layer.py
+      - name: Commit changes
+        run: |
+          if git diff --quiet; then
+            echo "No responsive changes needed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html'
+          git commit -m "Apply responsive safety layer to all pages"
+          git push
