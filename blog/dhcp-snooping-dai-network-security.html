@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه | محمدحسین عسگری</title>
+<meta name="description" content="راهنمای عملی DHCP Snooping و Dynamic ARP Inspection برای کاهش حملات DHCP Rogue و ARP Spoofing؛ از طراحی Trust تا نمونه تنظیمات سوئیچ و نکات عیب‌یابی.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="author" content="Mohammad Hossein Asgari Somarin">
+<link rel="canonical" href="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
+<link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
+<link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-blog/dhcp-snooping-dai-network-security.html">
+<link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
+<meta property="og:title" content="DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه">
+<meta property="og:description" content="راهنمای عملی کاهش DHCP Rogue و ARP Spoofing در شبکه‌های سازمانی.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="https://mowhmmdh.github.io/images/profile.webp">
+<meta property="og:image:alt" content="DHCP Snooping و Dynamic ARP Inspection در امنیت شبکه">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه">
+<meta name="twitter:description" content="راهنمای عملی کاهش DHCP Rogue و ARP Spoofing در شبکه‌های سازمانی.">
+<link rel="stylesheet" href="/assets/modern-ui-2026.css">
+<style>@font-face{font-family:v;src:url('/fonts/Vazirmatn-Regular.woff2') format('woff2');font-display:swap}@font-face{font-family:v;src:url('/fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:800;font-display:swap}:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#070b12;color:#eef3f8;font-family:v,system-ui;line-height:2}.wrap{width:min(900px,92%);margin:auto}.nav{padding:18px 0;border-bottom:1px solid #1d2937;display:flex;justify-content:space-between;align-items:center;gap:16px}.nav a{color:#a8b3c0;text-decoration:none}.nav>a{color:#d6ad5b;font-weight:800}.nav-links{display:flex;gap:16px;flex-wrap:wrap}.hero{padding:70px 0 30px}.kicker{color:#d6ad5b;font-size:.78rem;letter-spacing:.08em}.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.3;margin:14px 0}.lead{font-size:1.08rem;color:#a8b3c0}.meta{color:#8795a3;font-size:.85rem}.article{padding:20px 0 70px}.article h2{font-size:1.55rem;margin-top:42px}.article h3{font-size:1.15rem;margin-top:30px}.article p,.article li{color:#c3ccd5}.article a{color:#f0d28c}.box{border:1px solid #1d2937;background:rgba(13,20,32,.7);border-radius:16px;padding:20px;margin:24px 0}.box strong{color:#f0d28c}.code{direction:ltr;text-align:left;white-space:pre-wrap;overflow:auto;background:#05080d;border:1px solid #1d2937;border-radius:14px;padding:18px;color:#dbe4ec;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem}.footer{border-top:1px solid #1d2937;padding:25px 0 45px;color:#8795a3}@media(max-width:650px){.nav-links{display:none}.hero{padding-top:45px}}</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه","description":"راهنمای عملی DHCP Snooping و Dynamic ARP Inspection برای کاهش حملات DHCP Rogue و ARP Spoofing.","url":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html"},"author":{"@type":"Person","name":"Mohammad Hossein Asgari Somarin","url":"https://mowhmmdh.github.io/"},"publisher":{"@type":"Person","name":"Mohammad Hossein Asgari Somarin"},"inLanguage":"fa-IR","datePublished":"2026-09-07","dateModified":"2026-09-07"}</script>
+</head>
+<body>
+<nav class="wrap nav"><a href="/">محمدحسین عسگری</a><div class="nav-links"><a href="/vintech.html">VinTech</a><a href="/services.html">خدمات</a><a href="/projects.html">پروژه‌ها</a><a href="/blog/">مقالات</a><a href="/en-blog/dhcp-snooping-dai-network-security.html">EN</a></div></nav>
+<main class="wrap">
+<header class="hero"><div class="kicker">NETWORK SECURITY / L2</div><h1>DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه</h1><p class="lead">بخش مهمی از امنیت شبکه قبل از فایروال اتفاق می‌افتد: روی سوئیچ Access. اگر یک سیستم غیرمجاز بتواند DHCP Server جعلی راه بیندازد یا ARP جعلی منتشر کند، بخشی از کنترل ترافیک از دست می‌رود. DHCP Snooping و DAI برای همین سناریوها طراحی شده‌اند.</p><p class="meta">انتشار: ۷ سپتامبر ۲۰۲۶ · موضوع: Network Security</p></header>
+<article class="article">
+<h2>مسئله دقیقاً چیست؟</h2>
+<p>در یک شبکه لایه ۲، کلاینت برای گرفتن IP از DHCP پیام Broadcast ارسال می‌کند. اگر یک دستگاه غیرمجاز به شبکه وصل شود و به درخواست DHCP پاسخ دهد، ممکن است کلاینت‌ها Gateway یا DNS اشتباه دریافت کنند. این سناریو با عنوان Rogue DHCP شناخته می‌شود.</p>
+<p>در سمت دیگر، ARP ذاتاً مکانیزم احراز هویت ندارد. یک مهاجم می‌تواند با ارسال پاسخ‌های جعلی، نگاشت IP به MAC را دستکاری کند و زمینه حملاتی مانند ARP Spoofing یا Man-in-the-Middle را فراهم کند.</p>
+<div class="box"><strong>اصل طراحی:</strong> به جای اینکه فقط روی Endpoint یا Firewall حساب کنیم، Access Switch را هم به یک نقطه کنترل تبدیل می‌کنیم؛ DHCP Snooping منبع معتبر DHCP را مشخص می‌کند و DAI از اطلاعات قابل اعتماد برای اعتبارسنجی ARP استفاده می‌کند.</div>
+<h2>DHCP Snooping چه کاری انجام می‌دهد؟</h2>
+<p>سوئیچ پورت‌ها را از نظر DHCP به دو گروه منطقی تقسیم می‌کند: Trusted و Untrusted. پورت متصل به DHCP Server یا Uplink مورد اعتماد است؛ پورت‌های کاربر عادی Untrusted می‌مانند. پاسخ‌های DHCP Server از پورت Untrusted نباید پذیرفته شوند.</p>
+<p>یکی از خروجی‌های مهم DHCP Snooping، جدول binding است که معمولاً شامل IP، MAC، VLAN و Interface می‌شود. این جدول بعداً می‌تواند برای قابلیت‌هایی مانند Dynamic ARP Inspection استفاده شود.</p>
+<h2>یک الگوی پیاده‌سازی نمونه</h2>
+<p>Syntax بسته به Vendor و مدل سوئیچ متفاوت است. نمونه زیر یک الگوی رایج Cisco IOS است و نباید بدون تطبیق با مستندات مدل دقیق روی تجهیزات Production اجرا شود:</p>
+<pre class="code">ip dhcp snooping
+ip dhcp snooping vlan 10,20
+!
+interface GigabitEthernet1/0/48
+ ip dhcp snooping trust
+!
+interface range GigabitEthernet1/0/1-47
+ no ip dhcp snooping trust
+ ip dhcp snooping limit rate 15</pre>
+<p>نکته مهم این است که Trust را روی پورت کاربر فعال نکنید. اگر Access Port اشتباهاً Trusted شود، بخشی از کنترل ضد Rogue DHCP از بین می‌رود.</p>
+<h2>Dynamic ARP Inspection چگونه وارد ماجرا می‌شود؟</h2>
+<p>DAI درخواست‌ها و پاسخ‌های ARP را بررسی می‌کند و در پیاده‌سازی‌های متداول، آن‌ها را با DHCP Snooping Binding Table مقایسه می‌کند. اگر IP/MAC/Interface با اطلاعات معتبر همخوانی نداشته باشد، فریم ARP می‌تواند Drop شود.</p>
+<pre class="code">ip arp inspection vlan 10,20
+!
+interface GigabitEthernet1/0/48
+ ip arp inspection trust</pre>
+<p>مانند DHCP Snooping، پورت‌های Uplink یا مسیرهای واقعاً مورد اعتماد باید با دقت مشخص شوند. Trust کردن گسترده پورت‌ها عملاً ارزش کنترل را کاهش می‌دهد.</p>
+<h2>اگر کلاینت Static IP داشته باشد چه؟</h2>
+<p>اینجا یکی از نقاطی است که اجرای کورکورانه DAI باعث اختلال می‌شود. دستگاه‌هایی با IP ثابت الزاماً در DHCP Snooping Binding Table وجود ندارند. برای چنین تجهیزات، باید از روش مناسب همان Vendor، مانند ARP ACL یا Static Binding، استفاده شود.</p>
+<div class="box"><strong>قبل از فعال‌سازی در Production:</strong> Printer، Access Point، دوربین، تلفن IP، سرورهای Static و تجهیزات مدیریتی را فهرست کنید و رفتارشان را در VLAN مربوطه بررسی کنید.</div>
+<h2>چه چیزهایی را باید مانیتور کنیم؟</h2>
+<ul><li>تعداد و علت Drop شدن DHCP و ARP.</li><li>پورت‌هایی که به‌صورت غیرمنتظره DHCP Server Response تولید می‌کنند.</li><li>تغییرات Binding بین IP و MAC.</li><li>خطاهای مرتبط با IPهای Static و تجهیزات Legacy.</li><li>لاگ‌های سوئیچ و ارسال آن‌ها به Syslog یا SIEM در محیط‌های سازمانی.</li></ul>
+<h2>اشتباهات رایج</h2>
+<ol><li><strong>Trusted کردن همه پورت‌ها:</strong> کنترل امنیتی عملاً بی‌اثر می‌شود.</li><li><strong>فعال‌سازی مستقیم روی کل شبکه:</strong> بدون Inventory و تست، احتمال قطع تجهیزات Static وجود دارد.</li><li><strong>نادیده گرفتن Uplinkها:</strong> ممکن است DHCP معتبر یا ترافیک مورد نیاز Drop شود.</li><li><strong>نداشتن Logging:</strong> تشخیص اینکه چه چیزی Drop شده سخت می‌شود.</li><li><strong>وابستگی به یک قابلیت:</strong> DHCP Snooping و DAI جایگزین Segmentation، NAC، Port Security، 802.1X و مانیتورینگ نیستند.</li></ol>
+<h2>یک طراحی منطقی برای شبکه سازمانی</h2>
+<p>در یک معماری لایه‌ای می‌توان Access Switch را با DHCP Snooping و DAI سخت‌سازی کرد، VLANها را بر اساس نقش جدا کرد، روی پورت‌ها محدودیت و کنترل مناسب قرار داد و سپس در لایه‌های بالاتر از Firewall، NAC، ACL و مانیتورینگ استفاده کرد. هدف این نیست که یک قابلیت همه مشکلات را حل کند؛ هدف کاهش سطح حمله در چند نقطه مستقل است.</p>
+<h2>چک‌لیست قبل از اجرا</h2>
+<ul><li>DHCP Serverهای معتبر را مشخص کرده‌اید؟</li><li>Uplink و Trunkهای معتبر را مشخص کرده‌اید؟</li><li>VLANهای مشمول کنترل را دقیق انتخاب کرده‌اید؟</li><li>تجهیزات Static IP را شناسایی کرده‌اید؟</li><li>Rate Limit مناسب برای DHCP در نظر گرفته‌اید؟</li><li>Logging و مانیتورینگ فعال است؟</li><li>Rollback plan دارید؟</li><li>ابتدا روی یک VLAN آزمایشی تست کرده‌اید؟</li></ul>
+<h2>جمع‌بندی</h2>
+<p>امنیت شبکه فقط فایروال و Antivirus نیست. Access Layer می‌تواند اولین نقطه‌ای باشد که جلوی یک DHCP Server جعلی یا ARP Spoofing را می‌گیرد. DHCP Snooping و Dynamic ARP Inspection، وقتی درست طراحی و مانیتور شوند، دو کنترل مؤثر برای سخت‌سازی لایه ۲ هستند؛ اما باید در کنار Segmentation، کنترل دسترسی، لاگینگ و سایر لایه‌های امنیتی استفاده شوند.</p>
+<p>برای مطالعه مرتبط، <a href="/blog/vlan-segmentation.html">راهنمای Segmentation با VLAN</a> و <a href="/blog/network-hardening.html">مقاله سخت‌سازی شبکه</a> را هم ببینید.</p>
+</article>
+<footer class="footer">محتوای فنی با تمرکز بر Network Infrastructure، Security و IT Operations · <a href="/linkedin.html">LinkedIn</a> · <a href="/vintech.html">VinTech</a></footer>
+</main>
+<script src="/assets/modern-ui-2026.js" defer></script>
+</body></html>
