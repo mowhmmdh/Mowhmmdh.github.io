@@ -3,84 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحه پیدا نشد - محمدحسین عسگری ثمرین</title>
-    <link rel="stylesheet" href="style.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <meta name="robots" content="noindex,follow">
+    <meta name="theme-color" content="#0b1220">
+    <title>صفحه پیدا نشد | محمدحسین عسگری ثمرین</title>
+    <link rel="stylesheet" href="/style.min.css">
     <style>
+        :root { color-scheme: dark light; }
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            display: grid;
+            place-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 24px;
+            box-sizing: border-box;
             background: var(--bg);
-            font-family: 'Vazirmatn', 'Inter', sans-serif;
-            padding: 20px;
+            color: var(--text);
+            font-family: 'Vazirmatn', 'Inter', system-ui, sans-serif;
         }
         .error-container {
-            max-width: 600px;
-            padding: 60px 50px;
+            width: min(100%, 600px);
+            box-sizing: border-box;
+            padding: clamp(32px, 7vw, 60px) clamp(24px, 6vw, 50px);
             background: var(--bg2);
-            border-radius: var(--radius);
             border: 1px solid var(--border);
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
             text-align: center;
         }
         .error-container h1 {
-            font-size: 6rem;
             margin: 0;
+            font-size: clamp(4rem, 18vw, 6rem);
+            line-height: 1;
+            font-weight: 900;
+            letter-spacing: -.04em;
             background: linear-gradient(135deg, var(--gold), var(--navy-light));
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
-            font-family: 'Playfair Display', serif;
+            background-clip: text;
+            color: transparent;
         }
         .error-container p {
-            color: var(--text2);
-            font-size: 1.2rem;
             margin: 20px 0;
-            font-weight: 400;
-        }
-        .error-container .icon {
-            font-size: 4rem;
-            color: var(--text3);
-            margin-bottom: 10px;
-            display: block;
+            color: var(--text2);
+            font-size: clamp(1rem, 3vw, 1.2rem);
         }
         .error-container a {
-            display: inline-block;
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            padding: 0 28px;
+            border-radius: 999px;
+            background: var(--navy);
             color: #fff;
-            padding: 16px 40px;
-            border-radius: 60px;
             text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            margin-top: 10px;
-            font-family: 'Inter', 'Vazirmatn', sans-serif;
+            font-weight: 700;
+            transition: transform .2s ease, box-shadow .2s ease;
         }
-        body.dark .error-container a { background: linear-gradient(135deg, var(--gold), var(--navy-light)); color: var(--navy-dark); }
-        .error-container a:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 40px rgba(26,42,58,0.04);
+        .error-container a:hover,
+        .error-container a:focus-visible {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,.14);
         }
         .error-container .sub {
-            color: var(--text3);
-            font-size: 0.8rem;
             margin-top: 20px;
-            font-weight: 400;
+            color: var(--text3);
+            font-size: .82rem;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .error-container a { transition: none; }
         }
     </style>
-    <link rel="stylesheet" href="/assets/modern-ui-2026.css">
 </head>
 <body>
-    <div class="error-container">
-        <span class="icon"><i class="fas fa-compass"></i></span>
-        <h1>۴۰۴</h1>
+    <main class="error-container" aria-labelledby="error-title">
+        <h1 id="error-title">۴۰۴</h1>
         <p>صفحه‌ای که به دنبال آن هستید وجود ندارد.</p>
-        <a href="/"><i class="fas fa-home"></i> بازگشت به خانه</a>
+        <a href="/" aria-label="بازگشت به صفحه اصلی">بازگشت به خانه</a>
         <p class="sub">محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت</p>
-    </div>
-    <script src="/assets/modern-ui-2026.js" defer></script>
+    </main>
 </body>
 </html>
