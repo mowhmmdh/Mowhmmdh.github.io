@@ -1,0 +1,25 @@
+/* 2026 visual system: premium light mode, readable dark mode, consistent accents */
+:root{--ui-gold:#9a6700;--ui-gold2:#b47a08;--ui-blue:#075f7d;--ui-bg:#f6f8fb;--ui-panel:#fff;--ui-line:rgba(15,23,42,.12);--ui-muted:#475569;--ui-text:#0f172a}
+html[data-theme=light]{--vt-bg:#f6f8fb;--vt-bg2:#fff;--vt-surface:#fff;--vt-surface2:#eef3f7;--vt-text:#0f172a;--vt-muted:#475569;--vt-dim:#64748b;--vt-line:rgba(15,23,42,.12);--vt-gold:#9a6700;--vt-gold2:#b47a08;--vt-blue:#075f7d;--ui-bg:#f6f8fb;--ui-panel:#fff;--ui-line:rgba(15,23,42,.12);--ui-muted:#475569;--ui-text:#0f172a;--ui-gold:#9a6700;--ui-gold2:#b47a08;--ui-blue:#075f7d}
+html[data-theme=dark]{--ui-gold:#e5bd5a;--ui-gold2:#f2d47c;--ui-blue:#62c2ef}
+body:not(.dark){background-color:var(--bg,var(--ui-bg));color:var(--text,var(--ui-text))}
+body:not(.dark) .card,body:not(.dark) .service-card,body:not(.dark) .project-card,body:not(.dark) .timeline-item,body:not(.dark) .skill-category,body:not(.dark) .faq-item,body:not(.dark) .portrait,body:not(.dark) .profile-card,body:not(.dark) .cta,body:not(.dark) .contact-wrapper,body:not(.dark) .terminal,body:not(.dark) .metric{background:rgba(255,255,255,.92)!important;border-color:rgba(15,23,42,.12)!important;color:var(--ui-text)}
+body:not(.dark) .card p,body:not(.dark) .service-card p,body:not(.dark) .project-card p,body:not(.dark) .timeline-item p,body:not(.dark) .lead,body:not(.dark) .hero-subtitle{color:var(--ui-muted)!important}
+body:not(.dark) .nav,body:not(.dark) .navbar,body:not(.dark) .header-nav{background:rgba(255,255,255,.9)!important;border-color:var(--ui-line)!important;box-shadow:0 8px 30px rgba(15,23,42,.07)}
+body:not(.dark) .btn-secondary,body:not(.dark) .btn-outline{color:var(--ui-text)!important;border-color:var(--ui-line)!important;background:#fff!important}
+html[data-theme=light] .vt-card{background:var(--vt-surface)!important;color:var(--vt-text)}
+html[data-theme=light] .vt-card:hover{background:#fff!important;box-shadow:0 24px 60px rgba(15,23,42,.12)}
+html[data-theme=light] .vt-orbit i{background:rgba(255,255,255,.96);color:var(--vt-text);border-color:var(--vt-line);box-shadow:0 8px 20px rgba(15,23,42,.10)}
+html[data-theme=light] .vt-section-alt{background:linear-gradient(180deg,transparent,rgba(7,95,125,.035),transparent)}
+html[data-theme=light] .vt-nav{background:rgba(255,255,255,.92)}
+html[data-theme=dark] .vt-orbit i{background:rgba(17,28,46,.94);color:var(--vt-text)}
+html[data-theme=dark] .vt-card:hover{background:var(--vt-surface)!important}
+/* Personal legacy theme: restore contrast in light mode */
+body:not(.dark) .logo-text,body:not(.dark) .hero-title .highlight{background:linear-gradient(135deg,var(--gold),var(--navy-light));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+body:not(.dark) .nav-links a,body:not(.dark) .nav-actions button{color:#475569}
+body:not(.dark) .nav-links a:hover,body:not(.dark) .nav-links a.active,body:not(.dark) .nav-actions button:hover{color:#0f172a}
+/* Never use white text on a light surface by accident */
+html[data-theme=light] .vt-card h3,html[data-theme=light] .vt-section h2,html[data-theme=light] .vt-steps h3,html[data-theme=light] .vt-cta h2{color:var(--vt-text)}
+@media(max-width:900px){.vt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.vt-steps{grid-template-columns:repeat(2,minmax(0,1fr))}.vt-cta{flex-direction:column;align-items:stretch}}
+@media(max-width:620px){.vt-container{width:min(100% - 28px,520px)}.vt-grid,.vt-expertise,.vt-steps{grid-template-columns:1fr}.vt-hero{padding:64px 0 52px}.vt-hero h1{font-size:clamp(2.25rem,11vw,3.5rem)}.vt-actions{display:grid;grid-template-columns:1fr}.vt-btn{width:100%}.vt-cta{padding:26px 20px;border-radius:20px}}
+@media(prefers-reduced-motion:reduce){.vt-orbit,.hero-title .highlight{animation:none!important}}
