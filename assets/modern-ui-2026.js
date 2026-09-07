@@ -1,34 +1,57 @@
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const root = document.documentElement;
-  const path = location.pathname.replace(/\/$/, '');
-  const isVinTech = /\/vintech\.html$/.test(path) || /\/en-vintech\.html$/.test(path);
+  const themeKey = 'site-theme';
+  const isVinTech = () => !!document.querySelector('.vt-nav');
 
   const initTheme = () => {
-    const saved = localStorage.getItem('vt-theme');
-    const theme = saved === 'light' || saved === 'dark' ? saved : 'dark';
+    if (!isVinTech()) return;
+    const legacy = localStorage.getItem('vt-theme');
+    const saved = localStorage.getItem(themeKey) || legacy;
+    const theme = saved === 'light' || saved === 'dark'
+      ? saved
+      : (matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
     root.dataset.theme = theme;
     root.classList.toggle('light', theme === 'light');
-    const toggle = document.querySelector('.vt-theme-toggle');
-    if (!toggle) return;
+
+    let toggle = document.querySelector('.vt-theme-toggle');
+    if (!toggle) {
+      toggle = document.createElement('button');
+      toggle.className = 'vt-theme-toggle';
+      toggle.type = 'button';
+      toggle.innerHTML = '<span class="vt-theme-sun" aria-hidden="true">☀</span><span class="vt-theme-moon" aria-hidden="true">☾</span>';
+      const tools = document.querySelector('.vt-nav-tools');
+      const menu = document.querySelector('.vt-menu');
+      if (tools) tools.insertBefore(toggle, menu || null);
+      else if (menu && menu.parentNode) {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'vt-nav-tools';
+        menu.parentNode.insertBefore(wrapper, menu);
+        wrapper.appendChild(toggle);
+        wrapper.appendChild(menu);
+      }
+    }
+
+    const fa = root.lang && root.lang.toLowerCase().startsWith('fa');
     const sync = () => {
       const light = root.dataset.theme === 'light';
-      toggle.setAttribute('aria-label', light ? 'Switch to dark mode' : 'Switch to light mode');
-      toggle.setAttribute('title', light ? 'Dark mode' : 'Light mode');
+      toggle.setAttribute('aria-label', fa ? (light ? 'تغییر به حالت تاریک' : 'تغییر به حالت روشن') : (light ? 'Switch to dark mode' : 'Switch to light mode'));
+      toggle.setAttribute('title', fa ? (light ? 'حالت تاریک' : 'حالت روشن') : (light ? 'Dark mode' : 'Light mode'));
       toggle.setAttribute('aria-pressed', String(light));
     };
     sync();
-    toggle.addEventListener('click', () => {
+    toggle.onclick = () => {
       const next = root.dataset.theme === 'light' ? 'dark' : 'light';
       root.dataset.theme = next;
       root.classList.toggle('light', next === 'light');
+      localStorage.setItem(themeKey, next);
       localStorage.setItem('vt-theme', next);
       sync();
-    });
+    };
   };
 
   const initVinTechNav = () => {
-    if (!isVinTech) return;
+    if (!isVinTech()) return;
     const header = document.querySelector('.vt-nav');
     const menu = document.querySelector('.vt-menu');
     const nav = document.querySelector('.vt-links');
@@ -42,7 +65,7 @@
     document.addEventListener('click',e=>{if(menu.getAttribute('aria-expanded')==='true'&&!header.contains(e.target))close(false);});
     addEventListener('resize',()=>{if(!matchMedia('(max-width:760px)').matches)close(false);});
   };
-  const initReveal=()=>{if(!isVinTech)return;const items=document.querySelectorAll('[data-reveal]');if(!items.length||reduce||!('IntersectionObserver'in window))return;items.forEach(el=>el.classList.add('vt-ready'));const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});items.forEach(el=>io.observe(el));};
+  const initReveal=()=>{if(!isVinTech())return;const items=document.querySelectorAll('[data-reveal]');if(!items.length||reduce||!('IntersectionObserver'in window))return;items.forEach(el=>el.classList.add('vt-ready'));const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});items.forEach(el=>io.observe(el));};
   const initCards=()=>{document.querySelectorAll('.card,.service-card,.project-card,.timeline-item,.skill-category,.faq-item,.portrait,.profile-card,.cta,.metric,.vt-card').forEach(el=>{if(reduce)return;el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--card-x',`${e.clientX-r.left}px`);el.style.setProperty('--card-y',`${e.clientY-r.top}px`);},{passive:true});});};
   let raf=0;const updateScroll=()=>{const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);root.style.setProperty('--scroll-progress',(scrollY/max).toFixed(4));raf=0;};addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(updateScroll);},{passive:true});updateScroll();
   const mount=()=>{initTheme();initVinTechNav();initReveal();initCards();};
