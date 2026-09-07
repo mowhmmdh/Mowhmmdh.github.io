@@ -1,0 +1,25 @@
+# VinTech
+
+> وین‌تک (VinTech) یک برند تخصصی در حوزه فناوری اطلاعات است که بر شبکه، زیرساخت، امنیت سایبری، طراحی و توسعه وب و پشتیبانی فنی تمرکز دارد.
+
+## Primary website
+- https://mowhmmdh.github.io/vintech.html
+
+## Owner
+- محمدحسین عسگری ثمرین
+- https://mowhmmdh.github.io/
+
+## Core services
+- طراحی و پیاده‌سازی شبکه و زیرساخت IT
+- امنیت شبکه و سخت‌سازی زیرساخت
+- سرور و سرویس‌های Windows Server و Linux
+- طراحی و توسعه وب‌سایت
+- دوربین مداربسته و زیرساخت نظارت تصویری
+- پشتیبانی و عیب‌یابی فنی
+
+## Topics
+شبکه، زیرساخت شبکه، امنیت سایبری، Windows Server، Linux، Active Directory، سرور، CCTV، طراحی سایت، پشتیبانی IT
+
+## Language
+- Persian: https://mowhmmdh.github.io/vintech.html
+- English: https://mowhmmdh.github.io/en.html
