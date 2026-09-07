@@ -1,89 +1,23 @@
 (() => {
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const root = document.documentElement;
-  const themeKey = 'site-theme';
+  const themeKey = 'vintech-theme';
   const isVinTech = () => !!document.querySelector('.vt-nav');
-
+  const svg = {github:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .7a12 12 0 0 0-3.79 23.39c.6.11.82-.26.82-.58v-2.25c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.75.08-.74.08-.74 1.2.09 1.84 1.23 1.84 1.23 1.07 1.84 2.8 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.34-5.47-5.95 0-1.31.47-2.38 1.23-3.22-.12-.3-.53-1.52.12-3.17 0 0 1-.32 3.3 1.23a11.4 11.4 0 0 1 6 0c2.29-1.55 3.29-1.23 3.29-1.23.66 1.65.25 2.87.13 3.17.77.84 1.23 1.91 1.23 3.22 0 4.62-2.81 5.64-5.49 5.94.43.37.81 1.1.81 2.22v3.3c0 .32.22.69.83.58A12 12 0 0 0 12 .7Z"/></svg>',linkedin:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.2 3.5A2.2 2.2 0 1 1 .8 3.5a2.2 2.2 0 0 1 4.4 0ZM1.1 8h4.2v13H1.1V8Zm6.8 0h4v1.8h.06c.56-1.06 1.92-2.18 3.95-2.18 4.23 0 5.01 2.78 5.01 6.39V21h-4.17v-6.2c0-1.48-.03-3.38-2.06-3.38-2.06 0-2.38 1.61-2.38 3.27V21H7.9V8Z"/></svg>',instagram:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.3 2h9.4A5.3 5.3 0 0 1 22 7.3v9.4a5.3 5.3 0 0 1-5.3 5.3H7.3A5.3 5.3 0 0 1 2 16.7V7.3A5.3 5.3 0 0 1 7.3 2Zm0 2A3.3 3.3 0 0 0 4 7.3v9.4A3.3 3.3 0 0 0 7.3 20h9.4a3.3 3.3 0 0 0 3.3-3.3V7.3A3.3 3.3 0 0 0 16.7 4H7.3Zm9.95 1.5a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5ZM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/></svg>'};
   const initTheme = () => {
     if (!isVinTech()) return;
-    const legacy = localStorage.getItem('vt-theme');
-    const saved = localStorage.getItem(themeKey) || legacy;
-    const theme = saved === 'light' || saved === 'dark'
-      ? saved
-      : (matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
-    root.dataset.theme = theme;
-    root.classList.toggle('light', theme === 'light');
-
+    const saved = localStorage.getItem(themeKey);
+    const theme = saved === 'light' || saved === 'dark' ? saved : (matchMedia('(prefers-color-scheme:light)').matches ? 'light' : 'dark');
+    root.dataset.theme = theme; root.classList.toggle('light', theme === 'light');
     let toggle = document.querySelector('.vt-theme-toggle');
-    if (!toggle) {
-      toggle = document.createElement('button');
-      toggle.className = 'vt-theme-toggle';
-      toggle.type = 'button';
-      toggle.innerHTML = '<span class="vt-theme-sun" aria-hidden="true">☀</span><span class="vt-theme-moon" aria-hidden="true">☾</span>';
-      const tools = document.querySelector('.vt-nav-tools');
-      const menu = document.querySelector('.vt-menu');
-      if (tools) tools.insertBefore(toggle, menu || null);
-      else if (menu && menu.parentNode) {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'vt-nav-tools';
-        menu.parentNode.insertBefore(wrapper, menu);
-        wrapper.appendChild(toggle);
-        wrapper.appendChild(menu);
-      }
-    }
-
-    const fa = root.lang && root.lang.toLowerCase().startsWith('fa');
-    const sync = () => {
-      const light = root.dataset.theme === 'light';
-      toggle.setAttribute('aria-label', fa ? (light ? 'تغییر به حالت تاریک' : 'تغییر به حالت روشن') : (light ? 'Switch to dark mode' : 'Switch to light mode'));
-      toggle.setAttribute('title', fa ? (light ? 'حالت تاریک' : 'حالت روشن') : (light ? 'Dark mode' : 'Light mode'));
-      toggle.setAttribute('aria-pressed', String(light));
-    };
-    sync();
-    toggle.onclick = () => {
-      const next = root.dataset.theme === 'light' ? 'dark' : 'light';
-      root.dataset.theme = next;
-      root.classList.toggle('light', next === 'light');
-      localStorage.setItem(themeKey, next);
-      localStorage.setItem('vt-theme', next);
-      sync();
-    };
+    if (!toggle) { toggle=document.createElement('button'); toggle.className='vt-theme-toggle'; toggle.type='button'; toggle.innerHTML='<span class="vt-theme-sun" aria-hidden="true">☀</span><span class="vt-theme-moon" aria-hidden="true">☾</span>'; const tools=document.querySelector('.vt-nav-tools'); const menu=document.querySelector('.vt-menu'); if(tools)tools.insertBefore(toggle,menu||null); else if(menu&&menu.parentNode){const wrapper=document.createElement('div');wrapper.className='vt-nav-tools';menu.parentNode.insertBefore(wrapper,menu);wrapper.append(toggle,menu);}}
+    const fa=root.lang&&root.lang.toLowerCase().startsWith('fa'); const sync=()=>{const light=root.dataset.theme==='light';toggle.setAttribute('aria-label',fa?(light?'تغییر به حالت تاریک':'تغییر به حالت روشن'):(light?'Switch to dark mode':'Switch to light mode'));toggle.title=fa?(light?'حالت تاریک':'حالت روشن'):(light?'Dark mode':'Light mode');toggle.setAttribute('aria-pressed',String(light));}; sync(); toggle.onclick=()=>{const next=root.dataset.theme==='light'?'dark':'light';root.dataset.theme=next;root.classList.toggle('light',next==='light');localStorage.setItem(themeKey,next);sync();};
   };
-
-  const initVinTechNav = () => {
-    if (!isVinTech()) return;
-    const header = document.querySelector('.vt-nav');
-    const menu = document.querySelector('.vt-menu');
-    const nav = document.querySelector('.vt-links');
-    if (!header || !menu || !nav) return;
-    const close = (restoreFocus = false) => { menu.setAttribute('aria-expanded','false'); header.classList.remove('is-open'); document.body.classList.remove('vt-menu-open'); if (restoreFocus) menu.focus(); };
-    const open = () => { menu.setAttribute('aria-expanded','true'); header.classList.add('is-open'); document.body.classList.add('vt-menu-open'); const firstLink=nav.querySelector('a'); if(firstLink&&matchMedia('(max-width:760px)').matches) firstLink.focus(); };
-    menu.setAttribute('aria-expanded','false'); menu.setAttribute('aria-controls','vt-main-nav'); nav.id='vt-main-nav';
-    menu.addEventListener('click',()=>menu.getAttribute('aria-expanded')==='true'?close(true):open());
-    nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>close(false)));
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.getAttribute('aria-expanded')==='true')close(true);});
-    document.addEventListener('click',e=>{if(menu.getAttribute('aria-expanded')==='true'&&!header.contains(e.target))close(false);});
-    addEventListener('resize',()=>{if(!matchMedia('(max-width:760px)').matches)close(false);});
-  };
-
-  const initSocial = () => {
-    if (!isVinTech()) return;
-    const footer = document.querySelector('.vt-footer');
-    if (!footer || footer.querySelector('[data-instagram-link]')) return;
-    const link = document.createElement('a');
-    link.href = 'https://instagram.com/mowhmmdh';
-    link.target = '_blank';
-    link.rel = 'me noopener';
-    link.dataset.instagramLink = 'true';
-    link.textContent = 'Instagram · @mowhmmdh';
-    const inner = footer.querySelector('.vt-footer-inner') || footer;
-    inner.appendChild(link);
-  };
-
-  const initReveal=()=>{if(!isVinTech())return;const items=document.querySelectorAll('[data-reveal]');if(!items.length||reduce||!('IntersectionObserver'in window))return;items.forEach(el=>el.classList.add('vt-ready'));const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});items.forEach(el=>io.observe(el));};
-  const initCards=()=>{document.querySelectorAll('.card,.service-card,.project-card,.timeline-item,.skill-category,.faq-item,.portrait,.profile-card,.cta,.metric,.vt-card').forEach(el=>{if(reduce)return;el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--card-x',`${e.clientX-r.left}px`);el.style.setProperty('--card-y',`${e.clientY-r.top}px`);},{passive:true});});};
-  let raf=0;const updateScroll=()=>{const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);root.style.setProperty('--scroll-progress',(scrollY/max).toFixed(4));raf=0;};addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(updateScroll);},{passive:true});updateScroll();
-  const mount=()=>{initTheme();initVinTechNav();initSocial();initReveal();initCards();};
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
-  if(!reduce)addEventListener('pointermove',e=>{root.style.setProperty('--ui-pointer-x',`${e.clientX}px`);root.style.setProperty('--ui-pointer-y',`${e.clientY}px`);},{passive:true});
+  const initVinTechNav=()=>{if(!isVinTech())return;const header=document.querySelector('.vt-nav'),menu=document.querySelector('.vt-menu'),nav=document.querySelector('.vt-links');if(!header||!menu||!nav)return;const close=(f=false)=>{menu.setAttribute('aria-expanded','false');header.classList.remove('is-open');document.body.classList.remove('vt-menu-open');if(f)menu.focus()},open=()=>{menu.setAttribute('aria-expanded','true');header.classList.add('is-open');document.body.classList.add('vt-menu-open');const a=nav.querySelector('a');if(a&&matchMedia('(max-width:760px)').matches)a.focus()};menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-controls','vt-main-nav');nav.id='vt-main-nav';menu.addEventListener('click',()=>menu.getAttribute('aria-expanded')==='true'?close(true):open());nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>close(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu.getAttribute('aria-expanded')==='true')close(true)});document.addEventListener('click',e=>{if(menu.getAttribute('aria-expanded')==='true'&&!header.contains(e.target))close(false)});addEventListener('resize',()=>{if(!matchMedia('(max-width:760px)').matches)close(false)})};
+  const initSocial=()=>{if(!isVinTech())return;let row=document.querySelector('.vt-social-row');if(!row){const inner=document.querySelector('.vt-footer-inner');if(!inner)return;row=document.createElement('div');row.className='vt-social-row';row.setAttribute('aria-label','Social profiles');row.innerHTML='<a href="https://github.com/mowhmmdh" target="_blank" rel="me noopener" aria-label="GitHub" title="GitHub">'+svg.github+'</a><a href="https://www.linkedin.com/in/mohammadhosseinasgari/" target="_blank" rel="me noopener" aria-label="LinkedIn" title="LinkedIn">'+svg.linkedin+'</a><a href="https://instagram.com/mowhmmdh" target="_blank" rel="me noopener" aria-label="Instagram · @mowhmmdh" title="Instagram · @mowhmmdh">'+svg.instagram+'</a>';inner.appendChild(row);}};
+  const injectSocialStyles=()=>{if(!isVinTech()||document.getElementById('vt-social-styles'))return;const s=document.createElement('style');s.id='vt-social-styles';s.textContent='.vt-social-row{display:flex;align-items:center;gap:9px;margin-top:14px}.vt-social-row a{width:40px;height:40px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--vt-line);border-radius:12px;color:var(--vt-muted);font-size:0;transition:transform .25s var(--vt-ease),border-color .25s,color .25s,background .25s}.vt-social-row a svg{width:18px;height:18px;fill:currentColor}.vt-social-row a:hover{transform:translateY(-3px);border-color:rgba(212,160,48,.5);color:var(--vt-gold2);background:rgba(212,160,48,.06)}@media(max-width:760px){.vt-social-row{justify-content:center}}';document.head.appendChild(s)};
+  const initReveal=()=>{if(!isVinTech())return;const items=document.querySelectorAll('[data-reveal]');if(!items.length||reduce||!('IntersectionObserver'in window))return;items.forEach(el=>el.classList.add('vt-ready'));const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-visible');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});items.forEach(el=>io.observe(el))};
+  const initCards=()=>{document.querySelectorAll('.card,.service-card,.project-card,.timeline-item,.skill-category,.faq-item,.portrait,.profile-card,.cta,.metric,.vt-card').forEach(el=>{if(reduce)return;el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--card-x',`${e.clientX-r.left}px`);el.style.setProperty('--card-y',`${e.clientY-r.top}px`)},{passive:true})})};
+  let raf=0;const updateScroll=()=>{const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);root.style.setProperty('--scroll-progress',(scrollY/max).toFixed(4));raf=0};addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(updateScroll)},{passive:true});updateScroll();
+  const mount=()=>{initTheme();initVinTechNav();initSocial();injectSocialStyles();initReveal();initCards()};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();if(!reduce)addEventListener('pointermove',e=>{root.style.setProperty('--ui-pointer-x',`${e.clientX}px`);root.style.setProperty('--ui-pointer-y',`${e.clientY}px`)},{passive:true});
 })();
