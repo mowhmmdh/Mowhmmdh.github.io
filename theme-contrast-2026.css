@@ -1,0 +1,82 @@
+/* ==========================================================
+   VINTECH / PERSONAL — Premium accessible color system 2026
+   Fixes washed-out light mode while preserving the dark theme.
+   ========================================================== */
+:root {
+  --bg: #f7f8fb;
+  --bg2: #ffffff;
+  --bg-glass: rgba(255,255,255,.82);
+  --text: #111827;
+  --text2: #475569;
+  --text3: #64748b;
+  --border: rgba(15,23,42,.12);
+  --navy: #172554;
+  --navy-light: #1e40af;
+  --navy-dark: #0f172a;
+  --gold: #a16207;
+  --gold-light: #d4a72c;
+  --gold-glow: rgba(161,98,7,.10);
+  --shadow: 0 8px 30px rgba(15,23,42,.08);
+  --shadow-hover: 0 18px 55px rgba(15,23,42,.14);
+}
+
+body.dark {
+  --bg: #0b1220;
+  --bg2: #111c2e;
+  --bg-glass: rgba(17,28,46,.84);
+  --text: #f8fafc;
+  --text2: #cbd5e1;
+  --text3: #94a3b8;
+  --border: rgba(226,232,240,.14);
+  --navy: #1e3a8a;
+  --navy-light: #3b82f6;
+  --navy-dark: #0f172a;
+  --gold: #f0c75e;
+  --gold-light: #f7d77d;
+  --gold-glow: rgba(240,199,94,.12);
+  --shadow: 0 10px 35px rgba(0,0,0,.28);
+  --shadow-hover: 0 20px 60px rgba(0,0,0,.40);
+}
+
+/* Explicitly restore readable inherited text in common components. */
+body, p, li, label, small { color: var(--text2); }
+h1, h2, h3, h4, h5, h6, strong, b { color: var(--text); }
+a { color: var(--navy-light); }
+a:hover { color: var(--gold); }
+
+.card, .service-card, .project-card, .blog-card, .skill-card,
+.glass-card, .contact-card, .timeline-item, .stat-card,
+.navbar, .footer, .modal-content {
+  border-color: var(--border);
+  background-color: var(--bg2);
+  box-shadow: var(--shadow);
+}
+
+.btn-primary, .btn-primary:visited {
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: #fff;
+}
+
+.btn-secondary, .btn-outline {
+  color: var(--text);
+  border-color: var(--border);
+  background: var(--bg2);
+}
+
+input, textarea, select {
+  color: var(--text);
+  background: var(--bg2);
+  border-color: var(--border);
+}
+input::placeholder, textarea::placeholder { color: var(--text3); }
+
+::selection { background: var(--gold); color: #fff; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
