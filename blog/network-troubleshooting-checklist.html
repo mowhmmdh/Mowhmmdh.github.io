@@ -4,19 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN | محمدحسین عسگری</title>
+
+
+
+
+
+
+
+
+
+
+
+
+<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.9}pre{overflow:auto;padding:16px;background:#111;color:#eee;border-radius:12px}a{color:inherit}</style>
 <meta name="description" content="چک‌لیست عملی عیب‌یابی شبکه برای پیدا کردن سریع علت قطعی اینترنت، DNS، DHCP، VLAN، Gateway و مشکلات ارتباطی؛ از لایه فیزیکی تا سرویس‌های شبکه.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<meta name="author" content="Mohammad Hossein Asgari Somarin">
 <link rel="canonical" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
-<link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
-<link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-blog/network-troubleshooting-checklist.html">
-<link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
-<meta property="og:title" content="چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN">
-<meta property="og:description" content="یک روش مرحله‌ای و عملی برای پیدا کردن ریشه مشکلات شبکه بدون حدس‌زدن و تغییرات بی‌هدف.">
+<meta property="og:title" content="چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN | محمدحسین عسگری">
+<meta property="og:description" content="چک‌لیست عملی عیب‌یابی شبکه برای پیدا کردن سریع علت قطعی اینترنت، DNS، DHCP، VLAN، Gateway و مشکلات ارتباطی؛ از لایه فیزیکی تا سرویس‌های شبکه.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
 <meta property="og:locale" content="fa_IR">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN","description":"روش مرحله‌ای عیب‌یابی شبکه از لایه فیزیکی تا DNS و سرویس‌ها.","author":{"@type":"Person","name":"محمدحسین عسگری ثمرین","url":"https://mowhmmdh.github.io/"},"mainEntityOfPage":"https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html","inLanguage":"fa-IR"}</script>
-<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.9}pre{overflow:auto;padding:16px;background:#111;color:#eee;border-radius:12px}a{color:inherit}</style>
+<meta property="og:image" content="https://mowhmmdh.github.io/images/profile.webp">
+<meta property="og:image:alt" content="چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN | محمدحسین عسگری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN | محمدحسین عسگری">
+<meta name="twitter:description" content="چک‌لیست عملی عیب‌یابی شبکه برای پیدا کردن سریع علت قطعی اینترنت، DNS، DHCP، VLAN، Gateway و مشکلات ارتباطی؛ از لایه فیزیکی تا سرویس‌های شبکه.">
+<meta name="twitter:image" content="https://mowhmmdh.github.io/images/profile.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","@id":"https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html#article","headline":"چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN | محمدحسین عسگری","description":"چک‌لیست عملی عیب‌یابی شبکه برای پیدا کردن سریع علت قطعی اینترنت، DNS، DHCP، VLAN، Gateway و مشکلات ارتباطی؛ از لایه فیزیکی تا سرویس‌های شبکه.","url":"https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html#webpage"},"author":{"@id":"https://mowhmmdh.github.io/#person"},"image":"https://mowhmmdh.github.io/images/profile.webp","inLanguage":"fa-IR","datePublished":"2026-09-07","dateModified":"2026-09-07","isPartOf":{"@id":"https://mowhmmdh.github.io/#website"}},{"@type":"BreadcrumbList","@id":"https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"خانه","item":"https://mowhmmdh.github.io/"},{"@type":"ListItem","position":2,"name":"مقالات","item":"https://mowhmmdh.github.io/blog/"},{"@type":"ListItem","position":3,"name":"چک‌لیست عیب‌یابی شبکه؛ از قطع اینترنت تا مشکل DNS و VLAN | محمدحسین عسگری","item":"https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html"}]}]}</script>
 </head>
 <body>
 <main>
