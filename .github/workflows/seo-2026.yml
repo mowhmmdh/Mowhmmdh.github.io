@@ -42,7 +42,7 @@ jobs:
           }
 
           def esc(x):
-            return html.escape(re.sub(r'\s+',' ',x).strip(),quote=True)
+            return html.escape(re.sub(r'\s+',' ',html.unescape(x)).strip(),quote=True)
 
           def url(p):
             s=p.as_posix()
@@ -66,7 +66,7 @@ jobs:
             cfg=CONFIGS.get(key)
             title_match=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S)
             desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]*content=["\'](.*?)["\']',text,re.I|re.S)
-            title=re.sub(r'<[^>]+>','',title_match.group(1)).strip() if title_match else p.stem.replace('-',' ').title()
+            title=html.unescape(re.sub(r'<[^>]+>','',title_match.group(1)).strip()) if title_match else p.stem.replace('-',' ').title()
             desc=html.unescape(desc_match.group(1)).strip() if desc_match else ''
 
             if cfg:
@@ -123,25 +123,12 @@ jobs:
                   f'<meta name="twitter:description" content="{esc(desc)}">\n'
                   f'<meta name="twitter:image" content="{image}">')
 
-            person={
-              '@type':'Person','@id':BASE+'/#person','name':'محمدحسین عسگری ثمرین',
-              'alternateName':'Mohammad Hossein Asgari Somarin','jobTitle':'Network & Infrastructure Specialist',
-              'url':BASE+'/','image':BASE+'/images/profile.webp',
-              'sameAs':['https://github.com/mowhmmdh','https://www.linkedin.com/in/mohammadhosseinasgari/','https://instagram.com/mowhmmdh']
-            }
+            person={'@type':'Person','@id':BASE+'/#person','name':'محمدحسین عسگری ثمرین','alternateName':'Mohammad Hossein Asgari Somarin','jobTitle':'Network & Infrastructure Specialist','url':BASE+'/','image':BASE+'/images/profile.webp','sameAs':['https://github.com/mowhmmdh','https://www.linkedin.com/in/mohammadhosseinasgari/','https://instagram.com/mowhmmdh']}
 
             if kind=='business':
-              schema={'@context':'https://schema.org','@graph':[
-                {'@type':'Organization','@id':BASE+'/vintech.html#organization','name':'VinTech','alternateName':'وین‌تک','url':BASE+'/vintech.html','logo':BASE+'/images/vinicon.webp','description':desc,'founder':{'@id':BASE+'/#person'}},
-                person,
-                {'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'VinTech','publisher':{'@id':BASE+'/vintech.html#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
-                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':BASE+'/vintech.html#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
-              ]}
+              schema={'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':BASE+'/vintech.html#organization','name':'VinTech','alternateName':'وین‌تک','url':BASE+'/vintech.html','logo':BASE+'/images/vinicon.webp','description':desc,'founder':{'@id':BASE+'/#person'}},person,{'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'VinTech','publisher':{'@id':BASE+'/vintech.html#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},{'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':BASE+'/vintech.html#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}]}
             elif kind=='profile':
-              schema={'@context':'https://schema.org','@graph':[person,
-                {'@type':'WebSite','@id':BASE+'/#website','url':BASE+'/','name':'Mohammad Hossein Asgari Somarin','publisher':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
-                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
-              ]}
+              schema={'@context':'https://schema.org','@graph':[person,{'@type':'WebSite','@id':BASE+'/#website','url':BASE+'/','name':'Mohammad Hossein Asgari Somarin','publisher':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},{'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}]}
             elif kind=='article':
               schema={'@context':'https://schema.org','@type':'Article','@id':canonical+'#article','headline':title,'description':desc,'url':canonical,'mainEntityOfPage':{'@type':'WebPage','@id':canonical+'#webpage'},'author':{'@id':BASE+'/#person'},'image':image,'inLanguage':'en-US' if locale=='en_US' else 'fa-IR'}
             else:
