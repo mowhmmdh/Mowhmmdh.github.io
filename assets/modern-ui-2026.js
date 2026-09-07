@@ -65,10 +65,25 @@
     document.addEventListener('click',e=>{if(menu.getAttribute('aria-expanded')==='true'&&!header.contains(e.target))close(false);});
     addEventListener('resize',()=>{if(!matchMedia('(max-width:760px)').matches)close(false);});
   };
+
+  const initSocial = () => {
+    if (!isVinTech()) return;
+    const footer = document.querySelector('.vt-footer');
+    if (!footer || footer.querySelector('[data-instagram-link]')) return;
+    const link = document.createElement('a');
+    link.href = 'https://instagram.com/mowhmmdh';
+    link.target = '_blank';
+    link.rel = 'me noopener';
+    link.dataset.instagramLink = 'true';
+    link.textContent = 'Instagram · @mowhmmdh';
+    const inner = footer.querySelector('.vt-footer-inner') || footer;
+    inner.appendChild(link);
+  };
+
   const initReveal=()=>{if(!isVinTech())return;const items=document.querySelectorAll('[data-reveal]');if(!items.length||reduce||!('IntersectionObserver'in window))return;items.forEach(el=>el.classList.add('vt-ready'));const io=new IntersectionObserver(entries=>entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('is-visible');io.unobserve(entry.target);}}),{threshold:.12,rootMargin:'0px 0px -8% 0px'});items.forEach(el=>io.observe(el));};
   const initCards=()=>{document.querySelectorAll('.card,.service-card,.project-card,.timeline-item,.skill-category,.faq-item,.portrait,.profile-card,.cta,.metric,.vt-card').forEach(el=>{if(reduce)return;el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.setProperty('--card-x',`${e.clientX-r.left}px`);el.style.setProperty('--card-y',`${e.clientY-r.top}px`);},{passive:true});});};
   let raf=0;const updateScroll=()=>{const max=Math.max(1,document.documentElement.scrollHeight-innerHeight);root.style.setProperty('--scroll-progress',(scrollY/max).toFixed(4));raf=0;};addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(updateScroll);},{passive:true});updateScroll();
-  const mount=()=>{initTheme();initVinTechNav();initReveal();initCards();};
+  const mount=()=>{initTheme();initVinTechNav();initSocial();initReveal();initCards();};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount,{once:true});else mount();
   if(!reduce)addEventListener('pointermove',e=>{root.style.setProperty('--ui-pointer-x',`${e.clientX}px`);root.style.setProperty('--ui-pointer-y',`${e.clientY}px`);},{passive:true});
 })();
