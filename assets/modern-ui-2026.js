@@ -2,12 +2,14 @@
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const root = document.documentElement;
   const addVinTechAbout = () => {
-    if (!/\/vintech\.html$/.test(location.pathname)) return;
+    const isFa = /\/vintech\.html$/.test(location.pathname);
+    const isEn = /\/en-vintech\.html$/.test(location.pathname);
+    if (!isFa && !isEn) return;
     document.querySelectorAll('.nav-links,.links').forEach(nav => {
       if (nav.querySelector('[data-personal-about]')) return;
       const a = document.createElement('a');
-      a.href = '/about.html';
-      a.textContent = 'درباره ما';
+      a.href = isFa ? '/about.html' : '/en-about.html';
+      a.textContent = isFa ? 'درباره ما' : 'About Us';
       a.setAttribute('data-personal-about','true');
       a.className = 'vintech-about-link';
       nav.appendChild(a);
