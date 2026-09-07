@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Network Troubleshooting Checklist: DNS, DHCP, VLAN and Connectivity | Mohammad Hossein Asgari</title>
+<meta name="description" content="A practical network troubleshooting checklist for isolating physical, IP, gateway, DNS, DHCP, VLAN, routing and firewall problems step by step.">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://mowhmmdh.github.io/en-blog/network-troubleshooting-checklist.html">
+<link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-blog/network-troubleshooting-checklist.html">
+<link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
+<link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">
+<meta property="og:title" content="Network Troubleshooting Checklist: DNS, DHCP, VLAN and Connectivity">
+<meta property="og:description" content="A structured troubleshooting method that isolates network failures from the physical layer through DNS and security controls.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://mowhmmdh.github.io/en-blog/network-troubleshooting-checklist.html">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Network Troubleshooting Checklist: DNS, DHCP, VLAN and Connectivity","description":"A structured method for network troubleshooting.","author":{"@type":"Person","name":"Mohammad Hossein Asgari Somarin","url":"https://mowhmmdh.github.io/"},"mainEntityOfPage":"https://mowhmmdh.github.io/en-blog/network-troubleshooting-checklist.html","inLanguage":"en"}</script>
+<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;max-width:900px;margin:auto;padding:32px;line-height:1.9}pre{overflow:auto;padding:16px;background:#111;color:#eee;border-radius:12px}a{color:inherit}</style>
+</head>
+<body>
+<main><nav><a href="/en.html">Home</a> / <a href="/en-blog.html">Articles</a></nav><article>
+<p>NETWORK • TROUBLESHOOTING</p>
+<h1>Network Troubleshooting Checklist: DNS, DHCP, VLAN and Connectivity</h1>
+<p>When someone reports that “the internet is down,” the internet may not be the problem. The failure can be a cable, switch port, VLAN, DHCP scope, gateway, DNS resolver, firewall policy or a single service. Professional troubleshooting starts with the lowest layer and uses a measurable test at every step.</p>
+<h2>1. Define the scope</h2><ul><li>One user or many?</li><li>One VLAN or the whole network?</li><li>Internal connectivity or internet only?</li><li>Constant or intermittent?</li></ul>
+<h2>2. Check the physical and link layer</h2><p>Check the NIC and switch-port link, cable, patch panel and port status. If possible, test a known-good client on the same port. The goal is to separate physical failures from logical ones.</p>
+<h2>3. Validate IP configuration and gateway</h2><pre>ipconfig /all
+ping 127.0.0.1
+ping &lt;default-gateway&gt;</pre><p>If the client has no valid address, investigate DHCP. If the gateway cannot be reached, inspect VLAN membership, ARP, switching and local ACLs before touching DNS.</p>
+<h2>4. Isolate DNS</h2><pre>nslookup example.com
+nslookup example.com &lt;dns-server&gt;</pre><p>If connectivity to an IP works but name resolution fails, DNS is a much stronger suspect than the internet connection itself.</p>
+<h2>5. Check VLAN and DHCP</h2><p>Confirm that the access port belongs to the intended VLAN, trunks allow that VLAN, and the corresponding DHCP scope is active and has capacity. See <a href="/en-blog/vlan-segmentation.html">VLAN Segmentation</a> and <a href="/en-blog/dhcp-snooping-dai-network-security.html">DHCP Snooping and DAI</a>.</p>
+<h2>6. Check routing and firewall policy</h2><pre>tracert 1.1.1.1
+ping 1.1.1.1</pre><p>If the gateway is healthy but external destinations fail, inspect routing, NAT, firewall policies, VPN paths and the upstream connection. Change one variable at a time and document the result.</p>
+<h2>7. Consider security signals</h2><p>Unexpected DHCP, unusual ARP behavior or sudden traffic changes can indicate a security problem. Preserve switch, DHCP, DNS and firewall logs before making destructive changes. For hardening guidance, see <a href="/en-blog/network-hardening.html">Network Hardening</a> and <a href="/en-blog/active-directory-hardening.html">Active Directory Hardening</a>.</p>
+<h2>8. The troubleshooting rule that saves time</h2><p><strong>Test one hypothesis at a time.</strong> Record the result, eliminate or confirm the hypothesis, and only then move to the next layer. This is faster and leaves you with a reproducible troubleshooting trail.</p>
+<h2>Related resources</h2><ul><li><a href="/en-vintech/network-infrastructure.html">VinTech Network Infrastructure</a></li><li><a href="/en-vintech/cybersecurity.html">VinTech Cybersecurity</a></li><li><a href="/en-blog/dns-troubleshooting.html">DNS Troubleshooting</a></li><li><a href="/en-blog/vlan-segmentation.html">VLAN Segmentation</a></li></ul>
+</article></main>
+</body></html>
