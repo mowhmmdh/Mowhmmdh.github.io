@@ -10,17 +10,41 @@
     const menu = document.querySelector('.vt-menu');
     const nav = document.querySelector('.vt-links');
     if (!header || !menu || !nav) return;
-    menu.addEventListener('click', () => {
-      const open = menu.getAttribute('aria-expanded') === 'true';
-      menu.setAttribute('aria-expanded', String(!open));
-      header.classList.toggle('is-open', !open);
-      document.body.classList.toggle('vt-menu-open', !open);
-    });
-    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+
+    const close = (restoreFocus = false) => {
       menu.setAttribute('aria-expanded', 'false');
       header.classList.remove('is-open');
       document.body.classList.remove('vt-menu-open');
-    }));
+      if (restoreFocus) menu.focus();
+    };
+
+    const open = () => {
+      menu.setAttribute('aria-expanded', 'true');
+      header.classList.add('is-open');
+      document.body.classList.add('vt-menu-open');
+      const firstLink = nav.querySelector('a');
+      if (firstLink && matchMedia('(max-width:760px)').matches) firstLink.focus();
+    };
+
+    menu.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-controls', 'vt-main-nav');
+    nav.id = 'vt-main-nav';
+
+    menu.addEventListener('click', () => {
+      const isOpen = menu.getAttribute('aria-expanded') === 'true';
+      isOpen ? close(true) : open();
+    });
+    nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => close(false)));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && menu.getAttribute('aria-expanded') === 'true') close(true);
+    });
+    document.addEventListener('click', event => {
+      if (menu.getAttribute('aria-expanded') !== 'true') return;
+      if (!header.contains(event.target)) close(false);
+    });
+    addEventListener('resize', () => {
+      if (!matchMedia('(max-width:760px)').matches) close(false);
+    });
   };
 
   const initReveal = () => {
