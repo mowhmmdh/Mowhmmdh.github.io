@@ -1,0 +1,43 @@
+name: Apply 2026 UI layer
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  attach-ui:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Attach modern UI assets
+        shell: python
+        run: |
+          from pathlib import Path
+          files = [p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
+          changed = []
+          for p in files:
+              text = p.read_text(encoding='utf-8')
+              css = '<link rel="stylesheet" href="/assets/modern-ui-2026.css">'
+              js = '<script src="/assets/modern-ui-2026.js" defer></script>'
+              new = text
+              if css not in new and '</head>' in new:
+                  new = new.replace('</head>', f'    {css}\n</head>', 1)
+              if js not in new and '</body>' in new:
+                  new = new.replace('</body>', f'    {js}\n</body>', 1)
+              if new != text:
+                  p.write_text(new, encoding='utf-8')
+                  changed.append(str(p))
+          Path('/tmp/changed.txt').write_text('\n'.join(changed), encoding='utf-8')
+      - name: Commit UI attachment
+        shell: bash
+        run: |
+          if [ -s /tmp/changed.txt ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add '*.html'
+            git commit -m "chore(ui): attach 2026 visual system"
+            git push
+          else
+            echo "Modern UI already attached."
+          fi
