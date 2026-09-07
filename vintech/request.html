@@ -99,4 +99,5 @@
 <script>
 document.getElementById('vtRequestForm').addEventListener('submit',function(e){e.preventDefault();const f=new FormData(this);const subject=encodeURIComponent('درخواست پروژه / مشاوره VinTech - '+f.get('service'));const body=encodeURIComponent('نام / شرکت: '+f.get('name')+'\nراه ارتباطی: '+f.get('contact')+'\nنوع نیاز: '+f.get('service')+'\n\nشرح پروژه یا مشکل:\n'+f.get('message'));window.location.href='mailto:info@vintech.ir?subject='+subject+'&body='+body;});
 </script>
+    <script src="/assets/modern-ui-2026.js" defer></script>
 </body></html>
