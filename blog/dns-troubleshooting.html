@@ -1,4 +1,4 @@
-<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی</title><style>@font-face{font-family:v;src:url('/fonts/Vazirmatn-Regular.woff2')}@font-face{font-family:v;src:url('/fonts/Vazirmatn-Bold.woff2');font-weight:800}body{margin:0;background:#070b12;color:#edf2f7;font-family:v;line-height:2}.wrap{max-width:850px;width:92%;margin:auto}.nav{padding:22px 0;border-bottom:1px solid #1d2937}.nav a{color:#d6ad5b;text-decoration:none;margin-left:18px}.hero{padding:55px 0 25px}h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.35}.meta{color:#8f9cab}.content{padding-bottom:60px}.content h2{color:#f0d28c;margin-top:38px}.content p,.content li{color:#b4bfcb}.content code{background:#101a27;padding:2px 6px;border-radius:5px;color:#f0d28c}.box{border:1px solid #1d2937;background:#0d1420;border-radius:14px;padding:18px;margin:20px 0}a{color:#e0bb6d}</style>    <link rel="stylesheet" href="/assets/modern-ui-2026.css">
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>عیب‌یابی DNS | راهنمای فنی تشخیص و رفع خطا</title><style>@font-face{font-family:v;src:url('/fonts/Vazirmatn-Regular.woff2')}@font-face{font-family:v;src:url('/fonts/Vazirmatn-Bold.woff2');font-weight:800}body{margin:0;background:#070b12;color:#edf2f7;font-family:v;line-height:2}.wrap{max-width:850px;width:92%;margin:auto}.nav{padding:22px 0;border-bottom:1px solid #1d2937}.nav a{color:#d6ad5b;text-decoration:none;margin-left:18px}.hero{padding:55px 0 25px}h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.35}.meta{color:#8f9cab}.content{padding-bottom:60px}.content h2{color:#f0d28c;margin-top:38px}.content p,.content li{color:#b4bfcb}.content code{background:#101a27;padding:2px 6px;border-radius:5px;color:#f0d28c}.box{border:1px solid #1d2937;background:#0d1420;border-radius:14px;padding:18px;margin:20px 0}a{color:#e0bb6d}</style>    <link rel="stylesheet" href="/assets/modern-ui-2026.css">
 
 
 
@@ -509,21 +509,37 @@
 
 
 
-<meta name="description" content="راهنمای فنی درباره عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی؛ آموزش کاربردی شبکه، زیرساخت، سرور و امنیت IT.">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="راهنمای مرحله‌به‌مرحله عیب‌یابی DNS، بررسی رکوردها، کش، Forwarder و مشکلات Resolution.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <meta name="author" content="Mohammad Hossein Asgari Somarin">
 <link rel="canonical" href="https://mowhmmdh.github.io/blog/dns-troubleshooting.html">
-<meta property="og:title" content="عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی">
-<meta property="og:description" content="راهنمای فنی درباره عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی؛ آموزش کاربردی شبکه، زیرساخت، سرور و امنیت IT.">
+<meta property="og:title" content="عیب‌یابی DNS | راهنمای فنی تشخیص و رفع خطا">
+<meta property="og:description" content="راهنمای مرحله‌به‌مرحله عیب‌یابی DNS، بررسی رکوردها، کش، Forwarder و مشکلات Resolution.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://mowhmmdh.github.io/blog/dns-troubleshooting.html">
 <meta property="og:locale" content="fa_IR">
 <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.webp">
-<meta property="og:image:alt" content="عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی">
+<meta property="og:image:alt" content="عیب‌یابی DNS | راهنمای فنی تشخیص و رفع خطا">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی">
-<meta name="twitter:description" content="راهنمای فنی درباره عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی؛ آموزش کاربردی شبکه، زیرساخت، سرور و امنیت IT.">
+<meta name="twitter:title" content="عیب‌یابی DNS | راهنمای فنی تشخیص و رفع خطا">
+<meta name="twitter:description" content="راهنمای مرحله‌به‌مرحله عیب‌یابی DNS، بررسی رکوردها، کش، Forwarder و مشکلات Resolution.">
 <meta name="twitter:image" content="https://mowhmmdh.github.io/images/profile.webp">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","@id":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html#article","headline":"عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی","description":"راهنمای فنی درباره عیب‌یابی DNS در شبکه سازمانی | راهنمای عملی | VinTech | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی | مقاله فنی؛ آموزش کاربردی شبکه، زیرساخت، سرور و امنیت IT.","url":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html#webpage"},"author":{"@id":"https://mowhmmdh.github.io/#person"},"image":"https://mowhmmdh.github.io/images/profile.webp","inLanguage":"fa-IR"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","@id":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html#article","headline":"عیب‌یابی DNS | راهنمای فنی تشخیص و رفع خطا","description":"راهنمای مرحله‌به‌مرحله عیب‌یابی DNS، بررسی رکوردها، کش، Forwarder و مشکلات Resolution.","url":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html#webpage"},"author":{"@id":"https://mowhmmdh.github.io/#person"},"image":"https://mowhmmdh.github.io/images/profile.webp","inLanguage":"fa-IR","datePublished":"2026-09-07","dateModified":"2026-09-07","isPartOf":{"@id":"https://mowhmmdh.github.io/#website"}},{"@type":"BreadcrumbList","@id":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"خانه","item":"https://mowhmmdh.github.io/"},{"@type":"ListItem","position":2,"name":"مقالات","item":"https://mowhmmdh.github.io/blog/"},{"@type":"ListItem","position":3,"name":"عیب‌یابی DNS | راهنمای فنی تشخیص و رفع خطا","item":"https://mowhmmdh.github.io/blog/dns-troubleshooting.html"}]}]}</script>
 </head><body><nav class="wrap nav"><a href="/">محمدحسین عسگری</a><a href="/blog/">وبلاگ</a><a href="/vintech.html">VinTech</a></nav><main class="wrap"><header class="hero"><div class="meta">NETWORK / DNS / TROUBLESHOOTING</div><h1>عیب‌یابی DNS در شبکه سازمانی؛ از نام تا پاسخ</h1><p class="meta">راهنمای عملی برای زمانی که سیستم‌ها IP دارند اما نام‌ها درست resolve نمی‌شوند.</p></header><article class="content"><h2>۱. اول مسئله را دقیق تعریف کن</h2><p>مشخص کن مشکل فقط یک کلاینت است یا کل شبکه. سپس تست را از همان کلاینت با یک نام داخلی و یک نام عمومی انجام بده. این تفکیک کمک می‌کند بفهمی مشکل در Client، DNS Server، Zone یا مسیر دسترسی به Resolver است.</p><h2>۲. تنظیم DNS کلاینت را بررسی کن</h2><p>در Windows با <code>ipconfig /all</code> و در Linux با ابزارهای مدیریت شبکه یا <code>resolvectl status</code> ببین کلاینت دقیقاً از چه DNS سروری استفاده می‌کند. وجود چند DNS نامرتبط می‌تواند باعث پاسخ‌های متناقض و رفتار غیرقابل پیش‌بینی شود.</p><h2>۳. با nslookup یا dig تست کن</h2><div class="box"><code>nslookup server.example.local</code><br><code>nslookup example.com 8.8.8.8</code><br><code>dig server.example.local</code></div><p>اگر پرس‌وجو با DNS داخلی جواب می‌دهد ولی با Resolver عمومی نه، احتمالاً رکورد داخلی یا split DNS مطرح است. اگر هیچ Resolverی پاسخ نمی‌دهد، مسیر شبکه، سرویس DNS یا فایروال را بررسی کن.</p><h2>۴. رکورد و Zone را بررسی کن</h2><p>وجود A/AAAA، CNAME و رکوردهای مرتبط را بررسی کن. برای سرویس‌های سازمانی، TTL و کش را هم در نظر بگیر؛ تغییر رکورد لزوماً به معنی مشاهده فوری آن در همه کلاینت‌ها نیست.</p><h2>۵. کش را کورکورانه پاک نکن</h2><p>پاک‌کردن cache گاهی کمک می‌کند، اما نباید جای تشخیص علت باشد. قبل از flush کردن، نتیجه query و DNS Server مورد استفاده را ثبت کن تا بتوانی علت را بازسازی کنی.</p><h2>۶. اگر Active Directory داری</h2><p>در محیط‌های AD، DNS بخشی از زیرساخت احراز هویت و کشف سرویس است. تنظیم DNS کلاینت‌ها و DCها باید با معماری AD هماهنگ باشد و خطاهای DNS می‌توانند خود را به شکل مشکلات Login، Group Policy یا پیدا نکردن سرویس‌ها نشان دهند.</p><h2>چک‌لیست سریع</h2><ul><li>DNS Server صحیح روی کلاینت</li><li>دسترسی شبکه به پورت 53</li><li>وجود و صحت Zone/Record</li><li>تفاوت پاسخ داخلی و عمومی</li><li>کش و TTL</li><li>لاگ‌های DNS Server</li><li>در محیط AD، سلامت DNS و رکوردهای سرویس</li></ul></article></main>    <script src="/assets/modern-ui-2026.js" defer></script>
 </body></html>
