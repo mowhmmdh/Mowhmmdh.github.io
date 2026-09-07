@@ -46,7 +46,9 @@ jobs:
 
           def url(p):
             s=p.as_posix()
-            return BASE+'/' if s=='index.html' else BASE+'/'+s
+            if s=='index.html': return BASE+'/'
+            if s=='blog/index.html': return BASE+'/blog/'
+            return BASE+'/'+s
 
           def lastmod(p):
             try:
@@ -55,17 +57,18 @@ jobs:
               return date.today().isoformat()
 
           pages=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.as_posix()!='404.html']
+          page_keys={p.as_posix() for p in pages}
           canonical_pages=[]
 
           for p in pages:
             key=p.as_posix()
             text=p.read_text(encoding='utf-8')
             cfg=CONFIGS.get(key)
-
             title_match=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S)
             desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]*content=["\'](.*?)["\']',text,re.I|re.S)
             title=re.sub(r'<[^>]+>','',title_match.group(1)).strip() if title_match else p.stem.replace('-',' ').title()
             desc=html.unescape(desc_match.group(1)).strip() if desc_match else ''
+
             if cfg:
               title,desc,locale,kind=cfg
             else:
@@ -76,9 +79,6 @@ jobs:
                 desc='Technical article about network infrastructure, systems, security and IT operations.' if locale=='en_US' else 'مقاله فنی درباره شبکه، زیرساخت، سیستم‌ها، امنیت و عملیات فناوری اطلاعات.'
 
             canonical=url(p)
-            if key=='index.html': canonical=BASE+'/'
-            if key.endswith('/index.html') and key!='blog/index.html': canonical=BASE+'/'+key.rsplit('/',1)[0]+'/'
-
             text=re.sub(r'<title[^>]*>.*?</title>',f'<title>{esc(title)}</title>',text,count=1,flags=re.I|re.S)
             if not re.search(r'<title',text,re.I):
               text=text.replace('</head>',f'<title>{esc(title)}</title></head>',1)
@@ -98,17 +98,14 @@ jobs:
               text=re.sub(pat,'',text,flags=re.I|re.S)
 
             alt=''
-            if key in PAIRS and PAIRS[key] in [x.as_posix() for x in pages]:
-              alt_pair=PAIRS[key]
-              alt=f'\n<link rel="alternate" hreflang="fa" href="{url(Path(key if locale=="fa_IR" else alt_pair)) if locale=="fa_IR" else url(Path(alt_pair))}">' if False else ''
-              fa_key=key if locale=='fa_IR' else alt_pair
-              en_key=key if locale=='en_US' else alt_pair
+            if key in PAIRS and PAIRS[key] in page_keys:
+              fa_key=key if locale=='fa_IR' else PAIRS[key]
+              en_key=key if locale=='en_US' else PAIRS[key]
               alt=(f'\n<link rel="alternate" hreflang="fa" href="{url(Path(fa_key))}">'
                    f'\n<link rel="alternate" hreflang="en" href="{url(Path(en_key))}">'
                    f'\n<link rel="alternate" hreflang="x-default" href="{url(Path(fa_key))}">')
 
-            image=BASE+'/images/profile.webp'
-            if kind=='business': image=BASE+'/images/vinicon.webp'
+            image=BASE+'/images/vinicon.webp' if kind=='business' else BASE+'/images/profile.webp'
             ogtype='article' if kind=='article' else 'website'
             meta=(f'<meta name="description" content="{esc(desc)}">\n'
                   f'<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">\n'
@@ -128,23 +125,22 @@ jobs:
 
             person={
               '@type':'Person','@id':BASE+'/#person','name':'محمدحسین عسگری ثمرین',
-              'alternateName':'Mohammad Hossein Asgari Somarin',
-              'jobTitle':'Network & Infrastructure Specialist','url':BASE+'/',
-              'image':BASE+'/images/profile.webp',
+              'alternateName':'Mohammad Hossein Asgari Somarin','jobTitle':'Network & Infrastructure Specialist',
+              'url':BASE+'/','image':BASE+'/images/profile.webp',
               'sameAs':['https://github.com/mowhmmdh','https://www.linkedin.com/in/mohammadhosseinasgari/','https://instagram.com/mowhmmdh']
             }
 
             if kind=='business':
               schema={'@context':'https://schema.org','@graph':[
-                {'@type':'Organization','@id':canonical+'#organization','name':'VinTech','alternateName':'وین‌تک','url':BASE+'/vintech.html','logo':BASE+'/images/vinicon.webp','description':desc,'founder':{'@id':BASE+'/#person'}},
+                {'@type':'Organization','@id':BASE+'/vintech.html#organization','name':'VinTech','alternateName':'وین‌تک','url':BASE+'/vintech.html','logo':BASE+'/images/vinicon.webp','description':desc,'founder':{'@id':BASE+'/#person'}},
                 person,
-                {'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'VinTech','publisher':{'@id':canonical+'#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
-                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':canonical+'#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
+                {'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'VinTech','publisher':{'@id':BASE+'/vintech.html#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
+                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':BASE+'/vintech.html#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
               ]}
             elif kind=='profile':
               schema={'@context':'https://schema.org','@graph':[person,
-                {'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'Mohammad Hossein Asgari Somarin','publisher':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
-                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
+                {'@type':'WebSite','@id':BASE+'/#website','url':BASE+'/','name':'Mohammad Hossein Asgari Somarin','publisher':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
+                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
               ]}
             elif kind=='article':
               schema={'@context':'https://schema.org','@type':'Article','@id':canonical+'#article','headline':title,'description':desc,'url':canonical,'mainEntityOfPage':{'@type':'WebPage','@id':canonical+'#webpage'},'author':{'@id':BASE+'/#person'},'image':image,'inLanguage':'en-US' if locale=='en_US' else 'fa-IR'}
@@ -156,9 +152,8 @@ jobs:
             canonical_pages.append((canonical,lastmod(p)))
 
           Path('robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',encoding='utf-8')
-          canonical_pages=sorted(set(canonical_pages))
           out=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-          for u,lm in canonical_pages:
+          for u,lm in sorted(set(canonical_pages)):
             out.append(f'  <url><loc>{u}</loc><lastmod>{lm}</lastmod></url>')
           out.append('</urlset>')
           Path('sitemap.xml').write_text('\n'.join(out)+'\n',encoding='utf-8')
