@@ -14,52 +14,153 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import re, html, json
+          import re, html, json, subprocess
           from datetime import date
+
           BASE='https://mowhmmdh.github.io'
-          today=date.today().isoformat()
-          configs={
-            'index.html':('محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت IT','وب‌سایت رسمی محمدحسین عسگری ثمرین؛ متخصص شبکه و زیرساخت، سرور، امنیت، Windows Server، Linux و عملیات IT.','fa_IR','profile'),
-            'en.html':('Mohammad Hossein Asgari Somarin | Network & Infrastructure Specialist','Official website of Mohammad Hossein Asgari Somarin — network infrastructure, servers, security, Linux, Windows Server and IT operations.','en_US','profile'),
-            'vintech.html':('وین‌تک | خدمات شبکه، زیرساخت، امنیت و فناوری اطلاعات','VinTech؛ ارائه خدمات شبکه و زیرساخت، امنیت شبکه، سرور، دوربین مداربسته، پشتیبانی IT و طراحی وب برای کسب‌وکارها.','fa_IR','business'),
-            'services.html':('خدمات فناوری اطلاعات | شبکه، سرور، امنیت و پشتیبانی IT','خدمات تخصصی شبکه و زیرساخت، سرور، امنیت، CCTV، پشتیبانی IT و توسعه وب توسط محمدحسین عسگری ثمرین.','fa_IR','web'),
-            'projects.html':('پروژه‌های شبکه و زیرساخت | محمدحسین عسگری ثمرین','نمونه پروژه‌های عملی در شبکه، زیرساخت IT، سرور، امنیت، CCTV و توسعه وب.','fa_IR','web'),
-            'about.html':('درباره محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت','سوابق، مهارت‌ها، گواهینامه‌ها و مسیر حرفه‌ای محمدحسین عسگری ثمرین در شبکه، زیرساخت و فناوری اطلاعات.','fa_IR','profile'),
-            'blog/index.html':('مقالات شبکه، زیرساخت و امنیت | محمدحسین عسگری ثمرین','مقالات و راهنماهای کاربردی درباره شبکه، DNS، Active Directory، امنیت، سرور و عملیات IT.','fa_IR','blog')
+          PAIRS={
+            'index.html':'en.html','en.html':'index.html',
+            'about.html':'en-about.html','en-about.html':'about.html',
+            'services.html':'en-services.html','en-services.html':'services.html',
+            'projects.html':'en-projects.html','en-projects.html':'projects.html',
+            'vintech.html':'en-vintech.html','en-vintech.html':'vintech.html',
+            'blog/index.html':'en-blog.html','en-blog.html':'blog/index.html',
           }
-          def esc(x): return html.escape(re.sub(r'\s+',' ',x).strip(),quote=True)
+          CONFIGS={
+            'index.html':('محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت IT','وب‌سایت رسمی محمدحسین عسگری ثمرین؛ متخصص شبکه و زیرساخت، سرور، امنیت و عملیات فناوری اطلاعات.','fa_IR','profile'),
+            'en.html':('Mohammad Hossein Asgari Somarin | Network & Infrastructure Specialist','Official website of Mohammad Hossein Asgari Somarin, focused on network infrastructure, systems, security and IT operations.','en_US','profile'),
+            'vintech.html':('وین‌تک | خدمات شبکه، زیرساخت، امنیت و فناوری اطلاعات','وین‌تک؛ خدمات تخصصی شبکه و زیرساخت، امنیت سایبری، سرور، سیستم‌های نظارتی، پشتیبانی IT و وب.','fa_IR','business'),
+            'en-vintech.html':('VinTech | Network, Infrastructure, Cybersecurity & IT Services','VinTech provides professional network infrastructure, cybersecurity, servers, CCTV, IT operations and web services.','en_US','business'),
+            'services.html':('خدمات فناوری اطلاعات | شبکه، زیرساخت، امنیت و پشتیبانی IT','خدمات تخصصی شبکه و زیرساخت، سرور، امنیت، CCTV، پشتیبانی IT و وب توسط محمدحسین عسگری ثمرین.','fa_IR','services'),
+            'en-services.html':('IT Services | Network, Infrastructure, Security & IT Support','Professional network infrastructure, servers, cybersecurity, CCTV, IT operations and web services.','en_US','services'),
+            'projects.html':('پروژه‌های شبکه و زیرساخت | محمدحسین عسگری ثمرین','نمونه پروژه‌ها و مطالعات موردی در شبکه، زیرساخت، سرور، امنیت، عملیات IT و وب.','fa_IR','projects'),
+            'en-projects.html':('Network & Infrastructure Projects | Mohammad Hossein Asgari Somarin','Practical case studies covering network infrastructure, servers, security, IT operations and web development.','en_US','projects'),
+            'about.html':('درباره محمدحسین عسگری ثمرین | متخصص شبکه و زیرساخت','سوابق حرفه‌ای، حوزه‌های تخصصی و مسیر کاری محمدحسین عسگری ثمرین در شبکه، زیرساخت، سیستم‌ها و امنیت.','fa_IR','profile'),
+            'en-about.html':('About Mohammad Hossein Asgari Somarin | Network & Infrastructure Specialist','Professional background, technical focus and career path in networking, infrastructure, systems, security and IT operations.','en_US','profile'),
+            'blog/index.html':('مقالات شبکه، زیرساخت و امنیت | محمدحسین عسگری ثمرین','مقالات و راهنماهای فنی درباره شبکه، DNS، Active Directory، امنیت، سرور و عملیات IT.','fa_IR','blog'),
+            'en-blog.html':('Technical Blog | Network, Infrastructure & Security','Technical articles and notes about networking, infrastructure, security, servers and IT operations.','en_US','blog'),
+          }
+
+          def esc(x):
+            return html.escape(re.sub(r'\s+',' ',x).strip(),quote=True)
+
           def url(p):
             s=p.as_posix()
             return BASE+'/' if s=='index.html' else BASE+'/'+s
-          pages=list(Path('.').rglob('*.html'))
+
+          def lastmod(p):
+            try:
+              return subprocess.check_output(['git','log','-1','--format=%cs','--',p.as_posix()],text=True).strip() or date.today().isoformat()
+            except Exception:
+              return date.today().isoformat()
+
+          pages=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.as_posix()!='404.html']
+          canonical_pages=[]
+
           for p in pages:
-            if '.git' in p.parts: continue
-            key=p.as_posix(); text=p.read_text(encoding='utf-8')
-            cfg=configs.get(key)
-            if not cfg and key.startswith('blog/'):
-              m=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S)
-              title=re.sub(r'<[^>]+>','',m.group(1)).strip() if m else p.stem.replace('-',' ')
-              cfg=(title+' | مقاله فنی',f'راهنمای فنی درباره {title}؛ آموزش کاربردی شبکه، زیرساخت، سرور و امنیت IT.','fa_IR','article')
-            if not cfg: continue
-            title,desc,locale,kind=cfg; canonical=url(p)
+            key=p.as_posix()
+            text=p.read_text(encoding='utf-8')
+            cfg=CONFIGS.get(key)
+
+            title_match=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S)
+            desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]*content=["\'](.*?)["\']',text,re.I|re.S)
+            title=re.sub(r'<[^>]+>','',title_match.group(1)).strip() if title_match else p.stem.replace('-',' ').title()
+            desc=html.unescape(desc_match.group(1)).strip() if desc_match else ''
+            if cfg:
+              title,desc,locale,kind=cfg
+            else:
+              lang=re.search(r'<html[^>]+lang=["\']([^"\']+)',text,re.I)
+              locale='en_US' if lang and lang.group(1).lower().startswith('en') else 'fa_IR'
+              kind='article' if key.startswith('blog/') and key!='blog/index.html' else 'webpage'
+              if not desc:
+                desc='Technical article about network infrastructure, systems, security and IT operations.' if locale=='en_US' else 'مقاله فنی درباره شبکه، زیرساخت، سیستم‌ها، امنیت و عملیات فناوری اطلاعات.'
+
+            canonical=url(p)
+            if key=='index.html': canonical=BASE+'/'
+            if key.endswith('/index.html') and key!='blog/index.html': canonical=BASE+'/'+key.rsplit('/',1)[0]+'/'
+
             text=re.sub(r'<title[^>]*>.*?</title>',f'<title>{esc(title)}</title>',text,count=1,flags=re.I|re.S)
-            if not re.search(r'<title',text,re.I): text=text.replace('</head>',f'<title>{esc(title)}</title></head>',1)
-            patterns=[r'<meta[^>]+name=["\']description["\'][^>]*>',r'<meta[^>]+name=["\']keywords["\'][^>]*>',r'<meta[^>]+name=["\']robots["\'][^>]*>',r'<meta[^>]+name=["\']author["\'][^>]*>',r'<link[^>]+rel=["\']canonical["\'][^>]*>',r'<link[^>]+hreflang=[^>]+>',r'<meta[^>]+property=["\']og:[^"\']+["\'][^>]*>',r'<meta[^>]+name=["\']twitter:[^"\']+["\'][^>]*>',r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>.*?</script>']
-            for pat in patterns: text=re.sub(pat,'',text,flags=re.I|re.S)
-            links=f'<link rel="canonical" href="{canonical}">'
-            if key in ('index.html','en.html'): links+=f'\n<link rel="alternate" hreflang="fa" href="{BASE}/">\n<link rel="alternate" hreflang="en" href="{BASE}/en.html">\n<link rel="alternate" hreflang="x-default" href="{BASE}/">'
-            kw='وین‌تک, VinTech, خدمات شبکه, زیرساخت شبکه, امنیت شبکه, پشتیبانی IT, دوربین مداربسته, سرور, طراحی وب' if kind=='business' else 'شبکه, زیرساخت شبکه, امنیت شبکه, سرور, فناوری اطلاعات, IT, Network Infrastructure, Network Security'
-            meta=f'<meta name="description" content="{esc(desc)}">\n<meta name="keywords" content="{esc(kw)}">\n<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">\n<meta name="author" content="Mohammad Hossein Asgari Somarin">\n{links}\n<meta property="og:title" content="{esc(title)}">\n<meta property="og:description" content="{esc(desc)}">\n<meta property="og:type" content="website">\n<meta property="og:url" content="{canonical}">\n<meta property="og:locale" content="{locale}">\n<meta property="og:image" content="{BASE}/images/profile.webp">\n<meta property="og:image:alt" content="Mohammad Hossein Asgari Somarin — Network & Infrastructure Specialist">\n<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="{esc(title)}">\n<meta name="twitter:description" content="{esc(desc)}">\n<meta name="twitter:image" content="{BASE}/images/profile.webp">'
-            person={"@type":"Person","name":"محمدحسین عسگری ثمرین","alternateName":"Mohammad Hossein Asgari Somarin","jobTitle":"Network & Infrastructure Specialist","url":BASE+'/',"image":BASE+'/images/profile.webp',"sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}
-            if kind=='business': schema={"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":canonical+'#organization',"name":"وین‌تک","alternateName":"VinTech","url":canonical,"logo":BASE+'/images/vinicon.webp',"description":desc,"founder":person},{"@type":"WebSite","@id":canonical+'#website',"url":canonical,"name":"VinTech","publisher":{"@id":canonical+'#organization'},"inLanguage":"fa-IR"}]}
-            elif kind=='profile': schema={"@context":"https://schema.org","@graph":[person,{"@type":"WebSite","@id":canonical+'#website',"url":canonical,"name":"Mohammad Hossein Asgari Somarin","publisher":{"@id":BASE+'/#person'},"inLanguage":"fa-IR" if locale=='fa_IR' else 'en-US'}]}
-            elif kind=='article': schema={"@context":"https://schema.org","@type":"Article","headline":title.replace(' | مقاله فنی',''),"description":desc,"url":canonical,"mainEntityOfPage":{"@type":"WebPage","@id":canonical},"author":person,"dateModified":today,"image":BASE+'/images/profile.webp','inLanguage':'fa-IR'}
-            else: schema={"@context":"https://schema.org","@type":"WebPage","name":title,"description":desc,"url":canonical,"isPartOf":{"@type":"WebSite","url":BASE+'/'},"inLanguage":"fa-IR"}
+            if not re.search(r'<title',text,re.I):
+              text=text.replace('</head>',f'<title>{esc(title)}</title></head>',1)
+
+            patterns=[
+              r'<meta[^>]+name=["\']description["\'][^>]*>',
+              r'<meta[^>]+name=["\']keywords["\'][^>]*>',
+              r'<meta[^>]+name=["\']robots["\'][^>]*>',
+              r'<meta[^>]+name=["\']author["\'][^>]*>',
+              r'<link[^>]+rel=["\']canonical["\'][^>]*>',
+              r'<link[^>]+rel=["\']alternate["\'][^>]*>',
+              r'<meta[^>]+property=["\']og:[^"\']+["\'][^>]*>',
+              r'<meta[^>]+name=["\']twitter:[^"\']+["\'][^>]*>',
+              r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>.*?</script>'
+            ]
+            for pat in patterns:
+              text=re.sub(pat,'',text,flags=re.I|re.S)
+
+            alt=''
+            if key in PAIRS and PAIRS[key] in [x.as_posix() for x in pages]:
+              alt_pair=PAIRS[key]
+              alt=f'\n<link rel="alternate" hreflang="fa" href="{url(Path(key if locale=="fa_IR" else alt_pair)) if locale=="fa_IR" else url(Path(alt_pair))}">' if False else ''
+              fa_key=key if locale=='fa_IR' else alt_pair
+              en_key=key if locale=='en_US' else alt_pair
+              alt=(f'\n<link rel="alternate" hreflang="fa" href="{url(Path(fa_key))}">'
+                   f'\n<link rel="alternate" hreflang="en" href="{url(Path(en_key))}">'
+                   f'\n<link rel="alternate" hreflang="x-default" href="{url(Path(fa_key))}">')
+
+            image=BASE+'/images/profile.webp'
+            if kind=='business': image=BASE+'/images/vinicon.webp'
+            ogtype='article' if kind=='article' else 'website'
+            meta=(f'<meta name="description" content="{esc(desc)}">\n'
+                  f'<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">\n'
+                  f'<meta name="author" content="Mohammad Hossein Asgari Somarin">\n'
+                  f'<link rel="canonical" href="{canonical}">{alt}\n'
+                  f'<meta property="og:title" content="{esc(title)}">\n'
+                  f'<meta property="og:description" content="{esc(desc)}">\n'
+                  f'<meta property="og:type" content="{ogtype}">\n'
+                  f'<meta property="og:url" content="{canonical}">\n'
+                  f'<meta property="og:locale" content="{locale}">\n'
+                  f'<meta property="og:image" content="{image}">\n'
+                  f'<meta property="og:image:alt" content="{esc(title)}">\n'
+                  f'<meta name="twitter:card" content="summary_large_image">\n'
+                  f'<meta name="twitter:title" content="{esc(title)}">\n'
+                  f'<meta name="twitter:description" content="{esc(desc)}">\n'
+                  f'<meta name="twitter:image" content="{image}">')
+
+            person={
+              '@type':'Person','@id':BASE+'/#person','name':'محمدحسین عسگری ثمرین',
+              'alternateName':'Mohammad Hossein Asgari Somarin',
+              'jobTitle':'Network & Infrastructure Specialist','url':BASE+'/',
+              'image':BASE+'/images/profile.webp',
+              'sameAs':['https://github.com/mowhmmdh','https://www.linkedin.com/in/mohammadhosseinasgari/','https://instagram.com/mowhmmdh']
+            }
+
+            if kind=='business':
+              schema={'@context':'https://schema.org','@graph':[
+                {'@type':'Organization','@id':canonical+'#organization','name':'VinTech','alternateName':'وین‌تک','url':BASE+'/vintech.html','logo':BASE+'/images/vinicon.webp','description':desc,'founder':{'@id':BASE+'/#person'}},
+                person,
+                {'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'VinTech','publisher':{'@id':canonical+'#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
+                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':canonical+'#organization'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
+              ]}
+            elif kind=='profile':
+              schema={'@context':'https://schema.org','@graph':[person,
+                {'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'Mohammad Hossein Asgari Somarin','publisher':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'},
+                {'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':BASE+'/#person'},'inLanguage':'fa-IR' if locale=='fa_IR' else 'en-US'}
+              ]}
+            elif kind=='article':
+              schema={'@context':'https://schema.org','@type':'Article','@id':canonical+'#article','headline':title,'description':desc,'url':canonical,'mainEntityOfPage':{'@type':'WebPage','@id':canonical+'#webpage'},'author':{'@id':BASE+'/#person'},'image':image,'inLanguage':'en-US' if locale=='en_US' else 'fa-IR'}
+            else:
+              schema={'@context':'https://schema.org','@type':'WebPage','@id':canonical+'#webpage','name':title,'description':desc,'url':canonical,'isPartOf':{'@type':'WebSite','url':BASE+'/'},'inLanguage':'en-US' if locale=='en_US' else 'fa-IR'}
+
             text=text.replace('</head>',meta+'\n<script type="application/ld+json">'+json.dumps(schema,ensure_ascii=False,separators=(',',':'))+'</script>\n</head>',1)
             p.write_text(text,encoding='utf-8')
+            canonical_pages.append((canonical,lastmod(p)))
+
           Path('robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',encoding='utf-8')
-          urls=[url(p) for p in sorted(pages) if '.git' not in p.parts and not url(p).endswith('/404.html')]
-          out=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']+[f'  <url><loc>{u}</loc><lastmod>{today}</lastmod></url>' for u in urls]+['</urlset>']
+          canonical_pages=sorted(set(canonical_pages))
+          out=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+          for u,lm in canonical_pages:
+            out.append(f'  <url><loc>{u}</loc><lastmod>{lm}</lastmod></url>')
+          out.append('</urlset>')
           Path('sitemap.xml').write_text('\n'.join(out)+'\n',encoding='utf-8')
       - name: Commit SEO changes
         shell: bash
@@ -67,4 +168,9 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add '*.html' robots.txt sitemap.xml
-          if git diff --cached --quiet; then echo "SEO already up to date"; else git commit -m "chore(seo): refresh metadata schema sitemap and robots [skip ci]"; git push; fi
+          if git diff --cached --quiet; then
+            echo "SEO already up to date"
+          else
+            git commit -m "chore(seo): refresh bilingual metadata schema sitemap and robots [skip ci]"
+            git push
+          fi
