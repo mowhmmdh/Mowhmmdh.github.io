@@ -1,0 +1,11 @@
+/* Site Quality Layer 2026 — conservative accessibility/performance safeguards. */
+:root{--sq-focus:0 0 0 3px rgba(7,95,125,.24)}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden}
+:where(a,button,input,textarea,select,summary):focus-visible{outline:0;box-shadow:var(--sq-focus);border-radius:8px}
+:where(button,a)[aria-disabled="true"]{pointer-events:none}
+img[width][height]{height:auto}
+svg{max-width:100%}
+pre{white-space:pre-wrap;overflow-wrap:anywhere}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}:where(*,*::before,*::after){animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+@media(max-width:640px){:where(input,textarea,select,button){font-size:16px}:where(.container,.vt-container){max-width:100%}}
