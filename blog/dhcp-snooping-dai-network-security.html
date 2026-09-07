@@ -4,26 +4,42 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه | محمدحسین عسگری</title>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/assets/modern-ui-2026.css">
+<style>@font-face{font-family:v;src:url('/fonts/Vazirmatn-Regular.woff2') format('woff2');font-display:swap}@font-face{font-family:v;src:url('/fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:800;font-display:swap}:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#070b12;color:#eef3f8;font-family:v,system-ui;line-height:2}.wrap{width:min(900px,92%);margin:auto}.nav{padding:18px 0;border-bottom:1px solid #1d2937;display:flex;justify-content:space-between;align-items:center;gap:16px}.nav a{color:#a8b3c0;text-decoration:none}.nav>a{color:#d6ad5b;font-weight:800}.nav-links{display:flex;gap:16px;flex-wrap:wrap}.hero{padding:70px 0 30px}.kicker{color:#d6ad5b;font-size:.78rem;letter-spacing:.08em}.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.3;margin:14px 0}.lead{font-size:1.08rem;color:#a8b3c0}.meta{color:#8795a3;font-size:.85rem}.article{padding:20px 0 70px}.article h2{font-size:1.55rem;margin-top:42px}.article h3{font-size:1.15rem;margin-top:30px}.article p,.article li{color:#c3ccd5}.article a{color:#f0d28c}.box{border:1px solid #1d2937;background:rgba(13,20,32,.7);border-radius:16px;padding:20px;margin:24px 0}.box strong{color:#f0d28c}.code{direction:ltr;text-align:left;white-space:pre-wrap;overflow:auto;background:#05080d;border:1px solid #1d2937;border-radius:14px;padding:18px;color:#dbe4ec;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem}.footer{border-top:1px solid #1d2937;padding:25px 0 45px;color:#8795a3}@media(max-width:650px){.nav-links{display:none}.hero{padding-top:45px}}</style>
+
 <meta name="description" content="راهنمای عملی DHCP Snooping و Dynamic ARP Inspection برای کاهش حملات DHCP Rogue و ARP Spoofing؛ از طراحی Trust تا نمونه تنظیمات سوئیچ و نکات عیب‌یابی.">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
 <meta name="author" content="Mohammad Hossein Asgari Somarin">
 <link rel="canonical" href="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
-<link rel="alternate" hreflang="fa" href="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
-<link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-blog/dhcp-snooping-dai-network-security.html">
-<link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
-<meta property="og:title" content="DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه">
-<meta property="og:description" content="راهنمای عملی کاهش DHCP Rogue و ARP Spoofing در شبکه‌های سازمانی.">
+<meta property="og:title" content="DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه | محمدحسین عسگری">
+<meta property="og:description" content="راهنمای عملی DHCP Snooping و Dynamic ARP Inspection برای کاهش حملات DHCP Rogue و ARP Spoofing؛ از طراحی Trust تا نمونه تنظیمات سوئیچ و نکات عیب‌یابی.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html">
 <meta property="og:locale" content="fa_IR">
 <meta property="og:image" content="https://mowhmmdh.github.io/images/profile.webp">
-<meta property="og:image:alt" content="DHCP Snooping و Dynamic ARP Inspection در امنیت شبکه">
+<meta property="og:image:alt" content="DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه | محمدحسین عسگری">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه">
-<meta name="twitter:description" content="راهنمای عملی کاهش DHCP Rogue و ARP Spoofing در شبکه‌های سازمانی.">
-<link rel="stylesheet" href="/assets/modern-ui-2026.css">
-<style>@font-face{font-family:v;src:url('/fonts/Vazirmatn-Regular.woff2') format('woff2');font-display:swap}@font-face{font-family:v;src:url('/fonts/Vazirmatn-Bold.woff2') format('woff2');font-weight:800;font-display:swap}:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#070b12;color:#eef3f8;font-family:v,system-ui;line-height:2}.wrap{width:min(900px,92%);margin:auto}.nav{padding:18px 0;border-bottom:1px solid #1d2937;display:flex;justify-content:space-between;align-items:center;gap:16px}.nav a{color:#a8b3c0;text-decoration:none}.nav>a{color:#d6ad5b;font-weight:800}.nav-links{display:flex;gap:16px;flex-wrap:wrap}.hero{padding:70px 0 30px}.kicker{color:#d6ad5b;font-size:.78rem;letter-spacing:.08em}.hero h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.3;margin:14px 0}.lead{font-size:1.08rem;color:#a8b3c0}.meta{color:#8795a3;font-size:.85rem}.article{padding:20px 0 70px}.article h2{font-size:1.55rem;margin-top:42px}.article h3{font-size:1.15rem;margin-top:30px}.article p,.article li{color:#c3ccd5}.article a{color:#f0d28c}.box{border:1px solid #1d2937;background:rgba(13,20,32,.7);border-radius:16px;padding:20px;margin:24px 0}.box strong{color:#f0d28c}.code{direction:ltr;text-align:left;white-space:pre-wrap;overflow:auto;background:#05080d;border:1px solid #1d2937;border-radius:14px;padding:18px;color:#dbe4ec;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.86rem}.footer{border-top:1px solid #1d2937;padding:25px 0 45px;color:#8795a3}@media(max-width:650px){.nav-links{display:none}.hero{padding-top:45px}}</style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه","description":"راهنمای عملی DHCP Snooping و Dynamic ARP Inspection برای کاهش حملات DHCP Rogue و ARP Spoofing.","url":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html"},"author":{"@type":"Person","name":"Mohammad Hossein Asgari Somarin","url":"https://mowhmmdh.github.io/"},"publisher":{"@type":"Person","name":"Mohammad Hossein Asgari Somarin"},"inLanguage":"fa-IR","datePublished":"2026-09-07","dateModified":"2026-09-07"}</script>
+<meta name="twitter:title" content="DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه | محمدحسین عسگری">
+<meta name="twitter:description" content="راهنمای عملی DHCP Snooping و Dynamic ARP Inspection برای کاهش حملات DHCP Rogue و ARP Spoofing؛ از طراحی Trust تا نمونه تنظیمات سوئیچ و نکات عیب‌یابی.">
+<meta name="twitter:image" content="https://mowhmmdh.github.io/images/profile.webp">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@context":"https://schema.org","@type":"Article","@id":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html#article","headline":"DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه | محمدحسین عسگری","description":"راهنمای عملی DHCP Snooping و Dynamic ARP Inspection برای کاهش حملات DHCP Rogue و ARP Spoofing؛ از طراحی Trust تا نمونه تنظیمات سوئیچ و نکات عیب‌یابی.","url":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html#webpage"},"author":{"@id":"https://mowhmmdh.github.io/#person"},"image":"https://mowhmmdh.github.io/images/profile.webp","inLanguage":"fa-IR","datePublished":"2026-09-07","dateModified":"2026-09-07","isPartOf":{"@id":"https://mowhmmdh.github.io/#website"}},{"@type":"BreadcrumbList","@id":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"خانه","item":"https://mowhmmdh.github.io/"},{"@type":"ListItem","position":2,"name":"مقالات","item":"https://mowhmmdh.github.io/blog/"},{"@type":"ListItem","position":3,"name":"DHCP Snooping و Dynamic ARP Inspection؛ دو لایه مهم امنیت شبکه | محمدحسین عسگری","item":"https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html"}]}]}</script>
 </head>
 <body>
 <nav class="wrap nav"><a href="/">محمدحسین عسگری</a><div class="nav-links"><a href="/vintech.html">VinTech</a><a href="/services.html">خدمات</a><a href="/projects.html">پروژه‌ها</a><a href="/blog/">مقالات</a><a href="/en-blog/dhcp-snooping-dai-network-security.html">EN</a></div></nav>
