@@ -7,7 +7,6 @@
   const isVinTech=()=>!!document.querySelector('.vt-nav');
   const getTheme=()=>{const saved=store.get();return saved==='light'||saved==='dark'?saved:(media.matches?'light':'dark')};
   const applyTheme=theme=>{theme=theme==='light'?'light':'dark';root.dataset.theme=theme;root.style.colorScheme=theme;document.body?.setAttribute('data-theme',theme);store.set(theme)};
-  // Apply immediately to prevent light/dark flash before the page paints.
   if(!isVinTech()) applyTheme(getTheme());
   const loadStyle=(href,attr)=>{if(document.querySelector(`link[data-${attr}]`))return;const link=document.createElement('link');link.rel='stylesheet';link.href=href;link.setAttribute(`data-${attr}`,'true');document.head.appendChild(link)};
   const loadAsset=(href,attr)=>{if(document.querySelector(`script[data-${attr}]`))return;const script=document.createElement('script');script.src=href;script.defer=true;script.setAttribute(`data-${attr}`,'true');document.head.appendChild(script)};
@@ -15,14 +14,9 @@
   const ensureThemeToggle=()=>{
     if(isVinTech()) return;
     let b=document.querySelector('.theme-toggle');
-    if(!b){
-      const host=document.querySelector('.nav-actions')||document.querySelector('.site-nav')||document.body;
-      b=document.createElement('button');b.className='theme-toggle theme-toggle-global';b.type='button';b.setAttribute('aria-controls','site-theme');
-      b.innerHTML='<span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Theme</span>';
-      host.appendChild(b);
-    }
+    if(!b){const host=document.querySelector('.nav-actions')||document.querySelector('.site-nav')||document.body;b=document.createElement('button');b.className='theme-toggle theme-toggle-global';b.type='button';b.setAttribute('aria-controls','site-theme');b.innerHTML='<span class="theme-icon" aria-hidden="true"></span><span class="theme-label">Theme</span>';host.appendChild(b)}
     b.type='button';b.id=b.id||'site-theme';
-    const sync=()=>{const dark=root.dataset.theme==='dark';b.classList.toggle('is-dark',dark);b.setAttribute('aria-pressed',String(dark));b.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');b.title=dark?'Light mode':'Dark mode'};
+    const sync=()=>{const dark=root.dataset.theme==='dark';b.classList.toggle('is-dark',dark);b.setAttribute('aria-pressed',String(dark));b.setAttribute('aria-label',root.lang?.startsWith('en')?(dark?'Switch to light mode':'Switch to dark mode'):(dark?'تغییر به حالت روشن':'تغییر به حالت تاریک'));b.title=root.lang?.startsWith('en')?(dark?'Light mode':'Dark mode'):(dark?'حالت روشن':'حالت تاریک')};
     sync();b.onclick=()=>{applyTheme(root.dataset.theme==='dark'?'light':'dark');sync()};
   };
   const init=()=>{
@@ -30,6 +24,7 @@
     loadStyle('/assets/design-system-2026.css','design-system-2026');
     loadStyle('/assets/accessibility-performance-fixes-2026.css','quality-fixes-2026');
     loadStyle('/assets/modern-ui-2026.css','modern-ui-2026');
+    loadStyle('/assets/theme-consistency-2026.css','theme-consistency-2026');
     loadAsset('/assets/design-system-2026.js','design-system-2026');
     if(!vt){loadStyle('/assets/theme-runtime-2026.css','theme-runtime');loadStyle('/assets/unified-polish-2026.css','unified-polish');loadStyle('/assets/ultra-2026.css','ultra-ui');loadStyle('/assets/visual-recovery-2026.css','visual-recovery');loadStyle('/assets/site-experience-2026.css','site-experience');}
     const path=location.pathname.toLowerCase(),page=pageFor(path);
