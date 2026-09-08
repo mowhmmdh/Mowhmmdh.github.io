@@ -30,6 +30,8 @@
   const pageFor=path=>path==='/'?'home':path.includes('about')?'about':path.includes('projects')?'projects':path.includes('services')?'services':path.includes('/blog')||path.includes('en-blog')?'blog':path.includes('vintech')?(path.includes('/vintech/')||path.includes('/en-vintech/')?'service':'vintech'):'site';
   const init=()=>{
     const vt=isVinTech();
+    loadStyle('/assets/design-system-2026.css','design-system-2026');
+    loadAsset('/assets/design-system-2026.js','design-system-2026');
     if(!vt){loadStyle('/assets/theme-runtime-2026.css','theme-runtime');loadStyle('/assets/unified-polish-2026.css','unified-polish');loadStyle('/assets/ultra-2026.css','ultra-ui');loadStyle('/assets/visual-recovery-2026.css','visual-recovery');}
     const path=location.pathname.toLowerCase(),page=pageFor(path);
     if(page==='blog'){loadStyle('/assets/topical-authority-2026.css','topical-authority');loadAsset('/assets/topical-authority-2026.js','topical-authority')}
