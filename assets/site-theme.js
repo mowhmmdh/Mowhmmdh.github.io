@@ -21,11 +21,11 @@
   };
   const loadStyle=(href,attr)=>{
     if(document.querySelector(`link[data-${attr}]`))return;
-    const link=document.createElement('link');link.rel='stylesheet';link.href=href;link.dataset[attr]='true';document.head.appendChild(link);
+    const link=document.createElement('link');link.rel='stylesheet';link.href=href;link.setAttribute(`data-${attr}`,'true');document.head.appendChild(link);
   };
   const loadAsset=(href,attr)=>{
     if(document.querySelector(`script[data-${attr}]`))return;
-    const script=document.createElement('script');script.src=href;script.defer=true;script.dataset[attr]='true';document.head.appendChild(script);
+    const script=document.createElement('script');script.src=href;script.defer=true;script.setAttribute(`data-${attr}`,'true');document.head.appendChild(script);
   };
   const pageFor=path=>path==='/'?'home':path.includes('about')?'about':path.includes('projects')?'projects':path.includes('services')?'services':path.includes('/blog')||path.includes('en-blog')?'blog':path.includes('vintech')?(path.includes('/vintech/')||path.includes('/en-vintech/')?'service':'vintech'):'site';
   const init=()=>{
