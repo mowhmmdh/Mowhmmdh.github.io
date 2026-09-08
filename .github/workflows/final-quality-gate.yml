@@ -114,13 +114,10 @@ jobs:
       matrix:
         page: [/, /about.html, /services.html, /projects.html, /vintech.html, /vintech/network-infrastructure.html, /blog/, /blog/network-hardening.html, /en.html, /en-vintech.html]
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
       - name: Install Lighthouse
         run: npm install --global lighthouse@13
       - name: Run mobile Lighthouse
@@ -132,10 +129,9 @@ jobs:
           node - <<'NODE'
           const fs=require('fs');
           const r=JSON.parse(fs.readFileSync('reports/report.json')); const c=r.categories;
-          const limits={performance:100,accessibility:100,'best-practices':100,seo:100};
-          const scores=Object.fromEntries(Object.keys(limits).map(k=>[k,Math.round((c[k]?.score??0)*100)]));
+          const scores=Object.fromEntries(['performance','accessibility','best-practices','seo'].map(k=>[k,Math.round((c[k]?.score??0)*100)]));
           console.log(JSON.stringify(scores));
-          const bad=Object.keys(limits).filter(k=>scores[k]!==100);
+          const bad=Object.keys(scores).filter(k=>scores[k]!==100);
           if(bad.length){console.error('100/100 required:',bad.map(k=>`${k}=${scores[k]}`).join(', '));process.exit(1)}
           NODE
       - name: Upload Lighthouse report
@@ -158,10 +154,10 @@ jobs:
       matrix:
         page: [/, /vintech.html]
     steps:
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
       - name: Install Lighthouse
         run: npm install --global lighthouse@13
       - name: Run desktop Lighthouse
