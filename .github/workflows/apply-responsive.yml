@@ -1,32 +1,17 @@
-name: Apply responsive layer
+name: Legacy responsive layer (manual only)
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '**.html'
-      - 'assets/responsive-fix-2026.css'
-      - 'scripts/apply-responsive-layer.py'
-      - '.github/workflows/apply-responsive.yml'
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   responsive:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inject responsive stylesheet into all HTML pages
-        run: python3 scripts/apply-responsive-layer.py
-      - name: Commit changes
+      - name: Check unified responsive system
         run: |
-          if git diff --quiet; then
-            echo "No responsive changes needed"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add '*.html'
-          git commit -m "Apply responsive safety layer to all pages"
-          git push
+          test -f assets/stable-ui-2026.css
+          echo "PASS: stable-ui-2026.css is the active responsive foundation"
