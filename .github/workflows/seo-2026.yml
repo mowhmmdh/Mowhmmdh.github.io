@@ -143,7 +143,6 @@ jobs:
             else:
               schema={'@context':'https://schema.org','@type':'WebPage','@id':canonical+'#webpage','name':title,'description':desc,'url':canonical,'isPartOf':home,'inLanguage':lang}
 
-            # BreadcrumbList strengthens hierarchical discovery without relying on visible UI.
             parts=[x for x in p.as_posix().split('/') if x and x!='index.html']
             crumbs=[{'@type':'ListItem','position':1,'name':'Home' if locale=='en_US' else 'خانه','item':BASE+'/'}]
             if key.startswith(('vintech/','en-vintech/')):
@@ -167,4 +166,4 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add '*.html' robots.txt sitemap.xml
-          if git diff --cached --quiet; then echo "SEO already up to date"; else git commit -m "chore(seo): refresh bilingual metadata schema sitemap and robots [skip ci]"; git push; fi
+          if git diff --cached --quiet; then echo "SEO already up to date"; else git commit -m "chore(seo): refresh bilingual metadata schema sitemap and robots"; git push; fi
