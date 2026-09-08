@@ -94,3 +94,5 @@ jobs:
               for e in errors: print('ERROR:',e)
               sys.exit(1)
           print(f'PASS: {len(pages)} pages passed title/H1/description/canonical/local-link checks.')
+
+      # Keep the corrected validator on the push path; do not use skip-ci commits.
