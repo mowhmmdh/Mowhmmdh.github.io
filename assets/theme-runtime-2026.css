@@ -1,0 +1,19 @@
+/* Global theme contract: loaded last to neutralize page-specific legacy colors. */
+:root{--theme-bg:#070b12;--theme-surface:#0d141f;--theme-surface-2:#111a26;--theme-text:#edf2f7;--theme-muted:#9aa8b7;--theme-line:rgba(255,255,255,.1);--theme-accent:#d7b15d;--theme-accent-strong:#f3d994;--theme-input:#0b121b}
+html[data-theme=light]{--theme-bg:#f5f7fa;--theme-surface:#fff;--theme-surface-2:#eef2f6;--theme-text:#17212b;--theme-muted:#526170;--theme-line:rgba(20,32,45,.14);--theme-accent:#8b5b00;--theme-accent-strong:#a66d00;--theme-input:#fff}
+html,html body{background-color:var(--theme-bg)!important;color:var(--theme-text)!important;color-scheme:light dark}
+html[data-theme=light],html[data-theme=light] body{color-scheme:light!important}
+html[data-theme=dark],html[data-theme=dark] body{color-scheme:dark!important}
+body{background-image:none!important}
+body,p,li,dd,dt,small,span,label{color:var(--theme-text)}
+.muted,.sub,.subtitle,.description,.lead,.hero-subtitle,.card p,.post-card p,.meta,.meta span{color:var(--theme-muted)!important}
+h1,h2,h3,h4,h5,h6{color:var(--theme-text)!important}
+.nav,.navbar,.header-nav,.site-nav{background:color-mix(in srgb,var(--theme-surface) 92%,transparent)!important;border-color:var(--theme-line)!important;color:var(--theme-text)!important}
+.nav a,.navbar a,.header-nav a,.site-nav a{color:var(--theme-muted)!important}.nav a:hover,.navbar a:hover,.header-nav a:hover,.site-nav a:hover{color:var(--theme-accent-strong)!important}
+.card,.service-card,.project-card,.post-card,.timeline-item,.skill-category,.faq-item,.profile-card,.contact-wrapper,.metric,.cta,.portrait,.panel,.feature,.article-card{background:var(--theme-surface)!important;color:var(--theme-text)!important;border-color:var(--theme-line)!important}
+input,textarea,select{background:var(--theme-input)!important;color:var(--theme-text)!important;border-color:var(--theme-line)!important}input::placeholder,textarea::placeholder{color:var(--theme-muted)!important}
+button,.btn{border-color:var(--theme-line)}
+html[data-theme=light] .btn-secondary,html[data-theme=light] .btn:not(.primary){background:var(--theme-surface)!important;color:var(--theme-text)!important}
+html[data-theme=light] .hero-title .highlight,html[data-theme=light] .hero h1 span,html[data-theme=light] .highlight{color:var(--theme-accent)!important;-webkit-text-fill-color:var(--theme-accent)!important;background:none!important}
+:focus-visible{outline:3px solid var(--theme-accent-strong)!important;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
