@@ -10,36 +10,46 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Apply final visual system and theme compatibility
+      - name: Apply site-wide theme runtime safely
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          tag='  <link rel="stylesheet" href="/assets/light-mode-fix-2026.css">\n'
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
               s=p.read_text(encoding='utf-8')
               original=s
+              # The JS is the only runtime theme controller. It contains only visual color overrides,
+              # so it cannot alter page grids, spacing, typography, or responsive breakpoints.
+              if '/assets/site-theme.js' not in s and '</body>' in s:
+                  s=s.replace('</body>','<script src="/assets/site-theme.js" defer></script>\n</body>',1)
+              # Keep the standalone light layer available for pages whose local CSS has hard-coded dark colors.
               if '/assets/light-mode-fix-2026.css' not in s and '</head>' in s:
-                  s=s.replace('</head>',tag+'</head>',1)
-              if p.as_posix()=='vintech.html':
-                  marker='<a href="#expertise">جزئیات تخصص ←</a></article>'
-                  if marker in s:
-                      urls=['/vintech/network-infrastructure.html','/vintech/cybersecurity.html','/vintech/servers-systems.html','/vintech/cctv-nvr.html','/vintech/it-support.html','/vintech/web-technical-seo.html']
-                      for u in urls: s=s.replace(marker,f'<a href="{u}">مشاهده سرویس ←</a></article>',1)
-              if p.as_posix()=='en-vintech.html':
-                  marker='<a href="#expertise">View expertise →</a></article>'
-                  if marker in s:
-                      urls=['/en-vintech/network-infrastructure.html','/en-vintech/cybersecurity.html','/en-vintech/servers-systems.html','/en-vintech/cctv-nvr.html','/en-vintech/it-support.html','/en-vintech/web-technical-seo.html']
-                      for u in urls: s=s.replace(marker,f'<a href="{u}">View service →</a></article>',1)
+                  s=s.replace('</head>','<link rel="stylesheet" href="/assets/light-mode-fix-2026.css">\n</head>',1)
               if s!=original:
                   p.write_text(s,encoding='utf-8'); changed.append(str(p))
           print('Updated:', *changed, sep='\n- ')
+          PY
+      - name: Validate generated HTML references
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          bad=[]
+          for p in Path('.').rglob('*.html'):
+              if '.git' in p.parts: continue
+              s=p.read_text(encoding='utf-8')
+              if '/assets/site-theme.js' not in s: bad.append(f'{p}: missing site-theme.js')
+              if '/assets/light-mode-fix-2026.css' not in s: bad.append(f'{p}: missing light-mode-fix-2026.css')
+          if bad:
+              print('\n'.join(bad))
+              raise SystemExit(1)
+          print('All HTML pages have the shared theme runtime and light-mode compatibility layer.')
           PY
       - name: Commit visual layer changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add '*.html' '**/*.html' 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m 'fix(theme): apply final light mode compatibility layer' && git push)
+          git diff --cached --quiet || (git commit -m 'fix(theme): apply shared theme runtime to all pages' && git push)
