@@ -83,7 +83,7 @@ jobs:
           canonical_pages=[]
 
           for p in pages:
-            key=p.as_posix(); text=p.read_text(encoding='utf-8'); cfg=CONFIGS.get(key)
+            key=p.as_posix(); original=p.read_text(encoding='utf-8'); text=original; cfg=CONFIGS.get(key)
             title_match=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S)
             desc_match=re.search(r'<meta[^>]+name=["\']description["\'][^>]*content=["\'](.*?)["\']',text,re.I|re.S)
             title=html.unescape(re.sub(r'<[^>]+>','',title_match.group(1)).strip()) if title_match else p.stem.replace('-',' ').title()
@@ -96,8 +96,7 @@ jobs:
               kind='article' if ('/blog/' in '/'+key and key!='blog/index.html') else ('service' if key.startswith(('vintech/','en-vintech/')) else 'webpage')
               if not desc: desc='Technical content about network infrastructure, systems, security and IT operations.' if locale=='en_US' else 'محتوای فنی درباره شبکه، زیرساخت، سیستم‌ها، امنیت و عملیات فناوری اطلاعات.'
 
-            canonical=url(p)
-            lm=lastmod(p)
+            canonical=url(p); lm=lastmod(p)
             text=re.sub(r'<title[^>]*>.*?</title>',f'<title>{esc(title)}</title>',text,count=1,flags=re.I|re.S)
             if not re.search(r'<title',text,re.I): text=text.replace('</head>',f'<title>{esc(title)}</title></head>',1)
 
@@ -108,7 +107,8 @@ jobs:
               r'<meta[^>]+property=["\']og:[^"\']+["\'][^>]*>',r'<meta[^>]+name=["\']twitter:[^"\']+["\'][^>]*>',
               r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>.*?</script>'
             ]
-            for pat in patterns: text=re.sub(pat,'',text,flags=re.I|re.S)
+            for pat in patterns:
+              text=re.sub(r'[ \t]*'+pat+r'[ \t]*\n?', '', text, flags=re.I|re.S)
 
             alt=''
             if key in PAIRS and PAIRS[key] in page_keys:
@@ -133,28 +133,31 @@ jobs:
             lang='fa-IR' if locale=='fa_IR' else 'en-US'
             home={'@type':'WebSite','@id':BASE+'/#website','url':BASE+'/','name':'Mohammad Hossein Asgari Somarin','publisher':{'@id':BASE+'/#person'},'inLanguage':lang}
             if kind=='business':
-              schema={'@context':'https://schema.org','@graph':[{'@type':'Organization','@id':BASE+'/vintech.html#organization','name':'VinTech','alternateName':'وین‌تک','url':BASE+'/vintech.html','logo':BASE+'/images/vinicon.webp','description':desc,'founder':{'@id':BASE+'/#person'}},person,{'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'VinTech','publisher':{'@id':BASE+'/vintech.html#organization'},'inLanguage':lang},{'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':BASE+'/vintech.html#organization'},'inLanguage':lang}]}
+              schema={'@type':'Organization','@id':BASE+'/vintech.html#organization','name':'VinTech','alternateName':'وین‌تک','url':BASE+'/vintech.html','logo':BASE+'/images/vinicon.webp','description':desc,'founder':{'@id':BASE+'/#person'}}
+              graph=[schema,person,{'@type':'WebSite','@id':canonical+'#website','url':canonical,'name':'VinTech','publisher':{'@id':BASE+'/vintech.html#organization'},'inLanguage':lang},{'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':canonical+'#website'},'about':{'@id':BASE+'/vintech.html#organization'},'inLanguage':lang}]
             elif kind=='profile':
-              schema={'@context':'https://schema.org','@graph':[person,home,{'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#person'},'inLanguage':lang}]}
+              graph=[person,home,{'@type':'WebPage','@id':canonical+'#webpage','url':canonical,'name':title,'isPartOf':{'@id':BASE+'/#website'},'about':{'@id':BASE+'/#person'},'inLanguage':lang}]
             elif kind=='article':
-              schema={'@context':'https://schema.org','@type':'Article','@id':canonical+'#article','headline':title,'description':desc,'url':canonical,'mainEntityOfPage':{'@type':'WebPage','@id':canonical+'#webpage'},'author':{'@id':BASE+'/#person'},'image':image,'inLanguage':lang,'datePublished':lm,'dateModified':lm,'isPartOf':{'@id':BASE+'/#website'}}
+              graph=[{'@type':'Article','@id':canonical+'#article','headline':title,'description':desc,'url':canonical,'mainEntityOfPage':{'@type':'WebPage','@id':canonical+'#webpage'},'author':{'@id':BASE+'/#person'},'image':image,'inLanguage':lang,'datePublished':lm,'dateModified':lm,'isPartOf':{'@id':BASE+'/#website'},'publisher':{'@id':BASE+'/#person'}}]
             elif kind=='service':
-              schema={'@context':'https://schema.org','@type':'Service','@id':canonical+'#service','name':title,'description':desc,'url':canonical,'provider':{'@type':'Organization','@id':BASE+'/vintech.html#organization','name':'VinTech','url':BASE+'/vintech.html'},'inLanguage':lang}
+              graph=[{'@type':'Service','@id':canonical+'#service','name':title,'description':desc,'url':canonical,'provider':{'@type':'Organization','@id':BASE+'/vintech.html#organization','name':'VinTech','url':BASE+'/vintech.html'},'areaServed':'Iran','inLanguage':lang}]
             else:
-              schema={'@context':'https://schema.org','@type':'WebPage','@id':canonical+'#webpage','name':title,'description':desc,'url':canonical,'isPartOf':home,'inLanguage':lang}
+              graph=[{'@type':'WebPage','@id':canonical+'#webpage','name':title,'description':desc,'url':canonical,'isPartOf':home,'inLanguage':lang}]
 
-            parts=[x for x in p.as_posix().split('/') if x and x!='index.html']
             crumbs=[{'@type':'ListItem','position':1,'name':'Home' if locale=='en_US' else 'خانه','item':BASE+'/'}]
             if key.startswith(('vintech/','en-vintech/')):
               crumbs.append({'@type':'ListItem','position':2,'name':'VinTech','item':BASE+'/en-vintech.html' if locale=='en_US' else BASE+'/vintech.html'})
             elif key.startswith(('blog/','en-blog/')) and key not in ('blog/index.html','en-blog.html'):
               crumbs.append({'@type':'ListItem','position':2,'name':'Blog' if locale=='en_US' else 'مقالات','item':BASE+'/en-blog.html' if locale=='en_US' else BASE+'/blog/'})
-            if len(crumbs)<3 and key not in ('index.html','en.html'): crumbs.append({'@type':'ListItem','position':len(crumbs)+1,'name':title,'item':canonical})
-            elif len(crumbs)>=2 and key not in ('blog/index.html','en-blog.html','vintech.html','en-vintech.html','index.html','en.html'): crumbs.append({'@type':'ListItem','position':len(crumbs)+1,'name':title,'item':canonical})
-            schema={'@context':'https://schema.org','@graph':(schema.get('@graph') if '@graph' in schema else [schema]) + [{'@type':'BreadcrumbList','@id':canonical+'#breadcrumb','itemListElement':crumbs}]}
+            if key not in ('index.html','en.html','blog/index.html','en-blog.html','vintech.html','en-vintech.html'):
+              crumbs.append({'@type':'ListItem','position':len(crumbs)+1,'name':title,'item':canonical})
+            graph.append({'@type':'BreadcrumbList','@id':canonical+'#breadcrumb','itemListElement':crumbs})
+            schema={'@context':'https://schema.org','@graph':graph}
 
             text=text.replace('</head>',meta+'\n<script type="application/ld+json">'+json.dumps(schema,ensure_ascii=False,separators=(',',':'))+'</script>\n</head>',1)
-            p.write_text(text,encoding='utf-8'); canonical_pages.append((canonical,lm))
+            text=re.sub(r'\n[ \t]*\n(?:[ \t]*\n)+','\n\n',text)
+            if text != original: p.write_text(text,encoding='utf-8')
+            canonical_pages.append((canonical,lm))
 
           Path('robots.txt').write_text('User-agent: *\nAllow: /\nSitemap: '+BASE+'/sitemap.xml\n',encoding='utf-8')
           out=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
