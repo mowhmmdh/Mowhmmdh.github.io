@@ -80,7 +80,8 @@ jobs:
               if a.viewport!=1: errors.append(f'{rel}: exactly one viewport required')
               if a.h1!=1: errors.append(f'{rel}: exactly one H1 required (found {a.h1})')
               if not a.lang: errors.append(f'{rel}: html lang missing')
-              if len(a.canonical)!=1 or not a.canonical[0].startswith('https://mowhmmdh.github.io/'): errors.append(f'{rel}: canonical missing or off-site')
+              # 404 is intentionally noindex and has no canonical.
+              if rel != '404.html' and (len(a.canonical)!=1 or not a.canonical[0].startswith('https://mowhmmdh.github.io/')): errors.append(f'{rel}: canonical missing or off-site')
               if a.dup_ids: errors.append(f'{rel}: duplicate id(s): {", ".join(a.dup_ids[:5])}')
               for img in a.imgs:
                   if 'alt' not in img: errors.append(f'{rel}: image without alt')
