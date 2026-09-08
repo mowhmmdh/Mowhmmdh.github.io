@@ -140,6 +140,13 @@ jobs:
     steps:
       - name: Install Lighthouse
         run: npm install --global lighthouse@13
+      - name: Prepare artifact name
+        env:
+          PAGE: ${{ matrix.page }}
+        run: |
+          safe=$(printf '%s' "$PAGE" | sed 's#^/##; s#[^A-Za-z0-9._-]#-#g')
+          [ -n "$safe" ] || safe=home
+          echo "ARTIFACT_NAME=lighthouse-mobile-$safe" >> "$GITHUB_ENV"
       - name: Run mobile Lighthouse
         env:
           URL: https://mowhmmdh.github.io${{ matrix.page }}
@@ -160,7 +167,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-mobile-${{ matrix.page == '/' && 'home' || matrix.page }}
+          name: ${{ env.ARTIFACT_NAME }}
           path: reports/report.json
           retention-days: 7
 
