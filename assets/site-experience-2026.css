@@ -1,0 +1,21 @@
+/* Universal 2026 experience layer: shared interaction, navigation and theme controls. */
+:root{--sx-bg:var(--ui-bg,#f6f7f9);--sx-surface:var(--ui-surface,#fff);--sx-text:var(--ui-text,#17212b);--sx-muted:var(--ui-muted,#596777);--sx-line:var(--ui-line,rgba(23,33,43,.14));--sx-accent:var(--ui-accent,#986400);--sx-shadow:var(--ui-shadow,0 14px 40px rgba(20,35,50,.1))}
+html{background:var(--sx-bg)}body.personal-site{background:var(--sx-bg);color:var(--sx-text);transition:background-color .35s ease,color .35s ease}
+.theme-toggle-global{position:relative;display:inline-flex!important;align-items:center;justify-content:center;gap:7px;min-width:42px;min-height:42px;padding:9px 12px!important;border:1px solid var(--sx-line)!important;border-radius:999px!important;background:color-mix(in srgb,var(--sx-surface) 90%,transparent)!important;color:var(--sx-text)!important;box-shadow:0 6px 20px color-mix(in srgb,var(--sx-text) 8%,transparent);cursor:pointer;transition:transform .2s ease,box-shadow .2s ease,background .2s ease}
+.theme-toggle-global:hover{transform:translateY(-2px);box-shadow:0 10px 28px color-mix(in srgb,var(--sx-text) 14%,transparent)}
+.theme-toggle-global:focus-visible{outline:3px solid var(--ui-focus,#0874b5);outline-offset:3px}
+.theme-icon{width:18px;height:18px;border-radius:50%;display:block;background:currentColor;position:relative;transition:transform .3s ease}
+.theme-icon:after{content:"";position:absolute;width:18px;height:18px;border-radius:50%;background:var(--sx-surface);left:6px;top:-3px;transition:background .3s ease}
+.theme-toggle-global:not(.is-dark) .theme-icon{box-shadow:0 0 0 3px color-mix(in srgb,var(--sx-accent) 14%,transparent)}
+.theme-toggle-global.is-dark .theme-icon{transform:rotate(-20deg)}
+.theme-label{font-size:.75rem;font-weight:800;line-height:1;display:none}
+.nav-links a[aria-current=page],.mobile-panel a[aria-current=page],.vt-links a[aria-current=page]{color:var(--sx-text)!important;font-weight:800;position:relative}
+.nav-links a[aria-current=page]:after,.vt-links a[aria-current=page]:after{content:"";position:absolute;inset-inline:0;bottom:-8px;height:2px;border-radius:2px;background:var(--sx-accent)}
+.mobile-panel{background:var(--sx-surface)!important;color:var(--sx-text)!important;border:1px solid var(--sx-line)!important;box-shadow:var(--sx-shadow)!important}
+.site-nav,.nav,.navbar,.header-nav{background:color-mix(in srgb,var(--sx-surface) 88%,transparent);border-color:var(--sx-line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.card,.service-card,.project-card,.post-card,.profile-card,.metric,.stat,.timeline-item,.skill-category,.faq-item{background:var(--sx-surface);color:var(--sx-text);border-color:var(--sx-line);box-shadow:var(--sx-shadow);transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s ease}
+.card:hover,.service-card:hover,.project-card:hover,.post-card:hover,.profile-card:hover,.metric:hover,.stat:hover,.timeline-item:hover,.skill-category:hover,.faq-item:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--sx-accent) 45%,var(--sx-line));box-shadow:0 20px 50px color-mix(in srgb,var(--sx-text) 12%,transparent)}
+img{content-visibility:auto}.site-nav{position:sticky;top:0;z-index:1000}.skip-link{z-index:10000}
+@media(max-width:720px){.theme-toggle-global{min-width:40px;min-height:40px;padding:8px!important}.theme-label{display:none}.site-nav{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}.card:hover,.service-card:hover,.project-card:hover,.post-card:hover,.profile-card:hover,.metric:hover,.stat:hover,.timeline-item:hover,.skill-category:hover,.faq-item:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){body.personal-site,.theme-toggle-global,.card,.service-card,.project-card,.post-card,.profile-card,.metric,.stat,.timeline-item,.skill-category,.faq-item{transition:none!important}.theme-toggle-global:hover,.card:hover,.service-card:hover,.project-card:hover,.post-card:hover,.profile-card:hover,.metric:hover,.stat:hover,.timeline-item:hover,.skill-category:hover,.faq-item:hover{transform:none!important}}
+@media(forced-colors:active){.theme-toggle-global{border:1px solid ButtonText!important;color:ButtonText!important;background:ButtonFace!important}.nav-links a[aria-current=page]:after{background:Highlight}}
