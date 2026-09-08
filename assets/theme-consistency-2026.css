@@ -17,3 +17,9 @@ html[data-theme="light"] .vt-orbit i{background:rgba(255,255,255,.94);color:var(
 .social-icon-link svg,.footer-socials svg,.vt-social-row svg{width:19px;height:19px;display:block;fill:currentColor}
 @media(max-width:640px){.footer-socials,.vt-social-row{justify-content:center}.footer-socials-label{width:100%;text-align:center}}
 @media(prefers-reduced-motion:reduce){.footer-socials a,.vt-social-row a{transition:none}.footer-socials a:hover,.vt-social-row a:hover{transform:none}}
+
+/* WCAG AA contrast hardening: use theme-specific text colors for accents and CTAs. */
+html[data-theme="light"] :where(.kicker,.eyebrow,.hero-kicker,.section-tag,.tag,.vt-kicker,.vt-icon){color:#8b5b00!important}
+html[data-theme="dark"] :where(.kicker,.eyebrow,.hero-kicker,.section-tag,.tag,.vt-kicker,.vt-icon){color:#f0c85a!important}
+html[data-theme="light"] :where(.btn.primary,.btn-primary,.vt-btn.primary){background:linear-gradient(135deg,#8b5b00,#8b5b00)!important;color:#fff!important}
+html[data-theme="dark"] :where(.btn.primary,.btn-primary,.vt-btn.primary){background:linear-gradient(135deg,#d2a84e,#f0c85a)!important;color:#10151a!important}
