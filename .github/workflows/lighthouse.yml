@@ -16,5 +16,6 @@ jobs:
           urls: |
             https://mowhmmdh.github.io/
             https://mowhmmdh.github.io/vintech.html
+          configPath: .lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
