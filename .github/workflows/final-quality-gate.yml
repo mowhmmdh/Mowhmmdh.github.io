@@ -70,7 +70,7 @@ jobs:
                   if t=='meta' and a.get('property','').lower().startswith('og:'): self.og[a['property'].lower()]=a.get('content','').strip()
                   if t=='script' and a.get('type','').lower()=='application/ld+json': self.ld.append(''); self.active=True
               def handle_endtag(self,t):
-                  if t=='script': self.active=False
+                  if t=='script' and self.active: self.active=False
               def handle_data(self,d):
                   if self.active: self.ld[-1]+=d
           def url(p):
