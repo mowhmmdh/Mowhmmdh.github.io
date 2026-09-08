@@ -1,0 +1,53 @@
+name: SEO audit 2026
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate sitewide SEO invariants
+        shell: python
+        run: |
+          from pathlib import Path
+          import re, sys
+
+          base = 'https://mowhmmdh.github.io'
+          pages = [p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name != '404.html']
+          errors = []
+          seen = {}
+
+          for p in pages:
+              s = p.read_text(encoding='utf-8')
+              key = p.as_posix()
+              title = re.findall(r'<title(?:\s[^>]*)?>(.*?)</title>', s, re.I|re.S)
+              desc = re.findall(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'][^"\']+["\']', s, re.I)
+              canon = re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)', s, re.I)
+              lang = re.findall(r'<html[^>]+lang=["\']([^"\']+)', s, re.I)
+              h1 = re.findall(r'<h1(?:\s[^>]*)?>', s, re.I)
+              if len(title) != 1: errors.append(f'{key}: expected exactly one title')
+              if len(desc) != 1: errors.append(f'{key}: expected exactly one meta description')
+              if len(canon) != 1 or not canon[0].startswith(base + '/'): errors.append(f'{key}: invalid/missing canonical')
+              if len(lang) != 1: errors.append(f'{key}: missing html lang')
+              if len(h1) != 1: errors.append(f'{key}: expected exactly one H1')
+              if canon: seen.setdefault(canon[0], []).append(key)
+
+          for canonical, owners in seen.items():
+              if len(owners) > 1: errors.append(f'duplicate canonical: {canonical} -> {owners}')
+
+          robots = Path('robots.txt').read_text(encoding='utf-8')
+          if 'Sitemap: ' + base + '/sitemap.xml' not in robots: errors.append('robots.txt: sitemap directive missing')
+          sitemap = Path('sitemap.xml').read_text(encoding='utf-8')
+          if base not in sitemap: errors.append('sitemap.xml: canonical host missing')
+
+          if errors:
+              print('\n'.join(errors))
+              sys.exit(1)
+          print(f'SEO audit passed for {len(pages)} HTML pages.')
