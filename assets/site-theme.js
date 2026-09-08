@@ -31,6 +31,7 @@
   const init=()=>{
     const vt=isVinTech();
     loadStyle('/assets/design-system-2026.css','design-system-2026');
+    loadStyle('/assets/accessibility-performance-fixes-2026.css','quality-fixes-2026');
     loadAsset('/assets/design-system-2026.js','design-system-2026');
     if(!vt){loadStyle('/assets/theme-runtime-2026.css','theme-runtime');loadStyle('/assets/unified-polish-2026.css','unified-polish');loadStyle('/assets/ultra-2026.css','ultra-ui');loadStyle('/assets/visual-recovery-2026.css','visual-recovery');}
     const path=location.pathname.toLowerCase(),page=pageFor(path);
