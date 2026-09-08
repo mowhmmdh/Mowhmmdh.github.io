@@ -34,7 +34,10 @@ jobs:
               return re.findall(pattern, html, re.I|re.S)
 
           def path_url(p):
-              return base + '/' if p.as_posix() == 'index.html' else base + '/' + p.as_posix()
+              posix = p.as_posix()
+              if posix == 'index.html': return base + '/'
+              if p.name == 'index.html': return base + '/' + str(p.parent).replace('\\', '/') + '/'
+              return base + '/' + posix
 
           for p in pages:
               s = p.read_text(encoding='utf-8')
@@ -55,15 +58,17 @@ jobs:
               if len(viewport) != 1: errors.append(f'{key}: missing viewport')
               if len(h1) != 1: errors.append(f'{key}: expected exactly one H1')
               if 'noindex' in robots.lower(): errors.append(f'{key}: indexable page contains noindex')
-              if not ld: errors.append(f'{key}: missing JSON-LD structured data')
+
+              if not ld:
+                  errors.append(f'{key}: missing JSON-LD structured data')
               else:
                   for block in ld:
                       try:
                           data = json.loads(block)
-                          if isinstance(data, list): items = data
-                          elif isinstance(data, dict) and '@graph' in data: items = data['@graph']
-                          else: items = [data]
-                          if not any(isinstance(x, dict) and x.get('@context') == 'https://schema.org' for x in items):
+                          items = data if isinstance(data, list) else (data.get('@graph', [data]) if isinstance(data, dict) else [])
+                          if not isinstance(items, list): items = [items]
+                          contexts = [x.get('@context') for x in items if isinstance(x, dict)]
+                          if 'https://schema.org' not in contexts:
                               errors.append(f'{key}: JSON-LD missing schema.org context')
                       except Exception as exc:
                           errors.append(f'{key}: invalid JSON-LD ({exc})')
@@ -76,9 +81,11 @@ jobs:
               if not og_url or og_url != path_url(p): errors.append(f'{key}: invalid/missing og:url')
 
               alternates = re.findall(r'<link[^>]+rel=["\']alternate["\'][^>]+hreflang=["\']([^"\']+)["\'][^>]+href=["\']([^"\']+)', s, re.I)
-              if len(alternates) < 2: errors.append(f'{key}: missing reciprocal hreflang annotations')
-              if not any(h == lang[0] for h, _ in alternates): errors.append(f'{key}: hreflang self-reference missing')
-              if not any(h in ('en', 'en-US', 'fa', 'fa-IR') for h, _ in alternates): errors.append(f'{key}: expected bilingual hreflang')
+              normalized_lang = lang[0].split('-')[0].lower() if lang else ''
+              normalized_hreflang = {h.split('-')[0].lower() for h, _ in alternates}
+              if len(alternates) < 3: errors.append(f'{key}: expected fa/en/x-default hreflang annotations')
+              if normalized_lang not in normalized_hreflang: errors.append(f'{key}: hreflang self-reference missing')
+              if 'x-default' not in {h.lower() for h, _ in alternates}: errors.append(f'{key}: x-default hreflang missing')
 
               canonical_to_page.setdefault(canon[0] if canon else '', []).append(key)
 
