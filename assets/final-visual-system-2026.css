@@ -1,0 +1,26 @@
+/* VinTech / Personal final visual safety layer — 2026
+   Loaded last. Fixes theme leakage, contrast, overflow and motion without changing content. */
+:root{color-scheme:dark light}
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,video,canvas{max-width:100%;height:auto}
+button,a{ -webkit-tap-highlight-color:transparent }
+:focus-visible{outline:3px solid currentColor;outline-offset:3px}
+/* VinTech dark */
+html:not([data-theme="light"]) .vt-card:hover{background:var(--vt-surface2)!important;color:var(--vt-text)!important;box-shadow:0 24px 60px rgba(0,0,0,.28)!important}
+html:not([data-theme="light"]) .vt-orbit i{background:rgba(11,17,27,.94)!important;color:var(--vt-text)!important;border-color:var(--vt-line)!important}
+html:not([data-theme="light"]) .vt-section-alt{background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)!important}
+/* VinTech light */
+html[data-theme="light"] body{background:var(--vt-bg)!important;color:var(--vt-text)!important}
+html[data-theme="light"] .vt-card:hover{background:#fff!important;color:#10202d!important;box-shadow:0 24px 60px rgba(16,32,45,.12)!important}
+html[data-theme="light"] .vt-orbit i{background:rgba(255,255,255,.96)!important;color:#10202d!important;border-color:rgba(16,32,45,.14)!important}
+html[data-theme="light"] .vt-section-alt{background:linear-gradient(180deg,transparent,rgba(7,95,125,.025),transparent)!important}
+html[data-theme="light"] .vt-nav{color:#10202d!important}
+html[data-theme="light"] .vt-menu,html[data-theme="light"] .vt-theme-toggle{background:#fff!important;color:#10202d!important}
+html[data-theme="light"] .vt-btn:not(.primary){background:#fff!important;color:#10202d!important;border-color:rgba(16,32,45,.16)!important}
+html[data-theme="light"] .vt-trust span{background:#fff!important;color:#455866!important}
+/* Keep CTA readable in both themes */
+.vt-btn.primary{color:#fff!important}
+/* Small-screen stability */
+@media(max-width:760px){.vt-container{width:calc(100% - 32px)!important}.vt-hero-grid{min-width:0}.vt-hero-copy,.vt-hero-visual,.vt-section-head,.vt-card{min-width:0}.vt-orbit{max-width:270px}.vt-cta{overflow:hidden}}
+@media(max-width:430px){.vt-container{width:calc(100% - 24px)!important}.vt-hero h1{overflow-wrap:anywhere}.vt-lead{overflow-wrap:anywhere}.vt-card{padding:20px!important}.vt-actions .vt-btn{min-width:0!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
