@@ -1,0 +1,28 @@
+/* Unified 2026 visual polish: shared hierarchy, typography, surfaces, controls and responsive behavior. */
+:root{--up-radius:18px;--up-radius-sm:12px;--up-max:1180px;--up-gap:clamp(18px,2.4vw,32px);--up-shadow:0 18px 50px rgba(0,0,0,.16);--up-border:rgba(255,255,255,.10);--up-text:#edf2f7;--up-muted:#9aa8b7;--up-accent:#d7b15d;--up-accent-2:#55b7ea}
+html[data-theme=light]{--up-border:rgba(20,32,45,.12);--up-text:#17212b;--up-muted:#526170;--up-accent:#8b5b00;--up-accent-2:#086da8;--up-shadow:0 18px 50px rgba(20,35,50,.10)}
+html{font-family:Vazirmatn,Inter,system-ui,-apple-system,"Segoe UI",sans-serif}body{color:var(--up-text);line-height:1.8}main{position:relative;z-index:1}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid color-mix(in srgb,var(--up-accent) 70%,transparent);outline-offset:3px;border-radius:8px}
+.wrap,.container,.vt-container{max-width:var(--up-max);width:min(var(--up-max),calc(100% - 40px));margin-inline:auto}
+.nav,.navbar,.header-nav,.site-nav{border:1px solid var(--up-border);box-shadow:0 10px 35px rgba(0,0,0,.08)}
+.nav a,.navbar a,.header-nav a,.site-nav a{min-height:42px;display:inline-flex;align-items:center;gap:7px;text-decoration:none}
+.nav-links,.links{gap:6px;align-items:center}
+.section,.vt-section{position:relative}.section h2,.vt-section h2{letter-spacing:-.02em;text-wrap:balance}.section p,.vt-section p{max-width:72ch}
+.section-head,.vt-section-head{margin-bottom:clamp(22px,4vw,38px)}
+.card,.service-card,.project-card,.post-card,.timeline-item,.skill-category,.faq-item,.profile-card,.contact-wrapper,.metric,.process-step,.cta,.terminal{border:1px solid var(--up-border);border-radius:var(--up-radius);box-shadow:var(--up-shadow)}
+.card h3,.service-card h3,.project-card h3,.post-card h2,.post-card h3,.timeline-item h3,.skill-category h3{line-height:1.45;text-wrap:balance}
+.card p,.service-card p,.project-card p,.post-card p{color:var(--up-muted)}
+.btn,.button,.cta a,.actions a{min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:12px;font-weight:800;text-decoration:none;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease,background-color .22s ease}.btn:hover,.button:hover,.cta a:hover,.actions a:hover{transform:translateY(-2px)}
+.btn-primary,.btn.primary,.button.primary{box-shadow:0 10px 28px color-mix(in srgb,var(--up-accent) 20%,transparent)}
+input,textarea,select{width:100%;min-height:44px;border:1px solid var(--up-border);border-radius:12px;background:var(--ui-panel,#fff);color:var(--up-text);padding:10px 12px}textarea{min-height:120px;resize:vertical}label{display:grid;gap:7px;font-weight:700}
+img{content-visibility:auto}.post-content,.article-content,.prose{max-width:78ch;margin-inline:auto}.post-content h2,.article-content h2,.prose h2{margin-top:2.4em}.post-content h3,.article-content h3,.prose h3{margin-top:2em}.post-content img,.article-content img,.prose img{border-radius:var(--up-radius);border:1px solid var(--up-border);box-shadow:var(--up-shadow)}
+.hero-title,.hero h1{font-weight:850;text-wrap:balance}.hero-subtitle{max-width:68ch}.hero-actions{display:flex;flex-wrap:wrap;gap:10px}
+.grid,.services-grid,.projects-grid,.skills-grid,.posts-grid{align-items:stretch}.grid>* ,.services-grid>*,.projects-grid>*,.skills-grid>*,.posts-grid>*{min-width:0}
+.table-wrap{overflow:auto;border:1px solid var(--up-border);border-radius:var(--up-radius)}table{width:100%;border-collapse:collapse}th,td{padding:12px 14px;border-bottom:1px solid var(--up-border);text-align:start}th{font-weight:850}
+hr{border:0;border-top:1px solid var(--up-border);margin:clamp(28px,5vw,56px) 0}
+.badge,.tag,.chip,.signal{border:1px solid var(--up-border);border-radius:999px;padding:5px 10px;display:inline-flex;align-items:center;gap:6px}
+/* Personal and VinTech stay distinct; this layer only standardizes quality, not branding. */
+body.personal-site .card:hover,body.personal-site .project-card:hover,body.personal-site .service-card:hover,body.personal-site .post-card:hover{border-color:color-mix(in srgb,var(--up-accent) 38%,var(--up-border))}
+body.page-vintech .vt-card:hover,body.page-service .vt-card:hover{border-color:color-mix(in srgb,var(--up-accent) 38%,var(--up-border))}
+@media(max-width:900px){.wrap,.container,.vt-container{width:min(var(--up-max),calc(100% - 32px))}.section,.vt-section{scroll-margin-top:80px}.hero-actions{justify-content:center}.grid,.services-grid,.projects-grid,.skills-grid,.posts-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.wrap,.container,.vt-container{width:calc(100% - 28px)}.nav,.navbar,.header-nav,.site-nav{box-shadow:0 7px 24px rgba(0,0,0,.07)}.section,.vt-section{padding-block:48px!important}.grid,.services-grid,.projects-grid,.skills-grid,.posts-grid{grid-template-columns:1fr}.card,.service-card,.project-card,.post-card,.timeline-item,.skill-category,.faq-item,.profile-card,.contact-wrapper,.metric,.process-step,.cta,.terminal{border-radius:14px}.btn,.button,.cta a,.actions a{width:auto;min-height:46px}.hero-actions{width:100%}.hero-actions .btn,.hero-actions .button{flex:1 1 150px}.post-content,.article-content,.prose{font-size:.96rem}.table-wrap{border-radius:12px}th,td{padding:10px 11px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition-duration:.001ms!important;animation-duration:.001ms!important;animation-iteration-count:1!important}.btn:hover,.button:hover,.cta a:hover,.actions a:hover{transform:none}}
