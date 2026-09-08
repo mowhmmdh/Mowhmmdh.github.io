@@ -19,9 +19,7 @@
     sameAs:['https://github.com/mowhmmdh','https://www.linkedin.com/in/mohammadhosseinasgari/','https://instagram.com/mowhmmdh']
   };
   const graph=[person];
-  const site={'@type':'WebSite','@id':origin+'/#website',url:origin+'/',name:isEn?'Mohammad Hossein Asgari Somarin':'محمدحسین عسگری ثمرین',alternateName:'VinTech',publisher:{'@id':origin+'/#person'},inLanguage:isEn?'en':'fa'};
-  graph.push(site);
-  graph.push({'@type':'WebPage','@id':canonical+'#webpage',url:canonical,name:title,description:description||title,isPartOf:{'@id':origin+'/#website'},about:{'@id':origin+'/#person'},inLanguage:isEn?'en':'fa'});
+  graph.push({'@type':'WebSite','@id':origin+'/#website',url:origin+'/',name:isEn?'Mohammad Hossein Asgari Somarin':'محمدحسین عسگری ثمرین',alternateName:'VinTech',publisher:{'@id':origin+'/#person'},inLanguage:isEn?'en':'fa'});
 
   const parts=path.split('/').filter(Boolean);
   const isBlog=parts[0]==='blog'||parts[0]==='en-blog';
@@ -29,6 +27,13 @@
   const isVinTech=parts[0]==='vintech'||parts[0]==='en-vintech';
   const isVinTechHub=path==='/vintech'||path==='/en-vintech';
   const isRequest=path.endsWith('/request.html');
+  const isAbout=/^\/(en-)?about\.html$/.test(path);
+  const pageType=isRequest?'ContactPage':isAbout?'AboutPage':isBlogIndex?'CollectionPage':'WebPage';
+  const page={'@type':pageType,'@id':canonical+'#webpage',url:canonical,name:title,description:description||title,isPartOf:{'@id':origin+'/#website'},about:{'@id':origin+'/#person'},inLanguage:isEn?'en':'fa'};
+  if(isBlogIndex){
+    page.mainEntity={'@type':'ItemList','@id':canonical+'#article-list','name':isEn?'Network, infrastructure and cybersecurity articles':'مقالات شبکه، زیرساخت و امنیت'};
+  }
+  graph.push(page);
 
   if(parts.length){
     const crumbs=[{'@type':'ListItem',position:1,name:isEn?'Home':'خانه',item:origin+(isEn?'/en.html':'/')}];
@@ -38,10 +43,23 @@
     graph.push({'@type':'BreadcrumbList','@id':canonical+'#breadcrumb',itemListElement:crumbs});
   }
 
+  if(isBlogIndex){
+    const items=[...document.querySelectorAll('a[href*="blog/"]')].filter(a=>a.textContent.trim()).slice(0,50);
+    if(items.length){
+      graph.push({'@type':'ItemList','@id':canonical+'#articles','name':isEn?'Articles':'مقالات','itemListElement':items.map((a,i)=>({'@type':'ListItem',position:i+1,name:clean(a.textContent),url:new URL(a.getAttribute('href'),location.href).href}))});
+    }
+  }
+
   if(isBlog && !isBlogIndex){
     const date=document.querySelector('time[datetime]')?.getAttribute('datetime');
     const article={'@type':'Article','@id':canonical+'#article',headline:h1||title,description:description||h1||title,url:canonical,author:{'@id':origin+'/#person'},publisher:{'@id':origin+'/#person'},mainEntityOfPage:{'@id':canonical+'#webpage'},inLanguage:isEn?'en':'fa'};
-    if(date){article.datePublished=date;article.dateModified=date;}
+    const image=document.querySelector('meta[property="og:image"]')?.content||document.querySelector('article img')?.src;
+    if(image) article.image=new URL(image,location.href).href;
+    if(date){article.datePublished=date;article.dateModified=document.querySelector('meta[property="article:modified_time"]')?.content||date;}
+    const body=clean(document.querySelector('article')?.textContent||document.querySelector('main')?.textContent||'');
+    if(body) article.wordCount=body.split(/\s+/).filter(Boolean).length;
+    const keywords=clean(document.querySelector('meta[name="keywords"]')?.content||'');
+    if(keywords) article.keywords=keywords.split(',').map(clean).filter(Boolean);
     graph.push(article);
   }
 
