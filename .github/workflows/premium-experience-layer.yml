@@ -15,10 +15,8 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          layers = [
-              '/assets/premium-experience-2026.css',
-              '/assets/site-wide-premium-2026.css',
-          ]
+          import re
+          layers = ['/assets/premium-experience-2026.css','/assets/site-wide-premium-2026.css']
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
@@ -27,9 +25,23 @@ jobs:
               for layer in layers:
                   if layer not in s and '</head>' in s:
                       s=s.replace('</head>',f'  <link rel="stylesheet" href="{layer}">\n</head>',1)
+              # De-duplicate viewport metadata; keep the first declaration.
+              seen=False
+              def viewport(m):
+                  nonlocal seen
+                  if seen: return ''
+                  seen=True
+                  return m.group(0)
+              s=re.sub(r'<meta\s+name=["\']viewport["\'][^>]*>',viewport,s,flags=re.I)
+              # Add a keyboard-accessible skip link on pages with a main landmark.
+              if '<a class="skip-link" href="#main-content">' not in s and '<body' in s and '<main' in s:
+                  s=s.replace('<body>','<body><a class="skip-link" href="#main-content">پرش به محتوای اصلی</a>',1)
+                  if '<body ' in s:
+                      s=re.sub(r'(<body\b[^>]*>)',r'\1<a class="skip-link" href="#main-content">پرش به محتوای اصلی</a>',s,count=1)
+                  s=s.replace('<main>','<main id="main-content">',1)
+                  s=s.replace('<main class="','<main id="main-content" class="',1)
               if s!=original:
-                  p.write_text(s,encoding='utf-8')
-                  changed.append(str(p))
+                  p.write_text(s,encoding='utf-8'); changed.append(str(p))
           print('Updated pages:',len(changed))
           for p in changed: print(' -',p)
           PY
@@ -40,6 +52,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- '*.html'
           if ! git diff --cached --quiet; then
-            git commit -m 'Apply site-wide premium visual system to every page'
+            git commit -m 'Polish every page layout and accessibility'
             git push
           fi
