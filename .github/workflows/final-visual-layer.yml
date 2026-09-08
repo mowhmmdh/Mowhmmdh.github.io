@@ -1,8 +1,10 @@
-name: Apply final visual layer
+name: Apply unified visual layer
 on:
+  workflow_dispatch:
   push:
     branches: [main]
-  workflow_dispatch:
+    paths-ignore:
+      - '**/*.md'
 jobs:
   inject:
     runs-on: ubuntu-latest
@@ -10,66 +12,39 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Consolidate site-wide visual stack
+      - name: Normalize every HTML page
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          remove = [
-              '/assets/responsive-fix-2026.css',
-              '/assets/theme-contrast-2026.css',
-              '/assets/site-quality-2026.css',
-              '/assets/final-visual-system-2026.css',
-              '/assets/elite-web-system-2026.css',
-              '/assets/premium-experience-2026.css',
-              '/assets/site-wide-premium-2026.css',
-              '/assets/editorial-experience-2026.css',
-              '/assets/light-mode-fix-2026.css',
-          ]
-          changed=[]
+          stale=['responsive-fix-2026.css','theme-contrast-2026.css','site-quality-2026.css','final-visual-system-2026.css','elite-web-system-2026.css','premium-experience-2026.css','site-wide-premium-2026.css','editorial-experience-2026.css','light-mode-fix-2026.css']
           for p in Path('.').rglob('*.html'):
-              if '.git' in p.parts: continue
-              s=p.read_text(encoding='utf-8')
-              original=s
-              # Remove the accumulated visual layers that were overriding each other.
-              for href in remove:
-                  s=s.replace(f'<link rel="stylesheet" href="{href}">','')
-              # One stable layer is loaded last, after each page's own CSS, so it can fix theme
-              # colors and mobile overflow without rewriting page-specific layout systems.
-              if '/assets/stable-ui-2026.css' not in s and '</head>' in s:
-                  s=s.replace('</head>','<link rel="stylesheet" href="/assets/stable-ui-2026.css">\n</head>',1)
-              if '/assets/site-theme.js' not in s and '</body>' in s:
-                  s=s.replace('</body>','<script src="/assets/site-theme.js" defer></script>\n</body>',1)
-              if s!=original:
-                  p.write_text(s,encoding='utf-8'); changed.append(str(p))
-          print('Updated:', *changed, sep='\n- ')
+            if '.git' in p.parts: continue
+            s=p.read_text(encoding='utf-8'); original=s
+            for x in stale: s=s.replace(f'<link rel="stylesheet" href="/assets/{x}">','')
+            if '/assets/stable-ui-2026.css' not in s and '</head>' in s: s=s.replace('</head>','<link rel="stylesheet" href="/assets/stable-ui-2026.css">\n</head>',1)
+            if '/assets/site-theme.js' not in s and '</body>' in s: s=s.replace('</body>','<script src="/assets/site-theme.js" defer></script>\n</body>',1)
+            if s!=original: p.write_text(s,encoding='utf-8')
           PY
-      - name: Validate final page stack
+      - name: Validate HTML visual stack
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          removed = [
-              'responsive-fix-2026.css','theme-contrast-2026.css','site-quality-2026.css',
-              'final-visual-system-2026.css','elite-web-system-2026.css','premium-experience-2026.css',
-              'site-wide-premium-2026.css','editorial-experience-2026.css','light-mode-fix-2026.css'
-          ]
+          stale=['responsive-fix-2026.css','theme-contrast-2026.css','site-quality-2026.css','final-visual-system-2026.css','elite-web-system-2026.css','premium-experience-2026.css','site-wide-premium-2026.css','editorial-experience-2026.css','light-mode-fix-2026.css']
           bad=[]
           for p in Path('.').rglob('*.html'):
-              if '.git' in p.parts: continue
-              s=p.read_text(encoding='utf-8')
-              if '/assets/stable-ui-2026.css' not in s: bad.append(f'{p}: missing stable-ui-2026.css')
-              if '/assets/site-theme.js' not in s: bad.append(f'{p}: missing site-theme.js')
-              for x in removed:
-                  if x in s: bad.append(f'{p}: stale visual layer {x}')
-          if bad:
-              print('\n'.join(bad))
-              raise SystemExit(1)
-          print('Visual stack is consolidated and every HTML page has the stable UI layer + theme runtime.')
+            if '.git' in p.parts: continue
+            s=p.read_text(encoding='utf-8')
+            if '/assets/stable-ui-2026.css' not in s: bad.append(f'{p}: stable layer missing')
+            if '/assets/site-theme.js' not in s: bad.append(f'{p}: theme runtime missing')
+            bad += [f'{p}: stale {x}' for x in stale if x in s]
+          if bad: raise SystemExit('\n'.join(bad))
+          print('PASS: unified UI/theme stack present on every HTML page')
           PY
-      - name: Commit visual stack changes
+      - name: Commit normalized pages
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add '*.html' '**/*.html' 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m 'refactor(ui): consolidate site-wide visual layers' && git push)
+          if ! git diff --cached --quiet; then git commit -m 'refactor(ui): normalize every page visual stack'; git push; fi
