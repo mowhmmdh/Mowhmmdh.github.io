@@ -1,5 +1,3 @@
 User-agent: *
 Allow: /
-
-# Keep crawler discovery focused on the canonical XML sitemap.
 Sitemap: https://mowhmmdh.github.io/sitemap.xml
