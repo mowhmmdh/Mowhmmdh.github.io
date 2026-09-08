@@ -23,7 +23,7 @@ jobs:
           from pathlib import Path
           from html.parser import HTMLParser
           from urllib.parse import urlparse, unquote
-          import re, sys
+          import posixpath, re, sys
 
           ROOT = Path('.')
           BASE = 'https://mowhmmdh.github.io'
@@ -56,6 +56,27 @@ jobs:
               if p.is_file() and '.git' not in p.parts:
                   known.add(p.as_posix())
 
+          def resolve_local(p, href):
+              parsed = urlparse(href)
+              if parsed.scheme in ('http','https'):
+                  if parsed.netloc and parsed.netloc != 'mowhmmdh.github.io': return None
+                  target = parsed.path.lstrip('/')
+              elif href.startswith('/'):
+                  target = parsed.path.lstrip('/')
+              else:
+                  target = posixpath.normpath(posixpath.join(p.parent.as_posix(), parsed.path))
+              target = unquote(target)
+              if target in ('', '.'):
+                  target = 'index.html'
+              candidates = [target]
+              if target.endswith('/'):
+                  candidates = [target + 'index.html']
+              elif target not in known:
+                  candidates += [target + '.html', target + '/index.html']
+              for candidate in candidates:
+                  if candidate in known: return candidate
+              return candidates[0]
+
           for p in html_files:
               parser = Parser()
               parser.feed(p.read_text(encoding='utf-8', errors='replace'))
@@ -70,19 +91,10 @@ jobs:
               for href in parser.links:
                   href = unquote(href.strip())
                   if not href or href.startswith(('#','mailto:','tel:','javascript:')): continue
-                  parsed = urlparse(href)
-                  if parsed.scheme in ('http','https'):
-                      if parsed.netloc and parsed.netloc != 'mowhmmdh.github.io': continue
-                      target = parsed.path.lstrip('/')
-                  else:
-                      target = (p.parent / parsed.path).as_posix()
-                  if target.endswith('/'):
-                      target = target + 'index.html'
-                  if target == '': target = 'index.html'
-                  if target not in known and not Path(target).exists():
+                  target = resolve_local(p, href)
+                  if target is not None and target not in known:
                       errors.append(f'{rel}: broken local link -> {href}')
 
-          # Sitemap URLs must point at existing canonical pages/files.
           sitemap = ROOT / 'sitemap.xml'
           if not sitemap.exists():
               errors.append('sitemap.xml missing')
@@ -92,7 +104,6 @@ jobs:
               for u in urls:
                   if not u.startswith(BASE): errors.append(f'sitemap URL outside canonical host: {u}')
 
-          # Catch accidental secret material in tracked text files.
           secret_patterns = [
               r'-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----',
               r'(?i)api[_-]?key\s*[:=]\s*[\"\'][A-Za-z0-9_\-]{20,}',
