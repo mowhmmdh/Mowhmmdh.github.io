@@ -1,0 +1,28 @@
+/* Elite Web System 2026 — shared premium UX layer
+   Goal: elevate every page without changing its content, URLs or core behavior. */
+:root{--elite-radius:18px;--elite-shadow:0 18px 50px rgba(0,0,0,.12);--elite-shadow-hover:0 28px 80px rgba(0,0,0,.18)}
+html{scroll-behavior:smooth;text-rendering:optimizeLegibility}
+body{overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--gold,#c9a227);color:#111}
+:where(img,video,svg,canvas){max-width:100%;height:auto}
+:where(a,button,input,textarea,select):focus-visible{outline:3px solid color-mix(in srgb,var(--gold,#c9a227) 78%,currentColor 22%);outline-offset:3px}
+:where(a,button,input,textarea,select){touch-action:manipulation}
+/* Consistent premium surfaces for common cards/tiles. */
+:where(.card,.service-card,.project-card,.article-card,.blog-card,.skill-card,.feature-card,.vt-card,.service-item,.project-item){transition:transform .24s ease,box-shadow .24s ease,border-color .24s ease}
+@media(hover:hover){:where(.card,.service-card,.project-card,.article-card,.blog-card,.skill-card,.feature-card,.vt-card,.service-item,.project-item):hover{transform:translateY(-4px);box-shadow:var(--elite-shadow-hover)}}
+/* Better reading measure on long-form content. */
+:where(article,.article-content,.post-content,.content,.prose){text-wrap:pretty}
+:where(article p,.article-content p,.post-content p,.prose p){max-width:75ch}
+:where(h1,h2,h3,h4){text-wrap:balance}
+/* Prevent accidental horizontal overflow from code/URLs. */
+:where(pre,code){overflow-wrap:anywhere;word-break:break-word}
+pre{max-width:100%;overflow:auto}
+/* Mobile ergonomics. */
+@media(max-width:760px){:where(button,.btn,a[role="button"]){min-height:44px}:where(input,textarea,select){font-size:16px!important}:where(.container,.wrap,.section-inner,main){max-width:100%}}
+/* Respect accessibility preferences. */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+@media(forced-colors:active){a,button{border:1px solid currentColor}}
+/* Modern viewport-safe spacing for fixed headers. */
+:where(section[id],article[id]){scroll-margin-top:96px}
+/* Avoid layout shifts from media that expose intrinsic dimensions. */
+img[width][height],video[width][height]{height:auto}
