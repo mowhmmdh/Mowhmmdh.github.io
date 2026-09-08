@@ -1,40 +1,18 @@
-name: Apply 2026 visual system
+name: Legacy theme contrast layer (manual only)
+
 on:
-  push:
-    branches: [main]
-    paths:
-      - '**.html'
-      - 'assets/theme-contrast-2026.css'
-      - '.github/workflows/apply-theme-contrast.yml'
   workflow_dispatch:
+
 permissions:
-  contents: write
+  contents: read
+
 jobs:
   theme:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inject theme stylesheet into all HTML pages
+      - name: Check unified theme system
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          root=Path('.')
-          link='<link rel="stylesheet" href="/assets/theme-contrast-2026.css">'
-          changed=[]
-          for p in root.rglob('*.html'):
-              if '.git' in p.parts: continue
-              s=p.read_text(encoding='utf-8')
-              if link in s: continue
-              if '</head>' in s:
-                  p.write_text(s.replace('</head>', f'    {link}\n</head>', 1), encoding='utf-8')
-                  changed.append(str(p))
-          print(f'Injected into {len(changed)} pages')
-          PY
-      - name: Commit visual system injection
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add '*.html'
-          if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
-          git commit -m 'design: apply premium 2026 light dark theme'
-          git push
+          test -f assets/stable-ui-2026.css
+          test -f assets/site-theme.js
+          echo "PASS: unified theme system is active"
