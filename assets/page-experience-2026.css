@@ -1,0 +1,28 @@
+/* Page Experience System 2026
+   Page-type polish layered over the shared design system.
+   No content or URL changes; focused on hierarchy, rhythm, interaction and responsive UX. */
+:root{--px-accent:var(--gold,#d6ad5b);--px-line:rgba(255,255,255,.10);--px-soft:rgba(255,255,255,.045);--px-shadow:0 24px 70px rgba(0,0,0,.22);--px-ease:cubic-bezier(.22,.61,.36,1)}
+/* Global rhythm */
+main{isolation:isolate}section{scroll-margin-top:100px}.hero,.page-hero{position:relative}.hero:after,.page-hero:after{content:"";position:absolute;inset-inline:0;bottom:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--px-line),transparent);pointer-events:none}h1,h2,h3,h4{text-wrap:balance}p{overflow-wrap:break-word}
+/* Navigation */
+.nav,.site-nav{min-height:64px}.nav a,.site-nav a{position:relative}.nav a:not(.logo):after,.site-nav a:not(.logo):after{content:"";position:absolute;inset-inline:0;bottom:-7px;height:2px;background:var(--px-accent);transform:scaleX(0);transform-origin:center;transition:transform .2s var(--px-ease)}.nav a:hover:after,.site-nav a:hover:after,.nav a[aria-current=page]:after,.site-nav a[aria-current=page]:after{transform:scaleX(1)}
+/* Personal landing / secondary pages */
+body:has(.hero) .hero{padding-block:clamp(58px,8vw,110px)}body:has(.hero) .hero h1{max-width:980px}body:has(.hero) .hero p{max-width:760px}.site-wrap.section{width:min(1160px,92%);margin-inline:auto;padding-block:clamp(54px,7vw,100px)}.site-wrap.section>h1{max-width:950px}.site-wrap.section>.lead{max-width:780px}
+/* Services / projects / skills */
+.services-grid,.projects-grid,.skills-grid,.cards-grid,.grid-3,.grid-2{align-items:stretch}.services-grid>* ,.projects-grid>* ,.skills-grid>* ,.cards-grid>* ,.grid-3>* ,.grid-2>*{min-width:0}.service-card,.project-card,.skill-card,.feature-card{display:flex;flex-direction:column;height:100%;padding:clamp(22px,3vw,32px)}.service-card p,.project-card p,.skill-card p,.feature-card p{max-width:62ch}.service-card .btn,.project-card .btn,.service-card a:last-child,.project-card a:last-child{margin-top:auto;align-self:flex-start}
+/* Blog index */
+body:has(.topics) .hero{padding-bottom:48px}body:has(.topics) .grid{grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch}body:has(.topics) .card{min-height:290px;padding:clamp(24px,3vw,34px);border-radius:24px}body:has(.topics) .featured{min-height:360px}body:has(.topics) .card .tag{font-size:.74rem;opacity:.9}body:has(.topics) .card h2{font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.45}body:has(.topics) .card p{max-width:66ch}body:has(.topics) .read{display:inline-flex;align-items:center;gap:8px}
+/* Editorial articles */
+body:has(.article) .wrap,body:has(.article-content) .wrap,body:has(.post-content) .wrap{width:min(1180px,92%)}body:has(.article) main,body:has(.article-content) main,body:has(.post-content) main{padding-bottom:70px}body:has(.article)>main>h1,body:has(.article-content)>main>h1,body:has(.post-content)>main>h1{max-width:920px;margin-inline:auto}body:has(.article) .article,body:has(.article-content) .article-content,body:has(.post-content) .post-content{max-width:900px;margin-inline:auto;border-radius:26px}body:has(.article) .article p,body:has(.article-content) .article-content p,body:has(.post-content) .post-content p{font-size:clamp(1rem,1.25vw,1.075rem)}body:has(.article) .article h2,body:has(.article-content) .article-content h2,body:has(.post-content) .post-content h2{margin-top:3.2rem}body:has(.article) .article a,body:has(.article-content) .article-content a,body:has(.post-content) .post-content a{text-decoration-thickness:1px;text-underline-offset:4px}body:has(.article) .article img,body:has(.article-content) .article-content img,body:has(.post-content) .post-content img{display:block;margin:28px auto}
+/* Request/contact pages */
+form{max-width:900px;margin-inline:auto;padding:clamp(22px,4vw,38px);border:1px solid var(--px-line);background:linear-gradient(145deg,rgba(17,27,41,.84),rgba(8,13,21,.82));box-shadow:var(--px-shadow)}form label{font-weight:700;display:block;margin-bottom:7px}form .field,form .form-group{margin-bottom:18px}form textarea{min-height:150px;resize:vertical}form button{min-width:150px}
+/* About / profile pages */
+.profile,.about-grid,.timeline,.experience-grid{align-items:stretch}.profile>* ,.about-grid>* ,.timeline>* ,.experience-grid>*{min-width:0}.timeline-item,.experience-item{position:relative;padding:22px 24px;border-inline-start:2px solid var(--px-accent);background:linear-gradient(90deg,rgba(214,173,91,.055),transparent);border-radius:0 18px 18px 0}
+/* 404 / utility */
+.error-page,.not-found{min-height:70vh;display:grid;place-items:center;text-align:center}.error-page h1,.not-found h1{font-size:clamp(4rem,16vw,10rem);line-height:.9;margin:0;color:var(--px-accent)}
+/* Media stability */
+img[width][height],video[width][height]{aspect-ratio:auto}figure{margin:28px 0}figure img{display:block}figcaption{margin-top:9px;color:var(--muted,#9aa7b5);font-size:.86rem}
+/* Touch and motion */
+@media(max-width:760px){body:has(.topics) .grid{grid-template-columns:1fr}body:has(.topics) .card,body:has(.topics) .featured{min-height:0}.site-wrap.section{width:min(94%,1160px)}.service-card,.project-card,.skill-card,.feature-card{padding:23px}.timeline-item,.experience-item{padding:18px}.hero,.page-hero{padding-block:50px!important}}
+@media(prefers-reduced-motion:reduce){.nav a:after,.site-nav a:after{transition:none!important}}
+@media(prefers-contrast:more){.card,.service-card,.project-card,.skill-card,.feature-card,form{border-color:currentColor}}
