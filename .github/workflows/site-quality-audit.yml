@@ -125,4 +125,5 @@ jobs:
               for e in errors: print('ERROR:', e)
               sys.exit(1)
           print('Site quality audit passed.')
-# Verification trigger: run the current validator against the current main tree.
+# Verification trigger: current main tree validation after SEO automation.
+# Keep this workflow push-triggered so [skip ci] metadata refreshes do not hide validation.
