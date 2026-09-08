@@ -36,7 +36,7 @@ jobs:
         run: |
           from pathlib import Path
           from xml.etree import ElementTree as ET
-          import re, sys
+          import sys
           base='https://mowhmmdh.github.io/'
           root=ET.parse('sitemap.xml').getroot()
           ns='{http://www.sitemaps.org/schemas/sitemap/0.9}'
@@ -64,23 +64,25 @@ jobs:
         run: |
           from pathlib import Path
           from html.parser import HTMLParser
-          from urllib.parse import urlparse
           import json, sys
           base='https://mowhmmdh.github.io/'
           pages=sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name!='404.html')
           errors=[]
           class P(HTMLParser):
               def __init__(self):
-                  super().__init__(); self.lang=''; self.canon=[]; self.og={}; self.alts=[]; self.ld=[]
+                  super().__init__(); self.lang=''; self.canon=[]; self.og={}; self.alts=[]; self.ld=[]; self._ld_active=False
               def handle_starttag(self,tag,attrs):
                   a=dict(attrs); rel=(a.get('rel') or '').lower().split()
                   if tag=='html': self.lang=a.get('lang','')
                   if tag=='link' and 'canonical' in rel: self.canon.append(a.get('href',''))
                   if tag=='link' and 'alternate' in rel and a.get('hreflang') and a.get('href'): self.alts.append((a['hreflang'].lower(),a['href']))
                   if tag=='meta' and a.get('property','').lower().startswith('og:'): self.og[a['property'].lower()]=a.get('content','').strip()
-                  if tag=='script' and a.get('type','').lower()=='application/ld+json': self.ld.append('')
+                  if tag=='script' and a.get('type','').lower()=='application/ld+json':
+                      self.ld.append(''); self._ld_active=True
+              def handle_endtag(self,tag):
+                  if tag=='script': self._ld_active=False
               def handle_data(self,data):
-                  if self.ld: self.ld[-1]+=data
+                  if self._ld_active: self.ld[-1]+=data
           def expected(p):
               if p.as_posix()=='index.html': return base
               if p.name=='index.html': return base+p.parent.as_posix().lstrip('./')+'/'
@@ -100,9 +102,14 @@ jobs:
               for raw in a.ld:
                   try:
                       data=json.loads(raw)
-                      items=data if isinstance(data,list) else data.get('@graph',[data]) if isinstance(data,dict) else []
-                      if not isinstance(items,list): items=[items]
-                      if not any(isinstance(x,dict) and x.get('@context')=='https://schema.org' for x in items): errors.append(f'{p}: JSON-LD schema.org context missing')
+                      if not isinstance(data,(dict,list)): raise ValueError('top-level JSON-LD must be an object or array')
+                      roots=data if isinstance(data,list) else [data]
+                      if not any(isinstance(x,dict) and x.get('@context')=='https://schema.org' for x in roots):
+                          graphs=[]
+                          for x in roots:
+                              if isinstance(x,dict) and isinstance(x.get('@graph'),list): graphs.extend(x['@graph'])
+                          if not any(isinstance(x,dict) and x.get('@context')=='https://schema.org' for x in graphs):
+                              raise ValueError('schema.org context missing')
                   except Exception as e: errors.append(f'{p}: invalid JSON-LD: {e}')
           print(f'Metadata validation: {len(pages)} pages')
           if errors:
