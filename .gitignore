@@ -1,0 +1,10 @@
+.DS_Store
+Thumbs.db
+*.tmp
+*.temp
+*.log
+.vscode/
+.idea/
+node_modules/
+coverage/
+.lighthouseci/
