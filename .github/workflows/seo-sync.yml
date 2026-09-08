@@ -1,0 +1,31 @@
+name: SEO Sync
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Synchronize bilingual hreflang
+        run: python3 tools/seo_sync.py
+      - name: Commit synchronized metadata
+        run: |
+          if git diff --quiet; then
+            echo "No SEO metadata changes needed."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add blog en-blog vintech en-vintech index.html en.html about.html en-about.html services.html en-services.html projects.html en-projects.html linkedin.html en-linkedin.html
+          git commit -m "chore(seo): synchronize bilingual hreflang metadata"
+          git push
