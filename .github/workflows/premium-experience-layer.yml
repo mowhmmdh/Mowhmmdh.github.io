@@ -10,18 +10,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply premium CSS to every HTML page
+      - name: Apply shared premium systems to every HTML page
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          tag='  <link rel="stylesheet" href="/assets/premium-experience-2026.css">\n'
+          layers = [
+              '/assets/premium-experience-2026.css',
+              '/assets/site-wide-premium-2026.css',
+          ]
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
               s=p.read_text(encoding='utf-8')
-              if '/assets/premium-experience-2026.css' not in s and '</head>' in s:
-                  s=s.replace('</head>',tag+'</head>',1)
+              original=s
+              for layer in layers:
+                  if layer not in s and '</head>' in s:
+                      s=s.replace('</head>',f'  <link rel="stylesheet" href="{layer}">\n</head>',1)
+              if s!=original:
                   p.write_text(s,encoding='utf-8')
                   changed.append(str(p))
           print('Updated pages:',len(changed))
@@ -34,6 +40,6 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -- '*.html'
           if ! git diff --cached --quiet; then
-            git commit -m 'Apply premium experience system to every page'
+            git commit -m 'Apply site-wide premium visual system to every page'
             git push
           fi
