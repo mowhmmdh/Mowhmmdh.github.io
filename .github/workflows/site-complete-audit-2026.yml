@@ -1,0 +1,123 @@
+name: Site Complete Audit 2026
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run structural, SEO and accessibility audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse
+          import re, sys
+
+          root = Path('.')
+          files = sorted(root.rglob('*.html'))
+          errors=[]
+          warnings=[]
+
+          class Audit(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.tags=[]; self.links=[]; self.imgs=[]; self.h1=0
+                  self.title=[]; self.desc=[]; self.canonical=[]; self.lang=None; self.viewport=[]; self.hreflang=[]
+                  self.og={}; self.anchors=[]
+              def handle_starttag(self, tag, attrs):
+                  a=dict(attrs); self.tags.append(tag)
+                  if tag=='html': self.lang=a.get('lang')
+                  if tag=='h1': self.h1+=1
+                  if tag=='title': self.title.append('')
+                  if tag=='meta':
+                      if a.get('name')=='description': self.desc.append(a.get('content',''))
+                      if a.get('name')=='viewport': self.viewport.append(a.get('content',''))
+                      if a.get('property','').startswith('og:'): self.og[a['property']]=a.get('content','')
+                  if tag=='link':
+                      rel=(a.get('rel') or '').lower().split()
+                      if 'canonical' in rel: self.canonical.append(a.get('href',''))
+                      if 'alternate' in rel and a.get('hreflang'): self.hreflang.append((a.get('hreflang'),a.get('href','')))
+                  if tag=='a':
+                      href=a.get('href',''); self.links.append((href,a))
+                  if tag=='img': self.imgs.append(a)
+              def handle_data(self,data):
+                  if self.title: self.title[-1]+=data.strip()
+
+          for f in files:
+              if any(part in {'.git','node_modules'} for part in f.parts): continue
+              text=f.read_text(encoding='utf-8', errors='ignore')
+              p=Audit()
+              try: p.feed(text)
+              except Exception as e: errors.append(f'{f}: HTML parse error: {e}'); continue
+              if len(p.title)!=1 or not p.title[0].strip(): errors.append(f'{f}: exactly one non-empty <title> required')
+              if len(p.desc)!=1 or not p.desc[0].strip(): errors.append(f'{f}: exactly one non-empty meta description required')
+              if p.h1!=1: errors.append(f'{f}: exactly one H1 required (found {p.h1})')
+              if not p.lang: errors.append(f'{f}: html lang missing')
+              if len(p.viewport)!=1: errors.append(f'{f}: exactly one viewport meta required')
+              if len(p.canonical)!=1 or not p.canonical[0].startswith('https://mowhmmdh.github.io/'): errors.append(f'{f}: canonical missing or off-site')
+              for img in p.imgs:
+                  if 'alt' not in img: errors.append(f'{f}: image missing alt')
+              for href,a in p.links:
+                  if href.startswith('http://'): errors.append(f'{f}: mixed-content HTTP link: {href}')
+                  if a.get('target')=='_blank' and 'noopener' not in (a.get('rel') or ''): warnings.append(f'{f}: target=_blank should use rel=noopener')
+              if p.hreflang:
+                  codes={x[0] for x in p.hreflang}
+                  if 'x-default' not in codes: warnings.append(f'{f}: hreflang set has no x-default')
+                  if 'fa' not in codes and 'en' not in codes: warnings.append(f'{f}: hreflang should normally expose fa/en where a pair exists')
+              if 'og:title' not in p.og or 'og:description' not in p.og: warnings.append(f'{f}: OG title/description incomplete')
+
+          # Duplicate title/description detection across indexable pages.
+          titles={}; descs={}
+          for f in files:
+              text=f.read_text(encoding='utf-8', errors='ignore')
+              m=re.search(r'<title>(.*?)</title>',text,re.I|re.S)
+              if m: titles.setdefault(re.sub(r'\\s+',' ',m.group(1)).strip(),[]).append(str(f))
+              m=re.search(r'<meta[^>]+name=[\"\']description[\"\'][^>]+content=[\"\']([^\"\']*)',text,re.I)
+              if m: descs.setdefault(m.group(1).strip(),[]).append(str(f))
+          for k,v in titles.items():
+              if len(v)>1: warnings.append('Duplicate title: '+k+' -> '+', '.join(v))
+          for k,v in descs.items():
+              if len(v)>1: warnings.append('Duplicate description -> '+', '.join(v))
+
+          # Detect obvious placeholder/fabricated template residue.
+          bad=[r'Lorem ipsum',r'Coming soon',r'Your Name',r'John Doe',r'example@example.com',r'TODO',r'FIXME']
+          for f in files:
+              t=f.read_text(encoding='utf-8',errors='ignore')
+              for pat in bad:
+                  if re.search(pat,t,re.I): errors.append(f'{f}: placeholder content detected: {pat}')
+
+          # Secret-pattern guard for tracked text.
+          for f in root.rglob('*'):
+              if not f.is_file() or '.git' in f.parts: continue
+              if f.suffix.lower() not in {'.html','.css','.js','.json','.yml','.yaml','.md','.txt','.xml','.py'}: continue
+              try: t=f.read_text(encoding='utf-8',errors='ignore')
+              except: continue
+              for pat in [r'AKIA[0-9A-Z]{16}',r'ghp_[A-Za-z0-9]{30,}',r'-----BEGIN (?:RSA|OPENSSH|EC|DSA) PRIVATE KEY-----']:
+                  if re.search(pat,t): errors.append(f'{f}: possible secret pattern: {pat}')
+
+          print(f'Pages audited: {len(files)}')
+          print(f'Errors: {len(errors)} | Warnings: {len(warnings)}')
+          for x in errors: print('ERROR:',x)
+          for x in warnings: print('WARN:',x)
+          if errors: sys.exit(1)
+          PY
+
+      - name: Check canonical sitemap host
+        shell: bash
+        run: |
+          test -f sitemap.xml
+          grep -Eo 'https?://[^<]+' sitemap.xml | grep -v '^https://mowhmmdh.github.io/' && exit 1 || true
+          echo 'Sitemap host check passed.'
