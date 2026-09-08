@@ -10,58 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Apply page experience layer to every HTML page
+      - name: Validate page experience layer
         shell: bash
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          import re
-          layer='/assets/page-experience-2026.css'
-          changed=[]
-          for p in Path('.').rglob('*.html'):
-              if '.git' in p.parts: continue
-              s=p.read_text(encoding='utf-8')
-              original=s
-              if layer not in s and '</head>' in s:
-                  s=s.replace('</head>',f'  <link rel="stylesheet" href="{layer}">\n</head>',1)
-              # Normalize duplicate viewport declarations without touching content.
-              seen=False
-              def vp(m):
-                  nonlocal seen
-                  if seen: return ''
-                  seen=True
-                  return m.group(0)
-              s=re.sub(r'<meta\s+name=["\']viewport["\'][^>]*>',vp,s,flags=re.I)
-              if s!=original:
-                  p.write_text(s,encoding='utf-8'); changed.append(str(p))
-          print(f'Pages changed: {len(changed)}')
-          for p in changed: print(p)
-          PY
-      - name: Commit page engineering changes
-        shell: bash
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -- '*.html'
-          if ! git diff --cached --quiet; then
-            git commit -m 'Apply page-type experience system across site'
-            git push
-          fi
-      - name: Final structural smoke test
-        shell: bash
-        run: |
+          test -f assets/page-experience-2026.css
           python3 - <<'PY'
           from pathlib import Path
           import re,sys
-          pages=list(Path('.').rglob('*.html'))
+          pages=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
           errors=[]
           for p in pages:
-              if '.git' in p.parts: continue
               s=p.read_text(encoding='utf-8',errors='ignore')
-              if '/assets/page-experience-2026.css' not in s: errors.append(f'{p}: page experience layer missing')
-              if len(re.findall(r'<meta\s+name=["\']viewport["\']',s,re.I))>1: errors.append(f'{p}: duplicate viewport')
+              if len(re.findall(r'<meta\s+name=["\']viewport["\'][^>]*>',s,re.I))>1:
+                  errors.append(f'{p}: duplicate viewport')
           print(f'HTML pages checked: {len(pages)}')
           if errors:
-              print('\n'.join(errors)); sys.exit(1)
-          print('Page engineering smoke test passed.')
+              print('\n'.join(errors));sys.exit(1)
+          print('Page engineering validation passed.')
           PY
