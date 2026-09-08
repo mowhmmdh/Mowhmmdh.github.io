@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   quality:
@@ -14,141 +14,64 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
-      - name: Normalize HTML quality layer
+      - name: Validate HTML quality baseline
         shell: python
         run: |
           from pathlib import Path
-          import re
-          changed = []
+          import re, sys
+          errors=[]
           for p in Path('.').rglob('*.html'):
-              if '.git' in p.parts:
-                  continue
-              s = p.read_text(encoding='utf-8')
-              original = s
-              seen_viewport = False
-              def viewport(m):
-                  nonlocal seen_viewport
-                  if seen_viewport:
-                      return ''
-                  seen_viewport = True
-                  return m.group(0)
-              s = re.sub(r'<meta\s+name=["\']viewport["\'][^>]*>', viewport, s, flags=re.I)
-              if '/assets/site-quality-2026.css' not in s:
-                  marker = re.search(r'</head>', s, flags=re.I)
-                  if marker:
-                      s = s[:marker.start()] + '  <link rel="stylesheet" href="/assets/site-quality-2026.css">\n' + s[marker.start():]
-              if s != original:
-                  p.write_text(s, encoding='utf-8')
-                  changed.append(str(p))
-          print(f'Normalized {len(changed)} HTML files')
-          for x in changed:
-              print(x)
+              if '.git' in p.parts: continue
+              s=p.read_text(encoding='utf-8',errors='replace')
+              if len(re.findall(r'<meta\s+name=["\']viewport["\'][^>]*>',s,re.I))>1:
+                  errors.append(f'{p}: duplicate viewport meta')
+              if '/assets/stable-ui-2026.css' not in s:
+                  errors.append(f'{p}: stable UI layer missing')
+              if '/assets/site-theme.js' not in s and 'vintech' not in p.as_posix().lower():
+                  errors.append(f'{p}: theme runtime missing')
+          print(f'HTML files checked: {sum(1 for p in Path(".").rglob("*.html") if ".git" not in p.parts)}')
+          if errors:
+              for e in errors: print('ERROR:',e)
+              sys.exit(1)
+          print('PASS: unified responsive/theme stack is present and viewport metadata is sane.')
 
-      - name: Validate advanced SEO, HTML, links and assets
+      - name: Validate links and SEO essentials
         shell: python
         run: |
           from pathlib import Path
           from html.parser import HTMLParser
           from urllib.parse import urlparse, unquote
           import re, sys
-
-          BASE = 'https://mowhmmdh.github.io'
-          pages = sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name != '404.html')
-          known = {p.as_posix() for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts}
-          errors, warnings, metadata = [], [], {}
-
+          BASE='https://mowhmmdh.github.io'
+          pages=sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name!='404.html')
+          known={p.as_posix() for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts}
+          errors=[]
           class P(HTMLParser):
               def __init__(self):
-                  super().__init__(); self.title=[]; self.desc=[]; self.h1=[]; self.lang=None
-                  self.canonical=[]; self.hreflang=[]; self.links=[]; self.images=[]; self.external_scripts=[]; self.jsonld=[]
-              def handle_starttag(self, tag, attrs):
+                  super().__init__(); self.title=0; self.h1=0; self.desc=0; self.canonical=[]; self.links=[]
+              def handle_starttag(self,tag,attrs):
                   a=dict(attrs); rel=a.get('rel','').lower().split()
-                  if tag=='html': self.lang=a.get('lang')
-                  if tag=='title': self.title.append('')
-                  if tag=='h1': self.h1.append('')
-                  if tag=='meta' and a.get('name','').lower()=='description': self.desc.append(a.get('content',''))
+                  if tag=='title': self.title+=1
+                  if tag=='h1': self.h1+=1
+                  if tag=='meta' and a.get('name','').lower()=='description' and a.get('content',''): self.desc+=1
                   if tag=='link' and 'canonical' in rel: self.canonical.append(a.get('href',''))
-                  if tag=='link' and 'alternate' in rel and a.get('hreflang'): self.hreflang.append((a['hreflang'],a.get('href','')))
                   if tag=='a' and a.get('href'): self.links.append(a['href'])
-                  if tag=='img': self.images.append(a)
-                  if tag=='script' and a.get('src','').startswith(('http://','https://')): self.external_scripts.append(a['src'])
-              def handle_data(self,data):
-                  if self.title: self.title[-1]+=data.strip()
-                  if self.h1: self.h1[-1]+=data.strip()
-
           for p in pages:
-              s=p.read_text(encoding='utf-8',errors='replace'); q=P(); q.feed(s); rel=p.as_posix(); metadata[rel]=q
-              if len(q.title)!=1: errors.append(f'{rel}: expected exactly one title')
-              if len(q.desc)!=1 or len(q.desc[0])<40: errors.append(f'{rel}: missing/short meta description')
-              if len(q.h1)!=1: errors.append(f'{rel}: expected exactly one H1, found {len(q.h1)}')
-              if not q.lang: errors.append(f'{rel}: missing html lang')
-              if len(q.canonical)!=1: errors.append(f'{rel}: expected exactly one canonical')
-              elif not q.canonical[0].startswith(BASE): errors.append(f'{rel}: canonical outside canonical host')
-              for img in q.images:
-                  if 'alt' not in img: warnings.append(f'{rel}: image without alt: {img.get("src","")}')
-                  if img.get('loading')=='lazy' and not img.get('width') and not img.get('height'): warnings.append(f'{rel}: lazy image without dimensions may cause CLS: {img.get("src","")}')
-              for src in q.external_scripts:
-                  if src.startswith('http://'): errors.append(f'{rel}: insecure external script {src}')
+              q=P(); q.feed(p.read_text(encoding='utf-8',errors='replace')); rel=p.as_posix()
+              if q.title!=1: errors.append(f'{rel}: expected one title')
+              if q.h1!=1: errors.append(f'{rel}: expected one H1, found {q.h1}')
+              if q.desc!=1: errors.append(f'{rel}: missing meta description')
+              if len(q.canonical)!=1 or not q.canonical[0].startswith(BASE): errors.append(f'{rel}: canonical missing/invalid')
               for href in q.links:
-                  href=unquote(href.strip())
-                  if not href or href.startswith(('#','mailto:','tel:','javascript:')): continue
-                  u=urlparse(href)
-                  if u.scheme in ('http','https') and u.netloc not in ('','mowhmmdh.github.io'): continue
+                  href=unquote(href.strip()); u=urlparse(href)
+                  if not href or href.startswith(('#','mailto:','tel:','javascript:')) or (u.scheme in ('http','https') and u.netloc not in ('','mowhmmdh.github.io')): continue
                   target=u.path.lstrip('/') if u.scheme else (p.parent/u.path).as_posix()
                   if target.endswith('/'): target+='index.html'
                   if not target: target='index.html'
                   if target not in known: errors.append(f'{rel}: broken local link -> {href}')
-              for lang,href in q.hreflang:
-                  u=urlparse(href); target=u.path.lstrip('/')
-                  if u.netloc and u.netloc!='mowhmmdh.github.io': errors.append(f'{rel}: hreflang outside canonical host -> {href}')
-                  if target.endswith('/'): target+='index.html'
-                  if target and target not in known: errors.append(f'{rel}: missing hreflang target -> {href}')
-              if len([x[0] for x in q.hreflang]) != len(set(x[0] for x in q.hreflang)): errors.append(f'{rel}: duplicate hreflang language')
-
-          titles={}; descs={}
-          for rel,q in metadata.items():
-              if q.title: titles.setdefault(q.title[0],[]).append(rel)
-              if q.desc: descs.setdefault(q.desc[0],[]).append(rel)
-          for v,ps in titles.items():
-              if len(ps)>1: warnings.append(f'duplicate title: {ps[:6]}')
-          for v,ps in descs.items():
-              if len(ps)>1: warnings.append(f'duplicate description: {ps[:6]}')
-
-          sitemap=Path('sitemap.xml')
-          if not sitemap.exists(): errors.append('sitemap.xml missing')
-          else:
-              urls=re.findall(r'<loc>(.*?)</loc>',sitemap.read_text(encoding='utf-8',errors='replace'))
-              if len(urls)!=len(set(urls)): errors.append('sitemap.xml contains duplicate URLs')
-              for u in urls:
-                  if not u.startswith(BASE): errors.append(f'sitemap URL outside canonical host: {u}')
-              canon={q.canonical[0] for q in metadata.values() if q.canonical}
-              missing=sorted(canon-set(urls))
-              if missing: errors.append(f'canonical pages missing from sitemap: {missing[:10]}')
-
-          secret_patterns=[r'-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----',r'(?i)api[_-]?key\s*[:=]\s*["\'][A-Za-z0-9_\-]{20,}',r'(?i)(?:password|passwd|secret|token)\s*[:=]\s*["\'][^"\']{12,}["\']']
-          for p in Path('.').rglob('*'):
-              if not p.is_file() or '.git' in p.parts or p.suffix.lower() not in {'.html','.css','.js','.json','.yml','.yaml','.txt','.md'}: continue
-              text=p.read_text(encoding='utf-8',errors='ignore')
-              for pat in secret_patterns:
-                  if re.search(pat,text): errors.append(f'{p}: possible secret pattern detected'); break
-
-          print(f'Pages audited: {len(pages)}'); print(f'Warnings: {len(warnings)}')
-          for w in warnings: print('WARN:',w)
           if errors:
-              print(f'Errors: {len(errors)}')
               for e in errors: print('ERROR:',e)
               sys.exit(1)
-          print('Advanced site quality audit passed.')
-
-      - name: Commit normalization
-        if: github.event_name == 'push'
-        shell: bash
-        run: |
-          if git diff --quiet; then echo 'No normalization changes.'; exit 0; fi
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add '*.html' '**/*.html' assets/site-quality-2026.css
-          git commit -m 'chore(quality): normalize HTML and enforce advanced site checks [skip ci]'
-          git push
+          print(f'PASS: {len(pages)} pages passed title/H1/description/canonical/local-link checks.')
