@@ -17,37 +17,85 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import re, sys
+          import json, re, sys
 
           base = 'https://mowhmmdh.github.io'
-          pages = [p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name != '404.html']
+          pages = sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name != '404.html')
           errors = []
-          seen = {}
+          canonical_to_page = {}
+
+          def attr(html, tag, name):
+              pattern = rf'<{tag}[^>]+(?:name|property)=["\']{re.escape(name)}["\'][^>]+content=["\']([^"\']*)["\']'
+              m = re.search(pattern, html, re.I|re.S)
+              return m.group(1).strip() if m else ''
+
+          def link_rel(html, rel):
+              pattern = rf'<link[^>]+rel=["\']{re.escape(rel)}["\'][^>]*href=["\']([^"\']+)["\']'
+              return re.findall(pattern, html, re.I|re.S)
+
+          def path_url(p):
+              return base + '/' if p.as_posix() == 'index.html' else base + '/' + p.as_posix()
 
           for p in pages:
               s = p.read_text(encoding='utf-8')
               key = p.as_posix()
-              title = re.findall(r'<title(?:\s[^>]*)?>(.*?)</title>', s, re.I|re.S)
-              desc = re.findall(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'][^"\']+["\']', s, re.I)
-              canon = re.findall(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)', s, re.I)
+              titles = re.findall(r'<title(?:\s[^>]*)?>(.*?)</title>', s, re.I|re.S)
+              desc = attr(s, 'meta', 'description')
+              canon = link_rel(s, 'canonical')
               lang = re.findall(r'<html[^>]+lang=["\']([^"\']+)', s, re.I)
+              viewport = re.findall(r'<meta[^>]+name=["\']viewport["\'][^>]+content=["\'][^"\']+["\']', s, re.I)
               h1 = re.findall(r'<h1(?:\s[^>]*)?>', s, re.I)
-              if len(title) != 1: errors.append(f'{key}: expected exactly one title')
-              if len(desc) != 1: errors.append(f'{key}: expected exactly one meta description')
-              if len(canon) != 1 or not canon[0].startswith(base + '/'): errors.append(f'{key}: invalid/missing canonical')
-              if len(lang) != 1: errors.append(f'{key}: missing html lang')
-              if len(h1) != 1: errors.append(f'{key}: expected exactly one H1')
-              if canon: seen.setdefault(canon[0], []).append(key)
+              robots = attr(s, 'meta', 'robots')
+              ld = re.findall(r'<script[^>]+type=["\']application/ld\+json["\'][^>]*>(.*?)</script>', s, re.I|re.S)
 
-          for canonical, owners in seen.items():
-              if len(owners) > 1: errors.append(f'duplicate canonical: {canonical} -> {owners}')
+              if len(titles) != 1 or not titles[0].strip(): errors.append(f'{key}: expected exactly one non-empty title')
+              if not desc or len(desc) < 50 or len(desc) > 180: errors.append(f'{key}: meta description should be 50-180 characters')
+              if len(canon) != 1 or canon[0] != path_url(p): errors.append(f'{key}: canonical must exactly match {path_url(p)}')
+              if len(lang) != 1: errors.append(f'{key}: missing html lang')
+              if len(viewport) != 1: errors.append(f'{key}: missing viewport')
+              if len(h1) != 1: errors.append(f'{key}: expected exactly one H1')
+              if 'noindex' in robots.lower(): errors.append(f'{key}: indexable page contains noindex')
+              if not ld: errors.append(f'{key}: missing JSON-LD structured data')
+              else:
+                  for block in ld:
+                      try:
+                          data = json.loads(block)
+                          if isinstance(data, list): items = data
+                          elif isinstance(data, dict) and '@graph' in data: items = data['@graph']
+                          else: items = [data]
+                          if not any(isinstance(x, dict) and x.get('@context') == 'https://schema.org' for x in items):
+                              errors.append(f'{key}: JSON-LD missing schema.org context')
+                      except Exception as exc:
+                          errors.append(f'{key}: invalid JSON-LD ({exc})')
+
+              og_title = attr(s, 'meta', 'og:title')
+              og_desc = attr(s, 'meta', 'og:description')
+              og_url = attr(s, 'meta', 'og:url')
+              if not og_title: errors.append(f'{key}: missing og:title')
+              if not og_desc: errors.append(f'{key}: missing og:description')
+              if not og_url or og_url != path_url(p): errors.append(f'{key}: invalid/missing og:url')
+
+              alternates = re.findall(r'<link[^>]+rel=["\']alternate["\'][^>]+hreflang=["\']([^"\']+)["\'][^>]+href=["\']([^"\']+)', s, re.I)
+              if len(alternates) < 2: errors.append(f'{key}: missing reciprocal hreflang annotations')
+              if not any(h == lang[0] for h, _ in alternates): errors.append(f'{key}: hreflang self-reference missing')
+              if not any(h in ('en', 'en-US', 'fa', 'fa-IR') for h, _ in alternates): errors.append(f'{key}: expected bilingual hreflang')
+
+              canonical_to_page.setdefault(canon[0] if canon else '', []).append(key)
+
+          for canonical, owners in canonical_to_page.items():
+              if canonical and len(owners) > 1: errors.append(f'duplicate canonical: {canonical} -> {owners}')
 
           robots = Path('robots.txt').read_text(encoding='utf-8')
           if 'Sitemap: ' + base + '/sitemap.xml' not in robots: errors.append('robots.txt: sitemap directive missing')
           sitemap = Path('sitemap.xml').read_text(encoding='utf-8')
-          if base not in sitemap: errors.append('sitemap.xml: canonical host missing')
+          sitemap_urls = set(re.findall(r'<loc>([^<]+)</loc>', sitemap, re.I))
+          expected_urls = {path_url(p) for p in pages}
+          missing = sorted(expected_urls - sitemap_urls)
+          extra = sorted(sitemap_urls - expected_urls)
+          if missing: errors.append('sitemap.xml: missing URLs: ' + ', '.join(missing))
+          if extra: errors.append('sitemap.xml: contains non-indexable/unknown URLs: ' + ', '.join(extra))
 
           if errors:
               print('\n'.join(errors))
               sys.exit(1)
-          print(f'SEO audit passed for {len(pages)} HTML pages.')
+          print(f'Advanced SEO audit passed for {len(pages)} HTML pages.')
