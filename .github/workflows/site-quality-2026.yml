@@ -43,7 +43,7 @@ jobs:
           from pathlib import Path
           from html.parser import HTMLParser
           from urllib.parse import urlparse, unquote
-          import sys
+          import posixpath, sys
           BASE='https://mowhmmdh.github.io'
           pages=sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name!='404.html')
           known={p.as_posix() for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts}
@@ -52,10 +52,13 @@ jobs:
               if u.scheme in ('http','https'):
                   if u.netloc not in ('','mowhmmdh.github.io'): return None
                   target=u.path.lstrip('/')
+              elif href.startswith('/'):
+                  target=u.path.lstrip('/')
               else:
-                  target=(p.parent/u.path).as_posix()
+                  target=posixpath.normpath(posixpath.join(p.parent.as_posix(),u.path))
+              target=unquote(target)
               if target in ('','.'):
-                  return 'index.html'
+                  target='index.html'
               candidates=[target]
               if target.endswith('/'):
                   candidates=[target+'index.html']
