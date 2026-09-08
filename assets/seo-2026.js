@@ -23,9 +23,9 @@
 
   const parts=path.split('/').filter(Boolean);
   const isBlog=parts[0]==='blog'||parts[0]==='en-blog';
-  const isBlogIndex=path==='/blog'||path==='/en-blog';
+  const isBlogIndex=path==='/blog'||path==='/en-blog.html';
   const isVinTech=parts[0]==='vintech'||parts[0]==='en-vintech';
-  const isVinTechHub=path==='/vintech'||path==='/en-vintech';
+  const isVinTechHub=path==='/vintech.html'||path==='/en-vintech.html';
   const isRequest=path.endsWith('/request.html');
   const isAbout=/^\/(en-)?about\.html$/.test(path);
   const pageType=isRequest?'ContactPage':isAbout?'AboutPage':isBlogIndex?'CollectionPage':'WebPage';
@@ -37,8 +37,8 @@
 
   if(parts.length){
     const crumbs=[{'@type':'ListItem',position:1,name:isEn?'Home':'خانه',item:origin+(isEn?'/en.html':'/')}];
-    if(isBlog) crumbs.push({'@type':'ListItem',position:2,name:isEn?'Articles':'مقالات',item:origin+(isEn?'/en-blog.html':'/blog/')});
-    else if(isVinTech) crumbs.push({'@type':'ListItem',position:2,name:'VinTech',item:origin+(isEn?'/en-vintech.html':'/vintech.html')});
+    if(isBlog) crumbs.push({'@type':'ListItem',position:2,name:isEn?'Articles':'مقالات',item:origin+(isEn?'/en-blog.html':'/blog/'));
+    else if(isVinTech) crumbs.push({'@type':'ListItem',position:2,name:'VinTech',item:origin+(isEn?'/en-vintech.html':'/vintech.html'));
     crumbs.push({'@type':'ListItem',position:crumbs.length+1,name:h1||title||parts.at(-1),item:canonical});
     graph.push({'@type':'BreadcrumbList','@id':canonical+'#breadcrumb',itemListElement:crumbs});
   }
