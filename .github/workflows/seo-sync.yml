@@ -26,6 +26,10 @@ jobs:
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add blog en-blog vintech en-vintech index.html en.html about.html en-about.html services.html en-services.html projects.html en-projects.html linkedin.html en-linkedin.html
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No staged SEO metadata changes needed."
+            exit 0
+          fi
           git commit -m "chore(seo): synchronize bilingual hreflang metadata"
           git push
