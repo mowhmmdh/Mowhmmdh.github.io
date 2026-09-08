@@ -85,7 +85,8 @@ jobs:
               if parser.description != 1: errors.append(f'{rel}: expected exactly one meta description')
               if parser.h1 != 1: errors.append(f'{rel}: expected exactly one H1, found {parser.h1}')
               if not parser.lang: errors.append(f'{rel}: missing html lang')
-              if parser.canonical != 1: errors.append(f'{rel}: expected exactly one canonical')
+              # 404 is intentionally noindex and has no canonical to avoid declaring a canonical for arbitrary missing URLs.
+              if rel != '404.html' and parser.canonical != 1: errors.append(f'{rel}: expected exactly one canonical')
               if parser.images_missing_alt: warnings.append(f'{rel}: images missing alt: {parser.images_missing_alt[:5]}')
 
               for href in parser.links:
