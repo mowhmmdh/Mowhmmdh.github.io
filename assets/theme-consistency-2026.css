@@ -1,0 +1,19 @@
+/* Final theme consistency layer: fixes hard-coded light surfaces across VinTech and shared UI. */
+html[data-theme="dark"] .vt-orbit i{background:rgba(16,23,33,.92);color:var(--vt-text);border-color:var(--vt-line);box-shadow:0 10px 28px rgba(0,0,0,.25)}
+html[data-theme="dark"] .vt-card:hover{background:var(--vt-surface2);color:var(--vt-text)}
+html[data-theme="dark"] .vt-card:hover h3,html[data-theme="dark"] .vt-card:hover p{color:var(--vt-text)}
+html[data-theme="dark"] .vt-section-alt{background:linear-gradient(180deg,transparent,rgba(255,255,255,.018),transparent)}
+html[data-theme="dark"] .vt-cta{background:linear-gradient(120deg,rgba(212,160,48,.08),rgba(42,122,158,.07));border-color:rgba(212,160,48,.24)}
+html[data-theme="dark"] .vt-trust span,html[data-theme="dark"] .vt-expertise>div{background:var(--vt-surface);color:var(--vt-text)}
+html[data-theme="dark"] .footer-socials,html[data-theme="dark"] .vt-social-row{color:var(--vt-text)}
+html[data-theme="dark"] .footer-socials a,html[data-theme="dark"] .vt-social-row a{background:var(--vt-surface);border-color:var(--vt-line);color:var(--vt-text)}
+html[data-theme="light"] .vt-card:hover{background:var(--vt-bg2);color:var(--vt-text)}
+html[data-theme="light"] .vt-orbit i{background:rgba(255,255,255,.94);color:var(--vt-text)}
+/* Keep dynamically added social groups visually unified. */
+.footer-socials,.vt-social-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.footer-socials-label{font-size:.78rem;font-weight:800;color:var(--vt-muted,#596777)}
+.footer-socials a,.vt-social-row a{display:inline-flex;align-items:center;justify-content:center;min-width:40px;min-height:40px;padding:8px 11px;border:1px solid var(--ui-line,var(--vt-line,rgba(255,255,255,.12)));border-radius:12px;background:var(--ui-surface,var(--vt-surface,#fff));color:var(--ui-text,var(--vt-text,#17212b));transition:transform .2s ease,border-color .2s ease,background .2s ease}
+.footer-socials a:hover,.vt-social-row a:hover{transform:translateY(-2px);border-color:var(--ui-accent,var(--vt-gold2,#d4a030))}
+.social-icon-link svg,.footer-socials svg,.vt-social-row svg{width:19px;height:19px;display:block;fill:currentColor}
+@media(max-width:640px){.footer-socials,.vt-social-row{justify-content:center}.footer-socials-label{width:100%;text-align:center}}
+@media(prefers-reduced-motion:reduce){.footer-socials a,.vt-social-row a{transition:none}.footer-socials a:hover,.vt-social-row a:hover{transform:none}}
