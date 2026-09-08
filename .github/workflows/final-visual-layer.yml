@@ -2,6 +2,7 @@ name: Apply final visual layer
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 jobs:
   inject:
     runs-on: ubuntu-latest
@@ -9,17 +10,17 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Ensure final visual layer is loaded
+      - name: Ensure elite visual system is loaded on every HTML page
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          tag='  <link rel="stylesheet" href="/assets/final-visual-system-2026.css">\n'
+          tag='  <link rel="stylesheet" href="/assets/elite-web-system-2026.css">\n'
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
               s=p.read_text(encoding='utf-8')
-              if '/assets/final-visual-system-2026.css' not in s and '</head>' in s:
+              if '/assets/elite-web-system-2026.css' not in s and '</head>' in s:
                   p.write_text(s.replace('</head>',tag+'</head>',1),encoding='utf-8')
                   changed.append(str(p))
           print('Updated:', *changed, sep='\n- ')
@@ -29,4 +30,4 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add '*.html' '**/*.html' 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m 'Apply final visual system to all HTML pages' && git push)
+          git diff --cached --quiet || (git commit -m 'Apply elite web system to all HTML pages' && git push)
