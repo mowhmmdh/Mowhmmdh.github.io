@@ -1,18 +1,28 @@
 name: Page Engineering 2026
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
+
 permissions:
-  contents: write
+  contents: read
+
 jobs:
   engineer:
+    name: Page engineering validation
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Validate page experience layer
         shell: bash
         run: |
+          set -euo pipefail
           test -f assets/page-experience-2026.css
           python3 - <<'PY'
           from pathlib import Path
