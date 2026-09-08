@@ -16,46 +16,97 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Audit HTML SEO, accessibility and responsive foundations
+      - name: Audit HTML SEO accessibility links and responsive foundations
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          import re, sys
-          root = Path('.')
-          pages = sorted(root.rglob('*.html'))
-          errors=[]; warnings=[]
-          required = {
-            'viewport': re.compile(r'<meta[^>]+name=["\']viewport["\']', re.I),
-            'title': re.compile(r'<title>[^<]+</title>', re.I),
-            'description': re.compile(r'<meta[^>]+name=["\']description["\']', re.I),
-            'robots': re.compile(r'<meta[^>]+name=["\']robots["\']', re.I),
-            'canonical': re.compile(r'<link[^>]+rel=["\']canonical["\']', re.I),
-          }
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse, unquote
+          import posixpath, re, sys
+
+          root=Path('.')
+          pages=sorted(p for p in root.rglob('*.html') if '.git' not in p.parts)
+          known={p.as_posix() for p in root.rglob('*') if p.is_file() and '.git' not in p.parts}
+          errors=[]
+
+          class Audit(HTMLParser):
+              def __init__(self):
+                  super().__init__(); self.title=0; self.desc=0; self.robots=0; self.viewport=0; self.canonical=[]; self.h1=0; self.lang=None; self.dir=None; self.imgs=[]; self.links=[]; self.ids=set(); self.dup_ids=[]
+              def handle_starttag(self,tag,attrs):
+                  a=dict(attrs)
+                  if tag=='html': self.lang=a.get('lang'); self.dir=a.get('dir')
+                  elif tag=='title': self.title+=1
+                  elif tag=='h1': self.h1+=1
+                  elif tag=='img': self.imgs.append(a)
+                  elif tag=='a': self.links.append((a.get('href',''),a))
+                  elif tag=='meta':
+                      n=a.get('name','').lower()
+                      if n=='description': self.desc+=1
+                      elif n=='robots': self.robots+=1
+                      elif n=='viewport': self.viewport+=1
+                  elif tag=='link':
+                      if 'canonical' in (a.get('rel') or '').lower().split(): self.canonical.append(a.get('href',''))
+                  ident=a.get('id')
+                  if ident:
+                      if ident in self.ids: self.dup_ids.append(ident)
+                      self.ids.add(ident)
+
+          def resolve(page,href):
+              u=urlparse(href)
+              if u.scheme in ('http','https'):
+                  if u.netloc not in ('','mowhmmdh.github.io'): return None
+                  target=unquote(u.path.lstrip('/'))
+              elif href.startswith('/'):
+                  target=unquote(u.path.lstrip('/'))
+              else:
+                  target=unquote(posixpath.normpath(posixpath.join(page.parent.as_posix(),u.path)))
+              if target in ('','.'):
+                  target='index.html'
+              candidates=[target]
+              if target.endswith('/'):
+                  candidates=[target+'index.html']
+              elif target not in known:
+                  candidates += [target+'.html',target+'/index.html']
+              return next((c for c in candidates if c in known),None)
+
           for p in pages:
-            s=p.read_text(encoding='utf-8', errors='replace')
-            rel=str(p)
-            if '<html' not in s.lower(): errors.append(f'{rel}: missing html element')
-            if not re.search(r'<html[^>]+lang=',s,re.I): errors.append(f'{rel}: missing html lang')
-            for name,rx in required.items():
-              if not rx.search(s): errors.append(f'{rel}: missing {name}')
-            h1=len(re.findall(r'<h1\b',s,re.I))
-            if h1 != 1: warnings.append(f'{rel}: expected 1 H1, found {h1}')
-            for img in re.findall(r'<img\b[^>]*>',s,re.I):
-              if not re.search(r'\balt=',img,re.I): warnings.append(f'{rel}: image without alt')
-            if re.search(r'href=["\']http://',s,re.I): warnings.append(f'{rel}: insecure http internal/external link')
-          if not Path('sitemap.xml').exists(): errors.append('sitemap.xml missing')
-          if not Path('robots.txt').exists(): errors.append('robots.txt missing')
+              s=p.read_text(encoding='utf-8',errors='replace'); a=Audit(); a.feed(s)
+              rel=p.as_posix()
+              if a.title!=1: errors.append(f'{rel}: exactly one title required')
+              if a.desc!=1: errors.append(f'{rel}: exactly one description required')
+              if a.robots!=1: errors.append(f'{rel}: exactly one robots meta required')
+              if a.viewport!=1: errors.append(f'{rel}: exactly one viewport required')
+              if a.h1!=1: errors.append(f'{rel}: exactly one H1 required (found {a.h1})')
+              if not a.lang: errors.append(f'{rel}: html lang missing')
+              if len(a.canonical)!=1 or not a.canonical[0].startswith('https://mowhmmdh.github.io/'): errors.append(f'{rel}: canonical missing or off-site')
+              if a.dup_ids: errors.append(f'{rel}: duplicate id(s): {", ".join(a.dup_ids[:5])}')
+              for img in a.imgs:
+                  if 'alt' not in img: errors.append(f'{rel}: image without alt')
+                  src=img.get('src','')
+                  if src and not src.startswith(('data:','http://','https://')) and resolve(p,src) is None: errors.append(f'{rel}: missing image asset: {src}')
+              for href,attrs in a.links:
+                  if not href or href.startswith(('#','mailto:','tel:','javascript:')): continue
+                  if href.startswith('http://'): errors.append(f'{rel}: insecure HTTP link: {href}')
+                  if attrs.get('target')=='_blank' and 'noopener' not in (attrs.get('rel') or '').lower(): errors.append(f'{rel}: target=_blank without rel=noopener')
+                  if urlparse(href).netloc in ('','mowhmmdh.github.io') and resolve(p,href) is None: errors.append(f'{rel}: broken local link: {href}')
+
+              if re.search(r'\b(Lorem ipsum|Coming soon|Your Name|John Doe|TODO|FIXME)\b',s,re.I): errors.append(f'{rel}: placeholder content detected')
+
+          for required in ['sitemap.xml','robots.txt','manifest.json','.well-known/security.txt']:
+              if required not in known: errors.append(f'missing required site asset: {required}')
+
+          for f in root.rglob('*'):
+              if not f.is_file() or '.git' in f.parts: continue
+              if f.suffix.lower() not in {'.html','.css','.js','.json','.yml','.yaml','.md','.txt','.xml','.py'}: continue
+              s=f.read_text(encoding='utf-8',errors='ignore')
+              for pat in [r'AKIA[0-9A-Z]{16}',r'ghp_[A-Za-z0-9]{30,}',r'AIza[0-9A-Za-z_-]{30,}',r'-----BEGIN (?:RSA|OPENSSH|EC|DSA) PRIVATE KEY-----']:
+                  if re.search(pat,s): errors.append(f'{f.as_posix()}: possible secret pattern detected')
+
           if errors:
-            print('\nERRORS:')
-            print('\n'.join(errors))
-            print(f'\n{len(errors)} blocking issue(s).')
-            sys.exit(1)
-          print(f'Audit passed for {len(pages)} HTML pages.')
-          if warnings:
-            print('\nWarnings:')
-            print('\n'.join(warnings))
+              print('\n'.join('ERROR: '+x for x in errors)); print(f'\n{len(errors)} blocking issue(s).'); sys.exit(1)
+          print(f'Final quality gate passed: {len(pages)} HTML pages audited; links, assets, SEO foundations, accessibility basics and secret patterns checked.')
           PY
 
       - name: Validate sitemap is XML
