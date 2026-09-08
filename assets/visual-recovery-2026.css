@@ -1,0 +1,16 @@
+/* Visual recovery layer 2026 — loaded last by the shared runtimes. */
+:root{--vr-bg:#070b12;--vr-surface:#101923;--vr-surface2:#141f2c;--vr-text:#edf3f8;--vr-muted:#9aa8b7;--vr-line:rgba(255,255,255,.10);--vr-gold:#d2a84e;--vr-gold2:#f0c85a;--vr-blue:#4aa9dc}
+html[data-theme=light]{--vr-bg:#f5f7fa;--vr-surface:#fff;--vr-surface2:#f8fafc;--vr-text:#17212b;--vr-muted:#526170;--vr-line:rgba(23,33,43,.13);--vr-gold:#8b5b00;--vr-gold2:#b47700;--vr-blue:#086da8}
+html,body{background-color:var(--vr-bg);color:var(--vr-text)}body{color-scheme:dark}html[data-theme=light] body{color-scheme:light}
+:where(h1,h2,h3,h4,h5,h6,strong,b){color:var(--vr-text)}:where(p,li,label,small,.muted,.lead,.description){color:var(--vr-muted)}
+:where(.card,.service-card,.project-card,.post-card,.skill-category,.feature-card,.timeline-item,.experience-item,.faq-item,.stat,.metric,.profile-card,.cta,.contact-wrapper,.article,.article-content,.post-content,.terminal){background-color:var(--vr-surface);color:var(--vr-text);border-color:var(--vr-line)}
+:where(input,textarea,select){background-color:var(--vr-surface);color:var(--vr-text);border-color:var(--vr-line)}:where(input,textarea,select)::placeholder{color:var(--vr-muted)}
+:where(.btn:not(.primary),.btn-secondary,.btn-outline,.theme-toggle,.mobile-menu){background-color:var(--vr-surface);color:var(--vr-text);border-color:var(--vr-line)}
+:where(.kicker,.eyebrow,.hero-kicker,.section-tag,.tag){color:var(--vr-gold)}
+html[data-theme=light] .hero-title .highlight,html[data-theme=light] .hero h1 span,html[data-theme=light] .highlight{background:none!important;-webkit-text-fill-color:var(--vr-gold)!important;color:var(--vr-gold)!important}
+html[data-theme=light] .terminal{background:#101923!important;color:#d9e1e8}html[data-theme=light] .terminal *{color:#d9e1e8}
+html[data-theme=dark] .vt-card:hover{background:var(--vr-surface)!important;color:var(--vr-text)}html[data-theme=dark] .vt-orbit i{background:rgba(13,20,30,.94)!important;color:var(--vr-text)}
+html[data-theme=light] .vt-card:hover{background:var(--vr-surface)!important;color:var(--vr-text)}html[data-theme=light] .vt-orbit i{background:rgba(255,255,255,.94)!important;color:var(--vr-text)}
+.vt-card h3,.vt-card p,.vt-card a,.vt-expertise h3,.vt-expertise p,.vt-steps h3,.vt-steps p,.vt-cta h2,.vt-cta p{color:var(--vt-text,var(--vr-text))}.vt-card p,.vt-expertise p,.vt-steps p,.vt-cta p{color:var(--vt-muted,var(--vr-muted))}
+@media(max-width:760px){.vt-card:hover{transform:none!important}.card:hover,.service-card:hover,.project-card:hover,.post-card:hover,.skill-category:hover,.feature-card:hover,.timeline-item:hover,.stat:hover,.metric:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
