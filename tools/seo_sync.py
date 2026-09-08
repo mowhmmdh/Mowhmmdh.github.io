@@ -35,23 +35,29 @@ def canonical(path: str) -> str:
         return BASE + '/blog/'
     return BASE + '/' + path
 
+def default_url(path: str, other: str) -> str:
+    # x-default always points to the Persian counterpart of the language pair.
+    fa_path = path if not path.startswith(('en-', 'en-blog/', 'en-vintech/')) else other
+    return canonical(fa_path)
+
 def normalize(path: str) -> None:
     p = root / path
     text = p.read_text(encoding='utf-8')
     other = pairs.get(path)
     if not other or not (root / other).exists():
         return
+
     fa = not path.startswith(('en-', 'en-blog/', 'en-vintech/'))
-    lang = 'fa-IR' if fa else 'en-US'
+    lang = 'fa-IR' if fa else 'en'
     other_lang = 'en' if fa else 'fa-IR'
     own = canonical(path)
     other_url = canonical(other)
+    x_default = default_url(path, other)
     links = (
         f'<link rel="alternate" hreflang="{lang}" href="{own}">\n'
         f'<link rel="alternate" hreflang="{other_lang}" href="{other_url}">\n'
+        f'<link rel="alternate" hreflang="x-default" href="{x_default}">\n'
     )
-    if path in ('index.html', 'en.html'):
-        links += f'<link rel="alternate" hreflang="x-default" href="{BASE}/">\n'
     pattern = r'\s*<link\s+[^>]*rel=["\']alternate["\'][^>]*hreflang=["\'][^"\']+["\'][^>]*>\s*'
     new = re.sub(pattern, '\n', text, flags=re.I)
     if '</head>' not in new.lower():
