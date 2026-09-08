@@ -10,40 +10,36 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Apply elite web system and improve VinTech service routing
+      - name: Apply final visual system and theme compatibility
         shell: bash
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          tag='  <link rel="stylesheet" href="/assets/elite-web-system-2026.css">\n'
+          tag='  <link rel="stylesheet" href="/assets/light-mode-fix-2026.css">\n'
           changed=[]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts: continue
               s=p.read_text(encoding='utf-8')
               original=s
-              if '/assets/elite-web-system-2026.css' not in s and '</head>' in s:
+              if '/assets/light-mode-fix-2026.css' not in s and '</head>' in s:
                   s=s.replace('</head>',tag+'</head>',1)
               if p.as_posix()=='vintech.html':
-                  replacements={
-                    'شبکه و زیرساخت</h3><p>':'شبکه و زیرساخت</h3><p>',
-                    '<a href="#expertise">جزئیات تخصص ←</a></article>':'<a href="/vintech/network-infrastructure.html">مشاهده سرویس ←</a></article>',
-                  }
-                  for a,b in replacements.items(): s=s.replace(a,b)
-                  # The six cards are ordered 01..06; replace remaining identical CTA links by service-specific URLs.
-                  urls=['/vintech/cybersecurity.html','/vintech/servers-systems.html','/vintech/cctv-nvr.html','/vintech/it-support.html','/vintech/web-technical-seo.html']
                   marker='<a href="#expertise">جزئیات تخصص ←</a></article>'
-                  for u in urls: s=s.replace(marker,f'<a href="{u}">مشاهده سرویس ←</a></article>',1)
+                  if marker in s:
+                      urls=['/vintech/network-infrastructure.html','/vintech/cybersecurity.html','/vintech/servers-systems.html','/vintech/cctv-nvr.html','/vintech/it-support.html','/vintech/web-technical-seo.html']
+                      for u in urls: s=s.replace(marker,f'<a href="{u}">مشاهده سرویس ←</a></article>',1)
               if p.as_posix()=='en-vintech.html':
                   marker='<a href="#expertise">View expertise →</a></article>'
-                  urls=['/en-vintech/network-infrastructure.html','/en-vintech/cybersecurity.html','/en-vintech/servers-systems.html','/en-vintech/cctv-nvr.html','/en-vintech/it-support.html','/en-vintech/web-technical-seo.html']
-                  for u in urls: s=s.replace(marker,f'<a href="{u}">View service →</a></article>',1)
+                  if marker in s:
+                      urls=['/en-vintech/network-infrastructure.html','/en-vintech/cybersecurity.html','/en-vintech/servers-systems.html','/en-vintech/cctv-nvr.html','/en-vintech/it-support.html','/en-vintech/web-technical-seo.html']
+                      for u in urls: s=s.replace(marker,f'<a href="{u}">View service →</a></article>',1)
               if s!=original:
                   p.write_text(s,encoding='utf-8'); changed.append(str(p))
           print('Updated:', *changed, sep='\n- ')
           PY
-      - name: Commit injected links
+      - name: Commit visual layer changes
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add '*.html' '**/*.html' 2>/dev/null || true
-          git diff --cached --quiet || (git commit -m 'Apply elite web system and service navigation' && git push)
+          git diff --cached --quiet || (git commit -m 'fix(theme): apply final light mode compatibility layer' && git push)
