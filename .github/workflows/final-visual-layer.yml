@@ -1,50 +1,29 @@
 name: Apply unified visual layer
+
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths-ignore:
-      - '**/*.md'
+
+permissions:
+  contents: read
+
 jobs:
-  inject:
+  validate:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
-      - name: Normalize every HTML page
-        shell: bash
+      - name: Validate unified visual stack without rewriting pages
+        shell: python
         run: |
-          python3 - <<'PY'
           from pathlib import Path
-          stale=['responsive-fix-2026.css','theme-contrast-2026.css','site-quality-2026.css','final-visual-system-2026.css','elite-web-system-2026.css','premium-experience-2026.css','site-wide-premium-2026.css','editorial-experience-2026.css','light-mode-fix-2026.css']
-          for p in Path('.').rglob('*.html'):
-            if '.git' in p.parts: continue
-            s=p.read_text(encoding='utf-8'); original=s
-            for x in stale: s=s.replace(f'<link rel="stylesheet" href="/assets/{x}">','')
-            if '/assets/stable-ui-2026.css' not in s and '</head>' in s: s=s.replace('</head>','<link rel="stylesheet" href="/assets/stable-ui-2026.css">\n</head>',1)
-            if '/assets/site-theme.js' not in s and '</body>' in s: s=s.replace('</body>','<script src="/assets/site-theme.js" defer></script>\n</body>',1)
-            if s!=original: p.write_text(s,encoding='utf-8')
-          PY
-      - name: Validate HTML visual stack
-        shell: bash
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
+          import sys
           stale=['responsive-fix-2026.css','theme-contrast-2026.css','site-quality-2026.css','final-visual-system-2026.css','elite-web-system-2026.css','premium-experience-2026.css','site-wide-premium-2026.css','editorial-experience-2026.css','light-mode-fix-2026.css']
           bad=[]
           for p in Path('.').rglob('*.html'):
-            if '.git' in p.parts: continue
-            s=p.read_text(encoding='utf-8')
-            if '/assets/stable-ui-2026.css' not in s: bad.append(f'{p}: stable layer missing')
-            if '/assets/site-theme.js' not in s: bad.append(f'{p}: theme runtime missing')
-            bad += [f'{p}: stale {x}' for x in stale if x in s]
-          if bad: raise SystemExit('\n'.join(bad))
-          print('PASS: unified UI/theme stack present on every HTML page')
-          PY
-      - name: Commit normalized pages
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add '*.html' '**/*.html' 2>/dev/null || true
-          if ! git diff --cached --quiet; then git commit -m 'refactor(ui): normalize every page visual stack'; git push; fi
+              if '.git' in p.parts: continue
+              s=p.read_text(encoding='utf-8',errors='replace')
+              if '/assets/stable-ui-2026.css' not in s: bad.append(f'{p}: stable layer missing')
+              if '/assets/site-theme.js' not in s: bad.append(f'{p}: theme runtime missing')
+              bad += [f'{p}: stale {x}' for x in stale if x in s]
+          if bad:
+              print('\n'.join(bad)); sys.exit(1)
+          print('PASS: unified UI/theme stack is present and no stale visual layers remain.')
