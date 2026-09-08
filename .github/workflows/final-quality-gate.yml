@@ -2,9 +2,11 @@ name: Final Quality Gate
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
@@ -35,68 +37,116 @@ jobs:
           from pathlib import Path
           from xml.etree import ElementTree as ET
           import sys
-          base='https://mowhmmdh.github.io/'
-          root=ET.parse('sitemap.xml').getroot(); ns='{http://www.sitemaps.org/schemas/sitemap/0.9}'
-          urls=[x.text.strip() for x in root.findall(f'{ns}url/{ns}loc') if x.text and x.text.strip()]
-          pages=sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name!='404.html')
+          base = 'https://mowhmmdh.github.io/'
+          root = ET.parse('sitemap.xml').getroot()
+          ns = '{http://www.sitemaps.org/schemas/sitemap/0.9}'
+          urls = [x.text.strip() for x in root.findall(f'{ns}url/{ns}loc') if x.text and x.text.strip()]
+          pages = sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name != '404.html')
           def page_url(p):
-              if p.as_posix()=='index.html': return base
-              if p.name=='index.html': return base+p.parent.as_posix().lstrip('./')+'/'
-              return base+p.as_posix()
-          expected={page_url(p) for p in pages}; errors=[]
-          if len(urls)!=len(set(urls)): errors.append('duplicate sitemap URLs')
-          if any(not u.startswith(base) for u in urls): errors.append('off-site sitemap URL detected')
-          if expected-set(urls): errors.append('missing from sitemap: '+', '.join(sorted(expected-set(urls))))
-          if set(urls)-expected: errors.append('unknown sitemap URL: '+', '.join(sorted(set(urls)-expected)))
-          robots=Path('robots.txt').read_text(encoding='utf-8',errors='replace')
-          if 'Sitemap: '+base+'sitemap.xml' not in robots: errors.append('robots.txt sitemap directive missing')
+              if p.as_posix() == 'index.html':
+                  return base
+              if p.name == 'index.html':
+                  return base + p.parent.as_posix().lstrip('./') + '/'
+              return base + p.as_posix()
+          expected = {page_url(p) for p in pages}
+          errors = []
+          if len(urls) != len(set(urls)):
+              errors.append('duplicate sitemap URLs')
+          if any(not u.startswith(base) for u in urls):
+              errors.append('off-site sitemap URL detected')
+          if expected - set(urls):
+              errors.append('missing from sitemap: ' + ', '.join(sorted(expected - set(urls))))
+          if set(urls) - expected:
+              errors.append('unknown sitemap URL: ' + ', '.join(sorted(set(urls) - expected)))
+          robots = Path('robots.txt').read_text(encoding='utf-8', errors='replace')
+          if 'Sitemap: ' + base + 'sitemap.xml' not in robots:
+              errors.append('robots.txt sitemap directive missing')
           print(f'Sitemap coverage: {len(urls)} URLs / {len(expected)} indexable HTML pages')
-          if errors: print('\n'.join('ERROR: '+e for e in errors)); sys.exit(1)
+          if errors:
+              print('\n'.join('ERROR: ' + e for e in errors))
+              sys.exit(1)
           print('Sitemap and robots validation: PASS')
       - name: Validate JSON-LD, Open Graph and hreflang
         shell: python
         run: |
           from pathlib import Path
           from html.parser import HTMLParser
-          import json, sys
-          base='https://mowhmmdh.github.io/'; pages=sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name!='404.html'); errors=[]
+          import json
+          import sys
+          base = 'https://mowhmmdh.github.io/'
+          pages = sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name != '404.html')
+          errors = []
           class P(HTMLParser):
-              def __init__(self): super().__init__(); self.lang=''; self.canon=[]; self.og={}; self.alts=[]; self.ld=[]; self.active=False
-              def handle_starttag(self,t,attrs):
-                  a=dict(attrs); rel=(a.get('rel') or '').lower().split()
-                  if t=='html': self.lang=a.get('lang','')
-                  if t=='link' and 'canonical' in rel: self.canon.append(a.get('href',''))
-                  if t=='link' and 'alternate' in rel and a.get('hreflang') and a.get('href'): self.alts.append((a['hreflang'].lower(),a['href']))
-                  if t=='meta' and a.get('property','').lower().startswith('og:'): self.og[a['property'].lower()]=a.get('content','').strip()
-                  if t=='script' and a.get('type','').lower()=='application/ld+json': self.ld.append(''); self.active=True
-              def handle_endtag(self,t):
-                  if t=='script' and self.active: self.active=False
-              def handle_data(self,d):
-                  if self.active: self.ld[-1]+=d
+              def __init__(self):
+                  super().__init__()
+                  self.lang = ''
+                  self.canon = []
+                  self.og = {}
+                  self.alts = []
+                  self.ld = []
+                  self.active = False
+              def handle_starttag(self, t, attrs):
+                  a = dict(attrs)
+                  rel = (a.get('rel') or '').lower().split()
+                  if t == 'html':
+                      self.lang = a.get('lang', '')
+                  if t == 'link' and 'canonical' in rel:
+                      self.canon.append(a.get('href', ''))
+                  if t == 'link' and 'alternate' in rel and a.get('hreflang') and a.get('href'):
+                      self.alts.append((a['hreflang'].lower(), a['href']))
+                  if t == 'meta' and a.get('property', '').lower().startswith('og:'):
+                      self.og[a['property'].lower()] = a.get('content', '').strip()
+                  if t == 'script' and a.get('type', '').lower() == 'application/ld+json':
+                      self.ld.append('')
+                      self.active = True
+              def handle_endtag(self, t):
+                  if t == 'script' and self.active:
+                      self.active = False
+              def handle_data(self, d):
+                  if self.active:
+                      self.ld[-1] += d
           def url(p):
-              if p.as_posix()=='index.html': return base
-              if p.name=='index.html': return base+p.parent.as_posix().lstrip('./')+'/'
-              return base+p.as_posix()
+              if p.as_posix() == 'index.html':
+                  return base
+              if p.name == 'index.html':
+                  return base + p.parent.as_posix().lstrip('./') + '/'
+              return base + p.as_posix()
           for p in pages:
-              a=P(); a.feed(p.read_text(encoding='utf-8',errors='replace')); u=url(p)
-              if a.canon!=[u]: errors.append(f'{p}: canonical mismatch')
-              for k in ('og:title','og:description','og:url'):
-                  if not a.og.get(k): errors.append(f'{p}: missing {k}')
-              if a.og.get('og:url')!=u: errors.append(f'{p}: og:url mismatch')
-              langs={x[0] for x in a.alts}; own=a.lang.lower() if a.lang else ''
-              if len(a.alts)<3: errors.append(f'{p}: incomplete hreflang set')
-              if own not in langs and own.split('-')[0] not in {x.split('-')[0] for x in langs}: errors.append(f'{p}: hreflang self-reference missing')
-              if 'x-default' not in langs: errors.append(f'{p}: x-default hreflang missing')
-              if not a.ld: errors.append(f'{p}: JSON-LD missing')
+              a = P()
+              a.feed(p.read_text(encoding='utf-8', errors='replace'))
+              u = url(p)
+              if a.canon != [u]:
+                  errors.append(f'{p}: canonical mismatch')
+              for k in ('og:title', 'og:description', 'og:url'):
+                  if not a.og.get(k):
+                      errors.append(f'{p}: missing {k}')
+              if a.og.get('og:url') != u:
+                  errors.append(f'{p}: og:url mismatch')
+              langs = {x[0] for x in a.alts}
+              own = a.lang.lower() if a.lang else ''
+              if len(a.alts) < 3:
+                  errors.append(f'{p}: incomplete hreflang set')
+              if own not in langs and own.split('-')[0] not in {x.split('-')[0] for x in langs}:
+                  errors.append(f'{p}: hreflang self-reference missing')
+              if 'x-default' not in langs:
+                  errors.append(f'{p}: x-default hreflang missing')
+              if not a.ld:
+                  errors.append(f'{p}: JSON-LD missing')
               for raw in a.ld:
                   try:
-                      data=json.loads(raw); roots=data if isinstance(data,list) else [data]
-                      if not isinstance(data,(dict,list)): raise ValueError('top-level JSON-LD must be object/array')
-                      graphs=[g for x in roots if isinstance(x,dict) for g in (x.get('@graph') or [])] + roots
-                      if not any(isinstance(x,dict) and x.get('@context')=='https://schema.org' for x in graphs): raise ValueError('schema.org context missing')
-                  except Exception as e: errors.append(f'{p}: invalid JSON-LD: {e}')
+                      data = json.loads(raw)
+                      roots = data if isinstance(data, list) else [data]
+                      if not isinstance(data, (dict, list)):
+                          raise ValueError('top-level JSON-LD must be object/array')
+                      graphs = [g for x in roots if isinstance(x, dict) for g in (x.get('@graph') or [])] + roots
+                      if not any(isinstance(x, dict) and x.get('@context') == 'https://schema.org' for x in graphs):
+                          raise ValueError('schema.org context missing')
+                  except Exception as e:
+                      errors.append(f'{p}: invalid JSON-LD: {e}')
           print(f'Metadata validation: {len(pages)} pages')
-          if errors: print('\n'.join('ERROR: '+e for e in errors)); sys.exit(1)
+          if errors:
+              print('\n'.join('ERROR: ' + e for e in errors))
+              sys.exit(1)
           print('JSON-LD / Open Graph / hreflang validation: PASS')
 
   lighthouse-mobile:
@@ -109,10 +159,21 @@ jobs:
       fail-fast: false
       max-parallel: 5
       matrix:
-        page: [/, /about.html, /services.html, /projects.html, /vintech.html, /vintech/network-infrastructure.html, /blog/, /blog/network-hardening.html, /en.html, /en-vintech.html]
+        page:
+          - /
+          - /about.html
+          - /services.html
+          - /projects.html
+          - /vintech.html
+          - /vintech/network-infrastructure.html
+          - /blog/
+          - /blog/network-hardening.html
+          - /en.html
+          - /en-vintech.html
     steps:
       - uses: actions/checkout@v4
-        with: {fetch-depth: 1}
+        with:
+          fetch-depth: 1
       - name: Cache npm
         uses: actions/cache@v4
         with:
@@ -121,22 +182,31 @@ jobs:
       - name: Install Lighthouse
         run: npm install --global lighthouse@13
       - name: Run mobile Lighthouse
-        env: {URL: https://mowhmmdh.github.io${{ matrix.page }}}
+        env:
+          URL: https://mowhmmdh.github.io${{ matrix.page }}
         run: |
           mkdir -p reports
           lighthouse "$URL" --output=json --output-path=reports/report.json --chrome-flags='--headless --no-sandbox' --quiet
           node - <<'NODE'
-          const fs=require('fs'),r=JSON.parse(fs.readFileSync('reports/report.json')),c=r.categories;
-          const limits={performance:100,accessibility:100,'best-practices':100,seo:100};
-          const scores=Object.fromEntries(Object.keys(limits).map(k=>[k,Math.round((c[k]?.score??0)*100)]));
+          const fs = require('fs');
+          const r = JSON.parse(fs.readFileSync('reports/report.json'));
+          const c = r.categories;
+          const limits = {performance: 100, accessibility: 100, 'best-practices': 100, seo: 100};
+          const scores = Object.fromEntries(Object.keys(limits).map(k => [k, Math.round((c[k]?.score ?? 0) * 100)]));
           console.log(JSON.stringify(scores));
-          const bad=Object.entries(limits).filter(([k,v])=>scores[k]!==v);
-          if(bad.length){console.error('100/100 required:',bad.map(([k,v])=>`${k}=${scores[k]}`).join(', '));process.exit(1)}
+          const bad = Object.entries(limits).filter(([k, v]) => scores[k] !== v);
+          if (bad.length) {
+            console.error('100/100 required:', bad.map(([k]) => `${k}=${scores[k]}`).join(', '));
+            process.exit(1);
+          }
           NODE
       - name: Upload Lighthouse report
         if: always()
         uses: actions/upload-artifact@v4
-        with: {name: lighthouse-mobile-${{ strategy.job-index }}, path: reports/report.json, retention-days: 7}
+        with:
+          name: lighthouse-mobile-${{ strategy.job-index }}
+          path: reports/report.json
+          retention-days: 7
 
   lighthouse-desktop:
     name: Lighthouse desktop (${{ matrix.page }})
@@ -147,22 +217,36 @@ jobs:
     strategy:
       fail-fast: false
       max-parallel: 2
-      matrix: {page: [/, /vintech.html]}
+      matrix:
+        page:
+          - /
+          - /vintech.html
     steps:
       - name: Install Lighthouse
         run: npm install --global lighthouse@13
       - name: Run desktop Lighthouse
-        env: {URL: https://mowhmmdh.github.io${{ matrix.page }}}
+        env:
+          URL: https://mowhmmdh.github.io${{ matrix.page }}
         run: |
           mkdir -p reports
           lighthouse "$URL" --preset=desktop --output=json --output-path=reports/report.json --chrome-flags='--headless --no-sandbox' --quiet
           node - <<'NODE'
-          const fs=require('fs'),r=JSON.parse(fs.readFileSync('reports/report.json')),c=r.categories;
-          const limits={performance:100,accessibility:100,'best-practices':100,seo:100};
-          const scores=Object.fromEntries(Object.keys(limits).map(k=>[k,Math.round((c[k]?.score??0)*100)])); console.log(JSON.stringify(scores));
-          const bad=Object.entries(limits).filter(([k,v])=>scores[k]!==v); if(bad.length){console.error('100/100 required:',bad.map(([k,v])=>`${k}=${scores[k]}`).join(', '));process.exit(1)}
+          const fs = require('fs');
+          const r = JSON.parse(fs.readFileSync('reports/report.json'));
+          const c = r.categories;
+          const limits = {performance: 100, accessibility: 100, 'best-practices': 100, seo: 100};
+          const scores = Object.fromEntries(Object.keys(limits).map(k => [k, Math.round((c[k]?.score ?? 0) * 100)]));
+          console.log(JSON.stringify(scores));
+          const bad = Object.entries(limits).filter(([k, v]) => scores[k] !== v);
+          if (bad.length) {
+            console.error('100/100 required:', bad.map(([k]) => `${k}=${scores[k]}`).join(', '));
+            process.exit(1);
+          }
           NODE
       - name: Upload Lighthouse report
         if: always()
         uses: actions/upload-artifact@v4
-        with: {name: lighthouse-desktop-${{ strategy.job-index }}, path: reports/report.json, retention-days: 7}
+        with:
+          name: lighthouse-desktop-${{ strategy.job-index }}
+          path: reports/report.json
+          retention-days: 7
