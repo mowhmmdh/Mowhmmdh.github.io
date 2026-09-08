@@ -43,10 +43,27 @@ jobs:
           from pathlib import Path
           from html.parser import HTMLParser
           from urllib.parse import urlparse, unquote
-          import re, sys
+          import sys
           BASE='https://mowhmmdh.github.io'
           pages=sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name!='404.html')
           known={p.as_posix() for p in Path('.').rglob('*') if p.is_file() and '.git' not in p.parts}
+          def resolve_local(p, href):
+              u=urlparse(href)
+              if u.scheme in ('http','https'):
+                  if u.netloc not in ('','mowhmmdh.github.io'): return None
+                  target=u.path.lstrip('/')
+              else:
+                  target=(p.parent/u.path).as_posix()
+              if target in ('','.'):
+                  return 'index.html'
+              candidates=[target]
+              if target.endswith('/'):
+                  candidates=[target+'index.html']
+              elif target not in known:
+                  candidates += [target+'.html', target+'/index.html']
+              for c in candidates:
+                  if c in known: return c
+              return candidates[0]
           errors=[]
           class P(HTMLParser):
               def __init__(self):
@@ -66,11 +83,10 @@ jobs:
               if len(q.canonical)!=1 or not q.canonical[0].startswith(BASE): errors.append(f'{rel}: canonical missing/invalid')
               for href in q.links:
                   href=unquote(href.strip()); u=urlparse(href)
-                  if not href or href.startswith(('#','mailto:','tel:','javascript:')) or (u.scheme in ('http','https') and u.netloc not in ('','mowhmmdh.github.io')): continue
-                  target=u.path.lstrip('/') if u.scheme else (p.parent/u.path).as_posix()
-                  if target.endswith('/'): target+='index.html'
-                  if not target: target='index.html'
-                  if target not in known: errors.append(f'{rel}: broken local link -> {href}')
+                  if not href or href.startswith(('#','mailto:','tel:','javascript:')): continue
+                  if u.scheme in ('http','https') and u.netloc not in ('','mowhmmdh.github.io'): continue
+                  target=resolve_local(p,href)
+                  if target is not None and target not in known: errors.append(f'{rel}: broken local link -> {href}')
           if errors:
               for e in errors: print('ERROR:',e)
               sys.exit(1)
