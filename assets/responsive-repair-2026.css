@@ -1,0 +1,61 @@
+/* Responsive Repair 2026 — deterministic last-mile layout safety. */
+*,:before,:after{box-sizing:border-box}
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,video,canvas,iframe{max-width:100%;height:auto}
+button,input,textarea,select{max-width:100%;font:inherit}
+.site-wrap,.wrap,.en-page,.vt-container{width:min(1160px,calc(100% - 32px));max-width:100%;margin-inline:auto}
+.grid,.grid-2,.grid-3,.services-grid,.projects-grid,.about-grid,.clusters,.vt-grid,.vt-expertise,.vt-steps{min-width:0}
+.card,.post-card,.service-card,.project-card,.about-card,.cluster,.vt-card,.vt-expertise>div,.vt-steps>div{min-width:0;overflow-wrap:anywhere}
+.hero-grid,.grid-2,.grid-3,.services-grid,.projects-grid,.about-grid,.vt-grid,.vt-expertise,.vt-steps{align-items:stretch}
+.profile-card img{max-width:100%;height:auto}
+pre,code,.terminal-body{max-width:100%;overflow:auto;white-space:pre-wrap;overflow-wrap:anywhere}
+table{max-width:100%;display:block;overflow-x:auto}
+.mobile-panel{display:none}
+@media(max-width:900px){
+ .hero-grid{grid-template-columns:1fr!important}
+ .grid-3,.services-grid,.projects-grid,.vt-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .grid-2{grid-template-columns:1fr!important}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .vt-expertise,.vt-steps{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+ .site-nav{min-width:0}
+}
+@media(max-width:680px){
+ .site-wrap,.wrap,.en-page,.vt-container{width:calc(100% - 24px)}
+ .nav-links,.about-nav-links,.en-nav-links{display:none!important}
+ .mobile-menu{display:inline-flex!important}
+ .site-nav{gap:8px;min-height:60px}
+ .mobile-panel{position:absolute;inset-inline:12px;top:calc(100% + 8px);z-index:2000;display:none;flex-direction:column;gap:4px;padding:10px;border-radius:16px;background:var(--vf-surface,var(--panel,#fff));border:1px solid var(--vf-line,var(--line,rgba(0,0,0,.12)));box-shadow:0 18px 50px rgba(0,0,0,.16)}
+ .mobile-panel.is-open{display:flex}
+ .mobile-panel a{display:block;padding:12px 14px;border-radius:11px;color:var(--vf-text,var(--text,#17212b));font-size:.9rem;line-height:1.5}
+ .mobile-panel a:hover,.mobile-panel a[aria-current=page]{background:rgba(39,183,232,.10)}
+ .grid,.grid-2,.grid-3,.services-grid,.projects-grid,.about-grid,.clusters,.vt-grid,.vt-expertise,.vt-steps{grid-template-columns:1fr!important}
+ .stats{grid-template-columns:1fr 1fr!important}
+ .hero,.vt-hero{padding-top:48px!important}
+ .hero h1{font-size:clamp(2rem,10vw,3rem)!important;overflow-wrap:anywhere}
+ .hero h1 span{display:block}
+ .actions,.vt-actions{display:grid!important;grid-template-columns:1fr!important;width:100%}
+ .actions .btn,.vt-actions .vt-btn{width:100%;min-width:0}
+ .section,.about-section,.vt-section{padding-block:48px!important}
+ .section h2,.about-section h2,.vt-section h2{font-size:clamp(1.45rem,7vw,2.2rem)!important}
+ .card,.post-card,.service-card,.project-card,.about-card,.vt-card{padding:18px!important}
+ .profile{order:-1}
+ .profile-card{width:min(220px,70vw)}
+ .vt-hero-grid{grid-template-columns:1fr!important}
+ .vt-hero-visual{min-height:260px}
+ .vt-orbit{transform:scale(.82);transform-origin:center}
+ .vt-nav{position:sticky;top:0;z-index:3000}
+ .vt-links{display:none!important}
+ .vt-links.is-open{display:flex!important}
+ .vt-links{position:absolute;inset-inline:12px;top:calc(100% + 8px);padding:12px;flex-direction:column;align-items:stretch;border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.18);z-index:3001}
+ .vt-links a{width:100%;padding:12px 14px}
+ .vt-trust{display:grid!important;grid-template-columns:1fr!important}
+ .vt-cta{display:grid!important;grid-template-columns:1fr!important;gap:20px!important}
+}
+@media(max-width:390px){
+ .site-wrap,.wrap,.en-page,.vt-container{width:calc(100% - 20px)}
+ .stats{grid-template-columns:1fr!important}
+ .brand{font-size:.9rem}
+ .theme-toggle,.mobile-menu,.vt-menu{min-width:40px!important;width:40px!important;height:40px!important}
+}
+@media(hover:none){.card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.about-card:hover,.stat:hover,.vt-card:hover{transform:none!important}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
