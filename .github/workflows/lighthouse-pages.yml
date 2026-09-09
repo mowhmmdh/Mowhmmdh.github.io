@@ -1,57 +1,110 @@
 name: Lighthouse Pages
+
 on:
   workflow_dispatch:
   push:
     branches: [main]
   schedule:
     - cron: '17 * * * *'
+
 permissions:
   contents: read
+
 concurrency:
   group: lighthouse-pages-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
-  lighthouse:
+  discover:
+    name: Discover sitemap pages
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    strategy:
-      fail-fast: false
-      matrix:
-        page: [/, /about.html, /services.html, /projects.html, /vintech.html, /en.html]
+    timeout-minutes: 5
+    outputs:
+      pages: ${{ steps.pages.outputs.pages }}
     steps:
       - uses: actions/checkout@v4
+      - id: pages
+        name: Build Lighthouse matrix from sitemap
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          root = ET.fromstring(Path('sitemap.xml').read_text(encoding='utf-8'))
+          ns = {'sm': 'http://www.sitemaps.org/schemas/sitemap/0.9'}
+          base = 'https://mowhmmdh.github.io'
+          pages = []
+          for loc in root.findall('sm:url/sm:loc', ns):
+              url = (loc.text or '').strip()
+              if not url.startswith(base):
+                  raise SystemExit(f'Unexpected sitemap URL: {url}')
+              path = url[len(base):] or '/'
+              pages.append(path)
+
+          pages = sorted(set(pages))
+          if not pages:
+              raise SystemExit('Sitemap contains no URLs')
+          print(f'Found {len(pages)} sitemap URLs')
+          print('pages=' + json.dumps(pages, separators=(',', ':')))
+          PY
+
+  lighthouse:
+    name: Lighthouse 100 (${{ matrix.page }})
+    needs: discover
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        page: ${{ fromJSON(needs.discover.outputs.pages) }}
+    steps:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install --global lighthouse@13
+      - name: Install Lighthouse
+        run: npm install --global lighthouse@13
       - name: Wait until GitHub Pages serves the page
         env:
           URL: https://mowhmmdh.github.io${{ matrix.page }}
         run: |
-          for i in {1..30}; do
+          for i in {1..36}; do
             code=$(curl -L -s -o /dev/null -w '%{http_code}' "$URL" || true)
             if [ "$code" = "200" ]; then exit 0; fi
-            sleep 10
+            sleep 5
           done
           echo "GitHub Pages did not return HTTP 200: $URL"
           exit 1
-      - name: Run Lighthouse
+      - name: Run Lighthouse and enforce 100/100/100/100
         env:
           URL: https://mowhmmdh.github.io${{ matrix.page }}
         run: |
           mkdir -p reports
-          lighthouse "$URL" --output=json --output-path="reports/report.json" --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          lighthouse "$URL" \
+            --output=json \
+            --output-path="reports/report.json" \
+            --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
+            --quiet
           node - <<'NODE'
-          const fs=require('fs');
-          const r=JSON.parse(fs.readFileSync('reports/report.json','utf8'));
-          const c=r.categories,s={};
-          for(const k of ['performance','accessibility','best-practices','seo']) s[k]=Math.round((c[k]?.score??0)*100);
-          console.log(JSON.stringify(s,null,2));
-          if(Object.values(s).some(v=>v<100)) process.exit(1);
+          const fs = require('fs');
+          const r = JSON.parse(fs.readFileSync('reports/report.json', 'utf8'));
+          const categories = r.categories || {};
+          const scores = {};
+          for (const key of ['performance', 'accessibility', 'best-practices', 'seo']) {
+            scores[key] = Math.round((categories[key]?.score ?? 0) * 100);
+          }
+          console.log(`Page: ${process.env.URL}`);
+          console.log(JSON.stringify(scores, null, 2));
+          const failed = Object.entries(scores).filter(([, score]) => score !== 100);
+          if (failed.length) {
+            console.error('Lighthouse 100 gate failed:', failed);
+            process.exit(1);
+          }
           NODE
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page }}
+          name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page.replaceAll('/', '-') }}
           path: reports/report.json
           retention-days: 14
