@@ -11,42 +11,23 @@
   --va-surface:var(--fv-surface,var(--uf-surface,#101923));
   --va-surface2:var(--fv-surface2,var(--uf-surface2,#162331));
 }
-
-/* Kill layout surprises from legacy inline styles without changing content. */
 html,body{max-width:100%;overflow-x:hidden}
 main{min-width:0}
 img,svg,video,canvas,iframe{max-width:100%}
 img[width][height]{height:auto}
-
-/* Consistent content width and vertical rhythm. */
 .site-wrap,.wrap,.en-page,.vt-container{width:min(var(--va-max),calc(100% - 32px));margin-inline:auto}
 .section,.vt-section{scroll-margin-top:96px}
-
-/* Navigation: one predictable shell on all personal pages. */
 .site-nav,.about-nav,.en-nav,.nav{min-height:68px!important}
 .nav-links a,.about-nav-links a,.en-nav a{border-radius:10px}
 .nav-links a[aria-current=page],.about-nav-links a[aria-current=page],.en-nav a[aria-current=page]{color:var(--va-accent)!important}
-
-/* Buttons: uniform geometry and readable hierarchy. */
 .btn,.button,.vt-btn{min-height:48px!important;border-radius:13px!important;font-weight:800!important}
 .actions,.hero-actions,.vt-actions{align-items:stretch}
-
-/* Cards: equal-height grids, restrained depth, clean surfaces. */
 .grid-2,.grid-3,.services-grid,.projects-grid,.skills-grid,.cards-grid,.vt-grid,.vt-expertise,.vt-steps{align-items:stretch}
 .grid-2>* ,.grid-3>* ,.services-grid>* ,.projects-grid>* ,.skills-grid>* ,.cards-grid>* ,.vt-grid>* ,.vt-expertise>* ,.vt-steps>*{min-width:0}
-.card,.post-card,.service-card,.project-card,.about-card,.skill-category,.feature-card,.metric,.stat,.surface,.cluster,.process-step,.vt-card,.vt-expertise>div,.vt-steps>div{
-  min-width:0;
-  border:1px solid var(--va-line)!important;
-  border-radius:var(--va-radius)!important;
-  background:linear-gradient(145deg,var(--va-surface),color-mix(in srgb,var(--va-surface2) 62%,var(--va-surface)))!important;
-  color:var(--va-text)!important;
-  box-shadow:0 14px 42px rgba(0,0,0,.08)!important;
-}
+.card,.post-card,.service-card,.project-card,.about-card,.skill-category,.feature-card,.metric,.stat,.surface,.cluster,.process-step,.vt-card,.vt-expertise>div,.vt-steps>div{min-width:0;border:1px solid var(--va-line)!important;border-radius:var(--va-radius)!important;background:linear-gradient(145deg,var(--va-surface),color-mix(in srgb,var(--va-surface2) 62%,var(--va-surface)))!important;color:var(--va-text)!important;box-shadow:0 14px 42px rgba(0,0,0,.08)!important}
 .card p,.post-card p,.service-card p,.project-card p,.about-card p,.skill-category p,.feature-card p,.vt-card p,.vt-expertise p,.vt-steps p{color:var(--va-muted)!important}
 .card h2,.card h3,.post-card h2,.post-card h3,.service-card h2,.service-card h3,.project-card h2,.project-card h3,.about-card h3,.skill-category h3,.feature-card h3,.vt-card h3,.vt-expertise h3,.vt-steps h3{color:var(--va-text)!important}
 .card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.about-card:hover,.skill-category:hover,.feature-card:hover,.metric:hover,.stat:hover,.surface:hover,.cluster:hover,.process-step:hover,.vt-card:hover,.vt-expertise>div:hover,.vt-steps>div:hover{border-color:color-mix(in srgb,var(--va-accent) 42%,var(--va-line))!important;box-shadow:0 24px 70px rgba(0,0,0,.13)!important}
-
-/* Home: preserve the portrait and create a strong editorial hero. */
 .page-home .hero-grid{align-items:center}
 .page-home .profile-card{overflow:hidden;border-radius:26px!important}
 .page-home .profile-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top}
@@ -54,14 +35,11 @@ img[width][height]{height:auto}
 .page-home .stats{align-items:stretch}
 .page-home .stat{min-height:110px;padding:20px!important}
 .page-home .stat b{color:var(--va-accent)!important}
-
-/* About / services / projects: deliberate card hierarchy. */
 .page-about .about-grid,.page-services .services-grid,.page-projects .projects-grid{align-items:stretch;gap:var(--va-gap)}
 .page-about .about-card,.page-services .service-card,.page-projects .project-card{height:100%;display:flex;flex-direction:column}
 .page-services .service-card ul,.page-projects .project-card ul{margin-top:auto}
 .page-services .service-card.feature,.page-projects .project-card.feature{min-height:300px}
-
-/* Blog index and articles: prioritize reading comfort over decoration. */
+.page-services .cta,.page-projects .note{position:relative;overflow:hidden}
 .page-blog .grid{align-items:stretch;gap:var(--va-gap)}
 .page-blog .grid .card,.page-blog .grid .post-card{height:100%;display:flex;flex-direction:column;min-height:285px}
 .page-blog .grid .featured{min-height:340px}
@@ -72,12 +50,8 @@ img[width][height]{height:auto}
 .page-blog:has(.article) .article h2{border-inline-start:3px solid var(--va-accent);padding-inline-start:14px}
 .page-blog:has(.article) .article img{display:block;margin-inline:auto;border-radius:18px;max-width:100%;height:auto}
 .page-blog:has(.article) .article pre,.page-blog:has(.article) .article table{max-width:100%;overflow:auto}
-
-/* English shells: prevent LTR/RTL geometry drift. */
 html[dir=ltr] .en-page,html[dir=ltr] .site-wrap,html[dir=ltr] .wrap{direction:ltr}
 html[dir=rtl] .en-page{direction:rtl}
-
-/* VinTech hub/service: keep brand identity while removing hard-coded light hover artifacts. */
 html[data-theme=dark] .vt-card:hover{background:var(--vt-surface2)!important;color:var(--vt-text)!important}
 html[data-theme=dark] .vt-card:hover h3,html[data-theme=dark] .vt-card:hover p{color:var(--vt-text)!important}
 html[data-theme=light] .vt-card:hover{background:var(--vt-bg2)!important;color:var(--vt-text)!important}
@@ -87,18 +61,12 @@ html[data-theme=light] .vt-card:hover{background:var(--vt-bg2)!important;color:v
 .page-service main{max-width:1220px;margin-inline:auto}
 .page-service main>.section{border-top:1px solid var(--va-line);padding-block:clamp(52px,7vw,88px)}
 .page-service main>.section:first-child{border-top:0;padding-top:clamp(56px,8vw,96px)}
-
-/* Forms, tables and code remain usable on narrow screens. */
 form{max-width:900px;margin-inline:auto}
 input,textarea,select{max-width:100%;min-height:48px;border-radius:12px!important}
 textarea{min-height:145px}
 table{max-width:100%}
 pre{max-width:100%;overflow:auto}
-
-/* Remove global content-visibility from above-the-fold imagery; stabilize instead. */
 img{content-visibility:visible!important}
-
-/* Mobile: one clean column and no cramped horizontal navigation. */
 @media(max-width:760px){
   .site-wrap,.wrap,.en-page,.vt-container{width:calc(100% - 24px)}
   .site-nav,.about-nav,.en-nav,.nav{min-height:62px!important}
@@ -115,18 +83,132 @@ img{content-visibility:visible!important}
 }
 @media(max-width:430px){
   body{font-size:15px}
-  .hero h1{font-size:clamp(1.95rem,11vw,2.8rem)!important}
-  .vt-hero h1{font-size:clamp(2.15rem,12vw,3.1rem)!important}
+  .hero h1{font-size:clamp(1.95rem,11vw,2.8rem)}
+  .vt-hero h1{font-size:clamp(2.15rem,12vw,3.1rem)}
 }
-
-/* TV / very wide displays. */
 @media(min-width:1600px){
   .site-wrap,.wrap,.en-page,.vt-container{width:min(1360px,calc(100% - 64px))}
   .section,.vt-section{padding-block:96px}
 }
-
 @media(hover:none){
   .card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.about-card:hover,.skill-category:hover,.feature-card:hover,.metric:hover,.stat:hover,.surface:hover,.cluster:hover,.process-step:hover,.vt-card:hover,.vt-expertise>div:hover,.vt-steps>div:hover{transform:none!important}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
 @media(forced-colors:active){.card,.post-card,.service-card,.project-card,.about-card,.vt-card{border:1px solid CanvasText!important}}
+
+/* Precision normalization — fixes structural drift left by page-specific legacy CSS. */
+:root{--va-header-h:72px;--va-content:1240px;--va-control-h:50px;--va-radius-xl:24px}
+body{font-synthesis:none;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+main>section,main>header{scroll-margin-top:calc(var(--va-header-h) + 18px)}
+main>section.wrap:not(.hero),main>section.site-wrap:not(.hero){padding-block:clamp(34px,5vw,68px)}
+main>section.wrap+section.wrap,main>section.site-wrap+section.site-wrap{margin-top:0}
+
+/* One navigation language across the legacy, blog and English shells. */
+.site-nav,.about-nav,.en-nav,.nav{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:16px!important;padding:10px 14px!important;border:1px solid var(--va-line)!important;border-radius:18px!important;background:color-mix(in srgb,var(--va-surface) 92%,transparent)!important;box-shadow:0 10px 32px rgba(0,0,0,.06)!important;backdrop-filter:blur(18px) saturate(135%);-webkit-backdrop-filter:blur(18px) saturate(135%)}
+.site-nav{margin-top:12px!important}
+.nav>a:first-child,.about-nav strong,.en-nav>a:first-child,.site-nav .brand{flex:0 0 auto;color:var(--va-text)!important;font-weight:900!important;text-decoration:none!important}
+.nav>div,.about-nav-links,.en-nav-links,.site-nav .nav-links{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:4px!important;margin:0!important;min-width:0}
+.nav>div a,.about-nav-links a,.en-nav-links a,.site-nav .nav-links a{margin:0!important;padding:9px 11px!important;color:var(--va-muted)!important;font-size:.86rem!important;line-height:1.2!important;white-space:nowrap!important;text-decoration:none!important;transition:background .2s ease,color .2s ease,transform .2s ease}
+.nav>div a:hover,.about-nav-links a:hover,.en-nav-links a:hover,.site-nav .nav-links a:hover{color:var(--va-text)!important;background:color-mix(in srgb,var(--va-accent) 8%,transparent)!important;transform:translateY(-1px)}
+.site-nav .nav-actions{display:flex!important;align-items:center!important;gap:8px!important;flex:0 0 auto}
+.theme-toggle,.mobile-menu{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;padding:0!important;border:1px solid var(--va-line)!important;border-radius:12px!important;background:var(--va-surface)!important;color:var(--va-text)!important;display:inline-grid!important;place-items:center!important}
+
+/* Headers and section starts: same visual cadence everywhere. */
+.hero,.about-hero,.en-hero,.vt-hero{padding-block-start:clamp(54px,8vw,98px)!important}
+.hero-kicker,.hero .kicker,.about-eyebrow,.about-hero .about-eyebrow,.hero-kicker,.vt-kicker{line-height:1.4}
+.hero h1,.about-hero h1,.en-hero h1,.vt-hero h1{margin-block:14px 18px!important}
+.hero p,.hero-copy,.about-hero p,.en-hero p,.vt-lead{margin-block:0 24px!important}
+.section>h2,.about-section>h2,.vt-section h2{margin-block:8px 12px!important}
+.section>.lead,.about-section>.lead,.vt-section-head>p{margin-block:0 24px!important}
+
+/* Buttons: consistent height, padding, alignment and wrapping. */
+.btn,.button,.vt-btn,.read,.about-links a{box-sizing:border-box!important}
+.btn,.button,.vt-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;min-height:var(--va-control-h)!important;padding:11px 17px!important;border:1px solid var(--va-line)!important;line-height:1.2!important;text-align:center!important;text-decoration:none!important;white-space:normal!important}
+.btn:not(.primary):not(.btn-primary),.button:not(.primary),.vt-btn:not(.primary){background:var(--va-surface)!important;color:var(--va-text)!important}
+.btn.primary,.btn-primary,.button.primary{background:linear-gradient(135deg,var(--va-accent),color-mix(in srgb,var(--va-accent) 72%,white))!important;color:#101820!important}
+.actions,.hero-actions,.vt-actions{display:flex;flex-wrap:wrap;gap:10px!important;margin-top:22px}
+
+/* Equal-height cards with stable internal alignment. */
+.card,.post-card,.service-card,.project-card,.about-card,.skill-category,.feature-card,.metric,.stat,.surface,.cluster,.process-step,.vt-card,.vt-expertise>div,.vt-steps>div{isolation:isolate}
+.card>*,.post-card>*,.service-card>*,.project-card>*,.about-card>*,.vt-card>*,.vt-expertise>div>*,.vt-steps>div>*{position:relative;z-index:1}
+.card h2,.card h3,.post-card h2,.post-card h3,.service-card h2,.service-card h3,.project-card h2,.project-card h3,.about-card h3,.vt-card h3{margin-block:8px 10px;line-height:1.35!important}
+.card p,.post-card p,.service-card p,.project-card p,.about-card p,.vt-card p{margin-block:0 14px}
+.service-card ul,.project-card ul{margin-block:14px 0!important}
+.case-meta,.meta,.topics,.signals,.vt-trust{display:flex;flex-wrap:wrap;align-items:center;gap:8px!important}
+.case-meta span,.meta span,.topics span,.signals .signal,.vt-trust span{max-width:100%;line-height:1.35}
+
+/* Grid balance on desktop/tablet. */
+.services-grid,.projects-grid,.grid-3,.grid-2,.skills-grid,.cards-grid{gap:18px!important}
+.process{gap:14px!important}
+.architecture{gap:12px!important}
+
+/* Forms and action rows. */
+input,textarea,select{box-sizing:border-box!important;width:100%!important;padding:12px 14px!important;line-height:1.5!important}
+button{font-family:inherit}
+form .actions,form .hero-actions{margin-top:20px}
+
+/* Footer spacing and link rhythm. */
+.footer,.site-footer,.vt-footer{margin-top:30px!important}
+.footer,.vt-footer-inner{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.footer a,.vt-footer a{color:var(--va-muted)}
+
+/* VinTech remains branded, but shares the same geometry. */
+.vt-container{width:min(1180px,calc(100% - 32px))}
+.vt-nav{min-height:72px!important}
+.vt-nav-inner{min-height:72px!important;gap:16px!important}
+.vt-links{gap:4px!important}
+.vt-links a{padding:9px 12px!important}
+.vt-actions{margin-top:22px}
+.vt-section-head{margin-bottom:28px!important}
+.vt-card{padding:24px!important;min-height:250px}
+.vt-card a{margin-top:auto!important}
+.vt-cta{border-radius:var(--va-radius-xl)!important}
+
+/* Legacy mobile menus have no JS hamburger; use a deliberate horizontal nav instead of hiding it. */
+@media(max-width:760px){
+  .site-nav,.about-nav,.en-nav,.nav{width:calc(100% - 24px)!important;margin-inline:auto!important;padding:8px 10px!important;border-radius:16px!important}
+  .nav>div,.about-nav-links,.en-nav-links,.site-nav .nav-links{display:flex!important;flex:1 1 auto!important;justify-content:flex-start!important;overflow-x:auto!important;overflow-y:hidden!important;max-width:68vw!important;gap:3px!important;scrollbar-width:none!important;white-space:nowrap!important}
+  .nav>div::-webkit-scrollbar,.about-nav-links::-webkit-scrollbar,.en-nav-links::-webkit-scrollbar,.site-nav .nav-links::-webkit-scrollbar{display:none}
+  .nav>div a,.about-nav-links a,.en-nav-links a,.site-nav .nav-links a{flex:0 0 auto!important;padding:9px 10px!important;font-size:.78rem!important}
+  .nav>a:first-child,.about-nav strong,.en-nav>a:first-child,.site-nav .brand{font-size:.9rem!important}
+  .site-nav .nav-actions{gap:5px!important}
+  .site-nav .nav-actions .mobile-menu{display:inline-grid!important}
+  .hero,.about-hero,.en-hero,.vt-hero{padding-block-start:50px!important}
+  .hero h1,.about-hero h1,.en-hero h1{line-height:1.12!important}
+  .actions,.hero-actions,.vt-actions{display:grid!important;grid-template-columns:1fr!important;width:100%!important}
+  .actions .btn,.hero-actions .btn,.vt-actions .vt-btn{width:100%!important}
+  main>section.wrap:not(.hero),main>section.site-wrap:not(.hero){padding-block:28px 48px}
+  .services-grid,.projects-grid,.grid-3,.grid-2,.skills-grid,.cards-grid{gap:14px!important}
+  .service-card,.project-card,.about-card,.card,.post-card{padding:20px!important}
+  .page-services .service-card.feature,.page-projects .project-card.feature{min-height:0!important}
+  .process{grid-template-columns:1fr!important}
+  .architecture{grid-template-columns:1fr!important}
+  .about-links{display:grid!important;grid-template-columns:1fr!important}
+  .about-links a{width:100%!important;justify-content:center!important}
+  .page-blog .grid .card,.page-blog .grid .post-card{min-height:0!important}
+  .page-blog:has(.article) main{padding-inline:12px!important}
+  .page-blog:has(.article) .article{padding:22px 17px!important}
+  .vt-nav-inner{min-height:62px!important}
+  .vt-links{position:absolute!important;left:12px;right:12px;top:calc(100% + 8px);display:none!important;flex-direction:column!important;align-items:stretch!important;padding:10px!important;border:1px solid var(--vt-line);border-radius:16px;background:var(--vt-bg2);box-shadow:0 20px 50px rgba(0,0,0,.18)}
+  .vt-links.is-open{display:flex!important}
+  .vt-links a{width:100%!important;text-align:center!important}
+  .vt-menu{display:block!important}
+  .vt-hero-grid{grid-template-columns:1fr!important;gap:30px!important}
+  .vt-hero-visual{min-height:280px!important}
+  .vt-orbit{width:min(300px,76vw)!important}
+  .vt-cta{display:grid!important;grid-template-columns:1fr!important;padding:26px!important;gap:20px!important}
+}
+@media(max-width:430px){
+  .nav>div,.about-nav-links,.en-nav-links,.site-nav .nav-links{max-width:62vw!important}
+  .theme-toggle,.mobile-menu{width:42px!important;height:42px!important;min-width:42px!important}
+  .nav>a:first-child,.about-nav strong,.en-nav>a:first-child,.site-nav .brand{font-size:.84rem!important}
+  .hero h1,.about-hero h1,.en-hero h1{font-size:clamp(1.9rem,11vw,2.7rem)!important}
+}
+
+/* Keep hover effects only where a pointer actually exists. */
+@media(hover:hover){
+  .btn:hover,.button:hover,.vt-btn:hover,.about-links a:hover{transform:translateY(-2px)!important}
+}
+@media(hover:none){
+  .btn:hover,.button:hover,.vt-btn:hover,.about-links a:hover{transform:none!important}
+}
