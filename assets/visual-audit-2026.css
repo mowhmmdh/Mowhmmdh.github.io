@@ -1,0 +1,132 @@
+/* Final visual audit layer 2026 — last stylesheet loaded on every page. */
+:root{
+  --va-radius:20px;
+  --va-radius-sm:14px;
+  --va-gap:clamp(12px,2vw,20px);
+  --va-max:1280px;
+  --va-accent:var(--fv-accent,var(--uf-accent,#d6ad5b));
+  --va-text:var(--fv-text,var(--uf-text,#f5f8fb));
+  --va-muted:var(--fv-muted,var(--uf-muted,#a9b6c4));
+  --va-line:var(--fv-line,var(--uf-line,rgba(255,255,255,.1)));
+  --va-surface:var(--fv-surface,var(--uf-surface,#101923));
+  --va-surface2:var(--fv-surface2,var(--uf-surface2,#162331));
+}
+
+/* Kill layout surprises from legacy inline styles without changing content. */
+html,body{max-width:100%;overflow-x:hidden}
+main{min-width:0}
+img,svg,video,canvas,iframe{max-width:100%}
+img[width][height]{height:auto}
+
+/* Consistent content width and vertical rhythm. */
+.site-wrap,.wrap,.en-page,.vt-container{width:min(var(--va-max),calc(100% - 32px));margin-inline:auto}
+.section,.vt-section{scroll-margin-top:96px}
+
+/* Navigation: one predictable shell on all personal pages. */
+.site-nav,.about-nav,.en-nav,.nav{min-height:68px!important}
+.nav-links a,.about-nav-links a,.en-nav a{border-radius:10px}
+.nav-links a[aria-current=page],.about-nav-links a[aria-current=page],.en-nav a[aria-current=page]{color:var(--va-accent)!important}
+
+/* Buttons: uniform geometry and readable hierarchy. */
+.btn,.button,.vt-btn{min-height:48px!important;border-radius:13px!important;font-weight:800!important}
+.actions,.hero-actions,.vt-actions{align-items:stretch}
+
+/* Cards: equal-height grids, restrained depth, clean surfaces. */
+.grid-2,.grid-3,.services-grid,.projects-grid,.skills-grid,.cards-grid,.vt-grid,.vt-expertise,.vt-steps{align-items:stretch}
+.grid-2>* ,.grid-3>* ,.services-grid>* ,.projects-grid>* ,.skills-grid>* ,.cards-grid>* ,.vt-grid>* ,.vt-expertise>* ,.vt-steps>*{min-width:0}
+.card,.post-card,.service-card,.project-card,.about-card,.skill-category,.feature-card,.metric,.stat,.surface,.cluster,.process-step,.vt-card,.vt-expertise>div,.vt-steps>div{
+  min-width:0;
+  border:1px solid var(--va-line)!important;
+  border-radius:var(--va-radius)!important;
+  background:linear-gradient(145deg,var(--va-surface),color-mix(in srgb,var(--va-surface2) 62%,var(--va-surface)))!important;
+  color:var(--va-text)!important;
+  box-shadow:0 14px 42px rgba(0,0,0,.08)!important;
+}
+.card p,.post-card p,.service-card p,.project-card p,.about-card p,.skill-category p,.feature-card p,.vt-card p,.vt-expertise p,.vt-steps p{color:var(--va-muted)!important}
+.card h2,.card h3,.post-card h2,.post-card h3,.service-card h2,.service-card h3,.project-card h2,.project-card h3,.about-card h3,.skill-category h3,.feature-card h3,.vt-card h3,.vt-expertise h3,.vt-steps h3{color:var(--va-text)!important}
+.card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.about-card:hover,.skill-category:hover,.feature-card:hover,.metric:hover,.stat:hover,.surface:hover,.cluster:hover,.process-step:hover,.vt-card:hover,.vt-expertise>div:hover,.vt-steps>div:hover{border-color:color-mix(in srgb,var(--va-accent) 42%,var(--va-line))!important;box-shadow:0 24px 70px rgba(0,0,0,.13)!important}
+
+/* Home: preserve the portrait and create a strong editorial hero. */
+.page-home .hero-grid{align-items:center}
+.page-home .profile-card{overflow:hidden;border-radius:26px!important}
+.page-home .profile-card img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:center top}
+.page-home .profile-caption{position:relative;z-index:2}
+.page-home .stats{align-items:stretch}
+.page-home .stat{min-height:110px;padding:20px!important}
+.page-home .stat b{color:var(--va-accent)!important}
+
+/* About / services / projects: deliberate card hierarchy. */
+.page-about .about-grid,.page-services .services-grid,.page-projects .projects-grid{align-items:stretch;gap:var(--va-gap)}
+.page-about .about-card,.page-services .service-card,.page-projects .project-card{height:100%;display:flex;flex-direction:column}
+.page-services .service-card ul,.page-projects .project-card ul{margin-top:auto}
+.page-services .service-card.feature,.page-projects .project-card.feature{min-height:300px}
+
+/* Blog index and articles: prioritize reading comfort over decoration. */
+.page-blog .grid{align-items:stretch;gap:var(--va-gap)}
+.page-blog .grid .card,.page-blog .grid .post-card{height:100%;display:flex;flex-direction:column;min-height:285px}
+.page-blog .grid .featured{min-height:340px}
+.page-blog .read,.page-blog .post-foot{margin-top:auto}
+.page-blog:has(.article) main{max-width:1220px;margin-inline:auto;padding-inline:16px}
+.page-blog:has(.article) main>h1{max-width:920px;margin-inline:auto;text-wrap:balance}
+.page-blog:has(.article) .article{max-width:900px;margin:32px auto 0;padding:clamp(24px,5vw,58px)!important;border-radius:24px!important;line-height:2.05!important}
+.page-blog:has(.article) .article h2{border-inline-start:3px solid var(--va-accent);padding-inline-start:14px}
+.page-blog:has(.article) .article img{display:block;margin-inline:auto;border-radius:18px;max-width:100%;height:auto}
+.page-blog:has(.article) .article pre,.page-blog:has(.article) .article table{max-width:100%;overflow:auto}
+
+/* English shells: prevent LTR/RTL geometry drift. */
+html[dir=ltr] .en-page,html[dir=ltr] .site-wrap,html[dir=ltr] .wrap{direction:ltr}
+html[dir=rtl] .en-page{direction:rtl}
+
+/* VinTech hub/service: keep brand identity while removing hard-coded light hover artifacts. */
+html[data-theme=dark] .vt-card:hover{background:var(--vt-surface2)!important;color:var(--vt-text)!important}
+html[data-theme=dark] .vt-card:hover h3,html[data-theme=dark] .vt-card:hover p{color:var(--vt-text)!important}
+html[data-theme=light] .vt-card:hover{background:var(--vt-bg2)!important;color:var(--vt-text)!important}
+.vt-orbit i{background:var(--vt-surface)!important;color:var(--vt-text)!important;border-color:var(--vt-line)!important}
+.page-vintech .vt-card,.page-service .vt-card{height:100%;display:flex;flex-direction:column}
+.page-vintech .vt-card>a,.page-service .vt-card>a{margin-top:auto}
+.page-service main{max-width:1220px;margin-inline:auto}
+.page-service main>.section{border-top:1px solid var(--va-line);padding-block:clamp(52px,7vw,88px)}
+.page-service main>.section:first-child{border-top:0;padding-top:clamp(56px,8vw,96px)}
+
+/* Forms, tables and code remain usable on narrow screens. */
+form{max-width:900px;margin-inline:auto}
+input,textarea,select{max-width:100%;min-height:48px;border-radius:12px!important}
+textarea{min-height:145px}
+table{max-width:100%}
+pre{max-width:100%;overflow:auto}
+
+/* Remove global content-visibility from above-the-fold imagery; stabilize instead. */
+img{content-visibility:visible!important}
+
+/* Mobile: one clean column and no cramped horizontal navigation. */
+@media(max-width:760px){
+  .site-wrap,.wrap,.en-page,.vt-container{width:calc(100% - 24px)}
+  .site-nav,.about-nav,.en-nav,.nav{min-height:62px!important}
+  .hero-grid,.about-grid,.services-grid,.projects-grid,.skills-grid,.grid-3,.grid-2,.vt-grid,.vt-expertise,.vt-steps{grid-template-columns:1fr!important}
+  .actions,.hero-actions,.vt-actions{display:grid!important;grid-template-columns:1fr!important;width:100%!important}
+  .actions .btn,.hero-actions .btn,.vt-actions .vt-btn{width:100%!important}
+  .page-home .stats{grid-template-columns:1fr!important}
+  .page-home .stat{min-height:88px}
+  .card,.post-card,.service-card,.project-card,.about-card,.vt-card{border-radius:16px!important}
+  .page-services .service-card.feature,.page-projects .project-card.feature,.page-blog .grid .featured{min-height:auto}
+  .page-blog:has(.article) .article{padding:22px 18px!important;border-radius:18px!important}
+  .page-service main>.section{padding-block:48px}
+  .footer,.vt-footer-inner{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:430px){
+  body{font-size:15px}
+  .hero h1{font-size:clamp(1.95rem,11vw,2.8rem)!important}
+  .vt-hero h1{font-size:clamp(2.15rem,12vw,3.1rem)!important}
+}
+
+/* TV / very wide displays. */
+@media(min-width:1600px){
+  .site-wrap,.wrap,.en-page,.vt-container{width:min(1360px,calc(100% - 64px))}
+  .section,.vt-section{padding-block:96px}
+}
+
+@media(hover:none){
+  .card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.about-card:hover,.skill-category:hover,.feature-card:hover,.metric:hover,.stat:hover,.surface:hover,.cluster:hover,.process-step:hover,.vt-card:hover,.vt-expertise>div:hover,.vt-steps>div:hover{transform:none!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+@media(forced-colors:active){.card,.post-card,.service-card,.project-card,.about-card,.vt-card{border:1px solid CanvasText!important}}
