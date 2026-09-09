@@ -61,6 +61,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Prepare artifact name
+        run: |
+          safe_page=$(printf '%s' "${{ matrix.page }}" | sed 's#^/##; s#/#-#g')
+          [ -n "$safe_page" ] || safe_page=home
+          echo "ARTIFACT_NAME=lighthouse-$safe_page" >> "$GITHUB_ENV"
       - name: Install Lighthouse
         run: npm install --global lighthouse@13
       - name: Wait until GitHub Pages serves the page
@@ -100,13 +105,8 @@ jobs:
             process.exit(1);
           }
           NODE
-          safe_page=$(printf '%s' "${{ matrix.page }}" | sed 's#^/##; s#/#-#g')
-          [ -n "$safe_page" ] || safe_page=home
-          echo "ARTIFACT_NAME=lighthouse-$safe_page" >> "$GITHUB_ENV"
       - if: always()
         uses: actions/upload-artifact@v4
-        env:
-          ARTIFACT_NAME: ${{ env.ARTIFACT_NAME || format('lighthouse-{0}', matrix.page) }}
         with:
           name: ${{ env.ARTIFACT_NAME }}
           path: reports/report.json
