@@ -1,0 +1,100 @@
+/* Interaction & Conversational UX 2026
+   A restrained final layer: clearer hierarchy, warmer interaction, better scanning,
+   consistent responsive behavior, and a lightweight human-style navigation prompt. */
+
+.personal-site{
+  --ix-max:1240px;
+  --ix-reading:760px;
+  --ix-accent:#35c8ff;
+  --ix-accent-2:#7c5cff;
+  --ix-radius:20px;
+  --ix-border:rgba(127,127,127,.16);
+  --ix-surface:rgba(255,255,255,.76);
+  --ix-shadow:0 16px 45px rgba(15,23,42,.08);
+}
+.personal-site main{isolation:isolate}
+.personal-site main>section{position:relative}
+.personal-site .site-wrap,.personal-site .section{width:min(calc(100% - 2rem),var(--ix-max))}
+.personal-site .section{padding-block:clamp(3.5rem,7vw,6.5rem)}
+.personal-site .section:first-child{padding-top:clamp(3.25rem,7vw,7rem)}
+.personal-site h1,.personal-site h2,.personal-site h3{overflow-wrap:anywhere}
+.personal-site h1{font-size:clamp(2.25rem,5.2vw,4.7rem);line-height:1.04;letter-spacing:-.045em}
+.personal-site .hero h1 span{font-size:clamp(.72rem,1.7vw,1.1rem);line-height:1.35;margin-top:.85rem;letter-spacing:-.01em}
+.personal-site .hero-copy{max-width:680px;font-size:clamp(1rem,1.35vw,1.12rem);line-height:1.95}
+.personal-site .hero-grid{gap:clamp(2rem,5vw,5rem)}
+.personal-site .profile-card{transform:none;border-radius:24px}
+.personal-site .profile-card:hover{transform:translateY(-4px)}
+.personal-site .stats{grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border:1px solid var(--ix-border);border-radius:18px;overflow:hidden;background:rgba(127,127,127,.025)}
+.personal-site .stat{min-height:108px;border-top:0;border-inline-start:1px solid var(--ix-border);padding:1rem 1.2rem}
+.personal-site .stat:first-child{border-inline-start:0}
+.personal-site .grid-3{align-items:stretch;gap:1.1rem}
+.personal-site .card,.personal-site .post-card,.personal-site .project-card,.personal-site .service-card{height:100%;display:flex;flex-direction:column}
+.personal-site .card p,.personal-site .post-card p,.personal-site .project-card p,.personal-site .service-card p{max-width:62ch}
+.personal-site .post-foot{margin-top:auto;padding-top:1.1rem}
+.personal-site a:not(.btn):not(.post-foot){text-underline-offset:.18em}
+.personal-site .actions .btn{min-height:48px}
+.personal-site .actions .btn.primary{box-shadow:0 14px 34px rgba(53,200,255,.16)}
+.personal-site .terminal{border-radius:18px}
+.personal-site .social-row a{min-height:44px}
+.personal-site footer{padding-bottom:max(1.5rem,env(safe-area-inset-bottom))}
+
+/* Generic layouts used by secondary pages */
+.personal-site .cards,.personal-site .cards-grid,.personal-site .services-grid,.personal-site .projects-grid,.personal-site .posts-grid,.personal-site .features,.personal-site .feature-grid,.personal-site .two-col,.personal-site .content-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem;align-items:stretch}
+.personal-site .cards>* ,.personal-site .cards-grid>* ,.personal-site .services-grid>* ,.personal-site .projects-grid>* ,.personal-site .posts-grid>* ,.personal-site .features>* ,.personal-site .feature-grid>* ,.personal-site .content-grid>*{min-width:0}
+.personal-site .two-col{grid-template-columns:repeat(2,minmax(0,1fr))}
+.personal-site .prose,.personal-site .article-content,.personal-site .post-content{max-width:var(--ix-reading)}
+.personal-site .prose img,.personal-site .article-content img,.personal-site .post-content img{max-width:100%;height:auto;border-radius:16px}
+.personal-site table{display:block;overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.personal-site .hero+.section,.personal-site .hero~.section{scroll-margin-top:6rem}
+
+/* Small visual cue that the page is interactive without adding visual noise */
+.personal-site .card,.personal-site .post-card,.personal-site .project-card,.personal-site .service-card,.personal-site .social-row a,.personal-site .btn{will-change:auto}
+.personal-site .card:focus-within,.personal-site .post-card:focus-within,.personal-site .project-card:focus-within,.personal-site .service-card:focus-within{border-color:rgba(53,200,255,.42);box-shadow:0 16px 44px rgba(53,200,255,.09)}
+
+/* Conversational navigation dock */
+.ux-conversation{position:fixed;inset:auto 1.1rem 1.1rem auto;z-index:1200;font-family:inherit;direction:rtl}
+.ux-conversation[hidden]{display:none}
+.ux-conversation__panel{width:min(360px,calc(100vw - 2rem));margin-bottom:.65rem;padding:1rem;border:1px solid var(--ix-border);border-radius:20px;background:color-mix(in srgb,var(--ix-surface,#fff) 92%,transparent);backdrop-filter:blur(18px) saturate(1.15);box-shadow:0 24px 70px rgba(0,0,0,.16)}
+.ux-conversation__head{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;margin-bottom:.8rem}
+.ux-conversation__eyebrow{font-size:.7rem;font-weight:900;letter-spacing:.06em;color:var(--ix-accent,#35c8ff);text-transform:uppercase}
+.ux-conversation__title{margin:.15rem 0 0;font-size:1rem;font-weight:900;color:inherit}
+.ux-conversation__close{width:34px;height:34px;border:1px solid var(--ix-border);border-radius:10px;background:transparent;color:inherit;cursor:pointer}
+.ux-conversation__grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.ux-conversation__choice{display:flex;align-items:center;gap:.55rem;min-height:46px;padding:.65rem .7rem;border:1px solid var(--ix-border);border-radius:12px;background:rgba(127,127,127,.045);color:inherit;text-decoration:none;font-weight:750;line-height:1.35}
+.ux-conversation__choice:hover{border-color:rgba(53,200,255,.4);background:rgba(53,200,255,.08);transform:translateY(-1px)}
+.ux-conversation__choice span:first-child{font-size:1rem}
+.ux-conversation__note{margin:.75rem 0 0;color:var(--vm-muted,#667085);font-size:.76rem;line-height:1.65}
+.ux-conversation__toggle{display:inline-flex;align-items:center;gap:.5rem;min-height:48px;padding:.7rem .9rem;border:1px solid rgba(53,200,255,.3);border-radius:999px;background:linear-gradient(135deg,var(--ix-accent,#35c8ff),var(--ix-accent-2,#7c5cff));color:#061018;box-shadow:0 14px 35px rgba(53,200,255,.2);cursor:pointer;font:inherit;font-weight:900}
+.ux-conversation__toggle:hover{transform:translateY(-2px);box-shadow:0 18px 42px rgba(53,200,255,.25)}
+
+[data-theme="dark"] .personal-site{--ix-surface:rgba(13,18,29,.82);--ix-border:rgba(255,255,255,.12);--ix-shadow:0 20px 70px rgba(0,0,0,.3)}
+[data-theme="dark"] .ux-conversation__panel{box-shadow:0 24px 80px rgba(0,0,0,.42)}
+[data-theme="dark"] .ux-conversation__note{color:#a7b0c0}
+
+@media (max-width:900px){
+  .personal-site .hero-grid{grid-template-columns:1fr}
+  .personal-site .profile{max-width:620px;margin-inline:auto;width:100%}
+  .personal-site .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .personal-site .stat:nth-child(odd){border-inline-start:0}
+  .personal-site .stat:nth-child(n+3){border-top:1px solid var(--ix-border)}
+  .personal-site .cards,.personal-site .cards-grid,.personal-site .services-grid,.personal-site .projects-grid,.personal-site .posts-grid,.personal-site .features,.personal-site .feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .personal-site .site-wrap,.personal-site .section{width:min(calc(100% - 1.25rem),var(--ix-max))}
+  .personal-site .hero{padding-top:clamp(2.5rem,14vw,4.25rem)}
+  .personal-site h1{font-size:clamp(2rem,11vw,3.2rem);letter-spacing:-.04em}
+  .personal-site .section{padding-block:3.25rem}
+  .personal-site .actions{display:grid;grid-template-columns:1fr;gap:.55rem}
+  .personal-site .actions .btn{width:100%}
+  .personal-site .stats{grid-template-columns:1fr 1fr}
+  .personal-site .stat{min-height:96px;padding:.8rem}
+  .personal-site .stat b{font-size:1.35rem}
+  .personal-site .cards,.personal-site .cards-grid,.personal-site .services-grid,.personal-site .projects-grid,.personal-site .posts-grid,.personal-site .features,.personal-site .feature-grid,.personal-site .two-col,.personal-site .content-grid{grid-template-columns:1fr}
+  .ux-conversation{inset:auto .65rem .65rem .65rem}
+  .ux-conversation__panel{width:100%;margin-bottom:.55rem}
+  .ux-conversation__toggle{width:100%;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .personal-site *, .ux-conversation *{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
+}
+@media print{.ux-conversation{display:none!important}.personal-site .site-nav{position:static;box-shadow:none}.personal-site .card,.personal-site .post-card,.personal-site .project-card,.personal-site .service-card{break-inside:avoid}}
