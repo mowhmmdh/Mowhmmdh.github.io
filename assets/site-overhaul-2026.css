@@ -1,0 +1,120 @@
+/* Site Overhaul 2026 — final visual/UX layer
+   Loaded last so legacy page-specific styles cannot fragment the experience.
+   No content claims are introduced here. */
+:root{
+  --so-max:1280px;
+  --so-reading:780px;
+  --so-bg:#f5f7fb;
+  --so-surface:rgba(255,255,255,.82);
+  --so-solid:#fff;
+  --so-text:#111827;
+  --so-muted:#667085;
+  --so-line:rgba(17,24,39,.10);
+  --so-line-strong:rgba(17,24,39,.17);
+  --so-accent:#21b8ee;
+  --so-accent-2:#7058ff;
+  --so-radius:22px;
+  --so-shadow:0 14px 50px rgba(15,23,42,.08);
+  --so-shadow-hover:0 22px 70px rgba(15,23,42,.14);
+}
+html{background:var(--so-bg);scroll-behavior:smooth;scroll-padding-top:88px}
+body.personal-site{--so-bg:#f5f7fb;--so-surface:rgba(255,255,255,.82);--so-solid:#fff;--so-text:#111827;--so-muted:#667085;--so-line:rgba(17,24,39,.10);--so-line-strong:rgba(17,24,39,.17);--so-shadow:0 14px 50px rgba(15,23,42,.08);--so-shadow-hover:0 22px 70px rgba(15,23,42,.14);background:radial-gradient(900px 420px at 85% -10%,rgba(33,184,238,.10),transparent 62%),radial-gradient(700px 380px at 0 20%,rgba(112,88,255,.07),transparent 65%),var(--so-bg);color:var(--so-text)}
+body.personal-site[data-theme="dark"],body.personal-site[data-theme="dark"] *{--so-bg:#070b12;--so-surface:rgba(16,24,39,.78);--so-solid:#0f1724;--so-text:#f5f7fb;--so-muted:#a8b2c2;--so-line:rgba(255,255,255,.10);--so-line-strong:rgba(255,255,255,.17);--so-shadow:0 18px 65px rgba(0,0,0,.28);--so-shadow-hover:0 26px 90px rgba(0,0,0,.40)}
+body.personal-site[data-theme="dark"]{background:radial-gradient(1000px 500px at 85% -10%,rgba(33,184,238,.12),transparent 62%),radial-gradient(800px 420px at 0 20%,rgba(112,88,255,.11),transparent 65%),var(--so-bg)}
+body.personal-site:not(.vintech-modern){font-family:Vazirmatn,Inter,system-ui,sans-serif;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body.personal-site *{box-sizing:border-box}
+::selection{background:rgba(33,184,238,.24);color:inherit}
+
+/* Header families — make every page feel like one product. */
+body.personal-site .site-nav,body.personal-site .nav{position:sticky;top:10px;z-index:1000;width:min(calc(100% - 20px),var(--so-max));margin:10px auto 0;padding:8px 12px;border:1px solid var(--so-line);border-radius:18px;background:color-mix(in srgb,var(--so-solid) 82%,transparent);backdrop-filter:blur(18px) saturate(1.25);box-shadow:0 12px 38px rgba(15,23,42,.08);color:var(--so-text)}
+body.personal-site .site-nav{display:flex;align-items:center;gap:12px}
+body.personal-site .site-nav .brand,body.personal-site .nav>a:first-child{font-weight:900;color:inherit;text-decoration:none;white-space:nowrap}
+body.personal-site .site-nav .nav-links,body.personal-site .nav>div{display:flex;align-items:center;justify-content:center;gap:2px;flex-wrap:wrap}
+body.personal-site .site-nav .nav-links a,body.personal-site .nav a{color:inherit;text-decoration:none;padding:9px 11px;border-radius:11px;transition:.2s ease}
+body.personal-site .site-nav .nav-links a:hover,body.personal-site .nav a:hover{background:rgba(33,184,238,.09);color:var(--so-accent);transform:translateY(-1px)}
+body.personal-site .site-nav .nav-links a[aria-current="page"],body.personal-site .nav a[aria-current="page"]{background:rgba(33,184,238,.11);color:var(--so-accent);font-weight:850}
+body.personal-site .theme-toggle,body.personal-site .mobile-menu{min-width:44px;min-height:44px;border:1px solid var(--so-line);border-radius:12px;background:var(--so-surface);color:inherit}
+
+/* Global page framing. */
+body.personal-site main{width:100%;overflow:clip}
+body.personal-site .site-wrap,body.personal-site .wrap,body.personal-site .vt-container{width:min(calc(100% - 32px),var(--so-max));margin-inline:auto}
+body.personal-site .section,body.personal-site .vt-section{padding-block:clamp(64px,8vw,112px)}
+body.personal-site .section+ .section,body.personal-site .vt-section+ .vt-section{border-top:1px solid var(--so-line)}
+body.personal-site .hero{padding-block:clamp(72px,10vw,140px) 72px}
+body.personal-site .hero-grid{gap:clamp(28px,6vw,84px)}
+body.personal-site .hero h1{font-size:clamp(2.45rem,6vw,5.3rem);line-height:1.02;letter-spacing:-.055em;text-wrap:balance}
+body.personal-site .hero h1 span{color:var(--so-accent);font-size:.34em;line-height:1.2}
+body.personal-site .hero-copy,body.personal-site .lead,body.personal-site .hero p{color:var(--so-muted);line-height:1.95}
+body.personal-site .eyebrow,body.personal-site .kicker,body.personal-site .hero-kicker{color:var(--so-accent);font-weight:900;letter-spacing:.09em;text-transform:uppercase;font-size:.72rem}
+body.personal-site h2{letter-spacing:-.035em;text-wrap:balance;line-height:1.18}
+body.personal-site h3{letter-spacing:-.02em;line-height:1.3}
+
+/* Cards: consistent depth, not over-glassed. */
+body.personal-site .card,body.personal-site .post-card,body.personal-site .project-card,body.personal-site .service-card,body.personal-site .metric,body.personal-site .process-step,body.personal-site .about-card,body.personal-site .timeline-item{border:1px solid var(--so-line);border-radius:var(--so-radius);background:var(--so-surface);box-shadow:var(--so-shadow);color:var(--so-text)}
+body.personal-site .card,body.personal-site .post-card,body.personal-site .service-card,body.personal-site .project-card{overflow:hidden;transition:transform .24s ease,border-color .24s ease,box-shadow .24s ease,background .24s ease}
+body.personal-site .card:hover,body.personal-site .post-card:hover,body.personal-site .service-card:hover,body.personal-site .project-card:hover{transform:translateY(-6px);border-color:rgba(33,184,238,.30);box-shadow:var(--so-shadow-hover)}
+body.personal-site .card::before,body.personal-site .post-card::before,body.personal-site .service-card::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,var(--so-accent),var(--so-accent-2),transparent);opacity:.55}
+body.personal-site .grid-3{gap:18px}
+body.personal-site .tag{color:var(--so-accent);font-weight:900;letter-spacing:.07em}
+body.personal-site .card p,body.personal-site .post-card p,body.personal-site .service-card p,body.personal-site .project-card p,body.personal-site .process-step p{color:var(--so-muted);line-height:1.9}
+
+/* Buttons and links. */
+body.personal-site .btn,body.personal-site .vt-btn,body.personal-site .post-foot{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
+body.personal-site .btn.primary,body.personal-site .vt-btn.primary{background:linear-gradient(135deg,var(--so-accent),var(--so-accent-2));box-shadow:0 14px 34px rgba(33,184,238,.18);color:#061018}
+body.personal-site .btn:hover,body.personal-site .vt-btn:hover{transform:translateY(-2px)}
+
+/* Services page: remove its old boxed-in feel. */
+body.personal-site.page-services .hero{max-width:var(--so-max)}
+body.personal-site.page-services .services-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+body.personal-site.page-services .service-card{padding:28px;min-height:250px}
+body.personal-site.page-services .service-card.feature{grid-column:1/-1;min-height:auto;background:linear-gradient(135deg,rgba(33,184,238,.09),var(--so-surface) 45%,rgba(112,88,255,.06))}
+body.personal-site.page-services .cta{border:1px solid var(--so-line);border-radius:26px;background:linear-gradient(135deg,rgba(33,184,238,.08),var(--so-surface));box-shadow:var(--so-shadow);padding:clamp(24px,4vw,42px);margin-top:24px}
+body.personal-site.page-services .process{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+
+/* Content/blog: stronger reading hierarchy and navigation. */
+body.personal-site.page-blog .post-content,body.personal-site.page-blog .article-content,body.personal-site.page-blog .prose{max-width:var(--so-reading)}
+body.personal-site.page-blog main article{line-height:1.95}
+body.personal-site.page-blog main article h2{margin-top:2.7rem}
+body.personal-site.page-blog main article img{border-radius:20px;border:1px solid var(--so-line);box-shadow:var(--so-shadow)}
+body.personal-site.page-blog .post-card{min-height:260px}
+body.personal-site.page-blog .post-card .post-foot{color:inherit}
+
+/* Tables, code, forms. */
+body.personal-site table{border:1px solid var(--so-line);border-radius:16px;overflow:hidden;background:var(--so-surface)}
+body.personal-site th{background:rgba(33,184,238,.06)}
+body.personal-site pre{border:1px solid var(--so-line);border-radius:18px;box-shadow:var(--so-shadow)}
+body.personal-site blockquote{border-inline-start:3px solid var(--so-accent);border-radius:0 14px 14px 0;background:rgba(33,184,238,.06)}
+body.personal-site input,body.personal-site textarea,body.personal-site select{background:var(--so-solid);color:var(--so-text);border-color:var(--so-line-strong);border-radius:13px}
+body.personal-site input:focus,body.personal-site textarea:focus,body.personal-site select:focus{border-color:var(--so-accent);box-shadow:0 0 0 4px rgba(33,184,238,.12)}
+
+/* Homepage composition. */
+body.personal-site.page-home .stats{gap:0;border:1px solid var(--so-line);border-radius:20px;overflow:hidden;background:var(--so-surface);box-shadow:var(--so-shadow)}
+body.personal-site.page-home .stat{border-top:0;border-inline-end:1px solid var(--so-line);min-height:112px;padding:18px}
+body.personal-site.page-home .stat:last-child{border-inline-end:0}
+body.personal-site.page-home .terminal{border-radius:20px;box-shadow:var(--so-shadow)}
+
+/* VinTech: keep its identity, but make it part of the same product. */
+body.vintech-modern .vt-nav{position:sticky;top:10px;width:min(calc(100% - 20px),var(--so-max));margin:10px auto 0;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:rgba(7,11,18,.78);backdrop-filter:blur(18px) saturate(1.25);box-shadow:0 14px 45px rgba(0,0,0,.20)}
+body.vintech-modern .vt-hero{min-height:clamp(620px,84vh,900px);padding-block:clamp(80px,10vw,150px)}
+body.vintech-modern .vt-card{border-radius:22px;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+body.vintech-modern .vt-card:hover{transform:translateY(-6px);border-color:rgba(53,200,255,.35);box-shadow:0 24px 70px rgba(0,0,0,.26)}
+body.vintech-modern .vt-section{padding-block:clamp(72px,9vw,120px)}
+body.vintech-modern .vt-section-head h2{text-wrap:balance}
+
+/* Floating utility UI injected by site-overhaul.js. */
+.so-scroll{position:fixed;top:0;inset-inline:0;height:3px;z-index:2000;transform-origin:0 50%;transform:scaleX(var(--so-progress,0));background:linear-gradient(90deg,var(--so-accent),var(--so-accent-2));pointer-events:none}
+.so-top{position:fixed;inset-inline-end:20px;bottom:20px;width:46px;height:46px;border-radius:14px;border:1px solid var(--so-line);background:var(--so-solid);color:var(--so-text);box-shadow:0 12px 35px rgba(15,23,42,.14);opacity:0;visibility:hidden;transform:translateY(8px);transition:.2s ease;z-index:1100;cursor:pointer}
+.so-top.is-visible{opacity:1;visibility:visible;transform:none}
+.so-top:hover{color:var(--so-accent);border-color:rgba(33,184,238,.35);transform:translateY(-2px)}
+.so-section-label{display:flex;align-items:center;gap:10px;margin-bottom:14px;color:var(--so-accent);font-size:.7rem;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.so-section-label::before{content:"";width:28px;height:1px;background:currentColor;opacity:.7}
+.so-next{margin-top:clamp(32px,5vw,56px);padding:clamp(20px,3vw,28px);border:1px solid var(--so-line);border-radius:22px;background:linear-gradient(135deg,rgba(33,184,238,.08),var(--so-surface));box-shadow:var(--so-shadow);display:flex;align-items:center;justify-content:space-between;gap:20px}
+.so-next strong{display:block;font-size:1.05rem;margin-bottom:4px}.so-next span{color:var(--so-muted);font-size:.9rem}.so-next a{white-space:nowrap;text-decoration:none;color:var(--so-accent);font-weight:900}
+
+/* Responsive — phone, tablet, laptop, large displays. */
+@media(max-width:1000px){body.personal-site.page-services .services-grid{grid-template-columns:repeat(2,minmax(0,1fr))}body.personal-site.page-services .process{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){body.personal-site .site-wrap,body.personal-site .wrap,body.personal-site .vt-container{width:min(calc(100% - 24px),var(--so-max))}body.personal-site .site-nav,body.personal-site .nav{top:6px;margin-top:6px;border-radius:15px;padding:7px 8px}.site-nav .nav-links{display:none!important}.hero-grid{grid-template-columns:1fr}.profile-card{transform:none}.hero h1{font-size:clamp(2.25rem,12vw,4rem)}.grid-3,body.personal-site.page-services .services-grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.stat{min-height:92px}.process,body.personal-site.page-services .process{grid-template-columns:1fr}.so-next{align-items:flex-start;flex-direction:column}.so-next a{align-self:flex-start}.so-top{inset-inline-end:14px;bottom:14px}.footer{flex-direction:column}}
+@media(min-width:1600px){body.personal-site .site-wrap,body.personal-site .wrap,body.personal-site .vt-container{width:min(calc(100% - 64px),1400px)}body.personal-site .section,body.personal-site .vt-section{padding-block:120px}}
+@media(min-width:2200px){body.personal-site{font-size:18px}.hero h1{font-size:clamp(4rem,5vw,6.2rem)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+@media(forced-colors:active){.so-top,.so-next,.card,.post-card,.service-card,.project-card{border:1px solid CanvasText}}
