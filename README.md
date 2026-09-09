@@ -1,23 +1,34 @@
-# Mohammad Hossein Asgari Somarin
+# محمدحسین عسگری ثمرین | Mohammad Hossein Asgari Somarin
 
-IT / Network & Infrastructure Specialist focused on network operations, systems, security fundamentals and practical IT support.
+**IT / Network & Infrastructure Specialist** focused on network engineering, systems, security fundamentals, infrastructure hardening and practical IT operations.
 
-## Focus Areas
+This repository contains the source of my bilingual professional website and its technical documentation, SEO, accessibility, responsive UI and quality-control systems.
 
-- Network infrastructure and troubleshooting
+## Professional identity
+
+- **Persian name:** محمدحسین عسگری ثمرین
+- **English name:** Mohammad Hossein Asgari Somarin
+- **GitHub:** https://github.com/mowhmmdh
+- **Professional website:** https://mowhmmdh.github.io/
+- **LinkedIn:** https://www.linkedin.com/in/mohammadhosseinasgari/
+- **VinTech:** https://mowhmmdh.github.io/vintech.html
+
+## Technical focus
+
+- Network engineering, infrastructure and troubleshooting
 - Windows Server, Active Directory, DNS and DHCP
 - Linux and server administration
 - Network security and infrastructure hardening
 - IT support and HelpDesk operations
 - CCTV / NVR infrastructure
-- Technical web and SEO fundamentals
+- Technical web development and technical SEO
 
-## Certification & Education
+## Certification & education
 
 - **CompTIA Network+**
 - **Associate Degree in Computer Engineering**
 
-## Professional Background
+## Professional background
 
 | Position | Organization | Period |
 |:---|:---|:---|
@@ -26,16 +37,16 @@ IT / Network & Infrastructure Specialist focused on network operations, systems,
 | Technical Support Expert | Samt Cultural Institute | Apr 2022 – Oct 2022 |
 | IT Support Specialist | Ministry of Interior | Jul 2018 – Dec 2018 |
 
-## Website
+## Technical knowledge base
 
-The personal website covers professional background, technical services, projects and a technical blog focused on networking, infrastructure, systems and security.
+The website includes practical articles covering network troubleshooting, VLAN segmentation, DHCP Snooping / DAI, DNS troubleshooting, Active Directory security, network hardening and infrastructure security.
 
-**Website:** https://mowhmmdh.github.io/
+## Related repositories
 
-## Current Technical Direction
+- **Mowhmmdh.github.io** — bilingual personal website, portfolio and technical knowledge base.
+- **Projects** — project-oriented repository and technical work collection.
+- **vintech.github.io** — VinTech web presence and related infrastructure/service work.
 
-The main professional direction is to build deeper expertise in **network engineering and network security**, with an emphasis on troubleshooting from evidence, infrastructure hardening, systems administration and practical documentation.
+## Professional direction
 
-## Repository
-
-This repository contains the source of the bilingual personal website, including its HTML, CSS, JavaScript, technical SEO, accessibility checks and CI quality gates.
+The current technical direction is deeper expertise in **network engineering and network security**, with an emphasis on evidence-based troubleshooting, infrastructure hardening, systems administration and practical technical documentation.
