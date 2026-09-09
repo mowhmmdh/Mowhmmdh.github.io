@@ -1,0 +1,20 @@
+/* Final compatibility fixes for legacy inline/page-specific CSS. */
+body.personal-site.page-services{background:var(--so-bg)!important;color:var(--so-text)!important;font-family:Vazirmatn,Inter,system-ui,sans-serif!important;line-height:1.9!important}
+body.personal-site.page-services .wrap{width:min(calc(100% - 32px),var(--so-max))!important}
+body.personal-site.page-services .nav{display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}
+body.personal-site.page-services .nav>div{display:flex!important;align-items:center!important;gap:2px!important}
+body.personal-site.page-services .services-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:18px!important}
+body.personal-site.page-services .service-card{padding:28px!important;min-height:250px!important;border:1px solid var(--so-line)!important;border-radius:22px!important;background:var(--so-surface)!important;box-shadow:var(--so-shadow)!important;color:var(--so-text)!important}
+body.personal-site.page-services .service-card.feature{grid-column:1/-1!important;background:linear-gradient(135deg,rgba(33,184,238,.09),var(--so-surface) 45%,rgba(112,88,255,.06))!important}
+body.personal-site.page-services .service-card h2{color:var(--so-text)!important}
+body.personal-site.page-services .service-card p,body.personal-site.page-services .service-card li{color:var(--so-muted)!important}
+body.personal-site.page-services .cta{border:1px solid var(--so-line)!important;border-radius:26px!important;background:linear-gradient(135deg,rgba(33,184,238,.08),var(--so-surface))!important;box-shadow:var(--so-shadow)!important}
+body.personal-site.page-services .process{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:12px!important}
+body.personal-site.page-about .wrap,body.personal-site.page-projects .wrap,body.personal-site.page-blog .wrap{width:min(calc(100% - 32px),var(--so-max))!important}
+body.personal-site.page-about .about-nav,body.personal-site.page-projects .nav,body.personal-site.page-blog .nav{border-color:var(--so-line)!important;background:color-mix(in srgb,var(--so-solid) 82%,transparent)!important;color:var(--so-text)!important;border-radius:18px!important}
+body.personal-site.page-blog main article{max-width:var(--so-reading);margin-inline:auto}
+body.personal-site.page-blog main article h1{font-size:clamp(2rem,5vw,4rem)!important;line-height:1.1!important;letter-spacing:-.045em!important}
+body.personal-site.page-blog main article p,body.personal-site.page-blog main article li{color:var(--so-muted)!important;line-height:2!important}
+body.personal-site.page-blog main article .article-header,body.personal-site.page-blog main article .post-header{margin-bottom:32px!important}
+@media(max-width:1000px){body.personal-site.page-services .services-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}body.personal-site.page-services .process{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:720px){body.personal-site.page-services .nav>div{display:none!important}body.personal-site.page-services .services-grid{grid-template-columns:1fr!important}body.personal-site.page-services .service-card.feature{grid-column:auto!important}body.personal-site.page-services .process{grid-template-columns:1fr!important}}
