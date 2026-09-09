@@ -1,25 +1,45 @@
-# VinTech
+# Mohammad Hossein Asgari Somarin / محمدحسین عسگری ثمرین
 
-> وین‌تک (VinTech) یک برند تخصصی در حوزه فناوری اطلاعات است که بر شبکه، زیرساخت، امنیت سایبری، طراحی و توسعه وب و پشتیبانی فنی تمرکز دارد.
+> محمدحسین عسگری ثمرین (Mohammad Hossein Asgari Somarin) is an IT / Network & Infrastructure Specialist focused on network engineering, systems, infrastructure security, hardening and practical IT operations.
+
+## Identity
+- Persian name: محمدحسین عسگری ثمرین
+- English name: Mohammad Hossein Asgari Somarin
+- GitHub: https://github.com/mowhmmdh
+- Professional website: https://mowhmmdh.github.io/
+- LinkedIn: https://www.linkedin.com/in/mohammadhosseinasgari/
 
 ## Primary website
-- https://mowhmmdh.github.io/vintech.html
-
-## Owner
-- محمدحسین عسگری ثمرین
 - https://mowhmmdh.github.io/
+- https://mowhmmdh.github.io/about.html
+- https://mowhmmdh.github.io/projects.html
+- https://mowhmmdh.github.io/blog/
 
-## Core services
-- طراحی و پیاده‌سازی شبکه و زیرساخت IT
-- امنیت شبکه و سخت‌سازی زیرساخت
-- سرور و سرویس‌های Windows Server و Linux
-- طراحی و توسعه وب‌سایت
-- دوربین مداربسته و زیرساخت نظارت تصویری
-- پشتیبانی و عیب‌یابی فنی
+## VinTech
+- Brand: VinTech
+- Persian: https://mowhmmdh.github.io/vintech.html
+- English: https://mowhmmdh.github.io/en-vintech.html
+- Owner / founder identity: محمدحسین عسگری ثمرین
 
-## Topics
-شبکه، زیرساخت شبکه، امنیت سایبری، Windows Server، Linux، Active Directory، سرور، CCTV، طراحی سایت، پشتیبانی IT
+## Core technical areas
+- Network engineering and infrastructure
+- Network troubleshooting and operations
+- Network security and infrastructure hardening
+- Windows Server, Active Directory, DNS and DHCP
+- Linux and server administration
+- CCTV / NVR infrastructure
+- IT support and HelpDesk operations
+- Web development and technical SEO
+
+## Knowledge base
+- Network troubleshooting
+- VLAN segmentation
+- DHCP Snooping and Dynamic ARP Inspection
+- DNS troubleshooting
+- Active Directory security and hardening
+- Network hardening
+- Infrastructure security roadmap
 
 ## Language
-- Persian: https://mowhmmdh.github.io/vintech.html
+- Persian: https://mowhmmdh.github.io/
 - English: https://mowhmmdh.github.io/en.html
