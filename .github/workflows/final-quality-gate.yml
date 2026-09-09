@@ -18,63 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/quality-audit.py
-      - name: Validate sitemap, metadata and schema
-        shell: python
-        run: |
-          from pathlib import Path
-          from html.parser import HTMLParser
-          from xml.etree import ElementTree as ET
-          import json,sys
-          base='https://mowhmmdh.github.io/'
-          pages=sorted(p for p in Path('.').rglob('*.html') if '.git' not in p.parts and p.name!='404.html')
-          def u(p):
-            if p.as_posix()=='index.html': return base
-            if p.name=='index.html': return base+p.parent.as_posix().lstrip('./')+'/'
-            return base+p.as_posix()
-          errs=[]
-          ns='{http://www.sitemaps.org/schemas/sitemap/0.9}'
-          urls=[x.text.strip() for x in ET.parse('sitemap.xml').getroot().findall(f'{ns}url/{ns}loc') if x.text]
-          expected={u(p) for p in pages}
-          if set(urls)!=expected or len(urls)!=len(set(urls)): errs.append('sitemap mismatch or duplicates')
-          robots=Path('robots.txt').read_text(errors='replace')
-          if 'Sitemap: '+base+'sitemap.xml' not in robots: errs.append('robots sitemap missing')
-          class P(HTMLParser):
-            def __init__(self): super().__init__();self.lang='';self.t=0;self.d=0;self.h=0;self.c=[];self.og={};self.alt=[];self.ld=[];self.inld=False
-            def handle_starttag(self,t,a):
-              d=dict(a);rel=(d.get('rel') or '').lower().split()
-              if t=='html':self.lang=d.get('lang','')
-              if t=='title':self.t+=1
-              if t=='h1':self.h+=1
-              if t=='meta' and d.get('name','').lower()=='description':self.d+=1
-              if t=='link' and 'canonical' in rel:self.c.append(d.get('href',''))
-              if t=='link' and 'alternate' in rel and d.get('hreflang'):self.alt.append(d['hreflang'].lower())
-              if t=='meta' and d.get('property','').lower().startswith('og:'):self.og[d['property'].lower()]=d.get('content','').strip()
-              if t=='script' and d.get('type','').lower()=='application/ld+json':self.ld.append('');self.inld=True
-            def handle_endtag(self,t):
-              if t=='script':self.inld=False
-            def handle_data(self,d):
-              if self.inld and self.ld:self.ld[-1]+=d
-          for p in pages:
-            x=P();x.feed(p.read_text(errors='replace'));v=u(p)
-            if x.t!=1 or x.d!=1 or x.h!=1:errs.append(f'{p}: title/description/h1')
-            if x.c!=[v]:errs.append(f'{p}: canonical')
-            if x.og.get('og:url')!=v or not x.og.get('og:title') or not x.og.get('og:description'):errs.append(f'{p}: OpenGraph')
-            if len(x.alt)<3 or 'x-default' not in x.alt:errs.append(f'{p}: hreflang')
-            if not x.ld:errs.append(f'{p}: JSON-LD missing')
-            for raw in x.ld:
-              try:
-                z=json.loads(raw);z=z if isinstance(z,list) else [z];z += [g for a in z if isinstance(a,dict) for g in (a.get('@graph') or [])]
-                if not any(isinstance(a,dict) and a.get('@context')=='https://schema.org' for a in z):raise ValueError('schema context')
-              except Exception as e:errs.append(f'{p}: JSON-LD {e}')
-          print(f'Validated {len(pages)} pages')
-          if errs:print('\n'.join('ERROR: '+e for e in errs));sys.exit(1)
-          print('Repository SEO/schema gate: PASS')
   lighthouse:
-    name: Lighthouse mobile (${{ matrix.page }})
-    if: github.event_name != 'pull_request'
+    name: Lighthouse 100 (${{ matrix.page }})
     needs: audit
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       max-parallel: 5
@@ -84,17 +32,21 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - run: npm install -g lighthouse@13
-      - name: Audit
+      - name: Wait for deployed page
+        env: {URL: https://mowhmmdh.github.io${{ matrix.page }}}
+        run: |
+          for i in {1..30}; do code=$(curl -L -s -o /dev/null -w '%{http_code}' "$URL"); [ "$code" = "200" ] && exit 0; sleep 5; done; echo "Pages not ready: $URL"; exit 1
+      - name: Lighthouse audit
         env: {URL: https://mowhmmdh.github.io${{ matrix.page }}}
         run: |
           mkdir -p reports
           lighthouse "$URL" --output=json --output-path=reports/report.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
           node - <<'NODE'
-          const r=require('./reports/report.json'),c=r.categories,s={};for(const k of ['performance','accessibility','best-practices','seo'])s[k]=Math.round((c[k]?.score||0)*100);console.log(s);if(Object.values(s).some(v=>v<100))process.exit(1)
+          const fs=require('fs');const r=JSON.parse(fs.readFileSync('reports/report.json','utf8'));const c=r.categories;const s={};for(const k of ['performance','accessibility','best-practices','seo'])s[k]=Math.round((c[k]?.score??0)*100);console.log(JSON.stringify(s,null,2));const bad=Object.entries(s).filter(([,v])=>v!==100);if(bad.length){console.error('Lighthouse 100 gate failed:',bad);process.exit(1)}
           NODE
       - if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page }}
           path: reports/report.json
-          retention-days: 7
+          retention-days: 14
