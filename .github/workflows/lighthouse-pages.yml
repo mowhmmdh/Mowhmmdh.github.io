@@ -103,6 +103,6 @@ jobs:
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page }}
+          name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page.replaceAll('/', '-') }}
           path: reports/report.json
           retention-days: 14
