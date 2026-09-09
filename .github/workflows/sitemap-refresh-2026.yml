@@ -1,0 +1,43 @@
+name: Sitemap Refresh 2026
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sitemap:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate sitemap from HTML pages
+        shell: python
+        run: |
+          from pathlib import Path
+          from datetime import date
+          from xml.sax.saxutils import escape
+          root=Path('.')
+          urls=[]
+          for p in sorted(root.rglob('*.html')):
+              if '.git' in p.parts or p.name=='404.html': continue
+              rel=p.as_posix()
+              path='/' if rel=='index.html' else '/'+rel
+              urls.append('https://mowhmmdh.github.io'+path)
+          today=date.today().isoformat()
+          body='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+          body+=''.join(f'  <url><loc>{escape(u)}</loc><lastmod>{today}</lastmod></url>\n' for u in urls)
+          body+='</urlset>\n'
+          Path('sitemap.xml').write_text(body,encoding='utf-8')
+          print(f'Generated {len(urls)} sitemap URLs')
+      - name: Commit sitemap
+        run: |
+          if git diff --quiet -- sitemap.xml; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add sitemap.xml
+          git commit -m 'chore(seo): refresh sitemap from published pages [skip ci]'
+          git push
