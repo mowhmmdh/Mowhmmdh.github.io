@@ -39,13 +39,11 @@ jobs:
               url = (loc.text or '').strip()
               if not url.startswith(base):
                   raise SystemExit(f'Unexpected sitemap URL: {url}')
-              path = url[len(base):] or '/'
-              pages.append(path)
+              pages.append(url[len(base):] or '/')
 
           pages = sorted(set(pages))
           if not pages:
               raise SystemExit('Sitemap contains no URLs')
-          print(f'Found {len(pages)} sitemap URLs')
           print('pages=' + json.dumps(pages, separators=(',', ':')))
           PY
 
@@ -105,6 +103,6 @@ jobs:
       - if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page.replaceAll('/', '-') }}
+          name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page }}
           path: reports/report.json
           retention-days: 14
