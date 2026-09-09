@@ -1,0 +1,136 @@
+/* Ultimate visual polish — repository-wide, responsive, theme-safe */
+:root{
+  --ux-max:1220px;
+  --ux-gutter:clamp(14px,3vw,28px);
+  --ux-radius:20px;
+  --ux-radius-sm:14px;
+  --ux-shadow:0 18px 55px rgba(15,23,42,.10);
+  --ux-shadow-hover:0 28px 80px rgba(15,23,42,.16);
+  --ux-accent:var(--gold2,var(--brand,#2563eb));
+  --ux-line:var(--line,var(--border,rgba(100,116,139,.18)));
+}
+html{scroll-padding-top:88px}
+body{min-height:100dvh;overflow-x:hidden}
+::selection{background:color-mix(in srgb,var(--ux-accent) 28%,transparent);color:inherit}
+img{display:block;max-width:100%}
+button,input,textarea,select{max-width:100%}
+
+/* Shared navigation */
+.site-wrap,.wrap,.vt-container{width:min(var(--ux-max),calc(100% - (var(--ux-gutter) * 2)));}
+.site-nav,.navbar,.nav{position:relative;z-index:20}
+.site-nav{min-height:72px}
+.site-nav,.navbar,.nav{transition:background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+.nav-links a,.vt-links a{white-space:nowrap}
+
+/* Shared section rhythm */
+.section,.vt-section{position:relative}
+.section+ .section,.vt-section+ .vt-section{border-top:1px solid color-mix(in srgb,var(--ux-line) 55%,transparent)}
+.eyebrow,.kicker,.tag,.hero-kicker{font-weight:800}
+
+/* Cards: consistent depth without excessive glass */
+.card,.post-card,.stat,.service-card,.project-card,.metric,.surface,.vt-card,.vt-expertise>div,.vt-steps>div{
+  border-color:var(--ux-line);
+  transition:transform .32s cubic-bezier(.2,.75,.2,1),box-shadow .32s ease,border-color .25s ease,background-color .25s ease;
+}
+.card,.post-card,.service-card,.project-card,.metric,.surface,.vt-card,.vt-expertise>div{box-shadow:0 10px 34px rgba(15,23,42,.055)}
+.card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.metric:hover,.surface:hover,.vt-card:hover,.vt-expertise>div:hover{
+  border-color:color-mix(in srgb,var(--ux-accent) 36%,var(--ux-line));
+  box-shadow:var(--ux-shadow-hover);
+}
+
+/* Home / portfolio */
+.hero{isolation:isolate}
+.hero-grid{min-height:min(720px,calc(100dvh - 120px))}
+.hero h1{max-width:900px}
+.profile-card{position:relative;overflow:hidden}
+.profile-card:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(135deg,transparent 55%,color-mix(in srgb,var(--ux-accent) 10%,transparent));}
+.stats{align-items:stretch}
+.stat{min-height:96px;display:flex;flex-direction:column;justify-content:center}
+
+/* Services / projects */
+.services-grid,.projects-grid,.grid-3,.grid-2{align-items:stretch}
+.service-card,.project-card{height:100%}
+.service-card h2,.project-card h2,.service-card h3,.project-card h3{line-height:1.35}
+.service-card ul{padding-inline-start:1.2rem}
+.service-card li::marker{color:var(--ux-accent)}
+.cta{position:relative;overflow:hidden;box-shadow:var(--ux-shadow)}
+.cta:before,.vt-cta:before{content:"";position:absolute;inset:auto -10% -60%;height:180px;background:radial-gradient(ellipse,color-mix(in srgb,var(--ux-accent) 14%,transparent),transparent 70%);pointer-events:none}
+.process{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:24px}
+.process-step{padding:18px;border:1px solid var(--ux-line);border-radius:var(--ux-radius-sm);background:color-mix(in srgb,var(--panel,var(--surface,#fff)) 88%,transparent)}
+.process-step b{color:var(--ux-accent)}
+
+/* Forms */
+form{max-width:100%}
+input,textarea,select{width:100%;border:1px solid var(--ux-line);border-radius:13px;background:color-mix(in srgb,var(--panel,var(--surface,#fff)) 94%,transparent);color:var(--text,#111827);padding:.78rem .9rem;min-height:46px;outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+textarea{min-height:130px;resize:vertical}
+input:focus,textarea:focus,select:focus{border-color:color-mix(in srgb,var(--ux-accent) 58%,var(--ux-line));box-shadow:0 0 0 4px color-mix(in srgb,var(--ux-accent) 13%,transparent)}
+label{display:grid;gap:7px}
+
+/* Blog/article readability */
+article,.post-content,.article-content,.blog-content{max-width:100%}
+.post-content,.article-content{font-size:1rem;line-height:2}
+.post-content h2,.article-content h2{margin-top:2.4em}
+.post-content h3,.article-content h3{margin-top:1.8em}
+.post-content pre,.article-content pre{overflow:auto;border-radius:16px;padding:18px}
+.post-content table,.article-content table{display:block;overflow:auto;max-width:100%;border-collapse:collapse}
+blockquote{border-inline-start:3px solid var(--ux-accent);padding-inline:18px;color:var(--muted,#667085)}
+
+/* VinTech */
+.vt-hero h1{max-width:860px}
+.vt-card{min-height:250px}
+.vt-card:hover{transform:translateY(-6px)}
+.vt-cta{position:relative;overflow:hidden}
+.vt-orbit{max-width:390px}
+
+/* Avoid hover tricks on touch */
+@media (hover:none){.card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.metric:hover,.surface:hover,.vt-card:hover,.vt-expertise>div:hover{transform:none;box-shadow:0 10px 34px rgba(15,23,42,.055)}}
+
+/* Tablet */
+@media (max-width:980px){
+  .hero-grid{min-height:auto}
+  .process{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .vt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .vt-steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* Mobile */
+@media (max-width:700px){
+  .site-wrap,.wrap,.vt-container{width:calc(100% - 24px)}
+  .hero{padding-top:56px}
+  .hero-grid{gap:30px}
+  .hero h1{letter-spacing:-.025em}
+  .section,.vt-section{padding-block:54px}
+  .grid-3,.grid-2,.services-grid,.vt-grid,.vt-expertise{grid-template-columns:1fr!important}
+  .process,.vt-steps{grid-template-columns:1fr}
+  .card,.post-card,.service-card,.project-card,.vt-card{border-radius:16px}
+  .actions{gap:9px}
+  .actions .btn{width:100%}
+  .stats{grid-template-columns:1fr 1fr}
+  .vt-hero{padding:64px 0 58px;min-height:auto}
+  .vt-hero-grid{gap:42px}
+  .vt-hero h1{font-size:clamp(2.45rem,13vw,4rem);line-height:1.08}
+  .vt-hero-visual{min-height:300px}
+  .vt-orbit{width:min(310px,78vw)}
+  .vt-cta{padding:26px}
+}
+@media (max-width:430px){
+  .stats{grid-template-columns:1fr}
+  .hero h1{font-size:clamp(2rem,12vw,2.8rem)}
+  .vt-hero h1{font-size:clamp(2.15rem,13vw,3.1rem)}
+  .vt-actions .vt-btn{width:100%}
+}
+
+/* Large displays / TV */
+@media (min-width:1600px){
+  :root{--ux-max:1320px}
+  .section,.vt-section{padding-block:110px}
+  .hero-grid{gap:90px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.001ms!important}
+}
+@media (forced-colors:active){
+  .card,.post-card,.service-card,.project-card,.vt-card{border:1px solid CanvasText}
+  button,a,input,textarea,select{forced-color-adjust:auto}
+}
