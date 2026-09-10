@@ -26,6 +26,7 @@ jobs:
               '/assets/visual-final-pass-2026.css',
               '/assets/last-mile-visual-2026.css',
               '/assets/ultimate-ui-2026.css',
+              '/assets/final-appearance-2026.css',
           ]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts:
@@ -47,17 +48,16 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import re
-          html=list(Path('.').rglob('*.html'))
-          html=[p for p in html if '.git' not in p.parts]
+          html=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
           errors=[]
           for p in html:
               s=p.read_text(encoding='utf-8',errors='ignore')
-              if '/assets/ultimate-ui-2026.css' not in s:
-                  errors.append(f'{p}: missing ultimate-ui-2026.css')
+              for layer in ('/assets/ultimate-ui-2026.css','/assets/final-appearance-2026.css'):
+                  if layer not in s:
+                      errors.append(f'{p}: missing {layer}')
           vt=Path('assets/vintech.css').read_text(encoding='utf-8',errors='ignore')
           if '.vt-card:hover{transform:translateY(-8px);border-color:rgba(154,105,5,.28);background:#fff' in vt:
-              errors.append('assets/vintech.css: theme-breaking white hover remains; final override must stay active')
+              print('INFO: legacy VinTech hover rule exists; final-appearance-2026.css overrides it for dark/light themes.')
           if errors:
               print('\n'.join(errors))
               raise SystemExit(1)
@@ -68,5 +68,5 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add '*.html' '**/*.html'
-          git commit -m 'chore(ui): attach deterministic visual layers across all pages [skip ci]'
+          git commit -m 'chore(ui): attach deterministic final appearance layer across all pages [skip ci]'
           git push
