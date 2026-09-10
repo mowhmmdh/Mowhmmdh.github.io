@@ -23,7 +23,9 @@ jobs:
           fetch-depth: 1
       - name: Synchronize bilingual hreflang
         run: python3 tools/seo_sync.py
-      - name: Commit synchronized metadata
+      - name: Build internal discovery hubs
+        run: python3 tools/discovery_sync.py
+      - name: Commit synchronized SEO metadata
         run: |
           if git diff --quiet; then
             echo "No SEO metadata changes needed."
@@ -36,5 +38,5 @@ jobs:
             echo "No staged SEO metadata changes needed."
             exit 0
           fi
-          git commit -m "chore(seo): synchronize bilingual hreflang metadata"
+          git commit -m "chore(seo): synchronize metadata and internal discovery"
           git push
