@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://mowhmmdh.github.io/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/about.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/blog/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/active-directory-hardening.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/active-directory-security-basics.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/dns-troubleshooting.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/fortigate-firewall-policy-design.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/incident-response-network-outage.html</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://mowhmmdh.github.io/blog/index.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/network-hardening.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/network-infrastructure-security-roadmap.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/network-monitoring-basics.html</loc><lastmod>2026-09-10</lastmod></url>
@@ -15,6 +16,7 @@
   <url><loc>https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/vlan-segmentation.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-about.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/en-blog.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-blog/active-directory-hardening.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-blog/active-directory-security-basics.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-blog/dhcp-snooping-dai-network-security.html</loc><lastmod>2026-09-10</lastmod></url>
@@ -27,10 +29,10 @@
   <url><loc>https://mowhmmdh.github.io/en-blog/network-segmentation-for-small-business.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-blog/network-troubleshooting-checklist.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-blog/vlan-segmentation.html</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://mowhmmdh.github.io/en-blog.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-linkedin.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-projects.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-services.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/en-vintech.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-vintech/cctv-nvr.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-vintech/cybersecurity.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-vintech/insights/it-infrastructure-assessment.html</loc><lastmod>2026-09-10</lastmod></url>
@@ -39,12 +41,11 @@
   <url><loc>https://mowhmmdh.github.io/en-vintech/request.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-vintech/servers-systems.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en-vintech/web-technical-seo.html</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://mowhmmdh.github.io/en-vintech.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/en.html</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://mowhmmdh.github.io/</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/linkedin.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/projects.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/services.html</loc><lastmod>2026-09-10</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/vintech.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/vintech/cctv-nvr.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/vintech/cybersecurity.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/vintech/insights/it-infrastructure-assessment.html</loc><lastmod>2026-09-10</lastmod></url>
@@ -53,5 +54,4 @@
   <url><loc>https://mowhmmdh.github.io/vintech/request.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/vintech/servers-systems.html</loc><lastmod>2026-09-10</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/vintech/web-technical-seo.html</loc><lastmod>2026-09-10</lastmod></url>
-  <url><loc>https://mowhmmdh.github.io/vintech.html</loc><lastmod>2026-09-10</lastmod></url>
 </urlset>
