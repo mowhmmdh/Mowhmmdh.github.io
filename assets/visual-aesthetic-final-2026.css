@@ -1,0 +1,85 @@
+/* Visual Aesthetic Final 2026
+   Cross-page refinement layer. Loaded after the existing design stack.
+   Intent: premium technical editorial UI, clear hierarchy, restrained effects,
+   stable geometry, and excellent small-screen behavior. */
+:root{
+  --va-max:1240px;--va-reading:900px;--va-radius:20px;--va-radius-sm:14px;
+  --va-bg:#f5f7fb;--va-surface:#fff;--va-surface-2:#eef3f8;--va-text:#101828;
+  --va-muted:#667085;--va-line:rgba(16,24,40,.11);--va-accent:#16a9d8;--va-accent-2:#6958e8;
+  --va-shadow:0 18px 55px rgba(15,23,42,.08);--va-shadow-hover:0 28px 80px rgba(15,23,42,.13)
+}
+html[data-theme=dark],body[data-theme=dark]{--va-bg:#070b12;--va-surface:#0e1622;--va-surface-2:#141e2b;--va-text:#f4f7fb;--va-muted:#a8b4c4;--va-line:rgba(255,255,255,.11);--va-accent:#31c2ee;--va-accent-2:#8878ff;--va-shadow:0 22px 70px rgba(0,0,0,.28);--va-shadow-hover:0 30px 90px rgba(0,0,0,.38)}
+html{background:var(--va-bg)}
+body.personal-site{background:radial-gradient(850px 440px at 92% -8%,color-mix(in srgb,var(--va-accent) 9%,transparent),transparent 65%),radial-gradient(720px 420px at -8% 20%,color-mix(in srgb,var(--va-accent-2) 7%,transparent),transparent 68%),var(--va-bg)!important;color:var(--va-text)!important}
+body.personal-site .site-wrap,body.personal-site .wrap,body.personal-site .en-page{width:min(var(--va-max),calc(100% - 36px))!important}
+/* Navigation */
+body.personal-site .site-nav,body.personal-site .nav,body.personal-site .about-nav,body.personal-site .en-nav{width:min(var(--va-max),calc(100% - 24px))!important;min-height:64px!important;margin:10px auto 0!important;padding:7px 10px!important;border:1px solid var(--va-line)!important;border-radius:18px!important;background:color-mix(in srgb,var(--va-surface) 92%,transparent)!important;box-shadow:0 12px 38px rgba(15,23,42,.08)!important;backdrop-filter:blur(16px) saturate(130%);-webkit-backdrop-filter:blur(16px) saturate(130%)}
+body.personal-site .site-nav .brand{font-weight:900;letter-spacing:-.035em;color:var(--va-text)!important;white-space:nowrap}
+body.personal-site .brand em{color:var(--va-accent);font-style:normal}
+body.personal-site .nav-links a,body.personal-site .about-nav-links a,body.personal-site .en-nav-links a{padding:9px 10px!important;border-radius:11px!important;color:var(--va-muted)!important;font-size:.84rem!important;font-weight:650!important;transition:background .18s ease,color .18s ease,transform .18s ease!important}
+body.personal-site .nav-links a:hover,body.personal-site .about-nav-links a:hover,body.personal-site .en-nav-links a:hover{background:color-mix(in srgb,var(--va-accent) 9%,transparent)!important;color:var(--va-text)!important;transform:translateY(-1px)}
+body.personal-site .nav-links a[aria-current=page],body.personal-site .about-nav-links a[aria-current=page],body.personal-site .en-nav-links a[aria-current=page]{background:color-mix(in srgb,var(--va-accent) 11%,transparent)!important;color:var(--va-accent)!important;font-weight:850!important}
+body.personal-site .theme-toggle,body.personal-site .mobile-menu{width:44px!important;height:44px!important;min-width:44px!important;min-height:44px!important;border:1px solid var(--va-line)!important;border-radius:12px!important;background:var(--va-surface)!important;color:var(--va-text)!important}
+/* Global rhythm */
+body.personal-site .hero{padding-block:clamp(64px,8vw,112px) 58px!important}
+body.personal-site .hero-grid{align-items:center!important;gap:clamp(34px,7vw,88px)!important}
+body.personal-site .hero h1{max-width:900px!important;font-size:clamp(2.35rem,5.7vw,5rem)!important;line-height:1.07!important;letter-spacing:-.055em!important;text-wrap:balance!important}
+body.personal-site .hero h1 span{display:block!important;margin-top:10px!important;font-size:clamp(1rem,2vw,1.55rem)!important;line-height:1.35!important;color:var(--va-accent)!important;letter-spacing:-.015em!important}
+body.personal-site .hero-copy,body.personal-site .lead{max-width:70ch!important;color:var(--va-muted)!important;font-size:clamp(1rem,1.3vw,1.12rem)!important;line-height:1.95!important}
+body.personal-site .actions,body.personal-site .hero-actions{gap:10px!important;margin-top:24px!important}
+body.personal-site .btn,body.personal-site .button{min-height:50px!important;border-radius:13px!important;padding:11px 17px!important;font-weight:800!important}
+body.personal-site .btn.primary,body.personal-site .button.primary{background:linear-gradient(135deg,var(--va-accent),var(--va-accent-2))!important;color:#041017!important;border-color:transparent!important;box-shadow:0 12px 32px color-mix(in srgb,var(--va-accent) 18%,transparent)!important}
+/* Profile / hero visual */
+body.personal-site .profile-card{width:min(360px,100%)!important;margin-inline:auto!important;border:1px solid var(--va-line)!important;border-radius:26px!important;background:linear-gradient(145deg,var(--va-surface),var(--va-surface-2))!important;box-shadow:var(--va-shadow)!important;overflow:hidden!important;transform:none!important}
+body.personal-site .profile-card img{width:100%!important;aspect-ratio:4/5!important;object-fit:cover!important;object-position:center top!important;display:block!important}
+body.personal-site .profile-caption{padding:14px 18px!important;border-top:1px solid var(--va-line)!important;color:var(--va-muted)!important}
+body.personal-site .profile-caption strong{display:block;color:var(--va-accent)!important;font-size:.7rem;letter-spacing:.13em}
+/* Status rail */
+body.personal-site .signals{display:flex!important;flex-wrap:wrap!important;gap:8px!important;margin-top:22px!important}
+body.personal-site .signal{display:inline-flex!important;align-items:center!important;gap:7px!important;padding:7px 10px!important;border:1px solid var(--va-line)!important;border-radius:999px!important;background:color-mix(in srgb,var(--va-surface) 82%,transparent)!important;color:var(--va-muted)!important;font-size:.74rem!important}
+body.personal-site .signal i{width:6px!important;height:6px!important;border-radius:50%!important;background:var(--va-accent)!important;box-shadow:0 0 0 3px color-mix(in srgb,var(--va-accent) 12%,transparent)!important}
+body.personal-site .stats{margin-top:30px!important;border:1px solid var(--va-line)!important;border-radius:20px!important;overflow:hidden!important;background:color-mix(in srgb,var(--va-surface) 88%,transparent)!important;box-shadow:var(--va-shadow)!important}
+body.personal-site .stat{min-height:104px!important;padding:18px!important;border:0!important;border-inline-end:1px solid var(--va-line)!important;background:transparent!important}
+body.personal-site .stat:last-child{border-inline-end:0!important}
+body.personal-site .stat b{font-size:1.18rem!important;color:var(--va-accent)!important}
+body.personal-site .stat span{font-size:.78rem!important;line-height:1.55!important;color:var(--va-muted)!important}
+/* Sections */
+body.personal-site .section,body.personal-site .about-section{padding-block:clamp(58px,7vw,94px)!important;border-top:1px solid var(--va-line)!important}
+body.personal-site .hero+section{border-top:0!important}
+body.personal-site .section>h2,body.personal-site .about-section>h2{font-size:clamp(1.85rem,3.3vw,2.8rem)!important;line-height:1.18!important;letter-spacing:-.04em!important;text-wrap:balance!important}
+body.personal-site .grid-2,body.personal-site .grid-3,body.personal-site .services-grid,body.personal-site .projects-grid,body.personal-site .about-grid,body.personal-site .clusters{gap:18px!important;align-items:stretch!important}
+/* Cards */
+body.personal-site .card,body.personal-site .post-card,body.personal-site .service-card,body.personal-site .project-card,body.personal-site .about-card,body.personal-site .cluster,body.personal-site .metric,body.personal-site .process-step{min-width:0!important;border:1px solid var(--va-line)!important;border-radius:var(--va-radius)!important;background:linear-gradient(145deg,var(--va-surface),var(--va-surface-2))!important;color:var(--va-text)!important;box-shadow:var(--va-shadow)!important}
+body.personal-site .card,body.personal-site .post-card,body.personal-site .service-card,body.personal-site .project-card,body.personal-site .about-card{height:100%!important;position:relative!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;padding:25px!important;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important}
+body.personal-site .card::before,body.personal-site .post-card::before,body.personal-site .service-card::before,body.personal-site .project-card::before,body.personal-site .about-card::before{content:"";position:absolute;inset:0 0 auto;height:2px;background:linear-gradient(90deg,transparent,var(--va-accent),var(--va-accent-2),transparent);opacity:.24}
+body.personal-site .card:hover,body.personal-site .post-card:hover,body.personal-site .service-card:hover,body.personal-site .project-card:hover,body.personal-site .about-card:hover,body.personal-site .cluster:hover{transform:translateY(-4px)!important;border-color:color-mix(in srgb,var(--va-accent) 34%,var(--va-line))!important;box-shadow:var(--va-shadow-hover)!important}
+body.personal-site .card h3,body.personal-site .post-card h3,body.personal-site .service-card h3,body.personal-site .project-card h3,body.personal-site .about-card h3{color:var(--va-text)!important;line-height:1.35!important;margin:7px 0 10px!important}
+body.personal-site .card p,body.personal-site .post-card p,body.personal-site .service-card p,body.personal-site .project-card p,body.personal-site .about-card p,body.personal-site .cluster p{color:var(--va-muted)!important;line-height:1.9!important}
+body.personal-site .card>a:last-child,body.personal-site .post-foot,body.personal-site .service-card>a,body.personal-site .project-card>a{margin-top:auto!important;color:var(--va-accent)!important;font-weight:800!important}
+body.personal-site .tag,body.personal-site .eyebrow{color:var(--va-accent)!important;font-weight:850!important}
+/* Blog / articles */
+body.personal-site.page-blog .post-card{min-height:250px!important}
+body.personal-site.page-blog .featured{min-height:300px!important}
+body.personal-site.page-blog:has(.article) main{max-width:940px!important}
+body.personal-site.page-blog:has(.article) .article{border:1px solid var(--va-line)!important;border-radius:24px!important;background:linear-gradient(145deg,var(--va-surface),var(--va-surface-2))!important;color:var(--va-text)!important;box-shadow:var(--va-shadow)!important;padding:clamp(24px,5vw,54px)!important}
+body.personal-site.page-blog:has(.article) .article h1{font-size:clamp(2rem,4.7vw,3.5rem)!important;line-height:1.18!important;letter-spacing:-.045em!important;text-wrap:balance!important}
+body.personal-site.page-blog:has(.article) .article h2{margin-top:2.2em!important;color:var(--va-text)!important;line-height:1.35!important}
+body.personal-site.page-blog:has(.article) .article p,body.personal-site.page-blog:has(.article) .article li{color:var(--va-text)!important;line-height:2.05!important}
+body.personal-site.page-blog:has(.article) .article blockquote{border-inline-start:3px solid var(--va-accent)!important;background:color-mix(in srgb,var(--va-accent) 6%,transparent)!important;border-radius:0 12px 12px 0!important;padding:14px 18px!important}
+body.personal-site.page-blog:has(.article) .article pre{border:1px solid var(--va-line)!important;border-radius:16px!important;background:#0b1220!important;box-shadow:0 16px 40px rgba(0,0,0,.12)!important}
+/* Forms */
+body.personal-site input,body.personal-site textarea,body.personal-site select{width:100%!important;min-width:0!important;min-height:48px!important;border:1px solid var(--va-line)!important;border-radius:13px!important;background:var(--va-surface)!important;color:var(--va-text)!important}
+body.personal-site textarea{min-height:150px!important}
+body.personal-site input:focus,body.personal-site textarea:focus,body.personal-site select:focus{border-color:var(--va-accent)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--va-accent) 13%,transparent)!important}
+/* VinTech pages inside the personal repo */
+body.vintech-site .vt-card,body.vintech-modern .vt-card{border-radius:20px!important;overflow:hidden!important;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important}
+body.vintech-site .vt-card:hover,body.vintech-modern .vt-card:hover{transform:translateY(-4px)!important}
+body.vintech-site .vt-card:hover{background:var(--vt-bg2,var(--va-surface))!important}
+body.vintech-modern .vt-card:hover{background:var(--vt-surface,var(--va-surface))!important}
+/* Touch + mobile */
+@media(max-width:1000px){body.personal-site .hero-grid{grid-template-columns:1fr!important;gap:40px!important}.personal-site .profile{order:-1}.personal-site .profile-card{width:min(330px,72vw)}.personal-site.page-services .services-grid,.personal-site.page-projects .projects-grid,.personal-site.page-about .about-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:760px){body.personal-site .site-wrap,body.personal-site .wrap,body.personal-site .en-page{width:calc(100% - 24px)!important}body.personal-site .site-nav,body.personal-site .nav,body.personal-site .about-nav,body.personal-site .en-nav{top:6px!important;width:calc(100% - 12px)!important;margin-top:6px!important;min-height:60px!important;border-radius:15px!important}.personal-site .nav-links,.personal-site .about-nav-links,.personal-site .en-nav-links{display:none!important}.personal-site.menu-open .nav-links,.personal-site.menu-open .about-nav-links,.personal-site.menu-open .en-nav-links{display:flex!important;position:absolute!important;inset-inline:0!important;top:64px!important;flex-direction:column!important;align-items:stretch!important;padding:8px!important;border:1px solid var(--va-line)!important;border-radius:16px!important;background:var(--va-surface)!important;box-shadow:0 24px 60px rgba(15,23,42,.18)!important}.personal-site.menu-open .nav-links a,.personal-site.menu-open .about-nav-links a,.personal-site.menu-open .en-nav-links a{width:100%!important;text-align:center!important}.personal-site .hero{padding-block:52px 46px!important}.personal-site .hero h1{font-size:clamp(2.05rem,10.5vw,3.5rem)!important}.personal-site .actions,.personal-site .hero-actions{display:grid!important;grid-template-columns:1fr!important;width:100%!important}.personal-site .actions>*{width:100%!important}.personal-site .stats{grid-template-columns:repeat(2,minmax(0,1fr))!important}.personal-site .stat{min-height:92px!important;border-bottom:1px solid var(--va-line)!important}.personal-site .stat:nth-child(2n){border-inline-end:0!important}.personal-site .grid-2,.personal-site .grid-3,.personal-site .services-grid,.personal-site .projects-grid,.personal-site .about-grid,.personal-site .clusters,.personal-site.page-blog .grid{grid-template-columns:1fr!important}.personal-site .section,.personal-site .about-section{padding-block:50px!important}.personal-site .card,.personal-site .post-card,.personal-site .service-card,.personal-site .project-card,.personal-site .about-card{padding:21px!important;border-radius:17px!important}.personal-site.page-blog .post-card,.personal-site.page-blog .featured{min-height:0!important}.personal-site.page-blog:has(.article) .article{padding:21px!important;border-radius:18px!important}.vintech-modern .vt-card{padding:21px!important}.vintech-modern .vt-grid{grid-template-columns:1fr!important}}
+@media(max-width:430px){body.personal-site .hero h1{font-size:clamp(1.9rem,10.5vw,3rem)!important}.personal-site .card,.personal-site .post-card,.personal-site .service-card,.personal-site .project-card,.personal-site .about-card{padding:18px!important}.vintech-modern .vt-card{padding:18px!important}}
+@media(hover:none){body.personal-site .card:hover,body.personal-site .post-card:hover,body.personal-site .service-card:hover,body.personal-site .project-card:hover,body.personal-site .about-card:hover,body.personal-site .cluster:hover,body.vintech-site .vt-card:hover,body.vintech-modern .vt-card:hover{transform:none!important;box-shadow:var(--va-shadow)!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}body.personal-site .profile-card{transform:none!important}body.personal-site *,body.personal-site *::before,body.personal-site *::after{animation:none!important;transition:none!important}}
+@media(forced-colors:active){body.personal-site .card,body.personal-site .post-card,body.personal-site .service-card,body.personal-site .project-card,body.personal-site .about-card,body.vintech-site .vt-card,body.vintech-modern .vt-card{border:1px solid CanvasText!important;box-shadow:none!important}}
