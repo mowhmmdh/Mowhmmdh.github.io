@@ -74,7 +74,7 @@ for p in PAGES:
         if a.author!=1: ERRORS.append(f'{rel}: author count={a.author}')
         if len(a.hreflang)<2: ERRORS.append(f'{rel}: bilingual hreflang set incomplete')
         if PERSIAN_NAME not in s and ENGLISH_NAME not in s: ERRORS.append(f'{rel}: personal identity not discoverable in source')
-        if 'visual-master-2026.css' not in s and 'site-theme.js' not in s: ERRORS.append(f'{rel}: final visual system is not reachable')
+        if 'site-theme.js' not in s: ERRORS.append(f'{rel}: site-theme.js missing')
     if a.dup: ERRORS.append(f'{rel}: duplicate ids: {", ".join(a.dup[:5])}')
     for img in a.imgs:
         if 'alt' not in img: ERRORS.append(f'{rel}: image without alt')
@@ -93,7 +93,7 @@ for p in PAGES:
             if identity not in s: ERRORS.append(f'{rel}: missing identity link: {identity}')
     if re.search(r'\b(Lorem ipsum|Coming soon|Your Name|John Doe|TODO|FIXME)\b',s,re.I): ERRORS.append(f'{rel}: placeholder content')
 
-for required in ['sitemap.xml','robots.txt','manifest.json','.well-known/security.txt','llms.txt','humans.txt','assets/visual-master-2026.css']:
+for required in ['sitemap.xml','robots.txt','manifest.json','.well-known/security.txt','llms.txt','humans.txt','assets/site-final-polish.css']:
     if required not in KNOWN: ERRORS.append(f'missing required asset: {required}')
 
 site_theme=ROOT/'assets/site-theme.js'
@@ -101,7 +101,7 @@ if not site_theme.exists():
     ERRORS.append('assets/site-theme.js missing')
 else:
     ts=site_theme.read_text(encoding='utf-8',errors='replace')
-    if '/assets/visual-master-2026.css' not in ts: ERRORS.append('site-theme.js does not load visual-master-2026.css')
+    if '/assets/site-final-polish.css' not in ts: ERRORS.append('site-theme.js does not load site-final-polish.css')
 
 for f in ROOT.rglob('*'):
     if not f.is_file() or '.git' in f.parts or f.suffix.lower() not in {'.html','.css','.js','.json','.yml','.yaml','.md','.txt','.xml','.py'}: continue
@@ -115,4 +115,4 @@ for w in WARNINGS[:30]: print('WARN:',w)
 if ERRORS:
     for e in ERRORS: print('ERROR:',e)
     print(f'Blocking issues: {len(ERRORS)}'); sys.exit(1)
-print('PASS: structure, SEO foundations, identity, visual-system wiring, local links/assets, accessibility basics and secret patterns')
+print('PASS: structure, SEO foundations, identity, final visual-system wiring, local links/assets, accessibility basics and secret patterns')
