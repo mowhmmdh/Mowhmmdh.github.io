@@ -9,4 +9,9 @@ body.personal-site .content .box{border:1px solid var(--fa-line)!important;backg
 body.personal-site .content code{background:color-mix(in srgb,var(--fa-accent) 9%,var(--fa-surface-2))!important;color:var(--fa-accent)!important;border:1px solid var(--fa-line)!important}
 body.personal-site .meta{color:var(--fa-muted)!important}
 body.personal-site .content a{color:var(--fa-accent)!important}
-@media(max-width:620px){body.personal-site .wrap.nav{width:calc(100% - 12px);padding:8px 10px}.personal-site .wrap.nav a{font-size:.86rem;padding:7px 8px}.personal-site .content{padding:20px 16px!important;border-radius:18px!important}.personal-site .content h2{margin-top:1.7em!important}}
+body.personal-site .article{background:linear-gradient(145deg,var(--fa-surface),var(--fa-surface-2))!important;color:var(--fa-text)!important;border:1px solid var(--fa-line)!important;border-radius:24px!important;box-shadow:var(--fa-shadow)!important}
+body.personal-site .article h2{color:var(--fa-text)!important;margin-top:2em!important;line-height:1.35!important}
+body.personal-site .article p,body.personal-site .article li{color:var(--fa-text)!important;line-height:2!important}
+body.personal-site .article .check{padding:16px 18px!important;border:1px solid var(--fa-line)!important;border-inline-start:3px solid var(--fa-accent)!important;border-radius:14px!important;background:color-mix(in srgb,var(--fa-accent) 6%,var(--fa-surface))!important;color:var(--fa-text)!important;box-shadow:none!important}
+body.personal-site .article footer,body.personal-site footer{color:var(--fa-muted)!important;border-color:var(--fa-line)!important}
+@media(max-width:620px){body.personal-site .wrap.nav{width:calc(100% - 12px);padding:8px 10px}.personal-site .wrap.nav a{font-size:.86rem;padding:7px 8px}.personal-site .content{padding:20px 16px!important;border-radius:18px!important}.personal-site .content h2{margin-top:1.7em!important}.personal-site .article{padding:20px 16px!important;border-radius:18px!important}.personal-site .article h2{margin-top:1.7em!important}}
