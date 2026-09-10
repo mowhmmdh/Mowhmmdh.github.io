@@ -1,0 +1,115 @@
+/* Final Appearance 2026 — one deterministic visual layer for every page. */
+:root{
+  --fa-max:1220px;
+  --fa-bg:#f4f7fb;
+  --fa-surface:#ffffff;
+  --fa-surface-2:#eef3f8;
+  --fa-text:#101828;
+  --fa-muted:#5f6b7a;
+  --fa-line:rgba(16,24,40,.11);
+  --fa-accent:#149dcc;
+  --fa-accent-2:#6857e8;
+  --fa-shadow:0 18px 55px rgba(15,23,42,.08);
+  --fa-shadow-hover:0 28px 75px rgba(15,23,42,.14);
+  --fa-radius:20px;
+}
+html[data-theme="dark"]{
+  --fa-bg:#070b12;
+  --fa-surface:#0e1622;
+  --fa-surface-2:#141e2c;
+  --fa-text:#f4f7fb;
+  --fa-muted:#a8b4c4;
+  --fa-line:rgba(255,255,255,.115);
+  --fa-accent:#32c5ef;
+  --fa-accent-2:#8978ff;
+  --fa-shadow:0 22px 70px rgba(0,0,0,.30);
+  --fa-shadow-hover:0 30px 90px rgba(0,0,0,.42);
+}
+html{background:var(--fa-bg);color-scheme:light dark}
+body{min-width:320px;overflow-x:hidden;color:var(--fa-text)}
+body.personal-site{background:radial-gradient(850px 430px at 92% -8%,color-mix(in srgb,var(--fa-accent) 10%,transparent),transparent 65%),radial-gradient(760px 420px at -8% 20%,color-mix(in srgb,var(--fa-accent-2) 7%,transparent),transparent 68%),var(--fa-bg)!important;color:var(--fa-text)!important}
+body.personal-site :where(h1,h2,h3,h4,strong,b){color:var(--fa-text)}
+body.personal-site :where(p,li,small){color:var(--fa-muted)}
+body.personal-site a{color:inherit}
+body.personal-site :where(.site-wrap,.wrap,.container,.site-container,.en-page){width:min(var(--fa-max),calc(100% - 40px));margin-inline:auto}
+body.personal-site :where(.site-nav,.nav,.about-nav,.en-nav){border-color:var(--fa-line)!important;background:color-mix(in srgb,var(--fa-surface) 91%,transparent)!important;color:var(--fa-text)!important;box-shadow:0 12px 38px color-mix(in srgb,#000 8%,transparent)!important;backdrop-filter:blur(18px) saturate(130%);-webkit-backdrop-filter:blur(18px) saturate(130%)}
+body.personal-site :where(.nav-links a,.about-nav-links a,.en-nav-links a){color:var(--fa-muted)!important}
+body.personal-site :where(.nav-links a:hover,.about-nav-links a:hover,.en-nav-links a:hover){color:var(--fa-text)!important;background:color-mix(in srgb,var(--fa-accent) 9%,transparent)!important}
+body.personal-site :where(.nav-links a[aria-current="page"],.about-nav-links a[aria-current="page"],.en-nav-links a[aria-current="page"]){color:var(--fa-accent)!important;background:color-mix(in srgb,var(--fa-accent) 12%,transparent)!important}
+body.personal-site :where(.theme-toggle,.mobile-menu){background:var(--fa-surface)!important;color:var(--fa-text)!important;border-color:var(--fa-line)!important}
+body.personal-site .hero{padding-block:clamp(64px,8vw,112px) 62px!important}
+body.personal-site .hero h1{font-size:clamp(2.35rem,5.8vw,5.25rem)!important;line-height:1.07!important;letter-spacing:-.052em!important;text-wrap:balance!important}
+body.personal-site .hero h1 span{color:var(--fa-accent)!important}
+body.personal-site :where(.hero-copy,.lead){color:var(--fa-muted)!important;line-height:1.95!important}
+body.personal-site :where(.section,.about-section){border-top:1px solid var(--fa-line)!important;padding-block:clamp(58px,7vw,94px)!important}
+body.personal-site .hero+section{border-top:0!important}
+body.personal-site :where(.section>h2,.about-section>h2){color:var(--fa-text)!important;line-height:1.18!important;letter-spacing:-.04em!important}
+body.personal-site :where(.card,.post-card,.service-card,.project-card,.about-card,.cluster,.metric,.process-step){background:linear-gradient(145deg,var(--fa-surface),var(--fa-surface-2))!important;color:var(--fa-text)!important;border:1px solid var(--fa-line)!important;box-shadow:var(--fa-shadow)!important;border-radius:var(--fa-radius)!important}
+body.personal-site :where(.card,.post-card,.service-card,.project-card,.about-card){min-width:0;overflow:hidden;transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease!important}
+body.personal-site :where(.card,.post-card,.service-card,.project-card,.about-card):hover{transform:translateY(-4px)!important;border-color:color-mix(in srgb,var(--fa-accent) 34%,var(--fa-line))!important;box-shadow:var(--fa-shadow-hover)!important}
+body.personal-site :where(.card h3,.post-card h3,.service-card h3,.project-card h3,.about-card h3){color:var(--fa-text)!important}
+body.personal-site :where(.card p,.post-card p,.service-card p,.project-card p,.about-card p,.cluster p,.metric p,.process-step p){color:var(--fa-muted)!important;line-height:1.9!important}
+body.personal-site :where(.tag,.eyebrow,.kicker){color:var(--fa-accent)!important}
+body.personal-site :where(.btn,.button){background:var(--fa-surface)!important;color:var(--fa-text)!important;border:1px solid var(--fa-line)!important}
+body.personal-site :where(.btn.primary,.button.primary){background:linear-gradient(135deg,var(--fa-accent),var(--fa-accent-2))!important;color:#fff!important;border-color:transparent!important}
+body.personal-site :where(input,textarea,select){background:var(--fa-surface)!important;color:var(--fa-text)!important;border-color:var(--fa-line)!important}
+body.personal-site :where(input,textarea,select)::placeholder{color:var(--fa-muted)!important;opacity:.8}
+body.personal-site :where(input,textarea,select):focus{border-color:var(--fa-accent)!important;box-shadow:0 0 0 4px color-mix(in srgb,var(--fa-accent) 14%,transparent)!important}
+body.personal-site .profile-card{background:linear-gradient(145deg,var(--fa-surface),var(--fa-surface-2))!important;border-color:var(--fa-line)!important;box-shadow:var(--fa-shadow)!important}
+body.personal-site :where(.profile-caption,.stat){color:var(--fa-muted)!important;border-color:var(--fa-line)!important;background:color-mix(in srgb,var(--fa-surface) 88%,transparent)!important}
+body.personal-site :where(.profile-caption strong,.stat b){color:var(--fa-accent)!important}
+body.personal-site :where(.signal){background:color-mix(in srgb,var(--fa-surface) 88%,transparent)!important;color:var(--fa-muted)!important;border-color:var(--fa-line)!important}
+body.personal-site :where(.terminal){background:#09111c!important;color:#dce9f5!important;border-color:var(--fa-line)!important}
+body.personal-site :where(.article){background:linear-gradient(145deg,var(--fa-surface),var(--fa-surface-2))!important;color:var(--fa-text)!important;border-color:var(--fa-line)!important;box-shadow:var(--fa-shadow)!important}
+body.personal-site .article :where(p,li){color:var(--fa-text)!important}
+body.personal-site .article :where(h1,h2,h3,h4){color:var(--fa-text)!important}
+body.personal-site .article :where(blockquote){border-inline-start-color:var(--fa-accent)!important;background:color-mix(in srgb,var(--fa-accent) 7%,transparent)!important;color:var(--fa-text)!important}
+body.personal-site .article :where(pre){background:#09111c!important;color:#e6edf5!important;border-color:var(--fa-line)!important}
+body.personal-site :where(table th){background:color-mix(in srgb,var(--fa-accent) 9%,var(--fa-surface))!important;color:var(--fa-text)!important}
+body.personal-site :where(table td,table th){border-color:var(--fa-line)!important}
+body.personal-site .mobile-panel{background:var(--fa-surface)!important;border-color:var(--fa-line)!important;color:var(--fa-text)!important;box-shadow:var(--fa-shadow)!important}
+/* VinTech: explicit theme-safe repair, including legacy hard-coded hover rules. */
+body.vintech-site{background:var(--vt-bg)!important;color:var(--vt-text)!important}
+body.vintech-site .vt-bg{background:radial-gradient(850px 520px at 8% 8%,color-mix(in srgb,var(--vt-blue) 16%,transparent),transparent 65%),radial-gradient(720px 520px at 92% 78%,color-mix(in srgb,var(--vt-gold) 10%,transparent),transparent 63%),linear-gradient(180deg,var(--vt-bg),var(--vt-bg2))!important}
+body.vintech-site .vt-nav{background:color-mix(in srgb,var(--vt-bg) 84%,transparent)!important;border-color:var(--vt-line)!important}
+body.vintech-site .vt-links a{color:var(--vt-muted)!important}
+body.vintech-site .vt-links a:hover,body.vintech-site .vt-links a.active{color:var(--vt-text)!important}
+body.vintech-site .vt-card{background:var(--vt-surface)!important;color:var(--vt-text)!important;border-color:var(--vt-line)!important;box-shadow:0 18px 55px rgba(0,0,0,.08)!important}
+body.vintech-site .vt-card:hover{background:var(--vt-surface2,var(--vt-surface))!important;color:var(--vt-text)!important;border-color:color-mix(in srgb,var(--vt-gold) 38%,var(--vt-line))!important;box-shadow:0 24px 65px rgba(0,0,0,.16)!important}
+body.vintech-site .vt-card h3,body.vintech-site .vt-card p{color:var(--vt-text)!important}
+body.vintech-site .vt-card p,body.vintech-site .vt-expertise p,body.vintech-site .vt-steps p,body.vintech-site .vt-cta p{color:var(--vt-muted)!important}
+body.vintech-site .vt-orbit i{background:var(--vt-bg2)!important;color:var(--vt-text)!important;border-color:var(--vt-line)!important;box-shadow:0 8px 20px rgba(0,0,0,.12)!important}
+body.vintech-site .vt-expertise>div,body.vintech-site .vt-steps>div{background:var(--vt-surface)!important;color:var(--vt-text)!important;border-color:var(--vt-line)!important}
+body.vintech-site .vt-cta{background:linear-gradient(120deg,color-mix(in srgb,var(--vt-gold) 9%,var(--vt-bg2)),color-mix(in srgb,var(--vt-blue) 8%,var(--vt-bg2)))!important;border-color:color-mix(in srgb,var(--vt-gold) 30%,var(--vt-line))!important}
+body.vintech-site .vt-btn{background:var(--vt-surface)!important;color:var(--vt-text)!important;border-color:var(--vt-line)!important}
+body.vintech-site .vt-btn.primary{background:linear-gradient(135deg,var(--vt-gold),var(--vt-gold2))!important;color:#fff!important;border-color:transparent!important}
+html[data-theme="light"] body.vintech-site .vt-card:hover{background:var(--vt-surface2)!important;color:var(--vt-text)!important}
+html[data-theme="light"] body.vintech-site .vt-orbit i{background:rgba(255,255,255,.94)!important;color:var(--vt-text)!important}
+/* Shared responsive geometry. */
+@media(max-width:900px){
+  body.personal-site :where(.site-wrap,.wrap,.container,.site-container,.en-page){width:calc(100% - 24px)!important}
+  body.personal-site :where(.site-nav,.nav,.about-nav,.en-nav){width:calc(100% - 12px)!important;top:6px!important;margin-top:6px!important;border-radius:15px!important}
+  body.personal-site :where(.grid-2,.grid-3,.services-grid,.projects-grid,.about-grid,.clusters,.stats){grid-template-columns:1fr 1fr!important}
+  body.vintech-site .vt-container{width:calc(100% - 24px)!important}
+}
+@media(max-width:620px){
+  body.personal-site :where(.grid-2,.grid-3,.services-grid,.projects-grid,.about-grid,.clusters,.stats){grid-template-columns:1fr!important}
+  body.personal-site .hero{padding-block:50px 42px!important}
+  body.personal-site .hero h1{font-size:clamp(2.05rem,11vw,3.55rem)!important}
+  body.personal-site :where(.actions,.hero-actions){display:grid!important;grid-template-columns:1fr!important;width:100%!important}
+  body.personal-site :where(.actions>*,.hero-actions>*){width:100%!important}
+  body.personal-site :where(.card,.post-card,.service-card,.project-card,.about-card){padding:20px!important;border-radius:17px!important}
+  body.personal-site :where(.section,.about-section){padding-block:48px!important}
+  body.vintech-site .vt-hero{padding:52px 0 44px!important}
+  body.vintech-site .vt-hero-grid{grid-template-columns:1fr!important;gap:34px!important}
+  body.vintech-site .vt-hero-visual{order:-1;min-height:280px!important}
+  body.vintech-site .vt-grid,body.vintech-site .vt-expertise,body.vintech-site .vt-steps{grid-template-columns:1fr!important}
+  body.vintech-site .vt-card{padding:20px!important;min-height:0!important}
+  body.vintech-site .vt-actions{display:grid!important;grid-template-columns:1fr!important}
+  body.vintech-site .vt-btn{width:100%!important}
+  body.vintech-site .vt-cta{padding:24px!important;flex-direction:column!important;align-items:stretch!important}
+  body.vintech-site .vt-orbit{width:min(280px,76vw)!important}
+}
+@media(hover:none){body.personal-site :where(.card,.post-card,.service-card,.project-card,.about-card):hover,body.vintech-site .vt-card:hover,body.vintech-site .vt-btn:hover{transform:none!important}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+@media(forced-colors:active){body.personal-site :where(.card,.post-card,.service-card,.project-card,.about-card,.btn,.button,.site-nav),body.vintech-site :where(.vt-card,.vt-btn,.vt-nav){border:1px solid CanvasText!important;box-shadow:none!important}}
