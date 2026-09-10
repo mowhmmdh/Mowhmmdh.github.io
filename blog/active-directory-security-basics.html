@@ -27,11 +27,11 @@
 
 <link rel="stylesheet" href="/assets/content-theme-2026.css">
 
+<link rel="stylesheet" href="/assets/visual-master-2026.css">
+    <link rel="stylesheet" href="/assets/next-gen-2026.css">
 <link rel="alternate" hreflang="fa-IR" href="https://mowhmmdh.github.io/blog/active-directory-security-basics.html">
 <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-blog/active-directory-security-basics.html">
 <link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/blog/active-directory-security-basics.html">
-    <link rel="stylesheet" href="/assets/visual-master-2026.css">
-    <link rel="stylesheet" href="/assets/next-gen-2026.css">
 </head><body><nav class="wrap nav"><a href="/">محمدحسین عسگری</a><a href="/blog/">وبلاگ</a><a href="/vintech.html">VinTech</a></nav><main class="wrap"><header class="hero"><div class="meta">SECURITY / ACTIVE DIRECTORY</div><h1>اصول امنیت Active Directory؛ از حداقل دسترسی تا پایش</h1><p>AD فقط یک سرویس Login نیست؛ بخش مهمی از سطح اعتماد شبکه است و باید مثل یک زیرساخت حساس محافظت شود.</p></header><article class="content"><h2>۱. حساب‌های مدیریتی را محدود کن</h2><p>حساب روزمره کاربر نباید برای مدیریت Domain استفاده شود. دسترسی مدیریتی را به حساب‌های جداگانه و نقش‌های مشخص محدود کن و عضویت گروه‌های privileged را مرتب بازبینی کن.</p><h2>۲. اصل Least Privilege</h2><p>هر کاربر و سرویس باید فقط مجوزی را داشته باشد که واقعاً برای انجام وظیفه نیاز دارد. مجوزهای قدیمی یکی از ساده‌ترین راه‌های گسترش اثر یک حساب compromise شده هستند.</p><h2>۳. Group Policy را استاندارد کن</h2><p>سیاست‌های Password، Lockout، Audit، Defender و تنظیمات امنیتی Endpoint را به‌صورت مستند و قابل بازبینی مدیریت کن. GPOهای زیاد و بدون مالکیت مشخص، مدیریت را سخت می‌کنند.</p><h2>۴. سرویس‌های غیرضروری را حذف یا محدود کن</h2><p>هر سرویس یا پروتکل اضافی سطح حمله را بیشتر می‌کند. قبل از تغییر، وابستگی سرویس‌ها را بررسی و نتیجه را مستند کن؛ Hardening بدون شناخت dependency می‌تواند خودش باعث قطعی شود.</p><h2>۵. لاگ و Audit را جدی بگیر</h2><p>ثبت رویدادهای احراز هویت، تغییرات گروه‌های حساس، ایجاد حساب و رخدادهای مهم باید قابل بررسی باشد. هدف فقط جمع‌کردن Log نیست؛ باید برای رخدادهای مهم دید و زمان نگهداری مشخص داشته باشی.</p><h2>۶. Backup و Recovery</h2><p>پشتیبان‌گیری زمانی ارزش دارد که بازیابی آن آزمایش شده باشد. سناریوی خرابی DC، حذف اشتباهی و compromise را جداگانه در برنامه Recovery در نظر بگیر.</p><div class="box"><strong>چک‌لیست:</strong><ul><li>حساب‌های مدیریتی جدا</li><li>بازبینی گروه‌های privileged</li><li>GPOهای مستند و حداقلی</li><li>Audit مناسب</li><li>پایش تغییرات حساس</li><li>Backup و تست Restore</li></ul></div></article></main>    <script src="/assets/modern-ui-2026.js" defer></script>
 <script src="/assets/site-theme.js" defer></script>
 </body></html>
