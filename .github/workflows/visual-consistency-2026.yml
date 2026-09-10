@@ -25,6 +25,7 @@ jobs:
           layers=[
               '/assets/visual-final-pass-2026.css',
               '/assets/last-mile-visual-2026.css',
+              '/assets/ultimate-ui-2026.css',
           ]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts:
@@ -42,6 +43,25 @@ jobs:
                   p.write_text(s,encoding='utf-8')
                   changed.append(str(p))
           print(f'Normalized visual layers on {len(changed)} pages')
+      - name: Visual regression guardrails
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          html=list(Path('.').rglob('*.html'))
+          html=[p for p in html if '.git' not in p.parts]
+          errors=[]
+          for p in html:
+              s=p.read_text(encoding='utf-8',errors='ignore')
+              if '/assets/ultimate-ui-2026.css' not in s:
+                  errors.append(f'{p}: missing ultimate-ui-2026.css')
+          vt=Path('assets/vintech.css').read_text(encoding='utf-8',errors='ignore')
+          if '.vt-card:hover{transform:translateY(-8px);border-color:rgba(154,105,5,.28);background:#fff' in vt:
+              errors.append('assets/vintech.css: theme-breaking white hover remains; final override must stay active')
+          if errors:
+              print('\n'.join(errors))
+              raise SystemExit(1)
+          print(f'Visual guardrails passed for {len(html)} HTML pages')
       - name: Commit normalized pages
         run: |
           if git diff --quiet; then exit 0; fi
