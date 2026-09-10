@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"><channel><title>مقالات فنی محمدحسین عسگری ثمرین</title><link>https://mowhmmdh.github.io/blog/</link><description>مقالات شبکه، زیرساخت، امنیت و عملیات IT</description><language>fa</language>
-<item><title>تشخیص Drift در Hardening سرور لینوکس</title><link>https://mowhmmdh.github.io/off-page/stackharden/detecting-linux-hardening-drift.html</link><guid>https://mowhmmdh.github.io/off-page/stackharden/detecting-linux-hardening-drift.html</guid></item>
 <item><title>چک‌لیست Hardening سرور لینوکس</title><link>https://mowhmmdh.github.io/blog/linux-server-hardening-checklist.html</link><guid>https://mowhmmdh.github.io/blog/linux-server-hardening-checklist.html</guid></item>
 <item><title>CI/CD برای تیم‌های IT</title><link>https://mowhmmdh.github.io/blog/gitlab-ci-cd-for-it-infrastructure.html</link><guid>https://mowhmmdh.github.io/blog/gitlab-ci-cd-for-it-infrastructure.html</guid></item>
 <item><title>DHCP Snooping و DAI</title><link>https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html</link><guid>https://mowhmmdh.github.io/blog/dhcp-snooping-dai-network-security.html</guid></item>
