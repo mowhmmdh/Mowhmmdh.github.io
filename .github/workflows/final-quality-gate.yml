@@ -18,6 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: python3 scripts/quality-audit.py
+      - run: python3 scripts/asset-reference-audit.py
   lighthouse:
     name: Lighthouse 100 (${{ matrix.page }})
     needs: audit
