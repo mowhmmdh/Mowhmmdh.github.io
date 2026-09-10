@@ -27,6 +27,7 @@ jobs:
               '/assets/last-mile-visual-2026.css',
               '/assets/ultimate-ui-2026.css',
               '/assets/final-appearance-2026.css',
+              '/assets/content-theme-2026.css',
           ]
           for p in Path('.').rglob('*.html'):
               if '.git' in p.parts:
@@ -52,7 +53,7 @@ jobs:
           errors=[]
           for p in html:
               s=p.read_text(encoding='utf-8',errors='ignore')
-              for layer in ('/assets/ultimate-ui-2026.css','/assets/final-appearance-2026.css'):
+              for layer in ('/assets/ultimate-ui-2026.css','/assets/final-appearance-2026.css','/assets/content-theme-2026.css'):
                   if layer not in s:
                       errors.append(f'{p}: missing {layer}')
           vt=Path('assets/vintech.css').read_text(encoding='utf-8',errors='ignore')
