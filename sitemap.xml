@@ -2,6 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://mowhmmdh.github.io/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/about.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/authority.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/active-directory-hardening.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/active-directory-security-basics.html</loc><lastmod>2026-09-11</lastmod></url>
@@ -9,6 +10,7 @@
   <url><loc>https://mowhmmdh.github.io/blog/dns-troubleshooting.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/fortigate-firewall-policy-design.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/gitlab-ci-cd-for-it-infrastructure.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/blog/gitlab-production-checklist.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/incident-response-network-outage.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/linux-server-hardening-checklist.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/network-hardening.html</loc><lastmod>2026-09-11</lastmod></url>
@@ -16,7 +18,9 @@
   <url><loc>https://mowhmmdh.github.io/blog/network-monitoring-basics.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/network-segmentation-for-small-business.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/blog/network-troubleshooting-method.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/blog/vlan-segmentation.html</loc><lastmod>2026-09-11</lastmod></url>
+  <url><loc>https://mowhmmdh.github.io/blog/windows-domain-hardening-baseline.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/case-studies/</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/case-studies/gitlab-infrastructure.html</loc><lastmod>2026-09-11</lastmod></url>
   <url><loc>https://mowhmmdh.github.io/case-studies/network-troubleshooting.html</loc><lastmod>2026-09-11</lastmod></url>
