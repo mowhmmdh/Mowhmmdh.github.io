@@ -1,0 +1,4 @@
+Contact: mailto:mohammedhasgari@gmail.com
+Canonical: https://mowhmmdh.github.io/security.txt
+Preferred-Languages: fa, en
+Policy: https://mowhmmdh.github.io/press.html
