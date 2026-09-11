@@ -1,16 +1,18 @@
 # محمدحسین عسگری ثمرین | Mohammad Hossein Asgari Somarin
 
-**IT / Network & Infrastructure Specialist** focused on network engineering, systems, security fundamentals, infrastructure hardening and practical IT operations.
+**IT / Network & Infrastructure Specialist** focused on network engineering, systems, infrastructure security, hardening, evidence-based troubleshooting and practical IT operations.
 
-This repository contains the source of my bilingual professional website and its technical documentation, SEO, accessibility, responsive UI and quality-control systems.
+🌐 **Professional website:** https://mowhmmdh.github.io/
+📚 **Technical authority hub:** https://mowhmmdh.github.io/authority.html
+🧪 **Case studies:** https://mowhmmdh.github.io/case-studies/
+💼 **LinkedIn:** https://www.linkedin.com/in/mohammadhosseinasgari/
 
 ## Professional identity
 
 - **Persian name:** محمدحسین عسگری ثمرین
 - **English name:** Mohammad Hossein Asgari Somarin
 - **GitHub:** https://github.com/mowhmmdh
-- **Professional website:** https://mowhmmdh.github.io/
-- **LinkedIn:** https://www.linkedin.com/in/mohammadhosseinasgari/
+- **Website:** https://mowhmmdh.github.io/
 - **VinTech:** https://mowhmmdh.github.io/vintech.html
 
 ## Technical focus
@@ -23,23 +25,23 @@ This repository contains the source of my bilingual professional website and its
 - CCTV / NVR infrastructure
 - Technical web development and technical SEO
 
-## Certification & education
+## Engineering methodology
 
-- **CompTIA Network+**
-- **Associate Degree in Computer Engineering**
+**Problem → Scope → Baseline → Evidence → Hypothesis → Controlled Test → Root Cause → Fix → Validation → Documentation**
 
-## Professional background
-
-| Position | Organization | Period |
-|:---|:---|:---|
-| IT Specialist | Mahex Air Cargo Services (Mahex) | Jan 2026 – Present |
-| Site Support Expert | Kimiamehr Espadana Tadbir | Nov 2022 – Dec 2023 |
-| Technical Support Expert | Samt Cultural Institute | Apr 2022 – Oct 2022 |
-| IT Support Specialist | Ministry of Interior | Jul 2018 – Dec 2018 |
+The public case studies are intentionally sanitized: credentials, secrets, internal IPs, confidential architecture and organization-sensitive data are not published.
 
 ## Technical knowledge base
 
-The website includes practical articles covering network troubleshooting, VLAN segmentation, DHCP Snooping / DAI, DNS troubleshooting, Active Directory security, network hardening and infrastructure security.
+The website contains practical material on network troubleshooting, VLAN segmentation, DHCP Snooping / DAI, DNS troubleshooting, Active Directory security, Windows hardening, Linux hardening, network security, GitLab operations and infrastructure methodology.
+
+## Public evidence
+
+- **Technical Authority Hub:** [authority.html](https://mowhmmdh.github.io/authority.html)
+- **Case Studies:** [case-studies](https://mowhmmdh.github.io/case-studies/)
+- **Projects:** [projects.html](https://mowhmmdh.github.io/projects.html)
+- **Technical Articles:** [blog](https://mowhmmdh.github.io/blog/)
+- **Press / Editorial:** [press.html](https://mowhmmdh.github.io/press.html)
 
 ## Related repositories
 
@@ -49,4 +51,4 @@ The website includes practical articles covering network troubleshooting, VLAN s
 
 ## Professional direction
 
-The current technical direction is deeper expertise in **network engineering and network security**, with an emphasis on evidence-based troubleshooting, infrastructure hardening, systems administration and practical technical documentation.
+The technical direction is deeper expertise in **network engineering and network security**, with an emphasis on evidence-based troubleshooting, infrastructure hardening, systems administration, reliable IT operations and high-quality technical documentation.
