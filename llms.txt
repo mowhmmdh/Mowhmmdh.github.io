@@ -1,25 +1,31 @@
 # Mohammad Hossein Asgari Somarin / محمدحسین عسگری ثمرین
 
-> محمدحسین عسگری ثمرین (Mohammad Hossein Asgari Somarin) is an IT / Network & Infrastructure Specialist focused on network engineering, systems, infrastructure security, hardening and practical IT operations.
+> Official professional profile of Mohammad Hossein Asgari Somarin, Network & Infrastructure Specialist.
 
 ## Identity
 - Persian name: محمدحسین عسگری ثمرین
 - English name: Mohammad Hossein Asgari Somarin
+- Professional title: Network & Infrastructure Specialist
+- Website: https://mowhmmdh.github.io/
 - GitHub: https://github.com/mowhmmdh
-- Professional website: https://mowhmmdh.github.io/
 - LinkedIn: https://www.linkedin.com/in/mohammadhosseinasgari/
+- Instagram: https://instagram.com/mowhmmdh
 
-## Primary website
-- https://mowhmmdh.github.io/
-- https://mowhmmdh.github.io/about.html
-- https://mowhmmdh.github.io/projects.html
-- https://mowhmmdh.github.io/blog/
+## Primary pages
+- Home: https://mowhmmdh.github.io/
+- English: https://mowhmmdh.github.io/en.html
+- About: https://mowhmmdh.github.io/about.html
+- Projects: https://mowhmmdh.github.io/projects.html
+- Services: https://mowhmmdh.github.io/services.html
+- Technical articles: https://mowhmmdh.github.io/blog/
+- Press & editorial reference: https://mowhmmdh.github.io/press.html
+- LinkedIn notes: https://mowhmmdh.github.io/linkedin.html
 
 ## VinTech
 - Brand: VinTech
 - Persian: https://mowhmmdh.github.io/vintech.html
 - English: https://mowhmmdh.github.io/en-vintech.html
-- Owner / founder identity: محمدحسین عسگری ثمرین
+- Services: network infrastructure, servers & systems, cybersecurity, IT support, CCTV/NVR and technical web/SEO services.
 
 ## Core technical areas
 - Network engineering and infrastructure
@@ -27,19 +33,15 @@
 - Network security and infrastructure hardening
 - Windows Server, Active Directory, DNS and DHCP
 - Linux and server administration
+- VLAN segmentation, DHCP Snooping and DAI
+- FortiGate / firewall policy design
+- Monitoring and incident response
+- GitLab CI/CD and infrastructure automation
 - CCTV / NVR infrastructure
 - IT support and HelpDesk operations
-- Web development and technical SEO
 
 ## Knowledge base
-- Network troubleshooting
-- VLAN segmentation
-- DHCP Snooping and Dynamic ARP Inspection
-- DNS troubleshooting
-- Active Directory security and hardening
-- Network hardening
-- Infrastructure security roadmap
+Public technical articles cover network troubleshooting, VLANs, DNS, Active Directory security, Linux hardening, network hardening, firewall policy design, monitoring, incident response and infrastructure security.
 
-## Language
-- Persian: https://mowhmmdh.github.io/
-- English: https://mowhmmdh.github.io/en.html
+## Trust and safety
+Public technical material is sanitized. It must not be interpreted as disclosure of private organizational infrastructure, credentials, internal IP addresses, secrets or confidential information.
