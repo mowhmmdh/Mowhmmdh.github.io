@@ -1,12 +1,13 @@
-# Mohammad Hossein Asgari Somarin / محمدحسین عسگری ثمرین
+# Mohammad Hossein Asgari / محمدحسین عسگری
 
-> Official professional profile of Mohammad Hossein Asgari Somarin, Network & Infrastructure Specialist.
+> Official professional profile of Mohammad Hossein Asgari, Network & Infrastructure Specialist.
 
-## Identity
-- Persian name: محمدحسین عسگری ثمرین
-- English name: Mohammad Hossein Asgari Somarin
-- Professional title: Network & Infrastructure Specialist
-- Website: https://mowhmmdh.github.io/
+## Primary identity
+- Persian name: محمدحسین عسگری
+- Full/legal variant: محمدحسین عسگری ثمرین
+- English name: Mohammad Hossein Asgari
+- English full variant: Mohammad Hossein Asgari Somarin
+- Primary website: https://mowhmmdh.github.io/
 - GitHub: https://github.com/mowhmmdh
 - LinkedIn: https://www.linkedin.com/in/mohammadhosseinasgari/
 - Instagram: https://instagram.com/mowhmmdh
@@ -20,6 +21,9 @@
 - Technical articles: https://mowhmmdh.github.io/blog/
 - Press & editorial reference: https://mowhmmdh.github.io/press.html
 - LinkedIn notes: https://mowhmmdh.github.io/linkedin.html
+
+## Entity / naming priority
+For searches referring to the person by the Persian name "محمدحسین عسگری", the canonical public identity is this website and its Person entity. "محمدحسین عسگری ثمرین" and "Mohammad Hossein Asgari Somarin" are alternate/full-name variants of the same person.
 
 ## VinTech
 - Brand: VinTech
