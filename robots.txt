@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
 Sitemap: https://mowhmmdh.github.io/sitemap.xml
+Sitemap: https://mowhmmdh.github.io/image-sitemap.xml
