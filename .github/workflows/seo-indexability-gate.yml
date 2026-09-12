@@ -1,0 +1,51 @@
+name: SEO Indexability Gate
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit published HTML for indexability
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import sys
+
+          errors=[]
+          warnings=[]
+          pages=[]
+          for p in sorted(Path('.').rglob('*.html')):
+              if '.git' in p.parts or p.name == '404.html':
+                  continue
+              text=p.read_text(encoding='utf-8', errors='ignore')
+              rel=p.as_posix()
+              pages.append(rel)
+              low=text.lower()
+              if '<meta name="robots"' not in low and '<meta name="googlebot"' not in low:
+                  warnings.append(f'{rel}: missing explicit robots meta')
+              if '<title>' not in low or not re.search(r'<title>\s*[^<]+\s*</title>', text, re.I):
+                  errors.append(f'{rel}: missing/empty title')
+              if 'rel="canonical"' not in low:
+                  errors.append(f'{rel}: missing canonical')
+              if '<h1' not in low:
+                  warnings.append(f'{rel}: missing H1')
+              if 'og:title' not in low:
+                  warnings.append(f'{rel}: missing og:title')
+              if 'noindex' in low:
+                  errors.append(f'{rel}: contains noindex')
+
+          print(f'Audited {len(pages)} published HTML pages')
+          for w in warnings:
+              print('WARNING:', w)
+          if errors:
+              for e in errors:
+                  print('ERROR:', e)
+              sys.exit(1)
+          print('SEO indexability gate passed.')
