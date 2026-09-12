@@ -1,19 +1,23 @@
-# محمدحسین عسگری ثمرین | Mohammad Hossein Asgari Somarin
+# محمدحسین عسگری | Mohammad Hossein Asgari
 
 **IT / Network & Infrastructure Specialist** focused on network engineering, systems, infrastructure security, hardening, evidence-based troubleshooting and practical IT operations.
 
-🌐 **Professional website:** https://mowhmmdh.github.io/
+🌐 **Official professional website:** https://mowhmmdh.github.io/
 📚 **Technical authority hub:** https://mowhmmdh.github.io/authority.html
 🧪 **Case studies:** https://mowhmmdh.github.io/case-studies/
 💼 **LinkedIn:** https://www.linkedin.com/in/mohammadhosseinasgari/
 
 ## Professional identity
 
-- **Persian name:** محمدحسین عسگری ثمرین
-- **English name:** Mohammad Hossein Asgari Somarin
+- **Primary Persian name:** محمدحسین عسگری
+- **Full Persian name:** محمدحسین عسگری ثمرین
+- **Primary English name:** Mohammad Hossein Asgari
+- **Full English name:** Mohammad Hossein Asgari Somarin
 - **GitHub:** https://github.com/mowhmmdh
 - **Website:** https://mowhmmdh.github.io/
 - **VinTech:** https://mowhmmdh.github.io/vintech.html
+
+For the exact Persian search identity **محمدحسین عسگری**, the canonical public website is **https://mowhmmdh.github.io/**. The longer Persian and English full-name variants refer to the same professional identity.
 
 ## Technical focus
 
