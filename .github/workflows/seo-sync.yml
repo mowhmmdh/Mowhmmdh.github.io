@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - name: Synchronize bilingual hreflang
         run: python3 tools/seo_sync.py
       - name: Build internal discovery hubs
@@ -39,4 +39,16 @@ jobs:
             exit 0
           fi
           git commit -m "chore(seo): synchronize metadata and internal discovery"
-          git push
+          for attempt in 1 2 3; do
+            git fetch origin main
+            if git rebase origin/main; then
+              if git push origin HEAD:main; then
+                exit 0
+              fi
+            else
+              git rebase --abort || true
+            fi
+            sleep $((attempt * 2))
+          done
+          echo "Unable to push synchronized SEO metadata after 3 attempts."
+          exit 1
