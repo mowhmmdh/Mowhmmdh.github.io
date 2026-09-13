@@ -31,15 +31,24 @@ jobs:
       matrix:
         page: [/, /about.html, /services.html, /projects.html, /vintech.html, /vintech/network-infrastructure.html, /blog/, /blog/network-hardening.html, /en.html, /en-vintech.html]
     steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: {node-version: 22}
+        with:
+          node-version: 22
       - run: npm install -g lighthouse@13
-      - name: Wait for deployed page
-        env: {URL: https://mowhmmdh.github.io${{ matrix.page }}}
+      - name: Start exact-commit local server
         run: |
-          for i in {1..30}; do code=$(curl -L -s -o /dev/null -w '%{http_code}' "$URL"); [ "$code" = "200" ] && exit 0; sleep 5; done; echo "Pages not ready: $URL"; exit 1
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/site-server.log 2>&1 &
+          echo $! > /tmp/site-server.pid
+          for i in {1..20}; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:4173${{ matrix.page }}")
+            [ "$code" = "200" ] && exit 0
+            sleep 1
+          done
+          cat /tmp/site-server.log
+          exit 1
       - name: Lighthouse audit
-        env: {URL: https://mowhmmdh.github.io${{ matrix.page }}}
+        env: {URL: http://127.0.0.1:4173${{ matrix.page }}}
         run: |
           mkdir -p reports
           lighthouse "$URL" --output=json --output-path=reports/report.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
