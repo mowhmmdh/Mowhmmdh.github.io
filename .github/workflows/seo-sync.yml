@@ -8,9 +8,11 @@ on:
 permissions:
   contents: write
 
+# SEO generation and the page refactor both rewrite HTML. They must never
+# mutate main concurrently, otherwise generated commits race and rebase conflicts.
 concurrency:
-  group: seo-sync-${{ github.ref }}
-  cancel-in-progress: true
+  group: site-content-main
+  cancel-in-progress: false
 
 jobs:
   sync:
@@ -38,7 +40,7 @@ jobs:
             echo "No staged SEO metadata changes needed."
             exit 0
           fi
-          git commit -m "chore(seo): synchronize metadata and internal discovery"
+          git commit -m "chore(seo): synchronize metadata and internal discovery [skip ci]"
           for attempt in 1 2 3; do
             git fetch origin main
             if git rebase origin/main; then
