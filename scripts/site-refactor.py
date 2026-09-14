@@ -45,6 +45,7 @@ def meta(t,n,v):
 def process(t,p):
  lang=lang_for(p); direction='ltr' if lang=='en' else 'rtl'; rel=p.as_posix()
  is_vt=rel.startswith(('vintech/','en-vintech/')) or p.name in {'vintech.html','en-vintech.html'}
+ is_request=rel in {'vintech/request.html','en-vintech/request.html'}
  t=re.sub(r'<html\b([^>]*)>',lambda m:'<html'+re.sub(r'\s(?:lang|dir)=["\'][^"\']*["\']','',m.group(1),flags=re.I)+f' lang="{lang}" dir="{direction}">',t,count=1,flags=re.I)
  t=re.sub(r'<link\s+rel=["\']canonical["\'][^>]*>','',t,flags=re.I)
  t=re.sub(r'<link\s+rel=["\']alternate["\'][^>]*hreflang=["\'][^"\']+["\'][^>]*>','',t,flags=re.I)
@@ -53,7 +54,7 @@ def process(t,p):
  t=t.replace('</head>','<link rel="stylesheet" href="/assets/site-bundle.css">'+('\n<link rel="stylesheet" href="/assets/vintech.css">' if had_v else '')+'</head>',1)
  if re.search(r'<meta\s+name=["\']viewport["\']',t,re.I): t=re.sub(r'<meta\s+name=["\']viewport["\'][^>]*>','<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">',t,count=1,flags=re.I)
  else:t=t.replace('<head>','<head><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">',1)
- t=meta(t,'theme-color','#0b1220'); t=meta(t,'referrer','strict-origin-when-cross-origin'); t=meta(t,'robots','noindex,follow' if p.name=='404.html' else 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1')
+ t=meta(t,'theme-color','#0b1220'); t=meta(t,'referrer','strict-origin-when-cross-origin'); t=meta(t,'robots','noindex,follow' if p.name=='404.html' or is_request else 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1')
  if p.name!='404.html':
   t=t.replace('</head>',f'<link rel="canonical" href="{html_url(p)}"></head>',1)
   alt=equivalent(p); links=[f'<link rel="alternate" hreflang="{("fa-IR" if lang=="fa" else "en")}" href="{html_url(p)}">']
