@@ -1,20 +1,8 @@
 from pathlib import Path
 
+# Deprecated compatibility script.
+# Responsive rules are now part of the single production cascade in
+# assets/site-bundle.css. This script intentionally does not modify HTML,
+# preventing a second stylesheet layer from being reintroduced.
 ROOT = Path(__file__).resolve().parents[1]
-needle = '<link rel="stylesheet" href="/assets/responsive-fix-2026.css">'
-changed = []
-for path in ROOT.rglob('*.html'):
-    if '.git' in path.parts:
-        continue
-    text = path.read_text(encoding='utf-8')
-    if needle in text:
-        continue
-    marker = '</head>'
-    if marker not in text:
-        continue
-    text = text.replace(marker, f'  {needle}</head>', 1)
-    path.write_text(text, encoding='utf-8')
-    changed.append(str(path.relative_to(ROOT)))
-print(f'Updated {len(changed)} HTML files')
-for item in changed:
-    print(item)
+print(f'Responsive layer is consolidated in {ROOT / "assets/site-bundle.css"}; no HTML changes applied.')
