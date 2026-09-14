@@ -1,1 +1,61 @@
-(()=>{const d=document.documentElement,b=document.body;const key='mh-theme';const saved=localStorage.getItem(key);if(saved==='light')d.classList.add('light');const setTheme=()=>{const light=d.classList.toggle('light');localStorage.setItem(key,light?'light':'dark');document.querySelectorAll('.theme-toggle').forEach(x=>x.textContent=light?'☀':'☾')};document.addEventListener('click',e=>{const t=e.target.closest('.theme-toggle');if(t)setTheme();const m=e.target.closest('.mobile-menu');if(m){const n=document.querySelector('.nav-links');if(n){n.style.display=n.style.display==='flex'?'':'flex';n.style.flexDirection='column';n.style.position='absolute';n.style.top='70px';n.style.right='10px';n.style.background='var(--panel)';n.style.padding='10px';n.style.border='1px solid var(--line)';n.style.borderRadius='14px'}}const v=e.target.closest('.vt-menu');if(v){const n=document.querySelector('.vt-links');if(n)n.classList.toggle('open')}});document.addEventListener('DOMContentLoaded',()=>{document.querySelectorAll('.theme-toggle').forEach(x=>x.textContent=d.classList.contains('light')?'☀':'☾');const y=new Date().getFullYear();document.querySelectorAll('[data-year]').forEach(x=>x.textContent=y)})})();
+(() => {
+  'use strict';
+  const root = document.documentElement;
+  const body = document.body;
+  const storageKey = 'mha-theme';
+  const saved = localStorage.getItem(storageKey);
+  if (saved === 'light') root.classList.add('theme-light');
+
+  const themeButtons = document.querySelectorAll('.theme-toggle');
+  const syncTheme = () => {
+    const light = root.classList.contains('theme-light');
+    themeButtons.forEach(btn => {
+      btn.textContent = light ? '☀' : '☾';
+      btn.setAttribute('aria-label', light ? 'فعال‌کردن حالت تیره' : 'فعال‌کردن حالت روشن');
+      btn.setAttribute('aria-pressed', String(light));
+    });
+  };
+  themeButtons.forEach(btn => btn.addEventListener('click', () => {
+    root.classList.toggle('theme-light');
+    localStorage.setItem(storageKey, root.classList.contains('theme-light') ? 'light' : 'dark');
+    syncTheme();
+  }));
+  syncTheme();
+
+  const navs = document.querySelectorAll('.site-nav');
+  navs.forEach(nav => {
+    const menu = nav.querySelector('.mobile-menu');
+    const links = nav.querySelector('.nav-links');
+    if (!menu || !links) return;
+    menu.addEventListener('click', () => {
+      const open = nav.classList.toggle('menu-open');
+      menu.setAttribute('aria-expanded', String(open));
+      menu.textContent = open ? '×' : '☰';
+      if (open) {
+        const first = links.querySelector('a');
+        if (first) first.focus();
+      }
+    });
+    links.addEventListener('click', e => {
+      if (e.target.closest('a')) {
+        nav.classList.remove('menu-open');
+        menu.setAttribute('aria-expanded', 'false');
+        menu.textContent = '☰';
+      }
+    });
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.site-nav.menu-open').forEach(nav => {
+        nav.classList.remove('menu-open');
+        const menu = nav.querySelector('.mobile-menu');
+        if (menu) { menu.setAttribute('aria-expanded', 'false'); menu.textContent = '☰'; }
+      });
+    }
+  });
+
+  if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+  }
+})();
