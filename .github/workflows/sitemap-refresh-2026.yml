@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Generate sitemap from HTML pages
+      - name: Generate sitemap from indexable HTML pages
         shell: python
         run: |
           from pathlib import Path
@@ -26,21 +26,21 @@ jobs:
           urls=[]
           for p in sorted(root.rglob('*.html')):
               if '.git' in p.parts or p.name=='404.html': continue
+              text=p.read_text(encoding='utf-8',errors='ignore')
+              if 'name="robots" content="noindex' in text.lower(): continue
               rel=p.as_posix()
               if rel=='index.html': path='/'
               elif rel.endswith('/index.html'): path='/'+rel[:-10].rstrip('/')+'/'
               else: path='/'+rel
-              try:
-                  lastmod=subprocess.check_output(['git','log','-1','--format=%cs','--',rel],text=True).strip()
-              except Exception:
-                  lastmod=''
+              try: lastmod=subprocess.check_output(['git','log','-1','--format=%cs','--',rel],text=True).strip()
+              except Exception: lastmod=''
               urls.append((f'https://mowhmmdh.github.io{path}',lastmod))
           urls=sorted(set(urls))
           body='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
           body+=''.join(f'  <url><loc>{escape(u)}</loc>{f"<lastmod>{d}</lastmod>" if d else ""}</url>\n' for u,d in urls)
           body+='</urlset>\n'
           Path('sitemap.xml').write_text(body,encoding='utf-8')
-          print(f'Generated {len(urls)} sitemap URLs with file-specific lastmod')
+          print(f'Generated {len(urls)} indexable sitemap URLs with file-specific lastmod')
       - name: Commit sitemap
         run: |
           if git diff --quiet -- sitemap.xml; then exit 0; fi
