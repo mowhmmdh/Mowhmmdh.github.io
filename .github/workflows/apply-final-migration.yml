@@ -1,0 +1,22 @@
+name: Apply final migration
+on:
+  push:
+    branches: [refactor/10-of-10-final]
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/finalize_10.py
+      - name: Commit generated changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f scripts/.finalize-trigger
+          rm -f .github/workflows/finalize-10-of-10.yml .github/workflows/apply-final-migration.yml
+          rm -f scripts/finalize_10.py
+          git add -A
+          git commit -m "refactor: finalize production architecture" || exit 0
+          git push origin HEAD:refactor/10-of-10-final
