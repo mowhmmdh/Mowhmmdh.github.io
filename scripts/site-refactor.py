@@ -25,6 +25,8 @@ def lang_for(p):
 def equivalent(p):
  r=p.as_posix(); pairs={'index.html':'en.html','en.html':'index.html','about.html':'en-about.html','en-about.html':'about.html','authority.html':'en-authority.html','en-authority.html':'authority.html','projects.html':'en-projects.html','en-projects.html':'projects.html','services.html':'en-services.html','en-services.html':'services.html','press.html':'en-press.html','en-press.html':'press.html','linkedin.html':'en-linkedin.html','en-linkedin.html':'linkedin.html','blog/index.html':'en-blog.html','en-blog.html':'blog/index.html','vintech.html':'en-vintech.html','en-vintech.html':'vintech.html'}
  if r in pairs:return html_url(Path(pairs[r]))
+ if r=='vintech/insights/index.html': return BASE+'/en-vintech/insights/'
+ if r=='en-vintech/insights/index.html': return BASE+'/vintech/insights/'
  for a,b in [('blog/','en-blog/'),('en-blog/','blog/'),('vintech/','en-vintech/'),('en-vintech/','vintech/')]:
   if r.startswith(a): return BASE+'/'+b+r[len(a):]
  return None
@@ -39,8 +41,6 @@ def rewrite_css(css,src):
  return re.sub(r'url\(\s*([^)]*?)\s*\)',f,css,flags=re.I)
 
 all_css=[p for p in ROOT.rglob('*.css') if '.git' not in p.parts and p.as_posix() not in {'assets/site-bundle.css','assets/vintech.css'} and p.as_posix() not in RETIRED_CSS]
-# Base stylesheet MUST precede the active layers. Alphabetically bundling put
-# style.css last and allowed legacy rules to override the current design.
 css_paths=sorted(all_css,key=lambda p:(0 if p.as_posix()=='style.css' else 1,p.as_posix()))
 parts=['/* Production core CSS bundle. Cascade order is intentional. */']
 for p in css_paths: parts.append(f'/* --- {p.as_posix()} --- */\n{rewrite_css(p.read_text(encoding="utf-8"),p)}')
