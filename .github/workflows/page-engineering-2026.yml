@@ -29,16 +29,19 @@ jobs:
           set -euo pipefail
           python3 scripts/normalize-css-layers.py
 
-      - name: Validate page experience layer
+      - name: Validate page experience, metadata and links
         shell: bash
         run: |
           set -euo pipefail
           test -s assets/page-experience-2026.css
           python3 - <<'PY'
           from pathlib import Path
+          from urllib.parse import urlsplit, unquote
           import re, sys
 
-          pages = [p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
+          root = Path('.')
+          pages = [p for p in root.rglob('*.html') if '.git' not in p.parts]
+          page_set = {p.as_posix() for p in pages}
           errors = []
           legacy = {
               'visual-final-pass-2026.css', 'ultimate-ui-2026.css',
@@ -46,6 +49,27 @@ jobs:
               'visual-master-2026.css', 'next-gen-2026.css',
               'site-final-polish.css'
           }
+
+          def local_target(href):
+              if not href or href.startswith(('#', 'mailto:', 'tel:', 'javascript:', 'data:')):
+                  return None
+              u = urlsplit(href)
+              if u.scheme or u.netloc:
+                  return None
+              path = unquote(u.path or '/')
+              if not path.startswith('/'):
+                  return None
+              rel = path.lstrip('/')
+              if rel.endswith('/'):
+                  return rel + 'index.html'
+              if rel in page_set:
+                  return rel
+              if rel == '':
+                  return 'index.html'
+              if '.' not in Path(rel).name:
+                  return rel + '/index.html'
+              return rel
+
           for p in pages:
               s = p.read_text(encoding='utf-8', errors='ignore')
               rel = p.as_posix()
@@ -66,9 +90,33 @@ jobs:
                   errors.append(f'{rel}: non-VinTech page loads vintech.css')
               if not is_vt and 'modern-ui-2026.js' in s:
                   errors.append(f'{rel}: modern-ui-2026.js loaded outside VinTech')
+
+              if len(re.findall(r'<title>.*?</title>', s, re.I | re.S)) != 1:
+                  errors.append(f'{rel}: title count must be exactly 1')
+              if len(re.findall(r'<meta\s+name=["\']description["\'][^>]*>', s, re.I)) != 1:
+                  errors.append(f'{rel}: meta description count must be exactly 1')
+              if p.name != '404.html' and len(re.findall(r'<link\s+rel=["\']canonical["\'][^>]*>', s, re.I)) != 1:
+                  errors.append(f'{rel}: canonical count must be exactly 1')
+              if not re.search(r'<html\b[^>]*\blang=["\'][^"\']+["\']', s, re.I):
+                  errors.append(f'{rel}: html lang is missing')
+              if not re.search(r'<html\b[^>]*\bdir=["\'](?:rtl|ltr)["\']', s, re.I):
+                  errors.append(f'{rel}: html dir is missing or invalid')
+
+              if rel not in {'index.html', 'en.html', '404.html', 'sitemap.html'}:
+                  if s.count('AUTO-BREADCRUMB:START') != 1 or s.count('AUTO-BREADCRUMB:END') != 1:
+                      errors.append(f'{rel}: breadcrumb block must exist exactly once')
+                  if len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"', s, re.I)) != 1:
+                      errors.append(f'{rel}: BreadcrumbList schema count must be exactly 1')
+
+              for href in re.findall(r'<a\b[^>]+href=["\']([^"\']+)["\']', s, re.I):
+                  target = local_target(href)
+                  if target and target not in page_set:
+                      errors.append(f'{rel}: broken internal link -> {href}')
+
           print(f'HTML pages checked: {len(pages)}')
           if errors:
+              print(f'Validation failures: {len(errors)}')
               print('\n'.join(errors))
               sys.exit(1)
-          print('Page engineering validation passed.')
+          print('Full page engineering validation passed.')
           PY
