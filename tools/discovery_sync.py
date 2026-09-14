@@ -51,7 +51,8 @@ def ensure_meta(path: Path) -> None:
 
 def inject_breadcrumb(path: Path) -> None:
     text = path.read_text(encoding='utf-8'); rel = path.as_posix()
-    if rel in {'index.html', '404.html'}: return
+    # Home pages should not breadcrumb themselves. Keep both language roots clean.
+    if rel in {'index.html', 'en.html', '404.html'}: return
     is_en = rel == 'en.html' or rel.startswith('en-') or rel.startswith('en-blog/') or rel.startswith('en-vintech/')
     items = [('Home' if is_en else 'خانه', BASE + ('/en.html' if is_en else '/'))]
     if rel.startswith('blog/'): items.append(('Technical Blog' if is_en else 'مقالات فنی', BASE + ('/en-blog.html' if is_en else '/blog/')))
@@ -69,20 +70,11 @@ def inject_breadcrumb(path: Path) -> None:
     replace_block(path, block, BREAD_START, BREAD_END, marker='<main')
 
 def related_score(path: Path, candidate: Path) -> int:
-    """Prefer the same technical cluster instead of arbitrary alphabetical neighbors."""
     a = set(path.stem.lower().replace('_','-').split('-')); b = set(candidate.stem.lower().replace('_','-').split('-'))
     groups = [
-        {'active','directory','ad','windows','domain'},
-        {'dns'},
-        {'fortigate','firewall'},
-        {'gitlab','ci','cd'},
-        {'network','hardening','security'},
-        {'network','troubleshooting'},
-        {'network','monitoring'},
-        {'segmentation','vlan','dhcp','snooping','dai'},
-        {'linux','server'},
-        {'incident','response'}
-    ]
+        {'active','directory','ad','windows','domain'}, {'dns'}, {'fortigate','firewall'}, {'gitlab','ci','cd'},
+        {'network','hardening','security'}, {'network','troubleshooting'}, {'network','monitoring'},
+        {'segmentation','vlan','dhcp','snooping','dai'}, {'linux','server'}, {'incident','response'}]
     score = len(a & b) * 4
     for group in groups:
         if a & group and b & group: score += 12
