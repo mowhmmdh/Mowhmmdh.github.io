@@ -35,6 +35,12 @@ jobs:
           set -euo pipefail
           python3 scripts/normalize-css-layers.py
 
+      - name: Run full repository quality audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/quality-audit.py
+
       - name: Validate page experience, metadata and links
         shell: bash
         run: |
