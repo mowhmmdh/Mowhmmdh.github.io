@@ -1,4 +1,4 @@
-# Deterministic site-wide normalization: all HTML pages share one generated CSS entry point.
+# FINAL PASS: deterministic, idempotent normalization for every published HTML page.
 from pathlib import Path
 import re
 from urllib.parse import quote
@@ -27,7 +27,7 @@ def english_equivalent(path: Path) -> str | None:
     if rel.startswith('en-blog/'): return BASE + '/blog/' + rel[len('en-blog/'):]
     if rel.startswith('blog/'): return BASE + '/en-blog/' + rel[len('blog/'):]
     if rel.startswith('en-vintech/'): return BASE + '/vintech/' + rel[len('en-vintech/'):]
-    if rel.startswith('vintech/'): return BASE + '/en-vintech/' + rel[len('en-vintech/'):]
+    if rel.startswith('vintech/'): return BASE + '/en-vintech/' + rel[len('vintech/'):]
     if rel.startswith('en-'): return BASE + '/' + rel[3:]
     if rel in {'about.html','authority.html','projects.html','services.html','press.html','linkedin.html'}: return BASE + '/en-' + rel
     if rel in {'en-about.html','en-authority.html','en-projects.html','en-services.html','en-press.html','en-linkedin.html'}: return BASE + '/' + rel[3:]
@@ -44,7 +44,6 @@ def rewrite_css_urls(css: str, source: Path) -> str:
         except ValueError: return m.group(0)
     return re.sub(r'url\(\s*([^)]*?)\s*\)', repl, css, flags=re.I)
 
-# Never infer the source set from HTML: after the first successful pass, HTML only points to the bundle.
 css_paths = sorted([p for p in ROOT.rglob('*.css') if '.git' not in p.parts and p.as_posix() != 'assets/site-bundle.css'])
 bundle_parts = ['/* Generated site bundle. Source order is deterministic. */']
 for css in css_paths:
