@@ -3,6 +3,7 @@ import re
 
 ROOT = Path('.')
 BASE = 'https://mowhmmdh.github.io'
+# Deterministic repair: metadata and shared theme wiring only.
 
 def page_url(p):
     r = p.as_posix()
@@ -36,15 +37,12 @@ for p in sorted(ROOT.rglob('*.html')):
     if '.git' in p.parts or p.name == '404.html': continue
     text = p.read_text(encoding='utf-8', errors='replace')
     original = text
-
     if not re.search(r'<meta\s+name=["\']author["\']', text, re.I):
         tag = '<meta name="author" content="Mohammad Hossein Asgari">'
         m = re.search(r'<meta\s+name=["\']description["\'][^>]*>', text, re.I)
         text = text[:m.end()] + tag + text[m.end():] if m else text.replace('</head>', tag + '</head>', 1)
-
     if '/assets/site-theme.js' not in text:
         text = text.replace('</head>', '<script src="/assets/site-theme.js" defer></script></head>', 1)
-
     text = re.sub(r'\s*<link\s+rel=["\']alternate["\'][^>]*hreflang=["\'][^"\']+["\'][^>]*>', '', text, flags=re.I)
     own = page_url(p)
     other = equivalent(p)
@@ -55,9 +53,7 @@ for p in sorted(ROOT.rglob('*.html')):
         links.append(f'<link rel="alternate" hreflang="{"en" if language == "fa-IR" else "fa-IR"}" href="{other_url}">')
     links.append(f'<link rel="alternate" hreflang="x-default" href="{BASE}/">')
     text = text.replace('</head>', ''.join(links) + '</head>', 1)
-
     if text != original:
         p.write_text(text, encoding='utf-8')
         changed += 1
-
 print(f'Quality repair updated {changed} HTML pages.')
