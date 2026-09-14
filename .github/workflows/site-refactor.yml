@@ -11,19 +11,25 @@ concurrency:
 jobs:
   refactor:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - name: Validate refactor script
+        run: python3 -m py_compile scripts/site-refactor.py
       - name: Normalize every HTML page and bundle CSS
         run: python3 scripts/site-refactor.py
+      - name: Validate generated bundle
+        run: |
+          test -s assets/site-bundle.css
+          test "$(find . -name '*.html' -not -path './.git/*' | wc -l)" -gt 0
       - name: Commit generated refactor if changed
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/site-bundle.css '*.html' blog/*.html case-studies/*.html en-blog/*.html en-vintech/*.html services/*.html vintech/*.html
+          git add -A
           if git diff --cached --quiet; then
             echo "No generated changes."
           else
-            git commit -m "refactor: normalize all pages and consolidate CSS"
+            git commit -m "refactor: normalize all pages and consolidate CSS [skip ci]"
             git push
           fi
