@@ -7,11 +7,10 @@ HTMLS=sorted(p for p in ROOT.rglob('*.html') if '.git' not in p.parts)
 CSS_LINK=re.compile(r'<link\b[^>]*rel=["\']stylesheet["\'][^>]*>',re.I)
 IMG_RE=re.compile(r'<img\b([^>]*?)>',re.I)
 SCRIPT_RE=re.compile(r'<script\b([^>]*)>',re.I)
-RETIRED_CSS={
-'assets/visual-final-pass-2026.css','assets/ultimate-ui-2026.css','assets/final-appearance-2026.css',
-'assets/content-theme-2026.css','assets/visual-master-2026.css','assets/next-gen-2026.css',
-'assets/site-quality-2026.css','assets/theme-contrast-2026.css','assets/light-mode-fix-2026.css',
-'assets/editorial-experience-2026.css','assets/elite-web-system-2026.css'}
+# Keep every real CSS layer in the production bundle. Several of the site's
+# final visual layers are intentionally late-cascade overrides; dropping them
+# makes the existing semantic HTML render as an unstyled/misaligned shell.
+RETIRED_CSS=set()
 
 def html_url(p):
  r=p.as_posix()
@@ -40,9 +39,11 @@ def rewrite_css(css,src):
   except ValueError:return m.group(0)
  return re.sub(r'url\(\s*([^)]*?)\s*\)',f,css,flags=re.I)
 
-all_css=[p for p in ROOT.rglob('*.css') if '.git' not in p.parts and p.as_posix() not in {'assets/site-bundle.css','assets/vintech.css'} and p.as_posix() not in RETIRED_CSS]
+all_css=[p for p in ROOT.rglob('*.css') if '.git' not in p.parts and p.as_posix() not in {'assets/site-bundle.css','assets/vintech.css'}]
+# Base first, then deterministic layers. The late visual files are retained
+# rather than silently discarded so their intended cascade survives bundling.
 css_paths=sorted(all_css,key=lambda p:(0 if p.as_posix()=='style.css' else 1,p.as_posix()))
-parts=['/* Production core CSS bundle. Cascade order is intentional. */']
+parts=['/* Production core CSS bundle. Complete cascade; order is intentional. */']
 for p in css_paths: parts.append(f'/* --- {p.as_posix()} --- */\n{rewrite_css(p.read_text(encoding="utf-8"),p)}')
 (ROOT/'assets/site-bundle.css').write_text('\n\n'.join(parts)+'\n',encoding='utf-8')
 
