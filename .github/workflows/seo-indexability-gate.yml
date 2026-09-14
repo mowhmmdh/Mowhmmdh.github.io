@@ -21,6 +21,7 @@ jobs:
           errors=[]
           warnings=[]
           pages=[]
+          intentional_noindex={'vintech/request.html','en-vintech/request.html'}
           for p in sorted(Path('.').rglob('*.html')):
               if '.git' in p.parts or p.name == '404.html':
                   continue
@@ -38,8 +39,9 @@ jobs:
                   warnings.append(f'{rel}: missing H1')
               if 'og:title' not in low:
                   warnings.append(f'{rel}: missing og:title')
-              if 'noindex' in low:
-                  errors.append(f'{rel}: contains noindex')
+              if re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*noindex', text, re.I):
+                  if rel not in intentional_noindex:
+                      errors.append(f'{rel}: unexpected noindex')
 
           print(f'Audited {len(pages)} published HTML pages')
           for w in warnings:
