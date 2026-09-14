@@ -7,6 +7,11 @@ HTMLS=sorted(p for p in ROOT.rglob('*.html') if '.git' not in p.parts)
 CSS_LINK=re.compile(r'<link\b[^>]*rel=["\']stylesheet["\'][^>]*>',re.I)
 IMG_RE=re.compile(r'<img\b([^>]*?)>',re.I)
 SCRIPT_RE=re.compile(r'<script\b([^>]*)>',re.I)
+RETIRED_CSS={
+'assets/visual-final-pass-2026.css','assets/ultimate-ui-2026.css','assets/final-appearance-2026.css',
+'assets/content-theme-2026.css','assets/visual-master-2026.css','assets/next-gen-2026.css',
+'assets/site-quality-2026.css','assets/theme-contrast-2026.css','assets/light-mode-fix-2026.css',
+'assets/editorial-experience-2026.css','assets/elite-web-system-2026.css'}
 
 def html_url(p):
  r=p.as_posix()
@@ -33,8 +38,11 @@ def rewrite_css(css,src):
   except ValueError:return m.group(0)
  return re.sub(r'url\(\s*([^)]*?)\s*\)',f,css,flags=re.I)
 
-css_paths=sorted(p for p in ROOT.rglob('*.css') if '.git' not in p.parts and p.as_posix() not in {'assets/site-bundle.css','assets/vintech.css'})
-parts=['/* Production core CSS bundle. */']
+all_css=[p for p in ROOT.rglob('*.css') if '.git' not in p.parts and p.as_posix() not in {'assets/site-bundle.css','assets/vintech.css'} and p.as_posix() not in RETIRED_CSS]
+# Base stylesheet MUST precede the active layers. Alphabetically bundling put
+# style.css last and allowed legacy rules to override the current design.
+css_paths=sorted(all_css,key=lambda p:(0 if p.as_posix()=='style.css' else 1,p.as_posix()))
+parts=['/* Production core CSS bundle. Cascade order is intentional. */']
 for p in css_paths: parts.append(f'/* --- {p.as_posix()} --- */\n{rewrite_css(p.read_text(encoding="utf-8"),p)}')
 (ROOT/'assets/site-bundle.css').write_text('\n\n'.join(parts)+'\n',encoding='utf-8')
 
@@ -78,8 +86,8 @@ def process(t,p):
  if not is_vt: t=re.sub(r'<script\s+src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>','',t,flags=re.I)
  skip_text='Skip to main content' if lang=='en' else 'پرش به محتوای اصلی'
  skip=re.compile(r'<a\b[^>]*class=["\'][^"\']*skip-link[^"\']*["\'][^>]*>.*?</a>',re.I|re.S)
- if skip.search(t): t=skip.sub(f'<a class="skip-link" href="#main-content">{skip_text}</a>',t,count=1)
- elif re.search(r'<body\b',t,re.I): t=re.sub(r'<body\b([^>]*)>',r'<body\1><a class="skip-link" href="#main-content">'+skip_text+r'</a>',t,count=1,flags=re.I)
+ if skip.search(t): t=skip.sub(f'<a id="skip-to-content" class="skip-link" href="#main-content">{skip_text}</a>',t,count=1)
+ elif re.search(r'<body\b',t,re.I): t=re.sub(r'<body\b([^>]*)>',r'<body\1><a id="skip-to-content" class="skip-link" href="#main-content">'+skip_text+r'</a>',t,count=1,flags=re.I)
  if not re.search(r'<main\b[^>]*\bid=["\']main-content["\']',t,re.I):t=re.sub(r'<main\b','<main id="main-content"',t,count=1,flags=re.I)
  return t
 
