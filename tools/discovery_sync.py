@@ -9,17 +9,28 @@ BREAD_START = '<!-- AUTO-BREADCRUMB:START -->'; BREAD_END = '<!-- AUTO-BREADCRUM
 RELATED_START = '<!-- AUTO-RELATED:START -->'; RELATED_END = '<!-- AUTO-RELATED:END -->'
 BASE = 'https://mowhmmdh.github.io'
 
+
 def replace_block(path: Path, block: str, start: str = START, end: str = END, marker: str = '</main>') -> None:
-    text = path.read_text(encoding='utf-8'); pattern = re.compile(re.escape(start) + r'.*?' + re.escape(end), re.S); payload = f'{start}\n{block}\n{end}'
-    if pattern.search(text): new = pattern.sub(payload, text, count=1)
+    text = path.read_text(encoding='utf-8')
+    pattern = re.compile(re.escape(start) + r'.*?' + re.escape(end), re.S)
+    payload = f'{start}\n{block}\n{end}'
+    if pattern.search(text):
+        new = pattern.sub(payload, text, count=1)
     else:
         idx = text.lower().find(marker.lower())
-        if idx < 0: return
+        if idx < 0:
+            return
         new = text[:idx] + payload + '\n' + text[idx:]
-    if new != text: path.write_text(new, encoding='utf-8')
+    if new != text:
+        path.write_text(new, encoding='utf-8')
+
 
 def links(paths):
-    return ''.join(f'<a class="discovery-link" href="/{escape(p.as_posix())}"><span>{escape(p.stem.replace("-", " ").replace("_", " ").title())}</span><span aria-hidden="true">↗</span></a>' for p in sorted(paths))
+    return ''.join(
+        f'<a class="discovery-link" href="/{escape(p.as_posix())}"><span>{escape(p.stem.replace("-", " ").replace("_", " ").title())}</span><span aria-hidden="true">↗</span></a>'
+        for p in sorted(paths)
+    )
+
 
 def canonical_for(path: Path) -> str:
     rel = path.as_posix()
@@ -27,11 +38,21 @@ def canonical_for(path: Path) -> str:
     if rel == 'blog/index.html': return BASE + '/blog/'
     if rel == 'case-studies/index.html': return BASE + '/case-studies/'
     if rel == 'vintech/insights/index.html': return BASE + '/vintech/insights/'
+    if rel == 'en-vintech/insights/index.html': return BASE + '/en-vintech/insights/'
     return f'{BASE}/{quote(rel)}'
+
 
 def page_title(path: Path, text: str) -> str:
     m = re.search(r'<title>(.*?)</title>', text, re.I | re.S)
     return unescape(re.sub(r'\s+', ' ', m.group(1)).strip()) if m else path.stem.replace('-', ' ').replace('_', ' ').title()
+
+
+def strip_breadcrumb_schema(text: str) -> str:
+    return re.sub(
+        r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{.*?"@type"\s*:\s*["\']BreadcrumbList["\'].*?\}\s*</script>',
+        '', text, flags=re.I | re.S
+    )
+
 
 def ensure_meta(path: Path) -> None:
     text = path.read_text(encoding='utf-8')
@@ -49,25 +70,47 @@ def ensure_meta(path: Path) -> None:
         text = re.sub(r'</head>', f'<script type="application/ld+json">{schema}</script></head>', text, count=1, flags=re.I)
     if text != path.read_text(encoding='utf-8'): path.write_text(text, encoding='utf-8')
 
-def inject_breadcrumb(path: Path) -> None:
-    text = path.read_text(encoding='utf-8'); rel = path.as_posix()
-    # Home pages should not breadcrumb themselves. Keep both language roots clean.
-    if rel in {'index.html', 'en.html', '404.html'}: return
+
+def breadcrumb_items(path: Path, text: str):
+    rel = path.as_posix()
     is_en = rel == 'en.html' or rel.startswith('en-') or rel.startswith('en-blog/') or rel.startswith('en-vintech/')
-    items = [('Home' if is_en else 'خانه', BASE + ('/en.html' if is_en else '/'))]
-    if rel.startswith('blog/'): items.append(('Technical Blog' if is_en else 'مقالات فنی', BASE + ('/en-blog.html' if is_en else '/blog/')))
+    home = ('Home' if is_en else 'خانه', BASE + ('/en.html' if is_en else '/'))
+    # Section landing pages get a clean parent breadcrumb without a self-link.
+    if rel in {'blog/index.html', 'en-blog.html'}:
+        return [home, ('Technical Blog' if is_en else 'مقالات فنی', BASE + ('/en-blog.html' if is_en else '/blog/'))]
+    if rel in {'vintech.html', 'en-vintech.html'}:
+        return [home, ('VinTech', BASE + ('/en-vintech.html' if is_en else '/vintech.html'))]
+    if rel in {'case-studies/index.html'}:
+        return [home, ('Case Studies' if is_en else 'مطالعات موردی', BASE + '/case-studies/')]
+    if rel in {'vintech/insights/index.html', 'en-vintech/insights/index.html'}:
+        return [home, ('Insights', BASE + ('/en-vintech/insights/' if is_en else '/vintech/insights/'))]
+    items = [home]
+    if rel.startswith('blog/'): items.append(('Technical Blog', BASE + '/blog/'))
     elif rel.startswith('en-blog/'): items.append(('Technical Blog', BASE + '/en-blog.html'))
-    elif rel.startswith('vintech/'): items.append(('VinTech', BASE + ('/en-vintech.html' if is_en else '/vintech.html')))
+    elif rel.startswith('vintech/'): items.append(('VinTech', BASE + '/vintech.html'))
     elif rel.startswith('en-vintech/'): items.append(('VinTech', BASE + '/en-vintech.html'))
     elif rel.startswith('case-studies/'): items.append(('Case Studies' if is_en else 'مطالعات موردی', BASE + '/case-studies/'))
     elif rel.startswith('services/'): items.append(('Services' if is_en else 'خدمات', BASE + '/services.html'))
     items.append((page_title(path, text), canonical_for(path)))
+    return items
+
+
+def inject_breadcrumb(path: Path) -> None:
+    rel = path.as_posix()
+    if rel in {'index.html', 'en.html', '404.html', 'sitemap.html'}:
+        return
+    text = strip_breadcrumb_schema(path.read_text(encoding='utf-8'))
+    items = breadcrumb_items(path, text)
     li=[]; schema=[]
     for i,(name,url) in enumerate(items,1):
-        li.append(f'<li><a href="{escape(url)}">{escape(name)}</a></li>')
+        if i == len(items):
+            li.append(f'<li aria-current="page"><span>{escape(name)}</span></li>')
+        else:
+            li.append(f'<li><a href="{escape(url)}">{escape(name)}</a></li>')
         schema.append('{"@type":"ListItem","position":'+str(i)+',"name":"'+escape(name,quote=True)+'","item":"'+url+'"}')
     block=f'<nav class="auto-breadcrumb" aria-label="Breadcrumb"><ol>{"".join(li)}</ol></nav><script type="application/ld+json">{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{",".join(schema)}]}}</script>'
     replace_block(path, block, BREAD_START, BREAD_END, marker='<main')
+
 
 def related_score(path: Path, candidate: Path) -> int:
     a = set(path.stem.lower().replace('_','-').split('-')); b = set(candidate.stem.lower().replace('_','-').split('-'))
@@ -80,6 +123,7 @@ def related_score(path: Path, candidate: Path) -> int:
         if a & group and b & group: score += 12
     return score
 
+
 def inject_related(path: Path, candidates) -> None:
     rel=path.as_posix()
     if not (rel.startswith('blog/') or rel.startswith('en-blog/')) or rel.endswith('/index.html'): return
@@ -89,6 +133,7 @@ def inject_related(path: Path, candidates) -> None:
     is_en=rel.startswith('en-blog/'); heading='Related technical guides' if is_en else 'راهنماهای فنی مرتبط'; intro='Continue with closely related practical topics.' if is_en else 'برای مطالعه عمیق‌تر، این راهنماهای مرتبط را هم ببینید.'
     block=f'<section class="auto-related" aria-labelledby="related-guides-title"><h2 id="related-guides-title">{heading}</h2><p>{intro}</p><div class="auto-related-grid">'+''.join(f'<a href="/{escape(p.as_posix())}">{escape(page_title(p,p.read_text(encoding="utf-8"))) } ↗</a>' for p in same)+f'</div></section>'
     replace_block(path, block, RELATED_START, RELATED_END, marker='</main>')
+
 
 fa_articles=[p for p in (ROOT/'blog').glob('*.html') if p.name!='index.html']; en_articles=[p for p in (ROOT/'en-blog').glob('*.html')]; fa_services=[p for p in (ROOT/'vintech').rglob('*.html')]; en_services=[p for p in (ROOT/'en-vintech').rglob('*.html')]
 html_pages=[p for p in ROOT.rglob('*.html') if '.git' not in p.parts]
