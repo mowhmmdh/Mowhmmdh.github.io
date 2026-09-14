@@ -88,7 +88,7 @@ def inject_breadcrumb(path: Path) -> None:
     if rel in {'index.html', '404.html'}:
         return
     parts = rel.split('/')
-    is_en = rel.startswith('en-') or rel.startswith('en-blog/') or rel.startswith('en-vintech/')
+    is_en = rel == 'en.html' or rel.startswith('en-') or rel.startswith('en-blog/') or rel.startswith('en-vintech/')
     home_name = 'Home' if is_en else 'خانه'
     items = [(home_name, BASE + ('/en.html' if is_en else '/'))]
     if rel.startswith('blog/'):
