@@ -14,31 +14,33 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Generate sitemap from HTML pages
         shell: python
         run: |
           from pathlib import Path
-          from datetime import date
+          import subprocess
           from xml.sax.saxutils import escape
           root=Path('.')
           urls=[]
           for p in sorted(root.rglob('*.html')):
               if '.git' in p.parts or p.name=='404.html': continue
               rel=p.as_posix()
-              if rel=='index.html':
-                  path='/'
-              elif rel.endswith('/index.html'):
-                  path='/'+rel[:-10].rstrip('/')+'/'
-              else:
-                  path='/'+rel
-              urls.append('https://mowhmmdh.github.io'+path)
+              if rel=='index.html': path='/'
+              elif rel.endswith('/index.html'): path='/'+rel[:-10].rstrip('/')+'/'
+              else: path='/'+rel
+              try:
+                  lastmod=subprocess.check_output(['git','log','-1','--format=%cs','--',rel],text=True).strip()
+              except Exception:
+                  lastmod=''
+              urls.append((f'https://mowhmmdh.github.io{path}',lastmod))
           urls=sorted(set(urls))
-          today=date.today().isoformat()
           body='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-          body+=''.join(f'  <url><loc>{escape(u)}</loc><lastmod>{today}</lastmod></url>\n' for u in urls)
+          body+=''.join(f'  <url><loc>{escape(u)}</loc>{f"<lastmod>{d}</lastmod>" if d else ""}</url>\n' for u,d in urls)
           body+='</urlset>\n'
           Path('sitemap.xml').write_text(body,encoding='utf-8')
-          print(f'Generated {len(urls)} sitemap URLs')
+          print(f'Generated {len(urls)} sitemap URLs with file-specific lastmod')
       - name: Commit sitemap
         run: |
           if git diff --quiet -- sitemap.xml; then exit 0; fi
