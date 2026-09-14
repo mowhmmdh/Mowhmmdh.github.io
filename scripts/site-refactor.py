@@ -74,7 +74,8 @@ def process(t,p):
   if 'src=' in a.lower() and 'defer' not in a.lower() and 'application/ld+json' not in a.lower():a+=' defer'
   return '<script'+a+'>'
  t=SCRIPT_RE.sub(scr,t)
- if 'class="skip-link"' not in t and re.search(r'<body\b',t,re.I):t=re.sub(r'<body\b([^>]*)>',r'<body\1><a class="skip-link" href="#main-content">پرش به محتوای اصلی</a>',t,count=1,flags=re.I)
+ skip_text='Skip to content' if lang=='en' else 'پرش به محتوای اصلی'
+ if 'class="skip-link"' not in t and re.search(r'<body\b',t,re.I):t=re.sub(r'<body\b([^>]*)>',r'<body\1><a class="skip-link" href="#main-content">'+skip_text+r'</a>',t,count=1,flags=re.I)
  if not re.search(r'<main\b[^>]*\bid=["\']main-content["\']',t,re.I):t=re.sub(r'<main\b','<main id="main-content"',t,count=1,flags=re.I)
  return t
 

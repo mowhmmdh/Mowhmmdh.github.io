@@ -1,6 +1,6 @@
 from pathlib import Path
 import re
-from html import escape
+from html import escape, unescape
 from urllib.parse import quote
 
 ROOT = Path('.')
@@ -54,7 +54,7 @@ def canonical_for(path: Path) -> str:
 def page_title(path: Path, text: str) -> str:
     m = re.search(r'<title>(.*?)</title>', text, re.I | re.S)
     if m:
-        return re.sub(r'\s+', ' ', m.group(1)).strip()
+        return unescape(re.sub(r'\s+', ' ', m.group(1)).strip())
     return path.stem.replace('-', ' ').replace('_', ' ').title()
 
 
