@@ -26,7 +26,7 @@ jobs:
           test -s assets/site-bundle.css
           test "$(find . -name '*.html' -not -path './.git/*' | wc -l)" -gt 0
           ! grep -R "site-bundle.css.*visual-final-pass-2026.css" --include='*.html' .
-      - name: Commit generated refactor if changed
+      - name: Commit generated refactor
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -36,5 +36,14 @@ jobs:
             exit 0
           fi
           git commit -m "refactor: normalize all pages and consolidate CSS [skip ci]"
-          git pull --rebase origin main
-          git push origin HEAD:main
+          for attempt in 1 2 3 4 5 6 7; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort; git reset --soft origin/main; git add -A; git commit -m "refactor: normalize all pages and consolidate CSS [skip ci]" || true; }
+            if git push origin HEAD:main; then
+              echo "Generated site refactor pushed on attempt $attempt."
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "Could not push generated refactor after retries."
+          exit 1
