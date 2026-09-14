@@ -23,6 +23,12 @@ jobs:
         with:
           fetch-depth: 1
 
+      - name: Normalize generated page integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/site-integrity-fix.py
+
       - name: Validate CSS layer architecture
         shell: bash
         run: |
@@ -90,7 +96,6 @@ jobs:
                   errors.append(f'{rel}: non-VinTech page loads vintech.css')
               if not is_vt and 'modern-ui-2026.js' in s:
                   errors.append(f'{rel}: modern-ui-2026.js loaded outside VinTech')
-
               if len(re.findall(r'<title>.*?</title>', s, re.I | re.S)) != 1:
                   errors.append(f'{rel}: title count must be exactly 1')
               if len(re.findall(r'<meta\s+name=["\']description["\'][^>]*>', s, re.I)) != 1:
@@ -101,13 +106,11 @@ jobs:
                   errors.append(f'{rel}: html lang is missing')
               if not re.search(r'<html\b[^>]*\bdir=["\'](?:rtl|ltr)["\']', s, re.I):
                   errors.append(f'{rel}: html dir is missing or invalid')
-
               if rel not in {'index.html', 'en.html', '404.html', 'sitemap.html'}:
                   if s.count('AUTO-BREADCRUMB:START') != 1 or s.count('AUTO-BREADCRUMB:END') != 1:
                       errors.append(f'{rel}: breadcrumb block must exist exactly once')
                   if len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"', s, re.I)) != 1:
                       errors.append(f'{rel}: BreadcrumbList schema count must be exactly 1')
-
               for href in re.findall(r'<a\b[^>]+href=["\']([^"\']+)["\']', s, re.I):
                   target = local_target(href)
                   if target and target not in page_set:
