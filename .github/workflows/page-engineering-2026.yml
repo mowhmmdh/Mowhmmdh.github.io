@@ -53,7 +53,7 @@ jobs:
 
           root = Path('.')
           pages = [p for p in root.rglob('*.html') if '.git' not in p.parts]
-          page_set = {p.as_posix() for p in pages}
+          repository_files = {p.as_posix() for p in root.rglob('*') if p.is_file() and '.git' not in p.parts}
           errors = []
           legacy = {
               'visual-final-pass-2026.css', 'ultimate-ui-2026.css',
@@ -74,8 +74,6 @@ jobs:
               rel = path.lstrip('/')
               if rel.endswith('/'):
                   return rel + 'index.html'
-              if rel in page_set:
-                  return rel
               if rel == '':
                   return 'index.html'
               if '.' not in Path(rel).name:
@@ -119,7 +117,7 @@ jobs:
                       errors.append(f'{rel}: BreadcrumbList schema count must be exactly 1')
               for href in re.findall(r'<a\b[^>]+href=["\']([^"\']+)["\']', s, re.I):
                   target = local_target(href)
-                  if target and target not in page_set:
+                  if target and target not in repository_files:
                       errors.append(f'{rel}: broken internal link -> {href}')
 
           print(f'HTML pages checked: {len(pages)}')
