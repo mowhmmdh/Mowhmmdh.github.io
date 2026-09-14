@@ -4,12 +4,9 @@ from html import escape, unescape
 from urllib.parse import quote
 
 ROOT = Path('.')
-START = '<!-- AUTO-DISCOVERY:START -->'
-END = '<!-- AUTO-DISCOVERY:END -->'
-BREAD_START = '<!-- AUTO-BREADCRUMB:START -->'
-BREAD_END = '<!-- AUTO-BREADCRUMB:END -->'
-RELATED_START = '<!-- AUTO-RELATED:START -->'
-RELATED_END = '<!-- AUTO-RELATED:END -->'
+START = '<!-- AUTO-DISCOVERY:START -->'; END = '<!-- AUTO-DISCOVERY:END -->'
+BREAD_START = '<!-- AUTO-BREADCRUMB:START -->'; BREAD_END = '<!-- AUTO-BREADCRUMB:END -->'
+RELATED_START = '<!-- AUTO-RELATED:START -->'; RELATED_END = '<!-- AUTO-RELATED:END -->'
 BASE = 'https://mowhmmdh.github.io'
 
 def replace_block(path: Path, block: str, start: str = START, end: str = END, marker: str = '</main>') -> None:
@@ -66,17 +63,39 @@ def inject_breadcrumb(path: Path) -> None:
     items.append((page_title(path, text), canonical_for(path)))
     li=[]; schema=[]
     for i,(name,url) in enumerate(items,1):
-        li.append(f'<li><a href="{escape(url)}">{escape(name)}</a></li>'); schema.append('{"@type":"ListItem","position":'+str(i)+',"name":"'+escape(name,quote=True)+'","item":"'+url+'"}')
+        li.append(f'<li><a href="{escape(url)}">{escape(name)}</a></li>')
+        schema.append('{"@type":"ListItem","position":'+str(i)+',"name":"'+escape(name,quote=True)+'","item":"'+url+'"}')
     block=f'<nav class="auto-breadcrumb" aria-label="Breadcrumb"><ol>{"".join(li)}</ol></nav><script type="application/ld+json">{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{",".join(schema)}]}}</script>'
     replace_block(path, block, BREAD_START, BREAD_END, marker='<main')
+
+def related_score(path: Path, candidate: Path) -> int:
+    """Prefer the same technical cluster instead of arbitrary alphabetical neighbors."""
+    a = set(path.stem.lower().replace('_','-').split('-')); b = set(candidate.stem.lower().replace('_','-').split('-'))
+    groups = [
+        {'active','directory','ad','windows','domain'},
+        {'dns'},
+        {'fortigate','firewall'},
+        {'gitlab','ci','cd'},
+        {'network','hardening','security'},
+        {'network','troubleshooting'},
+        {'network','monitoring'},
+        {'segmentation','vlan','dhcp','snooping','dai'},
+        {'linux','server'},
+        {'incident','response'}
+    ]
+    score = len(a & b) * 4
+    for group in groups:
+        if a & group and b & group: score += 12
+    return score
 
 def inject_related(path: Path, candidates) -> None:
     rel=path.as_posix()
     if not (rel.startswith('blog/') or rel.startswith('en-blog/')) or rel.endswith('/index.html'): return
-    is_en=rel.startswith('en-blog/'); same=[p for p in candidates if p!=path and p.as_posix().startswith('en-blog/' if is_en else 'blog/')]; same=sorted(same,key=lambda p:p.name)[:6]
+    same=[p for p in candidates if p!=path and p.as_posix().startswith('en-blog/' if rel.startswith('en-blog/') else 'blog/')]
+    same=sorted(same,key=lambda p:(-related_score(path,p),p.name))[:6]
     if not same:return
-    heading='Related technical guides' if is_en else 'راهنماهای فنی مرتبط'; intro='Continue with closely related practical topics.' if is_en else 'برای مطالعه عمیق‌تر، این راهنماهای مرتبط را هم ببینید.'
-    block=f'<section class="auto-related" aria-labelledby="related-guides-title"><h2 id="related-guides-title">{heading}</h2><p>{intro}</p><div class="auto-related-grid">'+''.join(f'<a href="/{escape(p.as_posix())}">{escape(p.stem.replace("-", " ").title())} ↗</a>' for p in same)+f'</div></section>'
+    is_en=rel.startswith('en-blog/'); heading='Related technical guides' if is_en else 'راهنماهای فنی مرتبط'; intro='Continue with closely related practical topics.' if is_en else 'برای مطالعه عمیق‌تر، این راهنماهای مرتبط را هم ببینید.'
+    block=f'<section class="auto-related" aria-labelledby="related-guides-title"><h2 id="related-guides-title">{heading}</h2><p>{intro}</p><div class="auto-related-grid">'+''.join(f'<a href="/{escape(p.as_posix())}">{escape(page_title(p,p.read_text(encoding="utf-8"))) } ↗</a>' for p in same)+f'</div></section>'
     replace_block(path, block, RELATED_START, RELATED_END, marker='</main>')
 
 fa_articles=[p for p in (ROOT/'blog').glob('*.html') if p.name!='index.html']; en_articles=[p for p in (ROOT/'en-blog').glob('*.html')]; fa_services=[p for p in (ROOT/'vintech').rglob('*.html')]; en_services=[p for p in (ROOT/'en-vintech').rglob('*.html')]
