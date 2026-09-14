@@ -1,0 +1,27 @@
+name: Repository Quality Repair
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  repair:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Repair HTML quality invariants
+        run: python3 scripts/repair-quality.py
+      - name: Commit repaired HTML
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' 'blog/*.html' 'en-blog/*.html' 'vintech/*.html' 'en-vintech/*.html' 'case-studies/*.html' 'services/*.html'
+          if git diff --cached --quiet; then
+            echo "No HTML repairs required."
+            exit 0
+          fi
+          git commit -m "fix: normalize repository HTML quality [skip ci]"
+          git push
