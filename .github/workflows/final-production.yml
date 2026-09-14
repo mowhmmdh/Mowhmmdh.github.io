@@ -1,0 +1,19 @@
+name: Final production cleanup
+on:
+  push:
+    branches: [final-production-2026]
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/final_production2.py
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f scripts/final_production.py scripts/final_production2.py .github/workflows/final-production.yml
+          git add -A
+          git commit -m "refactor: enforce production CSS contract and bilingual UX" || exit 0
+          git push origin HEAD:final-production-2026
