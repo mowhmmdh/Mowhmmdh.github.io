@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: page-engineering-main
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   engineer:
@@ -21,38 +21,54 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
 
-      - name: Normalize global CSS layers
+      - name: Validate CSS layer architecture
         shell: bash
         run: |
           set -euo pipefail
           python3 scripts/normalize-css-layers.py
-          if ! git diff --quiet; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add '*.html'
-            git commit -m "chore: normalize CSS layers [skip ci]"
-            git pull --rebase origin main
-            git push origin HEAD:main
-          fi
 
       - name: Validate page experience layer
         shell: bash
         run: |
           set -euo pipefail
-          test -f assets/page-experience-2026.css
+          test -s assets/page-experience-2026.css
           python3 - <<'PY'
           from pathlib import Path
-          import re,sys
-          pages=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
-          errors=[]
+          import re, sys
+
+          pages = [p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
+          errors = []
+          legacy = {
+              'visual-final-pass-2026.css', 'ultimate-ui-2026.css',
+              'final-appearance-2026.css', 'content-theme-2026.css',
+              'visual-master-2026.css', 'next-gen-2026.css',
+              'site-final-polish.css'
+          }
           for p in pages:
-              s=p.read_text(encoding='utf-8',errors='ignore')
-              if len(re.findall(r'<meta\s+name=["\']viewport["\'][^>]*>',s,re.I))>1:
-                  errors.append(f'{p}: duplicate viewport')
+              s = p.read_text(encoding='utf-8', errors='ignore')
+              rel = p.as_posix()
+              if len(re.findall(r'<meta\s+name=["\']viewport["\'][^>]*>', s, re.I)) != 1:
+                  errors.append(f'{rel}: viewport count must be exactly 1')
+              if len(re.findall(r'<main\b[^>]*\bid=["\']main-content["\']', s, re.I)) != 1:
+                  errors.append(f'{rel}: main#main-content count must be exactly 1')
+              if len(re.findall(r'class=["\'][^"\']*\bskip-link\b[^"\']*["\']', s, re.I)) != 1:
+                  errors.append(f'{rel}: skip-link count must be exactly 1')
+              if s.count('/assets/site-bundle.css') != 1:
+                  errors.append(f'{rel}: site-bundle.css must be loaded exactly once')
+              if any(x in s for x in legacy):
+                  errors.append(f'{rel}: legacy CSS reference detected')
+              is_vt = rel.startswith(('vintech/', 'en-vintech/')) or p.name in {'vintech.html', 'en-vintech.html'}
+              if is_vt and s.count('/assets/vintech.css') != 1:
+                  errors.append(f'{rel}: VinTech must load vintech.css exactly once')
+              if not is_vt and '/assets/vintech.css' in s:
+                  errors.append(f'{rel}: non-VinTech page loads vintech.css')
+              if not is_vt and 'modern-ui-2026.js' in s:
+                  errors.append(f'{rel}: modern-ui-2026.js loaded outside VinTech')
           print(f'HTML pages checked: {len(pages)}')
           if errors:
-              print('\n'.join(errors));sys.exit(1)
+              print('\n'.join(errors))
+              sys.exit(1)
           print('Page engineering validation passed.')
           PY
