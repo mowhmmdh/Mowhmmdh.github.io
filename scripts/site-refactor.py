@@ -60,7 +60,6 @@ def process(t,p):
   if p.name in {'index.html','en.html'}:links.append(f'<link rel="alternate" hreflang="x-default" href="{BASE}/">')
   t=t.replace('</head>',''.join(links)+'</head>',1)
  t=t.replace('Mohammad Hossein Asgari Somarin','Mohammad Hossein Asgari').replace('محمدحسین عسگری ثمرین','محمدحسین عسگری')
- # Preserve the surname only as a single historical alternate in JSON-LD.
  t=re.sub(r'"alternateName":\s*\[[^\]]*\]', '"alternateName":["Mohammad Hossein Asgari","محمدحسین عسگری ثمرین"]',t,flags=re.I)
  def img(m):
   a=m.group(1)
@@ -74,8 +73,11 @@ def process(t,p):
   if 'src=' in a.lower() and 'defer' not in a.lower() and 'application/ld+json' not in a.lower():a+=' defer'
   return '<script'+a+'>'
  t=SCRIPT_RE.sub(scr,t)
- skip_text='Skip to content' if lang=='en' else 'پرش به محتوای اصلی'
- if 'class="skip-link"' not in t and re.search(r'<body\b',t,re.I):t=re.sub(r'<body\b([^>]*)>',r'<body\1><a class="skip-link" href="#main-content">'+skip_text+r'</a>',t,count=1,flags=re.I)
+ # Normalize one language-aware skip link instead of leaving stale markup behind.
+ skip_text='Skip to main content' if lang=='en' else 'پرش به محتوای اصلی'
+ skip=re.compile(r'<a\b[^>]*class=["\'][^"\']*skip-link[^"\']*["\'][^>]*>.*?</a>',re.I|re.S)
+ if skip.search(t): t=skip.sub(f'<a class="skip-link" href="#main-content">{skip_text}</a>',t,count=1)
+ elif re.search(r'<body\b',t,re.I): t=re.sub(r'<body\b([^>]*)>',r'<body\1><a class="skip-link" href="#main-content">'+skip_text+r'</a>',t,count=1,flags=re.I)
  if not re.search(r'<main\b[^>]*\bid=["\']main-content["\']',t,re.I):t=re.sub(r'<main\b','<main id="main-content"',t,count=1,flags=re.I)
  return t
 
