@@ -1,0 +1,20 @@
+name: Bilingual polish
+on:
+  push:
+    branches: [refactor/10-of-10-final]
+permissions:
+  contents: write
+jobs:
+  polish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scripts/final_polish.py
+      - name: Commit polish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          rm -f scripts/final_polish.py .github/workflows/bilingual-polish.yml
+          git add -A
+          git commit -m "fix: finalize bilingual accessibility and breadcrumbs" || exit 0
+          git push origin HEAD:refactor/10-of-10-final
