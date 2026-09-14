@@ -3,7 +3,7 @@ import re
 
 ROOT = Path('.')
 BASE = 'https://mowhmmdh.github.io'
-# Deterministic repair: metadata and shared theme wiring only.
+# Deterministic repository-wide HTML quality repair.
 
 def page_url(p):
     r = p.as_posix()
