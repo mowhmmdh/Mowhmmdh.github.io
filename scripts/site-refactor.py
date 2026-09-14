@@ -43,11 +43,12 @@ def meta(t,n,v):
  return pat.sub(tag,t,count=1) if pat.search(t) else t.replace('</head>',tag+'</head>',1)
 
 def process(t,p):
- lang=lang_for(p); direction='ltr' if lang=='en' else 'rtl'
+ lang=lang_for(p); direction='ltr' if lang=='en' else 'rtl'; rel=p.as_posix()
+ is_vt=rel.startswith(('vintech/','en-vintech/')) or p.name in {'vintech.html','en-vintech.html'}
  t=re.sub(r'<html\b([^>]*)>',lambda m:'<html'+re.sub(r'\s(?:lang|dir)=["\'][^"\']*["\']','',m.group(1),flags=re.I)+f' lang="{lang}" dir="{direction}">',t,count=1,flags=re.I)
  t=re.sub(r'<link\s+rel=["\']canonical["\'][^>]*>','',t,flags=re.I)
  t=re.sub(r'<link\s+rel=["\']alternate["\'][^>]*hreflang=["\'][^"\']+["\'][^>]*>','',t,flags=re.I)
- had_v=bool(re.search(r'href=["\'][^"\']*vintech\.css',t,re.I)) or p.as_posix().startswith(('vintech/','en-vintech/')) or p.name in {'vintech.html','en-vintech.html'}
+ had_v=bool(re.search(r'href=["\'][^"\']*vintech\.css',t,re.I)) or is_vt
  t=CSS_LINK.sub('',t)
  t=t.replace('</head>','<link rel="stylesheet" href="/assets/site-bundle.css">'+('\n<link rel="stylesheet" href="/assets/vintech.css">' if had_v else '')+'</head>',1)
  if re.search(r'<meta\s+name=["\']viewport["\']',t,re.I): t=re.sub(r'<meta\s+name=["\']viewport["\'][^>]*>','<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">',t,count=1,flags=re.I)
@@ -73,7 +74,7 @@ def process(t,p):
   if 'src=' in a.lower() and 'defer' not in a.lower() and 'application/ld+json' not in a.lower():a+=' defer'
   return '<script'+a+'>'
  t=SCRIPT_RE.sub(scr,t)
- # Normalize one language-aware skip link instead of leaving stale markup behind.
+ if not is_vt: t=re.sub(r'<script\s+src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>','',t,flags=re.I)
  skip_text='Skip to main content' if lang=='en' else 'پرش به محتوای اصلی'
  skip=re.compile(r'<a\b[^>]*class=["\'][^"\']*skip-link[^"\']*["\'][^>]*>.*?</a>',re.I|re.S)
  if skip.search(t): t=skip.sub(f'<a class="skip-link" href="#main-content">{skip_text}</a>',t,count=1)
