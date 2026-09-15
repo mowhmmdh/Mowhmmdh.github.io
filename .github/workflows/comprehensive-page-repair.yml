@@ -1,0 +1,106 @@
+name: Comprehensive page repair
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Repair every HTML page
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          ROOT = Path('.')
+          FULL = 'محمدحسین عسگری ثمرین'
+          SHORT = 'محمدحسین عسگری'
+          CSS = '/assets/final-polish-2026.css'
+          THEME = '/assets/site-theme.js'
+          pairs = {
+              'index.html':'en.html','about.html':'en-about.html','services.html':'en-services.html',
+              'projects.html':'en-projects.html','linkedin.html':'en-linkedin.html','vintech.html':'en-vintech.html',
+              'press.html':'en-press.html','blog/index.html':'en-blog.html'
+          }
+
+          def add_once(s, pattern, tag):
+              if tag in s: return s
+              m = re.search(pattern, s, re.I)
+              return s[:m.end()] + tag + s[m.end():] if m else s.replace('</head>', tag+'</head>', 1)
+
+          changed=[]
+          pages = sorted(p for p in ROOT.rglob('*.html') if '.git' not in p.parts)
+          for p in pages:
+              s = p.read_text(encoding='utf-8', errors='replace'); original=s
+              # Canonical professional identity in source, metadata and JSON-LD.
+              s = s.replace(SHORT, FULL)
+              # Normalize legacy route forms.
+              s = s.replace('href="/en-blog/"','href="/en-blog.html"')
+              s = s.replace('href="/en-vintech/"','href="/en-vintech.html"')
+              # Exactly one shared theme script on normal pages.
+              if p.name != '404.html':
+                  s = re.sub(r'<script\b[^>]*src=["\']/assets/site-theme\.js["\'][^>]*></script>\s*', '', s, flags=re.I)
+                  s = s.replace('</head>', f'<script src="{THEME}" defer></script></head>', 1)
+                  # Exactly one shared CSS and one final visual layer.
+                  s = re.sub(r'<link\b[^>]*href=["\']/assets/site-bundle\.css["\'][^>]*>\s*', '', s, flags=re.I)
+                  s = s.replace('</head>', '<link rel="stylesheet" href="/assets/site-bundle.css">' + f'<link rel="stylesheet" href="{CSS}"></head>', 1)
+              # Repair obvious duplicate visual layers from previous iterations.
+              for legacy in ['visual-final-pass-2026.css','ultimate-ui-2026.css','final-appearance-2026.css','content-theme-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css']:
+                  s = re.sub(r'<link\b[^>]*href=["\'][^"\']*'+re.escape(legacy)+r'["\'][^>]*>\s*', '', s, flags=re.I)
+              # Remove duplicate exact references while preserving first occurrence.
+              def one_ref(text, needle):
+                  first = text.find(needle)
+                  if first < 0: return text
+                  before, after = text[:first+len(needle)], text[first+len(needle):]
+                  return before + after.replace(needle, '')
+              s = one_ref(s, '<link rel="stylesheet" href="/assets/site-bundle.css">')
+              s = one_ref(s, f'<link rel="stylesheet" href="{CSS}">')
+
+              if s != original:
+                  p.write_text(s, encoding='utf-8'); changed.append(p.as_posix())
+
+          # Ensure bilingual alternate links for the principal paired pages.
+          for fa,en in pairs.items():
+              fp, ep = ROOT/fa, ROOT/en
+              if not fp.exists() or not ep.exists(): continue
+              for p, other, lang, otherlang in [(fp,en,'fa-IR','en'),(ep,fa,'en','fa-IR')]:
+                  s=p.read_text(encoding='utf-8',errors='replace'); o=s
+                  # Remove malformed duplicates for the same hreflang, then insert exactly once.
+                  s=re.sub(r'\s*<link\b[^>]*rel=["\']alternate["\'][^>]*hreflang=["\'](?:fa-IR|en)["\'][^>]*>','',s,flags=re.I)
+                  own='/' if p.as_posix()=='index.html' else '/'+p.as_posix()
+                  alt='/' if other=='index.html' else '/'+other
+                  block=f'\n<link rel="alternate" hreflang="{lang}" href="https://mowhmmdh.github.io{own}">\n<link rel="alternate" hreflang="{otherlang}" href="https://mowhmmdh.github.io{alt}">\n'
+                  s=s.replace('</head>',block+'</head>',1)
+                  if s!=o: p.write_text(s,encoding='utf-8'); changed.append(p.as_posix())
+
+          print(f'Pages normalized: {len(pages)}')
+          print(f'Files changed: {len(sorted(set(changed)))}')
+          PY
+      - name: Run repository audit
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/quality-audit.py
+          python3 scripts/seo-deep-audit.py
+      - name: Commit repairs and remove one-time workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git rm .github/workflows/comprehensive-page-repair.yml || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'fix: comprehensively normalize pages and visual system'
+            git push
+          fi
