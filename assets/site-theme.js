@@ -5,38 +5,31 @@
   const storageKey = 'mha-theme';
   const FULL_NAME = 'محمدحسین عسگری ثمرین';
   const SHORT_NAME = 'محمدحسین عسگری';
+  const shortNamePattern = new RegExp(`${SHORT_NAME.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?!\\s*ثمرین)`, 'g');
 
   const normalizeIdentity = () => {
+    const replaceShortName = value => typeof value === 'string' ? value.replace(shortNamePattern, FULL_NAME) : value;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     const nodes = [];
     let node;
-    while ((node = walker.nextNode())) nodes.push(node);
-    for (const textNode of nodes) {
-      if (textNode.nodeValue?.includes(SHORT_NAME)) {
-        textNode.nodeValue = textNode.nodeValue.replaceAll(SHORT_NAME, FULL_NAME);
-      }
+    while ((node = walker.nextNode())) {
+      if (node.parentElement?.closest('script,style,noscript,template')) continue;
+      nodes.push(node);
     }
-    if (document.title.includes(SHORT_NAME)) {
-      document.title = document.title.replaceAll(SHORT_NAME, FULL_NAME);
+    for (const textNode of nodes) textNode.nodeValue = replaceShortName(textNode.nodeValue);
+
+    if (document.title.includes(SHORT_NAME) && !document.title.includes(FULL_NAME)) {
+      document.title = replaceShortName(document.title);
     }
-    document.querySelectorAll('meta[content]').forEach(meta => {
-      if (meta.content.includes(SHORT_NAME)) meta.content = meta.content.replaceAll(SHORT_NAME, FULL_NAME);
-    });
-    document.querySelectorAll('img[alt],a[aria-label],button[aria-label]').forEach(el => {
-      ['alt', 'aria-label'].forEach(attr => {
-        if (el.hasAttribute(attr) && el.getAttribute(attr).includes(SHORT_NAME)) {
-          el.setAttribute(attr, el.getAttribute(attr).replaceAll(SHORT_NAME, FULL_NAME));
-        }
-      });
-    });
-    document.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
-      if (script.textContent.includes(SHORT_NAME)) script.textContent = script.textContent.replaceAll(SHORT_NAME, FULL_NAME);
+
+    document.querySelectorAll('meta[content], img[alt], a[aria-label], button[aria-label]').forEach(el => {
+      const attr = el.hasAttribute('content') ? 'content' : el.hasAttribute('alt') ? 'alt' : 'aria-label';
+      const value = el.getAttribute(attr);
+      if (value && value.includes(SHORT_NAME) && !value.includes(FULL_NAME)) el.setAttribute(attr, replaceShortName(value));
     });
   };
 
-  try {
-    if (localStorage.getItem(storageKey) === 'light') root.classList.add('theme-light');
-  } catch (_) {}
+  try { if (localStorage.getItem(storageKey) === 'light') root.classList.add('theme-light'); } catch (_) {}
 
   document.querySelectorAll('.theme-toggle').forEach(btn => {
     const sync = () => {
@@ -78,16 +71,10 @@
     document.querySelectorAll('.site-nav.menu-open').forEach(nav => {
       nav.classList.remove('menu-open');
       const menu = nav.querySelector('.mobile-menu');
-      if (menu) {
-        menu.setAttribute('aria-expanded', 'false');
-        menu.textContent = '☰';
-      }
+      if (menu) { menu.setAttribute('aria-expanded', 'false'); menu.textContent = '☰'; }
     });
   });
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', normalizeIdentity, { once: true });
-  } else {
-    normalizeIdentity();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', normalizeIdentity, { once: true });
+  else normalizeIdentity();
 })();
