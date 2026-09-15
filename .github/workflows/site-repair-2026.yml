@@ -45,6 +45,18 @@ jobs:
           ]
           changed = []
 
+          def clean_breadcrumb_jsonld(text):
+            script_pattern = re.compile(
+              r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>',
+              re.I | re.S,
+            )
+            def scrub(match):
+              block = match.group(0)
+              if re.search(r'"@type"\s*:\s*["\']BreadcrumbList["\']', block, re.I):
+                return ''
+              return block
+            return script_pattern.sub(scrub, text)
+
           def normalize_breadcrumbs(text):
             start = '<!-- AUTO-BREADCRUMB:START -->'
             end = '<!-- AUTO-BREADCRUMB:END -->'
@@ -53,7 +65,8 @@ jobs:
             if protected:
               text = text.replace(protected, '\x00PROTECTED_BREAD\x00', 1)
 
-            # Keep only one visible auto-breadcrumb nav. The marked block above is protected.
+            # Remove unmarked auto-breadcrumb navs only. The protected generated block
+            # is restored afterwards and remains the single source of truth.
             text = re.sub(
               r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*',
               '', text, flags=re.I | re.S
@@ -61,20 +74,17 @@ jobs:
             if protected:
               text = text.replace('\x00PROTECTED_BREAD\x00', protected, 1)
 
-            # Remove all BreadcrumbList scripts, then restore the schema inside the one
-            # protected generated block. This handles legacy duplicate schema blocks.
+            # Remove duplicate BreadcrumbList scripts safely, script-by-script. This
+            # can never consume neighboring HTML because the outer match ends at the
+            # first closing </script> tag.
             marker = re.search(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
             protected = marker.group(0) if marker else ''
             if protected:
               text = text.replace(protected, '\x00PROTECTED_BREAD_SCHEMA\x00', 1)
-            text = re.sub(
-              r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*.*?"@type"\s*:\s*["\']BreadcrumbList["\'].*?</script>\s*',
-              '', text, flags=re.I | re.S
-            )
+            text = clean_breadcrumb_jsonld(text)
             if protected:
               text = text.replace('\x00PROTECTED_BREAD_SCHEMA\x00', protected, 1)
 
-            # Finally collapse duplicate generated marker blocks.
             blocks = re.findall(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
             if len(blocks) > 1:
               first = blocks[0]
