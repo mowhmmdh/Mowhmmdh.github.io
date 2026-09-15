@@ -5,7 +5,7 @@ import re
 ROOT=Path('.')
 BASE='https://mowhmmdh.github.io'
 PERSON_FA='محمدحسین عسگری ثمرین'
-PERSON_EN='Mohammad Hossein Asgari Somarini Somarin'
+PERSON_EN='Mohammad Hossein Asgari Somarin'
 
 EN_CORRUPTION=re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+',re.I)
 EN_SHORT=re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?\b(?!\s+Somar\w*)',re.I)
