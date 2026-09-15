@@ -21,6 +21,31 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Bootstrap canonical identity in automation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          root = Path('.')
+          canonical = 'Mohammad Hossein Asgari Somarin'
+          pattern = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar[a-z]+)+', re.I)
+          short = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar[a-z]+\b)', re.I)
+          fa = 'محمدحسین عسگری ثمرین'
+          fa_pattern = re.compile(r'(?:محمدحسین عسگری ثمرین)(?:\s*ثمرین)+')
+          exts = {'.html','.css','.js','.json','.jsonld','.txt','.md','.xml','.webmanifest','.yml','.yaml','.py'}
+          for p in root.rglob('*'):
+              if not p.is_file() or '.git' in p.parts or p.suffix.lower() not in exts:
+                  continue
+              try: text = p.read_text(encoding='utf-8')
+              except Exception: continue
+              new = pattern.sub(canonical, text)
+              new = short.sub(canonical, new)
+              new = fa_pattern.sub(fa, new)
+              if new != text:
+                  p.write_text(new, encoding='utf-8')
+          PY
+
       - name: Normalize canonical identity
         run: python3 scripts/identity-sync-2026.py
       - name: Normalize generated page integrity
