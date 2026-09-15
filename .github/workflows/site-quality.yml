@@ -1,0 +1,73 @@
+name: Site Quality Gate 2026
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate repository structure
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f assets/site-bundle.css
+          test -f assets/final-polish-2026.css
+          test -f assets/elite-universal-2026.css
+          test -f assets/site-theme.js
+          test -f robots.txt
+          test -f sitemap.xml
+          test -f manifest.webmanifest
+          test -f .well-known/security.txt
+
+      - name: Run structural and SEO audits
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/quality-audit.py
+          python3 scripts/seo-deep-audit.py
+
+      - name: Syntax-check JavaScript
+        shell: bash
+        run: |
+          set -euo pipefail
+          find . -type f -name '*.js' -not -path './.git/*' -print0 | while IFS= read -r -d '' file; do
+            node --check "$file"
+          done
+
+      - name: Check production stylesheet contract
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          pages = [p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
+          legacy = {
+              'visual-final-pass-2026.css','last-mile-visual-2026.css','ultimate-ui-2026.css',
+              'final-appearance-2026.css','content-theme-2026.css','visual-master-2026.css',
+              'next-gen-2026.css','site-final-polish.css'
+          }
+          errors=[]
+          for p in pages:
+              s=p.read_text(encoding='utf-8',errors='replace')
+              if p.name != '404.html' and s.count('/assets/site-bundle.css') != 1:
+                  errors.append(f'{p}: site-bundle.css count={s.count("/assets/site-bundle.css")}')
+              for name in legacy:
+                  if name in s: errors.append(f'{p}: legacy stylesheet {name}')
+              if p.as_posix().startswith(('vintech/','en-vintech/')) or p.name in {'vintech.html','en-vintech.html'}:
+                  if '/assets/vintech.css' not in s: errors.append(f'{p}: VinTech stylesheet missing')
+              elif '/assets/vintech.css' in s:
+                  errors.append(f'{p}: VinTech stylesheet loaded on personal page')
+          if errors:
+              print('\n'.join(errors)); raise SystemExit(1)
+          print(f'Production stylesheet contract passed for {len(pages)} HTML pages')
