@@ -1,8 +1,6 @@
 name: SEO Sync
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -10,7 +8,6 @@ permissions:
 
 concurrency:
   group: site-content-main
-  # A stale SEO pass must never overwrite a newer site correction.
   cancel-in-progress: true
 
 jobs:
