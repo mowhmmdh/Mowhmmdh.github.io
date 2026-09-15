@@ -1,0 +1,24 @@
+/* Final UI hardening layer — loaded after all legacy styles. */
+/* VinTech: visible, reliable motion without depending on JS reveal state. */
+.vintech-modern .vt-orbit{animation:vt-orbit-float 7s ease-in-out infinite;will-change:transform}
+.vintech-modern .vt-orbit:before{animation:vt-orbit-spin 18s linear infinite}
+.vintech-modern .vt-orbit:after{animation:vt-orbit-spin-reverse 12s linear infinite}
+.vintech-modern .vt-orbit-core{animation:vt-core-pulse 2.8s ease-in-out infinite}
+@keyframes vt-orbit-float{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-8px) rotate(1deg)}}
+@keyframes vt-orbit-spin{to{transform:rotate(360deg)}}
+@keyframes vt-orbit-spin-reverse{to{transform:rotate(-360deg)}}
+@keyframes vt-core-pulse{0%,100%{box-shadow:0 0 30px rgba(217,173,85,.12);transform:scale(1)}50%{box-shadow:0 0 55px rgba(217,173,85,.24);transform:scale(1.04)}}
+.vintech-modern [data-reveal]{opacity:1!important;transform:none!important}
+.vintech-modern .vt-ready{opacity:1!important;transform:none!important}
+/* Social controls: graphical marks, not plain text labels. */
+.social-links a,.social-link,.social-icon,.socials a,.social-buttons a,.footer-socials a,.vt-social-row a{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;text-decoration:none}
+.social-links a::before,.social-link::before,.social-icon::before,.socials a::before,.social-buttons a::before,.footer-socials a::before,.vt-social-row a::before{display:inline-grid;place-items:center;width:1.35em;height:1.35em;border-radius:.35em;font-family:Arial,sans-serif;font-weight:900;line-height:1;flex:0 0 auto}
+.social-links a[href*="linkedin"]::before,.social-link[href*="linkedin"]::before,.socials a[href*="linkedin"]::before,.social-buttons a[href*="linkedin"]::before,.footer-socials a[href*="linkedin"]::before,.vt-social-row a[href*="linkedin"]::before{content:"in";background:#0a66c2;color:#fff;font-size:.8em}
+.social-links a[href*="instagram"]::before,.social-link[href*="instagram"]::before,.socials a[href*="instagram"]::before,.social-buttons a[href*="instagram"]::before,.footer-socials a[href*="instagram"]::before,.vt-social-row a[href*="instagram"]::before{content:"◎";border:1px solid currentColor;font-size:1.05em}
+.social-links a[href*="github"]::before,.social-link[href*="github"]::before,.socials a[href*="github"]::before,.social-buttons a[href*="github"]::before,.footer-socials a[href*="github"]::before,.vt-social-row a[href*="github"]::before{content:"⌘";border:1px solid currentColor;font-size:1em}
+.social-links a[href^="mailto:"]::before,.social-link[href^="mailto:"]::before,.socials a[href^="mailto:"]::before,.social-buttons a[href^="mailto:"]::before,.footer-socials a[href^="mailto:"]::before,.vt-social-row a[href^="mailto:"]::before{content:"✉";border:1px solid currentColor;font-size:.9em}
+.social-links svg,.social-link svg,.social-icon svg,.socials svg,.social-buttons svg,.footer-socials svg,.vt-social-row svg{display:block;width:1.15em;height:1.15em;flex:0 0 auto}
+.social-links img,.social-link img,.social-icon img,.socials img,.social-buttons img,.footer-socials img,.vt-social-row img{width:1.2em;height:1.2em;object-fit:contain;display:block}
+/* Prevent icon pseudo-elements from duplicating an actual SVG/image icon. */
+.social-links a:has(svg)::before,.social-links a:has(img)::before,.social-link:has(svg)::before,.social-link:has(img)::before,.social-icon:has(svg)::before,.social-icon:has(img)::before,.socials a:has(svg)::before,.socials a:has(img)::before,.social-buttons a:has(svg)::before,.social-buttons a:has(img)::before,.footer-socials a:has(svg)::before,.footer-socials a:has(img)::before,.vt-social-row a:has(svg)::before,.vt-social-row a:has(img)::before{content:none!important}
+@media(prefers-reduced-motion:reduce){.vintech-modern .vt-orbit,.vintech-modern .vt-orbit:before,.vintech-modern .vt-orbit:after,.vintech-modern .vt-orbit-core{animation:none!important}}
