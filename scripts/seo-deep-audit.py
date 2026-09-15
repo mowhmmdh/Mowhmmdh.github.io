@@ -33,6 +33,10 @@ def meta(a,name=None,prop=None):
 def canon(a): return [x.get('href','') for x in a if 'canonical' in (x.get('rel') or '').lower().split()]
 def alternates(a): return [(x.get('hreflang','').lower(),x.get('href','')) for x in a if 'alternate' in (x.get('rel') or '').lower().split() and x.get('hreflang')]
 
+def intentionally_noindex(rel):
+    # Utility/conversion request forms can remain out of search results while still being crawlable.
+    return rel in {'vintech/request.html','en-vintech/request.html'}
+
 for p in PAGES:
     rel=p.as_posix(); s=p.read_text(encoding='utf-8',errors='replace'); x=SEO(); x.feed(s)
     if not x.html_lang: errors.append(f'{rel}: html lang missing')
@@ -46,7 +50,7 @@ for p in PAGES:
     if len(al)<2 or 'x-default' not in langs: errors.append(f'{rel}: hreflang/x-default incomplete')
     if x.h1!=1: errors.append(f'{rel}: H1 count {x.h1}')
     robots=meta(x.meta,name='robots').lower()
-    if 'noindex' in robots: errors.append(f'{rel}: noindex on indexable page')
+    if 'noindex' in robots and not intentionally_noindex(rel): errors.append(f'{rel}: noindex on indexable page')
     for prop in ('og:title','og:description','og:image'):
         if not meta(x.meta,prop=prop): warnings.append(f'{rel}: missing {prop}')
     if x.jsonld==0: warnings.append(f'{rel}: no JSON-LD structured data')
