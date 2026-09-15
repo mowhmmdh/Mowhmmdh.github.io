@@ -14,22 +14,16 @@ def replace_block(path: Path, block: str, start: str = START, end: str = END, ma
     text = path.read_text(encoding='utf-8')
     pattern = re.compile(re.escape(start) + r'.*?' + re.escape(end), re.S)
     payload = f'{start}\n{block}\n{end}'
-    if pattern.search(text):
-        new = pattern.sub(payload, text, count=1)
+    if pattern.search(text): new = pattern.sub(payload, text, count=1)
     else:
         idx = text.lower().find(marker.lower())
-        if idx < 0:
-            return
+        if idx < 0: return
         new = text[:idx] + payload + '\n' + text[idx:]
-    if new != text:
-        path.write_text(new, encoding='utf-8')
+    if new != text: path.write_text(new, encoding='utf-8')
 
 
 def links(paths):
-    return ''.join(
-        f'<a class="discovery-link" href="/{escape(p.as_posix())}"><span>{escape(p.stem.replace("-", " ").replace("_", " ").title())}</span><span aria-hidden="true">↗</span></a>'
-        for p in sorted(paths)
-    )
+    return ''.join(f'<a class="discovery-link" href="/{escape(p.as_posix())}"><span>{escape(p.stem.replace("-", " ").replace("_", " ").title())}</span><span aria-hidden="true">↗</span></a>' for p in sorted(paths))
 
 
 def canonical_for(path: Path) -> str:
@@ -47,11 +41,14 @@ def page_title(path: Path, text: str) -> str:
     return unescape(re.sub(r'\s+', ' ', m.group(1)).strip()) if m else path.stem.replace('-', ' ').replace('_', ' ').title()
 
 
-def strip_breadcrumb_schema(text: str) -> str:
-    return re.sub(
-        r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{.*?"@type"\s*:\s*["\']BreadcrumbList["\'].*?\}\s*</script>',
-        '', text, flags=re.I | re.S
-    )
+def strip_breadcrumb_artifacts(text: str) -> str:
+    # Remove only breadcrumb DOM blocks; then inspect JSON-LD one script tag at a time.
+    text = re.sub(r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*', '', text, flags=re.I | re.S)
+    scripts = re.compile(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>', re.I | re.S)
+    def scrub(match):
+        block = match.group(0)
+        return '' if re.search(r'"@type"\s*:\s*["\']BreadcrumbList["\']', block, re.I) else block
+    return scripts.sub(scrub, text)
 
 
 def ensure_meta(path: Path) -> None:
@@ -72,18 +69,12 @@ def ensure_meta(path: Path) -> None:
 
 
 def breadcrumb_items(path: Path, text: str):
-    rel = path.as_posix()
-    is_en = rel == 'en.html' or rel.startswith('en-') or rel.startswith('en-blog/') or rel.startswith('en-vintech/')
+    rel = path.as_posix(); is_en = rel == 'en.html' or rel.startswith('en-') or rel.startswith('en-blog/') or rel.startswith('en-vintech/')
     home = ('Home' if is_en else 'خانه', BASE + ('/en.html' if is_en else '/'))
-    # Section landing pages get a clean parent breadcrumb without a self-link.
-    if rel in {'blog/index.html', 'en-blog.html'}:
-        return [home, ('Technical Blog' if is_en else 'مقالات فنی', BASE + ('/en-blog.html' if is_en else '/blog/'))]
-    if rel in {'vintech.html', 'en-vintech.html'}:
-        return [home, ('VinTech', BASE + ('/en-vintech.html' if is_en else '/vintech.html'))]
-    if rel in {'case-studies/index.html'}:
-        return [home, ('Case Studies' if is_en else 'مطالعات موردی', BASE + '/case-studies/')]
-    if rel in {'vintech/insights/index.html', 'en-vintech/insights/index.html'}:
-        return [home, ('Insights', BASE + ('/en-vintech/insights/' if is_en else '/vintech/insights/'))]
+    if rel in {'blog/index.html', 'en-blog.html'}: return [home, ('Technical Blog' if is_en else 'مقالات فنی', BASE + ('/en-blog.html' if is_en else '/blog/'))]
+    if rel in {'vintech.html', 'en-vintech.html'}: return [home, ('VinTech', BASE + ('/en-vintech.html' if is_en else '/vintech.html'))]
+    if rel == 'case-studies/index.html': return [home, ('Case Studies' if is_en else 'مطالعات موردی', BASE + '/case-studies/')]
+    if rel in {'vintech/insights/index.html', 'en-vintech/insights/index.html'}: return [home, ('Insights', BASE + ('/en-vintech/insights/' if is_en else '/vintech/insights/'))]
     items = [home]
     if rel.startswith('blog/'): items.append(('Technical Blog', BASE + '/blog/'))
     elif rel.startswith('en-blog/'): items.append(('Technical Blog', BASE + '/en-blog.html'))
@@ -97,16 +88,13 @@ def breadcrumb_items(path: Path, text: str):
 
 def inject_breadcrumb(path: Path) -> None:
     rel = path.as_posix()
-    if rel in {'index.html', 'en.html', '404.html', 'sitemap.html'}:
-        return
-    text = strip_breadcrumb_schema(path.read_text(encoding='utf-8'))
+    if rel in {'index.html', 'en.html', '404.html', 'sitemap.html'}: return
+    text = strip_breadcrumb_artifacts(path.read_text(encoding='utf-8'))
     items = breadcrumb_items(path, text)
     li=[]; schema=[]
     for i,(name,url) in enumerate(items,1):
-        if i == len(items):
-            li.append(f'<li aria-current="page"><span>{escape(name)}</span></li>')
-        else:
-            li.append(f'<li><a href="{escape(url)}">{escape(name)}</a></li>')
+        if i == len(items): li.append(f'<li aria-current="page"><span>{escape(name)}</span></li>')
+        else: li.append(f'<li><a href="{escape(url)}">{escape(name)}</a></li>')
         schema.append('{"@type":"ListItem","position":'+str(i)+',"name":"'+escape(name,quote=True)+'","item":"'+url+'"}')
     block=f'<nav class="auto-breadcrumb" aria-label="Breadcrumb"><ol>{"".join(li)}</ol></nav><script type="application/ld+json">{{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{",".join(schema)}]}}</script>'
     replace_block(path, block, BREAD_START, BREAD_END, marker='<main')
@@ -114,11 +102,8 @@ def inject_breadcrumb(path: Path) -> None:
 
 def related_score(path: Path, candidate: Path) -> int:
     a = set(path.stem.lower().replace('_','-').split('-')); b = set(candidate.stem.lower().replace('_','-').split('-'))
-    groups = [
-        {'active','directory','ad','windows','domain'}, {'dns'}, {'fortigate','firewall'}, {'gitlab','ci','cd'},
-        {'network','hardening','security'}, {'network','troubleshooting'}, {'network','monitoring'},
-        {'segmentation','vlan','dhcp','snooping','dai'}, {'linux','server'}, {'incident','response'}]
-    score = len(a & b) * 4
+    groups=[{'active','directory','ad','windows','domain'},{'dns'},{'fortigate','firewall'},{'gitlab','ci','cd'},{'network','hardening','security'},{'network','troubleshooting'},{'network','monitoring'},{'segmentation','vlan','dhcp','snooping','dai'},{'linux','server'},{'incident','response'}]
+    score=len(a & b)*4
     for group in groups:
         if a & group and b & group: score += 12
     return score
@@ -131,9 +116,8 @@ def inject_related(path: Path, candidates) -> None:
     same=sorted(same,key=lambda p:(-related_score(path,p),p.name))[:6]
     if not same:return
     is_en=rel.startswith('en-blog/'); heading='Related technical guides' if is_en else 'راهنماهای فنی مرتبط'; intro='Continue with closely related practical topics.' if is_en else 'برای مطالعه عمیق‌تر، این راهنماهای مرتبط را هم ببینید.'
-    block=f'<section class="auto-related" aria-labelledby="related-guides-title"><h2 id="related-guides-title">{heading}</h2><p>{intro}</p><div class="auto-related-grid">'+''.join(f'<a href="/{escape(p.as_posix())}">{escape(page_title(p,p.read_text(encoding="utf-8"))) } ↗</a>' for p in same)+f'</div></section>'
+    block=f'<section class="auto-related" aria-labelledby="related-guides-title"><h2 id="related-guides-title">{heading}</h2><p>{intro}</p><div class="auto-related-grid">'+''.join(f'<a href="/{escape(p.as_posix())}">{escape(page_title(p,p.read_text(encoding="utf-8")))} ↗</a>' for p in same)+f'</div></section>'
     replace_block(path, block, RELATED_START, RELATED_END, marker='</main>')
-
 
 fa_articles=[p for p in (ROOT/'blog').glob('*.html') if p.name!='index.html']; en_articles=[p for p in (ROOT/'en-blog').glob('*.html')]; fa_services=[p for p in (ROOT/'vintech').rglob('*.html')]; en_services=[p for p in (ROOT/'en-vintech').rglob('*.html')]
 html_pages=[p for p in ROOT.rglob('*.html') if '.git' not in p.parts]
