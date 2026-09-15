@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 ROOT = Path('.')
-CANONICAL_EN = 'Mohammad Hossein Asgari Somarin'
+CANONICAL_EN = 'Mohammad Hossein Asgari Somarini Somarin'
 CANONICAL_FA = 'محمدحسین عسگری ثمرین'
 TEXT_EXTENSIONS = {'.html', '.md', '.txt', '.json', '.xml'}
 EN_NAME = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+', re.I)
