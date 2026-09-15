@@ -13,6 +13,7 @@ EN_REPEAT=re.compile(r'(Mohammad\s+Hossein\s+Asgari\s+Somarin)(?:\s+Somarin)+',r
 FA_REPEAT=re.compile(r'(محمدحسین\s*عسگری\s*ثمرین)(?:\s*ثمرین)+')
 JSONLD=re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)',re.I|re.S)
 PORTFOLIO_CSS=re.compile(r'\s*<link[^>]+href=["\']/assets/portfolio-command-center-2026\.css["\'][^>]*>',re.I)
+MODERN_UI=re.compile(r'\s*<script\b[^>]*src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>',re.I)
 COMMON_CSS=('/assets/page-experience-2026.css','/assets/site-master-2026.css','/assets/social-fix-2026.css','/assets/site-final-fix-2026.css','/assets/navigation-fix-2026.css')
 HOME_CSS='/assets/home-finish-2026.css'
 VIN_CSS='/assets/vintech-motion-fix-2026-v2.css'
@@ -49,7 +50,7 @@ def ensure_vin_js(text):
 
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
-    tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\']\s+href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
+    tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\'][^>]*content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\'][^>]*href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
     title=re.sub(r'\s+',' ',tm.group(1)).strip() if tm else FULL_EN; desc=re.sub(r'\s+',' ',dm.group(1)).strip() if dm else 'Professional portfolio covering network, infrastructure, security and IT operations.'; url=cm.group(1).strip() if cm else BASE+'/'
     adds=[]; esc_title=title.replace('"','&quot;'); esc_desc=desc.replace('"','&quot;')
     if not re.search(r'<meta\s+property=["\']og:title["\']',text,re.I): adds.append(f'<meta property="og:title" content="{esc_title}">')
@@ -67,8 +68,13 @@ for path in sorted(ROOT.rglob('*')):
     text=normalize_identity(original)
     if path.suffix.lower()=='.html':
         text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
+        is_vt=path.name in {'vintech.html','en-vintech.html'} or 'vintech' in path.parts
+        if not is_vt:
+            text=MODERN_UI.sub('',text)
+            text= re.sub(r'\s*<link\b[^>]*href=["\']/assets/vintech-motion-fix-2026-v2\.css["\'][^>]*>\s*','',text,flags=re.I)
+        else:
+            text=ensure_stylesheet(text,VIN_CSS); text=ensure_vin_js(text)
         for href in COMMON_CSS: text=ensure_stylesheet(text,href)
         if 'class="mh-home"' in text: text=ensure_stylesheet(text,HOME_CSS)
-        if path.name in {'vintech.html','en-vintech.html'} or 'vintech' in path.parts: text=ensure_stylesheet(text,VIN_CSS); text=ensure_vin_js(text)
     if text!=original: path.write_text(text,encoding='utf-8'); changed.append(path.as_posix())
 print(f'Integrity sync: normalized {len(changed)} files')
