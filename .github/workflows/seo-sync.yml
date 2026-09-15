@@ -10,7 +10,8 @@ permissions:
 
 concurrency:
   group: site-content-main
-  cancel-in-progress: false
+  # A stale SEO pass must never overwrite a newer site correction.
+  cancel-in-progress: true
 
 jobs:
   sync:
@@ -33,7 +34,7 @@ jobs:
           short = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar[a-z]+\b)', re.I)
           fa = 'محمدحسین عسگری ثمرین'
           fa_pattern = re.compile(r'(?:محمدحسین عسگری ثمرین)(?:\s*ثمرین)+')
-          exts = {'.html','.css','.js','.json','.jsonld','.txt','.md','.xml','.webmanifest','.yml','.yaml','.py'}
+          exts = {'.html','.md','.txt','.json','.xml'}
           for p in root.rglob('*'):
               if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in exts:
                   continue
