@@ -5,7 +5,7 @@ import html, json, re
 ROOT=Path('.')
 BASE='https://mowhmmdh.github.io'
 PERSON_FA='محمدحسین عسگری ثمرین'
-PERSON_EN='Mohammad Hossein Asgari'
+PERSON_EN='Mohammad Hossein Asgari Somarin'
 DEFAULT_FA=f'{BASE}/images/profile.webp'
 DEFAULT_VT=f'{BASE}/images/vinicon.webp'
 

@@ -4,9 +4,9 @@ import re
 ROOT = Path('.')
 CANONICAL_EN = 'Mohammad Hossein Asgari Somarin'
 CANONICAL_FA = 'محمدحسین عسگری ثمرین'
-OLD_EN = re.compile(r'Mohammad Hossein Asgari(?! Somarin)')
+OLD_EN = re.compile(r'Mohammad Hossein Asgari Somarin(?! Somarin)')
 OLD_EN_FULL = 'Mohammad Hossein Asgari Somarin'
-OLD_FA_DUP = 'محمدحسین عسگری ثمرین ثمرین'
+OLD_FA_DUP = 'محمدحسین عسگری ثمرین'
 
 TEXT_EXT = {'.html','.css','.js','.json','.jsonld','.txt','.md','.xml','.webmanifest','.yml','.yaml','.py'}
 changed = []

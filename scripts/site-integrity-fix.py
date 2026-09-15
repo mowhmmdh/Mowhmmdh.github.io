@@ -2,9 +2,9 @@ from pathlib import Path
 import re, json
 ROOT = Path('.')
 FULL_EN = 'Mohammad Hossein Asgari Somarin'
-LEGACY_EN = 'Mohammad Hossein Asgari'
+LEGACY_EN = 'Mohammad Hossein Asgari Somarin'
 FULL_FA = 'محمدحسین عسگری ثمرین'
-LEGACY_FA_DUP = 'محمدحسین عسگری ثمرین ثمرین'
+LEGACY_FA_DUP = 'محمدحسین عسگری ثمرین'
 JSONLD = re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)', re.I | re.S)
 CSS = '/assets/page-experience-2026.css'
 MASTER_CSS = '/assets/site-master-2026.css'
