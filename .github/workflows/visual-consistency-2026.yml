@@ -4,16 +4,17 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
-  validate:
+  validate-and-apply:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 1
-      - name: Validate production CSS contract
+      - name: Apply elite visual layer to every HTML page
         shell: python
         run: |
           from pathlib import Path
@@ -22,14 +23,56 @@ jobs:
             '/assets/visual-final-pass-2026.css','/assets/last-mile-visual-2026.css','/assets/ultimate-ui-2026.css',
             '/assets/final-appearance-2026.css','/assets/content-theme-2026.css','/assets/visual-master-2026.css','/assets/next-gen-2026.css'
           }
-          errors=[]
+          href='/assets/elite-universal-2026.css'
           pages=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
+          changed=[]
+          errors=[]
           for p in pages:
             s=p.read_text(encoding='utf-8',errors='ignore')
             if s.count('/assets/site-bundle.css') != 1:
               errors.append(f'{p}: expected exactly one site-bundle.css')
-            for href in legacy:
-              if href in s: errors.append(f'{p}: legacy stylesheet {href}')
+              continue
+            for old in legacy:
+              s=s.replace(f'<link rel="stylesheet" href="{old}">','')
+            if href not in s:
+              marker=re.search(r'<link rel="stylesheet" href="/assets/site-bundle\.css">',s)
+              if marker:
+                s=s[:marker.end()]+f'<link rel="stylesheet" href="{href}">'+s[marker.end():]
+              else:
+                errors.append(f'{p}: cannot locate site-bundle.css link')
+                continue
+            # Canonical full identity in visible/metadata text where the old short form is used alone.
+            if 'محمدحسین عسگری ثمرین' in s:
+              s=re.sub(r'(?<!ثمرین)محمدحسین عسگری(?! ثمرین)', 'محمدحسین عسگری ثمرین', s)
+            if s!=p.read_text(encoding='utf-8',errors='ignore'):
+              p.write_text(s,encoding='utf-8'); changed.append(str(p))
           if errors:
             print('\n'.join(errors)); raise SystemExit(1)
-          print(f'Production CSS contract passed for {len(pages)} HTML pages')
+          print(f'Checked {len(pages)} HTML pages; changed {len(changed)}')
+          if changed: print('\n'.join(changed))
+      - name: Validate production CSS contract
+        shell: python
+        run: |
+          from pathlib import Path
+          pages=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
+          errors=[]
+          for p in pages:
+            s=p.read_text(encoding='utf-8',errors='ignore')
+            if s.count('/assets/site-bundle.css') != 1: errors.append(f'{p}: site-bundle count')
+            if s.count('/assets/elite-universal-2026.css') != 1: errors.append(f'{p}: elite layer count')
+            if 'محمدحسین عسگری' in s and 'محمدحسین عسگری ثمرین' not in s: errors.append(f'{p}: legacy Persian identity only')
+          if errors:
+            print('\n'.join(errors)); raise SystemExit(1)
+          print(f'Production visual contract passed for {len(pages)} HTML pages')
+      - name: Commit visual system rollout
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add '*.html' '*/**/*.html' || true
+          if git diff --cached --quiet; then
+            echo 'No HTML changes to commit.'
+          else
+            git commit -m 'style: apply elite visual system across all pages'
+            git push
+          fi
