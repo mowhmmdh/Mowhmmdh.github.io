@@ -3,7 +3,7 @@ import json
 import re
 
 ROOT = Path('.')
-FULL_EN = 'Mohammad Hossein Asgari Somarin'
+FULL_EN = 'Mohammad Hossein Asgari Somarini Somarin'
 FULL_FA = 'محمدحسین عسگری ثمرین'
 BASE = 'https://mowhmmdh.github.io'
 TEXT_EXTENSIONS = {'.html', '.md', '.txt', '.json', '.js', '.css', '.xml', '.yml', '.yaml', '.py'}
