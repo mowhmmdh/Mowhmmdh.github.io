@@ -4,7 +4,7 @@ import html, json, re, subprocess
 
 BASE = 'https://mowhmmdh.github.io'
 ROOT = Path('.')
-PERSON = 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin'
+PERSON = 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin'
 
 class P(HTMLParser):
     def __init__(self):
@@ -53,10 +53,10 @@ for path in sorted(ROOT.rglob('*.html')):
     # Preserve page-specific titles/descriptions; only enforce safe identity in metadata.
     title = parser.title.strip()
     description = meta(parser, n='description')
-    if title and 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin' in title:
+    if title and 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin' in title:
         title = re.sub(r'Mohammad\s+Hossein\s+Asgari(?:\s+Somar(?:in|ini))+', PERSON, title, flags=re.I)
         text = re.sub(r'(<title>).*?(</title>)', lambda m: m.group(1) + html.escape(title) + m.group(2), text, count=1, flags=re.I|re.S)
-    if description and 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin' in description:
+    if description and 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin' in description:
         description = re.sub(r'Mohammad\s+Hossein\s+Asgari(?:\s+Somar(?:in|ini))+', PERSON, description, flags=re.I)
         text = ensure_meta(text, 'description', description)
     # Keep a single canonical author value when an author meta tag exists.

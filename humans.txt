@@ -5,7 +5,7 @@
 /* تیم */
 توسعه‌دهنده: محمدحسین عسگری ثمرین
 نام کامل: محمدحسین عسگری ثمرین
-نام انگلیسی کامل: Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
+نام انگلیسی کامل: Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin
 وب‌سایت: https://mowhmmdh.github.io/
 ایمیل: mohammedhasgari@gmail.com
 موقعیت: تهران، ایران
@@ -38,8 +38,8 @@
 /* نام‌های جایگزین */
 نام فارسی اصلی: محمدحسین عسگری ثمرین
 نام کوتاه/قدیمی: محمدحسین عسگری
-نام انگلیسی اصلی: Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
-نام انگلیسی کامل: Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
+نام انگلیسی اصلی: Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin
+نام انگلیسی کامل: Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin
 
 /* آخرین کلمات */
 "کیفیت برتر، تعهد حرفه‌ای، نتایج قابل لمس"

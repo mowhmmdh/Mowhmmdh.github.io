@@ -5,7 +5,7 @@ import html, json, re
 ROOT=Path('.')
 BASE='https://mowhmmdh.github.io'
 PERSON_FA='محمدحسین عسگری ثمرین'
-PERSON_EN='Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarin'
+PERSON_EN='Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin'
 DEFAULT_FA=f'{BASE}/images/profile.webp'
 DEFAULT_VT=f'{BASE}/images/vinicon.webp'
 
