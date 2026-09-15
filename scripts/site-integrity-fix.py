@@ -17,6 +17,7 @@ SOCIAL_CSS = '/assets/social-fix-2026.css'
 FINAL_CSS = '/assets/site-final-fix-2026.css'
 VIN_MOTION_CSS = '/assets/vintech-motion-fix-2026-v2.css'
 VIN_JS = '/assets/modern-ui-2026.js'
+TEXT_EXTENSIONS = {'.html', '.md', '.txt', '.json', '.js', '.css', '.xml', '.yml', '.yaml'}
 
 
 def clean_jsonld(text):
@@ -41,8 +42,8 @@ def clean_jsonld(text):
     return JSONLD.sub(repl, text)
 
 
-for p in sorted(ROOT.rglob('*.html')):
-    if '.git' in p.parts:
+for p in sorted(ROOT.rglob('*')):
+    if not p.is_file() or '.git' in p.parts or p.suffix.lower() not in TEXT_EXTENSIONS:
         continue
     s = p.read_text(encoding='utf-8', errors='ignore')
     original = s
@@ -52,20 +53,21 @@ for p in sorted(ROOT.rglob('*.html')):
     for old in LEGACY_FA_VARIANTS:
         s = s.replace(old, FULL_FA)
 
-    s = clean_jsonld(s)
-    s = s.replace('href="/en-blog/"', 'href="/en-blog.html"')
-    s = s.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
+    if p.suffix.lower() == '.html':
+        s = clean_jsonld(s)
+        s = s.replace('href="/en-blog/"', 'href="/en-blog.html"')
+        s = s.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
 
-    is_vintech = 'vintech' in p.parts or p.name in {'vintech.html', 'en-vintech.html'}
-    if '</head>' in s:
-        for css in (CSS, MASTER_CSS, SOCIAL_CSS, FINAL_CSS):
-            if css not in s:
-                s = s.replace('</head>', f'  <link rel="stylesheet" href="{css}">\n</head>', 1)
-        if is_vintech:
-            if VIN_MOTION_CSS not in s:
-                s = s.replace('</head>', f'  <link rel="stylesheet" href="{VIN_MOTION_CSS}">\n</head>', 1)
-            if VIN_JS not in s:
-                s = s.replace('</head>', f'  <script src="{VIN_JS}" defer></script>\n</head>', 1)
+        is_vintech = 'vintech' in p.parts or p.name in {'vintech.html', 'en-vintech.html'}
+        if '</head>' in s:
+            for css in (CSS, MASTER_CSS, SOCIAL_CSS, FINAL_CSS):
+                if css not in s:
+                    s = s.replace('</head>', f'  <link rel="stylesheet" href="{css}">\n</head>', 1)
+            if is_vintech:
+                if VIN_MOTION_CSS not in s:
+                    s = s.replace('</head>', f'  <link rel="stylesheet" href="{VIN_MOTION_CSS}">\n</head>', 1)
+                if VIN_JS not in s:
+                    s = s.replace('</head>', f'  <script src="{VIN_JS}" defer></script>\n</head>', 1)
 
     if s != original:
         p.write_text(s, encoding='utf-8')
