@@ -33,6 +33,10 @@ jobs:
         run: python3 scripts/content-growth-sync.py
       - name: Build internal discovery hubs
         run: python3 tools/discovery_sync.py
+      - name: Final canonical identity lock
+        run: python3 scripts/identity-sync-2026.py
+      - name: Final generated page integrity lock
+        run: python3 scripts/site-integrity-fix.py
       - name: Run SEO deep audit
         run: python3 scripts/seo-deep-audit.py
       - name: Commit synchronized SEO metadata and content navigation
