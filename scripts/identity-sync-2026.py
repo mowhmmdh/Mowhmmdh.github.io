@@ -2,26 +2,22 @@ from pathlib import Path
 import re
 
 ROOT = Path('.')
-CANONICAL_EN = 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarini Somarin'
+CANONICAL_EN = 'Mohammad Hossein Asgari Somarin'
 CANONICAL_FA = 'محمدحسین عسگری ثمرین'
 
-# Match the canonical name, legacy spellings, and accidental repeated surname chains.
 EN_VARIANTS = re.compile(
-    r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:in|ini))+(?:\s+Somar(?:in|ini))*',
+    r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:ini|in))+(?=\s|[<>,.;:!?/\"\'\)\]]|$)',
     re.I,
 )
 EN_SHORT = re.compile(
-    r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar(?:in|ini)\b)',
+    r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar(?:ini|in)\b)',
     re.I,
 )
 FA_DUP = re.compile(r'(محمدحسین عسگری ثمرین)(?:\s*ثمرین)+')
 
-TEXT_EXT = {
-    '.html', '.css', '.js', '.json', '.jsonld', '.txt', '.md', '.xml',
-    '.webmanifest', '.yml', '.yaml', '.py'
-}
-
+TEXT_EXT = {'.html', '.css', '.js', '.json', '.jsonld', '.txt', '.md', '.xml', '.webmanifest', '.yml', '.yaml', '.py'}
 changed = []
+
 for p in sorted(ROOT.rglob('*')):
     if not p.is_file() or '.git' in p.parts or p.suffix.lower() not in TEXT_EXT:
         continue
