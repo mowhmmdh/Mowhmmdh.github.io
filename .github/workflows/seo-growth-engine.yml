@@ -1,0 +1,30 @@
+name: SEO Growth Engine
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  seo:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.x'}
+      - name: Apply SEO growth fixes
+        run: python3 scripts/seo-growth-fix.py
+      - name: Sync sitemap
+        run: python3 scripts/sitemap-sync.py
+      - name: Run SEO deep audit
+        run: python3 scripts/seo-deep-audit.py
+      - name: Run structural quality audit
+        run: python3 scripts/quality-audit.py
+      - name: Commit SEO changes
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then echo 'No SEO changes to commit.'; else git commit -m 'SEO: strengthen indexing, localization, structured data and conversion paths'; git push; fi
