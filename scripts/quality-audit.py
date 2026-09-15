@@ -9,7 +9,7 @@ KNOWN={p.as_posix() for p in ROOT.rglob('*') if p.is_file() and '.git' not in p.
 ERRORS=[]; WARNINGS=[]
 PERSIAN_NAME='محمدحسین عسگری ثمرین'; LEGACY_PERSIAN_NAME='محمدحسین عسگری'; ENGLISH_NAME='Mohammad Hossein Asgar Somarin'; LEGACY_ENGLISH_NAME='Mohammad Hossein Asgari'
 IDENTITY_LINKS=('https://github.com/mowhmmdh','https://www.linkedin.com/in/mohammadhosseinasgari/')
-LEGACY_CSS={'visual-final-pass-2026.css','ultimate-ui-2026.css','final-appearance-2026.css','content-theme-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css'}
+LEGACY_CSS={'visual-final-pass-2026.css','ultimate-ui-2026.css','final-appearance-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css'}
 
 class Audit(HTMLParser):
     def __init__(self):
