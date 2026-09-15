@@ -9,7 +9,7 @@ jobs:
   repair:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -32,54 +32,49 @@ jobs:
               'projects.html':'en-projects.html','linkedin.html':'en-linkedin.html','vintech.html':'en-vintech.html',
               'press.html':'en-press.html','blog/index.html':'en-blog.html'
           }
-
-          def add_once(s, pattern, tag):
-              if tag in s: return s
-              m = re.search(pattern, s, re.I)
-              return s[:m.end()] + tag + s[m.end():] if m else s.replace('</head>', tag+'</head>', 1)
+          short_re = re.compile(re.escape(SHORT) + r'(?!\s*ثمرین)')
 
           changed=[]
           pages = sorted(p for p in ROOT.rglob('*.html') if '.git' not in p.parts)
           for p in pages:
               s = p.read_text(encoding='utf-8', errors='replace'); original=s
-              # Canonical professional identity in source, metadata and JSON-LD.
-              s = s.replace(SHORT, FULL)
+              # Canonical identity: replace the short form only when it is not already part of the full name.
+              s = short_re.sub(FULL, s)
+              # Collapse accidental duplicate surname introduced by earlier repair passes.
+              s = re.sub(re.escape(FULL) + r'(?:\s*ثمرین)+', FULL, s)
               # Normalize legacy route forms.
               s = s.replace('href="/en-blog/"','href="/en-blog.html"')
               s = s.replace('href="/en-vintech/"','href="/en-vintech.html"')
-              # Exactly one shared theme script on normal pages.
+              # Request page is intentionally public/indexable; it is the primary VinTech conversion page.
+              if p.as_posix() in {'vintech/request.html','en-vintech/request.html'}:
+                  s = re.sub(r'<meta\s+name=["\']robots["\']\s+content=["\']noindex,follow["\']\s*/?>', '<meta name="robots" content="index,follow,max-image-preview:large">', s, flags=re.I)
               if p.name != '404.html':
                   s = re.sub(r'<script\b[^>]*src=["\']/assets/site-theme\.js["\'][^>]*></script>\s*', '', s, flags=re.I)
                   s = s.replace('</head>', f'<script src="{THEME}" defer></script></head>', 1)
-                  # Exactly one shared CSS and one final visual layer.
                   s = re.sub(r'<link\b[^>]*href=["\']/assets/site-bundle\.css["\'][^>]*>\s*', '', s, flags=re.I)
                   s = s.replace('</head>', '<link rel="stylesheet" href="/assets/site-bundle.css">' + f'<link rel="stylesheet" href="{CSS}"></head>', 1)
-              # Repair obvious duplicate visual layers from previous iterations.
               for legacy in ['visual-final-pass-2026.css','ultimate-ui-2026.css','final-appearance-2026.css','content-theme-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css']:
                   s = re.sub(r'<link\b[^>]*href=["\'][^"\']*'+re.escape(legacy)+r'["\'][^>]*>\s*', '', s, flags=re.I)
-              # Remove duplicate exact references while preserving first occurrence.
+              # Exactly one production reference for shared CSS and final polish.
               def one_ref(text, needle):
                   first = text.find(needle)
                   if first < 0: return text
-                  before, after = text[:first+len(needle)], text[first+len(needle):]
-                  return before + after.replace(needle, '')
+                  return text[:first+len(needle)] + text[first+len(needle):].replace(needle, '')
               s = one_ref(s, '<link rel="stylesheet" href="/assets/site-bundle.css">')
               s = one_ref(s, f'<link rel="stylesheet" href="{CSS}">')
-
               if s != original:
                   p.write_text(s, encoding='utf-8'); changed.append(p.as_posix())
 
-          # Ensure bilingual alternate links for the principal paired pages.
+          # Ensure bilingual alternates + x-default on every page that has a known language pair.
           for fa,en in pairs.items():
               fp, ep = ROOT/fa, ROOT/en
               if not fp.exists() or not ep.exists(): continue
               for p, other, lang, otherlang in [(fp,en,'fa-IR','en'),(ep,fa,'en','fa-IR')]:
                   s=p.read_text(encoding='utf-8',errors='replace'); o=s
-                  # Remove malformed duplicates for the same hreflang, then insert exactly once.
-                  s=re.sub(r'\s*<link\b[^>]*rel=["\']alternate["\'][^>]*hreflang=["\'](?:fa-IR|en)["\'][^>]*>','',s,flags=re.I)
+                  s=re.sub(r'\s*<link\b[^>]*rel=["\']alternate["\'][^>]*hreflang=["\'](?:fa-IR|en|x-default)["\'][^>]*>','',s,flags=re.I)
                   own='/' if p.as_posix()=='index.html' else '/'+p.as_posix()
                   alt='/' if other=='index.html' else '/'+other
-                  block=f'\n<link rel="alternate" hreflang="{lang}" href="https://mowhmmdh.github.io{own}">\n<link rel="alternate" hreflang="{otherlang}" href="https://mowhmmdh.github.io{alt}">\n'
+                  block=f'\n<link rel="alternate" hreflang="{lang}" href="https://mowhmmdh.github.io{own}">\n<link rel="alternate" hreflang="{otherlang}" href="https://mowhmmdh.github.io{alt}">\n<link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/">\n'
                   s=s.replace('</head>',block+'</head>',1)
                   if s!=o: p.write_text(s,encoding='utf-8'); changed.append(p.as_posix())
 
