@@ -9,6 +9,7 @@ JSONLD = re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(
 CSS = '/assets/page-experience-2026.css'
 MASTER_CSS = '/assets/site-master-2026.css'
 SOCIAL_CSS = '/assets/social-fix-2026.css'
+FINAL_CSS = '/assets/site-final-fix-2026.css'
 VIN_MOTION_CSS = '/assets/vintech-motion-fix-2026-v2.css'
 
 def clean_jsonld(text):
@@ -37,7 +38,7 @@ for p in sorted(ROOT.rglob('*.html')):
     s=clean_jsonld(s)
     s=s.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"')
     if '</head>' in s:
-        for css in (CSS,MASTER_CSS,SOCIAL_CSS):
+        for css in (CSS,MASTER_CSS,SOCIAL_CSS,FINAL_CSS):
             if css not in s: s=s.replace('</head>',f'  <link rel="stylesheet" href="{css}">\n</head>',1)
         if 'vintech' in p.parts or p.name in {'vintech.html','en-vintech.html'}:
             if VIN_MOTION_CSS not in s: s=s.replace('</head>',f'  <link rel="stylesheet" href="{VIN_MOTION_CSS}">\n</head>',1)
