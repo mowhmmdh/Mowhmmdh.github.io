@@ -3,15 +3,18 @@ import json
 import re
 
 ROOT = Path('.')
-
+FULL_EN = 'Mohammad Hossein Asgar Somarin'
+LEGACY_EN = 'Mohammad Hossein Asgari'
+FULL_FA = 'محمدحسین عسگری ثمرین'
+LEGACY_FA_DUP = 'محمدحسین عسگری ثمرین ثمرین'
 JSONLD = re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)', re.I | re.S)
+CSS = '/assets/page-experience-2026.css'
 
 
 def has_standalone_breadcrumb(text: str) -> bool:
     for m in JSONLD.finditer(text):
-        raw = m.group(2).strip()
         try:
-            data = json.loads(raw)
+            data = json.loads(m.group(2).strip())
         except Exception:
             continue
         if isinstance(data, dict) and data.get('@type') == 'BreadcrumbList':
@@ -20,28 +23,28 @@ def has_standalone_breadcrumb(text: str) -> bool:
 
 
 def clean_jsonld(text: str) -> str:
-    # Keep exactly one canonical BreadcrumbList. If a page already has the
-    # dedicated breadcrumb JSON-LD block, remove only duplicate copies nested
-    # in an @graph. Never delete the only BreadcrumbList from a page.
-    standalone = has_standalone_breadcrumb(text)
-    if not standalone:
+    if not has_standalone_breadcrumb(text):
         return text
 
     def repl(match):
-        raw = match.group(2).strip()
         try:
-            data = json.loads(raw)
+            data = json.loads(match.group(2).strip())
         except Exception:
             return match.group(0)
         if isinstance(data, dict) and isinstance(data.get('@graph'), list):
             filtered = [item for item in data['@graph'] if not (isinstance(item, dict) and item.get('@type') == 'BreadcrumbList')]
-            if len(filtered) == len(data['@graph']):
-                return match.group(0)
-            data['@graph'] = filtered
-            return match.group(1) + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + match.group(3)
+            if len(filtered) != len(data['@graph']):
+                data['@graph'] = filtered
+                return match.group(1) + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + match.group(3)
         return match.group(0)
 
     return JSONLD.sub(repl, text)
+
+
+def ensure_experience_css(text: str) -> str:
+    if CSS in text or '<head' not in text.lower():
+        return text
+    return text.replace('</head>', f'<link rel="stylesheet" href="{CSS}">\n</head>', 1)
 
 
 changed = 0
@@ -53,6 +56,9 @@ for path in ROOT.rglob('*.html'):
     text = clean_jsonld(text)
     text = text.replace('href="/en-blog/"', 'href="/en-blog.html"')
     text = text.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
+    text = text.replace(LEGACY_EN, FULL_EN)
+    text = text.replace(LEGACY_FA_DUP, FULL_FA)
+    text = ensure_experience_css(text)
     if text != original:
         path.write_text(text, encoding='utf-8')
         changed += 1
