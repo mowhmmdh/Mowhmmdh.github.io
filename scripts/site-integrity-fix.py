@@ -49,11 +49,16 @@ def ensure_vin_js(text):
 
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
-    tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\']\s+href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
-    title=re.sub(r'\s+',' ',tm.group(1)).strip() if tm else FULL_EN; desc=re.sub(r'\s+',' ',dm.group(1)).strip() if dm else 'Professional portfolio covering network, infrastructure, security and IT operations.'; url=cm.group(1).strip() if cm else BASE+'/'
+    tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S)
+    dm=re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
+    cm=re.search(r'<link\s+rel=["\']canonical["\']\s+href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
+    title=re.sub(r'\s+',' ',tm.group(1)).strip() if tm else FULL_EN
+    desc=re.sub(r'\s+',' ',dm.group(1)).strip() if dm else 'Professional portfolio covering network, infrastructure, security and IT operations.'
+    url=cm.group(1).strip() if cm else BASE+'/'
+    esc_title=title.replace('"','&quot;'); esc_desc=desc.replace('"','&quot;')
     adds=[]
-    if not re.search(r'<meta\s+property=["\']og:title["\']',text,re.I): adds.append(f'<meta property="og:title" content="{title.replace(chr(34),"&quot;')}">')
-    if not re.search(r'<meta\s+property=["\']og:description["\']',text,re.I): adds.append(f'<meta property="og:description" content="{desc.replace(chr(34),"&quot;')}">')
+    if not re.search(r'<meta\s+property=["\']og:title["\']',text,re.I): adds.append(f'<meta property="og:title" content="{esc_title}">')
+    if not re.search(r'<meta\s+property=["\']og:description["\']',text,re.I): adds.append(f'<meta property="og:description" content="{esc_desc}">')
     if not re.search(r'<meta\s+property=["\']og:image["\']',text,re.I): adds.append(f'<meta property="og:image" content="{BASE}/images/profile.webp">')
     if not re.search(r'<meta\s+property=["\']og:url["\']',text,re.I): adds.append(f'<meta property="og:url" content="{url}">')
     if not re.search(r'<meta\s+property=["\']og:type["\']',text,re.I): adds.append('<meta property="og:type" content="website">')
