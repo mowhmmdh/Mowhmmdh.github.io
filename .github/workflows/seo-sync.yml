@@ -27,8 +27,6 @@ jobs:
         run: python3 tools/seo_sync.py
       - name: Apply advanced SEO growth fixes
         run: python3 scripts/seo-growth-fix.py
-      - name: Synchronize canonical sitemap
-        run: python3 scripts/sitemap-sync.py
       - name: Build internal discovery hubs
         run: python3 tools/discovery_sync.py
       - name: Run SEO deep audit
