@@ -101,7 +101,7 @@ def ensure_og_defaults(text: str) -> str:
 
 changed = []
 for path in sorted(ROOT.rglob('*')):
-    if not path.is_file() or '.git' in path.parts or path.suffix.lower() not in TEXT_EXTENSIONS:
+    if not path.is_file() or '.git' in path.parts or '.github' in path.parts or path.suffix.lower() not in TEXT_EXTENSIONS:
         continue
     try:
         original = path.read_text(encoding='utf-8', errors='replace')
