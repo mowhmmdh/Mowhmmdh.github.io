@@ -8,8 +8,6 @@ on:
 permissions:
   contents: write
 
-# SEO generation and the page refactor both rewrite HTML. They must never
-# mutate main concurrently, otherwise generated commits race and rebase conflicts.
 concurrency:
   group: site-content-main
   cancel-in-progress: false
@@ -17,7 +15,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,8 +25,14 @@ jobs:
         run: python3 scripts/site-integrity-fix.py
       - name: Synchronize bilingual hreflang
         run: python3 tools/seo_sync.py
+      - name: Apply advanced SEO growth fixes
+        run: python3 scripts/seo-growth-fix.py
+      - name: Synchronize canonical sitemap
+        run: python3 scripts/sitemap-sync.py
       - name: Build internal discovery hubs
         run: python3 tools/discovery_sync.py
+      - name: Run SEO deep audit
+        run: python3 scripts/seo-deep-audit.py
       - name: Commit synchronized SEO metadata
         run: |
           if git diff --quiet; then
@@ -42,7 +46,7 @@ jobs:
             echo "No staged SEO metadata changes needed."
             exit 0
           fi
-          git commit -m "chore(seo): synchronize metadata and internal discovery [skip ci]"
+          git commit -m "chore(seo): strengthen indexing, structured data and conversion paths [skip ci]"
           for attempt in 1 2 3; do
             git fetch origin main
             if git rebase origin/main; then
