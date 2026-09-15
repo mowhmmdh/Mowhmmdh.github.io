@@ -5,9 +5,9 @@ import re
 ROOT = Path('.')
 FULL_EN = 'Mohammad Hossein Asgari Somarin'
 FULL_FA = 'محمدحسین عسگری ثمرین'
+BASE = 'https://mowhmmdh.github.io'
 TEXT_EXTENSIONS = {'.html', '.md', '.txt', '.json', '.js', '.css', '.xml', '.yml', '.yaml', '.py'}
 
-# Normalize every historical spelling/corruption to one canonical identity.
 EN_NAME = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+', re.I)
 EN_SHORT = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?\b(?!\s+Somar\w*)', re.I)
 EN_REPEAT = re.compile(r'(Mohammad\s+Hossein\s+Asgari\s+Somarin)(?:\s+Somarin)+', re.I)
@@ -74,6 +74,31 @@ def ensure_vintech_js(text: str) -> str:
     return text.replace('</body>', f'<script src="{VIN_JS}" defer></script>\n</body>', 1)
 
 
+def ensure_og_defaults(text: str) -> str:
+    if '<head' not in text.lower() or '</head>' not in text.lower():
+        return text
+    title_match = re.search(r'<title[^>]*>(.*?)</title>', text, re.I | re.S)
+    desc_match = re.search(r'<meta\s+name=["\']description["\']\s+content=["\'](.*?)["\'][^>]*>', text, re.I | re.S)
+    canonical_match = re.search(r'<link\s+rel=["\']canonical["\']\s+href=["\'](.*?)["\'][^>]*>', text, re.I | re.S)
+    title = re.sub(r'\s+', ' ', title_match.group(1)).strip() if title_match else FULL_EN
+    desc = re.sub(r'\s+', ' ', desc_match.group(1)).strip() if desc_match else 'Professional portfolio covering network, infrastructure, security and IT operations.'
+    url = canonical_match.group(1).strip() if canonical_match else BASE + '/'
+    additions = []
+    if not re.search(r'<meta\s+property=["\']og:title["\']', text, re.I):
+        additions.append(f'<meta property="og:title" content="{title.replace(chr(34), "&quot;")}">')
+    if not re.search(r'<meta\s+property=["\']og:description["\']', text, re.I):
+        additions.append(f'<meta property="og:description" content="{desc.replace(chr(34), "&quot;")}">')
+    if not re.search(r'<meta\s+property=["\']og:image["\']', text, re.I):
+        additions.append(f'<meta property="og:image" content="{BASE}/images/profile.webp">')
+    if not re.search(r'<meta\s+property=["\']og:url["\']', text, re.I):
+        additions.append(f'<meta property="og:url" content="{url}">')
+    if not re.search(r'<meta\s+property=["\']og:type["\']', text, re.I):
+        additions.append('<meta property="og:type" content="website">')
+    if additions:
+        text = text.replace('</head>', '\n'.join(additions) + '\n</head>', 1)
+    return text
+
+
 changed = []
 for path in sorted(ROOT.rglob('*')):
     if not path.is_file() or '.git' in path.parts or path.suffix.lower() not in TEXT_EXTENSIONS:
@@ -85,11 +110,11 @@ for path in sorted(ROOT.rglob('*')):
 
     text = normalize_identity(original)
     if path.suffix.lower() == '.html':
-        # Keep the legacy command-center file inert and remove its old page refs.
         text = PORTFOLIO_CSS.sub('', text)
         text = normalize_jsonld(text)
         text = text.replace('href="/en-blog/"', 'href="/en-blog.html"')
         text = text.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
+        text = ensure_og_defaults(text)
         for href in COMMON_CSS:
             text = ensure_stylesheet(text, href)
         if 'class="mh-home"' in text:
@@ -101,7 +126,7 @@ for path in sorted(ROOT.rglob('*')):
 
     if text != original:
         path.write_text(text, encoding='utf-8')
-        changed.append(str(path))
+        changed.append(path.as_posix())
 
 print(f'Integrity sync: normalized {len(changed)} files')
 for item in changed[:100]:
