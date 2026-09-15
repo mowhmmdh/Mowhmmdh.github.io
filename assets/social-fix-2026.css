@@ -1,0 +1,9 @@
+/* Social icon repair — 2026
+   Keeps social controls graphical even when icon fonts fail. */
+.social-links a,.social-link,.social-icon,.socials a,.social-buttons a{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;text-decoration:none}
+.social-links a::before,.social-link::before,.social-icon::before,.socials a::before,.social-buttons a::before{font-family:Arial,sans-serif;font-weight:800;line-height:1}
+.social-links a[href*="linkedin"]::before,.social-link[href*="linkedin"]::before,.socials a[href*="linkedin"]::before,.social-buttons a[href*="linkedin"]::before{content:"in";font-size:.82em}
+.social-links a[href*="instagram"]::before,.social-link[href*="instagram"]::before,.socials a[href*="instagram"]::before,.social-buttons a[href*="instagram"]::before{content:"◎";font-size:1.1em}
+.social-links a[href^="mailto:"]::before,.social-link[href^="mailto:"]::before,.socials a[href^="mailto:"]::before,.social-buttons a[href^="mailto:"]::before{content:"✉";font-size:1em}
+.social-links svg,.social-link svg,.social-icon svg,.socials svg,.social-buttons svg{display:block;width:1.15em;height:1.15em;flex:0 0 auto}
+.social-links img,.social-link img,.social-icon img,.socials img,.social-buttons img{width:1.2em;height:1.2em;object-fit:contain;display:block}
