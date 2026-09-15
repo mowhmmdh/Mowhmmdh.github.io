@@ -9,6 +9,7 @@ FULL_FA = 'محمدحسین عسگری ثمرین'
 LEGACY_FA_DUP = 'محمدحسین عسگری ثمرین ثمرین'
 JSONLD = re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)', re.I | re.S)
 CSS = '/assets/page-experience-2026.css'
+MASTER_CSS = '/assets/site-master-2026.css'
 
 
 def has_standalone_breadcrumb(text: str) -> bool:
@@ -42,9 +43,20 @@ def clean_jsonld(text: str) -> str:
 
 
 def ensure_experience_css(text: str) -> str:
-    if CSS in text or '<head' not in text.lower():
+    if '<head' not in text.lower():
         return text
-    return text.replace('</head>', f'<link rel="stylesheet" href="{CSS}">\n</head>', 1)
+    if CSS not in text:
+        text = text.replace('</head>', f'<link rel="stylesheet" href="{CSS}">\n</head>', 1)
+    return text
+
+
+def ensure_master_css(text: str) -> str:
+    if '<head' not in text.lower():
+        return text
+    if MASTER_CSS in text:
+        return text
+    # Final stylesheet: normalizes legacy/page-specific layers without changing content or URLs.
+    return text.replace('</head>', f'<link rel="stylesheet" href="{MASTER_CSS}">\n</head>', 1)
 
 
 changed = 0
@@ -59,6 +71,7 @@ for path in ROOT.rglob('*.html'):
     text = text.replace(LEGACY_EN, FULL_EN)
     text = text.replace(LEGACY_FA_DUP, FULL_FA)
     text = ensure_experience_css(text)
+    text = ensure_master_css(text)
     if text != original:
         path.write_text(text, encoding='utf-8')
         changed += 1
