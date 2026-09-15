@@ -48,28 +48,27 @@ jobs:
             start = '<!-- AUTO-BREADCRUMB:START -->'
             end = '<!-- AUTO-BREADCRUMB:END -->'
             blocks = re.findall(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
-            if len(blocks) > 1:
-              text = text.replace(blocks[0], '\x00AUTO_BREAD\x00', 1)
-              for block in blocks[1:]:
-                text = text.replace(block, '', 1)
-              text = text.replace('\x00AUTO_BREAD\x00', blocks[0], 1)
-
-            # Remove duplicate, unmarked breadcrumb nav/schema blocks so source has
-            # exactly one visible breadcrumb and one BreadcrumbList schema.
-            marker_block = re.search(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
-            protected = marker_block.group(0) if marker_block else ''
+            # Preserve one marked generated block as the canonical source.
+            protected = blocks[0] if blocks else ''
             if protected:
               text = text.replace(protected, '\x00PROTECTED_BREAD\x00', 1)
-            breadcrumb_pattern = re.compile(
-              r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*'
-              r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*?BreadcrumbList.*?</script>',
-              re.I | re.S,
+            # Remove every other visible auto-breadcrumb nav, regardless of whether
+            # a duplicate schema follows it. This catches legacy hand-written navs.
+            text = re.sub(
+              r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*',
+              '', text, flags=re.I | re.S
             )
-            found = breadcrumb_pattern.findall(text)
-            if found:
-              text = breadcrumb_pattern.sub('', text)
             if protected:
               text = text.replace('\x00PROTECTED_BREAD\x00', protected, 1)
+            # A marked block is authoritative. Remove duplicate marker blocks left
+            # behind by previous generator runs, then leave exactly one block.
+            blocks = re.findall(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
+            if len(blocks) > 1:
+              first = blocks[0]
+              text = text.replace(first, '\x00FIRST_BREAD\x00', 1)
+              for block in blocks[1:]:
+                text = text.replace(block, '', 1)
+              text = text.replace('\x00FIRST_BREAD\x00', first, 1)
             return text
 
           for p in sorted(ROOT.rglob('*')):
@@ -83,14 +82,13 @@ jobs:
             s = en_name.sub(EN, s)
             s = en_short.sub(EN, s)
             s = fa_name.sub(FA, s)
+            s = re.sub(r'\bMohammad\s+Hossein\s+Asgari\s+Somarin(?:\s+Somarin)+\b', EN, s, flags=re.I)
             s = s.replace('href="/en-blog/"', 'href="/en-blog.html"')
             s = s.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
             if p.suffix.lower() == '.html':
               s = normalize_breadcrumbs(s)
               for old in legacy_css:
                 s = re.sub(r'<link\b[^>]*href=["\']/assets/' + re.escape(old) + r'["\'][^>]*>\s*', '', s, flags=re.I)
-              s = s.replace('Somarini Somarini', 'Somarin')
-              s = s.replace('Somarin Somarin', 'Somarin')
             if s != original:
               p.write_text(s, encoding='utf-8')
               changed.append(p.as_posix())
