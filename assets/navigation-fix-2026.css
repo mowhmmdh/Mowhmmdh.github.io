@@ -1,5 +1,5 @@
-/* Stable responsive navigation for the site's shared .site-nav markup. */
-.site-nav{position:relative}
+/* Stable responsive navigation for shared and legacy navigation markup. */
+.site-nav,.about-nav,.nav,.vt-nav{position:relative}
 @media (max-width:860px){
   .site-nav .nav-links{
     position:absolute;
@@ -32,9 +32,27 @@
   .site-nav .nav-links a{width:100%;padding:12px 13px}
   .site-nav .mobile-menu{display:inline-grid;place-items:center}
   .site-nav .theme-toggle{display:inline-grid;place-items:center}
+
+  /* Older about pages have no hamburger. Never hide their only navigation on mobile. */
+  .about-nav{flex-wrap:wrap;padding-block:9px;row-gap:8px}
+  .about-nav .about-nav-links{
+    display:flex;
+    flex:1 0 100%;
+    order:3;
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    gap:4px;
+    padding-bottom:2px;
+    scrollbar-width:thin;
+  }
+  .about-nav .about-nav-links a{flex:0 0 auto;padding:8px 10px;white-space:nowrap}
 }
 @media (min-width:861px){
   .site-nav .mobile-menu{display:none}
   .site-nav .nav-links{position:static;max-height:none;opacity:1;visibility:visible;pointer-events:auto;transform:none;overflow:visible}
+  .about-nav .about-nav-links{display:flex}
 }
 @media (prefers-reduced-motion:reduce){.site-nav .nav-links{transition:none}}
