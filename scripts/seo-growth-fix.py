@@ -4,7 +4,7 @@ import html, json, re, subprocess
 
 BASE = 'https://mowhmmdh.github.io'
 ROOT = Path('.')
-PERSON = 'Mohammad Hossein Asgari Somarini Somarin'
+PERSON = 'Mohammad Hossein Asgari Somarin'
 
 class P(HTMLParser):
     def __init__(self):
@@ -19,33 +19,15 @@ class P(HTMLParser):
     def handle_data(self,d):
         if self.in_title: self.title+=d
 
-def meta(x,n=None,p=None):
-    for a in x.meta:
-        if n and a.get('name','').lower()==n: return a.get('content','')
-        if p and a.get('property','').lower()==p: return a.get('content','')
-    return ''
-
-def ensure_meta(text,name,content):
-    pattern=re.compile(r'<meta\s+name=["\']'+re.escape(name)+r'["\'][^>]*>',re.I)
-    tag=f'<meta name="{html.escape(name,quote=True)}" content="{html.escape(content,quote=True)}">'
-    return pattern.sub(tag,text,count=1) if pattern.search(text) else text.replace('</head>',tag+'\n</head>',1)
-
-def normalize_en_identity(value):
-    return re.sub(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:ini|in))+',PERSON,value,flags=re.I)
-
+# Keep the growth pass focused on SEO metadata and page content. It must never
+# rewrite .github workflow definitions or invent authority claims.
 for path in sorted(ROOT.rglob('*.html')):
-    if '.git' in path.parts: continue
-    text=path.read_text(encoding='utf-8',errors='ignore')
-    if '</head>' not in text: continue
-    parser=P(); parser.feed(text)
-    title=parser.title.strip(); description=meta(parser,n='description')
-    if title and re.search(r'Mohammad\s+Hossein\s+Asgar(?:i)?',title,re.I):
-        title=normalize_en_identity(title)
-        text=re.sub(r'(<title>).*?(</title>)',lambda m:m.group(1)+html.escape(title)+m.group(2),text,count=1,flags=re.I|re.S)
-    if description and re.search(r'Mohammad\s+Hossein\s+Asgar(?:i)?',description,re.I):
-        description=normalize_en_identity(description)
-        text=ensure_meta(text,'description',description)
-    text=re.sub(r'(<meta\s+name=["\']author["\']\s+content=["\']).*?(["\'][^>]*>)',lambda m:m.group(1)+PERSON+m.group(2),text,flags=re.I)
-    path.write_text(text,encoding='utf-8')
-
+    if '.git' in path.parts or '.github' in path.parts:
+        continue
+    try: text = path.read_text(encoding='utf-8')
+    except Exception: continue
+    new = re.sub(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+', PERSON, text, flags=re.I)
+    new = re.sub(r'(محمدحسین\s*عسگری\s*ثمرین)(?:\s*ثمرین)+', 'محمدحسین عسگری ثمرین', new)
+    if new != text:
+        path.write_text(new, encoding='utf-8')
 print('SEO growth metadata normalized with canonical identity.')
