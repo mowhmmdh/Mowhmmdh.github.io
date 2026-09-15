@@ -9,10 +9,10 @@ CSS_LINK = re.compile(r'<link\b[^>]*rel=["\']stylesheet["\'][^>]*>', re.I)
 IMG_RE = re.compile(r'<img\b([^>]*?)>', re.I)
 SCRIPT_RE = re.compile(r'<script\b([^>]*)>', re.I)
 
-# The production cascade is maintained manually in assets/site-bundle.css.
-# Never rebuild it from every CSS file: the repository contains retired/experimental
-# style layers whose selectors intentionally must not re-enter the global cascade.
+# Production CSS is maintained explicitly in assets/site-bundle.css.
 BUNDLE = ROOT / 'assets/site-bundle.css'
+CANONICAL_EN = 'Mohammad Hossein Asgari Somarin'
+CANONICAL_FA = 'محمدحسین عسگری ثمرین'
 
 
 def html_url(p):
@@ -81,7 +81,11 @@ def process(t, p):
         if alt: links.append(f'<link rel="alternate" hreflang="{("en" if lang == "fa" else "fa-IR")}" href="{alt}">')
         if p.name in {'index.html', 'en.html'}: links.append(f'<link rel="alternate" hreflang="x-default" href="{BASE}/">')
         t = t.replace('</head>', ''.join(links) + '</head>', 1)
-    t = re.sub(r'"alternateName":\s*\[[^\]]*\]', '"alternateName":["Mohammad Hossein Asgari Somarini Somarin","محمدحسین عسگری ثمرین"]', t, flags=re.I)
+
+    # Never introduce a malformed person name into JSON-LD.
+    t = re.sub(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+', CANONICAL_EN, t, flags=re.I)
+    t = re.sub(r'(?<=>)\s*محمدحسین\s*عسگری\s*ثمرین(?:\s*ثمرین)+(?=<)', CANONICAL_FA, t)
+    t = re.sub(r'"alternateName":\s*\[[^\]]*\]', f'"alternateName":["{CANONICAL_EN}","{CANONICAL_FA}"]', t, flags=re.I)
 
     def img(m):
         a = m.group(1)
@@ -100,7 +104,6 @@ def process(t, p):
         t = re.sub(r'<script\s+src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>', '', t, flags=re.I)
     return t
 
-# Do not rebuild the production CSS here. HTML normalization is safe to rerun.
 changed = 0
 for p in HTMLS:
     old = p.read_text(encoding='utf-8')
