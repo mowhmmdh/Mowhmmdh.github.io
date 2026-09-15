@@ -39,6 +39,8 @@ jobs:
         run: python3 scripts/site-integrity-fix.py
       - name: Run SEO deep audit
         run: python3 scripts/seo-deep-audit.py
+      - name: Absolute final identity sanitizer
+        run: python3 scripts/canonical-finalize.py
       - name: Commit synchronized SEO metadata and content navigation
         run: |
           if git diff --quiet; then
