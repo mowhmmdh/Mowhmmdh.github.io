@@ -20,6 +20,7 @@ COMMON_CSS = (
     '/assets/site-master-2026.css',
     '/assets/social-fix-2026.css',
     '/assets/site-final-fix-2026.css',
+    '/assets/navigation-fix-2026.css',
 )
 VIN_CSS = '/assets/vintech-motion-fix-2026-v2.css'
 VIN_JS = '/assets/modern-ui-2026.js'
@@ -83,9 +84,8 @@ for path in sorted(ROOT.rglob('*')):
 
     text = normalize_identity(original)
     if path.suffix.lower() == '.html':
-        # The experimental command-center layer is intentionally not global; it
-        # previously overrode page-specific cards/navigation. Keep the final
-        # visual system as the single last global layer instead.
+        # Experimental command-center layer is deliberately removed from pages;
+        # it previously overrode page-specific design systems.
         text = PORTFOLIO_CSS.sub('', text)
         text = normalize_jsonld(text)
         text = text.replace('href="/en-blog/"', 'href="/en-blog.html"')
