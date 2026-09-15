@@ -35,7 +35,7 @@ jobs:
           fa_pattern = re.compile(r'(?:محمدحسین عسگری ثمرین)(?:\s*ثمرین)+')
           exts = {'.html','.css','.js','.json','.jsonld','.txt','.md','.xml','.webmanifest','.yml','.yaml','.py'}
           for p in root.rglob('*'):
-              if not p.is_file() or '.git' in p.parts or p.suffix.lower() not in exts:
+              if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in exts:
                   continue
               try: text = p.read_text(encoding='utf-8')
               except Exception: continue
