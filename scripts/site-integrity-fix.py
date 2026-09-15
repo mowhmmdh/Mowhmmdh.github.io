@@ -3,13 +3,24 @@ import json
 import re
 
 ROOT = Path('.')
-FULL_EN = 'Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarin'
+FULL_EN = 'Mohammad Hossein Asgari Somarin'
 FULL_FA = 'محمدحسین عسگری ثمرین'
-EN_IDENTITY = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:in|ini))+', re.I)
-EN_SHORT = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar(?:in|ini)\b)', re.I)
+EN_IDENTITY = re.compile(
+    r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:in|ini))+(?:\s+Somar(?:in|ini))*',
+    re.I,
+)
+EN_SHORT = re.compile(
+    r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar(?:in|ini)\b)',
+    re.I,
+)
 FA_DUP = re.compile(r'(محمدحسین عسگری ثمرین)(?:\s*ثمرین)+')
-JSONLD = re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)', re.I | re.S)
-TEXT_EXTENSIONS = {'.html', '.md', '.txt', '.json', '.js', '.css', '.xml', '.yml', '.yaml', '.py'}
+JSONLD = re.compile(
+    r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)',
+    re.I | re.S,
+)
+TEXT_EXTENSIONS = {
+    '.html', '.md', '.txt', '.json', '.js', '.css', '.xml', '.yml', '.yaml', '.py'
+}
 COMMON_CSS = (
     '/assets/page-experience-2026.css',
     '/assets/site-master-2026.css',
@@ -19,11 +30,13 @@ COMMON_CSS = (
 VIN_CSS = '/assets/vintech-motion-fix-2026-v2.css'
 VIN_JS = '/assets/modern-ui-2026.js'
 
+
 def normalize_identity(text: str) -> str:
     text = EN_IDENTITY.sub(FULL_EN, text)
     text = EN_SHORT.sub(FULL_EN, text)
     text = FA_DUP.sub(FULL_FA, text)
     return text
+
 
 def clean_jsonld(text: str) -> str:
     def repl(match):
@@ -44,7 +57,9 @@ def clean_jsonld(text: str) -> str:
             data['@graph'] = graph
             raw = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
         return match.group(1) + raw + match.group(3)
+
     return JSONLD.sub(repl, text)
+
 
 changed = []
 for p in sorted(ROOT.rglob('*')):
