@@ -4,7 +4,7 @@ import html, json, re, subprocess
 
 BASE = 'https://mowhmmdh.github.io'
 ROOT = Path('.')
-PERSON = 'Mohammad Hossein Asgari Somarini Somarin'
+PERSON = 'Mohammad Hossein Asgari Somarin'
 
 class P(HTMLParser):
     def __init__(self):
