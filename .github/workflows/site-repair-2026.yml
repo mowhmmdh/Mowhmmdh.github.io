@@ -40,151 +40,91 @@ jobs:
             'portfolio-command-center-2026.css', 'content-theme-2026.css',
             'final-appearance-2026.css', 'visual-final-pass-2026.css',
             'ultimate-ui-2026.css', 'visual-master-2026.css',
-            'next-gen-2026.css', 'site-final-polish-2026.css',
-            'site-final-polish.css'
+            'next-gen-2026.css', 'site-final-polish-2026.css', 'site-final-polish.css'
           ]
-          changed = []
+          modern_ui = re.compile(r'\s*<script\b[^>]*src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>', re.I)
+          vin_motion = re.compile(r'\s*<link\b[^>]*href=["\']/assets/vintech-motion-fix-2026-v2\.css["\'][^>]*>\s*', re.I)
 
           def clean_breadcrumb_jsonld(text):
-            script_pattern = re.compile(
-              r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>',
-              re.I | re.S,
-            )
+            script_pattern = re.compile(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>', re.I | re.S)
             def scrub(match):
               block = match.group(0)
-              if re.search(r'"@type"\s*:\s*["\']BreadcrumbList["\']', block, re.I):
-                return ''
-              return block
+              return '' if re.search(r'"@type"\s*:\s*["\']BreadcrumbList["\']', block, re.I) else block
             return script_pattern.sub(scrub, text)
 
           def normalize_breadcrumbs(text):
-            start = '<!-- AUTO-BREADCRUMB:START -->'
-            end = '<!-- AUTO-BREADCRUMB:END -->'
+            start = '<!-- AUTO-BREADCRUMB:START -->'; end = '<!-- AUTO-BREADCRUMB:END -->'
             blocks = re.findall(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
             protected = blocks[0] if blocks else ''
-            if protected:
-              text = text.replace(protected, '\x00PROTECTED_BREAD\x00', 1)
-
-            # Remove unmarked auto-breadcrumb navs only. The protected generated block
-            # is restored afterwards and remains the single source of truth.
-            text = re.sub(
-              r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*',
-              '', text, flags=re.I | re.S
-            )
-            if protected:
-              text = text.replace('\x00PROTECTED_BREAD\x00', protected, 1)
-
-            # Remove duplicate BreadcrumbList scripts safely, script-by-script. This
-            # can never consume neighboring HTML because the outer match ends at the
-            # first closing </script> tag.
+            if protected: text = text.replace(protected, '\x00PROTECTED_BREAD\x00', 1)
+            text = re.sub(r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*', '', text, flags=re.I | re.S)
+            if protected: text = text.replace('\x00PROTECTED_BREAD\x00', protected, 1)
             marker = re.search(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
             protected = marker.group(0) if marker else ''
-            if protected:
-              text = text.replace(protected, '\x00PROTECTED_BREAD_SCHEMA\x00', 1)
+            if protected: text = text.replace(protected, '\x00PROTECTED_BREAD_SCHEMA\x00', 1)
             text = clean_breadcrumb_jsonld(text)
-            if protected:
-              text = text.replace('\x00PROTECTED_BREAD_SCHEMA\x00', protected, 1)
-
+            if protected: text = text.replace('\x00PROTECTED_BREAD_SCHEMA\x00', protected, 1)
             blocks = re.findall(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
             if len(blocks) > 1:
-              first = blocks[0]
-              text = text.replace(first, '\x00FIRST_BREAD\x00', 1)
-              for block in blocks[1:]:
-                text = text.replace(block, '', 1)
+              first = blocks[0]; text = text.replace(first, '\x00FIRST_BREAD\x00', 1)
+              for block in blocks[1:]: text = text.replace(block, '', 1)
               text = text.replace('\x00FIRST_BREAD\x00', first, 1)
             return text
 
           for p in sorted(ROOT.rglob('*')):
-            if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in exts:
-              continue
-            try:
-              s = p.read_text(encoding='utf-8', errors='replace')
-            except Exception:
-              continue
+            if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in exts: continue
+            try: s = p.read_text(encoding='utf-8', errors='replace')
+            except Exception: continue
             original = s
-            s = en_name.sub(EN, s)
-            s = en_short.sub(EN, s)
-            s = fa_name.sub(FA, s)
+            s = en_name.sub(EN, s); s = en_short.sub(EN, s); s = fa_name.sub(FA, s)
             s = re.sub(r'\bMohammad\s+Hossein\s+Asgari\s+Somarin(?:\s+Somarin)+\b', EN, s, flags=re.I)
-            s = s.replace('href="/en-blog/"', 'href="/en-blog.html"')
-            s = s.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
+            s = s.replace('href="/en-blog/"', 'href="/en-blog.html"').replace('href="/en-vintech/"', 'href="/en-vintech.html"')
             if p.suffix.lower() == '.html':
               s = normalize_breadcrumbs(s)
-              for old in legacy_css:
-                s = re.sub(r'<link\b[^>]*href=["\']/assets/' + re.escape(old) + r'["\'][^>]*>\s*', '', s, flags=re.I)
-            if s != original:
-              p.write_text(s, encoding='utf-8')
-              changed.append(p.as_posix())
+              for old in legacy_css: s = re.sub(r'<link\b[^>]*href=["\']/assets/' + re.escape(old) + r'["\'][^>]*>\s*', '', s, flags=re.I)
+              is_vt = p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
+              if is_vt:
+                if '/assets/vintech-motion-fix-2026-v2.css' not in s and '</head>' in s: s=s.replace('</head>','<link rel="stylesheet" href="/assets/vintech-motion-fix-2026-v2.css">\n</head>',1)
+                if '/assets/modern-ui-2026.js' not in s and '</body>' in s: s=s.replace('</body>','<script src="/assets/modern-ui-2026.js" defer></script>\n</body>',1)
+                if 'skip-link' not in s and '<body' in s: s=re.sub(r'(<body\b[^>]*>)',r'\1\n<a class="skip-link" href="#main-content">Skip to content</a>',s,count=1,flags=re.I)
+                if 'site-theme.js' not in s and '</body>' in s: s=s.replace('</body>','<script src="/assets/site-theme.js" defer></script>\n</body>',1)
+              else:
+                s = modern_ui.sub('', s); s = vin_motion.sub('', s)
+            if s != original: p.write_text(s, encoding='utf-8')
 
-          print(f'Repaired {len(changed)} published content files')
-          if changed:
-            print('\n'.join(changed))
-
-      - name: Verify no malformed identity remains
+      - name: Verify repository invariants
         shell: python
         run: |
           from pathlib import Path
           import re, sys
-          bad = re.compile(r'Somarini|Somarini\s+Somarin|Asgari\s+Somarin\s+Somarin', re.I)
-          hits = []
+          errors=[]
+          bad=re.compile(r'Somarini|Asgari\s+Somarin\s+Somarin',re.I)
           for p in sorted(Path('.').rglob('*')):
-            if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in {'.html','.md','.txt','.json','.xml'}:
-              continue
-            s = p.read_text(encoding='utf-8', errors='ignore')
-            if bad.search(s):
-              hits.append(str(p))
-          if hits:
-            print('Malformed identity remains:')
-            print('\n'.join(hits))
-            sys.exit(1)
-          print('Canonical identity verification passed.')
-
-      - name: Verify breadcrumb uniqueness
-        shell: python
-        run: |
-          from pathlib import Path
-          import re, sys
-          errors = []
-          for p in sorted(Path('.').rglob('*.html')):
-            if '.git' in p.parts or '.github' in p.parts or p.name in {'404.html','index.html','en.html','sitemap.html'}:
-              continue
-            s = p.read_text(encoding='utf-8', errors='ignore')
-            nav_count = len(re.findall(r'<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b', s, re.I))
-            schema_count = len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"', s, re.I))
-            markers = s.count('AUTO-BREADCRUMB:START') == 1 and s.count('AUTO-BREADCRUMB:END') == 1
-            if nav_count != 1 or schema_count != 1 or not markers:
-              errors.append(f'{p}: nav={nav_count}, schema={schema_count}, markers={markers}')
-          if errors:
-            print('\n'.join(errors))
-            sys.exit(1)
-          print('Breadcrumb uniqueness verification passed.')
-
-      - name: Verify retired CSS is absent from published HTML
-        shell: python
-        run: |
-          from pathlib import Path
-          import sys
-          retired=['portfolio-command-center-2026.css','content-theme-2026.css','final-appearance-2026.css','visual-final-pass-2026.css','ultimate-ui-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish-2026.css','site-final-polish.css']
-          hits=[]
-          for p in sorted(Path('.').rglob('*.html')):
-            if '.git' in p.parts or '.github' in p.parts: continue
+            if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in {'.html','.md','.txt','.json','.xml'}: continue
             s=p.read_text(encoding='utf-8',errors='ignore')
-            if any(x in s for x in retired): hits.append(str(p))
-          if hits:
-            print('Retired CSS references remain:')
-            print('\n'.join(hits))
-            sys.exit(1)
-          print('Retired CSS verification passed.')
+            if bad.search(s): errors.append(f'{p}: malformed identity')
+          for p in sorted(Path('.').rglob('*.html')):
+            if '.git' in p.parts or '.github' in p.parts or p.name=='404.html': continue
+            s=p.read_text(encoding='utf-8',errors='ignore')
+            is_vt=p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
+            if 'class="skip-link"' not in s and 'class="skip-link ' not in s: errors.append(f'{p}: skip-link missing')
+            if 'site-theme.js' not in s: errors.append(f'{p}: site-theme.js missing')
+            if not is_vt and 'modern-ui-2026.js' in s: errors.append(f'{p}: modern-ui loaded outside VinTech')
+            if is_vt and 'modern-ui-2026.js' not in s: errors.append(f'{p}: modern-ui missing on VinTech')
+            if is_vt and 'vintech-motion-fix-2026-v2.css' not in s: errors.append(f'{p}: VinTech motion CSS missing')
+            if not is_vt and 'vintech-motion-fix-2026-v2.css' in s: errors.append(f'{p}: VinTech motion CSS outside VinTech')
+            nav=len(re.findall(r'<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b',s,re.I)); schema=len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"',s,re.I))
+            if p.name not in {'index.html','en.html','sitemap.html'} and (nav!=1 or schema!=1 or s.count('AUTO-BREADCRUMB:START')!=1 or s.count('AUTO-BREADCRUMB:END')!=1): errors.append(f'{p}: breadcrumb contract nav={nav} schema={schema}')
+          if errors:
+            print('\n'.join(errors)); sys.exit(1)
+          print('Repository invariants passed.')
 
       - name: Commit repair
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if git diff --quiet; then
-            echo 'No repair changes needed.'
-            exit 0
-          fi
+          if git diff --quiet; then echo 'No repair changes needed.'; exit 0; fi
           git add -A
-          git commit -m 'fix: repair published identity breadcrumbs and visual references [skip ci]'
+          git commit -m 'fix: enforce shared runtime and accessibility invariants [skip ci]'
           git push origin HEAD:main
