@@ -6,7 +6,7 @@ ROOT = Path('.')
 FULL_EN = 'Mohammad Hossein Asgari Somarin'
 FULL_FA = 'محمدحسین عسگری ثمرین'
 EN_IDENTITY = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:in|ini))+', re.I)
-EN_SHORT = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?', re.I)
+EN_SHORT = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar(?:in|ini)\b)', re.I)
 FA_DUP = re.compile(r'(محمدحسین عسگری ثمرین)(?:\s*ثمرین)+')
 JSONLD = re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)', re.I | re.S)
 TEXT_EXTENSIONS = {'.html', '.md', '.txt', '.json', '.js', '.css', '.xml', '.yml', '.yaml', '.py'}
@@ -19,13 +19,11 @@ COMMON_CSS = (
 VIN_CSS = '/assets/vintech-motion-fix-2026-v2.css'
 VIN_JS = '/assets/modern-ui-2026.js'
 
-
 def normalize_identity(text: str) -> str:
     text = EN_IDENTITY.sub(FULL_EN, text)
     text = EN_SHORT.sub(FULL_EN, text)
     text = FA_DUP.sub(FULL_FA, text)
     return text
-
 
 def clean_jsonld(text: str) -> str:
     def repl(match):
@@ -46,9 +44,7 @@ def clean_jsonld(text: str) -> str:
             data['@graph'] = graph
             raw = json.dumps(data, ensure_ascii=False, separators=(',', ':'))
         return match.group(1) + raw + match.group(3)
-
     return JSONLD.sub(repl, text)
-
 
 changed = []
 for p in sorted(ROOT.rglob('*')):
@@ -56,9 +52,7 @@ for p in sorted(ROOT.rglob('*')):
         continue
     s = p.read_text(encoding='utf-8', errors='ignore')
     original = s
-
     s = normalize_identity(s)
-
     if p.suffix.lower() == '.html':
         s = clean_jsonld(s)
         s = s.replace('href="/en-blog/"', 'href="/en-blog.html"')
@@ -72,7 +66,6 @@ for p in sorted(ROOT.rglob('*')):
                 s = s.replace('</head>', f'  <link rel="stylesheet" href="{VIN_CSS}">\n</head>', 1)
             if is_vintech and VIN_JS not in s:
                 s = s.replace('</head>', f'  <script src="{VIN_JS}" defer></script>\n</head>', 1)
-
     if s != original:
         p.write_text(s, encoding='utf-8')
         changed.append(p.as_posix())
