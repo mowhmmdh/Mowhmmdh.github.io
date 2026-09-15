@@ -7,7 +7,7 @@ ROOT=Path('.')
 PAGES=sorted(p for p in ROOT.rglob('*.html') if '.git' not in p.parts)
 KNOWN={p.as_posix() for p in ROOT.rglob('*') if p.is_file() and '.git' not in p.parts}
 ERRORS=[]; WARNINGS=[]
-PERSIAN_NAME='محمدحسین عسگری'; ENGLISH_NAME='Mohammad Hossein Asgari'
+PERSIAN_NAME='محمدحسین عسگری ثمرین'; LEGACY_PERSIAN_NAME='محمدحسین عسگری'; ENGLISH_NAME='Mohammad Hossein Asgari'
 IDENTITY_LINKS=('https://github.com/mowhmmdh','https://www.linkedin.com/in/mohammadhosseinasgari/')
 LEGACY_CSS={'visual-final-pass-2026.css','ultimate-ui-2026.css','final-appearance-2026.css','content-theme-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css'}
 
@@ -70,6 +70,7 @@ for p in PAGES:
         if a.author!=1:ERRORS.append(f'{rel}: author count={a.author}')
         if len(a.hreflang)<2:ERRORS.append(f'{rel}: bilingual hreflang set incomplete')
         if PERSIAN_NAME not in s and ENGLISH_NAME not in s:ERRORS.append(f'{rel}: personal identity not discoverable')
+        if LEGACY_PERSIAN_NAME in s and PERSIAN_NAME not in s:ERRORS.append(f'{rel}: legacy Persian identity only')
         if 'site-theme.js' not in s:ERRORS.append(f'{rel}: site-theme.js missing')
         if s.count('/assets/site-bundle.css')!=1:ERRORS.append(f'{rel}: site-bundle.css count={s.count("/assets/site-bundle.css")}')
         if is_vt and s.count('/assets/vintech.css')!=1:ERRORS.append(f'{rel}: vintech.css count={s.count("/assets/vintech.css")}')
