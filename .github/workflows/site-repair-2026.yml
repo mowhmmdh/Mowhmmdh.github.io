@@ -1,0 +1,114 @@
+name: Site Repair 2026
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-repair-main
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Repair published content
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+
+          ROOT=Path('.')
+          EN='Mohammad Hossein Asgari Somarin'
+          FA='محمدحسین عسگری ثمرین'
+          exts={'.html','.md','.txt','.json','.xml'}
+          en_name=re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+',re.I)
+          en_short=re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?\b(?!\s+Somar\w*)',re.I)
+          fa_name=re.compile(r'(محمدحسین\s*عسگری\s*ثمرین)(?:\s*ثمرین)+')
+          legacy_css=[
+            '/assets/portfolio-command-center-2026.css',
+            '/assets/content-theme-2026.css',
+            '/assets/final-appearance-2026.css',
+            '/assets/visual-final-pass-2026.css',
+            '/assets/ultimate-ui-2026.css',
+            '/assets/visual-master-2026.css',
+            '/assets/next-gen-2026.css',
+            '/assets/site-final-polish.css',
+          ]
+          changed=[]
+          for p in sorted(ROOT.rglob('*')):
+            if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in exts:
+              continue
+            try: s=p.read_text(encoding='utf-8',errors='replace')
+            except Exception: continue
+            original=s
+            s=en_name.sub(EN,s)
+            s=en_short.sub(EN,s)
+            s=fa_name.sub(FA,s)
+            s=s.replace('href="/en-blog/"','href="/en-blog.html"')
+            s=s.replace('href="/en-vintech/"','href="/en-vintech.html"')
+            if p.suffix.lower()=='.html':
+              for old in legacy_css:
+                s=s.replace(f'<link rel="stylesheet" href="{old}">','')
+              s=s.replace('Somarini Somarini','Somarin')
+              s=s.replace('Somarin Somarin','Somarin')
+            if s!=original:
+              p.write_text(s,encoding='utf-8')
+              changed.append(p.as_posix())
+          print(f'Repaired {len(changed)} published content files')
+          if changed: print('\n'.join(changed))
+
+      - name: Verify no malformed identity remains
+        shell: python
+        run: |
+          from pathlib import Path
+          import re,sys
+          bad=re.compile(r'Somarini|Somarini\s+Somarin|Asgari\s+Somarin\s+Somarin',re.I)
+          hits=[]
+          for p in sorted(Path('.').rglob('*')):
+            if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in {'.html','.md','.txt','.json','.xml'}: continue
+            try: s=p.read_text(encoding='utf-8',errors='ignore')
+            except Exception: continue
+            if bad.search(s): hits.append(str(p))
+          if hits:
+            print('Malformed identity remains:'); print('\n'.join(hits)); sys.exit(1)
+          print('Canonical identity verification passed.')
+
+      - name: Verify retired CSS is absent from published HTML
+        shell: python
+        run: |
+          from pathlib import Path
+          import sys
+          retired=['portfolio-command-center-2026.css','content-theme-2026.css','final-appearance-2026.css','visual-final-pass-2026.css','ultimate-ui-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css']
+          hits=[]
+          for p in sorted(Path('.').rglob('*.html')):
+            if '.git' in p.parts or '.github' in p.parts: continue
+            s=p.read_text(encoding='utf-8',errors='ignore')
+            if any(x in s for x in retired): hits.append(str(p))
+          if hits:
+            print('Retired CSS references remain:'); print('\n'.join(hits)); sys.exit(1)
+          print('Retired CSS verification passed.')
+
+      - name: Commit repair
+        shell: bash
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --quiet; then
+            echo 'No repair changes needed.'
+            exit 0
+          fi
+          git add -A
+          git commit -m 'fix: repair published identity and visual references [skip ci]'
+          git push origin HEAD:main
