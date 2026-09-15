@@ -4,7 +4,7 @@ date: 2026-09-10
 description: "A practical, read-only workflow for detecting changes to a Linux hardening baseline before configuration drift becomes an incident."
 tags: ["linux", "hardening", "security", "sysadmin", "configuration-drift"]
 categories: ["guides"]
-author: "Mohammad Hossein Asgari Somarini Somarin Somarin"
+author: "Mohammad Hossein Asgari Somarini Somarin Somarini Somarin Somarin"
 author_bio: "IT and infrastructure specialist focused on network engineering, Linux and Windows administration, infrastructure security, hardening and practical IT operations."
 author_link: "https://mowhmmdh.github.io/"
 draft: true
