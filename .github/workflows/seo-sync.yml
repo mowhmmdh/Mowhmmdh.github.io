@@ -27,24 +27,26 @@ jobs:
         run: python3 tools/seo_sync.py
       - name: Apply advanced SEO growth fixes
         run: python3 scripts/seo-growth-fix.py
+      - name: Promote pillar content and topic clusters
+        run: python3 scripts/content-growth-sync.py
       - name: Build internal discovery hubs
         run: python3 tools/discovery_sync.py
       - name: Run SEO deep audit
         run: python3 scripts/seo-deep-audit.py
-      - name: Commit synchronized SEO metadata
+      - name: Commit synchronized SEO metadata and content navigation
         run: |
           if git diff --quiet; then
-            echo "No SEO metadata changes needed."
+            echo "No SEO/content synchronization changes needed."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
           if git diff --cached --quiet; then
-            echo "No staged SEO metadata changes needed."
+            echo "No staged changes needed."
             exit 0
           fi
-          git commit -m "chore(seo): strengthen indexing, structured data and conversion paths [skip ci]"
+          git commit -m "chore(seo): strengthen content clusters, metadata and discovery [skip ci]"
           for attempt in 1 2 3; do
             git fetch origin main
             if git rebase origin/main; then
@@ -56,5 +58,5 @@ jobs:
             fi
             sleep $((attempt * 2))
           done
-          echo "Unable to push synchronized SEO metadata after 3 attempts."
+          echo "Unable to push synchronized SEO/content changes after 3 attempts."
           exit 1
