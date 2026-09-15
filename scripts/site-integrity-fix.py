@@ -22,6 +22,7 @@ COMMON_CSS = (
     '/assets/site-final-fix-2026.css',
     '/assets/navigation-fix-2026.css',
 )
+HOME_CSS = '/assets/home-finish-2026.css'
 VIN_CSS = '/assets/vintech-motion-fix-2026-v2.css'
 VIN_JS = '/assets/modern-ui-2026.js'
 
@@ -84,14 +85,15 @@ for path in sorted(ROOT.rglob('*')):
 
     text = normalize_identity(original)
     if path.suffix.lower() == '.html':
-        # Experimental command-center layer is deliberately removed from pages;
-        # it previously overrode page-specific design systems.
+        # Keep the legacy command-center file inert and remove its old page refs.
         text = PORTFOLIO_CSS.sub('', text)
         text = normalize_jsonld(text)
         text = text.replace('href="/en-blog/"', 'href="/en-blog.html"')
         text = text.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
         for href in COMMON_CSS:
             text = ensure_stylesheet(text, href)
+        if 'class="mh-home"' in text:
+            text = ensure_stylesheet(text, HOME_CSS)
         is_vintech = path.name in {'vintech.html', 'en-vintech.html'} or 'vintech' in path.parts
         if is_vintech:
             text = ensure_stylesheet(text, VIN_CSS)
