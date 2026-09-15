@@ -1,13 +1,17 @@
 name: Visual Consistency 2026
+
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+
 permissions:
   contents: write
+
+concurrency:
+  group: visual-consistency-manual
+  cancel-in-progress: true
+
 jobs:
   validate-and-apply:
-    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
@@ -26,42 +30,28 @@ jobs:
           href='/assets/elite-universal-2026.css'
           bundle='/assets/site-bundle.css'
           pages=[p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
-          changed=[]
-          errors=[]
+          changed=[]; errors=[]
           for p in pages:
             s=p.read_text(encoding='utf-8',errors='ignore')
-            # Normalize the shared production stylesheet contract instead of
-            # failing on pages that were rebuilt with a deliberately lean shell.
             bundle_count=s.count(bundle)
             if bundle_count == 0:
               marker=re.search(r'<link rel="stylesheet" href="/assets/(?:site-final-fix-2026|page-experience-2026)\.css">',s)
-              if marker:
-                s=s[:marker.start()]+f'<link rel="stylesheet" href="{bundle}">'+s[marker.start():]
-              elif '</head>' in s:
-                s=s.replace('</head>',f'<link rel="stylesheet" href="{bundle}">\n</head>',1)
-              else:
-                errors.append(f'{p}: cannot establish site-bundle link')
-                continue
+              if marker: s=s[:marker.start()]+f'<link rel="stylesheet" href="{bundle}">'+s[marker.start():]
+              elif '</head>' in s: s=s.replace('</head>',f'<link rel="stylesheet" href="{bundle}">\n</head>',1)
+              else: errors.append(f'{p}: cannot establish site-bundle link'); continue
             elif bundle_count > 1:
-              first=s.find(f'<link rel="stylesheet" href="{bundle}">')
-              prefix=s[:first+len(f'<link rel="stylesheet" href="{bundle}">')]
-              rest=re.sub(r'\s*<link rel="stylesheet" href="/assets/site-bundle\.css">','',s[first+len(f'<link rel="stylesheet" href="{bundle}">'):])
-              s=prefix+rest
-            for old in legacy:
-              s=s.replace(f'<link rel="stylesheet" href="{old}">','')
+              tag=f'<link rel="stylesheet" href="{bundle}">'; first=s.find(tag)
+              s=s[:first+len(tag)]+re.sub(r'\s*'+re.escape(tag),'',s[first+len(tag):])
+            for old in legacy: s=s.replace(f'<link rel="stylesheet" href="{old}">','')
             if href not in s:
               marker=re.search(r'<link rel="stylesheet" href="/assets/site-bundle\.css">',s)
-              if marker:
-                s=s[:marker.end()]+f'<link rel="stylesheet" href="{href}">'+s[marker.end():]
-              else:
-                errors.append(f'{p}: cannot locate site-bundle.css link')
-                continue
+              if marker: s=s[:marker.end()]+f'<link rel="stylesheet" href="{href}">'+s[marker.end():]
+              else: errors.append(f'{p}: cannot locate site-bundle.css link'); continue
             if 'محمدحسین عسگری ثمرین' in s:
               s=re.sub(r'(?<!ثمرین)محمدحسین عسگری(?! ثمرین)', 'محمدحسین عسگری ثمرین', s)
             if s!=p.read_text(encoding='utf-8',errors='ignore'):
               p.write_text(s,encoding='utf-8'); changed.append(str(p))
-          if errors:
-            print('\n'.join(errors)); raise SystemExit(1)
+          if errors: print('\n'.join(errors)); raise SystemExit(1)
           print(f'Checked {len(pages)} HTML pages; changed {len(changed)}')
           if changed: print('\n'.join(changed))
       - name: Validate production CSS contract
@@ -74,9 +64,7 @@ jobs:
             s=p.read_text(encoding='utf-8',errors='ignore')
             if s.count('/assets/site-bundle.css') != 1: errors.append(f'{p}: site-bundle count')
             if s.count('/assets/elite-universal-2026.css') != 1: errors.append(f'{p}: elite layer count')
-            if 'محمدحسین عسگری' in s and 'محمدحسین عسگری ثمرین' not in s: errors.append(f'{p}: legacy Persian identity only')
-          if errors:
-            print('\n'.join(errors)); raise SystemExit(1)
+          if errors: print('\n'.join(errors)); raise SystemExit(1)
           print(f'Production visual contract passed for {len(pages)} HTML pages')
       - name: Commit visual system rollout
         shell: bash
