@@ -7,12 +7,13 @@ FULL_EN = 'Mohammad Hossein Asgari Somarin'
 FULL_FA = 'محمدحسین عسگری ثمرین'
 TEXT_EXTENSIONS = {'.html', '.md', '.txt', '.json', '.js', '.css', '.xml', '.yml', '.yaml', '.py'}
 
-# Collapse any historical malformed English identity variants to the canonical form.
+# Normalize every historical spelling/corruption to one canonical identity.
 EN_NAME = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+', re.I)
 EN_SHORT = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?\b(?!\s+Somar\w*)', re.I)
 EN_REPEAT = re.compile(r'(Mohammad\s+Hossein\s+Asgari\s+Somarin)(?:\s+Somarin)+', re.I)
 FA_REPEAT = re.compile(r'(محمدحسین\s*عسگری\s*ثمرین)(?:\s*ثمرین)+')
 JSONLD = re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)', re.I | re.S)
+PORTFOLIO_CSS = re.compile(r'\s*<link[^>]+href=["\']/assets/portfolio-command-center-2026\.css["\'][^>]*>', re.I)
 
 COMMON_CSS = (
     '/assets/page-experience-2026.css',
@@ -54,10 +55,8 @@ def normalize_jsonld(text: str) -> str:
             elif isinstance(value, list):
                 for item in value:
                     walk(item)
-
         walk(data)
         return match.group(1) + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + match.group(3)
-
     return JSONLD.sub(repl, text)
 
 
@@ -84,6 +83,10 @@ for path in sorted(ROOT.rglob('*')):
 
     text = normalize_identity(original)
     if path.suffix.lower() == '.html':
+        # The experimental command-center layer is intentionally not global; it
+        # previously overrode page-specific cards/navigation. Keep the final
+        # visual system as the single last global layer instead.
+        text = PORTFOLIO_CSS.sub('', text)
         text = normalize_jsonld(text)
         text = text.replace('href="/en-blog/"', 'href="/en-blog.html"')
         text = text.replace('href="/en-vintech/"', 'href="/en-vintech.html"')
