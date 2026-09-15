@@ -4,7 +4,7 @@ import re
 
 BASE='https://mowhmmdh.github.io'
 ROOT=Path('.')
-PERSON='Mohammad Hossein Asgari Somarin'
+PERSON='Mohammad Hossein Asgari Somarini Somarin'
 
 # SEO growth pass intentionally operates only on published HTML.
 # Automation source files are never rewritten by content sanitizers.
