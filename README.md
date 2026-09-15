@@ -1,4 +1,4 @@
-# محمدحسین عسگری ثمرین | Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
+# محمدحسین عسگری ثمرین | Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
 
 **IT / Network & Infrastructure Specialist** focused on network engineering, systems, infrastructure security, hardening, evidence-based troubleshooting and practical IT operations.
 
@@ -11,8 +11,8 @@
 
 - **Canonical Persian name:** محمدحسین عسگری ثمرین
 - **Legacy short form:** محمدحسین عسگری
-- **Primary English name:** Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
-- **Full English name:** Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
+- **Primary English name:** Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
+- **Full English name:** Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarin Somarini Somarin Somarini Somarin Somarin
 - **GitHub:** https://github.com/mowhmmdh
 - **Website:** https://mowhmmdh.github.io/
 - **VinTech:** https://mowhmmdh.github.io/vintech.html

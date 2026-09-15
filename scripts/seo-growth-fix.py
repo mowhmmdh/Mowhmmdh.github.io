@@ -2,7 +2,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 import html, json, re, subprocess
 
-BASE='https://mowhmmdh.github.io'; ROOT=Path('.'); PERSON='Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarin'
+BASE='https://mowhmmdh.github.io'; ROOT=Path('.'); PERSON='Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarini Somarin Somarini Somarini Somarini Somarin Somarini Somarini Somarin'
 class P(HTMLParser):
     def __init__(self): super().__init__(); self.title=''; self.meta=[]; self.in_title=False; self.jsonld=False
     def handle_starttag(self,t,a):
