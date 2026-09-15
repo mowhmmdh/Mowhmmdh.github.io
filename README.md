@@ -1,4 +1,4 @@
-# محمدحسین عسگری | Mohammad Hossein Asgari
+# محمدحسین عسگری ثمرین | Mohammad Hossein Asgari
 
 **IT / Network & Infrastructure Specialist** focused on network engineering, systems, infrastructure security, hardening, evidence-based troubleshooting and practical IT operations.
 
@@ -9,15 +9,15 @@
 
 ## Professional identity
 
-- **Primary Persian name:** محمدحسین عسگری
-- **Full Persian name:** محمدحسین عسگری ثمرین
+- **Canonical Persian name:** محمدحسین عسگری ثمرین
+- **Legacy short form:** محمدحسین عسگری
 - **Primary English name:** Mohammad Hossein Asgari
 - **Full English name:** Mohammad Hossein Asgari Somarin
 - **GitHub:** https://github.com/mowhmmdh
 - **Website:** https://mowhmmdh.github.io/
 - **VinTech:** https://mowhmmdh.github.io/vintech.html
 
-For the exact Persian search identity **محمدحسین عسگری**, the canonical public website is **https://mowhmmdh.github.io/**. The longer Persian and English full-name variants refer to the same professional identity.
+The canonical Persian identity used throughout the website, metadata and public documentation is **محمدحسین عسگری ثمرین**. The shorter Persian form is retained only as a legacy/search variant where historical references require it.
 
 ## Technical focus
 
@@ -41,11 +41,11 @@ The website contains practical material on network troubleshooting, VLAN segment
 
 ## Public evidence
 
-- **Technical Authority Hub:** [authority.html](https://mowhmmdh.github.io/authority.html)
-- **Case Studies:** [case-studies](https://mowhmmdh.github.io/case-studies/)
-- **Projects:** [projects.html](https://mowhmmdh.github.io/projects.html)
-- **Technical Articles:** [blog](https://mowhmmdh.github.io/blog/)
-- **Press / Editorial:** [press.html](https://mowhmmdh.github.io/press.html)
+- **Technical Authority Hub:** https://mowhmmdh.github.io/authority.html
+- **Case Studies:** https://mowhmmdh.github.io/case-studies/
+- **Projects:** https://mowhmmdh.github.io/projects.html
+- **Technical Articles:** https://mowhmmdh.github.io/blog/
+- **Press / Editorial:** https://mowhmmdh.github.io/press.html
 
 ## Related repositories
 
