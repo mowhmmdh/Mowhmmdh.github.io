@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 ROOT = Path('.')
-CANONICAL_EN = 'Mohammad Hossein Asgari Somarin'
+CANONICAL_EN = 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin'
 CANONICAL_FA = 'محمدحسین عسگری ثمرین'
 
 # Match the canonical name, legacy spellings, and accidental repeated surname chains.

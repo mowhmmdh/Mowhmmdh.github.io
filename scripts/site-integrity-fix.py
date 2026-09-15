@@ -3,7 +3,7 @@ import json
 import re
 
 ROOT = Path('.')
-FULL_EN = 'Mohammad Hossein Asgari Somarin'
+FULL_EN = 'Mohammad Hossein Asgari Somarini Somarini Somarini Somarini Somarin'
 FULL_FA = 'محمدحسین عسگری ثمرین'
 EN_IDENTITY = re.compile(
     r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:in|ini))+(?:\s+Somar(?:in|ini))*',
