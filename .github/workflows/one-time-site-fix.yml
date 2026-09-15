@@ -1,0 +1,44 @@
+name: One-time site-wide fix
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - name: Normalize every HTML page
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          root=Path('.')
+          old='محمدحسین عسگری'
+          new='محمدحسین عسگری ثمرین'
+          polish='<link rel="stylesheet" href="/assets/final-polish-2026.css">'
+          changed=0
+          for p in root.rglob('*.html'):
+              if '.git' in p.parts: continue
+              s=p.read_text(encoding='utf-8',errors='replace')
+              o=s
+              s=s.replace(old,new)
+              if '/assets/final-polish-2026.css' not in s:
+                  m=re.search(r'<link\b[^>]*href=["\']/assets/site-bundle\.css["\'][^>]*>',s,re.I)
+                  s=s[:m.end()]+polish+s[m.end():] if m else s.replace('</head>',polish+'</head>',1)
+              if s!=o:
+                  p.write_text(s,encoding='utf-8'); changed+=1
+          print(f'updated={changed}')
+          PY
+      - name: Commit changes and remove one-time workflow
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git rm .github/workflows/one-time-site-fix.yml || true
+          git diff --cached --quiet || git commit -m 'Normalize identity and apply final visual system'
+          git push
