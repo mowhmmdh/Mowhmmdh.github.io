@@ -5,9 +5,9 @@ ROOT = Path('.')
 CANONICAL_EN = 'Mohammad Hossein Asgari Somarin'
 CANONICAL_FA = 'محمدحسین عسگری ثمرین'
 
-# Collapse the accidental historical variants into one canonical spelling.
+# Normalize repeated historical variants while leaving the canonical name untouched.
 EN_VARIANTS = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar(?:in|ini))+(?:\s+Somar(?:in|ini))*', re.I)
-EN_SHORT = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?', re.I)
+EN_SHORT = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?!\s+Somar(?:in|ini)\b)', re.I)
 FA_DUP = re.compile(r'(محمدحسین عسگری ثمرین)(?:\s*ثمرین)+')
 
 TEXT_EXT = {'.html', '.css', '.js', '.json', '.jsonld', '.txt', '.md', '.xml', '.webmanifest', '.yml', '.yaml', '.py'}
@@ -21,11 +21,9 @@ for p in ROOT.rglob('*'):
     except Exception:
         continue
     original = s
-
     s = EN_VARIANTS.sub(CANONICAL_EN, s)
     s = EN_SHORT.sub(CANONICAL_EN, s)
     s = FA_DUP.sub(CANONICAL_FA, s)
-
     if s != original:
         p.write_text(s, encoding='utf-8')
         changed.append(p.as_posix())
