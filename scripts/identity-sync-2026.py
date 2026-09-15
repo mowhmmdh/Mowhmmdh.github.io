@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 ROOT = Path('.')
-CANONICAL_EN = 'Mohammad Hossein Asgari Somarin'
+CANONICAL_EN = 'Mohammad Hossein Asgari Somarini Somarin Somarini Somarini Somarin'
 CANONICAL_FA = 'محمدحسین عسگری ثمرین'
 
 # Normalize repeated historical variants while leaving the canonical name untouched.
