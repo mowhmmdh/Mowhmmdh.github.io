@@ -1,0 +1,150 @@
+/* Responsive Core 2026
+   Central mobile/tablet safety layer. Loaded by assets/site-theme.js.
+   Intentionally conservative: it fixes overflow, grids, navigation and controls
+   without replacing page-specific visual systems. */
+
+html{width:100%;max-width:100%;overflow-x:hidden;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{width:100%;max-width:100%;min-width:0;overflow-x:hidden}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,canvas,iframe{max-width:100%}
+img,svg,video,canvas{height:auto}
+iframe{border:0}
+pre{max-width:100%;overflow:auto;-webkit-overflow-scrolling:touch}
+code{overflow-wrap:anywhere}
+input,textarea,select,button{max-width:100%}
+input,textarea,select{min-width:0}
+button,a{touch-action:manipulation}
+
+.site-wrap,.wrap,.container,.en-page,.vt-container{width:min(1200px,calc(100% - 32px));max-width:100%;margin-inline:auto}
+
+/* Prevent intrinsic-width children from forcing the viewport wider. */
+main,header,footer,section,article,aside,nav,div,form,fieldset{min-width:0}
+.grid,.cards,.card-grid,.projects-grid,.services-grid,.posts-grid,.features-grid,.stats-grid,.content-grid{min-width:0}
+.grid>* ,.cards>* ,.card-grid>* ,.projects-grid>* ,.services-grid>* ,.posts-grid>* ,.features-grid>* ,.stats-grid>* ,.content-grid>*{min-width:0}
+
+/* Tables remain usable on narrow screens instead of expanding the page. */
+table{width:100%;max-width:100%;border-collapse:collapse}
+.table-wrap,.table-responsive{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* Modern navigation: desktop stays intact; mobile becomes a compact disclosure. */
+.site-nav{min-width:0}
+.site-nav .brand{min-width:0}
+.site-nav .nav-links{min-width:0}
+
+@media (max-width:1100px){
+  .site-nav{gap:10px}
+  .site-nav .nav-links{gap:4px}
+  .site-nav .nav-links a{padding-inline:8px}
+  .mh-hero-grid{grid-template-columns:minmax(0,1fr) minmax(280px,.9fr)!important;gap:32px!important}
+  .mh-terminal{right:6%!important}
+}
+
+@media (max-width:900px){
+  .site-wrap,.wrap,.container,.en-page,.vt-container{width:calc(100% - 24px)}
+
+  .site-nav{position:relative;flex-wrap:nowrap!important;min-height:60px!important;margin-top:8px!important;padding:8px 9px!important;border-radius:16px!important}
+  .site-nav .nav-actions{margin-inline-start:auto;flex:0 0 auto}
+  .site-nav .mobile-menu{display:inline-grid!important;place-items:center!important}
+  .site-nav .nav-links{display:none!important}
+  .site-nav.menu-open .nav-links{display:grid!important;position:absolute;inset-inline:0;top:calc(100% + 8px);z-index:100;grid-template-columns:1fr!important;gap:4px!important;padding:8px!important;border:1px solid rgba(135,164,196,.18);border-radius:16px;background:color-mix(in srgb,#0b1522 94%,transparent);box-shadow:0 18px 50px rgba(0,0,0,.22);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+  .theme-light .site-nav.menu-open .nav-links{background:rgba(255,255,255,.97)}
+  .site-nav.menu-open .nav-links a{display:block;width:100%;padding:12px 13px;border-radius:11px}
+
+  .mh-hero-grid{grid-template-columns:1fr!important;gap:24px!important}
+  .mh-hero{padding-block:48px 28px!important}
+  .mh-hero h1{font-size:clamp(2.25rem,9.5vw,4.5rem)!important;line-height:1.08!important}
+  .mh-hero-visual{min-height:min(560px,110vw)!important}
+  .mh-proofbar{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .mh-proofbar>div{border-inline-start:0!important;border-top:1px solid var(--ui-border,rgba(135,164,196,.18))}
+  .mh-proofbar>div:nth-child(-n+2){border-top:0}
+  .mh-cards-3{grid-template-columns:1fr!important}
+  .mh-expertise-grid{grid-template-columns:1fr!important}
+  .mh-section-head{align-items:flex-start!important;flex-direction:column!important}
+  .mh-split-inner{grid-template-columns:1fr!important}
+  .mh-identity-card{width:min(100%,520px);margin-inline:auto}
+
+  .hero-grid,.two-col,.split,.layout-2,.content-grid,.details-grid,.portfolio-grid,.service-grid,.project-grid{grid-template-columns:1fr!important}
+  .three-col,.layout-3{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  .hero,.page-hero{padding-block:48px 32px!important}
+
+  .nav-links,.about-nav-links,.en-nav-links{max-width:100%}
+  .actions,.hero-actions,.cta-actions{flex-wrap:wrap}
+  .actions a,.actions button,.hero-actions a,.hero-actions button,.cta-actions a,.cta-actions button{max-width:100%}
+}
+
+@media (max-width:760px){
+  .site-wrap,.wrap,.container,.en-page,.vt-container{width:calc(100% - 20px)}
+  body{font-size:16px}
+  h1{overflow-wrap:anywhere}
+  h2,h3,h4{overflow-wrap:anywhere}
+
+  .brand strong{max-width:38vw;overflow:hidden;text-overflow:ellipsis}
+  .site-nav .theme-toggle,.site-nav .mobile-menu{width:42px!important;min-width:42px!important;height:42px!important;min-height:42px!important;padding:0!important}
+
+  .mh-hero{padding-block:38px 24px!important}
+  .mh-lead{font-size:1rem!important;line-height:1.85!important}
+  .mh-actions{display:grid!important;grid-template-columns:1fr!important;gap:9px!important}
+  .mh-btn{width:100%;min-height:46px}
+  .mh-chips{gap:7px!important}
+  .mh-chips span{font-size:.72rem!important}
+  .mh-hero-visual{min-height:430px!important}
+  .mh-orbit{width:min(88vw,380px)!important}
+  .mh-node{min-width:78px!important;padding:7px 8px!important}
+  .mh-node-d{left:0!important}
+  .mh-terminal{left:0!important;right:2%!important;bottom:-2px!important;transform:rotate(-1deg)!important}
+  .mh-terminal pre{font-size:.62rem!important;padding:11px!important}
+  .mh-proofbar{grid-template-columns:1fr!important;margin-top:24px!important}
+  .mh-proofbar>div{border-top:1px solid var(--ui-border,rgba(135,164,196,.18))!important}
+  .mh-proofbar>div:first-child{border-top:0!important}
+  .mh-section{padding-block:48px 54px!important}
+  .mh-section h2{font-size:clamp(1.75rem,8vw,2.55rem)!important}
+  .mh-card{min-height:0!important;padding:20px!important}
+  .mh-card h3{margin-top:34px!important}
+  .mh-profile-links{display:grid!important;grid-template-columns:1fr!important}
+
+  .three-col,.layout-3{grid-template-columns:1fr!important}
+  .grid,.cards,.card-grid,.projects-grid,.services-grid,.posts-grid,.features-grid,.stats-grid{grid-template-columns:1fr!important}
+  .stack-mobile{display:flex!important;flex-direction:column!important}
+
+  .section,.page-section,.content-section{padding-block:42px!important}
+  .hero,.page-hero{padding:38px 0 28px!important}
+  .hero h1,.page-hero h1{font-size:clamp(2rem,10vw,3.2rem)!important;line-height:1.12!important}
+  .hero p,.page-hero p{line-height:1.85!important}
+
+  form{width:100%;max-width:100%}
+  form>*{min-width:0}
+  input,textarea,select{width:100%;max-width:100%}
+  textarea{min-height:130px}
+  .form-row,.form-grid,.fields{display:grid!important;grid-template-columns:1fr!important}
+
+  table{font-size:.86rem}
+  th,td{white-space:normal;word-break:break-word}
+  table:not(.no-scroll-table){display:block;overflow-x:auto}
+
+  pre{font-size:.78rem;line-height:1.65}
+  blockquote{margin-inline:0}
+  .modal,.dialog,.drawer{max-width:calc(100vw - 20px)!important}
+  .modal-body,.dialog-body{max-height:78vh;overflow:auto}
+}
+
+@media (max-width:420px){
+  .site-wrap,.wrap,.container,.en-page,.vt-container{width:calc(100% - 16px)}
+  .site-nav{padding-inline:7px!important}
+  .brand{gap:6px!important}
+  .brand span{width:32px!important;height:32px!important}
+  .brand strong{font-size:.9rem!important;max-width:44vw}
+  .nav-actions{gap:5px!important}
+  .mh-hero h1{font-size:clamp(2rem,10.5vw,2.7rem)!important}
+  .mh-terminal{display:none!important}
+  .mh-hero-visual{min-height:360px!important}
+}
+
+/* Touch devices should not depend on hover for access. */
+@media (hover:none){
+  .site-nav .nav-links a:hover,.mh-card:hover,.mh-btn:hover{transform:none!important;box-shadow:none}
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
