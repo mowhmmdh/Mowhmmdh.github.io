@@ -1,21 +1,12 @@
 (() => {
   'use strict';
 
-  /* Central responsive layer: loaded once on every page that uses site-theme.js. */
-  const responsiveHref = '/assets/responsive-core-2026.css';
-  if (!document.querySelector(`link[rel="stylesheet"][href="${responsiveHref}"]`)) {
-    const responsiveLink = document.createElement('link');
-    responsiveLink.rel = 'stylesheet';
-    responsiveLink.href = responsiveHref;
-    responsiveLink.dataset.responsiveCore = '2026';
-    document.head.appendChild(responsiveLink);
-  }
-
   const root = document.documentElement;
   const storageKey = 'mha-theme';
   const FULL_NAME = 'محمدحسین عسگری ثمرین';
   const SHORT_NAME = 'محمدحسین عسگری';
   const shortNamePattern = new RegExp(`${SHORT_NAME.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?!\\s*ثمرین)`, 'g');
+
   const normalizeIdentity = () => {
     const replaceShortName = value => typeof value === 'string' ? value.replace(shortNamePattern, FULL_NAME) : value;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -36,6 +27,71 @@
       const value = el.getAttribute(attr);
       if (value && value.includes(SHORT_NAME) && !value.includes(FULL_NAME)) el.setAttribute(attr, replaceShortName(value));
     });
+  };
+
+  const addJsonLd = data => {
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify(data);
+    document.head.appendChild(script);
+  };
+
+  const addCctvExperience = () => {
+    const path = location.pathname.replace(/\\/$/, '') || '/';
+    const isHome = path === '' || path === '/index.html' || path === '/';
+    const isVinTech = path === '/vintech.html';
+    const isServices = path === '/services.html';
+    if (!isHome && !isVinTech && !isServices) return;
+
+    if (!document.querySelector('[data-cctv-focus]')) {
+      const section = document.createElement('section');
+      section.setAttribute('data-cctv-focus', 'true');
+      section.className = isVinTech ? 'vt-section vt-cctv-focus' : 'site-wrap mh-section cctv-focus';
+      section.innerHTML = isVinTech ? `
+        <div class="vt-container">
+          <div class="vt-head"><div class="vt-eyebrow">CCTV · IP CAMERA · NVR</div><h2>دوربین مداربسته را هم به‌صورت تخصصی انجام می‌دهم.</h2><p>در کنار شبکه، زیرساخت و امنیت، طراحی و اجرای زیرساخت نظارت تصویری هم جزو خدمات VinTech است؛ از انتخاب معماری دوربین و مسیر شبکه تا PoE، NVR، ذخیره‌سازی و دسترسی امن.</p></div>
+          <div class="vt-grid">
+            <article class="vt-card"><div class="vt-icon">01</div><h3>طراحی CCTV تحت شبکه</h3><p>جانمایی، IP Plan، ظرفیت لینک، PoE و تفکیک ترافیک دوربین‌ها بر اساس نیاز پروژه.</p></article>
+            <article class="vt-card"><div class="vt-icon">02</div><h3>NVR و Storage</h3><p>برآورد فضای ذخیره‌سازی بر مبنای تعداد دوربین، رزولوشن، نرخ فریم و مدت نگهداری.</p></article>
+            <article class="vt-card"><div class="vt-icon">03</div><h3>امنیت و نگهداری</h3><p>محدودسازی دسترسی، مدیریت حساب‌ها، به‌روزرسانی، پایش و عیب‌یابی مسیر دوربین تا NVR.</p></article>
+          </div>
+          <div class="vt-actions" style="margin-top:22px"><a class="vt-btn primary" href="/vintech/cctv-nvr.html">جزئیات خدمات دوربین مداربسته ↗</a><a class="vt-btn" href="/vintech/request.html">درخواست اجرا</a></div>
+        </div>` : `
+        <div class="mh-section-head"><div><span class="mh-eyebrow">CCTV / IP VIDEO / NVR</span><h2>دوربین مداربسته هم بخشی از خدمات فنی من است.</h2></div><a class="mh-text-link" href="/vintech/cctv-nvr.html">جزئیات خدمت ↗</a></div>
+        <p class="mh-section-lead">در پروژه‌های نظارت تصویری، فقط خود دوربین مهم نیست؛ شبکه، کابل‌کشی، PoE، NVR، ذخیره‌سازی، دسترسی و امنیت باید از ابتدا هماهنگ طراحی شوند.</p>
+        <div class="mh-cards mh-cards-3"><a class="mh-card" href="/vintech/cctv-nvr.html"><span class="mh-card-tag">IP CCTV</span><h3>طراحی و اجرای دوربین تحت شبکه</h3><p>از مسیر کابل و PoE تا IP Plan و اتصال پایدار تجهیزات.</p></a><a class="mh-card" href="/blog/cctv-ip-camera-network-design.html"><span class="mh-card-tag">TECHNICAL GUIDE</span><h3>راهنمای طراحی CCTV</h3><p>نکات عملی انتخاب توپولوژی، ظرفیت ذخیره‌سازی، امنیت و عیب‌یابی.</p></a><a class="mh-card" href="/services.html"><span class="mh-card-tag">SERVICE</span><h3>خدمات فنی VinTech</h3><p>دوربین، شبکه، زیرساخت، سرور و امنیت در یک مسیر اجرایی.</p></a></div>`;
+
+      if (isServices) {
+        const main = document.querySelector('main');
+        const hero = main?.querySelector('.hero');
+        if (hero) hero.insertAdjacentElement('afterend', section); else main?.appendChild(section);
+      } else if (isVinTech) {
+        const main = document.querySelector('main');
+        const firstSection = main?.querySelector('.vt-section');
+        if (firstSection) firstSection.insertAdjacentElement('afterend', section); else main?.appendChild(section);
+      } else {
+        document.querySelector('main')?.appendChild(section);
+      }
+    }
+
+    if (!document.querySelector('script[data-cctv-schema]')) {
+      const s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.dataset.cctvSchema = 'true';
+      s.textContent = JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        '@id': 'https://mowhmmdh.github.io/vintech/cctv-nvr.html#service',
+        'name': 'خدمات دوربین مداربسته و NVR',
+        'alternateName': 'CCTV & NVR Services',
+        'description': 'طراحی و اجرای زیرساخت دوربین مداربسته تحت شبکه، PoE، NVR، ذخیره‌سازی و دسترسی امن.',
+        'url': 'https://mowhmmdh.github.io/vintech/cctv-nvr.html',
+        'provider': {'@type': 'Organization', 'name': 'VinTech', 'url': 'https://mowhmmdh.github.io/vintech.html'},
+        'areaServed': 'Iran',
+        'inLanguage': 'fa-IR'
+      });
+      document.head.appendChild(s);
+    }
   };
 
   try { if (localStorage.getItem(storageKey) === 'light') root.classList.add('theme-light'); } catch (_) {}
@@ -84,6 +140,7 @@
     });
   });
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', normalizeIdentity, { once: true });
-  else normalizeIdentity();
+  const boot = () => { normalizeIdentity(); addCctvExperience(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
+  else boot();
 })();
