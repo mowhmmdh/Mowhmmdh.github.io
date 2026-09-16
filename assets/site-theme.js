@@ -1,12 +1,21 @@
 (() => {
   'use strict';
 
+  /* Central responsive layer: loaded once on every page that uses site-theme.js. */
+  const responsiveHref = '/assets/responsive-core-2026.css';
+  if (!document.querySelector(`link[rel="stylesheet"][href="${responsiveHref}"]`)) {
+    const responsiveLink = document.createElement('link');
+    responsiveLink.rel = 'stylesheet';
+    responsiveLink.href = responsiveHref;
+    responsiveLink.dataset.responsiveCore = '2026';
+    document.head.appendChild(responsiveLink);
+  }
+
   const root = document.documentElement;
   const storageKey = 'mha-theme';
   const FULL_NAME = 'محمدحسین عسگری ثمرین';
   const SHORT_NAME = 'محمدحسین عسگری';
   const shortNamePattern = new RegExp(`${SHORT_NAME.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?!\\s*ثمرین)`, 'g');
-
   const normalizeIdentity = () => {
     const replaceShortName = value => typeof value === 'string' ? value.replace(shortNamePattern, FULL_NAME) : value;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
