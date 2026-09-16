@@ -36,6 +36,21 @@ def local_css_href(tag: str) -> str | None:
     return None
 
 
+def rewrite_relative_urls(css: str, source_href: str) -> str:
+    base = Path(source_href.lstrip('/')).parent.as_posix()
+    def repl(match: re.Match[str]) -> str:
+        raw = match.group(1).strip()
+        quote = ''
+        value = raw
+        if len(value) >= 2 and value[0] in "\"'" and value[-1] == value[0]:
+            quote, value = value[0], value[1:-1]
+        if not value or value.startswith(('/', '#', 'data:', 'http://', 'https://')):
+            return match.group(0)
+        clean = (Path('/') / base / value).as_posix()
+        return f'url({quote}{clean}{quote})'
+    return re.sub(r'url\(([^)]*)\)', repl, css, flags=re.I)
+
+
 def bundle_css(hrefs: list[str]) -> str:
     chunks = []
     for href in hrefs:
@@ -45,6 +60,7 @@ def bundle_css(hrefs: list[str]) -> str:
         if not path.exists():
             continue
         text = path.read_text(encoding='utf-8', errors='replace')
+        text = rewrite_relative_urls(text, href)
         chunks.append(f'/* SOURCE: {href} */\n{text}\n')
     raw = '\n'.join(chunks)
     raw = re.sub(r'/\*(?! SOURCE:).*?\*/', '', raw, flags=re.S)
@@ -88,6 +104,9 @@ for page in pages:
         text2 = text.replace(first, replacement, 1)
         for tag in tags[1:]:
             text2 = text2.replace(tag, '', 1)
+        marker = '<!-- pagespeed-css-bundle: /assets/site-final-quality-2026.css -->'
+        if marker not in text2:
+            text2 = text2.replace(replacement, replacement + '\n' + marker, 1)
 
     image_tags = list(IMG_RE.finditer(text2))
     for idx, match in reversed(list(enumerate(image_tags))):
