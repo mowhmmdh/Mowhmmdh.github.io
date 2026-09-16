@@ -1,0 +1,114 @@
+name: Sitewide SEO + Visual Sync
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sitewide-seo-visual-main
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Harden published indexability and shared visual layer
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          from html import escape
+          
+          ROOT = Path('.')
+          BASE = 'https://mowhmmdh.github.io'
+          VERIFY = 'w1K0ObPBkDyumGF71kjJyBwGvPFh1rhb6PBLBd-RC90'
+          CSS = '/assets/site-visual-upgrade-2026.css'
+          changed = []
+          indexable = []
+          
+          def page_url(p):
+              rel = p.as_posix()
+              if rel == 'index.html': return BASE + '/'
+              if rel.endswith('/index.html'): return BASE + '/' + rel[:-10].rstrip('/') + '/'
+              return BASE + '/' + rel
+          
+          def meta(content, name=None, prop=None):
+              if name:
+                  return f'<meta name="{name}" content="{escape(content, quote=True)}">'
+              return f'<meta property="{prop}" content="{escape(content, quote=True)}">'
+          
+          for p in sorted(ROOT.rglob('*.html')):
+              if '.git' in p.parts or '.github' in p.parts or p.name == '404.html':
+                  continue
+              text = p.read_text(encoding='utf-8', errors='ignore')
+              low = text.lower()
+              if re.search(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'][^"\']*noindex', text, re.I):
+                  continue
+              original = text
+              url = page_url(p)
+              title_m = re.search(r'<title>\s*(.*?)\s*</title>', text, re.I | re.S)
+              title = re.sub(r'\s+', ' ', title_m.group(1)).strip() if title_m else p.stem.replace('-', ' ').title()
+              desc_m = re.search(r'<meta[^>]+name=["\']description["\'][^>]+content=["\']([^"\']*)["\']', text, re.I)
+              desc = re.sub(r'\s+', ' ', desc_m.group(1)).strip() if desc_m else ''
+              h1_m = re.search(r'<h1\b[^>]*>(.*?)</h1>', text, re.I | re.S)
+              if not desc and h1_m:
+                  desc = re.sub(r'<[^>]+>', ' ', h1_m.group(1))
+                  desc = re.sub(r'\s+', ' ', desc).strip()
+              if len(desc) > 155: desc = desc[:152].rsplit(' ',1)[0] + '...'
+              if not desc:
+                  desc = f'{title} — شبکه، زیرساخت، امنیت و عملیات IT.'
+              
+              if 'google-site-verification' not in low:
+                  text = text.replace('</head>', f'{meta(VERIFY, name="google-site-verification")}\n</head>', 1)
+              if not re.search(r'<meta[^>]+name=["\']robots["\']', text, re.I):
+                  text = text.replace('</head>', f'{meta("index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1", name="robots")}\n</head>', 1)
+              if not re.search(r'<meta[^>]+name=["\']description["\']', text, re.I):
+                  text = text.replace('</head>', f'{meta(desc, name="description")}\n</head>', 1)
+              if not re.search(r'<link[^>]+rel=["\']canonical["\']', text, re.I):
+                  text = text.replace('</head>', f'<link rel="canonical" href="{url}">\n</head>', 1)
+              if 'og:title' not in text.lower():
+                  text = text.replace('</head>', f'{meta(title, prop="og:title")}\n</head>', 1)
+              if 'og:description' not in text.lower():
+                  text = text.replace('</head>', f'{meta(desc, prop="og:description")}\n</head>', 1)
+              if 'og:url' not in text.lower():
+                  text = text.replace('</head>', f'{meta(url, prop="og:url")}\n</head>', 1)
+              if 'twitter:card' not in text.lower():
+                  text = text.replace('</head>', f'{meta("summary_large_image", name="twitter:card")}\n</head>', 1)
+              if 'twitter:title' not in text.lower():
+                  text = text.replace('</head>', f'{meta(title, name="twitter:title")}\n</head>', 1)
+              if 'twitter:description' not in text.lower():
+                  text = text.replace('</head>', f'{meta(desc, name="twitter:description")}\n</head>', 1)
+              if CSS not in text:
+                  text = text.replace('</head>', f'<link rel="stylesheet" href="{CSS}">\n</head>', 1)
+              
+              if text != original:
+                  p.write_text(text, encoding='utf-8')
+                  changed.append(p.as_posix())
+              indexable.append(p.as_posix())
+          
+          print(f'Indexable HTML pages processed: {len(indexable)}')
+          print(f'Pages changed: {len(changed)}')
+          print('\n'.join(changed))
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No sitewide SEO/visual changes needed."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'chore(seo): strengthen sitewide indexing and visual consistency [skip ci]'
+          git push origin HEAD:main
