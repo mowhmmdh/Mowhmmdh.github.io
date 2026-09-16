@@ -7,6 +7,15 @@
   const SHORT_NAME = 'محمدحسین عسگری';
   const shortNamePattern = new RegExp(`${SHORT_NAME.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}(?!\\s*ثمرین)`, 'g');
 
+  const ensureResponsiveCore = () => {
+    if (document.querySelector('link[data-responsive-core]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/assets/responsive-core-2026.css';
+    link.dataset.responsiveCore = 'true';
+    document.head.appendChild(link);
+  };
+
   const normalizeIdentity = () => {
     const replaceShortName = value => typeof value === 'string' ? value.replace(shortNamePattern, FULL_NAME) : value;
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -52,15 +61,15 @@
   const addContentDiscovery = () => {
     const path = location.pathname.replace(/\/$/, '') || '/';
     const config = {
-      '/blog': {title:'جدید: طراحی دوربین مداربسته تحت شبکه', text:'راهنمای عملی IP Camera، PoE، VLAN، NVR، Storage و امنیت برای پروژه‌های واقعی.', href:'/blog/cctv-ip-camera-network-design.html', label:'CCTV / NETWORK'},
-      '/en-blog.html': {title:'New: IP CCTV Network Design Guide', text:'A practical guide to IP cameras, PoE, VLANs, NVR storage and security.', href:'/en-blog/cctv-ip-camera-network-design.html', label:'CCTV / NETWORK'},
-      '/vintech/insights': {title:'جدید: امن‌سازی دوربین مداربسته تحت شبکه', text:'VLAN، کنترل دسترسی، Firmware، Logging و Remote Access را از دید عملیاتی بررسی می‌کنیم.', href:'/vintech/insights/cctv-ip-camera-security.html', label:'VINTECH / CCTV SECURITY'},
-      '/en-vintech/insights': {title:'New: Securing IP CCTV Networks', text:'Engineering controls for VLANs, access, firmware, logging and remote access.', href:'/en-vintech/insights/cctv-ip-camera-security.html', label:'VINTECH / CCTV SECURITY'}
+      '/blog': {title:'جدید: طراحی دوربین مداربسته تحت شبکه', text:'راهنمای عملی IP Camera، PoE، VLAN، NVR، Storage و امنیت برای پروژه‌های واقعی.', href:'/blog/cctv-ip-camera-network-design.html', label:'CCTV / NETWORK', fa:true},
+      '/en-blog.html': {title:'New: IP CCTV Network Design Guide', text:'A practical guide to IP cameras, PoE, VLANs, NVR storage and security.', href:'/en-blog/cctv-ip-camera-network-design.html', label:'CCTV / NETWORK', fa:false},
+      '/vintech/insights': {title:'جدید: امن‌سازی دوربین مداربسته تحت شبکه', text:'VLAN، کنترل دسترسی، Firmware، Logging و Remote Access را از دید عملیاتی بررسی می‌کنیم.', href:'/vintech/insights/cctv-ip-camera-security.html', label:'VINTECH / CCTV SECURITY', fa:true},
+      '/en-vintech/insights': {title:'New: Securing IP CCTV Networks', text:'Engineering controls for VLANs, access, firmware, logging and remote access.', href:'/en-vintech/insights/cctv-ip-camera-security.html', label:'VINTECH / CCTV SECURITY', fa:false}
     }[path];
     if (!config || document.querySelector('[data-content-discovery]')) return;
     const main = document.querySelector('main'); if (!main) return;
     const box = document.createElement('aside'); box.dataset.contentDiscovery = 'true'; box.className = 'cctv-discovery';
-    box.innerHTML = `<div><span>${config.label}</span><h2>${config.title}</h2><p>${config.text}</p></div><a href="${config.href}">${path === '/en-blog.html' || path === '/en-vintech/insights' ? 'Read article ↗' : 'مطالعه مقاله ↗'}</a>`;
+    box.innerHTML = `<div><span>${config.label}</span><h2>${config.title}</h2><p>${config.text}</p></div><a href="${config.href}">${config.fa ? 'مطالعه مقاله ↗' : 'Read article ↗'}</a>`;
     const anchor = main.querySelector('.grid,.clusters,.vt-grid,.hero');
     if (anchor && anchor.parentElement === main) anchor.insertAdjacentElement('afterend', box); else main.appendChild(box);
   };
@@ -78,6 +87,6 @@
   });
   document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; document.querySelectorAll('.site-nav.menu-open').forEach(nav => { nav.classList.remove('menu-open'); const menu=nav.querySelector('.mobile-menu'); if(menu){menu.setAttribute('aria-expanded','false');menu.textContent='☰';} }); });
 
-  const boot = () => { normalizeIdentity(); addCctvExperience(); addContentDiscovery(); };
+  const boot = () => { ensureResponsiveCore(); normalizeIdentity(); addCctvExperience(); addContentDiscovery(); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true }); else boot();
 })();
