@@ -16,7 +16,7 @@ jobs:
   repair:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +28,6 @@ jobs:
         run: |
           from pathlib import Path
           import re
-
           ROOT = Path('.')
           EN = 'Mohammad Hossein Asgari Somarin'
           FA = 'محمدحسین عسگری ثمرین'
@@ -36,67 +35,65 @@ jobs:
           en_name = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?(?:\s+Somar\w*)+', re.I)
           en_short = re.compile(r'Mohammad\s+Hossein\s+Asgar(?:i)?\b(?!\s+Somar\w*)', re.I)
           fa_name = re.compile(r'(محمدحسین\s*عسگری\s*ثمرین)(?:\s*ثمرین)+')
-          legacy_css = [
-            'portfolio-command-center-2026.css', 'content-theme-2026.css',
-            'final-appearance-2026.css', 'visual-final-pass-2026.css',
-            'ultimate-ui-2026.css', 'visual-master-2026.css',
-            'next-gen-2026.css', 'site-final-polish-2026.css', 'site-final-polish.css'
-          ]
+          legacy_css = ['portfolio-command-center-2026.css','content-theme-2026.css','final-appearance-2026.css','visual-final-pass-2026.css','ultimate-ui-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish-2026.css','site-final-polish.css']
           modern_ui = re.compile(r'\s*<script\b[^>]*src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>', re.I)
           vin_motion = re.compile(r'\s*<link\b[^>]*href=["\']/assets/vintech-motion-fix-2026-v2\.css["\'][^>]*>\s*', re.I)
-
           def clean_breadcrumb_jsonld(text):
-            script_pattern = re.compile(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>', re.I | re.S)
-            def scrub(match):
-              block = match.group(0)
-              return '' if re.search(r'"@type"\s*:\s*["\']BreadcrumbList["\']', block, re.I) else block
-            return script_pattern.sub(scrub, text)
-
+            pattern = re.compile(r'<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>', re.I|re.S)
+            def scrub(m):
+              block=m.group(0)
+              return '' if re.search(r'"@type"\s*:\s*["\']BreadcrumbList["\']',block,re.I) else block
+            return pattern.sub(scrub,text)
           def normalize_breadcrumbs(text):
-            start = '<!-- AUTO-BREADCRUMB:START -->'; end = '<!-- AUTO-BREADCRUMB:END -->'
-            blocks = re.findall(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
-            protected = blocks[0] if blocks else ''
-            if protected: text = text.replace(protected, '\x00PROTECTED_BREAD\x00', 1)
-            text = re.sub(r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*', '', text, flags=re.I | re.S)
-            if protected: text = text.replace('\x00PROTECTED_BREAD\x00', protected, 1)
-            marker = re.search(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
-            protected = marker.group(0) if marker else ''
-            if protected: text = text.replace(protected, '\x00PROTECTED_BREAD_SCHEMA\x00', 1)
-            text = clean_breadcrumb_jsonld(text)
-            if protected: text = text.replace('\x00PROTECTED_BREAD_SCHEMA\x00', protected, 1)
-            blocks = re.findall(re.escape(start) + r'.*?' + re.escape(end), text, flags=re.S)
-            if len(blocks) > 1:
-              first = blocks[0]; text = text.replace(first, '\x00FIRST_BREAD\x00', 1)
-              for block in blocks[1:]: text = text.replace(block, '', 1)
-              text = text.replace('\x00FIRST_BREAD\x00', first, 1)
+            start='<!-- AUTO-BREADCRUMB:START -->'; end='<!-- AUTO-BREADCRUMB:END -->'
+            blocks=re.findall(re.escape(start)+r'.*?'+re.escape(end),text,flags=re.S)
+            protected=blocks[0] if blocks else ''
+            if protected: text=text.replace(protected,'\x00PROTECTED_BREAD\x00',1)
+            text=re.sub(r'\s*<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>.*?</nav>\s*','',text,flags=re.I|re.S)
+            if protected: text=text.replace('\x00PROTECTED_BREAD\x00',protected,1)
+            marker=re.search(re.escape(start)+r'.*?'+re.escape(end),text,flags=re.S)
+            protected=marker.group(0) if marker else ''
+            if protected: text=text.replace(protected,'\x00PROTECTED_BREAD_SCHEMA\x00',1)
+            text=clean_breadcrumb_jsonld(text)
+            if protected: text=text.replace('\x00PROTECTED_BREAD_SCHEMA\x00',protected,1)
+            blocks=re.findall(re.escape(start)+r'.*?'+re.escape(end),text,flags=re.S)
+            if len(blocks)>1:
+              first=blocks[0]; text=text.replace(first,'\x00FIRST_BREAD\x00',1)
+              for block in blocks[1:]: text=text.replace(block,'',1)
+              text=text.replace('\x00FIRST_BREAD\x00',first,1)
             return text
-
           for p in sorted(ROOT.rglob('*')):
             if not p.is_file() or '.git' in p.parts or '.github' in p.parts or p.suffix.lower() not in exts: continue
-            try: s = p.read_text(encoding='utf-8', errors='replace')
+            try: s=p.read_text(encoding='utf-8',errors='replace')
             except Exception: continue
-            original = s
-            s = en_name.sub(EN, s); s = en_short.sub(EN, s); s = fa_name.sub(FA, s)
-            s = re.sub(r'\bMohammad\s+Hossein\s+Asgari\s+Somarin(?:\s+Somarin)+\b', EN, s, flags=re.I)
-            s = s.replace('href="/en-blog/"', 'href="/en-blog.html"').replace('href="/en-vintech/"', 'href="/en-vintech.html"')
-            if p.suffix.lower() == '.html':
-              s = normalize_breadcrumbs(s)
-              for old in legacy_css: s = re.sub(r'<link\b[^>]*href=["\']/assets/' + re.escape(old) + r'["\'][^>]*>\s*', '', s, flags=re.I)
-              is_vt = p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
+            original=s
+            s=en_name.sub(EN,s); s=en_short.sub(EN,s); s=fa_name.sub(FA,s)
+            s=re.sub(r'\bMohammad\s+Hossein\s+Asgari\s+Somarin(?:\s+Somarin)+\b',EN,s,flags=re.I)
+            s=s.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"')
+            if p.suffix.lower()=='.html':
+              s=normalize_breadcrumbs(s)
+              for old in legacy_css: s=re.sub(r'<link\b[^>]*href=["\']/assets/'+re.escape(old)+r'["\'][^>]*>\s*','',s,flags=re.I)
+              is_vt=p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
               if is_vt:
                 if '/assets/vintech-motion-fix-2026-v2.css' not in s and '</head>' in s: s=s.replace('</head>','<link rel="stylesheet" href="/assets/vintech-motion-fix-2026-v2.css">\n</head>',1)
                 if '/assets/modern-ui-2026.js' not in s and '</body>' in s: s=s.replace('</body>','<script src="/assets/modern-ui-2026.js" defer></script>\n</body>',1)
                 if 'skip-link' not in s and '<body' in s: s=re.sub(r'(<body\b[^>]*>)',r'\1\n<a class="skip-link" href="#main-content">Skip to content</a>',s,count=1,flags=re.I)
                 if 'site-theme.js' not in s and '</body>' in s: s=s.replace('</body>','<script src="/assets/site-theme.js" defer></script>\n</body>',1)
               else:
-                s = modern_ui.sub('', s); s = vin_motion.sub('', s)
-            if s != original: p.write_text(s, encoding='utf-8')
+                s=modern_ui.sub('',s); s=vin_motion.sub('',s)
+            if s!=original: p.write_text(s,encoding='utf-8')
+
+      - name: Optimize CSS, images and script loading for Lighthouse
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/pagespeed-optimize-2026.py
 
       - name: Verify repository invariants
         shell: python
         run: |
           from pathlib import Path
-          import re, sys
+          import re,sys
           errors=[]
           bad=re.compile(r'Somarini|Asgari\s+Somarin\s+Somarin',re.I)
           for p in sorted(Path('.').rglob('*')):
@@ -107,24 +104,32 @@ jobs:
             if '.git' in p.parts or '.github' in p.parts or p.name=='404.html': continue
             s=p.read_text(encoding='utf-8',errors='ignore')
             is_vt=p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
-            if 'class="skip-link"' not in s and 'class="skip-link ' not in s: errors.append(f'{p}: skip-link missing')
-            if 'site-theme.js' not in s: errors.append(f'{p}: site-theme.js missing')
-            if not is_vt and 'modern-ui-2026.js' in s: errors.append(f'{p}: modern-ui loaded outside VinTech')
-            if is_vt and 'modern-ui-2026.js' not in s: errors.append(f'{p}: modern-ui missing on VinTech')
-            if is_vt and 'vintech-motion-fix-2026-v2.css' not in s: errors.append(f'{p}: VinTech motion CSS missing')
-            if not is_vt and 'vintech-motion-fix-2026-v2.css' in s: errors.append(f'{p}: VinTech motion CSS outside VinTech')
-            nav=len(re.findall(r'<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b',s,re.I)); schema=len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"',s,re.I))
-            if p.name not in {'index.html','en.html','sitemap.html'} and (nav!=1 or schema!=1 or s.count('AUTO-BREADCRUMB:START')!=1 or s.count('AUTO-BREADCRUMB:END')!=1): errors.append(f'{p}: breadcrumb contract nav={nav} schema={schema}')
+            if len(re.findall(r'<meta\s+name=["\']viewport["\'][^>]*>',s,re.I))!=1: errors.append(f'{p}: viewport count must be exactly 1')
+            if len(re.findall(r'<main\b[^>]*\bid=["\']main-content["\']',s,re.I))!=1: errors.append(f'{p}: main#main-content count must be exactly 1')
+            if len(re.findall(r'class=["\'][^"\']*\bskip-link\b[^"\']*["\']',s,re.I))!=1: errors.append(f'{p}: skip-link count must be exactly 1')
+            if s.count('/assets/site-bundle.css')!=1: errors.append(f'{p}: site-bundle.css must be loaded exactly once')
+            if any(x in s for x in ['portfolio-command-center-2026.css','content-theme-2026.css','final-appearance-2026.css','visual-final-pass-2026.css','ultimate-ui-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css']): errors.append(f'{p}: legacy CSS reference detected')
+            if is_vt and s.count('/assets/vintech.css')!=1: errors.append(f'{p}: VinTech must load vintech.css exactly once')
+            if not is_vt and '/assets/vintech.css' in s: errors.append(f'{p}: non-VinTech page loads vintech.css')
+            if not is_vt and 'modern-ui-2026.js' in s: errors.append(f'{p}: modern-ui-2026.js loaded outside VinTech')
+            if len(re.findall(r'<title>.*?</title>',s,re.I|re.S))!=1: errors.append(f'{p}: title count must be exactly 1')
+            if len(re.findall(r'<meta\s+name=["\']description["\'][^>]*>',s,re.I))!=1: errors.append(f'{p}: meta description count must be exactly 1')
+            if len(re.findall(r'<link\s+rel=["\']canonical["\'][^>]*>',s,re.I))!=1: errors.append(f'{p}: canonical count must be exactly 1')
+            if not re.search(r'<html\b[^>]*\blang=["\'][^"\']+["\']',s,re.I): errors.append(f'{p}: html lang is missing')
+            if not re.search(r'<html\b[^>]*\bdir=["\'](?:rtl|ltr)["\']',s,re.I): errors.append(f'{p}: html dir is missing or invalid')
+            if p.name not in {'index.html','en.html','sitemap.html'}:
+              if s.count('AUTO-BREADCRUMB:START')!=1 or s.count('AUTO-BREADCRUMB:END')!=1: errors.append(f'{p}: breadcrumb block must exist exactly once')
+              if len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"',s,re.I))!=1: errors.append(f'{p}: BreadcrumbList schema count must be exactly 1')
           if errors:
-            print('\n'.join(errors)); sys.exit(1)
-          print('Repository invariants passed.')
+            print('\n'.join(errors));sys.exit(1)
+          print('Repository invariants passed after performance optimization.')
 
-      - name: Commit repair
+      - name: Commit repair and performance optimization
         shell: bash
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           if git diff --quiet; then echo 'No repair changes needed.'; exit 0; fi
           git add -A
-          git commit -m 'fix: enforce shared runtime and accessibility invariants [skip ci]'
+          git commit -m 'perf: optimize all published pages for Lighthouse [skip ci]'
           git push origin HEAD:main
