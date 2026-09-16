@@ -1,0 +1,27 @@
+/* Site Visual Upgrade 2026 — progressive, page-safe polish layer. */
+:root{--upgrade-glow:0 14px 42px rgba(0,0,0,.12);--upgrade-radius:20px}
+html{scroll-behavior:smooth}
+body{min-height:100vh}
+::selection{background:color-mix(in srgb,var(--accent) 28%,transparent);color:var(--text)}
+img{display:block;max-width:100%;height:auto}
+a{transition:color .18s ease,background .18s ease,border-color .18s ease,transform .18s ease;text-underline-offset:3px}
+button,.btn,.vt-btn,[role=button]{-webkit-tap-highlight-color:transparent}
+.card,.post-card,.project-card,.service-card,.about-card,.feature-card,.timeline-item,.skill-category,.faq-item,.contact-wrapper{backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.card:hover,.post-card:hover,.project-card:hover,.service-card:hover,.about-card:hover,.feature-card:hover{transform:translateY(-3px)}
+.card img,.post-card img,.project-card img,.service-card img,.feature-card img{border-radius:calc(var(--upgrade-radius) - 6px)}
+.hero,.page-hero,.about-hero,.vt-hero{isolation:isolate}
+.hero:after,.page-hero:after,.about-hero:after,.vt-hero:after{content:"";position:absolute;inset:auto -10% -55% 35%;height:55%;background:radial-gradient(circle,color-mix(in srgb,var(--accent) 12%,transparent),transparent 68%);filter:blur(10px);pointer-events:none;z-index:-1}
+article h2,section h2{letter-spacing:-.025em;text-wrap:balance}
+article h3,section h3{letter-spacing:-.015em}
+article p,section p{overflow-wrap:anywhere}
+blockquote{margin:1.6rem 0;padding:1rem 1.2rem;border-inline-start:3px solid var(--accent);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--surface2) 78%,transparent)}
+code:not(pre code){padding:.16em .42em;border-radius:7px;background:color-mix(in srgb,var(--surface2) 82%,transparent);border:1px solid color-mix(in srgb,var(--line) 75%,transparent)}
+hr{border:0;border-top:1px solid color-mix(in srgb,var(--line) 62%,transparent);margin:2rem 0}
+fieldset{border:1px solid var(--line);border-radius:16px;padding:1rem}
+label{line-height:1.8}
+input::placeholder,textarea::placeholder{color:color-mix(in srgb,var(--muted) 72%,transparent)}
+main{scroll-margin-top:90px}
+.skip-link{z-index:9999}
+@media(max-width:700px){article h2,section h2{line-height:1.35}.hero:after,.page-hero:after,.about-hero:after,.vt-hero:after{inset:auto -30% -42% 10%;height:48%}.card:hover,.post-card:hover,.project-card:hover,.service-card:hover,.about-card:hover,.feature-card:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero:after,.page-hero:after,.about-hero:after,.vt-hero:after{display:none}}
+html.theme-light ::selection{color:#17202a}
