@@ -32,7 +32,8 @@ jobs:
           ROOT = Path('.')
           BASE = 'https://mowhmmdh.github.io'
           VERIFY = 'w1K0ObPBkDyumGF71kjJyBwGvPFh1rhb6PBLBd-RC90'
-          CSS = '/assets/site-visual-upgrade-2026.css'
+          CSS = '/assets/site-final-quality-2026.css'
+          JS = '/assets/site-final-quality-2026.js'
           changed = []
           indexable = []
           
@@ -90,6 +91,8 @@ jobs:
                   text = text.replace('</head>', f'{meta(desc, name="twitter:description")}\n</head>', 1)
               if CSS not in text:
                   text = text.replace('</head>', f'<link rel="stylesheet" href="{CSS}">\n</head>', 1)
+              if JS not in text and '</body>' in text:
+                  text = text.replace('</body>', f'<script src="{JS}" defer></script>\n</body>', 1)
               
               if text != original:
                   p.write_text(text, encoding='utf-8')
