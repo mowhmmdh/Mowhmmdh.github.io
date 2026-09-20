@@ -25,8 +25,6 @@ EXCLUDED_CSS = {
 
 
 def local_css_href(tag: str) -> str | None:
-    if 'data-pagespeed-bundle="2026"' in tag.lower():
-        return None
     m = HREF_RE.search(tag)
     if not m:
         return None
@@ -94,38 +92,27 @@ changed = []
 for page in pages:
     text = page.read_text(encoding='utf-8', errors='replace')
     tags = CSS_RE.findall(text)
-
-    # Keep the canonical base stylesheet discoverable for the repository quality gates.
-    # On VinTech pages also keep vintech.css exactly once, but make it non-render-blocking.
-    preserved = []
-    secondary = []
     is_vintech = page.name in {'vintech.html', 'en-vintech.html'} or 'vintech' in page.parts
-    for tag in tags:
-        href = local_css_href(tag)
-        if not href or href in EXCLUDED_CSS:
-            continue
-        if is_vintech and is_link_for(href, '/assets/vintech.css'):
-            preserved.append(tag)
-            continue
-        if is_link_for(href, '/assets/site-bundle.css'):
-            preserved.append(tag)
-        elif is_vintech and is_link_for(href, '/assets/vintech.css'):
-            preserved.append(tag)
-        else:
-            secondary.append(href)
 
-    text2 = text
-
-    # Remove duplicate references only; leave the first canonical base stylesheet.
+    # Keep one canonical base stylesheet. Everything else is folded into one
+    # page bundle, including bundles produced by earlier optimization passes.
+    secondary = []
     seen = set()
+    text2 = text
     for tag in tags:
         href = local_css_href(tag)
-        if href in seen and href:
+        if not href:
+            continue
+        if href in seen:
             text2 = text2.replace(tag, '', 1)
-        elif href:
-            seen.add(href)
+            continue
+        seen.add(href)
+        if href == '/assets/site-bundle.css' or href in EXCLUDED_CSS:
+            continue
+        if is_vintech and href == '/assets/vintech.css':
+            continue
+        secondary.append(href)
 
-    # Collapse secondary blocking CSS into one hashed stylesheet.
     unique_secondary = tuple(dict.fromkeys(secondary))
     if unique_secondary:
         if unique_secondary not in cache:
@@ -134,13 +121,17 @@ for page in pages:
             cache[unique_secondary] = f'/assets/page-bundles-2026/{filename}'
         bundle_href = cache[unique_secondary]
 
-        # Replace the first secondary stylesheet with the one bundled resource and remove the rest.
+        # Replace the first secondary stylesheet with one non-blocking bundle.
         inserted = False
         for tag in CSS_RE.findall(text2):
             href = local_css_href(tag)
             if href in unique_secondary:
                 if not inserted:
-                    replacement = f'<link rel="stylesheet" href="{bundle_href}" data-pagespeed-bundle="2026">'
+                    replacement = (
+                        f'<link rel="preload" as="style" href="{bundle_href}" '
+                        f'onload="this.onload=null;this.rel=\'stylesheet\'">'
+                        f'\\n<noscript><link rel="stylesheet" href="{bundle_href}"></noscript>'
+                    )
                     text2 = text2.replace(tag, replacement, 1)
                     inserted = True
                 else:
@@ -159,7 +150,7 @@ for page in pages:
     for idx, match in reversed(list(enumerate(image_tags))):
         old = match.group(0)
         new = old
-        if idx > 0 and 'loading=' not in new.lower():
+        if idx > 1 and 'loading=' not in new.lower():
             new = new[:-1] + ' loading="lazy">'
         if 'decoding=' not in new.lower():
             new = new[:-1] + ' decoding="async">'
