@@ -139,7 +139,7 @@ for page in pages:
 
     # VinTech CSS is retained for repository rules but loaded without blocking first paint.
     if is_vintech and '/assets/vintech.css' not in text2 and '</head>' in text2:
-        text2 = text2.replace('</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', 1)
+        text2 = text2.replace('</head>', '<link rel="stylesheet" href="/assets/vintech.css">\n</head>', 1)
 
     if is_vintech and 'rel="preload" as="style"' not in text2:
         for tag in list(CSS_RE.findall(text2)):
