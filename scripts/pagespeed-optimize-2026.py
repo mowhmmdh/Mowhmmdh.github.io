@@ -104,6 +104,9 @@ for page in pages:
         href = local_css_href(tag)
         if not href or href in EXCLUDED_CSS:
             continue
+        if is_vintech and is_link_for(href, '/assets/vintech.css'):
+            preserved.append(tag)
+            continue
         if is_link_for(href, '/assets/site-bundle.css'):
             preserved.append(tag)
         elif is_vintech and is_link_for(href, '/assets/vintech.css'):
