@@ -74,10 +74,21 @@
     if (anchor && anchor.parentElement === main) anchor.insertAdjacentElement('afterend', box); else main.appendChild(box);
   };
 
-  try { if (localStorage.getItem(storageKey) === 'light') root.classList.add('theme-light'); } catch (_) {}
+  const getStoredTheme = () => { try { return localStorage.getItem(storageKey); } catch (_) { return null; } };
+const prefersLight = () => window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
+const applyTheme = (mode) => {
+  root.classList.toggle('theme-light', mode === 'light');
+  root.dataset.theme = mode === 'light' ? 'light' : 'dark';
+};
+const initialTheme = getStoredTheme() || (prefersLight() ? 'light' : 'dark');
+applyTheme(initialTheme);
+if (!getStoredTheme() && window.matchMedia) {
+  const media = window.matchMedia('(prefers-color-scheme: light)');
+  media.addEventListener?.('change', e => applyTheme(e.matches ? 'light' : 'dark'));
+}
   document.querySelectorAll('.theme-toggle').forEach(btn => {
     const sync = () => { const light = root.classList.contains('theme-light'); btn.textContent = light ? '☀' : '☾'; btn.setAttribute('aria-label', light ? 'فعال‌کردن حالت تیره' : 'فعال‌کردن حالت روشن'); btn.setAttribute('aria-pressed', String(light)); };
-    btn.addEventListener('click', () => { root.classList.toggle('theme-light'); try { localStorage.setItem(storageKey, root.classList.contains('theme-light') ? 'light' : 'dark'); } catch (_) {} sync(); }); sync();
+    btn.addEventListener('click', () => { const next = root.classList.contains('theme-light') ? 'dark' : 'light'; applyTheme(next); try { localStorage.setItem(storageKey, next); } catch (_) {} sync(); }); sync();
   });
   document.querySelectorAll('.site-nav').forEach(nav => {
     const menu = nav.querySelector('.mobile-menu'), links = nav.querySelector('.nav-links'); if (!menu || !links) return;
