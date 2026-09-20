@@ -87,6 +87,12 @@ jobs:
                 s=modern_ui.sub('',s); s=vin_motion.sub('',s)
             if s!=original: p.write_text(s,encoding='utf-8')
 
+      - name: Normalize identity, theme and generated HTML integrity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 scripts/site-integrity-fix.py
+
       - name: Optimize CSS, images and script loading for Lighthouse
         shell: bash
         run: |
@@ -115,6 +121,19 @@ jobs:
                       s = s.replace(link, '', 1)
                   s = s.replace('\x00VINCSS\x00', first, 1)
               p.write_text(s, encoding='utf-8')
+
+      - name: Remove residual generated HTML artifacts
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          for p in sorted(Path('.').rglob('*.html')):
+              if '.git' in p.parts or '.github' in p.parts:
+                  continue
+              s=p.read_text(encoding='utf-8',errors='replace')
+              s=re.sub(r'>\\\\n(?=<)', '>\\n', s)
+              s=re.sub(r'<noscript>\\s*</noscript>', '', s, flags=re.I)
+              p.write_text(s,encoding='utf-8')
 
       - name: Verify repository invariants
         shell: python
