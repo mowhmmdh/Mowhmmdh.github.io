@@ -69,18 +69,19 @@ def ensure_profile_identity(text,path):
     name='Mohammad Hossein Asgari Somarin' if is_en else 'محمدحسین عسگری ثمرین'
     profile_url=BASE+'/en-about.html' if is_en else BASE+'/about.html'
 
-    # Remove duplicate/legacy ProfilePage blocks before inserting one canonical block.
-    text=re.sub(r'\\s*<script\\b[^>]*type=[\"\\']application/ld\\+json[\"\\'][^>]*>\\s*\\{\\s*[\"\\']@context[\"\\']\\s*:\\s*[\"\\']https://schema\\.org[\"\\']\\s*,\\s*[\"\\']@type[\"\\']\\s*:\\s*[\"\\']ProfilePage[\"\\'].*?</script>', '', text, flags=re.I|re.S)
+    # Remove every previous ProfilePage block on these canonical profile surfaces,
+    # then add exactly one authoritative block.
+    text=re.sub(r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{\s*["\']@context["\']\s*:\s*["\']https://schema\.org["\']\s*,\s*["\']@type["\']\s*:\s*["\']ProfilePage["\'].*?</script>', '', text, flags=re.I|re.S)
 
     block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgari Somarin","Mohammad Hossein Asgari","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":{{"@type":"ImageObject","contentUrl":"{BASE}/images/profile.webp","url":"{BASE}/images/profile.webp","caption":"{name}","creator":{{"@type":"Person","name":"{name}","url":"{BASE}/"}}}},"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
     if '</head>' in text.lower():
-        text=text.replace('</head>',block+'\\n</head>',1)
+        text=text.replace('</head>',block+'\n</head>',1)
         if 'as="image" href="/images/profile.webp"' not in text:
-            text=text.replace('</head>','<link rel="preload" as="image" href="/images/profile.webp" fetchpriority="high">\\n</head>',1)
+            text=text.replace('</head>','<link rel="preload" as="image" href="/images/profile.webp" fetchpriority="high">\n</head>',1)
         if 'property="og:image:alt"' not in text:
-            text=text.replace('</head>',f'<meta property="og:image:alt" content="{name} | Network & Infrastructure Specialist">\\n</head>',1)
+            text=text.replace('</head>',f'<meta property="og:image:alt" content="{name} | Network & Infrastructure Specialist">\n</head>',1)
         if 'name="twitter:image:alt"' not in text:
-            text=text.replace('</head>',f'<meta name="twitter:image:alt" content="{name} | Network & Infrastructure Specialist">\\n</head>',1)
+            text=text.replace('</head>',f'<meta name="twitter:image:alt" content="{name} | Network & Infrastructure Specialist">\n</head>',1)
     return text
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
