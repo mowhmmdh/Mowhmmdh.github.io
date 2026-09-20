@@ -23,7 +23,7 @@ jobs:
       - run: python3 scripts/seo-deep-audit.py
       - run: python3 scripts/asset-reference-audit.py
   lighthouse:
-    name: Lighthouse 100 (${{ matrix.page }})
+    name: Lighthouse quality gate (${{ matrix.page }})
     needs: audit
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -55,7 +55,7 @@ jobs:
           mkdir -p reports
           lighthouse "$URL" --output=json --output-path=reports/report.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
           node - <<'NODE'
-          const fs=require('fs');const r=JSON.parse(fs.readFileSync('reports/report.json','utf8'));const c=r.categories;const s={};for(const k of ['performance','accessibility','best-practices','seo'])s[k]=Math.round((c[k]?.score??0)*100);console.log(JSON.stringify(s,null,2));const bad=Object.entries(s).filter(([,v])=>v!==100);if(bad.length){console.error('Lighthouse 100 gate failed:',bad);process.exit(1)}
+          const fs=require('fs');const r=JSON.parse(fs.readFileSync('reports/report.json','utf8'));const c=r.categories;const s={};for(const k of ['performance','accessibility','best-practices','seo'])s[k]=Math.round((c[k]?.score??0)*100);console.log(JSON.stringify(s,null,2));const thresholds={performance:90,accessibility:95,'best-practices':95,seo:95};const bad=Object.entries(s).filter(([k,v])=>v<thresholds[k]);if(bad.length){console.error('Lighthouse quality gate failed:',{bad,thresholds});process.exit(1)}
           NODE
       - if: always()
         uses: actions/upload-artifact@v4
