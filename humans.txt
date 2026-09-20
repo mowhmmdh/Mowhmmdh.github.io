@@ -22,7 +22,7 @@
 کنترل نسخه: Git / GitHub
 فونت‌ها: Vazirmatn, Playfair Display, Inter, Orbitron
 آیکون‌ها: Font Awesome 6
-رهگیری: لایه آماده GA4؛ بدون Measurement ID فعال
+تحلیل: Google Analytics, Google Tag Manager
 
 /* پروژه */
 نام: وب‌سایت رسمی محمدحسین عسگری ثمرین؛ نمونه‌کار و رزومه شخصی حرفه‌ای
