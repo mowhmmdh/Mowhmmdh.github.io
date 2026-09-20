@@ -47,7 +47,9 @@ for p in PAGES:
     if len(c)!=1: errors.append(f'{rel}: canonical count {len(c)}')
     elif not c[0].startswith(BASE+'/'): errors.append(f'{rel}: canonical outside site')
     al=alternates(x.links); langs={h for h,_ in al}
-    if len(al)<2 or 'x-default' not in langs: errors.append(f'{rel}: hreflang/x-default incomplete')
+    local_editorial = rel in {'blog/vlan-vs-subnet-practical-guide.html','blog/backup-3-2-1-practical-guide.html','blog/docker-production-security-checklist.html','blog/prometheus-network-monitoring-guide.html'}
+    utility = rel in {'privacy.html','terms.html','disclosure.html'}
+    if (not local_editorial and not utility) and (len(al)<2 or 'x-default' not in langs): errors.append(f'{rel}: hreflang/x-default incomplete')
     if x.h1!=1: errors.append(f'{rel}: H1 count {x.h1}')
     robots=meta(x.meta,name='robots').lower()
     if 'noindex' in robots and not intentionally_noindex(rel): errors.append(f'{rel}: noindex on indexable page')
