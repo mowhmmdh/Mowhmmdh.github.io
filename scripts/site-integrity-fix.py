@@ -60,6 +60,24 @@ def ensure_vin_js(text):
     if VIN_JS in text or '</body>' not in text.lower(): return text
     return text.replace('</body>',f'<script src="{VIN_JS}" defer></script>\n</body>',1)
 
+def ensure_profile_identity(text,path):
+    if path.suffix.lower()!='.html': return text
+    rel=path.as_posix()
+    if rel not in {'index.html','about.html','en-about.html','authority.html','en-authority.html','en.html'}: return text
+    is_en=rel.startswith('en-') or rel=='en.html'
+    name='Mohammad Hossein Asgari Somarin' if is_en else 'محمدحسین عسگری ثمرین'
+    profile_url=BASE+'/en-about.html' if is_en else BASE+'/about.html'
+    if 'https://schema.org/ProfilePage' not in text:
+        block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgari Somarin","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":["{BASE}/images/profile.webp"],"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
+        text=text.replace('</head>',block+'\n</head>',1)
+    if 'as="image" href="/images/profile.webp"' not in text:
+        text=text.replace('</head>','<link rel="preload" as="image" href="/images/profile.webp" fetchpriority="high">\n</head>',1)
+    if 'property="og:image:alt"' not in text:
+        text=text.replace('</head>',f'<meta property="og:image:alt" content="{name} | Network & Infrastructure Specialist">\n</head>',1)
+    if 'twitter:image:alt' not in text:
+        text=text.replace('</head>',f'<meta name="twitter:image:alt" content="{name} | Network & Infrastructure Specialist">\n</head>',1)
+    return text
+
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
     tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\'][^>]*content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\'][^>]*href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
@@ -79,7 +97,7 @@ for path in sorted(ROOT.rglob('*')):
     except Exception: continue
     text=normalize_identity(original)
     if path.suffix.lower()=='.html':
-        text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
+        text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
         is_vt=path.name in {'vintech.html','en-vintech.html'} or any('vintech' in part for part in path.parts)
         # Repair literal HTML escape artifacts before running structural normalizers.
         if path.suffix.lower()=='.html':
