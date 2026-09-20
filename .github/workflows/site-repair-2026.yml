@@ -21,7 +21,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Repair published content
         shell: python
@@ -102,15 +102,15 @@ jobs:
               if not is_vt:
                   continue
               s = p.read_text(encoding='utf-8', errors='replace')
-              links = re.findall(r"<link\\b[^>]*href=['\\\"]/assets/vintech\\.css['\\\"][^>]*>", s, flags=re.I)
+              links = re.findall(r"<link\b[^>]*href=['\"]\/assets\/vintech\.css['\"][^>]*>", s, flags=re.I)
               if len(links) == 0 and '</head>' in s:
-                  s = s.replace('</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', 1)
+                  s = s.replace('</head>', '<link rel="stylesheet" href="/assets/vintech.css">\n</head>', 1)
               elif len(links) > 1:
                   first = links[0]
-                  s = s.replace(first, '\\x00VINCSS\\x00', 1)
+                  s = s.replace(first, '\x00VINCSS\x00', 1)
                   for link in links[1:]:
                       s = s.replace(link, '', 1)
-                  s = s.replace('\\x00VINCSS\\x00', first, 1)
+                  s = s.replace('\x00VINCSS\x00', first, 1)
               p.write_text(s, encoding='utf-8')
 
       - name: Verify repository invariants
@@ -157,4 +157,11 @@ jobs:
           if git diff --quiet; then echo 'No repair changes needed.'; exit 0; fi
           git add -A
           git commit -m 'perf: optimize all published pages for Lighthouse [skip ci]'
-          git push origin HEAD:main
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git rebase origin/main || { git rebase --abort || true; exit 1; }
+            if git push origin HEAD:main; then exit 0; fi
+            sleep 3
+          done
+          echo 'Failed to push repair commit after three attempts.'
+          exit 1
