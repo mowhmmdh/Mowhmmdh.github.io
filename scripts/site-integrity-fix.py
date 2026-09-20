@@ -80,7 +80,7 @@ for path in sorted(ROOT.rglob('*')):
     text=normalize_identity(original)
     if path.suffix.lower()=='.html':
         text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
-        is_vt=path.name in {'vintech.html','en-vintech.html'} or 'vintech' in path.parts
+        is_vt=path.name in {'vintech.html','en-vintech.html'} or any('vintech' in part for part in path.parts)
         if not is_vt:
             text=MODERN_UI.sub('',text)
             text= re.sub(r'\s*<link\b[^>]*href=["\']/assets/vintech-motion-fix-2026-v2\.css["\'][^>]*>\s*','',text,flags=re.I)
