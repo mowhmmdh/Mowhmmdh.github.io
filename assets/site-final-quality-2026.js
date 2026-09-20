@@ -14,9 +14,17 @@
       const max = root.scrollHeight - root.clientHeight;
       bar.style.transform = `scaleX(${max > 0 ? Math.min(1, root.scrollTop / max) : 0})`;
     };
+    let progressFrame = 0;
+    const scheduleProgress = () => {
+      if (progressFrame) return;
+      progressFrame = requestAnimationFrame(() => {
+        progressFrame = 0;
+        progress();
+      });
+    };
     progress();
-    window.addEventListener('scroll', progress, {passive:true});
-    window.addEventListener('resize', progress, {passive:true});
+    window.addEventListener('scroll', scheduleProgress, {passive:true});
+    window.addEventListener('resize', scheduleProgress, {passive:true});
 
     const path = location.pathname.replace(/\/+$/, '') || '/';
     const fa = !/^\/en(?:-|\/|$)/i.test(path);
