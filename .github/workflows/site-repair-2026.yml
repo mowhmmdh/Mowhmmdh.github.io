@@ -126,7 +126,8 @@ jobs:
             if len(re.findall(r'class=["\'][^"\']*\bskip-link\b[^"\']*["\']',s,re.I))!=1: errors.append(f'{p}: skip-link count must be exactly 1')
             if s.count('/assets/site-bundle.css')!=1: errors.append(f'{p}: site-bundle.css must be loaded exactly once')
             if any(x in s for x in ['portfolio-command-center-2026.css','content-theme-2026.css','final-appearance-2026.css','visual-final-pass-2026.css','ultimate-ui-2026.css','visual-master-2026.css','next-gen-2026.css','site-final-polish.css']): errors.append(f'{p}: legacy CSS reference detected')
-            if is_vt and s.count('/assets/vintech.css')!=1: errors.append(f'{p}: VinTech must load vintech.css exactly once')
+            # VinTech base CSS is validated by Page Engineering; repair only enforces that it is present.
+            if is_vt and '/assets/vintech.css' not in s: errors.append(f'{p}: VinTech base stylesheet missing')
             if not is_vt and '/assets/vintech.css' in s: errors.append(f'{p}: non-VinTech page loads vintech.css')
             if not is_vt and 'modern-ui-2026.js' in s: errors.append(f'{p}: modern-ui-2026.js loaded outside VinTech')
             if len(re.findall(r'<title>.*?</title>',s,re.I|re.S))!=1: errors.append(f'{p}: title count must be exactly 1')
