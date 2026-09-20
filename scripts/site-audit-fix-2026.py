@@ -62,7 +62,10 @@ def ensure_quality(text):
     return add_head(text, f'<link rel="stylesheet" href="{QUALITY}">')
 
 def ensure_identity(text):
-    return text.replace("محمدحسین عسگری", FA_NAME)
+    text = text.replace("محمدحسین عسگری", FA_NAME)
+    while FA_NAME + " ثمرین" in text:
+        text = text.replace(FA_NAME + " ثمرین", FA_NAME)
+    return text
 
 def ensure_webpage_schema(text, rel):
     if re.search(r'application/ld\+json', text, re.I):
