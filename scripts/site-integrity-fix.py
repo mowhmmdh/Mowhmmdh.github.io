@@ -45,6 +45,17 @@ def ensure_stylesheet(text,href):
     if href in text or '</head>' not in text.lower(): return text
     return text.replace('</head>',f'<link rel="stylesheet" href="{href}">\n</head>',1)
 
+def dedupe_stylesheet(text,href):
+    pattern=re.compile(r'\s*<link\b[^>]*href=["\']'+re.escape(href)+r'["\'][^>]*>\s*',re.I)
+    first=True
+    def repl(m):
+        nonlocal first
+        if first:
+            first=False
+            return m.group(0)
+        return '\n'
+    return pattern.sub(repl,text)
+
 def ensure_vin_js(text):
     if VIN_JS in text or '</body>' not in text.lower(): return text
     return text.replace('</body>',f'<script src="{VIN_JS}" defer></script>\n</body>',1)
@@ -77,5 +88,7 @@ for path in sorted(ROOT.rglob('*')):
             text=ensure_stylesheet(text,VIN_CSS); text=ensure_stylesheet(text,VIN_MOTION_CSS); text=ensure_vin_js(text)
         for href in COMMON_CSS: text=ensure_stylesheet(text,href)
         if 'class="mh-home"' in text: text=ensure_stylesheet(text,HOME_CSS)
+        for href in COMMON_CSS + (HOME_CSS, VIN_CSS, VIN_MOTION_CSS):
+            text=dedupe_stylesheet(text,href)
     if text!=original: path.write_text(text,encoding='utf-8'); changed.append(path.as_posix())
 print(f'Integrity sync: normalized {len(changed)} files')
