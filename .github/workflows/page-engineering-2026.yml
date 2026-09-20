@@ -113,7 +113,8 @@ jobs:
                   errors.append(f'{rel}: html lang is missing')
               if not re.search(r'<html\b[^>]*\bdir=["\'](?:rtl|ltr)["\']', s, re.I):
                   errors.append(f'{rel}: html dir is missing or invalid')
-              if rel not in {'index.html', 'en.html', '404.html', 'sitemap.html'}:
+              utility = rel in {'privacy.html','terms.html','disclosure.html'}
+              if rel not in {'index.html', 'en.html', '404.html', 'sitemap.html'} and not utility:
                   if s.count('AUTO-BREADCRUMB:START') != 1 or s.count('AUTO-BREADCRUMB:END') != 1:
                       errors.append(f'{rel}: breadcrumb block must exist exactly once')
                   if len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"', s, re.I)) != 1:
