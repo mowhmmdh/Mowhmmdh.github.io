@@ -16,7 +16,8 @@ PORTFOLIO_CSS=re.compile(r'\s*<link[^>]+href=["\']/assets/portfolio-command-cent
 MODERN_UI=re.compile(r'\s*<script\b[^>]*src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>',re.I)
 COMMON_CSS=('/assets/page-experience-2026.css','/assets/site-master-2026.css','/assets/social-fix-2026.css','/assets/site-final-fix-2026.css','/assets/navigation-fix-2026.css')
 HOME_CSS='/assets/home-finish-2026.css'
-VIN_CSS='/assets/vintech-motion-fix-2026-v2.css'
+VIN_CSS='/assets/vintech.css'
+VIN_MOTION_CSS='/assets/vintech-motion-fix-2026-v2.css'
 VIN_JS='/assets/modern-ui-2026.js'
 
 def normalize_identity(text):
@@ -73,7 +74,7 @@ for path in sorted(ROOT.rglob('*')):
             text=MODERN_UI.sub('',text)
             text= re.sub(r'\s*<link\b[^>]*href=["\']/assets/vintech-motion-fix-2026-v2\.css["\'][^>]*>\s*','',text,flags=re.I)
         else:
-            text=ensure_stylesheet(text,VIN_CSS); text=ensure_vin_js(text)
+            text=ensure_stylesheet(text,VIN_CSS); text=ensure_stylesheet(text,VIN_MOTION_CSS); text=ensure_vin_js(text)
         for href in COMMON_CSS: text=ensure_stylesheet(text,href)
         if 'class="mh-home"' in text: text=ensure_stylesheet(text,HOME_CSS)
     if text!=original: path.write_text(text,encoding='utf-8'); changed.append(path.as_posix())
