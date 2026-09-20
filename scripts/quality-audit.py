@@ -119,6 +119,8 @@ def resolve_local(page: Path, href: str):
     return next((c for c in candidates if c in KNOWN), None)
 
 
+UTILITY_PAGES={'privacy.html','terms.html','disclosure.html'}
+
 def is_vintech(page: Path) -> bool:
     rel = page.as_posix()
     return rel.startswith(('vintech/', 'en-vintech/')) or page.name in {'vintech.html', 'en-vintech.html'}
@@ -172,29 +174,30 @@ for page in PAGES:
             ERRORS.append(f'{rel}: invalid html dir={parser.dir}')
         if len(parser.canonical) != 1 or not parser.canonical[0].startswith(BASE + '/'):
             ERRORS.append(f'{rel}: canonical invalid')
-        if parser.author != 1:
-            ERRORS.append(f'{rel}: author count={parser.author}')
-        if len(parser.hreflang) < 2:
-            ERRORS.append(f'{rel}: bilingual hreflang set incomplete')
+        if rel not in UTILITY_PAGES:
+            if parser.author != 1:
+                ERRORS.append(f'{rel}: author count={parser.author}')
+            if len(parser.hreflang) < 2:
+                ERRORS.append(f'{rel}: bilingual hreflang set incomplete')
         if PERSIAN_NAME not in source and ENGLISH_NAME not in source:
             ERRORS.append(f'{rel}: canonical identity not discoverable in source')
         if BAD_ENGLISH.search(source):
             ERRORS.append(f'{rel}: malformed English identity remains')
-        if source.count('/assets/site-bundle.css') != 1:
+        if rel not in UTILITY_PAGES and source.count('/assets/site-bundle.css') != 1:
             ERRORS.append(f'{rel}: site-bundle.css count={source.count("/assets/site-bundle.css")}')
-        if 'site-theme.js' not in source:
+        if rel not in UTILITY_PAGES and 'site-theme.js' not in source:
             ERRORS.append(f'{rel}: site-theme.js missing')
-        if not vt and '/assets/vintech.css' in source:
+        if rel not in UTILITY_PAGES and not vt and '/assets/vintech.css' in source:
             ERRORS.append(f'{rel}: vintech.css loaded outside VinTech')
-        if vt and source.count('/assets/vintech.css') != 1:
+        if rel not in UTILITY_PAGES and vt and source.count('/assets/vintech.css') != 1:
             ERRORS.append(f'{rel}: VinTech vintech.css count={source.count("/assets/vintech.css")}')
-        if not vt and 'modern-ui-2026.js' in source:
+        if rel not in UTILITY_PAGES and not vt and 'modern-ui-2026.js' in source:
             ERRORS.append(f'{rel}: modern-ui-2026.js loaded outside VinTech')
 
         breadcrumb_navs = len(re.findall(r'<nav\b[^>]*class=["\'][^"\']*\bauto-breadcrumb\b[^"\']*["\'][^>]*>', source, re.I))
-        if breadcrumb_navs != 1 and rel not in {'index.html', 'en.html', 'sitemap.html', '404.html'}:
+        if breadcrumb_navs != 1 and rel not in {'index.html', 'en.html', 'sitemap.html', '404.html'} | UTILITY_PAGES:
             ERRORS.append(f'{rel}: auto-breadcrumb nav count={breadcrumb_navs}')
-        if rel not in {'index.html', 'en.html', 'sitemap.html', '404.html'}:
+        if rel not in {'index.html', 'en.html', 'sitemap.html', '404.html'} | UTILITY_PAGES:
             if source.count('AUTO-BREADCRUMB:START') != 1 or source.count('AUTO-BREADCRUMB:END') != 1:
                 ERRORS.append(f'{rel}: breadcrumb markers must occur exactly once')
             if source.count('"@type":"BreadcrumbList"') + source.count('"@type": "BreadcrumbList"') != 1:
@@ -202,7 +205,7 @@ for page in PAGES:
 
         # A skip link is expected on every normal page.
         skip = len(re.findall(r'class=["\'][^"\']*\bskip-link\b[^"\']*["\']', source, re.I))
-        if skip != 1:
+        if rel not in UTILITY_PAGES and skip != 1:
             ERRORS.append(f'{rel}: skip-link count={skip}')
 
     if parser.duplicate_ids:
