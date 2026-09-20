@@ -99,7 +99,8 @@ jobs:
           }
           console.log(`Page: ${process.env.URL}`);
           console.log(JSON.stringify(scores, null, 2));
-          const thresholds = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 };\n          const failed = Object.entries(scores).filter(([key, score]) => score < thresholds[key]);
+          const thresholds = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 };
+          const failed = Object.entries(scores).filter(([key, score]) => score < thresholds[key]);
           if (failed.length) {
             console.error('Lighthouse quality gate failed:', { failed, thresholds });
             process.exit(1);
