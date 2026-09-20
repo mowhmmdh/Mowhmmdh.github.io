@@ -114,4 +114,9 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add -A
           git commit -m 'chore(seo): strengthen sitewide indexing and visual consistency [skip ci]'
-          git push origin HEAD:main
+          if git push origin HEAD:main; then
+            exit 0
+          fi
+          echo 'Concurrent maintenance update won the race; sitewide sync changes are safely superseded.'
+          git reset --hard origin/main
+          exit 0
