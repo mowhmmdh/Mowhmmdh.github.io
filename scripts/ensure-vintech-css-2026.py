@@ -15,3 +15,5 @@ for p in ROOT.rglob('*.html'):
   s=s.replace('</head>','<link rel="stylesheet" href="/assets/vintech.css">\n</head>',1)
  p.write_text(s,encoding='utf-8')
 print('VinTech stylesheet normalization complete')
+
+# Final normalization is intentionally idempotent.
