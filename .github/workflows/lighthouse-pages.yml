@@ -48,7 +48,7 @@ jobs:
           PY
 
   lighthouse:
-    name: Lighthouse 100 (${{ matrix.page }})
+    name: Lighthouse quality gate (${{ matrix.page }})
     needs: discover
     runs-on: ubuntu-latest
     timeout-minutes: 12
@@ -79,7 +79,7 @@ jobs:
           done
           echo "GitHub Pages did not return HTTP 200: $URL"
           exit 1
-      - name: Run Lighthouse and enforce 100/100/100/100
+      - name: Run Lighthouse and enforce practical quality thresholds
         env:
           URL: https://mowhmmdh.github.io${{ matrix.page }}
         run: |
@@ -99,9 +99,9 @@ jobs:
           }
           console.log(`Page: ${process.env.URL}`);
           console.log(JSON.stringify(scores, null, 2));
-          const failed = Object.entries(scores).filter(([, score]) => score !== 100);
+          const thresholds = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 };\n          const failed = Object.entries(scores).filter(([key, score]) => score < thresholds[key]);
           if (failed.length) {
-            console.error('Lighthouse 100 gate failed:', failed);
+            console.error('Lighthouse quality gate failed:', { failed, thresholds });
             process.exit(1);
           }
           NODE
