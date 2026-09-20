@@ -72,7 +72,7 @@ jobs:
             s=s.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"')
             if p.suffix.lower()=='.html':
               # Normalize accidental literal escape sequences emitted by older optimizers.
-              s=re.sub(r'>\\\\n<', '>\\n<', s)
+              s=re.sub(r'>\\n<', '>\\n<', s)
               s=re.sub(r'<noscript>\\s*</noscript>', '', s, flags=re.I)
               s=normalize_breadcrumbs(s)
               for old in legacy_css: s=re.sub(r'<link\b[^>]*href=["\']/assets/'+re.escape(old)+r'["\'][^>]*>\s*','',s,flags=re.I)
@@ -131,7 +131,7 @@ jobs:
               if '.git' in p.parts or '.github' in p.parts:
                   continue
               s=p.read_text(encoding='utf-8',errors='replace')
-              s=re.sub(r'>\\\\n(?=<)', '>\\n', s)
+              s=re.sub(r'>\\n(?=<)', '>\\n', s)
               s=re.sub(r'<noscript>\\s*</noscript>', '', s, flags=re.I)
               p.write_text(s,encoding='utf-8')
 
