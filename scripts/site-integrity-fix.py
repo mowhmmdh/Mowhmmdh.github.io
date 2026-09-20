@@ -63,21 +63,25 @@ def ensure_vin_js(text):
 def ensure_profile_identity(text,path):
     if path.suffix.lower()!='.html': return text
     rel=path.as_posix()
-    if rel not in {'index.html','about.html','en-about.html','authority.html','en-authority.html','en.html'}: return text
+    targets={'index.html','about.html','en-about.html','authority.html','en-authority.html','en.html'}
+    if rel not in targets: return text
     is_en=rel.startswith('en-') or rel=='en.html'
     name='Mohammad Hossein Asgari Somarin' if is_en else 'محمدحسین عسگری ثمرین'
     profile_url=BASE+'/en-about.html' if is_en else BASE+'/about.html'
-    if 'https://schema.org/ProfilePage' not in text:
-        block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgari Somarin","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":["{BASE}/images/profile.webp"],"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
-        text=text.replace('</head>',block+'\n</head>',1)
-    if 'as="image" href="/images/profile.webp"' not in text:
-        text=text.replace('</head>','<link rel="preload" as="image" href="/images/profile.webp" fetchpriority="high">\n</head>',1)
-    if 'property="og:image:alt"' not in text:
-        text=text.replace('</head>',f'<meta property="og:image:alt" content="{name} | Network & Infrastructure Specialist">\n</head>',1)
-    if 'twitter:image:alt' not in text:
-        text=text.replace('</head>',f'<meta name="twitter:image:alt" content="{name} | Network & Infrastructure Specialist">\n</head>',1)
-    return text
 
+    # Remove duplicate/legacy ProfilePage blocks before inserting one canonical block.
+    text=re.sub(r'\\s*<script\\b[^>]*type=[\"\\']application/ld\\+json[\"\\'][^>]*>\\s*\\{\\s*[\"\\']@context[\"\\']\\s*:\\s*[\"\\']https://schema\\.org[\"\\']\\s*,\\s*[\"\\']@type[\"\\']\\s*:\\s*[\"\\']ProfilePage[\"\\'].*?</script>', '', text, flags=re.I|re.S)
+
+    block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgari Somarin","Mohammad Hossein Asgari","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":{{"@type":"ImageObject","contentUrl":"{BASE}/images/profile.webp","url":"{BASE}/images/profile.webp","caption":"{name}","creator":{{"@type":"Person","name":"{name}","url":"{BASE}/"}}}},"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
+    if '</head>' in text.lower():
+        text=text.replace('</head>',block+'\\n</head>',1)
+        if 'as="image" href="/images/profile.webp"' not in text:
+            text=text.replace('</head>','<link rel="preload" as="image" href="/images/profile.webp" fetchpriority="high">\\n</head>',1)
+        if 'property="og:image:alt"' not in text:
+            text=text.replace('</head>',f'<meta property="og:image:alt" content="{name} | Network & Infrastructure Specialist">\\n</head>',1)
+        if 'name="twitter:image:alt"' not in text:
+            text=text.replace('</head>',f'<meta name="twitter:image:alt" content="{name} | Network & Infrastructure Specialist">\\n</head>',1)
+    return text
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
     tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\'][^>]*content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\'][^>]*href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
@@ -101,8 +105,9 @@ for path in sorted(ROOT.rglob('*')):
         is_vt=path.name in {'vintech.html','en-vintech.html'} or any('vintech' in part for part in path.parts)
         # Repair literal HTML escape artifacts before running structural normalizers.
         if path.suffix.lower()=='.html':
-            text=re.sub(r'>\\\\n<','>\\n<',text)
-            text=re.sub(r'<noscript>\\s*</noscript>','',text,flags=re.I)
+            # Repair literal backslash-n artifacts between HTML tags without touching JS/CSS source.
+            text=re.sub(r'>\\\\n(?=<)', '>\\n', text)
+            text=re.sub(r'<noscript>\\s*</noscript>', '', text, flags=re.I)
         if not is_vt:
             text=MODERN_UI.sub('',text)
             text= re.sub(r'\s*<link\b[^>]*href=["\']/assets/vintech-motion-fix-2026-v2\.css["\'][^>]*>\s*','',text,flags=re.I)
