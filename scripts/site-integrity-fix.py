@@ -33,7 +33,7 @@ def normalize_jsonld(text):
                 for k,item in list(v.items()):
                     if isinstance(item,str):
                         item=normalize_identity(item)
-                        if k=='url': item=item.replace('/en-blog/','/en-blog.html').replace('/en-vintech/','/en-vintech.html')
+                        if k=='url': item=item.replace('/en-blog.html/','/en-blog/').replace('/en-vintech.html/','/en-vintech/').replace('/en-blog.html','/en-blog.html').replace('/en-vintech.html','/en-vintech.html')
                         v[k]=item
                     else: walk(item)
             elif isinstance(v,list):
@@ -81,6 +81,10 @@ for path in sorted(ROOT.rglob('*')):
     if path.suffix.lower()=='.html':
         text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
         is_vt=path.name in {'vintech.html','en-vintech.html'} or any('vintech' in part for part in path.parts)
+        # Repair literal HTML escape artifacts before running structural normalizers.
+        if path.suffix.lower()=='.html':
+            text=re.sub(r'>\\\\n<','>\\n<',text)
+            text=re.sub(r'<noscript>\\s*</noscript>','',text,flags=re.I)
         if not is_vt:
             text=MODERN_UI.sub('',text)
             text= re.sub(r'\s*<link\b[^>]*href=["\']/assets/vintech-motion-fix-2026-v2\.css["\'][^>]*>\s*','',text,flags=re.I)
