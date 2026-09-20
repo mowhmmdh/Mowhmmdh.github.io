@@ -1,0 +1,147 @@
+/* VinTech Final UI Repair — 2026-09-20
+   Deterministic last-mile layer for the Persian and English VinTech surfaces. */
+body.vt-page,
+body.vintech-modern{
+  --vt-bg:#07111f;
+  --vt-panel:#0b1728;
+  --vt-panel2:#0e1d31;
+  --vt-line:rgba(151,180,215,.16);
+  --vt-text:#f5f8fc;
+  --vt-muted:#91a3b8;
+  --vt-accent:#d9ad55;
+  --vt-blue:#61b6ee;
+  background:
+    radial-gradient(circle at 78% 5%,rgba(97,182,238,.10),transparent 30rem),
+    radial-gradient(circle at 12% 20%,rgba(217,173,85,.07),transparent 25rem),
+    var(--vt-bg)!important;
+  color:var(--vt-text)!important;
+}
+html.theme-light body.vt-page,
+html.theme-light body.vintech-modern{
+  --vt-bg:#f5f7fa;
+  --vt-panel:#ffffff;
+  --vt-panel2:#eef3f8;
+  --vt-line:#d8e1ea;
+  --vt-text:#17212b;
+  --vt-muted:#5d6b79;
+  --vt-accent:#8a5b00;
+  --vt-blue:#086da8;
+  background:
+    radial-gradient(circle at 78% 5%,rgba(8,109,168,.07),transparent 30rem),
+    radial-gradient(circle at 12% 20%,rgba(138,91,0,.055),transparent 25rem),
+    var(--vt-bg)!important;
+  color:var(--vt-text)!important;
+}
+body.vt-page .vt-nav,
+body.vintech-modern .vt-nav{
+  position:sticky!important;top:10px!important;z-index:1000!important;
+  width:min(1180px,calc(100% - 24px));margin-inline:auto;
+  border:1px solid var(--vt-line)!important;border-radius:18px!important;
+  background:color-mix(in srgb,var(--vt-bg) 86%,transparent)!important;
+  backdrop-filter:blur(18px) saturate(135%);
+  box-shadow:0 14px 45px rgba(0,0,0,.16);
+}
+body.vt-page .vt-nav-inner,
+body.vintech-modern .vt-nav-inner{min-height:64px!important;padding:8px 14px}
+body.vt-page .vt-logo,body.vintech-modern .vt-logo{color:var(--vt-text)!important}
+body.vt-page .vt-logo span,body.vintech-modern .vt-logo span{color:var(--vt-accent)!important}
+body.vt-page .vt-links a,body.vintech-modern .vt-links a{color:var(--vt-muted)!important}
+body.vt-page .vt-links a:hover,
+body.vt-page .vt-links a.active,
+body.vintech-modern .vt-links a:hover,
+body.vintech-modern .vt-links a.active{
+  color:var(--vt-text)!important;background:color-mix(in srgb,var(--vt-accent) 10%,transparent)!important;
+}
+body.vt-page .vt-menu,body.vintech-modern .vt-menu,
+body.vt-page .vt-theme-toggle,body.vintech-modern .vt-theme-toggle{
+  border-color:var(--vt-line)!important;background:var(--vt-panel)!important;color:var(--vt-text)!important;
+}
+body.vt-page .vt-hero,body.vintech-modern .vt-hero{min-height:auto}
+body.vt-page .vt-hero h1,body.vintech-modern .vt-hero h1,
+body.vt-page h2,body.vintech-modern h2,
+body.vt-page h3,body.vintech-modern h3{color:var(--vt-text)!important}
+body.vt-page .vt-hero h1 span,body.vintech-modern .vt-hero h1 span,
+body.vt-page .vt-eyebrow,body.vintech-modern .vt-eyebrow,
+body.vt-page .vt-kicker,body.vintech-modern .vt-kicker{color:var(--vt-accent)!important}
+body.vt-page .vt-lead,body.vintech-modern .vt-lead,
+body.vt-page .vt-head p,body.vintech-modern .vt-head p,
+body.vt-page .vt-card p,body.vintech-modern .vt-card p,
+body.vt-page .vt-expertise p,body.vintech-modern .vt-expertise p,
+body.vt-page .vt-step p,body.vintech-modern .vt-step p{color:var(--vt-muted)!important}
+body.vt-page .vt-card,
+body.vt-page .vt-expertise>div,
+body.vt-page .vt-step,
+body.vintech-modern .vt-card,
+body.vintech-modern .vt-expertise>div,
+body.vintech-modern .vt-step{
+  background:linear-gradient(145deg,color-mix(in srgb,var(--vt-panel2) 88%,transparent),var(--vt-panel))!important;
+  border-color:var(--vt-line)!important;
+}
+body.vt-page .vt-btn,body.vintech-modern .vt-btn{
+  color:var(--vt-text)!important;border-color:var(--vt-line)!important;background:color-mix(in srgb,var(--vt-panel) 92%,transparent)!important;
+}
+body.vt-page .vt-btn.primary,body.vintech-modern .vt-btn.primary{
+  background:linear-gradient(135deg,#e2bc6a,#b98936)!important;color:#07111f!important;
+}
+body.vt-page .vt-contact-box,body.vintech-modern .vt-contact-box{
+  background:linear-gradient(145deg,color-mix(in srgb,var(--vt-blue) 8%,var(--vt-panel)),var(--vt-panel))!important;
+  border-color:var(--vt-line)!important;
+}
+body.vt-page .vt-contact-links a,body.vintech-modern .vt-contact-links a{
+  color:var(--vt-text)!important;border-color:var(--vt-line)!important;background:color-mix(in srgb,var(--vt-panel) 92%,transparent)!important;
+}
+body.vt-page .vt-trust span,body.vintech-modern .vt-trust span{
+  color:var(--vt-muted)!important;border-color:var(--vt-line)!important;
+}
+body.vt-page .auto-breadcrumb,body.vintech-modern .auto-breadcrumb{
+  color:var(--vt-muted)!important;
+}
+body.vt-page .auto-discovery,body.vintech-modern .auto-discovery{
+  background:linear-gradient(145deg,color-mix(in srgb,var(--vt-blue) 6%,var(--vt-panel)),var(--vt-panel))!important;
+  border-color:var(--vt-line)!important;
+}
+body.vt-page .discovery-grid,body.vintech-modern .discovery-grid{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px;
+}
+body.vt-page .discovery-link,body.vintech-modern .discovery-link{
+  display:flex;justify-content:space-between;gap:12px;align-items:center;
+  padding:15px 16px;border:1px solid var(--vt-line);border-radius:15px;
+  background:color-mix(in srgb,var(--vt-panel) 92%,transparent);
+  color:var(--vt-text)!important;text-decoration:none;min-width:0;
+}
+body.vt-page .discovery-link:hover,body.vintech-modern .discovery-link:hover{
+  transform:translateY(-2px);border-color:color-mix(in srgb,var(--vt-accent) 45%,var(--vt-line));
+}
+body.vt-page .vt-elite-rail,body.vintech-modern .vt-elite-rail{
+  margin:0 auto 26px!important;
+}
+body.vt-page .vt-elite-rail a,body.vintech-modern .vt-elite-rail a{
+  color:var(--vt-muted)!important;background:var(--vt-panel)!important;border-color:var(--vt-line)!important;
+}
+body.vt-page .vt-elite-rail span,body.vintech-modern .vt-elite-rail span{color:var(--vt-accent)!important}
+html.theme-light body.vt-page .vt-orbit,
+html.theme-light body.vintech-modern .vt-orbit{
+  border-color:rgba(8,109,168,.22)!important;
+  box-shadow:0 0 80px rgba(8,109,168,.08),inset 0 0 50px rgba(8,109,168,.04)!important;
+}
+@media(max-width:900px){
+  body.vt-page .vt-links.open,
+  body.vt-page .vt-nav.is-open .vt-links,
+  body.vintech-modern .vt-links.open,
+  body.vintech-modern .vt-nav.is-open .vt-links{
+    display:flex!important;position:absolute!important;top:calc(100% + 8px)!important;inset-inline:0!important;
+    flex-direction:column!important;align-items:stretch!important;padding:9px!important;
+    background:var(--vt-panel)!important;border:1px solid var(--vt-line)!important;border-radius:16px!important;
+    box-shadow:0 20px 60px rgba(0,0,0,.22)!important;
+  }
+  body.vt-page .vt-links a,body.vintech-modern .vt-links a{text-align:center}
+  body.vt-page .discovery-grid,body.vintech-modern .discovery-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  body.vt-page .vt-nav,body.vintech-modern .vt-nav{top:5px!important;width:calc(100% - 16px)}
+  body.vt-page .discovery-grid,body.vintech-modern .discovery-grid{grid-template-columns:1fr}
+  body.vt-page .vt-section,body.vintech-modern .vt-section{padding-block:58px}
+}
+@media(prefers-reduced-motion:reduce){
+  body.vt-page *,body.vintech-modern *{scroll-behavior:auto!important}
+}
