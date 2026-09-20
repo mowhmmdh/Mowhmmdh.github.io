@@ -81,6 +81,37 @@ def ensure_webpage_schema(text, rel):
     )
     return add_head(text, data)
 
+def ensure_article_schema(text, rel):
+    path = rel.as_posix()
+    if not (path.startswith("blog/") or path.startswith("en-blog/")):
+        return text
+    if re.search(r'"@type"\s*:\s*"(?:Article|BlogPosting|NewsArticle)"', text, re.I):
+        return text
+    title = title_of(text, rel.stem.replace("-", " ").title())
+    desc = description_of(text) or title
+    lang = "en-US" if path.startswith("en-blog/") else "fa-IR"
+    url = canonical_for(rel)
+    image = None
+    m = re.search(r'<meta\s+[^>]*property=["\']og:image["\'][^>]*content=["\']([^"\']+)["\']', text, re.I)
+    if m:
+        image = m.group(1)
+    article = {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "@id": url + "#article",
+        "mainEntityOfPage": {"@type": "WebPage", "@id": url},
+        "headline": title[:110],
+        "description": desc[:300],
+        "url": url,
+        "inLanguage": lang,
+        "author": {"@type": "Person", "name": FA_NAME, "url": BASE + "/"},
+        "publisher": {"@type": "Person", "name": FA_NAME, "url": BASE + "/"}
+    }
+    if image:
+        article["image"] = [image]
+    data = '<script type="application/ld+json">' + json.dumps(article, ensure_ascii=False, separators=(",", ":")) + '</script>'
+    return add_head(text, data)
+
 def related_block(rel):
     path = rel.as_posix()
     if not (path.startswith("blog/") or path.startswith("en-blog/")):
@@ -116,6 +147,7 @@ for p in ROOT.rglob("*.html"):
         new = ensure_meta(new, rel)
         new = ensure_quality(new)
         new = ensure_webpage_schema(new, rel)
+        new = ensure_article_schema(new, rel)
         if "site-auto-related" not in new:
             block = related_block(rel)
             if block:
@@ -145,11 +177,19 @@ def safe_page_hardening(text):
             return tag
         return tag[:-1]+' alt="">'
     text=re.sub(r'<img\b[^>]*>',fix_img,text,flags=re.I|re.S)
+    images = list(re.finditer(r'<img\b[^>]*>', text, flags=re.I|re.S))
+    if not images:
+        return text
+    first_start = images[0].start()
     def lazy_img(m):
         tag=m.group(0)
+        if m.start() == first_start:
+            tag = re.sub(r'\sloading=["\'][^"\']*["\']', '', tag, flags=re.I)
+            tag = re.sub(r'\sfetchpriority=["\'][^"\']*["\']', '', tag, flags=re.I)
+            return tag[:-1]+' loading="eager" fetchpriority="high" decoding="async">'
         if re.search(r'\bloading=',tag,re.I) or re.search(r'\bfetchpriority=["\']high',tag,re.I):
             return tag
-        return tag[:-1]+' loading="lazy">'
+        return tag[:-1]+' loading="lazy" decoding="async">'
     return re.sub(r'<img\b[^>]*>',lazy_img,text,flags=re.I|re.S)
 
 def page_audit(text, rel):
