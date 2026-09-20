@@ -9,7 +9,7 @@
 
 <meta property="og:type" content="article"><meta property="og:locale" content="en_US"><meta property="og:title" content="Securing IP CCTV Networks: VLAN, Access Control, NVR & Remote Access | VinTech"><meta property="og:description" content="Engineering controls for secure IP camera and NVR deployments."><meta property="og:url" content="https://mowhmmdh.github.io/en-vintech/insights/cctv-ip-camera-security.html"><meta property="og:image" content="https://mowhmmdh.github.io/images/vinicon.webp">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Securing IP CCTV Networks: VLAN, Access Control, NVR & Remote Access","description":"VinTech engineering guide to securing IP CCTV and NVR systems with network segmentation, access control, firmware hygiene, logging and controlled remote access.","datePublished":"2026-09-16","dateModified":"2026-09-16","mainEntityOfPage":"https://mowhmmdh.github.io/en-vintech/insights/cctv-ip-camera-security.html","image":"https://mowhmmdh.github.io/images/vinicon.webp","author":{"@type":"Person","name":"Mohammad Hossein Asgari Somarin","url":"https://mowhmmdh.github.io/en-about.html"},"publisher":{"@type":"Organization","name":"VinTech","url":"https://mowhmmdh.github.io/en-vintech.html"},"inLanguage":"en"}</script>
-<link rel="stylesheet" href="/assets/site-bundle.css"><link rel="preload" as="style" href="/assets/page-bundles-2026/bundle-f59173c60d3533.css" onload="this.onload=null;this.rel='stylesheet'">\n<noscript><link rel="stylesheet" href="/assets/page-bundles-2026/bundle-f59173c60d3533.css"></noscript><script src="/assets/site-theme.js" defer></script>
+<link rel="stylesheet" href="/assets/site-bundle.css"><link rel="preload" as="style" href="/assets/page-bundles-2026/bundle-28bf5ea6edef6a.css" onload="this.onload=null;this.rel='stylesheet'">\n<noscript><link rel="stylesheet" href="/assets/page-bundles-2026/bundle-28bf5ea6edef6a.css"></noscript>\n<noscript></noscript><script src="/assets/site-theme.js" defer></script>
 <style>.wrap{width:min(960px,calc(100% - 28px));margin:auto}.hero{padding:72px 0 36px}.ey{color:#d9ad55;font:800 .72rem/1 system-ui;letter-spacing:.14em}.hero h1{font-size:clamp(2.2rem,5vw,4.2rem);line-height:1.15;margin:15px 0}.lead{max-width:820px;color:#93a5b8;line-height:1.9;font-size:1.08rem}.article{padding:30px;border:1px solid rgba(135,164,196,.16);border-radius:24px;background:rgba(255,255,255,.018);margin-bottom:55px}.article h2{margin-top:34px;font-size:clamp(1.5rem,3vw,2.2rem)}.article p,.article li{color:#b6c2d0;line-height:1.95}.article ul{padding-left:22px}.matrix{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}.matrix div{padding:17px;border-radius:16px;border:1px solid rgba(135,164,196,.14)}.matrix strong{display:block;color:#eaf2fb;margin-bottom:6px}.cta{padding:22px;border-radius:18px;border:1px solid rgba(217,173,85,.2);background:rgba(217,173,85,.06)}.cta a{display:inline-block;margin-top:9px;padding:11px 16px;border-radius:12px;background:#d9ad55;color:#07111f;text-decoration:none;font-weight:800}@media(max-width:700px){.hero{padding-top:48px}.article{padding:22px}.matrix{grid-template-columns:1fr}}</style>
 
 <meta name="google-site-verification" content="w1K0ObPBkDyumGF71kjJyBwGvPFh1rhb6PBLBd-RC90">
@@ -19,13 +19,11 @@
 
 <link rel="stylesheet" href="/assets/site-quality-2026.css">
 
-<link rel="stylesheet" href="/assets/vintech.css">
-<link rel="stylesheet" href="/assets/vintech-motion-fix-2026-v2.css">
-<link rel="stylesheet" href="/assets/page-experience-2026.css">
-<link rel="stylesheet" href="/assets/site-master-2026.css">
-<link rel="stylesheet" href="/assets/social-fix-2026.css">
-<link rel="stylesheet" href="/assets/site-final-fix-2026.css">
-<link rel="stylesheet" href="/assets/navigation-fix-2026.css">
+
+
+
+
+
 
 <link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-vintech/insights/cctv-ip-camera-security.html">
 <link rel="alternate" hreflang="fa-IR" href="https://mowhmmdh.github.io/vintech/insights/cctv-ip-camera-security.html">
@@ -37,5 +35,4 @@
 <main id="main-content"><div class="wrap hero"><div class="ey">VINTECH INSIGHT / CCTV SECURITY</div><h1>Securing IP CCTV Networks: VLAN, Access Control, NVR &amp; Remote Access</h1><p class="lead">CCTV is a network service. As cameras and NVRs become part of an organization's infrastructure, security controls need to be designed alongside connectivity.</p></div><article class="wrap article"><h2>Segment camera traffic</h2><p>Where the network architecture permits, a dedicated camera VLAN can make traffic control and administration clearer. Separate camera management paths from normal user access and limit which systems can reach the NVR.</p><h2>Protect administrative access</h2><p>Change default credentials, use strong authentication where supported and keep permissions aligned with actual duties. Avoid using highly privileged accounts for routine work.</p><h2>Control remote access</h2><p>Avoid exposing cameras and NVR management interfaces directly to the public internet unless there is a documented, controlled reason. Prefer a managed remote-access architecture such as VPN with restricted source access.</p><div class="matrix"><div><strong>Network</strong><span>VLAN, ACL and limited routes</span></div><div><strong>Device</strong><span>Firmware and credential hygiene</span></div><div><strong>Monitoring</strong><span>Availability, logs and alerts</span></div></div><h2>Monitor and document</h2><p>Link loss, unexpected errors, uplink saturation or access changes should be visible to the operations team. Documentation should cover IPs, models, switch ports, cable paths and ownership so incidents can be investigated quickly.</p><h2>Pre-handover checklist</h2><ul><li>Camera layout and naming are documented.</li><li>IP plan and VLAN assignment are recorded.</li><li>Administrative access has been reviewed.</li><li>Firmware and baseline configuration have been checked.</li><li>Remote access is controlled and documented.</li><li>NVR storage and health are monitored.</li></ul><div class="cta"><strong>VinTech combines CCTV with network and security engineering.</strong><p>For IP cameras, PoE, NVR, storage and secure access:</p><a href="/en-vintech/cctv-nvr.html">Explore CCTV &amp; NVR services ↗</a></div></article></main>
 <script src="/assets/site-final-quality-2026.js" defer></script>
 <footer class="legal-footer-2026"><a href="/privacy.html">حریم خصوصی</a> · <a href="/terms.html">شرایط استفاده</a> · <a href="/disclosure.html">تبلیغات و همکاری</a> · <a href="mailto:mohammedhasgari@gmail.com">تماس</a></footer>
-<script src="/assets/modern-ui-2026.js" defer></script>
 </body></html>
