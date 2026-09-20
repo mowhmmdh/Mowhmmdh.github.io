@@ -102,7 +102,7 @@ jobs:
               if not is_vt:
                   continue
               s = p.read_text(encoding='utf-8', errors='replace')
-              links = re.findall(r'<link\\b[^>]*href=["\\']/assets/vintech\\.css["\\'][^>]*>', s, flags=re.I)
+              links = re.findall(r"<link\\b[^>]*href=['\\\"]/assets/vintech\\.css['\\\"][^>]*>", s, flags=re.I)
               if len(links) == 0 and '</head>' in s:
                   s = s.replace('</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', 1)
               elif len(links) > 1:
