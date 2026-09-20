@@ -29,6 +29,9 @@ jobs:
           set -euo pipefail
           python3 scripts/site-integrity-fix.py
 
+      - name: Enforce VinTech stylesheet links
+        run: python3 scripts/ensure-vintech-css-2026.py
+
       - name: Validate CSS layer architecture
         shell: bash
         run: |
