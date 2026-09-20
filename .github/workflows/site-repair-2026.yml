@@ -102,9 +102,16 @@ jobs:
               if not is_vt:
                   continue
               s = p.read_text(encoding='utf-8', errors='replace')
-              if '/assets/vintech.css' not in s and '</head>' in s:
+              links = re.findall(r'<link\\b[^>]*href=["\\']/assets/vintech\\.css["\\'][^>]*>', s, flags=re.I)
+              if len(links) == 0 and '</head>' in s:
                   s = s.replace('</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', 1)
-                  p.write_text(s, encoding='utf-8')
+              elif len(links) > 1:
+                  first = links[0]
+                  s = s.replace(first, '\\x00VINCSS\\x00', 1)
+                  for link in links[1:]:
+                      s = s.replace(link, '', 1)
+                  s = s.replace('\\x00VINCSS\\x00', first, 1)
+              p.write_text(s, encoding='utf-8')
 
       - name: Verify repository invariants
         shell: python
