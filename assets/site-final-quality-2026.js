@@ -83,6 +83,31 @@
       (hero || main.firstElementChild || main).insertAdjacentElement('afterend', tool);
     }
 
+    /* Conversion layer: turn informational traffic into a clear service next step. */
+    if (!document.querySelector('.q-conversion')) {
+      const conversion = document.createElement('section');
+      conversion.className = 'q-conversion';
+      conversion.setAttribute('aria-label', fa ? 'درخواست خدمات' : 'Service request');
+      conversion.innerHTML = fa
+        ? '<div><span class="q-conversion-eyebrow">VINTECH / SERVICE</span><h2>اگر این موضوع به یک مشکل واقعی در شبکه یا زیرساخت شما مربوط است، از همین‌جا شروع کنید.</h2><p>شرح کوتاه مسئله را بفرستید؛ حوزه نیاز مشخص می‌شود و مسیر بررسی یا اجرای پروژه پیشنهاد خواهد شد.</p></div><div class="q-conversion-actions"><a class="q-conversion-primary" data-conversion="service_request" href="/vintech/request.html">درخواست بررسی / پروژه ↗</a><a class="q-conversion-secondary" data-conversion="email" href="mailto:mohammedhasgari@gmail.com?subject=درخواست%20مشاوره%20یا%20پروژه%20VinTech">ایمیل مستقیم</a></div>'
+        : '<div><span class="q-conversion-eyebrow">VINTECH / SERVICE</span><h2>Have a real infrastructure or IT problem?</h2><p>Send a short brief and get a practical path for assessment or implementation.</p></div><div class="q-conversion-actions"><a class="q-conversion-primary" data-conversion="service_request" href="/en-vintech/request.html">Request a project review ↗</a><a class="q-conversion-secondary" data-conversion="email" href="mailto:mohammedhasgari@gmail.com?subject=VinTech%20project%20or%20consulting%20request">Direct email</a></div>';
+      if (article) {
+        main.appendChild(conversion);
+      } else if (path !== '/vintech/request.html' && path !== '/en-vintech/request.html') {
+        const target = main.querySelector('footer') ? main : document.body;
+        target.appendChild(conversion);
+      }
+    }
+
+    if (!document.querySelector('.q-mobile-cta') && path !== '/vintech/request.html' && path !== '/en-vintech/request.html') {
+      const mobileCta = document.createElement('a');
+      mobileCta.className = 'q-mobile-cta';
+      mobileCta.href = fa ? '/vintech/request.html' : '/en-vintech/request.html';
+      mobileCta.setAttribute('data-conversion','mobile_service_request');
+      mobileCta.textContent = fa ? 'درخواست پروژه / مشاوره' : 'Request a project review';
+      document.body.appendChild(mobileCta);
+    }
+
     const footer = document.querySelector('footer');
     if (footer && !footer.querySelector('.q-footerline')) {
       const line = document.createElement('div');
