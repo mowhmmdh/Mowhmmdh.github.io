@@ -36,7 +36,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add '*.html' 'assets/conversion-monetization-2026.css' 'scripts/monetization-growth-2026.py' 'scripts/editorial-growth-2026.py' 'scripts/ensure-vintech-css-2026.py' 'SEO-AUDIT-2026.md'
+          git add -A
           if git diff --cached --quiet; then
             echo "No changes required."
             exit 0
