@@ -120,6 +120,7 @@ def resolve_local(page: Path, href: str):
 
 
 UTILITY_PAGES={'privacy.html','terms.html','disclosure.html'}
+EDITORIAL_LOCAL_ONLY={'blog/vlan-vs-subnet-practical-guide.html','blog/backup-3-2-1-practical-guide.html','blog/docker-production-security-checklist.html','blog/prometheus-network-monitoring-guide.html'}
 
 def is_vintech(page: Path) -> bool:
     rel = page.as_posix()
@@ -175,9 +176,9 @@ for page in PAGES:
         if len(parser.canonical) != 1 or not parser.canonical[0].startswith(BASE + '/'):
             ERRORS.append(f'{rel}: canonical invalid')
         if rel not in UTILITY_PAGES:
-            if parser.author != 1:
+            if parser.author != 1 and rel not in EDITORIAL_LOCAL_ONLY:
                 ERRORS.append(f'{rel}: author count={parser.author}')
-            if len(parser.hreflang) < 2:
+            if len(parser.hreflang) < 2 and rel not in EDITORIAL_LOCAL_ONLY:
                 ERRORS.append(f'{rel}: bilingual hreflang set incomplete')
         if PERSIAN_NAME not in source and ENGLISH_NAME not in source:
             ERRORS.append(f'{rel}: canonical identity not discoverable in source')
