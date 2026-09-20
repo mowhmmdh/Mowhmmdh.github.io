@@ -1,0 +1,36 @@
+name: Sitewide SEO and UX audit
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "SEO-AUDIT-2026.md"
+      - ".github/workflows/sitewide-seo-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  audit-and-fix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run sitewide fixer
+        run: python3 scripts/site-audit-fix-2026.py
+
+      - name: Commit safe fixes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add '*.html' 'SEO-AUDIT-2026.md'
+          if git diff --cached --quiet; then
+            echo "No changes required."
+            exit 0
+          fi
+          git commit -m "chore: apply sitewide SEO and UX audit fixes"
+          git push
