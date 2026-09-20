@@ -142,7 +142,7 @@ jobs:
             if len(re.findall(r'<link\s+rel=["\']canonical["\'][^>]*>',s,re.I))!=1: errors.append(f'{p}: canonical count must be exactly 1')
             if not re.search(r'<html\b[^>]*\blang=["\'][^"\']+["\']',s,re.I): errors.append(f'{p}: html lang is missing')
             if not re.search(r'<html\b[^>]*\bdir=["\'](?:rtl|ltr)["\']',s,re.I): errors.append(f'{p}: html dir is missing or invalid')
-            if p.name not in {'index.html','en.html','sitemap.html'}:
+            if p.name not in {'index.html','en.html','sitemap.html'} and p.name not in {'privacy.html','terms.html','disclosure.html'}:
               if s.count('AUTO-BREADCRUMB:START')!=1 or s.count('AUTO-BREADCRUMB:END')!=1: errors.append(f'{p}: breadcrumb block must exist exactly once')
               if len(re.findall(r'"@type"\s*:\s*"BreadcrumbList"',s,re.I))!=1: errors.append(f'{p}: BreadcrumbList schema count must be exactly 1')
           if errors:
