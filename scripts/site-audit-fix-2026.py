@@ -183,12 +183,12 @@ def safe_page_hardening(text):
     first_start = images[0].start()
     def lazy_img(m):
         tag=m.group(0)
+        # Fully normalize performance attributes so repeated CI runs are idempotent.
+        tag = re.sub(r'\sloading=["\'][^"\']*["\']', '', tag, flags=re.I)
+        tag = re.sub(r'\sfetchpriority=["\'][^"\']*["\']', '', tag, flags=re.I)
+        tag = re.sub(r'\sdecoding=["\'][^"\']*["\']', '', tag, flags=re.I)
         if m.start() == first_start:
-            tag = re.sub(r'\sloading=["\'][^"\']*["\']', '', tag, flags=re.I)
-            tag = re.sub(r'\sfetchpriority=["\'][^"\']*["\']', '', tag, flags=re.I)
             return tag[:-1]+' loading="eager" fetchpriority="high" decoding="async">'
-        if re.search(r'\bloading=',tag,re.I) or re.search(r'\bfetchpriority=["\']high',tag,re.I):
-            return tag
         return tag[:-1]+' loading="lazy" decoding="async">'
     return re.sub(r'<img\b[^>]*>',lazy_img,text,flags=re.I|re.S)
 
