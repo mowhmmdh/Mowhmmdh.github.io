@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://mowhmmdh.github.io"
 FA_NAME = "محمدحسین عسگری ثمرین"
 QUALITY = "/assets/site-quality-2026.css"
+UNIFIED_UI = "/assets/unified-ui-2026.css"
 SKIP = {".git", ".github", "node_modules", "vendor"}
 
 def is_html(p):
@@ -57,9 +58,11 @@ def ensure_meta(text, rel):
     return text
 
 def ensure_quality(text):
-    if QUALITY in text:
-        return text
-    return add_head(text, f'<link rel="stylesheet" href="{QUALITY}">')
+    if QUALITY not in text:
+        text = add_head(text, f'<link rel="stylesheet" href="{QUALITY}">')
+    if UNIFIED_UI not in text:
+        text = add_head(text, f'<link rel="stylesheet" href="{UNIFIED_UI}">')
+    return text
 
 def ensure_identity(text):
     text = text.replace("محمدحسین عسگری", FA_NAME)
