@@ -183,3 +183,164 @@ a,button{touch-action:manipulation}
   *,*::before,*::after{forced-color-adjust:auto}
   .card,.post-card,.project-card,.service-card,.about-card,.feature-card,form{border:1px solid CanvasText!important}
 }
+
+
+/* ─────────────────────────────────────────────────────────────
+   PREMIUM SECONDARY-PAGE SYSTEM — 2026
+   Consistent navigation, hierarchy, back/home controls, and
+   editorial surfaces for every inner page.
+   ───────────────────────────────────────────────────────────── */
+.page-shell,
+.inner-page,
+.secondary-page,
+main[data-page]{isolation:isolate}
+
+.inner-page-toolbar{
+  width:min(var(--ux-max),calc(100% - 2 * var(--ux-gutter)))!important;
+  margin:0 auto;
+  padding:14px 0 4px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  direction:rtl;
+}
+.inner-page-toolbar .toolbar-left,
+.inner-page-toolbar .toolbar-right{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
+}
+.inner-page-toolbar a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:40px;
+  padding:8px 13px;
+  border:1px solid var(--ui-border,var(--line));
+  border-radius:12px;
+  background:color-mix(in srgb,var(--surface,#fff) 78%,transparent);
+  color:var(--muted,#7d8a99);
+  text-decoration:none;
+  font-size:.82rem;
+  font-weight:700;
+  transition:transform .2s var(--ui-ease,cubic-bezier(.2,.7,.2,1)),
+             border-color .2s ease,background .2s ease,color .2s ease;
+}
+.inner-page-toolbar a:hover{
+  transform:translateY(-2px);
+  color:var(--text,#17212b);
+  border-color:color-mix(in srgb,var(--accent,#72b6ff) 38%,var(--line));
+  background:color-mix(in srgb,var(--accent,#72b6ff) 8%,var(--surface,#fff));
+}
+.inner-page-toolbar .toolbar-back{
+  gap:7px;
+}
+.inner-page-toolbar .toolbar-back::before{
+  content:"↩";
+  font-size:1rem;
+}
+.inner-page-toolbar .toolbar-home::before{
+  content:"⌂";
+  font-size:1rem;
+  margin-inline-end:5px;
+}
+.inner-page-toolbar .toolbar-context{
+  border-color:transparent;
+  background:transparent;
+  pointer-events:none;
+  color:var(--muted,#7d8a99);
+  font-weight:600;
+}
+html[dir="ltr"] .inner-page-toolbar .toolbar-back::before{content:"↪"}
+
+.auto-breadcrumb{
+  margin-top:4px;
+  margin-bottom:0;
+  min-height:44px;
+  display:flex;
+  align-items:center;
+}
+.auto-breadcrumb ol{
+  width:100%;
+  margin:0;
+  padding:0;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  list-style:none;
+}
+.auto-breadcrumb li{
+  display:inline-flex;
+  align-items:center;
+  min-width:0;
+  color:var(--muted,#7d8a99);
+  font-size:.76rem;
+}
+.auto-breadcrumb li+li::before{
+  content:"/";
+  margin-inline:3px 7px;
+  opacity:.45;
+}
+.auto-breadcrumb a{
+  color:inherit;
+  text-decoration:none;
+}
+.auto-breadcrumb a:hover{color:var(--text,#17212b)}
+
+body:not(.home-page) main{
+  position:relative;
+}
+body:not(.home-page) main::before{
+  content:"";
+  position:absolute;
+  inset:0 0 auto;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--ui-border,var(--line)),transparent);
+  pointer-events:none;
+}
+.inner-page-hero{
+  padding-top:clamp(28px,5vw,58px)!important;
+}
+.inner-page-hero .hero-kicker,
+.inner-page-hero .page-kicker,
+.inner-page-hero .eyebrow{
+  display:inline-flex;
+  align-items:center;
+  min-height:28px;
+  padding:5px 10px;
+  border:1px solid color-mix(in srgb,var(--accent,#72b6ff) 22%,var(--line));
+  border-radius:999px;
+  background:color-mix(in srgb,var(--accent,#72b6ff) 7%,transparent);
+  color:var(--accent,#72b6ff);
+  font-size:.68rem;
+  font-weight:800;
+  letter-spacing:.1em;
+}
+.inner-page-hero h1{
+  max-width:1000px;
+  margin-top:14px!important;
+  text-wrap:balance;
+}
+.inner-page-hero p{
+  max-width:780px;
+  text-wrap:pretty;
+}
+
+@media(max-width:640px){
+  .inner-page-toolbar{
+    width:calc(100% - 20px)!important;
+    padding-top:10px;
+    gap:8px;
+  }
+  .inner-page-toolbar .toolbar-left,
+  .inner-page-toolbar .toolbar-right{width:100%}
+  .inner-page-toolbar .toolbar-context{display:none}
+  .inner-page-toolbar a{flex:1 1 auto;min-height:42px}
+  .auto-breadcrumb{min-height:38px}
+}
+@media(prefers-reduced-motion:reduce){
+  .inner-page-toolbar a{transition:none}
+}
