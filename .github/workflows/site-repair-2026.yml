@@ -76,7 +76,7 @@ jobs:
               s=re.sub(r'<noscript>\\s*</noscript>', '', s, flags=re.I)
               s=normalize_breadcrumbs(s)
               for old in legacy_css: s=re.sub(r'<link\b[^>]*href=["\']/assets/'+re.escape(old)+r'["\'][^>]*>\s*','',s,flags=re.I)
-              is_vt=p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
+              is_vt=p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts or 'en-vintech' in p.parts
               if is_vt:
                 if '/assets/vintech.css' not in s and '</head>' in s: s=s.replace('</head>','<link rel="stylesheet" href="/assets/vintech.css">\n</head>',1)
                 if '/assets/vintech-motion-fix-2026-v2.css' not in s and '</head>' in s: s=s.replace('</head>','<link rel="stylesheet" href="/assets/vintech-motion-fix-2026-v2.css">\n</head>',1)
