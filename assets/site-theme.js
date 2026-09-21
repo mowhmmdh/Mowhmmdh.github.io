@@ -16,12 +16,20 @@
   };
 
   const ensureResponsiveCore = () => {
-    if (document.querySelector('link[data-responsive-core]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = '/assets/responsive-core-2026.css';
-    link.dataset.responsiveCore = 'true';
-    document.head.appendChild(link);
+    if (!document.querySelector('link[data-responsive-core]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/assets/responsive-core-2026.css';
+      link.dataset.responsiveCore = 'true';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('link[data-unified-ui]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = '/assets/unified-ui-2026.css';
+      link.dataset.unifiedUi = 'true';
+      document.head.appendChild(link);
+    }
   };
 
   const getStoredTheme = () => {
