@@ -104,55 +104,6 @@
   };
 
 
-  const bindInnerPageNavigation = () => {
-    if (document.body.classList.contains('home-page')) return;
-    if (document.querySelector('.inner-page-toolbar')) return;
-
-    const toolbar = document.createElement('nav');
-    toolbar.className = 'inner-page-toolbar';
-    toolbar.setAttribute('aria-label', 'ناوبری صفحه');
-
-    const left = document.createElement('div');
-    left.className = 'toolbar-left';
-
-    const right = document.createElement('div');
-    right.className = 'toolbar-right';
-
-    const back = document.createElement('a');
-    back.className = 'toolbar-back';
-    back.href = '/';
-    back.textContent = 'بازگشت';
-    back.setAttribute('aria-label', 'بازگشت به صفحه قبلی');
-
-    try {
-      const ref = document.referrer ? new URL(document.referrer, location.href) : null;
-      if (ref && ref.origin === location.origin && ref.href !== location.href) {
-        back.href = ref.href;
-        back.textContent = 'بازگشت به صفحه قبل';
-      }
-    } catch (_) {}
-
-    const home = document.createElement('a');
-    home.className = 'toolbar-home';
-    home.href = '/';
-    home.textContent = 'صفحه اصلی';
-    home.setAttribute('aria-label', 'بازگشت به صفحه اصلی');
-
-    const context = document.createElement('span');
-    context.className = 'toolbar-context';
-    context.textContent = document.title.split('|')[0].trim();
-
-    left.append(back, home);
-    right.append(context);
-    toolbar.append(left, right);
-
-    const breadcrumb = document.querySelector('.auto-breadcrumb');
-    const header = document.querySelector('header');
-    if (breadcrumb) breadcrumb.insertAdjacentElement('afterend', toolbar);
-    else if (header) header.insertAdjacentElement('afterend', toolbar);
-    else document.body.insertBefore(toolbar, document.body.firstElementChild);
-  };
-
   const bindEscape = () => {
     if (window.__mhaEscapeBound) return;
     window.__mhaEscapeBound = true;
