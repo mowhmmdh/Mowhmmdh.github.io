@@ -54,9 +54,13 @@ html.mha-theme-switching *{transition:none!important;animation:none!important}\\
 
   const applyTheme = (mode) => {
     const isLight = mode === 'light';
+    root.classList.add('mha-theme-switching');
     root.classList.toggle('theme-light', isLight);
     root.dataset.theme = isLight ? 'light' : 'dark';
+    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('mha-theme-switching')));
   };
+
+  installFinalThemeLayer();
 
   const initialTheme = getStoredTheme() || (prefersLight() ? 'light' : 'dark');
   applyTheme(initialTheme);
