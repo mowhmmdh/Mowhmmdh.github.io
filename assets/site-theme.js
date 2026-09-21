@@ -125,7 +125,6 @@
     bindThemeButtons();
     bindMenus();
     bindEscape();
-    bindInnerPageNavigation();
     requestAnimationFrame(() => root.classList.add('mha-motion-ready'));
   };
 
