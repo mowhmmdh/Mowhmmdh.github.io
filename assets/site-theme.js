@@ -10,8 +10,7 @@
     if (document.getElementById('mha-final-theme-layer')) return;
     const style = document.createElement('style');
     style.id = 'mha-final-theme-layer';
-    style.textContent = \
-`html{background:var(--mha-bg,#070b12)!important;color:var(--mha-text,#edf2f7)!important;color-scheme:dark}\\n\
+    style.textContent = String.raw`html{background:var(--mha-bg,#070b12)!important;color:var(--mha-text,#edf2f7)!important;color-scheme:dark}\\n\
 html[data-theme="light"]{--mha-bg:#f6f8fb;--mha-surface:#fff;--mha-surface-2:#eef2f6;--mha-text:#17212b;--mha-muted:#526170;--mha-line:#d8e0e8;--mha-accent:#8b5b00;--mha-accent-strong:#a66d00;color-scheme:light}\\n\
 html[data-theme="dark"]{--mha-bg:#070b12;--mha-surface:#0d1722;--mha-surface-2:#12202d;--mha-text:#edf2f7;--mha-muted:#a5b2c0;--mha-line:#243445;--mha-accent:#d9ad55;--mha-accent-strong:#f2ce7d;color-scheme:dark}\\n\
 body{background-color:var(--mha-bg)!important;color:var(--mha-text)!important}\\n\
