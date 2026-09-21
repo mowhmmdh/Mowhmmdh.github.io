@@ -148,15 +148,18 @@ for page in pages:
                 text2 = text2.replace(tag, make_async_stylesheet(tag), 1)
                 break
 
-    # Images after the first are deferred. Existing explicit priority/loads are preserved.
+    # Images: first content image is eager; all later images are lazy.
+    # Normalize attributes idempotently so repeated runs never duplicate loading/decoding attributes.
     image_tags = list(IMG_RE.finditer(text2))
     for idx, match in reversed(list(enumerate(image_tags))):
         old = match.group(0)
-        new = old
-        if idx > 1 and 'loading=' not in new.lower():
-            new = new[:-1] + ' loading="lazy">'
-        if 'decoding=' not in new.lower():
-            new = new[:-1] + ' decoding="async">'
+        new = re.sub(r'\sloading=["\'][^"\']*["\']', '', old, flags=re.I)
+        new = re.sub(r'\sfetchpriority=["\'][^"\']*["\']', '', new, flags=re.I)
+        new = re.sub(r'\sdecoding=["\'][^"\']*["\']', '', new, flags=re.I)
+        if idx == 0:
+            new = new[:-1] + ' loading="eager" fetchpriority="high" decoding="async">'
+        else:
+            new = new[:-1] + ' loading="lazy" decoding="async">'
         if new != old:
             text2 = text2[:match.start()] + new + text2[match.end():]
 
@@ -173,6 +176,33 @@ for page in pages:
     if text2 != text:
         page.write_text(text2, encoding='utf-8')
         changed.append(page.as_posix())
+
+# Generate a complete image sitemap from crawlable image references.
+from xml.sax.saxutils import escape as xml_escape
+grouped = {}
+for page in pages:
+    s = page.read_text(encoding='utf-8', errors='replace')
+    page_url = 'https://mowhmmdh.github.io/' if page.name == 'index.html' else 'https://mowhmmdh.github.io/' + page.relative_to(ROOT).as_posix().replace('/index.html','/')
+    for tag in IMG_RE.findall(s):
+        srcm = re.search(r'\bsrc=["\']([^"\']+)["\']', tag, re.I)
+        if not srcm: continue
+        src = srcm.group(1).strip()
+        if src.startswith('data:'): continue
+        if src.startswith('/'): src = 'https://mowhmmdh.github.io' + src
+        elif not src.startswith(('http://','https://')): continue
+        if not re.search(r'\.(?:avif|webp|jpg|jpeg|png|gif|svg)(?:[?#].*)?$', src, re.I): continue
+        altm = re.search(r'\balt=["\']([^"\']*)["\']', tag, re.I)
+        title = altm.group(1).strip() if altm and altm.group(1).strip() else ''
+        grouped.setdefault(page_url, [])
+        if (src,title) not in grouped[page_url]: grouped[page_url].append((src,title))
+parts=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
+for page_url,imgs in sorted(grouped.items()):
+    parts.append('<url><loc>'+xml_escape(page_url)+'</loc>')
+    for src,title in imgs:
+        parts.append('<image:image><image:loc>'+xml_escape(src)+'</image:loc>'+('<image:title>'+xml_escape(title)+'</image:title>' if title else '')+'</image:image>')
+    parts.append('</url>')
+parts.append('</urlset>')
+(ROOT/'image-sitemap.xml').write_text(''.join(parts),encoding='utf-8')
 
 print(f'Pages checked: {len(pages)}')
 print(f'Pages changed: {len(changed)}')
