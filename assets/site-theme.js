@@ -116,6 +116,7 @@
     bindThemeButtons();
     bindMenus();
     bindEscape();
+    requestAnimationFrame(() => root.classList.add('mha-motion-ready'));
   };
 
   if (document.readyState === 'loading') {
