@@ -121,5 +121,290 @@ pre{max-width:100%;overflow:auto;border-radius:14px}
 @media(forced-colors:active){.card,.post-card,.service-card,.project-card,.about-card,.vt-card{border:1px solid CanvasText!important}}
 
 
-/* ===== MHA FINAL UI SYSTEM 2026 ===== */
-@import url('/assets/mha-final-ui-2026.css');
+
+/* MHA FINAL UI SYSTEM 2026
+   Repository-wide last-mile normalization. Loaded last so it is the single
+   authority for responsive geometry, accessibility, overflow and visual rhythm.
+*/
+:root{
+  --mha-max:1240px;
+  --mha-gutter:clamp(12px,3vw,32px);
+  --mha-radius:20px;
+  --mha-radius-sm:14px;
+  --mha-ease:cubic-bezier(.2,.8,.2,1);
+  --mha-bg:#070b12;
+  --mha-surface:#0e1722;
+  --mha-surface-2:#121f2d;
+  --mha-text:#f3f6fa;
+  --mha-muted:#aab6c4;
+  --mha-line:rgba(255,255,255,.105);
+  --mha-accent:#d9ad55;
+  --mha-accent-2:#f0ce83;
+  --mha-link:#78c4ee;
+  --mha-shadow:0 18px 55px rgba(0,0,0,.16);
+}
+html[data-theme="light"],html.theme-light{
+  --mha-bg:#f5f7fa;
+  --mha-surface:#fff;
+  --mha-surface-2:#eef2f6;
+  --mha-text:#17212b;
+  --mha-muted:#5c6976;
+  --mha-line:rgba(18,34,50,.13);
+  --mha-accent:#936718;
+  --mha-accent-2:#704e11;
+  --mha-link:#126c9e;
+  --mha-shadow:0 18px 55px rgba(18,34,50,.09);
+  color-scheme:light;
+}
+html{background:var(--mha-bg);scroll-padding-top:88px}
+body{
+  min-width:320px!important;
+  max-width:100vw;
+  overflow-x:hidden!important;
+  background:
+    radial-gradient(900px 420px at 88% -8%,color-mix(in srgb,var(--mha-accent) 8%,transparent),transparent 70%),
+    var(--mha-bg)!important;
+  color:var(--mha-text)!important;
+  text-rendering:optimizeLegibility;
+  -webkit-font-smoothing:antialiased;
+}
+*,*::before,*::after{box-sizing:border-box}
+img,svg,video,canvas,iframe{max-width:100%;height:auto}
+iframe{border:0}
+pre,code{max-width:100%}
+pre{overflow:auto;-webkit-overflow-scrolling:touch}
+table{width:100%;max-width:100%;border-collapse:collapse}
+td,th{overflow-wrap:anywhere}
+a,button,input,textarea,select{touch-action:manipulation}
+button,input,textarea,select{max-width:100%}
+:focus-visible{outline:3px solid var(--mha-accent)!important;outline-offset:3px!important}
+::selection{background:color-mix(in srgb,var(--mha-accent) 28%,transparent)}
+h1,h2,h3,h4{color:var(--mha-text);text-wrap:balance}
+p,li{overflow-wrap:anywhere}
+
+/* One predictable content rail across legacy and modern templates. */
+.site-wrap,.wrap,.container,.content,.article,.vt-container,.en-page{
+  max-width:var(--mha-max);
+}
+.site-wrap,.wrap,.container,.vt-container,.en-page{
+  width:min(var(--mha-max),calc(100% - 2 * var(--mha-gutter)));
+  margin-inline:auto;
+}
+.content,.article{
+  width:min(920px,calc(100% - 2 * var(--mha-gutter)));
+  margin-inline:auto;
+}
+
+/* Navigation: desktop is calm; mobile becomes a contained drawer when a
+   mobile-menu exists, otherwise links wrap instead of overflowing. */
+.site-nav,.about-nav,.nav,.vt-nav,.en-nav{
+  min-height:68px!important;
+  gap:12px!important;
+}
+.brand,.site-nav .brand,.about-nav strong{flex-shrink:0}
+.nav-links,.about-nav-links,.en-nav-links{
+  min-width:0;
+  gap:3px!important;
+}
+.nav-links a,.about-nav-links a,.en-nav-links a,.nav a{
+  min-height:40px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  white-space:nowrap;
+}
+.nav-actions{flex:0 0 auto}
+.mobile-menu{flex:0 0 42px}
+.auto-breadcrumb,.ultimate-breadcrumb{
+  max-width:var(--mha-max)!important;
+  width:min(var(--mha-max),calc(100% - 2 * var(--mha-gutter)))!important;
+  margin-inline:auto!important;
+  overflow-wrap:anywhere;
+}
+
+/* Stable responsive primitives used by multiple generations of templates. */
+.grid-2,.grid-3,.projects-grid,.about-grid,
+.mh-cards,.mh-expertise-grid,.architecture,
+.vt-services,.vt-expertise,.vt-steps{
+  min-width:0;
+}
+.card,.post-card,.project-card,.service-card,.about-card,.timeline-item,
+.skill-category,.faq-item,.contact-wrapper,.mh-card,.mh-expertise,.vt-card{
+  min-width:0;
+  overflow:hidden;
+}
+.mh-card,.card,.post-card,.project-card,.service-card,.about-card,.vt-card{
+  transition:transform .22s var(--mha-ease),border-color .22s var(--mha-ease),box-shadow .22s var(--mha-ease),background .22s var(--mha-ease);
+}
+.mh-card:hover,.card:hover,.post-card:hover,.project-card:hover,.service-card:hover,.about-card:hover,.vt-card:hover{
+  transform:translateY(-3px);
+  border-color:color-mix(in srgb,var(--mha-accent) 38%,var(--mha-line));
+  box-shadow:var(--mha-shadow);
+}
+.mh-card:focus-visible,.card:focus-visible,.post-card:focus-visible,.project-card:focus-visible,.service-card:focus-visible,.about-card:focus-visible,.vt-card:focus-visible{
+  transform:none;
+}
+.mh-btn,.btn,.case-link,.vt-btn{
+  min-height:46px;
+  max-width:100%;
+}
+.mh-actions,.actions,.hero-actions,.vt-actions{
+  align-items:stretch;
+}
+
+/* Forms and media never escape their parent. */
+form{min-width:0}
+input,textarea,select{
+  min-width:0!important;
+  background:var(--mha-surface)!important;
+  color:var(--mha-text)!important;
+  border-color:var(--mha-line)!important;
+}
+textarea{resize:vertical}
+input::placeholder,textarea::placeholder{color:var(--mha-muted);opacity:.8}
+label{max-width:100%}
+
+/* Articles / technical pages. */
+.article,.content{
+  overflow:hidden;
+}
+.article img,.content img{
+  display:block;
+  margin-inline:auto;
+  border-radius:var(--mha-radius-sm);
+}
+.article h1,.content h1{font-size:clamp(2rem,5vw,3.5rem)}
+.article h2,.content h2{font-size:clamp(1.45rem,3vw,2.15rem);margin-top:2.2em}
+.article h3,.content h3{font-size:clamp(1.15rem,2.2vw,1.5rem);margin-top:1.6em}
+.article blockquote,.content blockquote{
+  margin:1.5rem 0;
+  padding:1rem 1.2rem;
+  border-inline-start:4px solid var(--mha-accent);
+  background:color-mix(in srgb,var(--mha-accent) 5%,var(--mha-surface));
+  border-radius:0 var(--mha-radius-sm) var(--mha-radius-sm) 0;
+}
+.article pre,.content pre,.code{
+  border:1px solid var(--mha-line);
+  border-radius:var(--mha-radius-sm);
+  padding:clamp(14px,2.5vw,22px);
+  font-size:clamp(.76rem,1.5vw,.9rem);
+  line-height:1.7;
+}
+.article table,.content table{display:block;overflow-x:auto;white-space:nowrap}
+.article li,.content li{margin-block:.35rem}
+
+/* Hero systems: prevent decorative visuals from forcing page width. */
+.mh-hero-grid,.hero-grid,.mh-split-inner{
+  min-width:0;
+}
+.mh-hero-copy,.mh-hero-visual,.hero-copy,.profile,.mh-split-inner>div{
+  min-width:0;
+}
+.mh-hero-visual,.mh-orbit,.mh-terminal{max-width:100%}
+.mh-terminal pre{white-space:pre-wrap;overflow-wrap:anywhere}
+.mh-proofbar{min-width:0}
+.mh-proofbar>*{min-width:0}
+.mh-proofbar strong{overflow-wrap:anywhere}
+
+/* Links are visibly interactive without noisy underlines everywhere. */
+.article a,.content a{color:var(--mha-link)}
+.article a:hover,.content a:hover{color:var(--mha-accent-2)}
+a[href^="mailto:"],a[href^="tel:"]{overflow-wrap:anywhere}
+
+/* Fixed/utility layers stay inside viewport. */
+.ultimate-tools{max-width:calc(100vw - 24px)}
+.ultimate-progress{max-width:100vw}
+.legal-footer-2026{overflow-wrap:anywhere}
+
+/* Tablet */
+@media (max-width:960px){
+  .site-nav,.about-nav,.nav,.vt-nav,.en-nav{
+    flex-wrap:wrap;
+    padding-block:8px;
+  }
+  .site-nav .nav-links,.about-nav .about-nav-links,.en-nav .en-nav-links,.nav .nav-links{
+    order:4;
+    width:100%;
+  }
+  .site-nav:not(.menu-open) .nav-links,
+  .about-nav:not(.menu-open) .about-nav-links,
+  .en-nav:not(.menu-open) .en-nav-links{
+    justify-content:flex-start;
+  }
+  .mh-hero-grid,.hero-grid{grid-template-columns:1fr!important}
+  .mh-hero-visual,.profile{order:-1}
+  .mh-hero-visual{width:min(100%,720px);margin-inline:auto}
+  .grid-3,.about-grid,.mh-cards-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .architecture{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mahex-bottom{grid-template-columns:1fr}
+}
+
+/* Phones */
+@media (max-width:720px){
+  :root{--mha-gutter:12px}
+  html{scroll-padding-top:72px}
+  .site-wrap,.wrap,.container,.vt-container,.en-page{
+    width:calc(100% - 24px)!important;
+  }
+  .content,.article{
+    width:calc(100% - 24px)!important;
+    padding:20px 16px!important;
+    border-radius:16px!important;
+  }
+  .site-nav,.about-nav,.nav,.vt-nav,.en-nav{
+    min-height:60px!important;
+  }
+  .site-nav .nav-links,.about-nav .about-nav-links,.en-nav .en-nav-links,.nav .nav-links{
+    width:100%;
+    overflow:hidden;
+  }
+  .site-nav .nav-links a,.about-nav .about-nav-links a,.en-nav .en-nav-links a,.nav .nav-links a{
+    flex:1 1 45%;
+    min-width:0;
+    white-space:normal;
+    text-align:center;
+  }
+  .grid-2,.grid-3,.projects-grid,.about-grid,
+  .mh-cards,.mh-cards-3,.mh-expertise-grid{
+    grid-template-columns:1fr!important;
+  }
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .architecture{grid-template-columns:1fr}
+  .hero,.about-hero,.vt-hero{padding-block:48px 34px}
+  h1{font-size:clamp(2rem,11vw,3.25rem)!important}
+  h2{font-size:clamp(1.5rem,8vw,2.25rem)!important}
+  .actions,.hero-actions,.mh-actions,.vt-actions{width:100%}
+  .actions>* ,.hero-actions>*,.mh-actions>*,.vt-actions>*{
+    width:100%!important;
+  }
+  .mh-hero-visual{transform:none!important}
+  .mh-orbit{min-height:300px!important}
+  .mh-node{transform:scale(.86)}
+  .mh-terminal{margin-inline:auto}
+  .mahex-hero{min-height:320px}
+  .mahex-copy{padding:20px}
+  .footer,.site-footer,.vt-footer{padding-bottom:28px}
+}
+
+/* Very small phones */
+@media (max-width:390px){
+  .stats{grid-template-columns:1fr}
+  .brand strong{max-width:125px;overflow:hidden;text-overflow:ellipsis}
+  .mh-orbit{min-height:250px!important}
+  .mh-node{transform:scale(.72)}
+  .article,.content{font-size:.94rem}
+}
+
+/* Accessibility / motion */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{
+    animation-duration:.001ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.001ms!important;
+  }
+}
+@media (forced-colors:active){
+  *,*::before,*::after{border-color:CanvasText!important}
+}
