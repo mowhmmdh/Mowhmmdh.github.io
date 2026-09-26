@@ -119,3 +119,7 @@ pre{max-width:100%;overflow:auto;border-radius:14px}
 @media(hover:none){.card:hover,.post-card:hover,.service-card:hover,.project-card:hover,.about-card:hover,.vt-card:hover{transform:none!important}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition-duration:.001ms!important}}
 @media(forced-colors:active){.card,.post-card,.service-card,.project-card,.about-card,.vt-card{border:1px solid CanvasText!important}}
+
+
+/* ===== MHA FINAL UI SYSTEM 2026 ===== */
+@import url('/assets/mha-final-ui-2026.css');
