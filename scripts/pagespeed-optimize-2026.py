@@ -19,7 +19,6 @@ EXCLUDED_CSS = {
     '/assets/elite-web-system-2026.css',
     '/assets/editorial-experience-2026.css',
     '/assets/premium-experience-2026.css',
-    '/assets/site-quality-2026.css',
     '/assets/theme-contrast-2026.css',
 }
 
