@@ -59,7 +59,7 @@ def rewrite_relative_urls(css: str, source_href: str) -> str:
 def bundle_css(hrefs: list[str]) -> str:
     chunks = []
     for href in hrefs:
-        if href in EXCLUDED_CSS:
+        if href in EXCLUDED_CSS or href.startswith('/assets/page-bundles-2026/'):
             continue
         path = ROOT / href.lstrip('/')
         if not path.exists():
