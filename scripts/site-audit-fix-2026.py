@@ -9,7 +9,6 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://mowhmmdh.github.io"
 FA_NAME = "محمدحسین عسگری ثمرین"
 QUALITY = "/assets/site-quality-2026.css"
-ADVANCED_UI = "/assets/advanced-ui-2026.css"
 UNIFIED_UI = "/assets/unified-ui-2026.css"
 SKIP = {".git", ".github", "node_modules", "vendor"}
 
