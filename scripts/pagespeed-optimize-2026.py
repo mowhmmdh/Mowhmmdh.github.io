@@ -203,6 +203,28 @@ for page_url,imgs in sorted(grouped.items()):
 parts.append('</urlset>')
 (ROOT/'image-sitemap.xml').write_text(''.join(parts),encoding='utf-8')
 
+# Final invariant: VinTech pages must retain exactly one direct VinTech stylesheet.
+for page in pages:
+    rel = page.as_posix()
+    is_vintech = rel.startswith(('vintech/', 'en-vintech/')) or page.name in {'vintech.html', 'en-vintech.html'}
+    if not is_vintech:
+        continue
+    text = page.read_text(encoding='utf-8', errors='replace')
+    link_re = re.compile(r'\s*<link\\b[^>]*href=["\\']/assets/vintech\\.css["\\'][^>]*>\\s*', re.I)
+    links = list(link_re.finditer(text))
+    if not links:
+        if '</head>' in text.lower():
+            text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', text, count=1, flags=re.I)
+    elif len(links) > 1:
+        first = links[0].group(0)
+        text = text[:links[0].start()] + first + text[links[0].end():]
+        text = link_re.sub('', text)
+        text = text.replace(first, first, 1)
+        # Rebuild deterministically after dedupe.
+        text = re.sub(r'\\s*<link\\b[^>]*href=["\\']/assets/vintech\\.css["\\'][^>]*>\\s*', '\\n', text, flags=re.I)
+        text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', text, count=1, flags=re.I)
+    page.write_text(text, encoding='utf-8')
+
 print(f'Pages checked: {len(pages)}')
 print(f'Pages changed: {len(changed)}')
 print(f'Unique secondary CSS bundles: {len(cache)}')
