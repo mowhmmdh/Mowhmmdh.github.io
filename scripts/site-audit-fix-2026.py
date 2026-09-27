@@ -148,6 +148,10 @@ for p in ROOT.rglob("*.html"):
     if p.name != "404.html":
         new = ensure_meta(new, rel)
         new = ensure_quality(new)
+        rel_path = rel.as_posix()
+        is_vintech = rel_path.startswith(("vintech/", "en-vintech/")) or rel.name in {"vintech.html", "en-vintech.html"}
+        if is_vintech and '/assets/vintech.css' not in new:
+            new = add_head(new, '<link rel="stylesheet" href="/assets/vintech.css">')
         new = ensure_webpage_schema(new, rel)
         new = ensure_article_schema(new, rel)
         if "site-auto-related" not in new:
