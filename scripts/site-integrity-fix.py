@@ -14,7 +14,7 @@ FA_REPEAT=re.compile(r'(محمدحسین\s*عسگری\s*ثمرین)(?:\s*ثمر�
 JSONLD=re.compile(r'(<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>)(.*?)(</script>)',re.I|re.S)
 PORTFOLIO_CSS=re.compile(r'\s*<link[^>]+href=["\']/assets/portfolio-command-center-2026\.css["\'][^>]*>',re.I)
 MODERN_UI=re.compile(r'\s*<script\b[^>]*src=["\']/assets/modern-ui-2026\.js["\'][^>]*>\s*</script>',re.I)
-COMMON_CSS=('/assets/page-experience-2026.css','/assets/site-master-2026.css','/assets/social-fix-2026.css','/assets/site-final-fix-2026.css','/assets/navigation-fix-2026.css')
+COMMON_CSS=()
 HOME_CSS='/assets/home-finish-2026.css'
 VIN_CSS='/assets/vintech.css'
 VIN_MOTION_CSS='/assets/vintech-motion-fix-2026-v2.css'
