@@ -60,7 +60,7 @@ def ensure_meta(text, rel):
 def ensure_quality(text):
     # Secondary CSS is merged into site-bundle.css to keep the critical path small.
     # Remove legacy standalone links so CI cannot reintroduce render-blocking requests.
-    text = re.sub(r'\s*<link\s+[^>]*href=["\']/assets/(?:site-quality-2026|unified-ui-2026|conversion-monetization-2026|page-experience-2026|site-master-2026|social-fix-2026|site-final-fix-2026|navigation-fix-2026|site-final-quality-2026)\.css["\'][^>]*>', '', text, flags=re.I)
+    text = re.sub(r'\s*<link\s+[^>]*href=["\']/assets/(?:site-quality-2026|unified-ui-2026|conversion-monetization-2026|page-experience-2026|site-master-2026|social-fix-2026|site-final-fix-2026|navigation-fix-2026)\.css["\'][^>]*>', '', text, flags=re.I)
     return text
 
 def ensure_identity(text):
