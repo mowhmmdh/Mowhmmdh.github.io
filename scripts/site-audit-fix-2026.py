@@ -92,14 +92,6 @@ def ensure_discovery_meta(text, rel):
     meta_name("twitter:image:alt", FA_NAME + " | Network & Infrastructure Specialist")
     return text
 
-def ensure_advanced_ui(text):
-    # One shared visual system is applied site-wide. The pagespeed pipeline may
-    # bundle this stylesheet later, but the direct reference remains the source
-    # of truth for every page and prevents visual drift between page families.
-    if '/assets/advanced-ui-2026.css' not in text and re.search(r"</head>", text, re.I):
-        text = add_head(text, '<link rel="stylesheet" href="/assets/advanced-ui-2026.css">')
-    return text
-
 def ensure_quality(text):
     # Secondary CSS is merged into site-bundle.css to keep the critical path small.
     # Remove legacy standalone links so CI cannot reintroduce render-blocking requests.
@@ -191,7 +183,6 @@ for p in ROOT.rglob("*.html"):
     if p.name != "404.html":
         new = ensure_meta(new, rel)
         new = ensure_quality(new)
-        new = ensure_advanced_ui(new)
         new = ensure_discovery_meta(new, rel)
         rel_path = rel.as_posix()
         is_vintech = rel_path.startswith(("vintech/", "en-vintech/")) or rel.name in {"vintech.html", "en-vintech.html"}
