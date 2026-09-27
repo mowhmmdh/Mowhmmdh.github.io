@@ -408,3 +408,8 @@ a[href^="mailto:"],a[href^="tel:"]{overflow-wrap:anywhere}
 @media (forced-colors:active){
   *,*::before,*::after{border-color:CanvasText!important}
 }
+
+/* Final stability/performance pass: reserve hero geometry and preserve profile ratio before runtime enhancement. */
+.mh-hero-visual{min-height:clamp(360px,40vw,520px);contain:layout paint}
+.mh-identity-card img{aspect-ratio:958/1278;height:auto;object-fit:cover}
+@media(max-width:720px){.mh-hero-visual{min-height:360px}}
