@@ -3,7 +3,7 @@
 from pathlib import Path
 import re
 import json
-from html import unescape
+from html import unescape, escape
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://mowhmmdh.github.io"
@@ -66,7 +66,7 @@ def ensure_discovery_meta(text, rel):
     def meta_name(name, content):
         nonlocal text
         if not re.search(r'<meta\\s+[^>]*name=["\\']' + re.escape(name) + r'["\\']', text, re.I):
-            text = add_head(text, '<meta name="' + name + '" content="' + html.escape(content, quote=True) + '">')
+            text = add_head(text, '<meta name="' + name + '" content="' + escape(content, quote=True) + '">')
     def meta_prop(prop, content):
         nonlocal text
         if not re.search(r'<meta\\s+[^>]*property=["\\']' + re.escape(prop) + r'["\\']', text, re.I):
