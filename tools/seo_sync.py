@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 BASE='https://mowhmmdh.github.io'; root=Path('.')
-pairs={'index.html':'en.html','about.html':'en-about.html','services.html':'en-services.html','projects.html':'en-projects.html','linkedin.html':'en-linkedin.html','vintech.html':'en-vintech.html','blog/index.html':'en-blog.html'}
+pairs={'index.html':'en.html','about.html':'en-about.html','services.html':'en-services.html','projects.html':'en-projects.html','linkedin.html':'en-linkedin.html','vintech.html':'en-vintech.html','blog/index.html':'en-blog.html','verification.html':'en-verification.html'}
 for fa in sorted((root/'blog').glob('*.html')):
     if fa.name!='index.html':
         en=root/'en-blog'/fa.name
