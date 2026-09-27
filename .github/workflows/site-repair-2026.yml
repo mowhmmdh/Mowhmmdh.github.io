@@ -107,7 +107,7 @@ jobs:
           for p in sorted(Path('.').rglob('*.html')):
               if '.git' in p.parts or '.github' in p.parts:
                   continue
-              is_vt = p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
+              is_vt = p.name in {'vintech.html','en-vintech.html'} or any(part in {'vintech','en-vintech'} for part in p.parts)
               if not is_vt:
                   continue
               s = p.read_text(encoding='utf-8', errors='replace')
@@ -149,7 +149,7 @@ jobs:
           for p in sorted(Path('.').rglob('*.html')):
             if '.git' in p.parts or '.github' in p.parts or p.name=='404.html': continue
             s=p.read_text(encoding='utf-8',errors='ignore')
-            is_vt=p.name in {'vintech.html','en-vintech.html'} or 'vintech' in p.parts
+            is_vt=p.name in {'vintech.html','en-vintech.html'} or any(part in {'vintech','en-vintech'} for part in p.parts)
             if len(re.findall(r'<meta\s+name=["\']viewport["\'][^>]*>',s,re.I))!=1: errors.append(f'{p}: viewport count must be exactly 1')
             if len(re.findall(r'<main\b[^>]*\bid=["\']main-content["\']',s,re.I))!=1: errors.append(f'{p}: main#main-content count must be exactly 1')
             if len(re.findall(r'class=["\'][^"\']*\bskip-link\b[^"\']*["\']',s,re.I))!=1: errors.append(f'{p}: skip-link count must be exactly 1')
