@@ -1,141 +1,66 @@
-(() => {
-  'use strict';
+(()=>{'use strict';
+const root=document.documentElement;
+const KEY='mha-theme';
 
-  const root = document.documentElement;
-  const storageKey = 'mha-theme';
+function theme(mode){
+  const light=mode==='light';
+  root.dataset.theme=light?'light':'dark';
+  root.classList.toggle('theme-light',light);
+  document.querySelectorAll('.theme-toggle').forEach(b=>{
+    b.textContent=light?'☀':'☾';
+    b.setAttribute('aria-label',light?'فعال‌کردن حالت تیره':'فعال‌کردن حالت روشن');
+    b.setAttribute('aria-pressed',String(light));
+  });
+}
 
-  /* Final visual contract: appended after every stylesheet so theme switching is deterministic.
-     It deliberately owns color/transition behavior, not page geometry. */
-  const installFinalThemeLayer = () => {
-    if (document.getElementById('mha-final-theme-layer')) return;
-    const style = document.createElement('style');
-    style.id = 'mha-final-theme-layer';
-    style.textContent = "html{background:var(--mha-bg,#070b12);color-scheme:dark}html[data-theme=\"light\"]{--mha-bg:#f6f8fb;--mha-text:#17212b;color-scheme:light}html[data-theme=\"dark\"]{--mha-bg:#070b12;--mha-text:#edf2f7;color-scheme:dark}body{background-color:var(--mha-bg)!important;color:var(--mha-text)}html.mha-theme-switching *,html.mha-theme-switching *::before,html.mha-theme-switching *::after{transition:none!important}";
-    style.textContent += "html:not(.mha-motion-ready) [data-reveal]{opacity:1!important;transform:none!important;visibility:visible!important}html.mha-motion-ready [data-reveal]{visibility:visible}html.mha-theme-switching [data-reveal]{opacity:1!important;transform:none!important}";
-    document.head.appendChild(style);
-  };
-
-  const ensureResponsiveCore = () => {
-    if (!document.querySelector('link[data-responsive-core]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/assets/responsive-core-2026.css';
-      link.dataset.responsiveCore = 'true';
-      document.head.appendChild(link);
-    }
-    if (!document.querySelector('link[data-unified-ui]')) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = '/assets/unified-ui-2026.css';
-      link.dataset.unifiedUi = 'true';
-      document.head.appendChild(link);
-    }
-  };
-
-  const getStoredTheme = () => {
-    try { return localStorage.getItem(storageKey); } catch (_) { return null; }
-  };
-
-  const prefersLight = () =>
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-
-  const applyTheme = (mode) => {
-    const isLight = mode === 'light';
-    root.classList.add('mha-theme-switching');
-    root.classList.toggle('theme-light', isLight);
-    root.dataset.theme = isLight ? 'light' : 'dark';
-    requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('mha-theme-switching')));
-  };
-
-  installFinalThemeLayer();
-
-  const initialTheme = getStoredTheme() || (prefersLight() ? 'light' : 'dark');
-  applyTheme(initialTheme);
-
-  if (!getStoredTheme() && window.matchMedia) {
-    const media = window.matchMedia('(prefers-color-scheme: light)');
-    media.addEventListener?.('change', e => applyTheme(e.matches ? 'light' : 'dark'));
-  }
-
-  const syncThemeButtons = () => {
-    const light = root.classList.contains('theme-light');
-    document.querySelectorAll('.theme-toggle').forEach(btn => {
-      btn.textContent = light ? '☀' : '☾';
-      btn.setAttribute('aria-label', light ? 'فعال‌کردن حالت تیره' : 'فعال‌کردن حالت روشن');
-      btn.setAttribute('aria-pressed', String(light));
+function bind(){
+  document.querySelectorAll('.theme-toggle').forEach(b=>{
+    if(b.dataset.bound)return;
+    b.dataset.bound='1';
+    b.addEventListener('click',()=>{
+      const next=root.dataset.theme==='light'?'dark':'light';
+      theme(next);
+      try{localStorage.setItem(KEY,next)}catch(_){}
     });
-  };
+  });
 
-  const bindThemeButtons = () => {
-    document.querySelectorAll('.theme-toggle').forEach(btn => {
-      if (btn.dataset.themeBound === 'true') return;
-      btn.dataset.themeBound = 'true';
-      btn.addEventListener('click', () => {
-        const next = root.classList.contains('theme-light') ? 'dark' : 'light';
-        applyTheme(next);
-        try { localStorage.setItem(storageKey, next); } catch (_) {}
-        syncThemeButtons();
-      });
+  document.querySelectorAll('.site-nav,.about-nav,.en-nav,.nav,.vt-nav').forEach(nav=>{
+    const menu=nav.querySelector('.mobile-menu');
+    const links=nav.querySelector('.nav-links,.about-nav-links,.en-nav-links');
+    if(!menu||!links||menu.dataset.bound)return;
+    menu.dataset.bound='1';
+    const close=()=>{
+      nav.classList.remove('menu-open');
+      menu.setAttribute('aria-expanded','false');
+      menu.setAttribute('aria-label','باز کردن منو');
+      menu.textContent='☰';
+    };
+    menu.addEventListener('click',e=>{
+      e.stopPropagation();
+      const open=!nav.classList.contains('menu-open');
+      if(open)nav.classList.add('menu-open');else close();
+      menu.setAttribute('aria-expanded',String(open));
+      menu.setAttribute('aria-label',open?'بستن منو':'باز کردن منو');
+      menu.textContent=open?'×':'☰';
     });
-    syncThemeButtons();
-  };
+    links.addEventListener('click',e=>{if(e.target.closest('a'))close()});
+    nav._mhaClose=close;
+  });
+}
 
-  const bindMenus = () => {
-    document.querySelectorAll('.site-nav').forEach(nav => {
-      const menu = nav.querySelector('.mobile-menu');
-      const links = nav.querySelector('.nav-links');
-      if (!menu || !links || menu.dataset.menuBound === 'true') return;
-      menu.dataset.menuBound = 'true';
-      menu.setAttribute('aria-expanded', 'false');
-      menu.addEventListener('click', () => {
-        const open = nav.classList.toggle('menu-open');
-        menu.setAttribute('aria-expanded', String(open));
-        menu.setAttribute('aria-label', open ? 'بستن منو' : 'باز کردن منو');
-        menu.textContent = open ? '×' : '☰';
-      });
-      links.addEventListener('click', e => {
-        if (e.target.closest('a')) {
-          nav.classList.remove('menu-open');
-          menu.setAttribute('aria-expanded', 'false');
-          menu.textContent = '☰';
-        }
-      });
-    });
-  };
-
-
-  const bindEscape = () => {
-    if (window.__mhaEscapeBound) return;
-    window.__mhaEscapeBound = true;
-    document.addEventListener('keydown', e => {
-      if (e.key !== 'Escape') return;
-      document.querySelectorAll('.site-nav.menu-open').forEach(nav => {
-        nav.classList.remove('menu-open');
-        const menu = nav.querySelector('.mobile-menu');
-        if (menu) {
-          menu.setAttribute('aria-expanded', 'false');
-          menu.textContent = '☰';
-        }
-      });
-    });
-  };
-
-  const boot = () => {
-    ensureResponsiveCore();
-    bindThemeButtons();
-    bindMenus();
-    bindEscape();
-    requestAnimationFrame(() => root.classList.add('mha-motion-ready'));
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
-  } else {
-    boot();
-  }
+let saved=null;
+try{saved=localStorage.getItem(KEY)}catch(_){}
+theme(saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
+if(!saved){
+  const mq=matchMedia('(prefers-color-scheme: light)');
+  mq.addEventListener?.('change',e=>theme(e.matches?'light':'dark'));
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
+document.addEventListener('click',e=>{
+  if(e.target.closest('.menu-open'))return;
+  document.querySelectorAll('.menu-open').forEach(n=>n._mhaClose?.());
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')document.querySelectorAll('.menu-open').forEach(n=>n._mhaClose?.());
+});
 })();
-/* Ultimate global UX bridge 2026. */
-(()=>{'use strict';if(window.__ultimateDirectUX)return;window.__ultimateDirectUX=1;const d=document,h=d.documentElement,p=location.pathname;const light=localStorage.getItem('ultimate-theme')||'dark';h.dataset.theme=light;const nav=d.createElement('div');nav.className='ultimate-tools';nav.innerHTML='<button type="button" id="u-theme-global" aria-label="تغییر پوسته">◐</button>';d.body.appendChild(nav);const btn=d.getElementById('u-theme-global');btn.addEventListener('click',()=>{const t=h.dataset.theme==='light'?'dark':'light';h.dataset.theme=t;localStorage.setItem('ultimate-theme',t)});const bar=d.createElement('div');bar.className='ultimate-progress';d.body.appendChild(bar);const upd=()=>{const m=d.documentElement.scrollHeight-innerHeight;bar.style.transform='scaleX('+(m>0?scrollY/m:0)+')'};addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();if(p!=='/'&&!/404/.test(p)){const main=d.querySelector('main');if(main&&!d.querySelector('.ultimate-breadcrumb')){const bc=d.createElement('nav');bc.className='ultimate-breadcrumb';bc.setAttribute('aria-label','مسیر');bc.innerHTML='<a href="/">خانه</a><span>›</span><span>'+decodeURIComponent(p.split('/').filter(Boolean).join(' / ').replace(/\.html$/,''))+'</span>';main.before(bc)}}})();
-
-/* ===== MHA FINAL INTERACTION LAYER 2026 ===== */
-(()=>{'use strict';if(window.__mhaFinalInteraction)return;window.__mhaFinalInteraction=true;const d=document;const close=n=>{n.classList.remove('menu-open');const b=n.querySelector('.mobile-menu');if(b){b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','باز کردن منو');b.textContent='☰'}};const bind=()=>d.querySelectorAll('.site-nav,.about-nav,.en-nav,.nav,.vt-nav').forEach(n=>{const b=n.querySelector('.mobile-menu'),l=n.querySelector('.nav-links,.about-nav-links,.en-nav-links');if(!b||!l||b.dataset.finalBound)return;b.dataset.finalBound='1';b.addEventListener('click',e=>{e.stopPropagation();const o=!n.classList.contains('menu-open');o?n.classList.add('menu-open'):close(n);b.setAttribute('aria-expanded',String(o));b.setAttribute('aria-label',o?'بستن منو':'باز کردن منو');b.textContent=o?'×':'☰'});l.addEventListener('click',e=>{if(e.target.closest('a'))close(n)})});d.addEventListener('click',e=>{if(!e.target.closest('.menu-open'))d.querySelectorAll('.menu-open').forEach(close)});d.addEventListener('keydown',e=>{if(e.key==='Escape')d.querySelectorAll('.menu-open').forEach(close)});document.readyState==='loading'?d.addEventListener('DOMContentLoaded',bind,{once:true}):bind()})();
