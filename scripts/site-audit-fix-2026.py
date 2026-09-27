@@ -58,6 +58,40 @@ def ensure_meta(text, rel):
         text = add_head(text, f'<link rel="canonical" href="{canonical_for(rel)}">')
     return text
 
+def ensure_discovery_meta(text, rel):
+    """Strengthen crawl/social discovery metadata without overwriting author content."""
+    title = title_of(text, rel.stem.replace("-", " ").title())
+    desc = description_of(text) or title
+    url = canonical_for(rel)
+    def meta_name(name, content):
+        nonlocal text
+        if not re.search(r'<meta\\s+[^>]*name=["\\']' + re.escape(name) + r'["\\']', text, re.I):
+            text = add_head(text, '<meta name="' + name + '" content="' + html.escape(content, quote=True) + '">')
+    def meta_prop(prop, content):
+        nonlocal text
+        if not re.search(r'<meta\\s+[^>]*property=["\\']' + re.escape(prop) + r'["\\']', text, re.I):
+            text = add_head(text, '<meta property="' + prop + '" content="' + html.escape(content, quote=True) + '">')
+    meta_name("author", FA_NAME)
+    meta_name("referrer", "strict-origin-when-cross-origin")
+    meta_name("theme-color", "#071019")
+    image = None
+    m = re.search(r'<meta\\s+[^>]*property=["\\']og:image["\\'][^>]*content=["\\']([^"\\']+)', text, re.I)
+    if m: image = m.group(1)
+    if not image: image = BASE + "/images/profile.webp"
+    meta_prop("og:type", "article" if rel.as_posix().startswith(("blog/", "en-blog/")) else "website")
+    meta_prop("og:title", title[:180])
+    meta_prop("og:description", desc[:300])
+    meta_prop("og:url", url)
+    meta_prop("og:site_name", FA_NAME)
+    meta_prop("og:image", image)
+    meta_prop("og:image:alt", FA_NAME + " | Network & Infrastructure Specialist")
+    meta_name("twitter:card", "summary_large_image")
+    meta_name("twitter:title", title[:180])
+    meta_name("twitter:description", desc[:300])
+    meta_name("twitter:image", image)
+    meta_name("twitter:image:alt", FA_NAME + " | Network & Infrastructure Specialist")
+    return text
+
 def ensure_advanced_ui(text):
     # One shared visual system is applied site-wide. The pagespeed pipeline may
     # bundle this stylesheet later, but the direct reference remains the source
@@ -158,6 +192,7 @@ for p in ROOT.rglob("*.html"):
         new = ensure_meta(new, rel)
         new = ensure_quality(new)
         new = ensure_advanced_ui(new)
+        new = ensure_discovery_meta(new, rel)
         rel_path = rel.as_posix()
         is_vintech = rel_path.startswith(("vintech/", "en-vintech/")) or rel.name in {"vintech.html", "en-vintech.html"}
         if is_vintech and '/assets/vintech.css' not in new:
