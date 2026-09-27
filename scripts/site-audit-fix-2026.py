@@ -58,10 +58,9 @@ def ensure_meta(text, rel):
     return text
 
 def ensure_quality(text):
-    if QUALITY not in text:
-        text = add_head(text, f'<link rel="stylesheet" href="{QUALITY}">')
-    if UNIFIED_UI not in text:
-        text = add_head(text, f'<link rel="stylesheet" href="{UNIFIED_UI}">')
+    # Secondary CSS is merged into site-bundle.css to keep the critical path small.
+    # Remove legacy standalone links so CI cannot reintroduce render-blocking requests.
+    text = re.sub(r'\s*<link\s+[^>]*href=["\']/assets/(?:site-quality-2026|unified-ui-2026|conversion-monetization-2026)\.css["\'][^>]*>', '', text, flags=re.I)
     return text
 
 def ensure_identity(text):
