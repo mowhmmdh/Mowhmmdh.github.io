@@ -59,3 +59,4 @@
 Audit: repository-wide page quality pass 2026-09-27
 Final runtime audit trigger.
 Final stability pass.
+Lighthouse final verification trigger.
