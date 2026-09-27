@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://mowhmmdh.github.io"
 FA_NAME = "محمدحسین عسگری ثمرین"
 QUALITY = "/assets/site-quality-2026.css"
+ADVANCED_UI = "/assets/advanced-ui-2026.css"
 UNIFIED_UI = "/assets/unified-ui-2026.css"
 SKIP = {".git", ".github", "node_modules", "vendor"}
 
@@ -55,6 +56,14 @@ def ensure_meta(text, rel):
         text = add_head(text, '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">')
     if not re.search(r'<link\s+[^>]*rel=["\']canonical["\']', text, re.I):
         text = add_head(text, f'<link rel="canonical" href="{canonical_for(rel)}">')
+    return text
+
+def ensure_advanced_ui(text):
+    # One shared visual system is applied site-wide. The pagespeed pipeline may
+    # bundle this stylesheet later, but the direct reference remains the source
+    # of truth for every page and prevents visual drift between page families.
+    if '/assets/advanced-ui-2026.css' not in text and re.search(r"</head>", text, re.I):
+        text = add_head(text, '<link rel="stylesheet" href="/assets/advanced-ui-2026.css">')
     return text
 
 def ensure_quality(text):
@@ -148,6 +157,7 @@ for p in ROOT.rglob("*.html"):
     if p.name != "404.html":
         new = ensure_meta(new, rel)
         new = ensure_quality(new)
+        new = ensure_advanced_ui(new)
         rel_path = rel.as_posix()
         is_vintech = rel_path.startswith(("vintech/", "en-vintech/")) or rel.name in {"vintech.html", "en-vintech.html"}
         if is_vintech and '/assets/vintech.css' not in new:
