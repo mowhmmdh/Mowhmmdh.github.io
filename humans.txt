@@ -61,3 +61,4 @@ Final runtime audit trigger.
 Final stability pass.
 Lighthouse final verification trigger.
 Final SEO gate trigger.
+Final critical-path validation.
