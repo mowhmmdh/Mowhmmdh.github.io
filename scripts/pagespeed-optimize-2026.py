@@ -93,12 +93,11 @@ changed = []
 # directly; old generated bundles are removed below.
 STABLE_QUALITY_CSS = '/assets/site-final-quality-2026.css'
 PAGE_BUNDLE_RE = re.compile(
-    r"<link\\b[^>]*(?:rel=[\"']preload[\"'][^>]*as=[\"']style[\"'][^>]*|rel=[\"']stylesheet[\"'])"
-    r"[^>]*href=[\"']/assets/page-bundles-2026/[^\"']+[\"'][^>]*>\\s*",
+    r"<link\b[^>]*(?:rel=[\"']preload[\"'][^>]*as=[\"']style[\"'][^>]*|rel=[\"']stylesheet[\"'])[^>]*href=[\"']/assets/page-bundles-2026/[^\"']+[\"'][^>]*>\s*",
     re.I
 )
 PAGE_BUNDLE_NOSCRIPT_RE = re.compile(
-    r"<noscript>\\s*<link\\b[^>]*href=[\"']/assets/page-bundles-2026/[^\"']+[\"'][^>]*>\\s*</noscript>",
+    r"<noscript>\s*<link\b[^>]*href=[\"']/assets/page-bundles-2026/[^\"']+[\"'][^>]*>\s*</noscript>",
     re.I
 )
 
@@ -106,30 +105,26 @@ for page in pages:
     text = page.read_text(encoding='utf-8', errors='replace')
     original = text
 
-    # Remove both the preload and stylesheet forms of obsolete generated bundles.
     text = PAGE_BUNDLE_RE.sub('', text)
     text = PAGE_BUNDLE_NOSCRIPT_RE.sub('', text)
 
-    # Add the stable quality layer once, non-blocking, if the page had a generated bundle.
-    if '/assets/site-final-quality-2026.css' not in text and original.find('/assets/page-bundles-2026/') >= 0:
+    if '/assets/site-final-quality-2026.css' not in text and '/assets/page-bundles-2026/' in original:
         tag = (
             '<link rel="preload" as="style" href="/assets/site-final-quality-2026.css" '
-            'onload="this.onload=null;this.rel=\'stylesheet\'">\\n'
-            '<noscript><link rel="stylesheet" href="/assets/site-final-quality-2026.css"></noscript>\\n'
+            'onload="this.onload=null;this.rel=\'stylesheet\'">\n'
+            '<noscript><link rel="stylesheet" href="/assets/site-final-quality-2026.css"></noscript>\n'
         )
         if '</head>' in text:
             text = text.replace('</head>', tag + '</head>', 1)
 
-    # Remove empty generated noscript placeholders left by older passes.
-    text = re.sub(r'<noscript>\\s*</noscript>', '', text, flags=re.I)
+    text = re.sub(r'<noscript>\s*</noscript>', '', text, flags=re.I)
 
-    # Keep image loading deterministic and avoid duplicate loading attributes.
     image_tags = list(IMG_RE.finditer(text))
     for idx, match in reversed(list(enumerate(image_tags))):
         old = match.group(0)
-        new = re.sub(r'\\sloading=["\\'][^"\\']*["\\']', '', old, flags=re.I)
-        new = re.sub(r'\\sfetchpriority=["\\'][^"\\']*["\\']', '', new, flags=re.I)
-        new = re.sub(r'\\sdecoding=["\\'][^"\\']*["\\']', '', new, flags=re.I)
+        new = re.sub(r'\sloading=["\'][^"\']*["\']', '', old, flags=re.I)
+        new = re.sub(r'\sfetchpriority=["\'][^"\']*["\']', '', new, flags=re.I)
+        new = re.sub(r'\sdecoding=["\'][^"\']*["\']', '', new, flags=re.I)
         if idx == 0:
             new = new[:-1] + ' loading="eager" fetchpriority="high" decoding="async">'
         else:
