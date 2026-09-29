@@ -34,8 +34,7 @@ def canon(a): return [x.get('href','') for x in a if 'canonical' in (x.get('rel'
 def alternates(a): return [(x.get('hreflang','').lower(),x.get('href','')) for x in a if 'alternate' in (x.get('rel') or '').lower().split() and x.get('hreflang')]
 
 def intentionally_noindex(rel):
-    # Utility/conversion request forms can remain out of search results while still being crawlable.
-    return rel in {'vintech/request.html','en-vintech/request.html'}
+    return rel == '404.html'
 
 for p in PAGES:
     rel=p.as_posix(); s=p.read_text(encoding='utf-8',errors='replace'); x=SEO(); x.feed(s)
