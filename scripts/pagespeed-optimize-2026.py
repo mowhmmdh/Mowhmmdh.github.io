@@ -85,84 +85,59 @@ def make_async_stylesheet(tag: str) -> str:
 
 
 pages = sorted(p for p in ROOT.rglob('*.html') if '.git' not in p.parts and '.github' not in p.parts and p.name != '404.html')
-cache: dict[tuple[str, ...], str] = {}
 changed = []
+
+# The first generation of this optimizer accidentally bundled already-generated
+# page bundles into new bundles on every run. That produced recursive CSS files
+# hundreds of KB large. Published pages now use the stable shared stylesheet
+# directly; old generated bundles are removed below.
+STABLE_QUALITY_CSS = '/assets/site-final-quality-2026.css'
+PAGE_BUNDLE_RE = re.compile(
+    r'<link\\b[^>]*(?:rel=["\\']preload["\\'][^>]*as=["\\']style["\\'][^>]*|rel=["\\']stylesheet["\\'])'
+    r'[^>]*href=["\\']/assets/page-bundles-2026/[^"\\']+["\\'][^>]*>\\s*',
+    re.I
+)
+PAGE_BUNDLE_NOSCRIPT_RE = re.compile(
+    r'<noscript>\\s*<link\\b[^>]*href=["\\']/assets/page-bundles-2026/[^"\\']+["\\'][^>]*>\\s*</noscript>',
+    re.I
+)
 
 for page in pages:
     text = page.read_text(encoding='utf-8', errors='replace')
-    tags = CSS_RE.findall(text)
-    is_vintech = page.name in {'vintech.html', 'en-vintech.html'} or 'vintech' in page.parts
+    original = text
 
-    # Keep one canonical base stylesheet. Everything else is folded into one
-    # page bundle, including bundles produced by earlier optimization passes.
-    secondary = []
-    seen = set()
-    text2 = text
-    for tag in tags:
-        href = local_css_href(tag)
-        if not href:
-            continue
-        if href in seen:
-            text2 = text2.replace(tag, '', 1)
-            continue
-        seen.add(href)
-        if href == '/assets/site-bundle.css' or href in EXCLUDED_CSS:
-            continue
-        if is_vintech and href == '/assets/vintech.css':
-            continue
-        secondary.append(href)
+    # Remove both the preload and stylesheet forms of obsolete generated bundles.
+    text = PAGE_BUNDLE_RE.sub('', text)
+    text = PAGE_BUNDLE_NOSCRIPT_RE.sub('', text)
 
-    unique_secondary = tuple(dict.fromkeys(secondary))
-    if unique_secondary:
-        if unique_secondary not in cache:
-            filename = bundle_name(list(unique_secondary))
-            (BUNDLES / filename).write_text(bundle_css(list(unique_secondary)), encoding='utf-8')
-            cache[unique_secondary] = f'/assets/page-bundles-2026/{filename}'
-        bundle_href = cache[unique_secondary]
+    # Add the stable quality layer once, non-blocking, if the page had a generated bundle.
+    if '/assets/site-final-quality-2026.css' not in text and original.find('/assets/page-bundles-2026/') >= 0:
+        tag = (
+            '<link rel="preload" as="style" href="/assets/site-final-quality-2026.css" '
+            'onload="this.onload=null;this.rel=\\'stylesheet\\'">\\n'
+            '<noscript><link rel="stylesheet" href="/assets/site-final-quality-2026.css"></noscript>\\n'
+        )
+        if '</head>' in text:
+            text = text.replace('</head>', tag + '</head>', 1)
 
-        # Replace the first secondary stylesheet with one non-blocking bundle.
-        inserted = False
-        for tag in CSS_RE.findall(text2):
-            href = local_css_href(tag)
-            if href in unique_secondary:
-                if not inserted:
-                    replacement = (
-                        f'<link rel="preload" as="style" href="{bundle_href}" '
-                        f'onload="this.onload=null;this.rel=\'stylesheet\'">'
-                        f'\n<noscript><link rel="stylesheet" href="{bundle_href}"></noscript>'
-                    )
-                    text2 = text2.replace(tag, replacement, 1)
-                    inserted = True
-                else:
-                    text2 = text2.replace(tag, '', 1)
+    # Remove empty generated noscript placeholders left by older passes.
+    text = re.sub(r'<noscript>\\s*</noscript>', '', text, flags=re.I)
 
-    # VinTech CSS is retained for repository rules but loaded without blocking first paint.
-    if is_vintech and '/assets/vintech.css' not in text2 and '</head>' in text2:
-        text2 = text2.replace('</head>', '<link rel="stylesheet" href="/assets/vintech.css">\n</head>', 1)
-
-    if is_vintech and 'rel="preload" as="style"' not in text2:
-        for tag in list(CSS_RE.findall(text2)):
-            href = local_css_href(tag)
-            if href == '/assets/vintech.css' and 'preload' not in tag.lower():
-                text2 = text2.replace(tag, make_async_stylesheet(tag), 1)
-                break
-
-    # Images: first content image is eager; all later images are lazy.
-    # Normalize attributes idempotently so repeated runs never duplicate loading/decoding attributes.
-    image_tags = list(IMG_RE.finditer(text2))
+    # Keep image loading deterministic and avoid duplicate loading attributes.
+    image_tags = list(IMG_RE.finditer(text))
     for idx, match in reversed(list(enumerate(image_tags))):
         old = match.group(0)
-        new = re.sub(r'\sloading=["\'][^"\']*["\']', '', old, flags=re.I)
-        new = re.sub(r'\sfetchpriority=["\'][^"\']*["\']', '', new, flags=re.I)
-        new = re.sub(r'\sdecoding=["\'][^"\']*["\']', '', new, flags=re.I)
+        new = re.sub(r'\\sloading=["\\'][^"\\']*["\\']', '', old, flags=re.I)
+        new = re.sub(r'\\sfetchpriority=["\\'][^"\\']*["\\']', '', new, flags=re.I)
+        new = re.sub(r'\\sdecoding=["\\'][^"\\']*["\\']', '', new, flags=re.I)
         if idx == 0:
             new = new[:-1] + ' loading="eager" fetchpriority="high" decoding="async">'
         else:
             new = new[:-1] + ' loading="lazy" decoding="async">'
         if new != old:
-            text2 = text2[:match.start()] + new + text2[match.end():]
+            text = text[:match.start()] + new + text[match.end():]
 
-    # Defer local scripts unless the page already controls their scheduling.
+    # Defer local scripts unless the page already controls scheduling.
     def defer_script(m: re.Match[str]) -> str:
         tag = m.group(0)
         low = tag.lower()
@@ -170,11 +145,21 @@ for page in pages:
             return tag
         return tag[:-1] + ' defer>'
 
-    text2 = SCRIPT_RE.sub(defer_script, text2)
+    text = SCRIPT_RE.sub(defer_script, text)
 
-    if text2 != text:
-        page.write_text(text2, encoding='utf-8')
+    if text != original:
+        page.write_text(text, encoding='utf-8')
         changed.append(page.as_posix())
+
+# Delete every obsolete generated page bundle. They are not part of the source
+# design system and were the cause of recursive CSS growth.
+if BUNDLES.exists():
+    for old_bundle in BUNDLES.glob('*.css'):
+        old_bundle.unlink()
+    try:
+        BUNDLES.rmdir()
+    except OSError:
+        pass
 
 # Generate a complete image sitemap from crawlable image references.
 from xml.sax.saxutils import escape as xml_escape
@@ -183,14 +168,14 @@ for page in pages:
     s = page.read_text(encoding='utf-8', errors='replace')
     page_url = 'https://mowhmmdh.github.io/' if page.name == 'index.html' else 'https://mowhmmdh.github.io/' + page.relative_to(ROOT).as_posix().replace('/index.html','/')
     for tag in IMG_RE.findall(s):
-        srcm = re.search(r'\bsrc=["\']([^"\']+)["\']', tag, re.I)
+        srcm = re.search(r'\\bsrc=["\\']([^"\\']+)["\\']', tag, re.I)
         if not srcm: continue
         src = srcm.group(1).strip()
         if src.startswith('data:'): continue
         if src.startswith('/'): src = 'https://mowhmmdh.github.io' + src
         elif not src.startswith(('http://','https://')): continue
-        if not re.search(r'\.(?:avif|webp|jpg|jpeg|png|gif|svg)(?:[?#].*)?$', src, re.I): continue
-        altm = re.search(r'\balt=["\']([^"\']*)["\']', tag, re.I)
+        if not re.search(r'\\.(?:avif|webp|jpg|jpeg|png|gif|svg)(?:[?#].*)?$', src, re.I): continue
+        altm = re.search(r'\\balt=["\\']([^"\\']*)["\\']', tag, re.I)
         title = altm.group(1).strip() if altm and altm.group(1).strip() else ''
         grouped.setdefault(page_url, [])
         if (src,title) not in grouped[page_url]: grouped[page_url].append((src,title))
@@ -210,18 +195,13 @@ for page in pages:
     if not is_vintech:
         continue
     text = page.read_text(encoding='utf-8', errors='replace')
-    link_re = re.compile(r"\s*<link\b[^>]*href=[\"']/assets/vintech\.css[\"'][^>]*>\s*", re.I)
+    link_re = re.compile(r"\\s*<link\\b[^>]*href=[\\"']/assets/vintech\\.css[\\"'][^>]*>\\s*", re.I)
     links = list(link_re.finditer(text))
     if not links:
         if '</head>' in text.lower():
-            text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\n</head>', text, count=1, flags=re.I)
+            text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', text, count=1, flags=re.I)
     elif len(links) > 1:
-        first = links[0].group(0)
-        text = text[:links[0].start()] + first + text[links[0].end():]
         text = link_re.sub('', text)
-        text = text.replace(first, first, 1)
-        # Rebuild deterministically after dedupe.
-        text = re.sub(r"\s*<link\b[^>]*href=[\"']/assets/vintech\.css[\"'][^>]*>\s*", "\n", text, flags=re.I)
         text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', text, count=1, flags=re.I)
     page.write_text(text, encoding='utf-8')
 
