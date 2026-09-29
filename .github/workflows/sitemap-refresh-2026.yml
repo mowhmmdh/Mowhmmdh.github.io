@@ -83,7 +83,8 @@ jobs:
               Path('sitemap.xml').write_text(body,encoding='utf-8')
               git add sitemap.xml
               git commit -m 'chore(seo): refresh sitemap from published pages [skip ci]' || true
-            fi
+            PY
+              fi
             sleep 2
           done
           echo 'Failed to push sitemap after three attempts.'
