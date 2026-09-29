@@ -114,7 +114,7 @@ for page in pages:
     if '/assets/site-final-quality-2026.css' not in text and original.find('/assets/page-bundles-2026/') >= 0:
         tag = (
             '<link rel="preload" as="style" href="/assets/site-final-quality-2026.css" '
-            'onload="this.onload=null;this.rel=\\'stylesheet\\'">\\n'
+            'onload="this.onload=null;this.rel=\'stylesheet\'">\\n'
             '<noscript><link rel="stylesheet" href="/assets/site-final-quality-2026.css"></noscript>\\n'
         )
         if '</head>' in text:
