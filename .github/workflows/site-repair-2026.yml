@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: site-repair-main
-  cancel-in-progress: true
+  group: site-mutating-main
+  queue: max
 
 jobs:
   repair:
