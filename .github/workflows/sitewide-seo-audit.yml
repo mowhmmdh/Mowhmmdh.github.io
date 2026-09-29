@@ -9,8 +9,8 @@ on:
   workflow_dispatch:
 
 concurrency:
-  group: site-mutating-${{ github.ref }}
-  cancel-in-progress: false
+  group: site-mutating-main
+  queue: max
 
 permissions:
   contents: write
