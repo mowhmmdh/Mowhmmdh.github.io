@@ -78,7 +78,17 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           for attempt in 1 2 3 4; do
             git fetch origin main
-            git reset --soft origin/main
+            git reset --hard origin/main
+            python3 scripts/identity-sync-2026.py
+            python3 scripts/site-integrity-fix.py
+            python3 tools/seo_sync.py
+            python3 scripts/seo-growth-fix.py
+            python3 scripts/content-growth-sync.py
+            python3 tools/discovery_sync.py
+            python3 scripts/identity-sync-2026.py
+            python3 scripts/site-integrity-fix.py
+            python3 scripts/seo-deep-audit.py
+            python3 scripts/canonical-finalize.py
             git add -A
             if git diff --cached --quiet; then
               echo "No staged changes needed."
