@@ -69,7 +69,7 @@ def ensure_discovery_meta(text, rel):
     def meta_prop(prop, content):
         nonlocal text
         if not re.search(r"<meta\s+[^>]*property=[\"']" + re.escape(prop) + r"[\"']", text, re.I):
-            text = add_head(text, '<meta property="' + prop + '" content="' + html.escape(content, quote=True) + '">')
+            text = add_head(text, '<meta property="' + prop + '" content="' + escape(content, quote=True) + '">')
     meta_name("author", FA_NAME)
     meta_name("referrer", "strict-origin-when-cross-origin")
     meta_name("theme-color", "#071019")
@@ -95,6 +95,7 @@ def ensure_quality(text):
     # Secondary CSS is merged into site-bundle.css to keep the critical path small.
     # Remove legacy standalone links so CI cannot reintroduce render-blocking requests.
     text = re.sub(r'\s*<link\s+[^>]*href=["\']/assets/(?:site-quality-2026|unified-ui-2026|conversion-monetization-2026|page-experience-2026|site-master-2026|social-fix-2026|site-final-fix-2026|navigation-fix-2026)\.css["\'][^>]*>', '', text, flags=re.I)
+    text = re.sub(r'<noscript>\s*</noscript>', '', text, flags=re.I)
     return text
 
 def ensure_identity(text):
