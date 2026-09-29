@@ -67,40 +67,19 @@ jobs:
       - name: Absolute final identity sanitizer
         run: python3 scripts/canonical-finalize.py
       - name: Commit synchronized SEO metadata and content navigation
-        shell: bash
         run: |
-          set -euo pipefail
           if git diff --quiet; then
             echo "No SEO/content synchronization changes needed."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for attempt in 1 2 3 4; do
-            git fetch origin main
-            git reset --soft origin/main
-            git add -A
-            if git diff --cached --quiet; then
-              echo "No staged changes needed."
-              exit 0
-            fi
-            git commit -m "chore(seo): normalize identity and strengthen site integrity [skip ci]"
-            if git push origin HEAD:main; then
-              exit 0
-            fi
-            git reset --hard origin/main
-            sleep 3
-            # Re-run the deterministic synchronization pipeline on the fresh main.
-            python3 scripts/identity-sync-2026.py
-            python3 scripts/site-integrity-fix.py
-            python3 tools/seo_sync.py
-            python3 scripts/seo-growth-fix.py
-            python3 scripts/content-growth-sync.py
-            python3 tools/discovery_sync.py
-            python3 scripts/identity-sync-2026.py
-            python3 scripts/site-integrity-fix.py
-            python3 scripts/seo-deep-audit.py
-            python3 scripts/canonical-finalize.py
-          done
-          echo "Failed to push synchronized SEO changes after four attempts."
-          exit 1
+          git fetch origin main
+          git reset --soft origin/main
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No staged changes needed."
+            exit 0
+          fi
+          git commit -m "chore(seo): normalize identity and strengthen site integrity [skip ci]"
+          git push origin HEAD:main
