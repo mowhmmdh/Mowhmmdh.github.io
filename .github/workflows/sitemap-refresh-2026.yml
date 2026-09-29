@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: sitemap-main
-  cancel-in-progress: false
+  group: site-mutating-main
+  queue: max
 
 jobs:
   sitemap:
