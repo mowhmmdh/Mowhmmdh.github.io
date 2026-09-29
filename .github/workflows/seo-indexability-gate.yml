@@ -21,7 +21,7 @@ jobs:
           errors=[]
           warnings=[]
           pages=[]
-          intentional_noindex={'vintech/request.html','en-vintech/request.html'}
+          intentional_noindex={'404.html'}
           for p in sorted(Path('.').rglob('*.html')):
               if '.git' in p.parts or p.name == '404.html':
                   continue
