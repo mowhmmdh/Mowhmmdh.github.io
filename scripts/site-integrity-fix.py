@@ -83,6 +83,62 @@ def ensure_profile_identity(text,path):
         if 'name="twitter:image:alt"' not in text:
             text=text.replace('</head>',f'<meta name="twitter:image:alt" content="{name} | Network & Infrastructure Specialist">\n</head>',1)
     return text
+IMAGE_LICENSE_URL = BASE + '/terms.html#image-license'
+IMAGE_ACQUIRE_URL = BASE + '/disclosure.html#image-license'
+IMAGE_CREDIT = FULL_EN
+IMAGE_COPYRIGHT = '© 2026 Mohammad Hossein Asgari Somarin. All rights reserved.'
+
+def enhance_image_metadata(text):
+    """Complete Schema.org ImageObject rights metadata for Google Images."""
+    def repl(m):
+        raw = m.group(2).strip()
+        try:
+            data = json.loads(raw)
+        except Exception:
+            return m.group(0)
+
+        changed = False
+
+        def walk(value):
+            nonlocal changed
+            if isinstance(value, dict):
+                typ = value.get('@type')
+                types = typ if isinstance(typ, list) else [typ]
+                if 'ImageObject' in types:
+                    defaults = {
+                        'license': IMAGE_LICENSE_URL,
+                        'acquireLicensePage': IMAGE_ACQUIRE_URL,
+                        'creditText': IMAGE_CREDIT,
+                        'copyrightNotice': IMAGE_COPYRIGHT,
+                    }
+                    for key, default in defaults.items():
+                        if not value.get(key):
+                            value[key] = default
+                            changed = True
+                    if not value.get('creator'):
+                        value['creator'] = {
+                            '@type': 'Person',
+                            'name': FULL_EN,
+                            'url': BASE + '/'
+                        }
+                        changed = True
+                    if not value.get('copyrightYear'):
+                        value['copyrightYear'] = 2026
+                        changed = True
+                for item in value.values():
+                    walk(item)
+            elif isinstance(value, list):
+                for item in value:
+                    walk(item)
+
+        walk(data)
+        if not changed:
+            return m.group(0)
+        return m.group(1) + json.dumps(data, ensure_ascii=False, separators=(',', ':')) + m.group(3)
+
+    return JSONLD.sub(repl, text)
+
+
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
     tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\'][^>]*content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\'][^>]*href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
