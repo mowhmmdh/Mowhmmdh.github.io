@@ -187,6 +187,9 @@ for path in sorted(ROOT.rglob('*')):
     text=normalize_identity(original)
     if path.suffix.lower()=='.html':
         text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=enhance_image_metadata(text); text=ensure_profile_image_rights(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
+        text=text.replace('/assets/mha-final-interaction-2026.js','/assets/interaction-2026.js')
+        text=re.sub(r'\s*<link\b[^>]*href=["\']/assets/mha-final-ui-2026\.css["\'][^>]*>\s*','',text,flags=re.I)
+        text=re.sub(r'<style>\s*@font-face\{font-family:InterLocal;src:url\(["\']?/fonts/Inter-Regular\.woff2[^}]+\}\s*body\{font-family:InterLocal,Inter,system-ui,sans-serif\}', '<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}', text, flags=re.I)
         is_vt=path.name in {'vintech.html','en-vintech.html'} or any('vintech' in part for part in path.parts)
         # Repair literal HTML escape artifacts before running structural normalizers.
         if path.suffix.lower()=='.html':
