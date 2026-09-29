@@ -64,11 +64,11 @@ def ensure_discovery_meta(text, rel):
     url = canonical_for(rel)
     def meta_name(name, content):
         nonlocal text
-        if not re.search(r'<meta\s+[^>]*name=["\\']' + re.escape(name) + r'["\\']', text, re.I):
+        if not re.search(r"<meta\s+[^>]*name=[\"']" + re.escape(name) + r"[\"']", text, re.I):
             text = add_head(text, '<meta name="' + name + '" content="' + escape(content, quote=True) + '">')
     def meta_prop(prop, content):
         nonlocal text
-        if not re.search(r'<meta\s+[^>]*property=["\\']' + re.escape(prop) + r'["\\']', text, re.I):
+        if not re.search(r"<meta\s+[^>]*property=[\"']" + re.escape(prop) + r"[\"']", text, re.I):
             text = add_head(text, '<meta property="' + prop + '" content="' + html.escape(content, quote=True) + '">')
     meta_name("author", FA_NAME)
     meta_name("referrer", "strict-origin-when-cross-origin")
