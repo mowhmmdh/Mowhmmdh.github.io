@@ -64,17 +64,17 @@ def ensure_discovery_meta(text, rel):
     url = canonical_for(rel)
     def meta_name(name, content):
         nonlocal text
-        if not re.search(r'<meta\\s+[^>]*name=["\\']' + re.escape(name) + r'["\\']', text, re.I):
+        if not re.search(r'<meta\s+[^>]*name=["\\']' + re.escape(name) + r'["\\']', text, re.I):
             text = add_head(text, '<meta name="' + name + '" content="' + escape(content, quote=True) + '">')
     def meta_prop(prop, content):
         nonlocal text
-        if not re.search(r'<meta\\s+[^>]*property=["\\']' + re.escape(prop) + r'["\\']', text, re.I):
+        if not re.search(r'<meta\s+[^>]*property=["\\']' + re.escape(prop) + r'["\\']', text, re.I):
             text = add_head(text, '<meta property="' + prop + '" content="' + html.escape(content, quote=True) + '">')
     meta_name("author", FA_NAME)
     meta_name("referrer", "strict-origin-when-cross-origin")
     meta_name("theme-color", "#071019")
     image = None
-    m = re.search(r'<meta\\s+[^>]*property=["\\']og:image["\\'][^>]*content=["\\']([^"\\']+)', text, re.I)
+    m = re.search(r'<meta\s+[^>]*property=["\\']og:image["\\'][^>]*content=["\\']([^"\\']+)', text, re.I)
     if m: image = m.group(1)
     if not image: image = BASE + "/images/profile.webp"
     meta_prop("og:type", "article" if rel.as_posix().startswith(("blog/", "en-blog/")) else "website")
