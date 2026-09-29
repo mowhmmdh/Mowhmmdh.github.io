@@ -35,7 +35,8 @@ def equivalent(p):
         'en-projects.html':'projects.html','services.html':'en-services.html','en-services.html':'services.html',
         'press.html':'en-press.html','en-press.html':'press.html','linkedin.html':'en-linkedin.html',
         'en-linkedin.html':'linkedin.html','blog/index.html':'en-blog.html','en-blog.html':'blog/index.html',
-        'vintech.html':'en-vintech.html','en-vintech.html':'vintech.html'
+        'vintech.html':'en-vintech.html','en-vintech.html':'vintech.html',
+        'vintech/request.html':'en-vintech/request.html','en-vintech/request.html':'vintech/request.html'
     }
     if r in pairs: return html_url(Path(pairs[r]))
     if r == 'vintech/insights/index.html': return BASE + '/en-vintech/insights/'
@@ -56,7 +57,6 @@ def process(t, p):
     direction = 'ltr' if lang == 'en' else 'rtl'
     rel = p.as_posix()
     is_vt = rel.startswith(('vintech/', 'en-vintech/')) or p.name in {'vintech.html', 'en-vintech.html'}
-    is_request = rel in {'vintech/request.html', 'en-vintech/request.html'}
 
     t = re.sub(r'<html\b([^>]*)>', lambda m: '<html' + re.sub(r'\s(?:lang|dir)=["\'][^"\']*["\']', '', m.group(1), flags=re.I) + f' lang="{lang}" dir="{direction}">', t, count=1, flags=re.I)
     t = re.sub(r'<link\s+rel=["\']canonical["\'][^>]*>', '', t, flags=re.I)
@@ -73,7 +73,7 @@ def process(t, p):
 
     t = meta(t, 'theme-color', '#0b1220')
     t = meta(t, 'referrer', 'strict-origin-when-cross-origin')
-    t = meta(t, 'robots', 'noindex,follow' if p.name == '404.html' or is_request else 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1')
+    t = meta(t, 'robots', 'noindex,follow' if p.name == '404.html' else 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1')
     if p.name != '404.html':
         t = t.replace('</head>', f'<link rel="canonical" href="{html_url(p)}"></head>', 1)
         alt = equivalent(p)
