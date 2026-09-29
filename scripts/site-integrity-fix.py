@@ -142,6 +142,31 @@ def enhance_image_metadata(text):
     return JSONLD.sub(repl, text)
 
 
+def ensure_profile_image_rights(text):
+    """Attach Google Images licensing metadata to the profile image on every page where it appears."""
+    profile_url=BASE + '/images/profile.webp'
+    if profile_url not in text or '"#image-rights"' in text:
+        return text
+    block=(
+        '<script type="application/ld+json">' +
+        json.dumps({
+            '@context':'https://schema.org',
+            '@type':'ImageObject',
+            '@id':profile_url + '#image-rights',
+            'contentUrl':profile_url,
+            'url':profile_url,
+            'license':IMAGE_LICENSE_URL,
+            'acquireLicensePage':IMAGE_ACQUIRE_URL,
+            'creditText':IMAGE_CREDIT,
+            'copyrightNotice':IMAGE_COPYRIGHT,
+            'creator':{'@type':'Person','name':FULL_EN,'url':BASE+'/'},
+            'copyrightYear':2026
+        }, ensure_ascii=False, separators=(',',':')) +
+        '</script>'
+    )
+    return text.replace('</head>', block + '\n</head>', 1) if '</head>' in text.lower() else text
+
+
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
     tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\'][^>]*content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\'][^>]*href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
