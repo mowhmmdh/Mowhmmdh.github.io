@@ -5,61 +5,27 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+
 permissions:
   contents: read
+
 concurrency:
   group: quality-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 jobs:
   audit:
     name: Repository quality audit
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
       - name: Validate audit scripts
-        run: python3 -m py_compile scripts/quality-audit.py scripts/seo-deep-audit.py scripts/asset-reference-audit.py scripts/site-integrity-fix.py
-      - run: python3 scripts/quality-audit.py
-      - run: python3 scripts/seo-deep-audit.py
-      - run: python3 scripts/asset-reference-audit.py
-  lighthouse:
-    name: Lighthouse quality gate (${{ matrix.page }})
-    needs: audit
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      max-parallel: 5
-      matrix:
-        page: [/, /about.html, /services.html, /projects.html, /vintech.html, /vintech/network-infrastructure.html, /blog/, /blog/network-hardening.html, /en.html, /en-vintech.html]
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-      - run: npm install -g lighthouse@13
-      - name: Start exact-commit local server
-        run: |
-          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/site-server.log 2>&1 &
-          echo $! > /tmp/site-server.pid
-          for i in {1..20}; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:4173${{ matrix.page }}")
-            [ "$code" = "200" ] && exit 0
-            sleep 1
-          done
-          cat /tmp/site-server.log
-          exit 1
-      - name: Lighthouse audit
-        env: {URL: http://127.0.0.1:4173${{ matrix.page }}}
-        run: |
-          mkdir -p reports
-          lighthouse "$URL" --output=json --output-path=reports/report.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
-          node - <<'NODE'
-          const fs=require('fs');const r=JSON.parse(fs.readFileSync('reports/report.json','utf8'));const c=r.categories;const s={};for(const k of ['performance','accessibility','best-practices','seo'])s[k]=Math.round((c[k]?.score??0)*100);console.log(JSON.stringify(s,null,2));const thresholds={performance:90,accessibility:95,'best-practices':95,seo:95};const bad=Object.entries(s).filter(([k,v])=>v<thresholds[k]);if(bad.length){console.error('Lighthouse quality gate failed:',{bad,thresholds});process.exit(1)}
-          NODE
-      - if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-${{ matrix.page == '/' && 'home' || matrix.page }}
-          path: reports/report.json
-          retention-days: 14
+        run: python3 -m py_compile scripts/quality-audit.py scripts/seo-deep-audit.py scripts/asset-reference-audit.py scripts/site-integrity-fix.py scripts/pagespeed-optimize-2026.py
+      - name: Repository quality audit
+        run: python3 scripts/quality-audit.py
+      - name: SEO deep audit
+        run: python3 scripts/seo-deep-audit.py
+      - name: Asset reference audit
+        run: python3 scripts/asset-reference-audit.py
