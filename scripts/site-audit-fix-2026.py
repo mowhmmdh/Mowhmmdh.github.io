@@ -294,5 +294,11 @@ lines = [
 ]
 lines.extend(f"- {x}" for x in changed)
 lines.append("")
+lines.append("## Hard errors")
+if audit_issues:
+    lines.extend(f"- {x}" for x in audit_issues)
+else:
+    lines.append("- None")
+lines.append("")
 report.write_text("\n".join(lines), encoding="utf-8")
 print(f"Changed {len(changed)} HTML files; wrote {report.relative_to(ROOT)}")
