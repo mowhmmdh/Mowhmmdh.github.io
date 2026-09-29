@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: sitewide-seo-visual-main
-  cancel-in-progress: true
+  group: site-mutating-main
+  queue: max
 
 jobs:
   sync:
