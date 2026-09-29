@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: site-content-main
-  cancel-in-progress: true
+  group: site-mutating-main
+  queue: max
 
 jobs:
   sync:
