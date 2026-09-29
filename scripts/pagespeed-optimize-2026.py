@@ -93,12 +93,12 @@ changed = []
 # directly; old generated bundles are removed below.
 STABLE_QUALITY_CSS = '/assets/site-final-quality-2026.css'
 PAGE_BUNDLE_RE = re.compile(
-    r'<link\\b[^>]*(?:rel=["\\']preload["\\'][^>]*as=["\\']style["\\'][^>]*|rel=["\\']stylesheet["\\'])'
-    r'[^>]*href=["\\']/assets/page-bundles-2026/[^"\\']+["\\'][^>]*>\\s*',
+    r"<link\\b[^>]*(?:rel=[\"']preload[\"'][^>]*as=[\"']style[\"'][^>]*|rel=[\"']stylesheet[\"'])"
+    r"[^>]*href=[\"']/assets/page-bundles-2026/[^\"']+[\"'][^>]*>\\s*",
     re.I
 )
 PAGE_BUNDLE_NOSCRIPT_RE = re.compile(
-    r'<noscript>\\s*<link\\b[^>]*href=["\\']/assets/page-bundles-2026/[^"\\']+["\\'][^>]*>\\s*</noscript>',
+    r"<noscript>\\s*<link\\b[^>]*href=[\"']/assets/page-bundles-2026/[^\"']+[\"'][^>]*>\\s*</noscript>",
     re.I
 )
 
