@@ -163,25 +163,37 @@ for page in pages:
     s = page.read_text(encoding='utf-8', errors='replace')
     page_url = 'https://mowhmmdh.github.io/' if page.name == 'index.html' else 'https://mowhmmdh.github.io/' + page.relative_to(ROOT).as_posix().replace('/index.html','/')
     for tag in IMG_RE.findall(s):
-        srcm = re.search(r'\\bsrc=["\\']([^"\\']+)["\\']', tag, re.I)
-        if not srcm: continue
+        srcm = re.search(r"\bsrc=[\"']([^\"']+)[\"']", tag, re.I)
+        if not srcm:
+            continue
         src = srcm.group(1).strip()
-        if src.startswith('data:'): continue
-        if src.startswith('/'): src = 'https://mowhmmdh.github.io' + src
-        elif not src.startswith(('http://','https://')): continue
-        if not re.search(r'\\.(?:avif|webp|jpg|jpeg|png|gif|svg)(?:[?#].*)?$', src, re.I): continue
-        altm = re.search(r'\\balt=["\\']([^"\\']*)["\\']', tag, re.I)
+        if src.startswith('data:'):
+            continue
+        if src.startswith('/'):
+            src = 'https://mowhmmdh.github.io' + src
+        elif not src.startswith(('http://','https://')):
+            continue
+        if not re.search(r"\.(?:avif|webp|jpg|jpeg|png|gif|svg)(?:[?#].*)?$", src, re.I):
+            continue
+        altm = re.search(r"\balt=[\"']([^\"']*)[\"']", tag, re.I)
         title = altm.group(1).strip() if altm and altm.group(1).strip() else ''
         grouped.setdefault(page_url, [])
-        if (src,title) not in grouped[page_url]: grouped[page_url].append((src,title))
-parts=['<?xml version="1.0" encoding="UTF-8"?>','<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">']
-for page_url,imgs in sorted(grouped.items()):
-    parts.append('<url><loc>'+xml_escape(page_url)+'</loc>')
-    for src,title in imgs:
-        parts.append('<image:image><image:loc>'+xml_escape(src)+'</image:loc>'+('<image:title>'+xml_escape(title)+'</image:title>' if title else '')+'</image:image>')
+        if (src, title) not in grouped[page_url]:
+            grouped[page_url].append((src, title))
+
+parts = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">'
+]
+for page_url, imgs in sorted(grouped.items()):
+    parts.append('<url><loc>' + xml_escape(page_url) + '</loc>')
+    for src, title in imgs:
+        parts.append('<image:image><image:loc>' + xml_escape(src) + '</image:loc>' +
+                     ('<image:title>' + xml_escape(title) + '</image:title>' if title else '') +
+                     '</image:image>')
     parts.append('</url>')
 parts.append('</urlset>')
-(ROOT/'image-sitemap.xml').write_text(''.join(parts),encoding='utf-8')
+(ROOT / 'image-sitemap.xml').write_text(''.join(parts), encoding='utf-8')
 
 # Final invariant: VinTech pages must retain exactly one direct VinTech stylesheet.
 for page in pages:
@@ -190,7 +202,7 @@ for page in pages:
     if not is_vintech:
         continue
     text = page.read_text(encoding='utf-8', errors='replace')
-    link_re = re.compile(r"\\s*<link\\b[^>]*href=[\\"']/assets/vintech\\.css[\\"'][^>]*>\\s*", re.I)
+    link_re = re.compile(r"\s*<link\b[^>]*href=[\"']/assets/vintech\.css[\"'][^>]*>\s*", re.I)
     links = list(link_re.finditer(text))
     if not links:
         if '</head>' in text.lower():
@@ -200,6 +212,9 @@ for page in pages:
         text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', text, count=1, flags=re.I)
     page.write_text(text, encoding='utf-8')
 
+print(f'Pages checked: {len(pages)}')
+print(f'Pages changed: {len(changed)}')
+print('Generated page bundles: 0 (legacy recursive bundles removed)')
 print(f'Pages checked: {len(pages)}')
 print(f'Pages changed: {len(changed)}')
 print(f'Unique secondary CSS bundles: {len(cache)}')
