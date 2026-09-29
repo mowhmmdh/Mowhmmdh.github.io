@@ -74,7 +74,7 @@ def ensure_discovery_meta(text, rel):
     meta_name("referrer", "strict-origin-when-cross-origin")
     meta_name("theme-color", "#071019")
     image = None
-    m = re.search(r'<meta\s+[^>]*property=["\\']og:image["\\'][^>]*content=["\\']([^"\\']+)', text, re.I)
+    m = re.search(r"<meta\s+[^>]*property=[\"']og:image[\"'][^>]*content=[\"']([^\"']+)", text, re.I)
     if m: image = m.group(1)
     if not image: image = BASE + "/images/profile.webp"
     meta_prop("og:type", "article" if rel.as_posix().startswith(("blog/", "en-blog/")) else "website")
