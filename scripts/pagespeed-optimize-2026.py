@@ -214,14 +214,14 @@ for page in pages:
     links = list(link_re.finditer(text))
     if not links:
         if '</head>' in text.lower():
-            text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', text, count=1, flags=re.I)
+            text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\n</head>', text, count=1, flags=re.I)
     elif len(links) > 1:
         first = links[0].group(0)
         text = text[:links[0].start()] + first + text[links[0].end():]
         text = link_re.sub('', text)
         text = text.replace(first, first, 1)
         # Rebuild deterministically after dedupe.
-        text = re.sub(r'\\s*<link\\b[^>]*href=["\\']/assets/vintech\\.css["\\'][^>]*>\\s*', '\\n', text, flags=re.I)
+        text = re.sub(r"\s*<link\b[^>]*href=[\"']/assets/vintech\.css[\"'][^>]*>\s*", "\n", text, flags=re.I)
         text = re.sub(r'</head>', '<link rel="stylesheet" href="/assets/vintech.css">\\n</head>', text, count=1, flags=re.I)
     page.write_text(text, encoding='utf-8')
 
