@@ -186,7 +186,7 @@ for path in sorted(ROOT.rglob('*')):
     except Exception: continue
     text=normalize_identity(original)
     if path.suffix.lower()=='.html':
-        text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
+        text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=enhance_image_metadata(text); text=ensure_profile_image_rights(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
         is_vt=path.name in {'vintech.html','en-vintech.html'} or any('vintech' in part for part in path.parts)
         # Repair literal HTML escape artifacts before running structural normalizers.
         if path.suffix.lower()=='.html':
