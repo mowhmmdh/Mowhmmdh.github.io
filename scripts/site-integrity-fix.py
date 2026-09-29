@@ -64,11 +64,10 @@ def ensure_profile_identity(text,path):
     if path.suffix.lower()!='.html': return text
     rel=path.as_posix()
     targets={'about.html','en-about.html','authority.html','en-authority.html'}
-    if rel not in targets: return text
-    # The homepage is not a valid ProfilePage use case; keep profile markup on dedicated profile surfaces.
+    profile_pattern=r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{\s*["\']@context["\']\s*:\s*["\']https://schema\.org["\']\s*,\s*["\']@type["\']\s*:\s*["\']ProfilePage["\'].*?</script>'
+    # ProfilePage is valid for dedicated person/profile surfaces, not the homepage.
     if rel not in targets:
-        text=re.sub(r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{\s*["\']@context["\']\s*:\s*["\']https://schema\.org["\']\s*,\s*["\']@type["\']\s*:\s*["\']ProfilePage["\'].*?</script>', '', text, flags=re.I|re.S)
-        return text
+        return re.sub(profile_pattern, '', text, flags=re.I|re.S)
     is_en=rel.startswith('en-')
     name='Mohammad Hossein Asgari Somarin' if is_en else 'محمدحسین عسگری ثمرین'
     profile_url=BASE+'/en-about.html' if is_en else BASE+'/about.html'
