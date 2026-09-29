@@ -63,9 +63,13 @@ def ensure_vin_js(text):
 def ensure_profile_identity(text,path):
     if path.suffix.lower()!='.html': return text
     rel=path.as_posix()
-    targets={'index.html','about.html','en-about.html','authority.html','en-authority.html','en.html'}
+    targets={'about.html','en-about.html','authority.html','en-authority.html'}
     if rel not in targets: return text
-    is_en=rel.startswith('en-') or rel=='en.html'
+    # The homepage is not a valid ProfilePage use case; keep profile markup on dedicated profile surfaces.
+    if rel not in targets:
+        text=re.sub(r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{\s*["\']@context["\']\s*:\s*["\']https://schema\.org["\']\s*,\s*["\']@type["\']\s*:\s*["\']ProfilePage["\'].*?</script>', '', text, flags=re.I|re.S)
+        return text
+    is_en=rel.startswith('en-')
     name='Mohammad Hossein Asgari Somarin' if is_en else 'محمدحسین عسگری ثمرین'
     profile_url=BASE+'/en-about.html' if is_en else BASE+'/about.html'
 
