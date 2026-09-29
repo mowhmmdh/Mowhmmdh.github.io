@@ -210,7 +210,7 @@ for page in pages:
     if not is_vintech:
         continue
     text = page.read_text(encoding='utf-8', errors='replace')
-    link_re = re.compile(r'\s*<link\\b[^>]*href=["\\']/assets/vintech\\.css["\\'][^>]*>\\s*', re.I)
+    link_re = re.compile(r"\s*<link\b[^>]*href=[\"']/assets/vintech\.css[\"'][^>]*>\s*", re.I)
     links = list(link_re.finditer(text))
     if not links:
         if '</head>' in text.lower():
