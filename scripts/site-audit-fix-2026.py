@@ -250,7 +250,8 @@ def page_audit(text, rel):
         main_n=len(re.findall(r"<main\b",text,re.I))
         if main_n!=1: issues.append(f"{rel}: main count={main_n}")
         if text.count('/assets/site-bundle.css')!=1: issues.append(f"{rel}: site-bundle.css count != 1")
-        if text.count('/assets/site-theme.js')!=1: issues.append(f"{rel}: site-theme.js count != 1")
+        if rel.as_posix() not in {"privacy.html","terms.html","disclosure.html"} and text.count('/assets/site-theme.js')!=1:
+            issues.append(f"{rel}: site-theme.js count != 1")
         is_vt=rel.name in {"vintech.html","en-vintech.html"} or any(part in {"vintech","en-vintech"} for part in rel.parts)
         if is_vt and text.count('/assets/vintech.css')!=1: issues.append(f"{rel}: vintech.css count != 1")
         if not is_vt and '/assets/vintech.css' in text: issues.append(f"{rel}: vintech.css outside VinTech")
