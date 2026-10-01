@@ -914,3 +914,39 @@ footer,.site-footer,.footer,.vt-footer,.mh-footer{border-top-color:var(--adv-bor
 @media(prefers-reduced-motion:reduce){
   *,*:before,*:after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}
 }
+
+
+/* 2026-10 responsive + SEO hardening pass */
+html{overflow-x:clip}
+body{overflow-x:clip}
+.container,.site-wrap,.wrap,.vt-container,.en-page{min-width:0}
+main,section,article,header,footer,nav,div{min-width:0}
+img,video,iframe,svg{max-width:100%}
+pre,code{max-width:100%}
+pre{white-space:pre;overflow-x:auto;-webkit-overflow-scrolling:touch}
+table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+/* Prevent desktop-width components from creating mobile horizontal scroll. */
+@media(max-width:760px){
+  .site-wrap,.wrap,.vt-container,.en-page{width:calc(100% - 24px)!important;max-width:none!important}
+  .site-nav,.nav,.about-nav,.en-nav,.vt-nav{position:relative;gap:8px}
+  .brand{min-width:0;max-width:calc(100% - 105px);overflow:hidden;text-overflow:ellipsis}
+  .brand strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .nav-actions{flex:0 0 auto}
+  .nav-links,.about-nav-links,.en-nav-links{max-width:100%;min-width:0}
+  .site-nav.menu-open .nav-links,.nav.menu-open .nav-links,.about-nav.menu-open .about-nav-links,.en-nav.menu-open .en-nav-links{position:absolute;top:calc(100% + 8px);inset-inline:0;z-index:1000;display:flex!important;flex-direction:column;align-items:stretch;max-height:calc(100vh - 90px);overflow:auto;padding:8px;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+  .site-nav.menu-open .nav-links a,.nav.menu-open .nav-links a,.about-nav.menu-open .about-nav-links a,.en-nav.menu-open .en-nav-links a{text-align:center;width:100%;padding:11px 10px}
+  .hero-grid,.mh-hero-grid,.mh-split-inner,.mahex-bottom,.grid-2,.grid-3,.projects-grid,.services-grid,.about-grid,.architecture,.stats{min-width:0}
+  .content,.article,.post-content,.case-content{width:100%;min-width:0;overflow-wrap:anywhere}
+  .content pre,.article pre,.post-content pre,.case-content pre{font-size:.78rem}
+  .content table,.article table,.post-content table,.case-content table{display:block;max-width:100%;overflow-x:auto}
+  .q-conversion{width:calc(100% - 24px)!important}
+}
+@media(max-width:420px){
+  .site-wrap,.wrap,.vt-container,.en-page{width:calc(100% - 20px)!important}
+  .brand span{width:31px;height:31px}
+  .brand strong{font-size:.9rem}
+  .hero,.about-hero,.vt-hero{padding-top:40px}
+  .card,.post-card,.project-card,.service-card,.about-card,.content,.article{max-width:100%}
+}
+@media(hover:none){.card:hover,.post-card:hover,.project-card:hover,.service-card:hover,.about-card:hover,.feature-card:hover,.case-card:hover,.service:hover,.vt-card:hover{transform:none!important}}
