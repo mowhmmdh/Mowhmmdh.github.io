@@ -236,10 +236,32 @@ def safe_page_hardening(text):
         return tag[:-1]+' rel="noopener noreferrer">'
     text=re.sub(r'<a\b[^>]*>',fix_blank,text,flags=re.I|re.S)
     def fix_img(m):
-        tag=m.group(0)
-        if re.search(r'\balt=',tag,re.I):
+        tag = m.group(0)
+        src_match = re.search(r'\bsrc=["\']([^"\']+)["\']', tag, re.I)
+        src = src_match.group(1).split("?")[0].split("#")[0] if src_match else ""
+        suffix = Path(src).suffix.lower()
+        alt_match = re.search(r'\balt=["\']([^"\']*)["\']', tag, re.I)
+        current_alt = alt_match.group(1).strip() if alt_match else ""
+        is_en = bool(re.search(r'<html\b[^>]*\blang=["\']en(?:-[^"\']*)?["\']', text, re.I))
+        if suffix == ".svg" and alt_match and current_alt == "":
             return tag
-        return tag[:-1]+' alt="">'
+        if current_alt:
+            return tag
+        stem = Path(src).stem.lower().replace("_", " ").replace("-", " ").strip()
+        if any(token in stem for token in ("profile", "portrait", "mowhmmdh", "mohammad-hossein")):
+            alt = "Mohammad Hossein Asgari Somarin" if is_en else "محمدحسین عسگری ثمرین"
+        elif "logo" in stem or "brand" in stem:
+            alt = "Mohammad Hossein Asgari Somarin website logo" if is_en else "لوگوی وب‌سایت محمدحسین عسگری ثمرین"
+        elif any(token in stem for token in ("hero", "banner", "cover")):
+            alt = "Page banner image" if is_en else "تصویر اصلی صفحه"
+        elif stem and not re.fullmatch(r'(?:img|image|photo|dsc)[\s_-]*\d*', stem):
+            alt = re.sub(r'\s+', ' ', stem.replace(".", " ")).strip().capitalize()
+        else:
+            alt = "Related content image" if is_en else "تصویر مرتبط با محتوای صفحه"
+        escaped_alt = alt.replace("&", "&amp;").replace('"', "&quot;")
+        if alt_match:
+            return tag[:alt_match.start(1)] + escaped_alt + tag[alt_match.end(1):]
+        return tag[:-1] + ' alt="' + escaped_alt + '">'
     text=re.sub(r'<img\b[^>]*>',fix_img,text,flags=re.I|re.S)
     images = list(re.finditer(r'<img\b[^>]*>', text, flags=re.I|re.S))
     if not images:
