@@ -8,6 +8,7 @@ from html import unescape, escape
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://mowhmmdh.github.io"
 FA_NAME = "محمدحسین عسگری ثمرین"
+EN_NAME = "Mohammad Hossein Asgari Somarin"
 TITLE_REWRITES = {
     "blog/backup-3-2-1-practical-guide.html": (
         "قانون 3-2-1 Backup؛ راهنمای عملی پشتیبان‌گیری | محمدحسین عسگری ثمرین",
@@ -86,9 +87,27 @@ def ensure_discovery_meta(text, rel):
             text = add_head(text, '<meta name="' + name + '" content="' + escape(content, quote=True) + '">')
     def meta_prop(prop, content):
         nonlocal text
-        if not re.search(r"<meta\s+[^>]*property=[\"']" + re.escape(prop) + r"[\"']", text, re.I):
+        if not re.search(r"<meta\\s+[^>]*property=[\\\"']" + re.escape(prop) + r"[\\\"']", text, re.I):
             text = add_head(text, '<meta property="' + prop + '" content="' + escape(content, quote=True) + '">')
-    meta_name("author", FA_NAME)
+    def set_meta_content(attribute, key, content):
+        nonlocal text
+        pattern = re.compile(r'<meta\\b(?=[^>]*\\b' + attribute + r'=[\\\"']' + re.escape(key) + r'[\\\"'])[^>]*>', re.I)
+        match = pattern.search(text)
+        if not match:
+            return
+        tag = match.group(0)
+        escaped = escape(content, quote=True)
+        if re.search(r'\\bcontent\\s*=', tag, re.I):
+            tag = re.sub(r'(\\bcontent\\s*=\\s*)([\\\"'])(.*?)\\2', lambda m: m.group(1) + m.group(2) + escaped + m.group(2), tag, count=1, flags=re.I|re.S)
+        else:
+            tag = tag[:-1] + ' content="' + escaped + '">'
+        text = text[:match.start()] + tag + text[match.end():]
+    path = rel.as_posix()
+    is_english = path.startswith(("en-", "en-blog/", "en-vintech/")) or rel.name.startswith("en-")
+    is_vintech_landing = path in {"vintech.html", "en-vintech.html"}
+    site_name = ("VinTech" if is_english else "وین‌تک") if is_vintech_landing else (EN_NAME if is_english else FA_NAME)
+    image_alt = ("VinTech — Network, Infrastructure and Cybersecurity Services" if is_english else "وین‌تک | خدمات شبکه، زیرساخت و امنیت سایبری") if is_vintech_landing else (EN_NAME + " | Network & Infrastructure Specialist" if is_english else FA_NAME + " | متخصص شبکه و زیرساخت")
+    meta_name("author", EN_NAME if is_english else FA_NAME)
     meta_name("referrer", "strict-origin-when-cross-origin")
     meta_name("theme-color", "#071019")
     image = None
@@ -99,14 +118,30 @@ def ensure_discovery_meta(text, rel):
     meta_prop("og:title", title[:180])
     meta_prop("og:description", desc[:300])
     meta_prop("og:url", url)
-    meta_prop("og:site_name", FA_NAME)
+    meta_prop("og:site_name", site_name)
     meta_prop("og:image", image)
-    meta_prop("og:image:alt", FA_NAME + " | Network & Infrastructure Specialist")
+    meta_prop("og:image:alt", image_alt)
     meta_name("twitter:card", "summary_large_image")
     meta_name("twitter:title", title[:180])
     meta_name("twitter:description", desc[:300])
     meta_name("twitter:image", image)
-    meta_name("twitter:image:alt", FA_NAME + " | Network & Infrastructure Specialist")
+    meta_name("twitter:image:alt", image_alt)
+    # Repair legacy language mismatches while preserving page-specific text.
+    if is_vintech_landing:
+        set_meta_content("property", "og:site_name", site_name)
+        set_meta_content("property", "og:image:alt", image_alt)
+        set_meta_content("name", "twitter:image:alt", image_alt)
+    else:
+        for attribute, key in (("property", "og:site_name"), ("property", "og:image:alt"), ("name", "twitter:image:alt")):
+            match = re.search(r'<meta\\b(?=[^>]*\\b' + attribute + r'=[\\\"']' + re.escape(key) + r'[\\\"'])[^>]*>', text, re.I)
+            if match:
+                content_match = re.search(r'\\bcontent=[\\\"']([^\\\"']*)[\\\"']', match.group(0), re.I)
+                if content_match:
+                    value = content_match.group(1)
+                    if is_english and FA_NAME in value:
+                        set_meta_content(attribute, key, site_name if key == "og:site_name" else image_alt)
+                    elif not is_english and EN_NAME in value:
+                        set_meta_content(attribute, key, site_name if key == "og:site_name" else image_alt)
     return text
 
 def ensure_quality(text):
