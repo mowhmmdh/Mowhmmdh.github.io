@@ -167,6 +167,27 @@ def ensure_profile_image_rights(text):
     return text.replace('</head>', block + '\n</head>', 1) if '</head>' in text.lower() else text
 
 
+
+def dedupe_profile_image_rights(text):
+    """Keep exactly one ImageObject rights block per profile image per page."""
+    seen = False
+    profile_id = BASE + '/images/profile.webp#image-rights'
+
+    def repl(match):
+        nonlocal seen
+        try:
+            data = json.loads(match.group(2).strip())
+        except Exception:
+            return match.group(0)
+        if isinstance(data, dict) and data.get('@id') == profile_id:
+            if seen:
+                return ''
+            seen = True
+        return match.group(0)
+
+    return JSONLD.sub(repl, text)
+
+
 def ensure_og_defaults(text):
     if '<head' not in text.lower() or '</head>' not in text.lower(): return text
     tm=re.search(r'<title[^>]*>(.*?)</title>',text,re.I|re.S); dm=re.search(r'<meta\s+name=["\']description["\'][^>]*content=["\'](.*?)["\'][^>]*>',text,re.I|re.S); cm=re.search(r'<link\s+rel=["\']canonical["\'][^>]*href=["\'](.*?)["\'][^>]*>',text,re.I|re.S)
@@ -186,7 +207,7 @@ for path in sorted(ROOT.rglob('*')):
     except Exception: continue
     text=normalize_identity(original)
     if path.suffix.lower()=='.html':
-        text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=enhance_image_metadata(text); text=ensure_profile_image_rights(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
+        text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=enhance_image_metadata(text); text=ensure_profile_image_rights(text); text=dedupe_profile_image_rights(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
         text=text.replace('/assets/mha-final-interaction-2026.js','/assets/interaction-2026.js')
         text=re.sub(r'\s*<link\b[^>]*href=["\']/assets/mha-final-ui-2026\.css["\'][^>]*>\s*','',text,flags=re.I)
         text=re.sub(r'<style>\s*@font-face\{font-family:InterLocal;src:url\(["\']?/fonts/Inter-Regular\.woff2[^}]+\}\s*body\{font-family:InterLocal,Inter,system-ui,sans-serif\}', '<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}', text, flags=re.I)
