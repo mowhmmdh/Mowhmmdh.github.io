@@ -7,6 +7,7 @@ BASE='https://mowhmmdh.github.io'
 ROOT=Path('.')
 PAGES=sorted(p for p in ROOT.rglob('*.html') if '.git' not in p.parts and p.name!='404.html')
 errors=[]; warnings=[]
+title_map={}; description_map={}; canonical_map={}
 
 class SEO(HTMLParser):
     def __init__(self):
@@ -41,8 +42,12 @@ for p in PAGES:
     if not x.html_lang: errors.append(f'{rel}: html lang missing')
     if not (15<=len(x.title.strip())<=65): warnings.append(f'{rel}: title length {len(x.title.strip())}')
     desc=meta(x.meta,name='description')
+    title_value=x.title.strip()
+    if title_value: title_map.setdefault(title_value, []).append(rel)
+    if desc.strip(): description_map.setdefault(desc.strip(), []).append(rel)
     if not (50<=len(desc)<=170): warnings.append(f'{rel}: description length {len(desc)}')
     c=canon(x.links)
+    if len(c)==1 and c[0]: canonical_map.setdefault(c[0], []).append(rel)
     if len(c)!=1: errors.append(f'{rel}: canonical count {len(c)}')
     elif not c[0].startswith(BASE+'/'): errors.append(f'{rel}: canonical outside site')
     al=alternates(x.links); langs={h for h,_ in al}
@@ -65,6 +70,16 @@ for p in PAGES:
         if not meta(x.meta,prop=prop): warnings.append(f'{rel}: missing {prop}')
     if x.jsonld==0: warnings.append(f'{rel}: no JSON-LD structured data')
     if 'http://' in s and re.search(r'(?:href|src)=["\']http://',s,re.I): warnings.append(f'{rel}: insecure embedded URL')
+
+for title, paths in title_map.items():
+    if len(paths) > 1:
+        warnings.append(f'duplicate title across {len(paths)} pages: {title[:100]} [{", ".join(paths[:8])}]')
+for description, paths in description_map.items():
+    if len(paths) > 1:
+        warnings.append(f'duplicate description across {len(paths)} pages: {description[:100]} [{", ".join(paths[:8])}]')
+for target, paths in canonical_map.items():
+    if len(paths) > 1:
+        errors.append(f'duplicate canonical target across {len(paths)} pages: {target} [{", ".join(paths[:8])}]')
 
 print(f'Deep SEO audit: {len(PAGES)} HTML pages')
 print(f'Warnings: {len(warnings)}')
