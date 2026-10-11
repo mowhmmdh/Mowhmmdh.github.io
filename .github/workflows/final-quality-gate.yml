@@ -29,3 +29,5 @@ jobs:
         run: python3 scripts/seo-deep-audit.py
       - name: Asset reference audit
         run: python3 scripts/asset-reference-audit.py
+      - name: Release smoke test
+        run: python3 scripts/release-smoke-test.py
