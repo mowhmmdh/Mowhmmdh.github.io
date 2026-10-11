@@ -22,8 +22,37 @@ def replace_block(path: Path, block: str, start: str = START, end: str = END, ma
     if new != text: path.write_text(new, encoding='utf-8')
 
 
+# Stable human-readable labels for generated service directories. Keep these here,
+# rather than editing generated HTML, because SEO Sync rebuilds discovery blocks.
+DISCOVERY_LABELS = {
+    'cctv-nvr': ('CCTV و NVR', 'CCTV & NVR'),
+    'cybersecurity': ('امنیت سایبری', 'Cybersecurity'),
+    'backup-and-disaster-recovery': ('پشتیبان‌گیری و بازیابی پس از بحران', 'Backup & Disaster Recovery'),
+    'cctv-ip-camera-security': ('امنیت دوربین‌های IP', 'IP Camera Security'),
+    'index': ('راهنمای مطالب', 'Insights Library'),
+    'it-infrastructure-assessment': ('ارزیابی زیرساخت IT', 'IT Infrastructure Assessment'),
+    'network-security-assessment': ('ارزیابی امنیت شبکه', 'Network Security Assessment'),
+    'it-support': ('پشتیبانی IT', 'IT Support'),
+    'network-infrastructure': ('شبکه و زیرساخت', 'Network & Infrastructure'),
+    'request': ('درخواست مشاوره', 'Request a Consultation'),
+    'servers-systems': ('سرور و سیستم‌ها', 'Servers & Systems'),
+    'web-technical-seo': ('وب و سئوی فنی', 'Web & Technical SEO'),
+}
+
+
+def discovery_label(path: Path) -> str:
+    labels = DISCOVERY_LABELS.get(path.stem.lower())
+    if labels:
+        is_en = path.as_posix().startswith(('en-vintech/', 'en-blog/'))
+        return labels[1 if is_en else 0]
+    return path.stem.replace('-', ' ').replace('_', ' ').title()
+
+
 def links(paths):
-    return ''.join(f'<a class="discovery-link" href="/{escape(p.as_posix())}"><span>{escape(p.stem.replace("-", " ").replace("_", " ").title())}</span><span aria-hidden="true">↗</span></a>' for p in sorted(paths))
+    return ''.join(
+        f'<a class="discovery-link" href="/{escape(p.as_posix())}"><span>{escape(discovery_label(p))}</span><span aria-hidden="true">↗</span></a>'
+        for p in sorted(paths)
+    )
 
 
 def canonical_for(path: Path) -> str:
