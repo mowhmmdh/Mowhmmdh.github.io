@@ -95,7 +95,7 @@ for rel, expected in REQUIRED.items():
         errors.append(f"{rel}: canonical missing, duplicated, or not self-referencing")
     if parser.h1 != 1:
         errors.append(f"{rel}: expected exactly one H1, found {parser.h1}")
-    if not re.search(r'<html\\b[^>]*\\blang=[\"\']fa[\"\']', source, re.I):
+    if not re.search(r'<html\b[^>]*\blang=[\"\']fa[\"\']', source, re.I):
         errors.append(f"{rel}: Persian language attribute missing")
     if not any(img.get("src") == expected["image"] and img.get("alt", "").strip() for img in parser.images):
         errors.append(f"{rel}: expected profile image or descriptive alt text missing")
