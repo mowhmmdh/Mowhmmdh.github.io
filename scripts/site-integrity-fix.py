@@ -76,7 +76,7 @@ def ensure_profile_identity(text,path):
     # then add exactly one authoritative block.
     text=re.sub(r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{\s*["\']@context["\']\s*:\s*["\']https://schema\.org["\']\s*,\s*["\']@type["\']\s*:\s*["\']ProfilePage["\'].*?</script>', '', text, flags=re.I|re.S)
 
-    block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgari Somarin","Mohammad Hossein Asgari","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":{{"@type":"ImageObject","contentUrl":"{BASE}/images/profile.webp","url":"{BASE}/images/profile.webp","caption":"{name}","creator":{{"@type":"Person","name":"{name}","url":"{BASE}/"}}}},"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
+    block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgari","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":{{"@type":"ImageObject","contentUrl":"{BASE}/images/profile.webp","url":"{BASE}/images/profile.webp","caption":"{name}","creator":{{"@type":"Person","name":"{name}","url":"{BASE}/"}}}},"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
     if '</head>' in text.lower():
         text=text.replace('</head>',block+'\n</head>',1)
         if 'as="image" href="/images/profile.webp"' not in text:
@@ -207,6 +207,9 @@ for path in sorted(ROOT.rglob('*')):
     except Exception: continue
     text=normalize_identity(original)
     if path.suffix.lower()=='.html':
+        # Keep public content pages on the shared CSS foundation; legal/utility pages stay standalone.
+        if path.as_posix() not in {'privacy.html','terms.html','disclosure.html','404.html'}:
+            text=ensure_stylesheet(text,'/assets/site-bundle.css')
         text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=enhance_image_metadata(text); text=ensure_profile_image_rights(text); text=dedupe_profile_image_rights(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
         text=text.replace('/assets/mha-final-interaction-2026.js','/assets/interaction-2026.js')
         text=re.sub(r'\s*<link\b[^>]*href=["\']/assets/mha-final-ui-2026\.css["\'][^>]*>\s*','',text,flags=re.I)
