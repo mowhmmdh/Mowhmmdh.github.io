@@ -33,6 +33,9 @@ jobs:
       - name: Apply traffic conversion and monetization foundation
         run: python3 scripts/monetization-growth-2026.py
 
+      - name: Normalize breadcrumbs and related-content blocks
+        run: python3 tools/discovery_sync.py
+
       - name: Normalize VinTech stylesheet links
         run: python3 scripts/ensure-vintech-css-2026.py
 
@@ -48,6 +51,7 @@ jobs:
             python3 scripts/editorial-growth-2026.py
             python3 scripts/site-audit-fix-2026.py
             python3 scripts/monetization-growth-2026.py
+            python3 tools/discovery_sync.py
             python3 scripts/ensure-vintech-css-2026.py
             git add -A
             if git diff --cached --quiet; then
