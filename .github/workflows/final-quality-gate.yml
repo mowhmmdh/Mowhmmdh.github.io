@@ -22,7 +22,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Validate audit scripts
-        run: python3 -m py_compile scripts/quality-audit.py scripts/seo-deep-audit.py scripts/asset-reference-audit.py scripts/site-integrity-fix.py scripts/pagespeed-optimize-2026.py
+        run: python3 -m py_compile scripts/quality-audit.py scripts/seo-deep-audit.py scripts/asset-reference-audit.py scripts/site-integrity-fix.py scripts/pagespeed-optimize-2026.py scripts/release-smoke-test.py
       - name: Repository quality audit
         run: python3 scripts/quality-audit.py
       - name: SEO deep audit
