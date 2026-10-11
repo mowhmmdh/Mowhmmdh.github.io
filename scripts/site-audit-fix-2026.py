@@ -8,6 +8,24 @@ from html import unescape, escape
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "https://mowhmmdh.github.io"
 FA_NAME = "محمدحسین عسگری ثمرین"
+TITLE_REWRITES = {
+    "blog/backup-3-2-1-practical-guide.html": (
+        "قانون 3-2-1 Backup؛ راهنمای عملی پشتیبان‌گیری | محمدحسین عسگری ثمرین",
+        "قانون 3-2-1؛ راهنمای عملی پشتیبان‌گیری | محمدحسین عسگری ثمرین",
+    ),
+    "blog/nginx-ssl-cdn-reverse-proxy-troubleshooting.html": (
+        "عیب‌یابی خطای SSL پشت CDN و Reverse Proxy؛ چک‌لیست عملی Nginx | محمدحسین عسگری ثمرین",
+        "عیب‌یابی SSL پشت CDN و Nginx | محمدحسین عسگری ثمرین",
+    ),
+    "blog/prometheus-network-monitoring-guide.html": (
+        "مانیتورینگ شبکه با Prometheus؛ از Metrics تا Alert | محمدحسین عسگری ثمرین",
+        "مانیتورینگ شبکه با Prometheus | محمدحسین عسگری ثمرین",
+    ),
+    "blog/vlan-vs-subnet-practical-guide.html": (
+        "VLAN و Subnet چیست؟ راهنمای عملی طراحی شبکه | محمدحسین عسگری ثمرین",
+        "VLAN یا Subnet؟ راهنمای طراحی شبکه | محمدحسین عسگری ثمرین",
+    ),
+}
 QUALITY = "/assets/site-quality-2026.css"
 UNIFIED_UI = "/assets/unified-ui-2026.css"
 SKIP = {".git", ".github", "node_modules", "vendor"}
@@ -178,8 +196,12 @@ for p in ROOT.rglob("*.html"):
     if not is_html(p):
         continue
     old = p.read_text(encoding="utf-8")
-    new = ensure_identity(old)
     rel = p.relative_to(ROOT)
+    new = old
+    title_rewrite = TITLE_REWRITES.get(rel.as_posix())
+    if title_rewrite:
+        new = new.replace(title_rewrite[0], title_rewrite[1])
+    new = ensure_identity(new)
     if p.name != "404.html":
         new = ensure_meta(new, rel)
         new = ensure_quality(new)
