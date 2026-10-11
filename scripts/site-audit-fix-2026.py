@@ -110,9 +110,9 @@ def ensure_discovery_meta(text, rel):
     return text
 
 def ensure_quality(text):
-    # Remove obsolete/merged visual layers, but retain the conversion stylesheet:
-    # monetization-growth-2026.py and editorial CTAs depend on its .conversion-cta rules.
-    text = re.sub(r'\s*<link\s+[^>]*href=["\']/assets/(?:site-quality-2026|unified-ui-2026|page-experience-2026|site-master-2026|social-fix-2026|site-final-fix-2026|navigation-fix-2026)\.css["\'][^>]*>', '', text, flags=re.I)
+    # Remove standalone layers already merged into site-bundle.css. Conversion CTA rules
+    # are included in the bundle, so do not load a duplicate render-blocking stylesheet.
+    text = re.sub(r'\s*<link\s+[^>]*href=["\']/assets/(?:site-quality-2026|unified-ui-2026|conversion-monetization-2026|page-experience-2026|site-master-2026|social-fix-2026|site-final-fix-2026|navigation-fix-2026)\.css["\'][^>]*>', '', text, flags=re.I)
     text = re.sub(r'<noscript>\s*</noscript>', '', text, flags=re.I)
     return text
 
