@@ -63,20 +63,20 @@ def ensure_vin_js(text):
 def ensure_profile_identity(text,path):
     if path.suffix.lower()!='.html': return text
     rel=path.as_posix()
-    targets={'about.html','en-about.html','authority.html','en-authority.html'}
+    targets={'about.html','en-about.html','authority.html','en-authority.html','profile.html'}
     profile_pattern=r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{\s*["\']@context["\']\s*:\s*["\']https://schema\.org["\']\s*,\s*["\']@type["\']\s*:\s*["\']ProfilePage["\'].*?</script>'
     # ProfilePage is valid for dedicated person/profile surfaces, not the homepage.
     if rel not in targets:
         return re.sub(profile_pattern, '', text, flags=re.I|re.S)
     is_en=rel.startswith('en-')
-    name='Mohammad Hossein Asgar Somarin' if is_en else 'محمدحسین عسگری ثمرین'
-    profile_url=BASE+'/en-about.html' if is_en else BASE+'/about.html'
+    name='Mohammad Hossein Asgari Somarin' if is_en else 'محمدحسین عسگری ثمرین'
+    profile_url=BASE+'/en-about.html' if is_en else (BASE+'/profile.html' if rel=='profile.html' else BASE+'/about.html')
 
     # Remove every previous ProfilePage block on these canonical profile surfaces,
     # then add exactly one authoritative block.
     text=re.sub(r'\s*<script\b[^>]*type=["\']application/ld\+json["\'][^>]*>\s*\{\s*["\']@context["\']\s*:\s*["\']https://schema\.org["\']\s*,\s*["\']@type["\']\s*:\s*["\']ProfilePage["\'].*?</script>', '', text, flags=re.I|re.S)
 
-    block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgar Somarin","Mohammad Hossein Asgari","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":{{"@type":"ImageObject","contentUrl":"{BASE}/images/profile.webp","url":"{BASE}/images/profile.webp","caption":"{name}","creator":{{"@type":"Person","name":"{name}","url":"{BASE}/"}}}},"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
+    block=f'<script type="application/ld+json">{{"@context":"https://schema.org","@type":"ProfilePage","@id":"{profile_url}#profile","mainEntity":{{"@type":"Person","@id":"{BASE}/#person","name":"{name}","alternateName":["Mohammad Hossein Asgari Somarin","Mohammad Hossein Asgari","محمدحسین عسگری ثمرین","mowhmmdh"],"description":"Network, infrastructure and IT security specialist","image":{{"@type":"ImageObject","contentUrl":"{BASE}/images/profile.webp","url":"{BASE}/images/profile.webp","caption":"{name}","creator":{{"@type":"Person","name":"{name}","url":"{BASE}/"}}}},"url":"{BASE}/","sameAs":["https://github.com/mowhmmdh","https://www.linkedin.com/in/mohammadhosseinasgari/","https://instagram.com/mowhmmdh"]}}}}</script>'
     if '</head>' in text.lower():
         text=text.replace('</head>',block+'\n</head>',1)
         if 'as="image" href="/images/profile.webp"' not in text:
@@ -89,7 +89,7 @@ def ensure_profile_identity(text,path):
 IMAGE_LICENSE_URL = BASE + '/terms.html#image-license'
 IMAGE_ACQUIRE_URL = BASE + '/disclosure.html#image-license'
 IMAGE_CREDIT = FULL_EN
-IMAGE_COPYRIGHT = '© 2026 Mohammad Hossein Asgar Somarin. All rights reserved.'
+IMAGE_COPYRIGHT = '© 2026 Mohammad Hossein Asgari Somarin. All rights reserved.'
 
 def enhance_image_metadata(text):
     """Complete Schema.org ImageObject rights metadata for Google Images."""
@@ -145,7 +145,7 @@ def enhance_image_metadata(text):
 def ensure_profile_image_rights(text):
     """Attach Google Images licensing metadata to the profile image on every page where it appears."""
     profile_url=BASE + '/images/profile.webp'
-    if profile_url not in text or '"#image-rights"' in text:
+    if profile_url not in text or profile_url + '#image-rights' in text:
         return text
     block=(
         '<script type="application/ld+json">' +
