@@ -950,3 +950,25 @@ table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
   .card,.post-card,.project-card,.service-card,.about-card,.content,.article{max-width:100%}
 }
 @media(hover:none){.card:hover,.post-card:hover,.project-card:hover,.service-card:hover,.about-card:hover,.feature-card:hover,.case-card:hover,.service:hover,.vt-card:hover{transform:none!important}}
+
+
+/* Site-wide refinement pass — accessibility, mobile resilience and predictable rendering. */
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid var(--accent2,#72b6ff);outline-offset:3px}
+:where(img,video,iframe,svg,canvas){max-width:100%}
+img{height:auto}
+:where(h1,h2,h3,h4,[id]){scroll-margin-top:6rem}
+:where(button,input,select,textarea){font:inherit}
+:where(button,a,[role="button"],input[type="submit"]){-webkit-tap-highlight-color:transparent}
+:where(p,li,dd,figcaption){text-wrap:pretty}
+:where(.content,.article,.post-content,.case-content,.page-content){overflow-wrap:anywhere}
+:where(.content, .article, .post-content, .case-content) :where(pre,table){max-width:100%}
+:where(.content, .article, .post-content, .case-content) pre{overflow:auto;overscroll-behavior-inline:contain}
+:where(.content, .article, .post-content, .case-content) table{border-collapse:collapse}
+@media(max-width:640px){
+  :where(input,select,textarea){max-width:100%;font-size:16px}
+  :where(.site-wrap,.wrap,.container,.content,.article,.post-content,.case-content){min-width:0}
+  :where(.content,.article,.post-content,.case-content) img{height:auto}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
