@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>عیب‌یابی خطای SSL پشت CDN و Reverse Proxy؛ چک‌لیست عملی Nginx | محمدحسین عسگری ثمرین</title>
+<meta name="description" content="راهنمای مرحله‌به‌مرحله عیب‌یابی خطاهای SSL و ERR_SSL_VERSION_OR_CIPHER_MISMATCH پشت CDN، بررسی DNS، گواهی، SNI، Nginx و اتصال به سرور مبدا.">
+<meta name="author" content="محمدحسین عسگری ثمرین">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<link rel="canonical" href="https://mowhmmdh.github.io/blog/nginx-ssl-cdn-reverse-proxy-troubleshooting.html">
+<meta name="color-scheme" content="light dark">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:title" content="عیب‌یابی خطای SSL پشت CDN و Reverse Proxy">
+<meta property="og:description" content="چک‌لیست عملی برای تشخیص خطای TLS بین مرورگر، CDN و Nginx مبدا.">
+<meta property="og:url" content="https://mowhmmdh.github.io/blog/nginx-ssl-cdn-reverse-proxy-troubleshooting.html">
+<meta property="og:image" content="https://mowhmmdh.github.io/images/profile.webp">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"عیب‌یابی خطای SSL پشت CDN و Reverse Proxy؛ چک‌لیست عملی Nginx","description":"راهنمای مرحله‌به‌مرحله عیب‌یابی خطاهای TLS در معماری CDN و Nginx reverse proxy.","inLanguage":"fa-IR","datePublished":"2026-10-11","dateModified":"2026-10-11","author":{"@type":"Person","name":"محمدحسین عسگری ثمرین","url":"https://mowhmmdh.github.io/profile.html"},"publisher":{"@type":"Person","name":"محمدحسین عسگری ثمرین","url":"https://mowhmmdh.github.io/profile.html"},"mainEntityOfPage":"https://mowhmmdh.github.io/blog/nginx-ssl-cdn-reverse-proxy-troubleshooting.html"}</script>
+<style>
+:root{color-scheme:light dark;--bg:#0b1220;--panel:#111c2d;--text:#e9eef7;--muted:#a9b8ca;--line:#29384c;--gold:#e5bd69}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/2 system-ui,-apple-system,"Segoe UI",sans-serif}a{color:var(--gold)}.wrap{width:min(900px,92%);margin:auto}.nav{padding:18px 0;border-bottom:1px solid var(--line)}.nav a{margin-left:18px;text-decoration:none}.hero{padding:48px 0 28px}.eyebrow{color:var(--gold);font-size:.85rem;font-weight:800}.hero h1{font-size:clamp(1.8rem,5vw,3.2rem);line-height:1.5;margin:.4em 0}.lead{font-size:1.12rem;color:var(--muted)}article section{margin:24px 0;padding:24px;background:var(--panel);border:1px solid var(--line);border-radius:18px}h2{font-size:1.45rem;line-height:1.6}h3{font-size:1.1rem}code,pre{direction:ltr;text-align:left;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}pre{overflow:auto;padding:16px;background:#060b13;border:1px solid var(--line);border-radius:12px;color:#e5edf8;line-height:1.65}code{overflow-wrap:anywhere}.note{border-right:3px solid var(--gold);padding:10px 14px;background:#182338}.checklist li{margin:.4em 0}.footer{padding:28px 0;color:var(--muted);border-top:1px solid var(--line);margin-top:40px}@media(prefers-color-scheme:light){:root{--bg:#f5f7fb;--panel:#fff;--text:#172033;--muted:#526176;--line:#dce3ed}pre{background:#111827;color:#f3f4f6}.note{background:#fff8e8}}
+</style>
+</head>
+<body>
+<header class="wrap nav"><a href="/">صفحه اصلی</a><a href="/blog/">همه مقالات</a><a href="/profile.html">درباره نویسنده</a></header>
+<main class="wrap">
+<header class="hero"><span class="eyebrow">LINUX · NGINX · TLS · CDN</span><h1>عیب‌یابی خطای SSL پشت CDN و Reverse Proxy؛ چک‌لیست عملی Nginx</h1><p class="lead">وقتی سایت با خاموش‌کردن Proxy باز می‌شود اما با فعال‌کردن CDN خطایی مثل <code>ERR_SSL_VERSION_OR_CIPHER_MISMATCH</code> می‌دهد، باید مسیر TLS را لایه‌به‌لایه بررسی کرد؛ نه اینکه فوراً گواهی را دوباره نصب کنیم.</p><p><small>نویسنده: <a href="/profile.html">محمدحسین عسگری ثمرین</a> · آخرین بازبینی: ۱۱ اکتبر ۲۰۲۶ · زمان مطالعه: حدود ۷ دقیقه</small></p></header>
+<article>
+<section><h2>۱. اول مشخص کن TLS کجا قطع می‌شود</h2><p>در معماری معمول <b>مرورگر ← CDN ← سرور مبدا</b> دو اتصال مستقل TLS وجود دارد: یکی بین کاربر و CDN و دیگری بین CDN و Origin. موفق‌بودن اتصال مستقیم به Origin ثابت نمی‌کند اتصال کاربر به CDN هم سالم است؛ همین‌طور گواهی معتبر روی Origin به‌تنهایی تنظیمات SSL در پنل CDN را تضمین نمی‌کند.</p><p class="note">اصل عیب‌یابی: هر بار فقط یک بخش را تغییر بده و قبل و بعد از تغییر، خروجی قابل مقایسه بگیر.</p></section>
+<section><h2>۲. رکورد DNS و مقصد واقعی را بررسی کن</h2><p>ابتدا بررسی کن نام دامنه به مقصد مورد انتظار اشاره می‌کند و رکوردهای قدیمی یا متناقض وجود ندارند.</p><pre><code>dig +short example.com
+dig +short www.example.com
+curl -sS -D- -o /dev/null https://example.com/</code></pre><p>وقتی Proxy روشن است، IPهای پاسخ‌داده‌شده ممکن است متعلق به CDN باشند؛ این موضوع به‌خودی‌خود خطا نیست. برای بررسی Origin از شبکه مجاز خودت استفاده کن و IP عمومی سرور را بی‌دلیل در معرض دسترسی قرار نده.</p></section>
+<section><h2>۳. اتصال مستقیم به Origin را با SNI تست کن</h2><p>این تست، درخواست را به IP انتخابی می‌فرستد اما نام دامنه را برای TLS و HTTP حفظ می‌کند:</p><pre><code>curl -vkI --resolve example.com:443:ORIGIN_IP https://example.com/</code></pre><p>برای تست گواهی و زنجیره TLS، گزینه <code>-k</code> را حذف کن؛ چون <code>-k</code> خطاهای اعتبارسنجی گواهی را پنهان می‌کند. از خروجی تست بدون <code>-k</code> برای بررسی نام دامنه، تاریخ اعتبار و اعتماد زنجیره استفاده کن.</p><pre><code>openssl s_client -connect ORIGIN_IP:443 -servername example.com -showcerts</code></pre><p>اگر این تست موفق است، به سراغ تنظیمات SSL/TLS و گواهی سمت CDN برو. اگر شکست می‌خورد، ابتدا Virtual Host، پورت ۴۴۳، SNI، فایروال و گواهی Origin را بررسی کن.</p></section>
+<section><h2>۴. پیکربندی Nginx و گواهی را اعتبارسنجی کن</h2><pre><code>sudo nginx -t
+sudo nginx -T
+sudo ss -lntp | grep ':443'
+sudo systemctl status nginx --no-pager
+sudo journalctl -u nginx --since "30 minutes ago" --no-pager</code></pre><ul class="checklist"><li>برای هر دامنه، <code>server_name</code> درست تعریف شده باشد.</li><li>مسیر <code>ssl_certificate</code> به گواهی مناسب و زنجیره کامل اشاره کند.</li><li>کلید خصوصی با گواهی متناظر باشد و مجوز فایل‌ها امن بماند.</li><li>فایل‌های تکراری در <code>sites-enabled</code> یا نام دامنه اشتباه، Virtual Host ناخواسته نسازند.</li><li>پس از تغییر، ابتدا <code>nginx -t</code> و فقط در صورت موفقیت reload اجرا شود.</li></ul><pre><code>sudo nginx -t && sudo systemctl reload nginx</code></pre></section>
+<section><h2>۵. حالت SSL در CDN را با Origin هماهنگ کن</h2><p>در پنل CDN بررسی کن گواهی لبه (Edge Certificate) فعال و برای دامنه درست صادر شده باشد. اگر اتصال CDN به Origin باید HTTPS باشد، گواهی Origin باید از دید CDN قابل اعتبارسنجی باشد و نام دامنه مورد انتظار را پوشش دهد. حالت‌های رمزنگاری و گزینه‌های بررسی گواهی را بر اساس مستندات همان CDN تنظیم کن؛ کاهش امنیت یا غیرفعال‌کردن اعتبارسنجی را راه‌حل دائمی قرار نده.</p><p>اگر گواهی لبه فعال نیست، ممکن است خطا پیش از رسیدن درخواست به Nginx رخ دهد. در آن حالت، تغییرات سمت Origin الزاماً مشکل را حل نمی‌کند.</p></section>
+<section><h2>۶. لاگ‌ها را هم‌زمان با یک درخواست واقعی بخوان</h2><pre><code>sudo tail -f /var/log/nginx/error.log
+sudo tail -f /var/log/nginx/access.log</code></pre><p>در یک ترمینال لاگ‌ها را باز بگذار و در ترمینال دیگر فقط یک درخواست کنترل‌شده بفرست. اگر هیچ درخواستی در Origin ثبت نمی‌شود، احتمال دارد خطا در DNS، اتصال کاربر به CDN یا TLS لبه رخ دهد. اگر درخواست به Origin می‌رسد، timestamp و خطای متناظر را دنبال کن.</p></section>
+<section><h2>چک‌لیست نهایی</h2><ol class="checklist"><li>DNS و وضعیت Proxy را ثبت کن.</li><li>Edge TLS و گواهی دامنه را در CDN بررسی کن.</li><li>Origin را با <code>curl --resolve</code> و SNI تست کن.</li><li>اعتبار گواهی را بدون <code>-k</code> بررسی کن.</li><li><code>nginx -t</code>، <code>nginx -T</code> و لاگ‌ها را بخوان.</li><li>هر بار یک تغییر انجام بده، دوباره تست کن و نتیجه را مستند کن.</li></ol><p>برای ایمنی، IPهای Origin و خروجی‌های دارای اطلاعات حساس را در گزارش عمومی منتشر نکن. اگر مشکل ادامه دارد، زمان خطا، نام CDN، خطای دقیق مرورگر و نتیجه تست TLS را جمع‌آوری کن؛ کلید خصوصی یا توکن‌ها را ارسال نکن.</p></section>
+<section><h2>مطالعه بیشتر</h2><ul><li><a href="/blog/network-hardening.html">سخت‌سازی شبکه</a></li><li><a href="/blog/linux-server-hardening-checklist.html">چک‌لیست سخت‌سازی سرور لینوکس</a></li><li><a href="/blog/network-troubleshooting-method.html">روش نظام‌مند عیب‌یابی شبکه</a></li></ul></section>
+</article>
+</main><footer class="wrap footer"><a href="/privacy.html">حریم خصوصی</a> · <a href="/terms.html">شرایط استفاده</a> · <a href="mailto:mohammedhasgari@gmail.com">تماس</a><p>© محمدحسین عسگری ثمرین</p></footer>
+</body></html>
