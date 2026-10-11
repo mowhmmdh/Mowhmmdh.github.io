@@ -1,15 +1,31 @@
 from pathlib import Path
 import re
-ROOT=Path('.')
-pat=re.compile(r'<link\b[^>]*href=["\']/assets/vintech\.css[^"\']*["\'][^>]*>\s*',re.I)
-for p in ROOT.rglob('*.html'):
-    if '.git' in p.parts or '.github' in p.parts: continue
-    rel=p.as_posix()
-    is_vt=rel.startswith(('vintech/','en-vintech/')) or p.name in {'vintech.html','en-vintech.html'}
-    if not is_vt: continue
-    s=p.read_text(encoding='utf-8',errors='replace')
-    s=pat.sub('',s)
-    if '</head>' in s:
-        s=s.replace('</head>','<link rel="stylesheet" href="/assets/vintech.css">\n</head>',1)
-        p.write_text(s,encoding='utf-8')
-print('VinTech stylesheet normalization complete')
+
+ROOT = Path(".")
+PATTERN = re.compile(r'<link\b[^>]*href=["\']/assets/vintech\.css[^"\']*["\'][^>]*>\s*', re.I)
+LINK = '<link rel="stylesheet" href="/assets/vintech.css">'
+
+for path in ROOT.rglob("*.html"):
+    if ".git" in path.parts or ".github" in path.parts:
+        continue
+    rel = path.as_posix()
+    is_vintech = rel.startswith(("vintech/", "en-vintech/")) or path.name in {"vintech.html", "en-vintech.html"}
+    if not is_vintech:
+        continue
+
+    original = path.read_text(encoding="utf-8", errors="replace")
+    matches = list(PATTERN.finditer(original))
+    if matches:
+        # Preserve the first stylesheet's location; remove only duplicates.
+        first_end = matches[0].end()
+        updated = original[:first_end] + PATTERN.sub("", original[first_end:])
+    elif re.search(r"</head\s*>", original, re.I):
+        updated = re.sub(r"</head\s*>", LINK + "\n</head>", original, count=1, flags=re.I)
+    else:
+        continue
+
+    updated = updated.rstrip() + "\n"
+    if updated != original:
+        path.write_text(updated, encoding="utf-8")
+
+print("VinTech stylesheet normalization complete")
