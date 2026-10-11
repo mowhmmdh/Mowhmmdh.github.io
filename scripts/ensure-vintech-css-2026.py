@@ -26,11 +26,11 @@ for path in ROOT.rglob("*.html"):
         continue
 
     if SIGNATURE_LINK not in updated:
-        css_anchor = re.search(r'<link\\b[^>]*href=["\\']/assets/vintech\\.css["\\'][^>]*>', updated, re.I)
-        if css_anchor:
-            updated = updated[:css_anchor.end()] + "\\n" + SIGNATURE_LINK + updated[css_anchor.end():]
-        elif re.search(r"</head\\s*>", updated, re.I):
-            updated = re.sub(r"</head\\s*>", SIGNATURE_LINK + "\\n</head>", updated, count=1, flags=re.I)
+        css_anchor = '<link rel="stylesheet" href="/assets/vintech.css">'
+        if css_anchor in updated:
+            updated = updated.replace(css_anchor, css_anchor + "\n" + SIGNATURE_LINK, 1)
+        elif re.search(r"</head\s*>", updated, re.I):
+            updated = re.sub(r"</head\s*>", SIGNATURE_LINK + "\n</head>", updated, count=1, flags=re.I)
 
     updated = updated.rstrip() + "\n"
     if updated != original:
