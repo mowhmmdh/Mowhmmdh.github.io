@@ -142,10 +142,31 @@ def enhance_image_metadata(text):
     return JSONLD.sub(repl, text)
 
 
+def has_visible_profile_image(text):
+    """Return true only when the profile image is rendered in page content, not merely used as an OG preview."""
+    return bool(re.search(r'<img\b[^>]*\bsrc=["\'](?:https://mowhmmdh\.github\.io)?/images/profile\.webp(?:[?#][^"\']*)?["\']', text, re.I))
+
+
+def remove_profile_image_rights(text):
+    """Remove page-level image-license schema when the profile image is not visibly rendered."""
+    profile_id = BASE + '/images/profile.webp#image-rights'
+
+    def repl(match):
+        try:
+            data = json.loads(match.group(2).strip())
+        except Exception:
+            return match.group(0)
+        if isinstance(data, dict) and data.get('@id') == profile_id:
+            return ''
+        return match.group(0)
+
+    return JSONLD.sub(repl, text)
+
+
 def ensure_profile_image_rights(text):
-    """Attach Google Images licensing metadata to the profile image on every page where it appears."""
+    """Attach image licensing metadata only on pages that visibly render the profile image."""
     profile_url=BASE + '/images/profile.webp'
-    if profile_url not in text or profile_url + '#image-rights' in text:
+    if not has_visible_profile_image(text) or profile_url + '#image-rights' in text:
         return text
     block=(
         '<script type="application/ld+json">' +
@@ -210,7 +231,17 @@ for path in sorted(ROOT.rglob('*')):
         # Keep public content pages on the shared CSS foundation; legal/utility pages stay standalone.
         if path.as_posix() not in {'privacy.html','terms.html','disclosure.html','404.html'}:
             text=ensure_stylesheet(text,'/assets/site-bundle.css')
-        text=PORTFOLIO_CSS.sub('',text); text=normalize_jsonld(text); text=ensure_profile_identity(text,path); text=enhance_image_metadata(text); text=ensure_profile_image_rights(text); text=dedupe_profile_image_rights(text); text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"'); text=ensure_og_defaults(text)
+        text=PORTFOLIO_CSS.sub('',text)
+        text=normalize_jsonld(text)
+        text=ensure_profile_identity(text,path)
+        text=enhance_image_metadata(text)
+        if has_visible_profile_image(text):
+            text=ensure_profile_image_rights(text)
+            text=dedupe_profile_image_rights(text)
+        else:
+            text=remove_profile_image_rights(text)
+        text=text.replace('href="/en-blog/"','href="/en-blog.html"').replace('href="/en-vintech/"','href="/en-vintech.html"')
+        text=ensure_og_defaults(text)
         text=text.replace('/assets/mha-final-interaction-2026.js','/assets/interaction-2026.js')
         text=re.sub(r'\s*<link\b[^>]*href=["\']/assets/mha-final-ui-2026\.css["\'][^>]*>\s*','',text,flags=re.I)
         text=re.sub(r'<style>\s*@font-face\{font-family:InterLocal;src:url\(["\']?/fonts/Inter-Regular\.woff2[^}]+\}\s*body\{font-family:InterLocal,Inter,system-ui,sans-serif\}', '<style>body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}', text, flags=re.I)
