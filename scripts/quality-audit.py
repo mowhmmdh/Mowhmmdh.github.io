@@ -178,8 +178,32 @@ for page in PAGES:
         if rel not in UTILITY_PAGES:
             if parser.author != 1 and rel not in EDITORIAL_LOCAL_ONLY:
                 ERRORS.append(f'{rel}: author count={parser.author}')
-            if len(parser.hreflang) < 2 and rel not in EDITORIAL_LOCAL_ONLY:
-                ERRORS.append(f'{rel}: bilingual hreflang set incomplete')
+            counterpart = None
+            if rel == 'index.html': counterpart = 'en.html'
+            elif rel == 'en.html': counterpart = 'index.html'
+            elif rel == 'blog/index.html': counterpart = 'en-blog.html'
+            elif rel == 'en-blog.html': counterpart = 'blog/index.html'
+            elif rel.startswith('blog/'): counterpart = rel.replace('blog/', 'en-blog/', 1)
+            elif rel.startswith('en-blog/'): counterpart = rel.replace('en-blog/', 'blog/', 1)
+            elif rel.startswith('vintech/'): counterpart = rel.replace('vintech/', 'en-vintech/', 1)
+            elif rel.startswith('en-vintech/'): counterpart = rel.replace('en-vintech/', 'vintech/', 1)
+            elif rel in {'about.html','authority.html','projects.html','services.html','press.html','linkedin.html','media-kit.html','vintech.html'}:
+                counterpart = 'en-' + rel
+            elif rel in {'en-about.html','en-authority.html','en-projects.html','en-services.html','en-press.html','en-linkedin.html','en-media-kit.html','en-vintech.html'}:
+                counterpart = rel[3:]
+            elif rel == 'index.html': counterpart = 'en.html'
+            elif rel == 'en.html': counterpart = 'index.html'
+            has_pair = bool(counterpart and Path(counterpart).is_file())
+            if has_pair:
+                langs = {lang.lower() for lang, _ in parser.hreflang}
+                if len(parser.hreflang) < 2 or 'x-default' not in langs:
+                    ERRORS.append(f'{rel}: bilingual hreflang set incomplete')
+                pair_url = BASE + '/' + counterpart
+                if counterpart == 'index.html': pair_url = BASE + '/'
+                elif counterpart.endswith('/index.html'): pair_url = BASE + '/' + counterpart[:-10]
+                expected_lang = 'en' if counterpart.startswith('en-') or counterpart.startswith('en-blog/') or counterpart.startswith('en-vintech/') else 'fa-IR'
+                if not any(lang.lower() == expected_lang.lower() and href == pair_url for lang, href in parser.hreflang):
+                    ERRORS.append(f'{rel}: hreflang counterpart URL mismatch for {counterpart}')
         if PERSIAN_NAME not in source and ENGLISH_NAME not in source:
             ERRORS.append(f'{rel}: canonical identity not discoverable in source')
         if BAD_ENGLISH.search(source):
