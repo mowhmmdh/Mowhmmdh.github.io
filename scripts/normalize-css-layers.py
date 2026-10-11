@@ -4,7 +4,7 @@ import sys
 
 # This checker is intentionally validation-only. CSS generation belongs to
 # site-refactor.py; this job must never prescribe or mutate the visual stack.
-CSS_LINK = re.compile(r'<link\\b(?=[^>]*\\brel=["\\'][^"\\']*\\bstylesheet\\b[^"\\']*["\\'])(?=[^>]*\\bhref=["\\']([^"\\']+)["\\'])[^>]*>', re.I)
+CSS_LINK = re.compile(r'<link\b(?=[^>]*\brel=["\'][^"\']*\bstylesheet\b[^"\']*["\'])(?=[^>]*\bhref=["\']([^"\']+)["\'])[^>]*>', re.I)
 SCRIPT_SRC = re.compile(r'<script\b[^>]*src=["\']([^"\']+)["\'][^>]*>', re.I)
 pages = [p for p in Path('.').rglob('*.html') if '.git' not in p.parts]
 errors=[]
