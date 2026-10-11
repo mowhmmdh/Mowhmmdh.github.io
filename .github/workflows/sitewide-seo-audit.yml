@@ -24,14 +24,14 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Run sitewide fixer
+      - name: Generate original editorial growth pages
+        run: python3 scripts/editorial-growth-2026.py
+
+      - name: Run sitewide fixer after content generation
         run: python3 scripts/site-audit-fix-2026.py
 
       - name: Apply traffic conversion and monetization foundation
         run: python3 scripts/monetization-growth-2026.py
-
-      - name: Generate original editorial growth pages
-        run: python3 scripts/editorial-growth-2026.py
 
       - name: Normalize VinTech stylesheet links
         run: python3 scripts/ensure-vintech-css-2026.py
@@ -45,9 +45,9 @@ jobs:
           for attempt in 1 2 3 4; do
             git fetch origin main
             git reset --hard origin/main
+            python3 scripts/editorial-growth-2026.py
             python3 scripts/site-audit-fix-2026.py
             python3 scripts/monetization-growth-2026.py
-            python3 scripts/editorial-growth-2026.py
             python3 scripts/ensure-vintech-css-2026.py
             git add -A
             if git diff --cached --quiet; then
