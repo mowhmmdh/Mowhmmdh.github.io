@@ -26,6 +26,8 @@
     window.addEventListener('scroll', scheduleProgress, {passive:true});
     window.addEventListener('resize', scheduleProgress, {passive:true});
 
+    // Keep the initial render responsive: secondary discovery/conversion UI is non-critical.
+    const enhance = () => {
     const path = location.pathname.replace(/\/+$/, '') || '/';
     const fa = !/^\/en(?:-|\/|$)/i.test(path);
     const pools = fa ? {
@@ -121,6 +123,13 @@
       const line = document.createElement('div');
       line.className = 'q-footerline';
       footer.prepend(line);
+    }
+    };
+
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(enhance, {timeout: 1200});
+    } else {
+      window.setTimeout(enhance, 1);
     }
   });
 })();
