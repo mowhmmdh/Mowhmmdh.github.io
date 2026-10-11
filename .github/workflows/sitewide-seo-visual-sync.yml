@@ -103,6 +103,11 @@ jobs:
                       text = text.replace('</head>', f'<link rel="stylesheet" href="{VT_CSS}">\n</head>', 1)
               if JS not in text and '</body>' in text:
                   text = text.replace('</body>', f'<script src="{JS}" defer></script>\n</body>', 1)
+              if is_vintech_page:
+                  head_match = re.search(r'<head\b[^>]*>[\s\S]*?</head\s*>', text, re.I)
+                  if head_match and r'\n' in head_match.group(0):
+                      cleaned_head = head_match.group(0).replace(r'\n', '')
+                      text = text[:head_match.start()] + cleaned_head + text[head_match.end():]
               
               if text != original:
                   p.write_text(text, encoding='utf-8')

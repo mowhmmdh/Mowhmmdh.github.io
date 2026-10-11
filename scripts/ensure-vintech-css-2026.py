@@ -32,6 +32,11 @@ for path in ROOT.rglob("*.html"):
         elif re.search(r"</head\s*>", updated, re.I):
             updated = re.sub(r"</head\s*>", SIGNATURE_LINK + "\n</head>", updated, count=1, flags=re.I)
 
+    head_match = re.search(r'<head\b[^>]*>[\s\S]*?</head\s*>', updated, re.I)
+    if head_match and r'\n' in head_match.group(0):
+        cleaned_head = head_match.group(0).replace(r'\n', '')
+        updated = updated[:head_match.start()] + cleaned_head + updated[head_match.end():]
+
     updated = updated.rstrip() + "\n"
     if updated != original:
         path.write_text(updated, encoding="utf-8")
