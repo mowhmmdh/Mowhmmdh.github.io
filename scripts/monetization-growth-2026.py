@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import re
 ROOT=Path('.')
 EMAIL='mohammedhasgari@gmail.com'
 legal={
@@ -26,11 +27,15 @@ css=ROOT/'assets/conversion-monetization-2026.css'
 css.write_text('''.conversion-cta{margin:36px 0;padding:24px;border:1px solid var(--theme-line,#243445);border-radius:20px;background:linear-gradient(135deg,var(--theme-surface2,#12202d),var(--theme-surface,#0d1722));color:var(--theme-text,#f3f6fa)}.conversion-cta p{color:var(--theme-muted,#a5b2c0)}.conversion-cta a{display:inline-block;margin:6px;padding:10px 16px;border-radius:12px;background:var(--theme-accent,#d9ad55);color:#10151b;text-decoration:none;font-weight:700}.legal-footer-2026{max-width:1180px;margin:40px auto 0;padding:24px 20px;border-top:1px solid var(--theme-line,#243445);text-align:center;color:var(--theme-muted,#a5b2c0)}.legal-footer-2026 a{margin:0 6px;color:inherit}''',encoding='utf-8')
 cta='''<aside class="conversion-cta" aria-label="درخواست خدمات"><strong>برای یک پروژه واقعی کمک می‌خواهید؟</strong><p>برای بررسی شبکه، زیرساخت، امنیت یا پشتیبانی IT می‌توانید درخواست اولیه خود را ارسال کنید.</p><a href="/services.html">مشاهده خدمات</a><a href="mailto:mohammedhasgari@gmail.com">ارسال درخواست</a></aside>'''
 cta_en='''<aside class="conversion-cta" aria-label="Request technical service"><strong>Need help with a real project?</strong><p>Request an initial discussion for network, infrastructure, security or IT support work.</p><a href="/en-services.html">View services</a><a href="mailto:mohammedhasgari@gmail.com">Send request</a></aside>'''
-footer='''<footer class="legal-footer-2026"><a href="/privacy.html">حریم خصوصی</a> · <a href="/terms.html">شرایط استفاده</a> · <a href="/disclosure.html">تبلیغات و همکاری</a> · <a href="mailto:mohammedhasgari@gmail.com">تماس</a></footer>'''
+footer_fa='''<footer class="legal-footer-2026"><a href="/privacy.html">حریم خصوصی</a> · <a href="/terms.html">شرایط استفاده</a> · <a href="/disclosure.html">تبلیغات و همکاری</a> · <a href="mailto:mohammedhasgari@gmail.com">تماس</a></footer>'''
+footer_en='''<footer class="legal-footer-2026"><a href="/en-privacy.html">Privacy</a> · <a href="/en-terms.html">Terms</a> · <a href="/en-disclosure.html">Disclosure</a> · <a href="mailto:mohammedhasgari@gmail.com">Contact</a></footer>'''
 for p in ROOT.rglob('*.html'):
- if '.git' in p.parts or '.github' in p.parts or p.name in {'404.html','privacy.html','terms.html','disclosure.html'}: continue
- s=p.read_text(encoding='utf-8',errors='replace')
- if 'conversion-cta' not in s and ('/blog/' in '/'+p.as_posix() or 'en-blog' in p.parts) and '</main>' in s: s=s.replace('</main>',(cta_en if 'en-blog' in p.parts else cta)+'</main>',1)
- if 'legal-footer-2026' not in s and '</body>' in s: s=s.replace('</body>',footer+'</body>',1)
- p.write_text(s,encoding='utf-8')
+  if '.git' in p.parts or '.github' in p.parts or p.name in {'404.html','privacy.html','terms.html','disclosure.html','en-privacy.html','en-terms.html','en-disclosure.html'}: continue
+  s=p.read_text(encoding='utf-8',errors='replace')
+  is_en = p.as_posix().startswith(('en-', 'en-blog/', 'en-vintech/')) or bool(re.search(r'<html\b[^>]*\blang=["\']en(?:-[^"\']*)?["\']',s,re.I))
+  if 'conversion-cta' not in s and ('/blog/' in '/'+p.as_posix() or 'en-blog' in p.parts) and '</main>' in s:
+    s=s.replace('</main>',(cta_en if is_en else cta)+'</main>',1)
+  if 'legal-footer-2026' not in s and '</body>' in s:
+    s=s.replace('</body>',(footer_en if is_en else footer_fa)+'</body>',1)
+  p.write_text(s,encoding='utf-8')
 print('traffic/conversion/monetization foundation applied')
