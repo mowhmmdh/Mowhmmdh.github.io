@@ -92,6 +92,15 @@ jobs:
                   text = text.replace('</head>', f'{meta(desc, name="twitter:description")}\n</head>', 1)
               if CSS not in text:
                   text = text.replace('</head>', f'<link rel="stylesheet" href="{CSS}">\n</head>', 1)
+              rel = p.as_posix()
+              is_vintech_page = rel.startswith(('vintech/', 'en-vintech/')) or p.name in {'vintech.html', 'en-vintech.html'}
+              VT_CSS = '/assets/vintech-signature-2026.css'
+              if is_vintech_page and VT_CSS not in text:
+                  vt_link = re.compile(r'(<link\\b[^>]*href=[\"\\\']/assets/vintech\\.css[\"\\\'][^>]*>)', re.I)
+                  if vt_link.search(text):
+                      text = vt_link.sub(r'\\1\\n<link rel="stylesheet" href="' + VT_CSS + '">', text, count=1)
+                  else:
+                      text = text.replace('</head>', f'<link rel="stylesheet" href="{VT_CSS}">\\n</head>', 1)
               if JS not in text and '</body>' in text:
                   text = text.replace('</body>', f'<script src="{JS}" defer></script>\n</body>', 1)
               
