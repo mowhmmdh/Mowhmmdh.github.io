@@ -201,7 +201,7 @@ for page in PAGES:
                 pair_url = BASE + '/' + counterpart
                 if counterpart == 'index.html': pair_url = BASE + '/'
                 elif counterpart.endswith('/index.html'): pair_url = BASE + '/' + counterpart[:-10]
-                expected_lang = 'en' if counterpart.startswith('en-') or counterpart.startswith('en-blog/') or counterpart.startswith('en-vintech/') else 'fa-IR'
+                expected_lang = 'en' if counterpart == 'en.html' or counterpart.startswith('en-') or counterpart.startswith('en-blog/') or counterpart.startswith('en-vintech/') else 'fa-IR'
                 if not any(lang.lower() == expected_lang.lower() and href == pair_url for lang, href in parser.hreflang):
                     ERRORS.append(f'{rel}: hreflang counterpart URL mismatch for {counterpart}')
         if PERSIAN_NAME not in source and ENGLISH_NAME not in source:
