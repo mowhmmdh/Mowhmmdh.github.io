@@ -14,6 +14,17 @@ CSS_RE = re.compile(r'<link\b[^>]*rel=["\']stylesheet["\'][^>]*>', re.I)
 HREF_RE = re.compile(r'\bhref=["\']([^"\']+)["\']', re.I)
 IMG_RE = re.compile(r'<img\b[^>]*>', re.I)
 SCRIPT_RE = re.compile(r'<script\b[^>]*src=["\']([^"\']+)["\'][^>]*>', re.I)
+FONT_FACE_RE = re.compile(r'(@font-face\s*\{[^}]*)(\})', re.I | re.S)
+
+
+def stabilize_font_faces(text: str) -> str:
+    def add_font_display(match: re.Match[str]) -> str:
+        block = match.group(1)
+        if re.search(r'\bfont-display\s*:', block, re.I):
+            return match.group(0)
+        return block.rstrip() + ';font-display:optional' + match.group(2)
+    return FONT_FACE_RE.sub(add_font_display, text)
+
 
 EXCLUDED_CSS = {
     '/assets/elite-web-system-2026.css',
