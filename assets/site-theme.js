@@ -4,8 +4,12 @@ const KEY='mha-theme';
 
 function theme(mode){
   const light=mode==='light';
-  root.dataset.theme=light?'light':'dark';
-  root.classList.toggle('theme-light',light);
+  if(light){
+    if(root.dataset.theme!=='light')root.dataset.theme='light';
+  }else if(root.hasAttribute('data-theme')){
+    root.removeAttribute('data-theme');
+  }
+  if(root.classList.contains('theme-light')!==light)root.classList.toggle('theme-light',light);
   document.querySelectorAll('.theme-toggle').forEach(b=>{
     b.textContent=light?'☀':'☾';
     b.setAttribute('aria-label',light?'فعال‌کردن حالت تیره':'فعال‌کردن حالت روشن');
