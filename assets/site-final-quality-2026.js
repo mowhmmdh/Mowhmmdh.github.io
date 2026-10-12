@@ -5,26 +5,8 @@
   ready(() => {
     const main = document.querySelector('main');
     if (!main) return;
-    const bar = document.createElement('div');
-    bar.className = 'q-progress';
-    bar.setAttribute('aria-hidden', 'true');
-    document.body.prepend(bar);
-    const progress = () => {
-      const root = document.documentElement;
-      const max = root.scrollHeight - root.clientHeight;
-      bar.style.transform = `scaleX(${max > 0 ? Math.min(1, root.scrollTop / max) : 0})`;
-    };
-    let progressFrame = 0;
-    const scheduleProgress = () => {
-      if (progressFrame) return;
-      progressFrame = requestAnimationFrame(() => {
-        progressFrame = 0;
-        progress();
-      });
-    };
-    progress();
-    window.addEventListener('scroll', scheduleProgress, {passive:true});
-    window.addEventListener('resize', scheduleProgress, {passive:true});
+    // The decorative reading-progress bar is disabled in the shared CSS; avoid
+    // creating hidden DOM and scroll listeners on every page.
 
     // Keep the initial render responsive: secondary discovery/conversion UI is non-critical.
     const enhance = () => {
