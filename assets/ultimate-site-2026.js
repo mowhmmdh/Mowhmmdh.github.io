@@ -1,5 +1,5 @@
-/* Ultimate Site UX 2026 — local-only enhancements, accessible and dependency-free. */
-(()=>{"use strict";if(window.__ultimateDirectUX)return;window.__ultimateDirectUX=1;
+/* Deprecated compatibility shim: the shared site-theme.js and site-final-quality-2026.js own these features. */
+(()=>{"use strict";if(document.querySelector('script[src*="/assets/site-theme.js"]')||window.__ultimateDirectUX)return;window.__ultimateDirectUX=1;
 const d=document,html=d.documentElement,body=d.body;
 const path=location.pathname;
 const isFa=(html.lang||"fa").toLowerCase().startsWith("fa");
