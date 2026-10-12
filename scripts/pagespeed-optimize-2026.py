@@ -105,6 +105,9 @@ for page in pages:
     text = page.read_text(encoding='utf-8', errors='replace')
     original = text
 
+    # Avoid late web-font swaps that shift article content after first paint.
+    text = stabilize_font_faces(text)
+
     text = PAGE_BUNDLE_RE.sub('', text)
     text = PAGE_BUNDLE_NOSCRIPT_RE.sub('', text)
 
