@@ -77,7 +77,7 @@
     const links = key ? pools[key] : null;
     const article = main.classList.contains('article') || !!main.querySelector('.content');
 
-    if (links && !document.querySelector('.q-discovery')) {
+    if (links && !document.querySelector('.q-discovery, .auto-related, .related-articles, .site-auto-related')) {
       const section = document.createElement('section');
       section.className = 'q-discovery';
       section.setAttribute('aria-labelledby','q-discovery-title');
@@ -85,16 +85,8 @@
       (article ? main : document.body).appendChild(section);
     }
 
-    if (article && !document.querySelector('.q-reading-tools')) {
-      const tool = document.createElement('div');
-      tool.className = 'q-reading-tools';
-      tool.innerHTML = `<div class="q-meter"><span class="q-dot" aria-hidden="true"></span><span>${fa ? 'ساختار مرحله‌ای، لینک‌های مرتبط و مطالعه راحت‌تر' : 'Structured reading with related technical paths'}</span></div><span class="q-last-updated"><strong>VinTech / Technical Knowledge Base</strong></span>`;
-      const hero = main.querySelector('.article-hero,.page-hero,.about-hero');
-      (hero || main.firstElementChild || main).insertAdjacentElement('afterend', tool);
-    }
-
     /* Conversion layer: turn informational traffic into a clear service next step. */
-    if (!document.querySelector('.q-conversion')) {
+    if (!document.querySelector('.q-conversion, .conversion-cta, .seo-conversion-cta, .service-cta')) {
       const conversion = document.createElement('section');
       conversion.className = 'q-conversion';
       conversion.setAttribute('aria-label', fa ? 'درخواست خدمات' : 'Service request');
