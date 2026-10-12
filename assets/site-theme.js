@@ -54,11 +54,9 @@ function bind(){
 
 let saved=null;
 try{saved=localStorage.getItem(KEY)}catch(_){}
-theme(saved||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'));
-if(!saved){
-  const mq=matchMedia('(prefers-color-scheme: light)');
-  mq.addEventListener?.('change',e=>theme(e.matches?'light':'dark'));
-}
+// Default to the site's dark palette. Several technical articles have dark, page-specific
+// surfaces; auto-applying a light OS preference would mix dark backgrounds with light-theme text.
+theme(saved||'dark');
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 document.addEventListener('click',e=>{
   if(e.target.closest('.menu-open'))return;
