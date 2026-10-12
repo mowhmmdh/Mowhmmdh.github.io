@@ -14,6 +14,8 @@ CSS_RE = re.compile(r'<link\b[^>]*rel=["\']stylesheet["\'][^>]*>', re.I)
 HREF_RE = re.compile(r'\bhref=["\']([^"\']+)["\']', re.I)
 IMG_RE = re.compile(r'<img\b[^>]*>', re.I)
 SCRIPT_RE = re.compile(r'<script\b[^>]*src=["\']([^"\']+)["\'][^>]*>', re.I)
+ULTIMATE_SCRIPT_RE = re.compile(r'<script\b[^>]*src=["\']/assets/ultimate-site-2026\.js["\'][^>]*>\s*</script>', re.I)
+ICON_RE = re.compile(r'<link\b[^>]*rel=["\'](?:shortcut\s+)?icon["\'][^>]*>', re.I)
 FONT_FACE_RE = re.compile(r'(@font-face\s*\{[^}]*)(\})', re.I | re.S)
 
 
@@ -118,6 +120,14 @@ for page in pages:
 
     # Avoid late web-font swaps that shift article content after first paint.
     text = stabilize_font_faces(text)
+
+    # The compatibility shim exits whenever site-final-quality is present; do not
+    # download and parse that redundant script on those pages.
+    if '/assets/site-final-quality-2026.js' in text:
+        text = ULTIMATE_SCRIPT_RE.sub('', text)
+
+    if not ICON_RE.search(text) and re.search(r'</head>', text, re.I):
+        text = re.sub(r'</head>', '<link rel="icon" href="/favicon.webp" type="image/webp">\\n</head>', text, count=1, flags=re.I)
 
     text = PAGE_BUNDLE_RE.sub('', text)
     text = PAGE_BUNDLE_NOSCRIPT_RE.sub('', text)
