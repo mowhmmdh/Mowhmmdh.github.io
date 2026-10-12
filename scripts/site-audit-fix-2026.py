@@ -74,6 +74,10 @@ def ensure_meta(text, rel):
         text = add_head(text, '<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">')
     if not re.search(r'<link\s+[^>]*rel=["\']canonical["\']', text, re.I):
         text = add_head(text, f'<link rel="canonical" href="{canonical_for(rel)}">')
+    # Keep a real, existing site icon on every generated HTML page. Several
+    # later SEO passes rewrite head metadata, so this must live in the shared fixer.
+    if not re.search(r'<link\b[^>]*rel=["\'](?:shortcut\s+)?icon["\']', text, re.I):
+        text = add_head(text, '<link rel="icon" href="/favicon.webp" type="image/webp">')
     return text
 
 def ensure_discovery_meta(text, rel):
