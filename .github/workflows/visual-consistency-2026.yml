@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: visual-consistency-manual
@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   validate-and-apply:
+    if: false # Paused pending approval-gated workflow redesign.
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
