@@ -1,0 +1,52 @@
+name: AI Site Quality Auditor
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "assets/**"
+      - "scripts/quality-audit.py"
+      - ".github/workflows/agent-quality-audit.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-quality-audit
+  cancel-in-progress: true
+
+jobs:
+  quality-audit:
+    name: Read-only site and SEO quality audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run repository quality audit
+        id: audit
+        continue-on-error: true
+        run: |
+          mkdir -p audit-report
+          python scripts/quality-audit.py 2>&1 | tee audit-report/quality-audit.txt
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-quality-audit
+          path: audit-report/quality-audit.txt
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Fail workflow if audit found blocking issues
+        if: steps.audit.outcome == 'failure'
+        run: |
+          echo "Quality audit found blocking issues. Review the site-quality-audit artifact."
+          exit 1
