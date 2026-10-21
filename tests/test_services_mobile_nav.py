@@ -25,7 +25,7 @@ class ServicesMobileNavigationTests(unittest.TestCase):
     def test_mobile_rule_does_not_hide_navigation_container(self):
         self.assertNotRegex(
             HTML,
-            r"@media\s*\(max-width\s*:\s*720px\)\s*\{[^}]*\.nav\s+div\s*\{\s*display\s*:\s*none",
+            r"\.nav\s+div\s*\{\s*display\s*:\s*none",
         )
 
     def test_mobile_navigation_wraps_and_keeps_links_visible(self):
