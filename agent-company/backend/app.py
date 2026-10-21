@@ -10,6 +10,7 @@ from typing import Literal
 from uuid import uuid4
 
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
 APP_DIR = Path(__file__).resolve().parent
@@ -24,6 +25,15 @@ app = FastAPI(
     ),
     docs_url="/docs",
     redoc_url=None,
+)
+
+# Permit only the local dashboard origins used by the documented dev server.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8788", "http://localhost:8788"],
+    allow_credentials=False,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 TaskStatus = Literal["queued", "approved", "rejected", "completed", "failed"]
