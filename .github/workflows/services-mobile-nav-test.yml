@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - "services.html"
+      - "projects.html"
       - "tests/test_services_mobile_nav.py"
       - ".github/workflows/services-mobile-nav-test.yml"
   workflow_dispatch:
