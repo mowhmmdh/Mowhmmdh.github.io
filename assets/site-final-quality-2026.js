@@ -107,3 +107,21 @@
     }
   });
 })();
+
+/* Load the homepage-only premium visual layer on the main personal homepage. */
+(() => {
+  const applyEliteHome = () => {
+    if (!document.body || !document.body.classList.contains('mh-home')) return;
+    if (document.querySelector('link[data-elite-home-visual]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = '/assets/elite-home-2026.css';
+    link.dataset.eliteHomeVisual = 'true';
+    document.head.appendChild(link);
+  };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyEliteHome, { once: true });
+  } else {
+    applyEliteHome();
+  }
+})();
