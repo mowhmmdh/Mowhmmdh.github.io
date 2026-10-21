@@ -1,0 +1,22 @@
+name: Services mobile navigation regression
+on:
+  pull_request:
+    paths:
+      - "services.html"
+      - "tests/test_services_mobile_nav.py"
+      - ".github/workflows/services-mobile-nav-test.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile-navigation-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Run mobile navigation regression tests
+        run: python -m unittest discover -s tests -p "test_services_mobile_nav.py" -v
