@@ -27,7 +27,7 @@ python -m pytest -q
 uvicorn app:app --host 127.0.0.1 --port 8787
 ```
 
-Open http://127.0.0.1:8787/docs for the local API. Keep the host set to `127.0.0.1`; do not expose this prototype to the public internet.
+Open http://127.0.0.1:8787/docs for the local API. Keep the host set to `127.0.0.1`; do not expose this prototype to the public internet.\n\nIn a second PowerShell window, from the repository root, serve the dashboard locally:\n\n```powershell\npy -m http.server 8788 --bind 127.0.0.1 --directory agent-company\n```\n\nThen open http://127.0.0.1:8788/operations.html. The dashboard polls the local API every 10 seconds and displays recorded tasks, decisions, and agent-role status. It intentionally shows all roles as inactive because no agent worker is connected yet. Do not open the dashboard via the public GitHub Pages URL if you want local API data; browsers block that cross-origin/local-network pattern.
 
 SQLite database defaults to `agent_company.sqlite3` in this folder. Set `AGENT_COMPANY_DB` to use a different path.
 
