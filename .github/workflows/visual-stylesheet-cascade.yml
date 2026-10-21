@@ -1,0 +1,21 @@
+name: Visual stylesheet cascade regression
+on:
+  pull_request:
+    paths:
+      - "404.html"
+      - "assets/site-bundle.css"
+      - "assets/site-final-quality-2026.css"
+      - "tests/test_visual_stylesheet_cascade.py"
+      - ".github/workflows/visual-stylesheet-cascade.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  visual-stylesheet-cascade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: python -m unittest discover -s tests -p "test_visual_stylesheet_cascade.py" -v
