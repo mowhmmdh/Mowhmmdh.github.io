@@ -28,16 +28,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run site and SEO audits
-        id: audit
         continue-on-error: true
         run: |
           mkdir -p reports
+          set +e
           python3 scripts/quality-audit.py > reports/quality-audit.txt 2>&1
-          echo "quality_audit_exit=$?" >> "$GITHUB_STEP_SUMMARY"
+          quality_rc=$?
           python3 scripts/seo-deep-audit.py > reports/seo-deep-audit.txt 2>&1
-          echo "seo_deep_audit_exit=$?" >> "$GITHUB_STEP_SUMMARY"
+          seo_rc=$?
+          set -e
           cat reports/quality-audit.txt
           cat reports/seo-deep-audit.txt
+          echo "Quality audit exit: $quality_rc; SEO audit exit: $seo_rc"
+          if [ "$quality_rc" -ne 0 ] || [ "$seo_rc" -ne 0 ]; then exit 1; fi
       - if: always()
         uses: actions/upload-artifact@v4
         with:
@@ -93,22 +96,43 @@ jobs:
           retention-days: 14
 
   content-discovery:
-    name: Specialist 04 — RSS, sitemap and discovery
+    name: Specialist 04 — RSS and sitemap discovery
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: Validate RSS and sitemap
+      - name: Validate RSS and sitemap without modifying files
         continue-on-error: true
         run: |
           mkdir -p reports
+          set +e
           python3 scripts/rss-feed-audit.py > reports/rss-feed-audit.txt 2>&1
           rss_rc=$?
-          python3 scripts/generate-sitemap.py > reports/sitemap-audit.txt 2>&1
+          python3 - <<'PY' > reports/sitemap-validation.txt 2>&1
+          from pathlib import Path
+          import xml.etree.ElementTree as ET
+
+          path = Path("sitemap.xml")
+          if not path.is_file():
+              raise SystemExit("ERROR: sitemap.xml is missing")
+          root = ET.fromstring(path.read_text(encoding="utf-8"))
+          ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+          urls = [((e.text or "").strip()) for e in root.findall("sm:url/sm:loc", ns)]
+          if not urls:
+              raise SystemExit("ERROR: sitemap contains no URLs")
+          invalid = [u for u in urls if not u.startswith("https://mowhmmdh.github.io/")]
+          if invalid:
+              raise SystemExit("ERROR: unexpected URL(s): " + ", ".join(invalid[:10]))
+          duplicates = sorted({u for u in urls if urls.count(u) > 1})
+          if duplicates:
+              raise SystemExit("ERROR: duplicate sitemap URLs: " + ", ".join(duplicates[:10]))
+          print(f"Sitemap XML valid; {len(urls)} unique URLs checked.")
+          PY
           sitemap_rc=$?
+          set -e
           cat reports/rss-feed-audit.txt
-          cat reports/sitemap-audit.txt
-          echo "RSS audit exit code: $rss_rc; sitemap script exit code: $sitemap_rc"
+          cat reports/sitemap-validation.txt
+          echo "RSS audit exit: $rss_rc; sitemap validation exit: $sitemap_rc"
           if [ "$rss_rc" -ne 0 ] || [ "$sitemap_rc" -ne 0 ]; then exit 1; fi
       - if: always()
         uses: actions/upload-artifact@v4
@@ -141,7 +165,7 @@ jobs:
             echo "| Technical SEO and page integrity | $SEO_RESULT |"
             echo "| Assets and internal references | $ASSET_RESULT |"
             echo "| Release readiness | $RELEASE_RESULT |"
-            echo "| RSS, sitemap and discovery | $DISCOVERY_RESULT |"
+            echo "| RSS and sitemap discovery | $DISCOVERY_RESULT |"
             echo
             echo "Audit logs are attached as workflow artifacts. These are automated deterministic checks, not independent generative-AI agents."
             echo "This workflow is read-only: it does not edit site files, publish content, or push commits."
