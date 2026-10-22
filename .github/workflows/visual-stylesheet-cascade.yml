@@ -3,8 +3,11 @@ on:
   pull_request:
     paths:
       - "404.html"
+      - "vintech.html"
       - "assets/site-bundle.css"
       - "assets/site-final-quality-2026.css"
+      - "assets/vintech-final-fix-2026.css"
+      - "assets/vintech-signature-2026.css"
       - "tests/test_visual_stylesheet_cascade.py"
       - ".github/workflows/visual-stylesheet-cascade.yml"
   workflow_dispatch:
