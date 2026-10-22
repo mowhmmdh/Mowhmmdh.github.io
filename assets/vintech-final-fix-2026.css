@@ -43,9 +43,9 @@ body.vintech-modern .vt-nav{
 }
 body.vt-page .vt-nav-inner,
 body.vintech-modern .vt-nav-inner{min-height:64px!important;padding:8px 14px}
-body.vt-page .vt-logo,body.vintech-modern .vt-logo{color:var(--vt-text)!important}
-body.vt-page .vt-logo span,body.vintech-modern .vt-logo span{color:var(--vt-accent)!important}
-body.vt-page .vt-links a,body.vintech-modern .vt-links a{color:var(--vt-muted)!important}
+body.vt-page .vt-logo,body.vintech-modern .vt-logo{color:var(--vt-text)}
+body.vt-page .vt-logo span,body.vintech-modern .vt-logo span{color:var(--vt-accent)}
+body.vt-page .vt-links a,body.vintech-modern .vt-links a{color:var(--vt-muted)}
 body.vt-page .vt-links a:hover,
 body.vt-page .vt-links a.active,
 body.vintech-modern .vt-links a:hover,
@@ -78,10 +78,10 @@ body.vintech-modern .vt-step{
   border-color:var(--vt-line)!important;
 }
 body.vt-page .vt-btn,body.vintech-modern .vt-btn{
-  color:var(--vt-text)!important;border-color:var(--vt-line)!important;background:color-mix(in srgb,var(--vt-panel) 92%,transparent)!important;
+  color:var(--vt-text);border-color:var(--vt-line);background:color-mix(in srgb,var(--vt-panel) 92%,transparent);
 }
 body.vt-page .vt-btn.primary,body.vintech-modern .vt-btn.primary{
-  background:linear-gradient(135deg,#e2bc6a,#b98936)!important;color:#07111f!important;
+  background:linear-gradient(135deg,#e2bc6a,#b98936);color:#07111f!important;
 }
 body.vt-page .vt-contact-box,body.vintech-modern .vt-contact-box{
   background:linear-gradient(145deg,color-mix(in srgb,var(--vt-blue) 8%,var(--vt-panel)),var(--vt-panel))!important;
@@ -91,7 +91,7 @@ body.vt-page .vt-contact-links a,body.vintech-modern .vt-contact-links a{
   color:var(--vt-text)!important;border-color:var(--vt-line)!important;background:color-mix(in srgb,var(--vt-panel) 92%,transparent)!important;
 }
 body.vt-page .vt-trust span,body.vintech-modern .vt-trust span{
-  color:var(--vt-muted)!important;border-color:var(--vt-line)!important;
+  color:var(--vt-muted);border-color:var(--vt-line);
 }
 body.vt-page .auto-breadcrumb,body.vintech-modern .auto-breadcrumb{
   color:var(--vt-muted)!important;

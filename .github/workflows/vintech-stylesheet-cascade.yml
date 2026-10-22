@@ -1,0 +1,21 @@
+name: VinTech stylesheet cascade regression
+on:
+  pull_request:
+    paths:
+      - "vintech.html"
+      - "assets/vintech-final-fix-2026.css"
+      - "assets/vintech-signature-2026.css"
+      - "tests/test_vintech_stylesheet_cascade.py"
+      - ".github/workflows/vintech-stylesheet-cascade.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  vintech-stylesheet-cascade:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - run: python -m unittest discover -s tests -p "test_vintech_stylesheet_cascade.py" -v
