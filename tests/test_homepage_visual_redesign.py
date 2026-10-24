@@ -18,7 +18,7 @@ THEME_JS = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
 class HomepageVisualRedesignTests(unittest.TestCase):
     def test_redesign_stylesheet_is_loaded_once_after_shared_home_layers(self):
         href = "/assets/home-visual-redesign-2026.css"
-        links = re.findall(r'<link\\b[^>]*href=["\\']' + re.escape(href) + r'["\\'][^>]*>', HOME, re.I)
+        links = re.findall(r"<link\\b[^>]*href=[\"']" + re.escape(href) + r"[\"'][^>]*>", HOME, re.I)
         self.assertEqual(len(links), 1, "homepage redesign stylesheet must be linked exactly once")
         self.assertIn("data-home-visual-redesign", links[0], "the runtime loader needs a reliable marker")
         self.assertEqual(HOME.count("/assets/site-bundle.css"), 1)
@@ -31,10 +31,10 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn("link.dataset.eliteHomeVisual = 'true'", QUALITY_JS)
 
     def test_persian_homepage_seo_language_and_accessibility_contract_is_preserved(self):
-        self.assertRegex(HOME, r'<html\\b[^>]*lang=["\\']fa["\\'][^>]*dir=["\\']rtl["\\']')
-        self.assertEqual(len(re.findall(r'<title>.*?</title>', HOME, re.I | re.S)), 1)
-        self.assertEqual(len(re.findall(r'<meta\\s+name=["\\']description["\\']', HOME, re.I)), 1)
-        self.assertEqual(len(re.findall(r'<link\\s+rel=["\\']canonical["\\']', HOME, re.I)), 1)
+        self.assertRegex(HOME, r"<html\\b[^>]*lang=[\"']fa[\"'][^>]*dir=[\"']rtl[\"']")
+        self.assertEqual(len(re.findall(r"<title>.*?</title>", HOME, re.I | re.S)), 1)
+        self.assertEqual(len(re.findall(r"<meta\\s+name=[\"']description[\"']", HOME, re.I)), 1)
+        self.assertEqual(len(re.findall(r"<link\\s+rel=[\"']canonical[\"']", HOME, re.I)), 1)
         self.assertIn('href="https://mowhmmdh.github.io/"', HOME)
         self.assertIn('hreflang="en"', HOME)
         self.assertIn('id="main-content"', HOME)
@@ -55,9 +55,9 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn("theme(saved||'dark')", THEME_JS)
 
     def test_english_homepage_remains_ltr_and_outside_persian_redesign_scope(self):
-        self.assertRegex(EN_HOME, r'<html\\b[^>]*lang=["\\']en["\\'][^>]*dir=["\\']ltr["\\']')
+        self.assertRegex(EN_HOME, r"<html\\b[^>]*lang=[\"']en[\"'][^>]*dir=[\"']ltr[\"']")
         self.assertNotIn("/assets/home-visual-redesign-2026.css", EN_HOME)
-        self.assertNotRegex(EN_HOME, r'<body[^>]*class=["\\'][^"\\']*\\bmh-home\\b')
+        self.assertNotRegex(EN_HOME, r"<body[^>]*class=[\"'][^\"']*\\bmh-home\\b")
 
 
 if __name__ == "__main__":
