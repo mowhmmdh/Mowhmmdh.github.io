@@ -32,6 +32,7 @@ DISCOVERY_LABELS = {
     'index': ('راهنمای مطالب', 'Insights Library'),
     'it-infrastructure-assessment': ('ارزیابی زیرساخت IT', 'IT Infrastructure Assessment'),
     'network-security-assessment': ('ارزیابی امنیت شبکه', 'Network Security Assessment'),
+    'network-security-baseline-for-small-business': ('Baseline امنیت شبکه برای کسب‌وکارهای کوچک', 'Small Business Network Security Baseline'),
     'it-support': ('پشتیبانی IT', 'IT Support'),
     'network-infrastructure': ('شبکه و زیرساخت', 'Network & Infrastructure'),
     'request': ('درخواست مشاوره', 'Request a Consultation'),
