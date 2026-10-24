@@ -114,7 +114,7 @@ function renderDiscipline(runs){
  ];
  var html=defs.map(function(d){
   var list=runs.filter(function(r){return d.re.test((r.name||'')+' '+(r.display_title||''))});
-  if(!list.length) list=runs.slice(0,Math.min(5,runs.length));
+  if(!list.length) return '<article class="discipline-card"><div class="discipline-top"><div><strong>'+d.name+'</strong><div class="small">'+d.desc+'</div></div><span class="tag warn">داده کافی نیست</span></div><p>در اجراهای اخیر workflow مشخصی برای این نقش پیدا نشد؛ برای جلوگیری از امتیازسازی، نمره‌ای محاسبه نشده است.</p><div class="discipline-actions"><a href="https://github.com/'+owner+'/'+repo+'/actions" target="_blank" rel="noopener noreferrer">بررسی گردش‌کارها ↗</a></div></article>';
   var fails=list.filter(function(r){return r.conclusion==='failure'||r.conclusion==='timed_out'||r.conclusion==='action_required'});
   var wins=list.filter(function(r){return r.conclusion==='success'});
   var score=Math.max(0,Math.min(100,100-fails.length*15+wins.length*2));
