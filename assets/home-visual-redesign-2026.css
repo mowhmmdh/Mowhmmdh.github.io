@@ -109,11 +109,6 @@
  .mh-home .q-conversion{margin-top:35px;display:block;padding:23px 18px}.mh-home .q-conversion-actions{margin-top:20px;min-width:0}
  .mh-home .mh-cta{align-items:flex-start;flex-direction:column;padding-top:18px}.mh-home .mh-footer{align-items:flex-start;flex-direction:column}.mh-home .mh-footer-links{gap:12px}
 }
-@media(prefers-color-scheme:light){
- .mh-home:has(.theme-toggle[aria-label*="تاریک"]){--mh-bg:#f5f8fc;--mh-panel:#fff;--mh-text:#102033;--mh-muted:#53667e}
-}
-
-
 /* Explicit theme class used by assets/site-theme.js; do not depend on OS preference. */
 html.theme-light .mh-home{
   --mh-bg:#f4f7fb;--mh-panel:#fff;--mh-panel-2:#edf3f9;--mh-line:rgba(35,58,84,.16);
