@@ -82,12 +82,12 @@ class EnglishBaselineRegressionTests(unittest.TestCase):
 
     def test_people_first_sections_and_primary_sources_exist(self):
         for heading in (
-            "Build a usable asset inventory",
-            "Make identity and remote access hard to abuse",
-            "Segment the network and keep firewall rules intentional",
-            "Collect logs that help answer real questions",
-            "Back up important data and test recovery",
-            "Prepare for incidents and review vendor access",
+            "1. Build a usable asset inventory",
+            "2. Make identity and remote access hard to abuse",
+            "3. Segment the network and keep firewall rules intentional",
+            "5. Collect logs that help answer real questions",
+            "6. Back up important data and test recovery",
+            "7. Prepare for incidents and review vendor access",
         ):
             self.assertIn(f"<h2>{heading}</h2>", self.en)
         self.assertIn("https://csrc.nist.gov/pubs/sp/1300/final", self.en)
