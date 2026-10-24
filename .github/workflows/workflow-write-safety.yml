@@ -1,0 +1,23 @@
+name: Workflow Write Safety
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: workflow-write-safety-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    name: Disabled workflow write-path regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Test workflow write safety
+        run: python3 -m unittest discover -s tests -p "test_workflow_write_safety.py" -v
