@@ -84,6 +84,8 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         self.assertIn('class="skip-link" href="#main-content"', self.english)
         self.assertIn("@media(max-width:560px)", self.english)
         self.assertIn("prefers-reduced-motion:reduce", self.english)
+        self.assertEqual(self.english.count("AUTO-BREADCRUMB:START"), 1)
+        self.assertEqual(self.english.count("AUTO-BREADCRUMB:END"), 1)
 
 
 if __name__ == "__main__":
