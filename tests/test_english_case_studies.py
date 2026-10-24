@@ -16,7 +16,7 @@ def read(path):
 
 def hreflang_map(html):
     return dict(re.findall(
-        r'<link\\s+rel="alternate"\\s+hreflang="([^"]+)"\\s+href="([^"]+)"',
+        r'<link\s+rel="alternate"\s+hreflang="([^"]+)"\s+href="([^"]+)"',
         html,
         flags=re.I,
     ))
@@ -32,7 +32,7 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         cls.sitemap = ET.fromstring(read("sitemap.xml"))
 
     def test_english_page_has_correct_language_canonical_and_h1(self):
-        self.assertRegex(self.english, r'<html\\b[^>]*lang="en"[^>]*dir="ltr"')
+        self.assertRegex(self.english, r'<html\b[^>]*lang="en"[^>]*dir="ltr"')
         self.assertIn(f'<link rel="canonical" href="{EN_URL}">', self.english)
         self.assertRegex(self.english, r'<h1[^>]*>Technical case studies</h1>')
 
@@ -65,7 +65,7 @@ class EnglishCaseStudiesTests(unittest.TestCase):
 
     def test_json_ld_is_valid_and_contains_collection_and_breadcrumb(self):
         blocks = re.findall(
-            r'<script type="application/ld\\+json">(.*?)</script>',
+            r'<script type="application/ld\+json">(.*?)</script>',
             self.english,
             flags=re.I | re.S,
         )
