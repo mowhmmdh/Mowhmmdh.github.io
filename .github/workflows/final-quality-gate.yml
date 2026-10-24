@@ -33,3 +33,5 @@ jobs:
         run: python3 scripts/release-smoke-test.py
       - name: RSS feed audit
         run: python3 scripts/rss-feed-audit.py
+      - name: English small-business baseline regression tests
+        run: python3 -m unittest discover -s tests -p "test_*.py"
