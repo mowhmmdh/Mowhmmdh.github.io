@@ -67,17 +67,12 @@ jobs:
             if s.count('/assets/elite-universal-2026.css') != 1: errors.append(f'{p}: elite layer count')
           if errors: print('\n'.join(errors)); raise SystemExit(1)
           print(f'Production visual contract passed for {len(pages)} HTML pages')
-      - name: Commit visual system rollout
+      - name: Report generated changes without writing to main
+        if: always()
         shell: bash
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git fetch origin main
-          git reset --soft origin/main
-          git add '*.html' '*/**/*.html' || true
-          if git diff --cached --quiet; then
-            echo 'No HTML changes to commit.'
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No generated changes."
           else
-            git commit -m 'style: apply elite visual system across all pages [skip ci]'
-            git push origin HEAD:main
+            echo "::notice::Generated changes are not committed or pushed automatically. Review them on a dedicated branch and submit a pull request."
           fi

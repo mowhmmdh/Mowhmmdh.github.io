@@ -171,27 +171,12 @@ jobs:
             print('\n'.join(errors));sys.exit(1)
           print('Repository invariants passed after performance optimization.')
 
-      - name: Commit repair and performance optimization
+      - name: Report generated changes without writing to main
+        if: always()
         shell: bash
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if git diff --quiet; then echo 'No repair changes needed.'; exit 0; fi
-          git add -A
-          git commit -m 'perf: optimize all published pages for Lighthouse [skip ci]'
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if git rebase origin/main; then
-              if git push origin HEAD:main; then exit 0; fi
-            else
-              git rebase --abort || true
-              git reset --hard origin/main
-              python3 scripts/pagespeed-optimize-2026.py
-              git add -A
-              git commit -m 'perf: optimize all published pages for Lighthouse [skip ci]' || true
-              if git push origin HEAD:main; then exit 0; fi
-            fi
-            sleep 3
-          done
-          echo 'Failed to push repair commit after three attempts.'
-          exit 1
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No generated changes."
+          else
+            echo "::notice::Generated changes are not committed or pushed automatically. Review them on a dedicated branch and submit a pull request."
+          fi

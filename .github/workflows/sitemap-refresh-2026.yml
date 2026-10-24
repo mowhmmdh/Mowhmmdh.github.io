@@ -25,29 +25,12 @@ jobs:
       - name: Generate sitemap
         run: python3 scripts/generate-sitemap.py
 
-      - name: Commit sitemap safely
+      - name: Report generated changes without writing to main
+        if: always()
         shell: bash
         run: |
-          set -euo pipefail
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet -- sitemap.xml; then
-            echo "Sitemap is already current."
-            exit 0
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No generated changes."
+          else
+            echo "::notice::Generated changes are not committed or pushed automatically. Review them on a dedicated branch and submit a pull request."
           fi
-          git add sitemap.xml
-          git commit -m "chore(seo): refresh sitemap [skip ci]"
-          for attempt in 1 2 3; do
-            git fetch origin main
-            if git rebase origin/main && git push origin HEAD:main; then
-              exit 0
-            fi
-            git rebase --abort || true
-            git reset --hard origin/main
-            python3 scripts/generate-sitemap.py
-            git add sitemap.xml
-            git commit -m "chore(seo): refresh sitemap after rebase [skip ci]" || true
-            sleep 2
-          done
-          echo "Failed to update sitemap after three attempts."
-          exit 1
