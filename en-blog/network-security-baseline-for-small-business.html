@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Small Business Network Security Baseline: Practical Checklist</title>
+<meta name="description" content="A practical small-business security baseline covering asset inventory, MFA, segmentation, firewall rules, patching, monitoring, backups and incident response.">
+<meta name="author" content="Mohammad Hossein Asgari Somarin">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+<link rel="canonical" href="https://mowhmmdh.github.io/en-blog/network-security-baseline-for-small-business.html">
+<link rel="alternate" hreflang="en" href="https://mowhmmdh.github.io/en-blog/network-security-baseline-for-small-business.html">
+<link rel="alternate" hreflang="fa-IR" href="https://mowhmmdh.github.io/blog/network-security-baseline-for-small-business.html">
+<link rel="alternate" hreflang="x-default" href="https://mowhmmdh.github.io/blog/network-security-baseline-for-small-business.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Small Business Network Security Baseline: Practical Checklist">
+<meta property="og:description" content="A practical, prioritized baseline for protecting a small business network without adding unnecessary complexity.">
+<meta property="og:url" content="https://mowhmmdh.github.io/en-blog/network-security-baseline-for-small-business.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://mowhmmdh.github.io/images/profile.webp">
+<meta property="og:site_name" content="Mohammad Hossein Asgari Somarin">
+<meta property="og:image:alt" content="Mohammad Hossein Asgari Somarin | Network &amp; Infrastructure Specialist">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Small Business Network Security Baseline: Practical Checklist">
+<meta name="twitter:description" content="A practical, prioritized baseline for protecting a small business network without adding unnecessary complexity.">
+<meta name="twitter:image" content="https://mowhmmdh.github.io/images/profile.webp">
+<meta name="twitter:image:alt" content="Mohammad Hossein Asgari Somarin | Network &amp; Infrastructure Specialist">
+<meta name="theme-color" content="#0b1220">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<script src="/assets/site-theme.js" defer></script>
+<link rel="stylesheet" href="/assets/site-bundle.css">
+<link rel="stylesheet" href="/assets/site-final-quality-2026.css">
+<link rel="icon" href="/favicon.webp" type="image/webp">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "@id": "https://mowhmmdh.github.io/en-blog/network-security-baseline-for-small-business.html#article",
+  "headline": "Small Business Network Security Baseline: Practical Checklist",
+  "description": "A prioritized network and IT security baseline for small businesses covering assets, access, segmentation, patching, monitoring, recovery and incident response.",
+  "url": "https://mowhmmdh.github.io/en-blog/network-security-baseline-for-small-business.html",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "Mohammad Hossein Asgari Somarin",
+    "url": "https://mowhmmdh.github.io/en-about.html",
+    "sameAs": [
+      "https://github.com/mowhmmdh",
+      "https://www.linkedin.com/in/mohammadhosseinasgari/"
+    ]
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mowhmmdh.github.io/en-blog/network-security-baseline-for-small-business.html"
+  },
+  "datePublished": "2026-10-24",
+  "dateModified": "2026-10-24",
+  "image": "https://mowhmmdh.github.io/images/profile.webp"
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<nav class="wrap nav" aria-label="Primary navigation">
+  <a href="/en.html">Mohammad Hossein Asgari Somarin</a>
+  <div class="nav-links">
+    <a href="/en-vintech.html">VinTech</a>
+    <a href="/en-services.html">Services</a>
+    <a href="/en-projects.html">Projects</a>
+    <a href="/en-about.html">About</a>
+    <a href="/blog/network-security-baseline-for-small-business.html" lang="fa" hreflang="fa-IR">فارسی</a>
+  </div>
+</nav>
+<nav class="auto-breadcrumb" aria-label="Breadcrumb">
+  <ol>
+    <li><a href="https://mowhmmdh.github.io/en.html">Home</a></li>
+    <li><a href="https://mowhmmdh.github.io/en-blog.html">Technical Blog</a></li>
+    <li aria-current="page"><span>Small Business Network Security Baseline</span></li>
+  </ol>
+</nav>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://mowhmmdh.github.io/en.html"},{"@type":"ListItem","position":2,"name":"Technical Blog","item":"https://mowhmmdh.github.io/en-blog.html"},{"@type":"ListItem","position":3,"name":"Small Business Network Security Baseline","item":"https://mowhmmdh.github.io/en-blog/network-security-baseline-for-small-business.html"}]}
+</script>
+<main id="main-content" class="article">
+  <p class="meta">NETWORK SECURITY · PRACTICAL BASELINE · OCTOBER 24, 2026</p>
+  <h1>Small Business Network Security Baseline: A Practical, Prioritized Checklist</h1>
+  <p>A small business does not need an enterprise-sized security program to reduce its most avoidable risks. It does need a clear picture of its assets, controlled access, maintained systems, useful logs and backups that can actually be restored. This baseline turns those essentials into a repeatable starting point.</p>
+  <div class="box" role="note" aria-label="Quick baseline checklist">
+    <strong>Start here:</strong>
+    <ul>
+      <li>Know which devices, services and data the business depends on.</li>
+      <li>Protect administrator and remote-access accounts with multifactor authentication (MFA).</li>
+      <li>Separate guest, camera/IoT, user, server and management networks where the equipment supports it.</li>
+      <li>Patch supported systems and remove unnecessary internet exposure.</li>
+      <li>Collect security events and alert on high-risk changes.</li>
+      <li>Test recovery from a backup, not just whether a backup job says “successful.”</li>
+    </ul>
+  </div>
+  <p>This is an operational starting point, not a certification or a guarantee against compromise. The <a href="https://csrc.nist.gov/pubs/sp/1300/final" rel="noopener noreferrer">NIST Cybersecurity Framework 2.0 Small Business Quick-Start Guide</a> is a useful companion for organizing risk management around governance, identification, protection, detection, response and recovery.</p>
+
+  <h2>1. Build a usable asset inventory</h2>
+  <p>List the devices and services that store business data, provide access or keep operations running. Include laptops, desktops, servers, network switches, firewalls, wireless access points, cameras/NVRs, cloud services, business email, backups and vendor-managed systems.</p>
+  <p>For each asset, record an owner, purpose, location, support status, management interface, internet exposure and recovery dependency. The first inventory can be a simple spreadsheet; the important part is that someone owns it and updates it when equipment or services change.</p>
+  <ul>
+    <li>Identify unsupported operating systems and devices that can no longer receive security updates.</li>
+    <li>Find forgotten accounts, unused services, port forwards and remote-management interfaces.</li>
+    <li>Mark the systems that would stop sales, delivery or customer support if they failed.</li>
+  </ul>
+
+  <h2>2. Make identity and remote access hard to abuse</h2>
+  <p>Require MFA for email, cloud administration, VPN or remote-access gateways, and other privileged accounts wherever the service supports it. Prefer phishing-resistant methods when practical. Use unique accounts rather than shared administrator credentials, and keep daily work separate from administration.</p>
+  <ul>
+    <li>Remove access promptly when staff or contractors leave or change roles.</li>
+    <li>Give each account only the permissions needed for its job; review privileged access on a schedule.</li>
+    <li>Disable unused accounts and legacy authentication paths.</li>
+    <li>Do not expose Remote Desktop or device-management consoles directly to the public internet. Use an approved, secured remote-access path and restrict who can reach it.</li>
+  </ul>
+  <p>For practical MFA guidance, see <a href="https://www.cisa.gov/audiences/small-and-medium-businesses/secure-your-business/require-multifactor-authentication" rel="noopener noreferrer">CISA's guidance for small and medium-sized businesses</a>.</p>
+
+  <h2>3. Segment the network and keep firewall rules intentional</h2>
+  <p>A flat network lets a compromised guest device, camera or workstation reach more systems than it should. Group devices by trust and purpose—for example, users, servers, voice, CCTV/IoT, management and guests—and define the required flows before changing VLANs or firewall policies.</p>
+  <ul>
+    <li>Keep guest Wi-Fi separate from business devices and internal services.</li>
+    <li>Restrict cameras and IoT devices to the recorder, required management services and approved destinations.</li>
+    <li>Allow only the inter-network traffic required for business operations; document exceptions with an owner and reason.</li>
+    <li>Change one segment at a time and test DNS, DHCP, printing, file access, voice and critical applications before expanding the rollout.</li>
+  </ul>
+  <p>For a deeper design walkthrough, read <a href="/en-blog/network-segmentation-for-small-business.html">Network Segmentation for Small Businesses</a> and the <a href="/en-blog/network-security-engineering-playbook.html">Network Security Engineering Playbook</a>. VLANs alone are not a security boundary unless routing and access rules enforce the intended separation.</p>
+
+  <h2>4. Maintain endpoints, Wi-Fi and exposed services</h2>
+  <p>Keep operating systems, browsers, firmware and business applications on supported versions. Enable automatic security updates where they are safe and appropriate, and assign someone to track devices that need a maintenance window or manual patching.</p>
+  <ul>
+    <li>Use reputable endpoint protection and make sure tamper protection and update status are monitored.</li>
+    <li>Change default device passwords, disable unused services and turn off remote administration when it is not needed.</li>
+    <li>Use WPA2-AES or WPA3 for wireless networks; create a separate guest SSID and prevent it from reaching internal resources.</li>
+    <li>Review public-facing services and port forwards periodically. Close what is not required and restrict management access by source and identity.</li>
+    <li>Protect business email with the provider's recommended domain-authentication settings, including SPF, DKIM and DMARC where applicable.</li>
+  </ul>
+  <p>The <a href="https://www.ftc.gov/business-guidance/small-businesses/cybersecurity" rel="noopener noreferrer">FTC's Cybersecurity for Small Business guide</a> provides additional practical advice on updates, passwords, wireless networks, vendor access and incident planning.</p>
+
+  <h2>5. Collect logs that help answer real questions</h2>
+  <p>Logging is useful only when events can be reviewed and someone knows what to do with an alert. Start with identity-provider and administrator sign-ins, firewall/VPN events, endpoint protection, critical servers and backup status. Synchronize system time so events can be correlated.</p>
+  <p>Prioritize a small set of high-value alerts:</p>
+  <ul>
+    <li>New administrator accounts, privilege changes or MFA being disabled.</li>
+    <li>Repeated failed sign-ins or unusual remote-access activity.</li>
+    <li>Endpoint protection being stopped or a critical system falling out of compliance.</li>
+    <li>Firewall policy changes, unexpected exposed services or repeated denied traffic to sensitive systems.</li>
+    <li>Failed backups or a recovery job that did not complete as expected.</li>
+  </ul>
+  <p>Choose a retention period that matches operational needs, risk and applicable obligations. Restrict access to logs because they may contain sensitive information.</p>
+
+  <h2>6. Back up important data and test recovery</h2>
+  <p>Identify what must be restored first and how much data the business can afford to lose. Keep backup copies protected from ordinary user and administrator credentials; where feasible, maintain an offline or immutable copy. A successful scheduled job does not prove that files, permissions, applications and services can be recovered.</p>
+  <ol>
+    <li>Document the backup scope, owner, frequency and retention.</li>
+    <li>Perform a restore test on a representative file or system in a safe location.</li>
+    <li>Record the recovery time, missing dependencies and any permission or integrity issues.</li>
+    <li>Fix the gaps and repeat the test after significant infrastructure changes.</li>
+  </ol>
+  <p>For a broader recovery plan, see <a href="/en-blog/incident-response-network-outage.html">Network Outage Response</a> and <a href="/en-blog/network-monitoring-basics.html">Network Monitoring Basics</a>.</p>
+
+  <h2>7. Prepare for incidents and review vendor access</h2>
+  <p>Write down who coordinates an incident, who can isolate a device or disable an account, how evidence and logs are preserved, and how operations will continue. Include contact details for IT support, cloud providers, insurers and other critical vendors. Make the first steps accessible when normal email or file shares are unavailable.</p>
+  <p>Vendor access should be named, limited to the required systems, time-bound when possible and removed when work ends. Confirm which party is responsible for patching, backups, logging and incident notification before relying on a managed service.</p>
+
+  <h2>A realistic 30-day rollout</h2>
+  <ol>
+    <li><strong>Week 1 — Discover:</strong> inventory assets, identify unsupported devices, map internet exposure and name system owners.</li>
+    <li><strong>Week 2 — Protect access:</strong> enable MFA on critical accounts, remove stale access, change default credentials and patch urgent issues.</li>
+    <li><strong>Week 3 — Reduce reach:</strong> review firewall rules, separate guest access and plan one low-risk network-segmentation change.</li>
+    <li><strong>Week 4 — Prove recovery:</strong> test a restore, review important logs, write the incident contact sheet and schedule a recurring review.</li>
+  </ol>
+  <p>Prioritize based on business impact and exposure rather than trying to change everything at once. Document exceptions and owners so that temporary compromises do not silently become permanent.</p>
+
+  <h2>Related technical guides</h2>
+  <ul>
+    <li><a href="/en-blog/network-hardening.html">Network Hardening</a></li>
+    <li><a href="/en-blog/network-security-assessment-checklist.html">Network Security Assessment Checklist</a></li>
+    <li><a href="/en-blog/dhcp-snooping-dai-network-security.html">DHCP Snooping and Dynamic ARP Inspection</a></li>
+    <li><a href="/en-blog/active-directory-security-basics.html">Active Directory Security Basics</a></li>
+    <li><a href="/blog/network-security-baseline-for-small-business.html" lang="fa" hreflang="fa-IR">نسخه فارسی این راهنما</a></li>
+  </ul>
+  <p><a href="/en-blog.html">Back to all technical articles</a></p>
+  <section class="seo-conversion-cta" aria-label="IT services">
+    <h2>Need help applying a security baseline?</h2>
+    <p>Get practical support with network design, infrastructure hardening, access controls and operational documentation.</p>
+    <p><a href="/en-services.html">Explore IT services ↗</a> · <a href="/en-vintech/request.html">Request a project or consultation ↗</a></p>
+  </section>
+</main>
+<script src="/assets/site-final-quality-2026.js" defer></script>
+<footer class="legal-footer-2026">
+  <a href="/en-privacy.html">Privacy</a> · <a href="/en-terms.html">Terms</a> · <a href="/en-disclosure.html">Disclosure</a> · <a href="mailto:mohammedhasgari@gmail.com">Contact</a>
+</footer>
+</body>
+</html>
