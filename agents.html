@@ -2,221 +2,272 @@
 <html lang="fa" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#08111f">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#080d17">
+<meta name="description" content="اتاق فرمان Mowhmmdh AI Company؛ پایش شفاف و فقط‌خواندنی گردش‌کارها، تست‌ها، Pull Requestها و تغییرات GitHub.">
 <meta name="robots" content="index,follow,max-image-preview:large">
-<meta name="description" content="پنل مشاهده وضعیت GitHub Actions، Pull Requestها و commitهای پروژه Mowhmmdh AI Company؛ وضعیت زمان‌بندی‌های ChatGPT در این پنل به‌صورت زنده قابل مشاهده نیست.">
 <meta name="author" content="Mohammad Hossein Asgari Somarin">
-<meta property="og:title" content="اتاق فرمان ایجنت‌ها | Mowhmmdh AI Company">
-<meta property="og:description" content="نمای زنده از GitHub Actions، تغییرات و وضعیت انتشار پروژه Mowhmmdh AI Company.">
+<meta property="og:title" content="اتاق فرمان | Mowhmmdh AI Company">
+<meta property="og:description" content="داشبورد پایش شفاف گردش‌کارهای GitHub و وضعیت پروژه.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://mowhmmdh.github.io/agents.html">
-<meta property="og:image" content="https://mowhmmdh.github.io/images/profile.webp">
 <link rel="canonical" href="https://mowhmmdh.github.io/agents.html">
-<link rel="stylesheet" href="/assets/site-bundle.css">
-<script src="/assets/site-theme.js" defer></script>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"صفحه اصلی","item":"https://mowhmmdh.github.io/"},{"@type":"ListItem","position":2,"name":"اتاق فرمان ایجنت‌ها","item":"https://mowhmmdh.github.io/agents.html"}]}</script>
-<title>اتاق فرمان ایجنت‌ها | Mowhmmdh AI Company</title>
+<title>اتاق فرمان | Mowhmmdh AI Company</title>
 <style>
-:root{color-scheme:dark;--bg:#07101d;--panel:#0e1a2b;--line:#22334a;--text:#edf4ff;--muted:#9eb0c8;--cyan:#62e6d5;--blue:#7da7ff;--green:#64d99b;--yellow:#ffd479;--red:#ff8d9a}
-*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% 0,#173457 0,transparent 38%),var(--bg);color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif;line-height:1.7}a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}.wrap{max-width:1200px;margin:auto;padding:28px 18px 60px}.top{display:flex;gap:20px;align-items:center;justify-content:space-between;flex-wrap:wrap}.eyebrow{color:var(--cyan);font-size:.85rem;letter-spacing:.04em}.hero h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.2;margin:.35rem 0}.sub{color:var(--muted);max-width:720px}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:12px;padding:10px 14px;color:var(--text);background:#13243a;cursor:pointer;font:inherit}.btn.primary{background:var(--cyan);color:#06211f;border-color:var(--cyan);font-weight:bold}.statusline{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:.9rem;margin:22px 0}.dot{width:9px;height:9px;border-radius:50%;background:var(--yellow);display:inline-block}.dot.live{background:var(--green);box-shadow:0 0 12px #64d99b99}.dot.error{background:var(--red)}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin:18px 0}.metric,.panel,.agent{background:linear-gradient(160deg,#122239,#0c1727);border:1px solid var(--line);border-radius:18px;padding:18px;min-width:0}.metric .label{color:var(--muted);font-size:.9rem}.metric strong{font-size:2rem;display:block;margin-top:4px}.section{margin-top:28px}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}.section h2{font-size:1.25rem;margin:0}.muted{color:var(--muted)}.agents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.agenthead{display:flex;gap:10px;align-items:center}.icon{width:58px;height:58px;flex:0 0 58px;display:grid;place-items:center;border-radius:17px;background:linear-gradient(145deg,#203a59,#111c2e);border:1px solid #344760;overflow:hidden;position:relative}.icon svg{width:52px;height:52px;filter:drop-shadow(0 4px 6px #0005)}.agent-task{margin:12px 0 7px;padding:10px 11px;background:#091321a8;border:1px solid #202e42;border-radius:12px}.agent-task strong{display:block;font-size:.78rem;color:#dce8fa;margin-bottom:3px}.agent-task span{display:block;color:var(--muted);font-size:.8rem;overflow-wrap:anywhere}.agent-foot{display:flex;justify-content:space-between;gap:8px;font-size:.74rem;color:var(--muted)}.agent h3{margin:0;font-size:1rem}.tag{font-size:.78rem;border:1px solid var(--line);border-radius:99px;padding:2px 9px;color:var(--muted);display:inline-block;margin-top:8px}.tag.ok{color:var(--green);border-color:#27694e}.tag.warn{color:var(--yellow);border-color:#765c2b}.tag.bad{color:var(--red);border-color:#713b4b}.list{display:grid;gap:10px}.item{border:1px solid var(--line);background:#0b1625;border-radius:13px;padding:13px 15px;display:flex;align-items:flex-start;justify-content:space-between;gap:16px}.item h3{font-size:.98rem;margin:0 0 4px;overflow-wrap:anywhere}.item p{margin:0;color:var(--muted);font-size:.84rem}.pill{white-space:nowrap;font-size:.78rem;border-radius:99px;padding:3px 9px;background:#1b3048;color:var(--muted)}.pill.success{background:#10392d;color:var(--green)}.pill.running{background:#123b45;color:var(--cyan)}.pill.failure{background:#482331;color:var(--red)}.empty{padding:22px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--muted)}.notice{border:1px solid #6b562e;background:#2a2418;color:#f5dca6;padding:14px 16px;border-radius:14px;margin-top:22px}.foot{border-top:1px solid var(--line);margin-top:32px;padding-top:18px;color:var(--muted);font-size:.85rem}.small{font-size:.82rem;color:var(--muted)}.spin{animation:spin 1.4s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
-.discipline{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.discipline-card{background:linear-gradient(155deg,#1b2032,#101827);border:1px solid #493b4c;border-radius:16px;padding:16px;min-width:0}
-.discipline-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.score{font-size:1.8rem;font-weight:800;color:var(--green)}
-.score.low{color:var(--red)}.score.mid{color:var(--yellow)}
-.meter{height:7px;background:#253247;border-radius:9px;overflow:hidden;margin:9px 0 12px}
-.meter span{height:100%;display:block;background:var(--green);width:0;transition:width .35s}
-.meter span.low{background:var(--red)}.meter span.mid{background:var(--yellow)}
-.discipline-card p{font-size:.84rem;color:var(--muted);margin:6px 0}
-.discipline-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.discipline-actions a{font-size:.8rem;border:1px solid var(--line);padding:7px 10px;border-radius:9px;background:#17243a}
-.discipline-actions a.warn{border-color:#765c2b;color:var(--yellow)}
-.rulebox{margin-top:12px;padding:12px;border-radius:12px;background:#111b2b;border:1px solid var(--line);font-size:.82rem;color:var(--muted)}
-@media(max-width:850px){.discipline{grid-template-columns:1fr}}
-
-@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.agents{grid-template-columns:1fr}}@media(max-width:480px){.wrap{padding:18px 12px 40px}.grid{gap:9px}.metric{padding:13px}.metric strong{font-size:1.6rem}.item{flex-direction:column;gap:8px}}
-/* Responsive control-room layout */
-html{scroll-behavior:smooth;scroll-padding-top:16px}
-body{min-width:320px;overflow-x:hidden}
-.wrap{width:100%;max-width:1200px}
-img,svg,video,canvas{max-width:100%}
-button,a{touch-action:manipulation}
-button:focus-visible,a:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
-.skip-link{position:absolute;top:-60px;right:12px;z-index:1000;background:var(--cyan);color:#06211f;padding:10px 14px;border-radius:10px}
-.skip-link:focus{top:12px}
-.grid{grid-template-columns:repeat(4,minmax(0,1fr))}
-.agents{grid-template-columns:repeat(3,minmax(0,1fr))}
-.discipline{grid-template-columns:repeat(3,minmax(0,1fr))}
-.metric,.panel,.agent,.discipline-card{min-width:0}
-.item>div{min-width:0;flex:1}
-.item h3,.item p,.sub,.agent-task span{overflow-wrap:anywhere;word-break:normal}
-.item .pill{flex:0 0 auto;max-width:100%;white-space:normal;text-align:center}
-.actions .btn{min-height:44px}
-@media(max-width:900px){
- .wrap{padding:22px 16px 48px}
- .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
- .agents{grid-template-columns:repeat(2,minmax(0,1fr))}
- .discipline{grid-template-columns:repeat(2,minmax(0,1fr))}
- .top{align-items:flex-start}
-}
-@media(max-width:640px){
- .wrap{padding:16px 12px 36px}
- .top{display:flex;flex-direction:column;gap:14px}
- .hero h1{font-size:clamp(1.65rem,7vw,2.25rem)}
- .sub{font-size:.92rem}
- .actions{width:100%;display:grid;grid-template-columns:1fr}
- .actions .btn{width:100%;min-height:46px}
- .statusline{align-items:flex-start;flex-wrap:wrap;margin:16px 0}
- .grid{gap:9px;margin:14px 0}
- .metric{padding:12px;border-radius:14px}
- .metric .label{font-size:.78rem;overflow-wrap:anywhere}
- .metric strong{font-size:1.55rem}
- .agents,.discipline{grid-template-columns:minmax(0,1fr);gap:10px}
- .agent,.discipline-card{padding:14px;border-radius:15px}
- .section{margin-top:23px}
- .sectionhead{align-items:flex-start}
- .section h2{font-size:1.08rem}
- .item{display:flex;flex-direction:column;gap:9px;padding:12px}
- .item .pill{align-self:flex-start}
- .discipline-top{align-items:flex-start}
- .discipline-actions{display:grid;grid-template-columns:1fr}
- .discipline-actions a{text-align:center;min-height:42px;display:flex;align-items:center;justify-content:center}
- .rulebox,.notice{padding:12px;font-size:.82rem;overflow-wrap:anywhere}
- .foot{overflow-wrap:anywhere}
-}
-@media(max-width:380px){
- .wrap{padding-left:9px;padding-right:9px}
- .grid{gap:7px}
- .metric{padding:10px}
- .metric strong{font-size:1.35rem}
- .metric .label{font-size:.73rem}
- .agenthead{align-items:flex-start}
- .icon{width:48px;height:48px;flex-basis:48px}
- .icon svg{width:44px;height:44px}
-}
-@media(prefers-reduced-motion:reduce){
- html{scroll-behavior:auto}
- *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-}
+:root{color-scheme:dark;--bg:#080d17;--bg2:#0b1220;--panel:#0e1727;--panel2:#111e31;--line:#24334a;--line2:#304560;--text:#edf4ff;--muted:#91a3bd;--cyan:#65f0dc;--blue:#7ca8ff;--green:#6be0a0;--amber:#ffce73;--red:#ff8192;--purple:#b5a0ff;--radius:18px;--shadow:0 14px 40px #0002}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;min-width:320px;background:radial-gradient(ellipse at 80% -15%,#173459 0,transparent 38%),radial-gradient(ellipse at 0% 35%,#101d31 0,transparent 34%),var(--bg);color:var(--text);font-family:Inter,"Segoe UI",Tahoma,Arial,sans-serif;line-height:1.65}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.12;background-image:linear-gradient(#24334a 1px,transparent 1px),linear-gradient(90deg,#24334a 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(to bottom,#000,transparent 75%);z-index:-1}
+a{color:var(--cyan);text-decoration:none}a:hover{text-decoration:underline}
+button,input,select{font:inherit}
+button,a,input,select{touch-action:manipulation}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--cyan);outline-offset:3px}
+button{cursor:pointer}
+.skip{position:absolute;top:-80px;inset-inline-start:12px;z-index:50;background:var(--cyan);color:#041a19;padding:10px 14px;border-radius:10px}.skip:focus{top:12px}
+.shell{width:min(1480px,100%);margin:auto;padding:18px clamp(12px,2vw,30px) 40px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 0 20px;border-bottom:1px solid #25344a}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.brandmark{width:44px;height:44px;display:grid;place-items:center;border:1px solid #3b5c72;border-radius:14px;background:linear-gradient(145deg,#18364a,#101b2d);color:var(--cyan);font-size:1.25rem;box-shadow:0 0 26px #65f0dc12;flex:none}
+.brandname{font-size:.96rem;font-weight:800;letter-spacing:.02em}.brandcaption{font-size:.72rem;color:var(--muted);letter-spacing:.12em}
+.top-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 13px;border-radius:12px;border:1px solid var(--line2);background:#121f32;color:var(--text);font-weight:650;font-size:.86rem;white-space:normal}
+.btn:hover{border-color:#5d7d9c;text-decoration:none;background:#172941}
+.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#071b1a}
+.btn:disabled{opacity:.6;cursor:wait}
+.btn.iconbtn{width:44px;padding:8px}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:22px;padding-top:22px}
+.sidebar{align-self:start;position:sticky;top:18px;border:1px solid var(--line);border-radius:var(--radius);padding:12px;background:#0b1422d9;backdrop-filter:blur(14px)}
+.navlabel{padding:9px 11px 6px;color:#6f86a5;font-size:.68rem;letter-spacing:.12em;font-weight:800}
+.navlink{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:11px;color:#aebed2;font-size:.87rem;margin:2px 0}
+.navlink:hover,.navlink.active{background:#172940;color:var(--text);text-decoration:none}
+.navlink.active{box-shadow:inset 3px 0 var(--cyan)}
+.navicon{width:22px;text-align:center;color:var(--cyan);font-size:1rem}
+.sidebar-note{margin-top:15px;padding:12px;border-radius:12px;background:#111e30;border:1px solid var(--line);font-size:.78rem;color:var(--muted)}
+main{min-width:0}
+.hero{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;padding:6px 0 22px}
+.eyebrow{display:flex;align-items:center;gap:8px;color:var(--cyan);font-size:.74rem;font-weight:800;letter-spacing:.13em}
+.eyebrow:before{content:"";width:22px;height:2px;background:var(--cyan);box-shadow:0 0 10px var(--cyan)}
+h1{font-size:clamp(1.8rem,3.4vw,3rem);line-height:1.2;letter-spacing:-.035em;margin:10px 0 12px}
+.lead{max-width:760px;color:var(--muted);margin:0;font-size:.97rem}
+.hero-tools{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;min-width:170px}
+.connection{display:flex;align-items:center;gap:9px;flex-wrap:wrap;padding:11px 14px;margin-bottom:15px;background:#0e1a2a;border:1px solid var(--line);border-radius:13px;color:var(--muted);font-size:.81rem}
+.live-dot{width:8px;height:8px;display:inline-block;border-radius:50%;background:var(--amber);flex:none}
+.live-dot.ok{background:var(--green);box-shadow:0 0 12px #6be0a055}.live-dot.bad{background:var(--red)}
+.sep{opacity:.35}.push{margin-inline-start:auto}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.metric{position:relative;overflow:hidden;min-width:0;padding:17px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#121f32,#0d1726);box-shadow:var(--shadow)}
+.metric:after{content:"";position:absolute;width:90px;height:90px;border-radius:50%;inset-inline-end:-38px;bottom:-54px;background:var(--glow,#65f0dc);opacity:.09;filter:blur(2px)}
+.metric-head{display:flex;justify-content:space-between;align-items:center;gap:8px;color:var(--muted);font-size:.79rem}
+.metric-symbol{width:31px;height:31px;display:grid;place-items:center;border:1px solid var(--line2);border-radius:10px;color:var(--glow,var(--cyan));background:#17263a}
+.metric strong{display:block;font-size:clamp(1.65rem,2.7vw,2.35rem);line-height:1.25;margin:12px 0 4px;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.metric-foot{font-size:.74rem;color:var(--muted)}
+.section{margin-top:28px;scroll-margin-top:18px}
+.sectionhead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:13px}
+.sectiontitle{margin:0;font-size:1.12rem;letter-spacing:-.02em}
+.sectiondesc{font-size:.79rem;color:var(--muted);margin-top:3px}
+.textlink{font-size:.81rem;font-weight:650}
+.panel{min-width:0;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(150deg,#101b2c,#0b1421);box-shadow:var(--shadow)}
+.panelpad{padding:17px}
+.agentgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.agent{min-width:0;padding:16px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(155deg,#121f32,#0c1524)}
+.agenttop{display:flex;align-items:center;gap:11px}
+.agentglyph{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:#182a40;border:1px solid #344a64;color:var(--cyan);font-size:1.2rem;flex:none}
+.agent h3{font-size:.94rem;margin:0}.agent-en{font-size:.72rem;color:var(--muted)}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:99px;border:1px solid var(--line2);color:var(--muted);font-size:.7rem;margin-top:13px}
+.tag:before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.tag.warn{color:var(--amber);border-color:#65512d}.tag.good{color:var(--green);border-color:#285e49}.tag.bad{color:var(--red);border-color:#673947}
+.agent p{font-size:.8rem;color:var(--muted);margin:11px 0 0}
+.agent-evidence{margin-top:13px;padding-top:11px;border-top:1px solid #243249;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.75rem}
+.agent-evidence span{color:var(--muted)}
+.two-col{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(260px,.75fr);gap:13px}
+.list{display:grid;gap:9px}
+.rowitem{display:flex;align-items:flex-start;justify-content:space-between;gap:13px;padding:13px 14px;border:1px solid #223149;border-radius:13px;background:#0d1726;min-width:0}
+.rowmain{min-width:0;flex:1}
+.rowtitle{font-size:.87rem;font-weight:700;line-height:1.5;overflow-wrap:anywhere;margin:0}
+.rowtitle a{color:var(--text)}.rowtitle a:hover{color:var(--cyan)}
+.rowmeta{display:flex;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:.74rem;margin-top:5px;overflow-wrap:anywhere}
+.pill{flex:none;max-width:45%;font-size:.7rem;padding:4px 8px;border-radius:8px;background:#19283c;color:var(--muted);text-align:center;overflow-wrap:anywhere}
+.pill.success{background:#103529;color:var(--green)}.pill.running{background:#123541;color:var(--cyan)}.pill.failure{background:#41212c;color:var(--red)}.pill.warning{background:#3c301a;color:var(--amber)}
+.empty{padding:24px 16px;text-align:center;border:1px dashed #30415a;border-radius:13px;color:var(--muted);font-size:.85rem}
+.callout{padding:15px 16px;border:1px solid #65512d;border-radius:14px;background:linear-gradient(130deg,#2b2418,#171a20);color:#ecd8a9;font-size:.82rem}
+.callout strong{color:#fff0c8}
+.callout a{color:#ffdc91;text-decoration:underline}
+.accountgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.accountcard{padding:15px;border:1px solid var(--line);border-radius:15px;background:#0e1827;min-width:0}
+.accountcard h3{margin:0 0 6px;font-size:.9rem}.accountcard p{margin:0;color:var(--muted);font-size:.79rem}
+.accountnum{font-size:1.5rem;font-weight:800;color:var(--cyan);font-variant-numeric:tabular-nums}
+.toolsrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.search{width:min(280px,100%);min-height:42px;border-radius:11px;border:1px solid var(--line2);background:#0b1421;color:var(--text);padding:9px 12px}
+.select{min-height:42px;border-radius:11px;border:1px solid var(--line2);background:#0b1421;color:var(--text);padding:8px 10px;max-width:100%}
+.footer{margin-top:32px;padding:19px 0 5px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.75rem}
+.mobile-nav-toggle{display:none}
+[hidden]{display:none!important}
+html[dir="ltr"] body{font-family:Inter,"Segoe UI",Arial,sans-serif}
+html[dir="ltr"] .navlink.active{box-shadow:inset 3px 0 var(--cyan)}
+html[dir="ltr"] .push{margin-inline-start:auto}
+@media(max-width:1120px){.layout{grid-template-columns:185px minmax(0,1fr);gap:15px}.agentgrid{grid-template-columns:1fr}.agent{padding:14px}.two-col{grid-template-columns:1fr}.metrics{gap:9px}}
+@media(max-width:780px){.shell{padding:12px 12px 28px}.topbar{padding:7px 0 13px}.brandmark{width:40px;height:40px}.brandname{font-size:.87rem}.brandcaption{font-size:.65rem}.layout{display:block;padding-top:16px}.sidebar{position:static;margin-bottom:18px;padding:10px}.sidebar-nav{display:none}.sidebar.open .sidebar-nav{display:block}.mobile-nav-toggle{display:flex;width:100%;justify-content:space-between;align-items:center;min-height:42px;background:transparent;border:0;color:var(--text);font-weight:700;padding:7px}.sidebar-note{margin-top:9px}.hero{display:block;padding:5px 0 17px}.hero-tools{justify-content:flex-start;margin-top:15px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.metric{padding:13px}.metric strong{font-size:1.8rem}.agentgrid{grid-template-columns:1fr}.accountgrid{grid-template-columns:1fr}.section{margin-top:23px}.sectiontitle{font-size:1.03rem}.connection{font-size:.76rem}.push{margin-inline-start:0}}
+@media(max-width:430px){.top-actions .btn{padding:8px 10px;font-size:.78rem;min-height:40px}.brand{gap:8px}.brandmark{width:36px;height:36px}.brandcaption{letter-spacing:.04em}.hero h1{font-size:1.75rem}.lead{font-size:.88rem}.hero-tools{display:grid;grid-template-columns:1fr 1fr}.hero-tools .btn{width:100%;font-size:.78rem;padding:8px}.metrics{gap:8px}.metric{padding:11px;border-radius:13px}.metric-head{font-size:.72rem}.metric-symbol{width:27px;height:27px}.metric strong{font-size:1.55rem;margin:9px 0 3px}.metric-foot{font-size:.68rem}.rowitem{padding:11px;gap:8px}.rowtitle{font-size:.82rem}.rowmeta{font-size:.69rem}.pill{font-size:.65rem;padding:4px 6px;max-width:40%}.toolsrow{display:grid;grid-template-columns:1fr;width:100%}.search,.select{width:100%}.panelpad{padding:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<a class="skip-link" href="#main-content">پرش به محتوای اصلی</a>
-<main class="wrap" id="main-content">
-<!-- AUTO-BREADCRUMB:START -->
-<nav class="auto-breadcrumb" aria-label="مسیر صفحه"><a href="/">صفحه اصلی</a> / <span aria-current="page">اتاق فرمان ایجنت‌ها</span></nav>
-<!-- AUTO-BREADCRUMB:END -->
-<header class="top">
-<div class="hero">
-<div class="eyebrow">MOWHMMDH AI COMPANY / CONTROL ROOM</div>
-<h1>اتاق فرمان ایجنت‌ها</h1>
-<p class="sub">نمای زنده از گردش‌کارهای GitHub، تست‌ها و Pull Requestهای پروژه. اطلاعات هر ۳۰ ثانیه از API عمومی GitHub به‌روزرسانی می‌شود؛ نیازی به API پولی یا توکن داخل مرورگر نیست.</p>
-</div>
-<div class="actions">
-<button class="btn" id="refresh" type="button" aria-label="به‌روزرسانی اطلاعات پنل">↻ به‌روزرسانی</button>
-<a class="btn primary" href="https://github.com/mowhmmdh/Mowhmmdh.github.io/actions">مشاهده همه اجراها ↗</a>
+<a class="skip" href="#main" data-i18n="skip">پرش به محتوای اصلی</a>
+<div class="shell">
+<header class="topbar">
+<div class="brand"><div class="brandmark" aria-hidden="true">⌘</div><div><div class="brandname">MOWHMMDH AI COMPANY</div><div class="brandcaption" data-i18n="brandCaption">AI OPERATIONS / OBSERVABILITY</div></div></div>
+<div class="top-actions">
+<button class="btn" id="langToggle" type="button" aria-label="Switch language">EN / فارسی</button>
+<a class="btn" href="https://github.com/mowhmmdh/Mowhmmdh.github.io" target="_blank" rel="noopener noreferrer" data-i18n="repoLink">↗ مخزن GitHub</a>
 </div>
 </header>
-<div class="statusline"><span class="dot" id="liveDot"></span><span id="connection">در حال اتصال به GitHub…</span><span aria-hidden="true">·</span><span id="updated">هنوز به‌روزرسانی نشده</span></div>
-<section class="grid" aria-label="خلاصه وضعیت">
-<div class="metric"><div class="label">در حال اجرا</div><strong id="runningCount">—</strong><span class="small">GitHub Actions</span></div>
-<div class="metric"><div class="label">اجراهای موفق اخیر</div><strong id="successCount">—</strong><span class="small">از ۲۰ اجرای اخیر</span></div>
-<div class="metric"><div class="label">اجراهای ناموفق اخیر</div><strong id="failureCount">—</strong><span class="small">از ۲۰ اجرای اخیر</span></div>
-<div class="metric"><div class="label">Pull Requestهای باز</div><strong id="prCount">—</strong><span class="small">تغییرات در انتظار بررسی</span></div>
-</section>
-<section class="section">
-<div class="sectionhead"><h2>وضعیت نقش‌های تیم</h2><span class="small">وضعیت واقعی بر اساس شواهد مخزن</span></div>
-<div class="agents">
-<article class="agent"><div class="agenthead"><div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="13" y="18" width="38" height="34" rx="13" fill="#294f70" stroke="#76cce2" stroke-width="2"/><rect x="19" y="27" width="26" height="13" rx="6" fill="#071624"/><circle cx="26" cy="33" r="3" fill="#65ead8"/><circle cx="38" cy="33" r="3" fill="#65ead8"/><path d="M25 45h14M32 8v8" stroke="#78d8e8" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="7" r="3" fill="#65ead8"/></svg></div><div><h3>مهندسی و کنترل کیفیت</h3><div class="small">تست، کیفیت کد و CI</div></div></div><span class="tag" id="engineeringTag">در انتظار داده</span><div class="agent-task"><strong>فعالیت قابل مشاهده</strong><span id="engineeringTask">در حال دریافت داده‌ها…</span></div><div class="agent-foot"><span id="engineeringTime">—</span><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/actions" target="_blank" rel="noopener noreferrer">جزئیات ↗</a></div><p class="small">این کارت از اجراهای GitHub نتیجه می‌گیرد؛ اجرای تمام‌شده به معنی مشغول‌بودن دائمی ایجنت نیست.</p></article>
-<article class="agent"><div class="agenthead"><div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M31 51V28" stroke="#6ee0a6" stroke-width="3" stroke-linecap="round"/><path d="M31 37C15 37 13 25 14 16c12 0 20 6 17 21Z" fill="#247b68" stroke="#6ee0a6" stroke-width="2"/><path d="M32 31c0-13 8-19 19-18 1 12-5 22-19 22" fill="#245b62" stroke="#6ee0a6" stroke-width="2"/><rect x="12" y="50" width="40" height="5" rx="2.5" fill="#6ee0a6"/></svg></div><div><h3>رشد و محتوای سایت</h3><div class="small">SEO، دوزبانه و تجربه کاربر</div></div></div><span class="tag" id="growthTag">در انتظار داده</span><div class="agent-task"><strong>فعالیت قابل مشاهده</strong><span id="growthTask">در حال بررسی PRها…</span></div><div class="agent-foot"><span id="growthTime">—</span><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/pulls" target="_blank" rel="noopener noreferrer">تغییرات ↗</a></div><p class="small">تغییرات پیشنهادی را در فهرست PRهای باز ببین.</p></article>
-<article class="agent"><div class="agenthead"><div class="icon"><svg viewBox="0 0 64 64" aria-hidden="true"><path d="M32 7 51 14v14c0 13-8 21-19 28C21 49 13 41 13 28V14L32 7Z" fill="#493d77" stroke="#b5a3ff" stroke-width="2"/><path d="m22 32 7 7 14-16" stroke="#b5f3d9" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><h3>عیب‌یابی و تعمیر</h3><div class="small">خطاها، رگرسیون‌ها و اصلاح امن</div></div></div><span class="tag warn" id="repairTag">در انتظار داده</span><div class="agent-task"><strong>آخرین بررسی کیفیت/امنیت</strong><span id="repairTask">در حال دریافت نتیجه‌ها…</span></div><div class="agent-foot"><span id="repairTime">—</span><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/security" target="_blank" rel="noopener noreferrer">امنیت ↗</a></div><p class="small">وضعیت زنده اتوماسیون ChatGPT از این صفحه قابل دریافت نیست؛ تا زمانی که اتصال امن جداگانه اضافه نشود، این پنل نمی‌تواند آن را در حال اجرا نشان دهد.</p></article>
+<div class="layout">
+<aside class="sidebar" id="sidebar">
+<button class="mobile-nav-toggle" id="navToggle" type="button" aria-expanded="false"><span data-i18n="navigation">ناوبری پنل</span><span aria-hidden="true">☰</span></button>
+<nav class="sidebar-nav" aria-label="Dashboard navigation">
+<div class="navlabel" data-i18n="workspace">فضای کاری</div>
+<a class="navlink active" href="#overview"><span class="navicon">◈</span><span data-i18n="navOverview">نمای کلی</span></a>
+<a class="navlink" href="#agents"><span class="navicon">⌘</span><span data-i18n="navAgents">نقش‌های تیم</span></a>
+<a class="navlink" href="#workflows"><span class="navicon">↻</span><span data-i18n="navWorkflows">گردش‌کارها</span></a>
+<a class="navlink" href="#pulls"><span class="navicon">⑂</span><span data-i18n="navPulls">Pull Requestها</span></a>
+<a class="navlink" href="#activity"><span class="navicon">≋</span><span data-i18n="navActivity">جریان فعالیت</span></a>
+<a class="navlink" href="#accountability"><span class="navicon">◇</span><span data-i18n="navAccount">پاسخ‌گویی</span></a>
+<div class="navlabel" data-i18n="system">سیستم</div>
+<a class="navlink" href="https://github.com/mowhmmdh/Mowhmmdh.github.io/actions" target="_blank" rel="noopener noreferrer"><span class="navicon">↗</span><span data-i18n="navActions">GitHub Actions</span></a>
+<a class="navlink" href="https://github.com/mowhmmdh/Mowhmmdh.github.io/security" target="_blank" rel="noopener noreferrer"><span class="navicon">⌑</span><span data-i18n="navSecurity">امنیت مخزن</span></a>
+</nav>
+<div class="sidebar-note"><strong data-i18n="truthTitle">شفافیت وضعیت</strong><br><span data-i18n="truthText">این پنل فقط داده‌های قابل مشاهده GitHub را گزارش می‌کند؛ اجرای مستقل ایجنت‌ها هنوز به اتصال heartbeat نیاز دارد.</span></div>
+</aside>
+<main id="main">
+<section id="overview" aria-labelledby="pageTitle">
+<div class="hero">
+<div><div class="eyebrow" data-i18n="eyebrow">CONTROL PLANE / LIVE OBSERVABILITY</div><h1 id="pageTitle" data-i18n="title">اتاق فرمان هوش مصنوعی</h1><p class="lead" data-i18n="lead">مرکز پایش پروژه برای گردش‌کارها، کیفیت، تغییرات و رویدادها؛ با داده‌های واقعی، بدون ساختن فعالیت یا امتیاز غیرقابل‌اثبات.</p></div>
+<div class="hero-tools"><button class="btn primary" id="refresh" type="button"><span aria-hidden="true">↻</span><span data-i18n="refresh">به‌روزرسانی</span></button><button class="btn" id="autoToggle" type="button" aria-pressed="true"><span aria-hidden="true">◷</span><span id="autoLabel" data-i18n="autoOn">پایش خودکار: روشن</span></button></div>
 </div>
+<div class="connection" role="status" aria-live="polite"><span class="live-dot" id="liveDot"></span><strong id="connection" data-i18n="connecting">در حال اتصال به GitHub…</strong><span class="sep">/</span><span id="updated" data-i18n="notUpdated">هنوز به‌روزرسانی نشده</span><span class="push" id="apiQuota"></span></div>
+<div class="metrics" aria-label="Metrics">
+<article class="metric" style="--glow:var(--cyan)"><div class="metric-head"><span data-i18n="metricRunning">در حال اجرا</span><span class="metric-symbol">↻</span></div><strong id="runningCount">—</strong><div class="metric-foot" data-i18n="metricRunningFoot">گردش‌کارهای فعال GitHub</div></article>
+<article class="metric" style="--glow:var(--green)"><div class="metric-head"><span data-i18n="metricSuccess">موفقیت‌ها</span><span class="metric-symbol">✓</span></div><strong id="successCount">—</strong><div class="metric-foot" data-i18n="metricSuccessFoot">از آخرین ۲۰ اجرا</div></article>
+<article class="metric" style="--glow:var(--red)"><div class="metric-head"><span data-i18n="metricFailure">شکست‌ها</span><span class="metric-symbol">!</span></div><strong id="failureCount">—</strong><div class="metric-foot" data-i18n="metricFailureFoot">از آخرین ۲۰ اجرا</div></article>
+<article class="metric" style="--glow:var(--purple)"><div class="metric-head"><span data-i18n="metricPR">PRهای باز</span><span class="metric-symbol">⑂</span></div><strong id="prCount">—</strong><div class="metric-foot" data-i18n="metricPRFoot">تغییرات نیازمند بررسی</div></article>
+</div>
+</section>
+
+<section class="section" id="agents">
+<div class="sectionhead"><div><h2 class="sectiontitle" data-i18n="agentsTitle">نقش‌های تیم</h2><div class="sectiondesc" data-i18n="agentsDesc">نقش‌های عملیاتی پیشنهادی؛ نه ادعای وجود فرایند خودکار فعال</div></div></div>
+<div class="agentgrid">
+<article class="agent"><div class="agenttop"><div class="agentglyph" aria-hidden="true">⌘</div><div><h3 data-i18n="agentEng">مهندسی و کیفیت</h3><div class="agent-en">ENGINEERING / QA</div></div></div><span class="tag warn" id="engineeringTag" data-i18n="waitingEvidence">در انتظار شواهد</span><p data-i18n="agentEngDesc">نقش: تست ساختاری، بررسی JavaScript، سازگاری موبایل و کنترل کیفیت. وضعیت فقط از workflowهای قابل تطبیق گزارش می‌شود.</p><div class="agent-evidence"><span id="engineeringEvidence" data-i18n="noEvidence">هنوز شواهدی دریافت نشده</span><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/actions" target="_blank" rel="noopener noreferrer" data-i18n="evidenceLink">شواهد ↗</a></div></article>
+<article class="agent"><div class="agenttop"><div class="agentglyph" aria-hidden="true">◎</div><div><h3 data-i18n="agentGrowth">رشد و تجربه کاربر</h3><div class="agent-en">GROWTH / UX / SEO</div></div></div><span class="tag warn" id="growthTag" data-i18n="waitingEvidence">در انتظار شواهد</span><p data-i18n="agentGrowthDesc">نقش: سئو، دسترس‌پذیری، محتوا و تجربه دوزبانه. تا زمانی که وظیفه و گزارش اجرا ثبت نشود، ایجنت فعال فرض نمی‌شود.</p><div class="agent-evidence"><span id="growthEvidence" data-i18n="noEvidence">هنوز شواهدی دریافت نشده</span><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/pulls" target="_blank" rel="noopener noreferrer" data-i18n="evidenceLink">شواهد ↗</a></div></article>
+<article class="agent"><div class="agenttop"><div class="agentglyph" aria-hidden="true">⬡</div><div><h3 data-i18n="agentSecurity">امنیت و تعمیر</h3><div class="agent-en">SECURITY / REPAIR</div></div></div><span class="tag warn" id="repairTag" data-i18n="waitingEvidence">در انتظار شواهد</span><p data-i18n="agentSecurityDesc">نقش: بررسی شکست‌ها، اسکن امنیتی و پیشنهاد اصلاح در branch آزمایشی؛ بدون انتشار مستقیم به production.</p><div class="agent-evidence"><span id="repairEvidence" data-i18n="noEvidence">هنوز شواهدی دریافت نشده</span><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/security" target="_blank" rel="noopener noreferrer" data-i18n="evidenceLink">شواهد ↗</a></div></article>
+</div>
+</section>
+
+<section class="section" id="workflows">
+<div class="sectionhead"><div><h2 class="sectiontitle" data-i18n="workflowTitle">گردش‌کارها و کنترل کیفیت</h2><div class="sectiondesc" data-i18n="workflowDesc">نتیجه اجراها از API مخزن؛ وضعیت‌ها تا زمان دریافت داده نامشخص باقی می‌مانند.</div></div><a class="textlink" href="https://github.com/mowhmmdh/Mowhmmdh.github.io/actions" target="_blank" rel="noopener noreferrer" data-i18n="viewAll">مشاهده همه ↗</a></div>
+<div class="two-col">
+<div class="panel panelpad"><div class="sectionhead"><div><h3 class="sectiontitle" data-i18n="recentRuns">اجراهای اخیر</h3><div class="sectiondesc" data-i18n="runsLimit">حداکثر ۲۰ اجرا</div></div></div><div class="list" id="runs"><div class="empty" data-i18n="loading">در حال دریافت داده…</div></div></div>
+<div class="panel panelpad"><div class="sectionhead"><div><h3 class="sectiontitle" data-i18n="qualityTitle">آخرین دروازه‌های کیفیت</h3><div class="sectiondesc" data-i18n="qualityDesc">فقط workflowهایی که نامشان با کنترل کیفیت/امنیت تطبیق دارد</div></div></div><div class="list" id="quality"><div class="empty" data-i18n="loading">در حال دریافت داده…</div></div></div>
+</div>
+</section>
+
+<section class="section" id="pulls">
+<div class="sectionhead"><div><h2 class="sectiontitle" data-i18n="pullsTitle">Pull Requestهای باز</h2><div class="sectiondesc" data-i18n="pullsDesc">تغییرات پیشنهادی که هنوز وارد شاخه اصلی نشده‌اند.</div></div><a class="textlink" href="https://github.com/mowhmmdh/Mowhmmdh.github.io/pulls" target="_blank" rel="noopener noreferrer" data-i18n="viewAll">مشاهده همه ↗</a></div>
+<div class="panel panelpad"><div class="list" id="prs"><div class="empty" data-i18n="loading">در حال دریافت داده…</div></div></div>
+</section>
+
+<section class="section" id="activity">
+<div class="sectionhead"><div><h2 class="sectiontitle" data-i18n="activityTitle">جریان فعالیت مخزن</h2><div class="sectiondesc" data-i18n="activityDesc">ترکیبی از workflowها، PRها و commitهای ثبت‌شده در GitHub.</div></div><div class="toolsrow"><input class="search" id="activitySearch" type="search" aria-label="Search activity" data-i18n-placeholder="searchPlaceholder" placeholder="جست‌وجوی فعالیت…"><select class="select" id="activityFilter" aria-label="Filter activity"><option value="all" data-i18n="filterAll">همه رویدادها</option><option value="run" data-i18n="filterRuns">گردش‌کارها</option><option value="pr" data-i18n="filterPRs">Pull Requestها</option><option value="commit" data-i18n="filterCommits">Commitها</option></select></div></div>
+<div class="panel panelpad"><div class="list" id="activityList"><div class="empty" data-i18n="loading">در حال دریافت داده…</div></div></div>
 </section>
 
 <section class="section" id="accountability">
-<div class="sectionhead"><h2>مرکز پاسخ‌گویی، اخطار و اصلاح</h2><span class="small">امتیازها از نتیجه واقعی اجراهای اخیر محاسبه می‌شوند</span></div>
-<div class="notice" style="margin:0 0 14px"><strong>قانون تیم:</strong> خطا پنهان نمی‌شود؛ شکست ثبت می‌شود، تیکت اصلاح ساخته می‌شود و تا عبور از تست‌ها، کار به انتشار نمی‌رود. «تنبیه» در این نسخه یعنی اخطار و محدودیت اعتماد مبتنی بر شواهد، نه آسیب یا اقدام خودکار مخرب.</div>
-<div class="discipline" id="disciplineCards"><div class="empty">در حال محاسبه امتیاز عملکرد…</div></div>
-<div class="rulebox"><strong>نردبان پاسخ‌گویی:</strong> ۱) شکست آزمون = ثبت خطا؛ ۲) تکرار شکست = اخطار و اولویت اصلاح؛ ۳) سه شکست متوالی = وضعیت قرمز و توقف واگذاری کار جدید تا بررسی؛ ۴) فقط پس از اجرای موفق تست‌ها، وضعیت بهبود می‌یابد. امتیاز فعلی بر اساس workflowهاست و تا وقتی هر ایجنت گزارش heartbeat و task ID ندهد، این امتیاز را نباید عملکرد قطعی یک ایجنت انسانی/خودکار تلقی کرد.</div>
+<div class="sectionhead"><div><h2 class="sectiontitle" data-i18n="accountTitle">پاسخ‌گویی و اصلاح مبتنی بر شواهد</h2><div class="sectiondesc" data-i18n="accountDesc">هیچ امتیاز ساختگی یا «مجازات خودکار» در این نسخه اعمال نمی‌شود.</div></div></div>
+<div class="callout"><strong data-i18n="safetyTitle">قاعده انتشار امن</strong> — <span data-i18n="safetyText">شکست‌ها باید با لینک اجرای واقعی ثبت شوند؛ اصلاح در branch انجام شود، تست و بررسی امنیتی بگذرد و انتشار production فقط پس از تأیید انسانی باشد.</span></div>
+<div class="accountgrid" style="margin-top:12px">
+<article class="accountcard"><div class="accountnum" id="failedEvidence">—</div><h3 data-i18n="accountFailures">شکست قابل مشاهده</h3><p data-i18n="accountFailuresDesc">تعداد workflowهای ناموفق در ۲۰ اجرای اخیر؛ این عدد به‌تنهایی نشان‌دهنده خطای یک ایجنت خاص نیست.</p></article>
+<article class="accountcard"><div class="accountnum" id="openWork">—</div><h3 data-i18n="accountOpen">تغییرات در انتظار</h3><p data-i18n="accountOpenDesc">Pull Requestهای باز؛ هر PR نیازمند بررسی تست‌ها و تغییرات است.</p></article>
+<article class="accountcard"><div class="accountnum" id="lastCommitAge">—</div><h3 data-i18n="accountLast">آخرین commit</h3><p id="lastCommitDetail" data-i18n="noCommit">هنوز اطلاعات commit دریافت نشده.</p></article>
+</div>
+<div class="toolsrow" style="margin-top:13px"><a class="btn" id="newIssue" href="https://github.com/mowhmmdh/Mowhmmdh.github.io/issues/new" target="_blank" rel="noopener noreferrer" data-i18n="issueButton">＋ ثبت تیکت اصلاح</a><a class="btn" href="https://github.com/mowhmmdh/Mowhmmdh.github.io/pulls" target="_blank" rel="noopener noreferrer" data-i18n="reviewButton">بررسی PRها ↗</a></div>
 </section>
-<section class="section">
-<div class="sectionhead"><h2>جریان فعالیت</h2><span class="small">آخرین رویدادهای مخزن</span></div>
-<div id="activity" class="list"><div class="empty">در حال دریافت فعالیت‌ها…</div></div>
-</section>
-<section class="section">
-<div class="sectionhead"><h2>اجراهای اخیر</h2><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/actions">همه اجراها ↗</a></div>
-<div id="runs" class="list"><div class="empty">در حال دریافت اجراها…</div></div>
-</section>
-<section class="section">
-<div class="sectionhead"><h2>Pull Requestهای باز</h2><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/pulls">مشاهده همه PRها ↗</a></div>
-<div id="prs" class="list"><div class="empty">در حال دریافت PRها…</div></div>
-</section>
-<section class="section">
-<div class="sectionhead"><h2>آخرین commitها</h2><a href="https://github.com/mowhmmdh/Mowhmmdh.github.io/commits/main">تاریخچه مخزن ↗</a></div>
-<div id="commits" class="list"><div class="empty">در حال دریافت commitها…</div></div>
-</section>
-<footer class="foot">Mowhmmdh AI Company · پنل مشاهده‌گر فقط‌خواندنی · به‌روزرسانی خودکار هر ۳۰ ثانیه · هیچ تغییری از این صفحه روی سایت اعمال نمی‌شود.</footer>
+
+<footer class="footer"><span data-i18n="footerLeft">Mowhmmdh AI Company · پنل مشاهده‌گر فقط‌خواندنی</span><span data-i18n="footerRight">بدون توکن مرورگر · بدون انتشار خودکار · داده‌ها از GitHub API</span></footer>
 </main>
+</div>
+</div>
 <script>
 (function(){
 'use strict';
-var owner='mowhmmdh',repo='Mowhmmdh.github.io',api='https://api.github.com/repos/'+owner+'/'+repo;
+var OWNER='mowhmmdh',REPO='Mowhmmdh.github.io',API='https://api.github.com/repos/'+OWNER+'/'+REPO;
 var el=function(id){return document.getElementById(id)};
-var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
-var date=function(s){try{return new Intl.DateTimeFormat('fa-IR',{dateStyle:'medium',timeStyle:'short'}).format(new Date(s))}catch(e){return s||'—'}};
-var age=function(s){var n=Math.max(0,Date.now()-new Date(s).getTime());if(n<60000)return 'همین الان';if(n<3600000)return Math.floor(n/60000)+' دقیقه پیش';if(n<86400000)return Math.floor(n/3600000)+' ساعت پیش';return Math.floor(n/86400000)+' روز پیش'};
-async function get(path){var r=await fetch(api+path,{headers:{'Accept':'application/vnd.github+json'},cache:'no-store'});if(!r.ok)throw new Error('GitHub API: '+r.status);return r.json()}
-function status(run){if(run.status==='in_progress')return ['در حال اجرا','running'];if(run.status==='queued'||run.status==='waiting'||run.status==='requested'||run.status==='pending')return ['در صف','running'];if(run.conclusion==='success')return ['موفق','success'];if(run.conclusion==='failure'||run.conclusion==='timed_out'||run.conclusion==='action_required')return ['ناموفق','failure'];if(run.conclusion==='cancelled')return ['لغو شده',''];return [run.conclusion||run.status||'نامشخص','']}
-function item(title,sub,url,label,kind){return '<article class="item"><div><h3><a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+esc(title)+'</a></h3><p>'+esc(sub)+'</p></div><span class="pill '+(kind||'')+'">'+esc(label)+'</span></article>'}
-
-function renderDiscipline(runs){
- var defs=[
-  {id:'engineering',name:'مهندسی و کیفیت',desc:'تست، build و quality gate',re:/quality|test|lint|build|ci/i},
-  {id:'growth',name:'رشد و تجربه کاربر',desc:'SEO، محتوا و دسترس‌پذیری',re:/seo|content|accessibility|pages|site/i},
-  {id:'repair',name:'امنیت و تعمیر',desc:'security scan، audit و CodeQL',re:/security|audit|codeql|repair|dependabot/i}
- ];
- var html=defs.map(function(d){
-  var list=runs.filter(function(r){return d.re.test((r.name||'')+' '+(r.display_title||''))}).slice().sort(function(a,b){return new Date(b.created_at||b.updated_at)-new Date(a.created_at||a.updated_at)});
-  if(!list.length) return '<article class="discipline-card"><div class="discipline-top"><div><strong>'+d.name+'</strong><div class="small">'+d.desc+'</div></div><span class="tag warn">داده کافی نیست</span></div><p>در اجراهای اخیر workflow مشخصی برای این نقش پیدا نشد؛ برای جلوگیری از امتیازسازی، نمره‌ای محاسبه نشده است.</p><div class="discipline-actions"><a href="https://github.com/'+owner+'/'+repo+'/actions" target="_blank" rel="noopener noreferrer">بررسی گردش‌کارها ↗</a></div></article>';
-  var fails=list.filter(function(r){return r.conclusion==='failure'||r.conclusion==='timed_out'||r.conclusion==='action_required'});
-  var wins=list.filter(function(r){return r.conclusion==='success'});
-  var evaluated=wins.length+fails.length;var score=evaluated?Math.round(wins.length/evaluated*100):null;
-  var streak=0;
-  for(var i=0;i<list.length;i++){if(list[i].conclusion==='failure'||list[i].conclusion==='timed_out'||list[i].conclusion==='action_required')streak++;else break}
-  var cls=score===null?'':score<60?'low':score<85?'mid':'';
-  var state=streak>=3?'قرمز · بررسی اجباری':fails.length?'نیازمند اصلاح':list.some(function(r){return r.status==='in_progress'})?'در حال اجرا':evaluated?'پایدار در داده‌های موجود':'در انتظار نتیجه قابل ارزیابی';
-  var latest=list[0];
-  var title='اخطار اصلاحی: '+d.name+' — '+(fails.length?'شکست در workflow':'بررسی عملکرد');
-  var body='## گزارش پاسخ‌گویی\n\n- نقش: '+d.name+'\n- وضعیت: '+state+'\n- امتیاز مبتنی بر workflow: '+score+'/100\n- شکست‌های مشاهده‌شده: '+fails.length+'\n- شکست متوالی: '+streak+'\n- آخرین workflow: '+(latest?(latest.name||latest.display_title)+' ('+(latest.conclusion||latest.status)+')':'داده‌ای ثبت نشده')+'\n\n## اقدام لازم\n1. علت ریشه‌ای را از logها پیدا کن.\n2. اصلاح را فقط در branch انجام بده.\n3. تست‌های کیفیت و امنیت را اجرا کن.\n4. نتیجه، شواهد و rollback را در همین issue ثبت کن.\n5. بدون تأیید انسانی به production منتشر نکن.';
-  var issue='https://github.com/'+owner+'/'+repo+'/issues/new?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(body)+'&labels='+encodeURIComponent('bug');
-  var runUrl=latest?latest.html_url:'https://github.com/'+owner+'/'+repo+'/actions';
-  return '<article class="discipline-card"><div class="discipline-top"><div><strong>'+d.name+'</strong><div class="small">'+d.desc+'</div></div><div class="score '+cls+'">'+(score===null?'—':score)+'<span class="small">'+(score===null?'':'/100')+'</span></div></div><div class="meter"><span class="'+cls+'" style="width:'+(score===null?0:score)+'%"></span></div><p><strong>وضعیت:</strong> '+state+'</p><p><strong>شکست‌ها:</strong> '+fails.length+' · <strong>موفق:</strong> '+wins.length+' · <strong>متوالی:</strong> '+streak+'</p><p>'+(latest?'آخرین شاهد: '+esc(latest.name||latest.display_title)+' · '+esc(latest.conclusion||latest.status):'هیچ workflow قابل ارزیابی نیست')+'</p><div class="discipline-actions"><a class="warn" href="'+esc(issue)+'" target="_blank" rel="noopener noreferrer">ثبت اخطار / تیکت اصلاح ↗</a><a href="'+esc(runUrl)+'" target="_blank" rel="noopener noreferrer">مشاهده شواهد ↗</a></div></article>';
- }).join('');
- el('disciplineCards').innerHTML=html||'<div class="empty">داده‌ای برای محاسبه عملکرد موجود نیست.</div>';
+var lang='fa',autoRefresh=true,timer=null,lastData={runs:[],prs:[],commits:[]},refreshing=false;
+var I18N={
+fa:{
+skip:'پرش به محتوای اصلی',brandCaption:'پایش عملیات / مشاهده‌پذیری',repoLink:'↗ مخزن GitHub',navigation:'ناوبری پنل',workspace:'فضای کاری',navOverview:'نمای کلی',navAgents:'نقش‌های تیم',navWorkflows:'گردش‌کارها',navPulls:'Pull Requestها',navActivity:'جریان فعالیت',navAccount:'پاسخ‌گویی',system:'سیستم',navActions:'GitHub Actions',navSecurity:'امنیت مخزن',truthTitle:'شفافیت وضعیت',truthText:'این پنل فقط داده‌های قابل مشاهده GitHub را گزارش می‌کند؛ اجرای مستقل ایجنت‌ها هنوز به اتصال heartbeat نیاز دارد.',eyebrow:'CONTROL PLANE / LIVE OBSERVABILITY',title:'اتاق فرمان هوش مصنوعی',lead:'مرکز پایش پروژه برای گردش‌کارها، کیفیت، تغییرات و رویدادها؛ با داده‌های واقعی، بدون ساختن فعالیت یا امتیاز غیرقابل‌اثبات.',refresh:'به‌روزرسانی',autoOn:'پایش خودکار: روشن',autoOff:'پایش خودکار: خاموش',connecting:'در حال اتصال به GitHub…',notUpdated:'هنوز به‌روزرسانی نشده',metricRunning:'در حال اجرا',metricRunningFoot:'گردش‌کارهای فعال GitHub',metricSuccess:'موفقیت‌ها',metricSuccessFoot:'از آخرین ۲۰ اجرا',metricFailure:'شکست‌ها',metricFailureFoot:'از آخرین ۲۰ اجرا',metricPR:'PRهای باز',metricPRFoot:'تغییرات نیازمند بررسی',agentsTitle:'نقش‌های تیم',agentsDesc:'نقش‌های عملیاتی پیشنهادی؛ نه ادعای وجود فرایند خودکار فعال',agentEng:'مهندسی و کیفیت',agentEngDesc:'نقش: تست ساختاری، بررسی JavaScript، سازگاری موبایل و کنترل کیفیت. وضعیت فقط از workflowهای قابل تطبیق گزارش می‌شود.',agentGrowth:'رشد و تجربه کاربر',agentGrowthDesc:'نقش: سئو، دسترس‌پذیری، محتوا و تجربه دوزبانه. تا زمانی که وظیفه و گزارش اجرا ثبت نشود، ایجنت فعال فرض نمی‌شود.',agentSecurity:'امنیت و تعمیر',agentSecurityDesc:'نقش: بررسی شکست‌ها، اسکن امنیتی و پیشنهاد اصلاح در branch آزمایشی؛ بدون انتشار مستقیم به production.',waitingEvidence:'در انتظار شواهد',noEvidence:'هنوز شواهدی دریافت نشده',evidenceLink:'شواهد ↗',workflowTitle:'گردش‌کارها و کنترل کیفیت',workflowDesc:'نتیجه اجراها از API مخزن؛ وضعیت‌ها تا زمان دریافت داده نامشخص باقی می‌مانند.',viewAll:'مشاهده همه ↗',recentRuns:'اجراهای اخیر',runsLimit:'حداکثر ۲۰ اجرا',qualityTitle:'آخرین دروازه‌های کیفیت',qualityDesc:'فقط workflowهایی که نامشان با کنترل کیفیت/امنیت تطبیق دارد',loading:'در حال دریافت داده…',pullsTitle:'Pull Requestهای باز',pullsDesc:'تغییرات پیشنهادی که هنوز وارد شاخه اصلی نشده‌اند.',activityTitle:'جریان فعالیت مخزن',activityDesc:'ترکیبی از workflowها، PRها و commitهای ثبت‌شده در GitHub.',searchPlaceholder:'جست‌وجوی فعالیت…',filterAll:'همه رویدادها',filterRuns:'گردش‌کارها',filterPRs:'Pull Requestها',filterCommits:'Commitها',accountTitle:'پاسخ‌گویی و اصلاح مبتنی بر شواهد',accountDesc:'هیچ امتیاز ساختگی یا «مجازات خودکار» در این نسخه اعمال نمی‌شود.',safetyTitle:'قاعده انتشار امن',safetyText:'شکست‌ها باید با لینک اجرای واقعی ثبت شوند؛ اصلاح در branch انجام شود، تست و بررسی امنیتی بگذرد و انتشار production فقط پس از تأیید انسانی باشد.',accountFailures:'شکست قابل مشاهده',accountFailuresDesc:'تعداد workflowهای ناموفق در ۲۰ اجرای اخیر؛ این عدد به‌تنهایی نشان‌دهنده خطای یک ایجنت خاص نیست.',accountOpen:'تغییرات در انتظار',accountOpenDesc:'Pull Requestهای باز؛ هر PR نیازمند بررسی تست‌ها و تغییرات است.',accountLast:'آخرین commit',noCommit:'هنوز اطلاعات commit دریافت نشده.',issueButton:'＋ ثبت تیکت اصلاح',reviewButton:'بررسی PRها ↗',footerLeft:'Mowhmmdh AI Company · پنل مشاهده‌گر فقط‌خواندنی',footerRight:'بدون توکن مرورگر · بدون انتشار خودکار · داده‌ها از GitHub API',apiQuota:'',connected:'اتصال به GitHub برقرار است',apiError:'دریافت داده ناموفق بود؛ اتصال یا محدودیت نرخ API را بررسی کن.',unknown:'نامشخص',running:'در حال اجرا',queued:'در صف',success:'موفق',failure:'ناموفق',cancelled:'لغو شده',completed:'تکمیل‌شده',draft:'پیش‌نویس',open:'باز',commit:'Commit',workflow:'گردش‌کار',updated:'به‌روزرسانی',noRuns:'در اجرای اخیر داده‌ای ثبت نشده است.',noQuality:'در اجراهای اخیر workflow مشخصی برای کنترل کیفیت یا امنیت پیدا نشد.',noPRs:'Pull Request بازی وجود ندارد.',noActivity:'رویدادی مطابق جست‌وجو پیدا نشد.',run:'گردش‌کار',pr:'Pull Request',branch:'شاخه',author:'نویسنده',lastCheck:'آخرین بررسی',lastCommitNone:'بدون داده',refreshing:'در حال دریافت…',autoDisabled:'پایش خودکار متوقف شد',filtered:'فیلتر شده',rateLimit:'محدودیت API',notMapped:'قابل انتساب به ایجنت نیست'
+},
+en:{
+skip:'Skip to main content',brandCaption:'AI OPERATIONS / OBSERVABILITY',repoLink:'↗ GitHub repository',navigation:'Panel navigation',workspace:'WORKSPACE',navOverview:'Overview',navAgents:'Team roles',navWorkflows:'Workflows',navPulls:'Pull requests',navActivity:'Activity stream',navAccount:'Accountability',system:'SYSTEM',navActions:'GitHub Actions',navSecurity:'Repository security',truthTitle:'Status transparency',truthText:'This panel reports only observable GitHub data. Independent agent execution still requires a connected heartbeat.',eyebrow:'CONTROL PLANE / LIVE OBSERVABILITY',title:'AI Command Center',lead:'Project observability for workflows, quality, changes, and events — based on real evidence, without fabricated activity or scores.',refresh:'Refresh data',autoOn:'Auto refresh: on',autoOff:'Auto refresh: off',connecting:'Connecting to GitHub…',notUpdated:'Not updated yet',metricRunning:'Running now',metricRunningFoot:'Active GitHub workflows',metricSuccess:'Successful',metricSuccessFoot:'Last 20 runs',metricFailure:'Failed',metricFailureFoot:'Last 20 runs',metricPR:'Open PRs',metricPRFoot:'Changes awaiting review',agentsTitle:'Team roles',agentsDesc:'Proposed operational roles, not a claim that autonomous workers are active',agentEng:'Engineering & QA',agentEngDesc:'Role: structural tests, JavaScript checks, mobile compatibility, and quality gates. Status is shown only when a workflow can be matched.',agentGrowth:'Growth & user experience',agentGrowthDesc:'Role: SEO, accessibility, content, and bilingual UX. A role is not treated as active without task and run evidence.',agentSecurity:'Security & repair',agentSecurityDesc:'Role: investigate failures, run security scans, and propose fixes on a staging branch; no direct production deployment.',waitingEvidence:'Awaiting evidence',noEvidence:'No evidence received yet',evidenceLink:'Evidence ↗',workflowTitle:'Workflows & quality gates',workflowDesc:'Run results from the repository API. Unknown states remain unknown until data arrives.',viewAll:'View all ↗',recentRuns:'Recent runs',runsLimit:'Up to 20 runs',qualityTitle:'Latest quality gates',qualityDesc:'Only workflows whose names match quality or security checks',loading:'Loading data…',pullsTitle:'Open pull requests',pullsDesc:'Proposed changes that have not yet entered the default branch.',activityTitle:'Repository activity stream',activityDesc:'A combined view of GitHub workflows, pull requests, and commits.',searchPlaceholder:'Search activity…',filterAll:'All events',filterRuns:'Workflows',filterPRs:'Pull requests',filterCommits:'Commits',accountTitle:'Evidence-based accountability',accountDesc:'No fabricated scores or automatic “punishment” is applied in this version.',safetyTitle:'Safe release rule',safetyText:'Failures must link to real runs; fixes stay on a branch, pass tests and security review, and production release requires human approval.',accountFailures:'Observed failures',accountFailuresDesc:'Failed workflows among the latest 20 runs. This alone does not attribute a failure to a particular agent.',accountOpen:'Changes pending',accountOpenDesc:'Open pull requests; each requires review of its changes and test results.',accountLast:'Latest commit',noCommit:'Commit data has not been received yet.',issueButton:'＋ Create repair issue',reviewButton:'Review pull requests ↗',footerLeft:'Mowhmmdh AI Company · Read-only observability dashboard',footerRight:'No browser token · No auto-deployment · Data from GitHub API',apiQuota:'',connected:'Connected to GitHub',apiError:'Data retrieval failed. Check connectivity or API rate limits.',unknown:'Unknown',running:'Running',queued:'Queued',success:'Success',failure:'Failed',cancelled:'Cancelled',completed:'Completed',draft:'Draft',open:'Open',commit:'Commit',workflow:'Workflow',updated:'Updated',noRuns:'No recent workflow runs were found.',noQuality:'No matching quality or security workflow was found in recent runs.',noPRs:'There are no open pull requests.',noActivity:'No matching activity was found.',run:'Workflow',pr:'Pull request',branch:'Branch',author:'Author',lastCheck:'Last checked',lastCommitNone:'No data',refreshing:'Loading…',autoDisabled:'Auto refresh paused',filtered:'Filtered',rateLimit:'API rate limit',notMapped:'Not attributable to an agent'}
+};
+function tr(k){return (I18N[lang]&&I18N[lang][k])||I18N.fa[k]||k}
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function date(s){if(!s)return '—';try{return new Intl.DateTimeFormat(lang==='fa'?'fa-IR':'en-GB',{dateStyle:'medium',timeStyle:'short'}).format(new Date(s))}catch(e){return s}}
+function age(s){if(!s)return '—';var n=Math.max(0,Date.now()-new Date(s).getTime());if(n<60000)return lang==='fa'?'همین الان':'just now';if(n<3600000)return Math.floor(n/60000)+(lang==='fa'?' دقیقه پیش':' min ago');if(n<86400000)return Math.floor(n/3600000)+(lang==='fa'?' ساعت پیش':' hr ago');return Math.floor(n/86400000)+(lang==='fa'?' روز پیش':' days ago')}
+function status(r){if(r.status==='in_progress')return [tr('running'),'running'];if(['queued','waiting','requested','pending'].indexOf(r.status)>=0)return [tr('queued'),'running'];if(r.conclusion==='success')return [tr('success'),'success'];if(['failure','timed_out','action_required'].indexOf(r.conclusion)>=0)return [tr('failure'),'failure'];if(r.conclusion==='cancelled')return [tr('cancelled'),''];return [r.conclusion||r.status||tr('unknown'),'']}
+function row(title,meta,url,label,kind){return '<article class="rowitem"><div class="rowmain"><h3 class="rowtitle"><a href="'+esc(url||'#')+'" target="_blank" rel="noopener noreferrer">'+esc(title)+'</a></h3><div class="rowmeta">'+meta+'</div></div><span class="pill '+(kind||'')+'">'+esc(label)+'</span></article>'}
+function textMeta(parts){return parts.filter(Boolean).map(esc).join(' · ')}
+function applyLanguage(){document.documentElement.lang=lang;document.documentElement.dir=lang==='fa'?'rtl':'ltr';document.querySelectorAll('[data-i18n]').forEach(function(node){var k=node.getAttribute('data-i18n');if(I18N[lang][k])node.textContent=I18N[lang][k]});document.querySelectorAll('[data-i18n-placeholder]').forEach(function(node){node.placeholder=tr(node.getAttribute('data-i18n-placeholder'))});el('langToggle').textContent=lang==='fa'?'EN / فارسی':'فارسی / EN';el('langToggle').setAttribute('aria-label',lang==='fa'?'Switch language':'تغییر زبان');el('autoLabel').textContent=tr(autoRefresh?'autoOn':'autoOff');if(lastData.runs.length||lastData.prs.length||lastData.commits.length)renderData();else if(!refreshing){el('connection').textContent=tr('connecting')}}
+async function get(path){var res=await fetch(API+path,{headers:{'Accept':'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},cache:'no-store'});if(!res.ok){var err=new Error('GitHub API '+res.status);err.status=res.status;throw err}return {data:await res.json(),remaining:res.headers.get('X-RateLimit-Remaining'),reset:res.headers.get('X-RateLimit-Reset')}}
+function isFailed(r){return ['failure','timed_out','action_required'].indexOf(r.conclusion)>=0}
+function isQuality(r){return /quality|security|codeql|audit|test|lint|accessibility|validation/i.test((r.name||'')+' '+(r.display_title||''))}
+function renderAgents(runs,prs,commits){
+var running=runs.find(function(r){return r.status==='in_progress'});
+var qa=runs.find(isQuality);
+var latestCommit=commits[0];
+el('engineeringTag').textContent=running?tr('running'):tr('waitingEvidence');el('engineeringTag').className='tag '+(running?'good':'warn');el('engineeringEvidence').textContent=running?((running.name||tr('workflow'))+' · '+age(running.updated_at||running.created_at)):tr('noEvidence');
+el('growthTag').textContent=prs.length?tr('open'):tr('waitingEvidence');el('growthTag').className='tag '+(prs.length?'good':'warn');el('growthEvidence').textContent=prs.length?('#'+prs[0].number+' · '+age(prs[0].updated_at)):(latestCommit?age(latestCommit.commit.author.date):tr('noEvidence'));
+el('repairTag').textContent=qa?(qa.conclusion?tr(qa.conclusion==='success'?'success':isFailed(qa)?'failure':'completed'):tr(qa.status==='in_progress'?'running':'queued')):tr('waitingEvidence');el('repairTag').className='tag '+(qa&&qa.conclusion==='success'?'good':qa&&isFailed(qa)?'bad':'warn');el('repairEvidence').textContent=qa?((qa.name||tr('workflow'))+' · '+age(qa.updated_at||qa.created_at)):tr('noEvidence');
 }
-
+function renderData(){
+var runs=lastData.runs,prs=lastData.prs,commits=lastData.commits;
+var running=runs.filter(function(r){return r.status==='in_progress'}).length,success=runs.filter(function(r){return r.conclusion==='success'}).length,failed=runs.filter(isFailed).length;
+el('runningCount').textContent=running;el('successCount').textContent=success;el('failureCount').textContent=failed;el('prCount').textContent=prs.length;el('failedEvidence').textContent=failed;el('openWork').textContent=prs.length;
+el('runs').innerHTML=runs.length?runs.slice(0,8).map(function(r){var s=status(r);return row(r.name||tr('workflow'),textMeta([r.event,r.head_branch,age(r.updated_at||r.created_at)]),r.html_url,s[0],s[1])}).join(''):'<div class="empty">'+esc(tr('noRuns'))+'</div>';
+var quality=runs.filter(isQuality).slice(0,5);el('quality').innerHTML=quality.length?quality.map(function(r){var s=status(r);return row(r.name||tr('workflow'),textMeta([r.head_branch,age(r.updated_at||r.created_at)]),r.html_url,s[0],s[1])}).join(''):'<div class="empty">'+esc(tr('noQuality'))+'</div>';
+el('prs').innerHTML=prs.length?prs.slice(0,12).map(function(p){var label=p.draft?tr('draft'):tr('open');return row('#'+p.number+' '+p.title,textMeta([p.head&&p.head.ref?p.head.ref:'',p.user&&p.user.login?'@'+p.user.login:'',age(p.updated_at)]),p.html_url,label,p.draft?'':'success')}).join(''):'<div class="empty">'+esc(tr('noPRs'))+'</div>';
+if(commits.length){var c=commits[0],msg=c.commit&&c.commit.message?c.commit.message.split('\n')[0]:tr('commit');el('lastCommitAge').textContent=age(c.commit&&c.commit.author&&c.commit.author.date);el('lastCommitDetail').textContent=msg+' · '+String(c.sha||'').slice(0,7)}else{el('lastCommitAge').textContent='—';el('lastCommitDetail').textContent=tr('noCommit')}
+renderAgents(runs,prs,commits);renderActivity();
+}
+function renderActivity(){
+var runs=lastData.runs,prs=lastData.prs,commits=lastData.commits,events=[];
+runs.slice(0,10).forEach(function(r){var s=status(r);events.push({type:'run',time:r.updated_at||r.created_at,title:r.name||tr('workflow'),detail:textMeta([r.event,r.head_branch,age(r.updated_at||r.created_at)]),url:r.html_url,label:s[0],kind:s[1]})});
+prs.slice(0,10).forEach(function(p){events.push({type:'pr',time:p.updated_at,title:'#'+p.number+' '+p.title,detail:textMeta([p.head&&p.head.ref?p.head.ref:'',p.user&&p.user.login?'@'+p.user.login:'',age(p.updated_at)]),url:p.html_url,label:p.draft?tr('draft'):tr('open'),kind:p.draft?'':'success'})});
+commits.slice(0,10).forEach(function(c){events.push({type:'commit',time:c.commit&&c.commit.author&&c.commit.author.date,title:c.commit&&c.commit.message?c.commit.message.split('\n')[0]:tr('commit'),detail:textMeta([String(c.sha||'').slice(0,7),c.commit&&c.commit.author&&c.commit.author.name,age(c.commit&&c.commit.author&&c.commit.author.date)]),url:c.html_url,label:tr('commit'),kind:''})});
+events.sort(function(a,b){return new Date(b.time||0)-new Date(a.time||0)});
+var q=(el('activitySearch').value||'').toLowerCase().trim(),filter=el('activityFilter').value;
+events=events.filter(function(e){return (filter==='all'||e.type===filter)&&(!q||(e.title+' '+e.detail+' '+e.label).toLowerCase().indexOf(q)>=0)});
+el('activityList').innerHTML=events.length?events.slice(0,20).map(function(e){return row(e.title,e.detail,e.url,date(e.time),e.kind)}).join(''):'<div class="empty">'+esc(tr('noActivity'))+'</div>';
+}
 async function load(){
-el('refresh').disabled=true;el('refresh').textContent='↻ در حال دریافت';
+if(refreshing)return;refreshing=true;el('refresh').disabled=true;el('refresh').querySelector('span:last-child').textContent=tr('refreshing');
 try{
-var results=await Promise.all([get('/actions/runs?per_page=20'),get('/pulls?state=open&per_page=20&sort=updated&direction=desc'),get('/commits?per_page=8')]);
-var runs=results[0].workflow_runs||[],prs=results[1]||[],commits=results[2]||[];
-renderDiscipline(runs);
-var running=runs.filter(function(r){return r.status==='in_progress'}).length;
-var success=runs.filter(function(r){return r.conclusion==='success'}).length;
-var failure=runs.filter(function(r){return r.conclusion==='failure'||r.conclusion==='timed_out'}).length;
-el('runningCount').textContent=running;el('successCount').textContent=success;el('failureCount').textContent=failure;el('prCount').textContent=prs.length;
-el('engineeringTag').textContent=running?'در حال اجرا':'آخرین وضعیت بررسی شد';el('engineeringTag').className='tag '+(running?'ok':'');var er=runs.find(function(r){return r.status==='in_progress'})||runs[0];el('engineeringTask').textContent=er?(er.name+' · '+(er.conclusion||er.status)+' · '+(er.head_branch||'شاخه')):'اجرایی ثبت نشده';el('engineeringTime').textContent=er?age(er.updated_at||er.created_at):'—';
-el('growthTag').textContent=prs.length?'تغییر در انتظار بررسی':'PR باز ثبت نشده';el('growthTag').className='tag '+(prs.length?'warn':'');el('growthTask').textContent=prs.length?('#'+prs[0].number+' '+prs[0].title):(commits[0]?(commits[0].commit.message||'Commit').split('\n')[0]:'فعالیتی ثبت نشده');el('growthTime').textContent=prs.length?age(prs[0].updated_at):(commits[0]?age(commits[0].commit.author.date):'—');
-el('runs').innerHTML=runs.length?runs.map(function(r){var s=status(r);return item(r.name||r.display_title||'GitHub Actions', (r.event||'event')+' · '+(r.head_branch||'branch')+' · '+age(r.updated_at||r.created_at),r.html_url,s[0],s[1])}).join(''):'<div class="empty">اجرایی پیدا نشد.</div>';
-el('prs').innerHTML=prs.length?prs.map(function(p){return item('#'+p.number+' '+p.title,(p.draft?'پیش‌نویس':'آماده بررسی')+' · '+(p.head&&p.head.ref?p.head.ref:'branch')+' · '+age(p.updated_at),p.html_url,p.draft?'Draft':'Open',p.draft?'':'success')}).join(''):'<div class="empty">Pull Request بازی وجود ندارد.</div>';
-var qa=runs.find(function(r){return /quality|security|codeql|audit|test|lint/i.test(r.name||'')});el('repairTag').textContent=qa?(qa.conclusion==='success'?'بررسی موفق':qa.conclusion==='failure'?'بررسی ناموفق':qa.status):'بررسی ثبت نشده';el('repairTag').className='tag '+(qa&&qa.conclusion==='success'?'ok':qa&&qa.conclusion==='failure'?'bad':'warn');el('repairTask').textContent=qa?qa.name+' · '+(qa.conclusion||qa.status):'در اجراهای اخیر بررسی مشخصی یافت نشد';el('repairTime').textContent=qa?age(qa.updated_at||qa.created_at):'—';var ev=[];runs.slice(0,5).forEach(function(r){var st=status(r);ev.push({time:r.updated_at||r.created_at,title:r.name||'GitHub Actions',detail:'گردش‌کار '+st[0]+' · '+(r.head_branch||'شاخه'),url:r.html_url,label:st[0],kind:st[1]})});prs.slice(0,4).forEach(function(p){ev.push({time:p.updated_at,title:'PR #'+p.number+' · '+p.title,detail:(p.draft?'پیش‌نویس':'در انتظار بررسی')+' · '+age(p.updated_at),url:p.html_url,label:p.draft?'Draft':'Open',kind:''})});commits.slice(0,5).forEach(function(c){ev.push({time:c.commit.author.date,title:(c.commit.message||'Commit').split('\n')[0],detail:'Commit '+String(c.sha||'').slice(0,7)+' · '+age(c.commit.author.date),url:c.html_url,label:'Commit',kind:''})});ev.sort(function(a,b){return new Date(b.time)-new Date(a.time)});el('activity').innerHTML=ev.length?ev.slice(0,10).map(function(e){return item(e.title,e.detail,e.url,date(e.time),e.kind)}).join(''):'<div class="empty">رویدادی ثبت نشده.</div>';
-el('commits').innerHTML=commits.length?commits.map(function(c){var msg=c.commit&&c.commit.message?c.commit.message.split('\n')[0]:'Commit';return item(msg,(c.commit&&c.commit.author&&c.commit.author.date?date(c.commit.author.date):'')+' · '+String(c.sha||'').slice(0,7),c.html_url,'Commit','')}).join(''):'<div class="empty">Commitی پیدا نشد.</div>';
-el('liveDot').className='dot live';el('connection').textContent='اتصال موفق به GitHub API';el('updated').textContent='آخرین بررسی: '+date(new Date().toISOString());
-}catch(err){el('liveDot').className='dot error';el('connection').textContent='دریافت داده ناموفق بود؛ ممکن است محدودیت نرخ API رخ داده باشد.';console.error(err)}
-finally{el('refresh').disabled=false;el('refresh').textContent='↻ به‌روزرسانی'}
+var results=await Promise.all([get('/actions/runs?per_page=20'),get('/pulls?state=open&per_page=20&sort=updated&direction=desc'),get('/commits?per_page=12')]);
+lastData.runs=results[0].data.workflow_runs||[];lastData.prs=results[1].data||[];lastData.commits=results[2].data||[];
+renderData();el('liveDot').className='live-dot ok';el('connection').textContent=tr('connected');el('updated').textContent=tr('lastCheck')+': '+date(new Date().toISOString());
+var remain=results[0].remaining;el('apiQuota').textContent=remain!==null?(tr('rateLimit')+': '+remain):'';
+}catch(err){el('liveDot').className='live-dot bad';el('connection').textContent=tr('apiError');el('apiQuota').textContent=err.status===403||err.status===429?tr('rateLimit'):'';if(!lastData.runs.length&&!lastData.prs.length&&!lastData.commits.length){['runs','quality','prs','activityList'].forEach(function(id){el(id).innerHTML='<div class="empty">'+esc(tr('apiError'))+'</div>'})}console.error('Dashboard data fetch failed:',err)}
+finally{refreshing=false;el('refresh').disabled=false;el('refresh').querySelector('span:last-child').textContent=tr('refresh');}
 }
-el('refresh').addEventListener('click',load);load();setInterval(load,30000);
+function setAuto(on){autoRefresh=on;el('autoToggle').setAttribute('aria-pressed',String(on));el('autoLabel').textContent=tr(on?'autoOn':'autoOff');if(timer){clearInterval(timer);timer=null}if(on)timer=setInterval(load,60000)}
+el('langToggle').addEventListener('click',function(){lang=lang==='fa'?'en':'fa';applyLanguage();renderData()});
+el('refresh').addEventListener('click',load);
+el('autoToggle').addEventListener('click',function(){setAuto(!autoRefresh)});
+el('activitySearch').addEventListener('input',renderActivity);
+el('activityFilter').addEventListener('change',renderActivity);
+el('navToggle').addEventListener('click',function(){var open=el('sidebar').classList.toggle('open');el('navToggle').setAttribute('aria-expanded',String(open))});
+document.querySelectorAll('.navlink[href^="#"]').forEach(function(a){a.addEventListener('click',function(){document.querySelectorAll('.navlink').forEach(function(n){n.classList.remove('active')});a.classList.add('active');el('sidebar').classList.remove('open');el('navToggle').setAttribute('aria-expanded','false')})});
+el('newIssue').href='https://github.com/'+OWNER+'/'+REPO+'/issues/new?title='+encodeURIComponent('Investigate and repair a verified workflow failure')+'&body='+encodeURIComponent('## Evidence\n\nAdd the link to the failed GitHub Actions run.\n\n## Root cause\n\nDocument the root cause and affected files.\n\n## Fix and validation\n\n- [ ] Fix stays on a feature branch\n- [ ] Relevant tests pass\n- [ ] Security/quality checks pass\n- [ ] Rollback plan documented\n- [ ] Human approval obtained before production deployment\n');
+setAuto(true);load();
 })();
 </script>
 </body>
