@@ -45,7 +45,7 @@ class HomepageClaimAccuracyTests(unittest.TestCase):
 
     def test_unsupported_percentage_skill_bars_are_removed(self):
         self.assertNotIn('class="mh-mini-bar"', HTML)
-        self.assertNotRegex(HTML, r"--w:\\s*\\d+%")
+        self.assertNotRegex(HTML, r"--w:\s*\d+%")
 
     def test_primary_content_and_conversion_paths_remain(self):
         self.assertIn('id="main-content"', HTML)
