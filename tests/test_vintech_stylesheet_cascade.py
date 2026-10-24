@@ -40,9 +40,11 @@ class VinTechCascadeTests(unittest.TestCase):
             ("body.vt-page .vt-logo span,body.vintech-modern .vt-logo span", "color", "var(--vts-gold)"),
             ("body.vt-page .vt-links a,body.vintech-modern .vt-links a", "color", "#b3c2d4"),
             ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "color", "var(--vts-text)"),
+            ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "border-color", "var(--vts-line)"),
             ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "background", "rgba(255,255,255,.025)"),
             ("body.vt-page .vt-btn.primary,body.vintech-modern .vt-btn.primary", "background", "linear-gradient(130deg,#f0ce7b,#d6a33f)"),
             ("body.vt-page .vt-trust span,body.vintech-modern .vt-trust span", "color", "#b1c0d2"),
+            ("body.vt-page .vt-trust span,body.vintech-modern .vt-trust span", "border-color", "var(--vts-line)"),
         ]
         for selector, prop, expected in cases:
             with self.subTest(selector=selector, property=prop):
