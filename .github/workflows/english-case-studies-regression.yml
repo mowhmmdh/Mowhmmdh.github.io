@@ -1,0 +1,39 @@
+name: English case studies bilingual regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'en-case-studies.html'
+      - 'en.html'
+      - 'en-sitemap.html'
+      - 'case-studies/index.html'
+      - 'sitemap.xml'
+      - 'tests/test_english_case_studies.py'
+      - '.github/workflows/english-case-studies-regression.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'en-case-studies.html'
+      - 'en.html'
+      - 'en-sitemap.html'
+      - 'case-studies/index.html'
+      - 'sitemap.xml'
+      - 'tests/test_english_case_studies.py'
+      - '.github/workflows/english-case-studies-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  bilingual-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Run English case-study regression tests
+        run: python -m unittest discover -s tests -p "test_english_case_studies.py" -v
