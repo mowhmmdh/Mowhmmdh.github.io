@@ -36,20 +36,20 @@ class VinTechCascadeTests(unittest.TestCase):
 
     def test_later_signature_values_are_not_blocked(self):
         cases = [
-            ("body.vt-page .vt-logo,body.vintech-modern .vt-logo", "color", "#f7fbff"),
-            ("body.vt-page .vt-logo span,body.vintech-modern .vt-logo span", "color", "var(--vts-gold)"),
-            ("body.vt-page .vt-links a,body.vintech-modern .vt-links a", "color", "#b3c2d4"),
-            ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "color", "var(--vts-text)"),
-            ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "border-color", "var(--vts-line)"),
-            ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "background", "rgba(255,255,255,.025)"),
-            ("body.vt-page .vt-btn.primary,body.vintech-modern .vt-btn.primary", "background", "linear-gradient(130deg,#f0ce7b,#d6a33f)"),
-            ("body.vt-page .vt-trust span,body.vintech-modern .vt-trust span", "color", "#b1c0d2"),
-            ("body.vt-page .vt-trust span,body.vintech-modern .vt-trust span", "border-color", "var(--vts-line)"),
+            ("body.vt-page .vt-logo,body.vintech-modern .vt-logo", "color", "color", "#f7fbff"),
+            ("body.vt-page .vt-logo span,body.vintech-modern .vt-logo span", "color", "color", "var(--vts-gold)"),
+            ("body.vt-page .vt-links a,body.vintech-modern .vt-links a", "color", "color", "#b3c2d4"),
+            ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "color", "color", "var(--vts-text)"),
+            ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "border-color", "border", "1px solid var(--vts-line)"),
+            ("body.vt-page .vt-btn,body.vintech-modern .vt-btn", "background", "background", "rgba(255,255,255,.025)"),
+            ("body.vt-page .vt-btn.primary,body.vintech-modern .vt-btn.primary", "background", "background", "linear-gradient(130deg,#f0ce7b,#d6a33f)"),
+            ("body.vt-page .vt-trust span,body.vintech-modern .vt-trust span", "color", "color", "#b1c0d2"),
+            ("body.vt-page .vt-trust span,body.vintech-modern .vt-trust span", "border-color", "border", "1px solid var(--vts-line)"),
         ]
-        for selector, prop, expected in cases:
-            with self.subTest(selector=selector, property=prop):
-                earlier = declarations("assets/vintech-final-fix-2026.css", selector, prop)
-                later = declarations("assets/vintech-signature-2026.css", selector, prop)
+        for selector, earlier_prop, later_prop, expected in cases:
+            with self.subTest(selector=selector, property=earlier_prop):
+                earlier = declarations("assets/vintech-final-fix-2026.css", selector, earlier_prop)
+                later = declarations("assets/vintech-signature-2026.css", selector, later_prop)
                 self.assertTrue(earlier)
                 self.assertFalse(any("!important" in value.lower() for value in earlier))
                 self.assertTrue(later)
