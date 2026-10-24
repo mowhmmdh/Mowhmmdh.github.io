@@ -30,6 +30,8 @@ class EnglishBaselineRegressionTests(unittest.TestCase):
         self.assertEqual(len(re.findall(r"<h1\b", self.en, re.I)), 1)
         self.assertEqual(len(re.findall(r"<main\b", self.en, re.I)), 1)
         self.assertNotIn("<title>Draft</title>", self.en)
+        self.assertEqual(self.en.count("<!-- AUTO-BREADCRUMB:START -->"), 1)
+        self.assertEqual(self.en.count("<!-- AUTO-BREADCRUMB:END -->"), 1)
         self.assertGreater(len(self.en), 7000)
 
     def test_hreflang_is_reciprocal_and_visible_to_readers(self):
