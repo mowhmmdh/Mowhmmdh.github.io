@@ -159,6 +159,3 @@ html.theme-light .mh-home .mh-footer{border-color:rgba(35,58,84,.14)}
 html.theme-light .mh-home .mh-footer>div:first-child strong{color:#122237}
 html.theme-light .mh-home .mh-footer>div:first-child span{color:#64768b}
 html.theme-light .mh-home .legal-footer-2026{color:#64768b;border-color:rgba(35,58,84,.12)}
-@media(prefers-color-scheme:light){
-  html:not(.theme-light):not(.theme-dark) .mh-home{--mh-bg:#f4f7fb;--mh-text:#122237;--mh-muted:#52657b}
-}
