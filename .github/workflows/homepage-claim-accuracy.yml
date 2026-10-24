@@ -1,0 +1,30 @@
+name: Homepage Claim Accuracy
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - index.html
+      - tests/test_homepage_claim_accuracy.py
+      - .github/workflows/homepage-claim-accuracy.yml
+
+permissions:
+  contents: read
+
+concurrency:
+  group: homepage-claim-accuracy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  claim-accuracy:
+    name: Homepage claim accuracy regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run homepage claim-accuracy tests
+        run: python3 tests/test_homepage_claim_accuracy.py
