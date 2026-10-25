@@ -45,6 +45,14 @@ test('prints metric and main-thread diagnostics including long tasks', () => {
   assert.match(output, /performance: 85 < 90/);
 });
 
+test('does not dump arbitrary report fields into diagnostic logs', () => {
+  const report = fixture();
+  report.audits['cache-insight'] = { title: 'Use efficient cache lifetimes', details: { type: 'table', items: [{ secret: 'private marker' }] } };
+  const output = formatSummary(summarizeReport(report));
+  assert.doesNotMatch(output, /private marker/);
+  assert.match(output, /detail available/);
+});
+
 test('passes when every category meets the existing thresholds', () => {
   const report = fixture();
   report.categories.performance.score = 0.95;
