@@ -2,8 +2,9 @@ name: Free Site Automation Team
 
 on:
   workflow_dispatch:
+  # Hourly deterministic audit. This is not a continuously running AI model.
   schedule:
-    - cron: "17 6 * * *"
+    - cron: "17 * * * *"
   push:
     branches: [main]
     paths:
@@ -21,6 +22,36 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  live-site-health:
+    name: Specialist 00 — Live site availability
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check representative Persian and English pages
+        shell: bash
+        run: |
+          set -uo pipefail
+          mkdir -p reports
+          failed=0
+          for url in \
+            "https://mowhmmdh.github.io/" \
+            "https://mowhmmdh.github.io/en.html" \
+            "https://mowhmmdh.github.io/agents.html" \
+            "https://mowhmmdh.github.io/vintech.html"
+          do
+            code=$(curl -L -sS -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 25 "$url" || true)
+            printf '%s HTTP %s\n' "$url" "${code:-000}" | tee -a reports/live-site-health.txt
+            if [[ ! "$code" =~ ^2[0-9][0-9]$ ]]; then failed=1; fi
+          done
+          exit "$failed"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: specialist-00-live-site-health
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 14
+
   technical-seo:
     name: Specialist 01 — Technical SEO and page integrity
     runs-on: ubuntu-latest
@@ -28,7 +59,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run site and SEO audits
-        continue-on-error: true
         run: |
           mkdir -p reports
           set +e
@@ -56,7 +86,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Audit local assets and references
-        continue-on-error: true
         run: |
           mkdir -p reports
           python3 scripts/asset-reference-audit.py > reports/asset-reference-audit.txt 2>&1
@@ -79,7 +108,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run release smoke tests
-        continue-on-error: true
         run: |
           mkdir -p reports
           python3 scripts/release-smoke-test.py > reports/release-smoke-test.txt 2>&1
@@ -102,7 +130,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Validate RSS and sitemap without modifying files
-        continue-on-error: true
         run: |
           mkdir -p reports
           set +e
@@ -117,7 +144,7 @@ jobs:
               raise SystemExit("ERROR: sitemap.xml is missing")
           root = ET.fromstring(path.read_text(encoding="utf-8"))
           ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
-          urls = [((e.text or "").strip()) for e in root.findall("sm:url/sm:loc", ns)]
+          urls = [(e.text or "").strip() for e in root.findall("sm:url/sm:loc", ns)]
           if not urls:
               raise SystemExit("ERROR: sitemap contains no URLs")
           invalid = [u for u in urls if not u.startswith("https://mowhmmdh.github.io/")]
@@ -145,11 +172,12 @@ jobs:
   coordination-report:
     name: Specialist 05 — Coordination and combined status
     if: always()
-    needs: [technical-seo, asset-integrity, release-and-runtime, content-discovery]
+    needs: [live-site-health, technical-seo, asset-integrity, release-and-runtime, content-discovery]
     runs-on: ubuntu-latest
     steps:
       - name: Publish run summary
         env:
+          LIVE_RESULT: ${{ needs.live-site-health.result }}
           SEO_RESULT: ${{ needs.technical-seo.result }}
           ASSET_RESULT: ${{ needs.asset-integrity.result }}
           RELEASE_RESULT: ${{ needs.release-and-runtime.result }}
@@ -162,11 +190,13 @@ jobs:
             echo
             echo "| Specialist | Result |"
             echo "|---|---|"
+            echo "| Live site availability | $LIVE_RESULT |"
             echo "| Technical SEO and page integrity | $SEO_RESULT |"
             echo "| Assets and internal references | $ASSET_RESULT |"
             echo "| Release readiness | $RELEASE_RESULT |"
             echo "| RSS and sitemap discovery | $DISCOVERY_RESULT |"
             echo
-            echo "Audit logs are attached as workflow artifacts. These are automated deterministic checks, not independent generative-AI agents."
-            echo "This workflow is read-only: it does not edit site files, publish content, or push commits."
+            echo "This workflow performs hourly deterministic checks. It is not a continuously running generative-AI agent and does not autonomously edit files."
+            echo "Read-only: it does not edit site files, publish content, or push commits."
+            echo "Browser screenshot comparison and Lighthouse are not part of this workflow."
           } >> "$GITHUB_STEP_SUMMARY"
