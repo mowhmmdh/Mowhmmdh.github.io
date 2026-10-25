@@ -1,0 +1,31 @@
+name: Bilingual Language Detection Regression
+
+on:
+  pull_request:
+    paths:
+      - "assets/site-final-quality-2026.js"
+      - "tests/test_site_language_detection.py"
+      - ".github/workflows/bilingual-language-detection.yml"
+  push:
+    branches: [main]
+    paths:
+      - "assets/site-final-quality-2026.js"
+      - "tests/test_site_language_detection.py"
+      - ".github/workflows/bilingual-language-detection.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  language-detection:
+    name: Language detection regression tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Run regression tests
+        run: python -m unittest discover -s tests -p "test_site_language_detection.py" -v
