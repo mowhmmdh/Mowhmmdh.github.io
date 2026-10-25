@@ -11,7 +11,7 @@
     // Keep the initial render responsive: secondary discovery/conversion UI is non-critical.
     const enhance = () => {
     const path = location.pathname.replace(/\/+$/, '') || '/';
-    const fa = !/^\/en(?:-|\/|$)/i.test(path);
+    const fa = !/^\/en(?:\.html|[-/]|$)/i.test(path);
     const pools = fa ? {
       '/blog': [
         ['/blog/network-security-engineering-playbook.html','مهندسی امنیت شبکه','معماری، Segmentation، کنترل دسترسی و Monitoring.'],
