@@ -9,7 +9,7 @@ SCRIPT = Path(__file__).resolve().parents[1] / "assets" / "site-final-quality-20
 
 def detected_as_persian(path: str) -> bool:
     source = SCRIPT.read_text(encoding="utf-8")
-    match = re.search(r"const fa = !/(.*?)/i\\.test\\(path\\);", source)
+    match = re.search(r"const fa = !/(.*?)/i\.test\(path\);", source)
     if not match:
         raise AssertionError("Could not find the shared language-detection expression")
     # The extracted expression is a JavaScript regex literal body. Its only
