@@ -14,7 +14,7 @@ def detected_as_persian(path: str) -> bool:
         raise AssertionError("Could not find the shared language-detection expression")
     # The extracted expression is a JavaScript regex literal body. Its only
     # JavaScript-specific escape here is \\/ for a literal slash.
-    pattern = match.group(1).replace(r"\\/", "/")
+    pattern = match.group(1).replace(r"\/", "/")
     return re.search(pattern, path, flags=re.IGNORECASE) is None
 
 
