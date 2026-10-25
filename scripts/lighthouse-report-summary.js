@@ -77,7 +77,9 @@ function summarizeReport(report) {
         if (typeof item.duration === 'number') parts.push(Math.round(item.duration) + ' ms');
         if (typeof item.wastedMs === 'number' && item.wastedMs > 0) parts.push('potential saving ' + Math.round(item.wastedMs) + ' ms');
         if (typeof item.wastedBytes === 'number' && item.wastedBytes > 0) parts.push('potential saving ' + Math.round(item.wastedBytes / 1024) + ' KiB');
-        return parts.join(' — ') || JSON.stringify(item).slice(0, 180);
+        if (item.label) parts.push(String(item.label).slice(0, 120));
+        if (item.type) parts.push(String(item.type));
+        return parts.join(' — ') || 'detail available';
       });
       return { id, title: audit.title || id, displayValue: audit.displayValue || '', items };
     })
