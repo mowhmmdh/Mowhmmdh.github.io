@@ -1,0 +1,29 @@
+name: Mobile Navigation Accessibility
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - assets/site-theme.js
+      - tests/test_mobile_nav_accessibility.py
+      - .github/workflows/mobile-nav-accessibility.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: mobile-nav-accessibility-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    name: Bilingual mobile navigation regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check JavaScript syntax
+        run: node --check assets/site-theme.js
+      - name: Run accessibility regression tests
+        run: python3 -m unittest discover -s tests -p "test_mobile_nav_accessibility.py" -v
