@@ -1,0 +1,40 @@
+name: Lighthouse Diagnostics Regression
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "scripts/lighthouse-report-summary.js"
+      - "scripts/run-lighthouse-with-retry.sh"
+      - "tests/lighthouse-report-summary.test.js"
+      - "tests/lighthouse-runner-retry.test.js"
+      - ".github/workflows/lighthouse-diagnostics-regression.yml"
+      - ".github/workflows/lighthouse-pages.yml"
+  push:
+    branches: [main]
+    paths:
+      - "scripts/lighthouse-report-summary.js"
+      - "scripts/run-lighthouse-with-retry.sh"
+      - "tests/lighthouse-report-summary.test.js"
+      - "tests/lighthouse-runner-retry.test.js"
+      - ".github/workflows/lighthouse-diagnostics-regression.yml"
+      - ".github/workflows/lighthouse-pages.yml"
+permissions:
+  contents: read
+concurrency:
+  group: lighthouse-diagnostics-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check diagnostic script syntax
+        run: node --check scripts/lighthouse-report-summary.js
+      - name: Check Lighthouse retry runner syntax
+        run: bash -n scripts/run-lighthouse-with-retry.sh
+      - name: Test Lighthouse report summarizer and retry runner
+        run: node --test tests/lighthouse-report-summary.test.js tests/lighthouse-runner-retry.test.js

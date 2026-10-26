@@ -84,28 +84,8 @@ jobs:
           URL: https://mowhmmdh.github.io${{ matrix.page }}
         run: |
           mkdir -p reports
-          lighthouse "$URL" \
-            --output=json \
-            --output-path="reports/report.json" \
-            --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
-            --quiet
-          node - <<'NODE'
-          const fs = require('fs');
-          const r = JSON.parse(fs.readFileSync('reports/report.json', 'utf8'));
-          const categories = r.categories || {};
-          const scores = {};
-          for (const key of ['performance', 'accessibility', 'best-practices', 'seo']) {
-            scores[key] = Math.round((categories[key]?.score ?? 0) * 100);
-          }
-          console.log(`Page: ${process.env.URL}`);
-          console.log(JSON.stringify(scores, null, 2));
-          const thresholds = { performance: 90, accessibility: 95, 'best-practices': 95, seo: 95 };
-          const failed = Object.entries(scores).filter(([key, score]) => score < thresholds[key]);
-          if (failed.length) {
-            console.error('Lighthouse quality gate failed:', { failed, thresholds });
-            process.exit(1);
-          }
-          NODE
+          bash scripts/run-lighthouse-with-retry.sh "$URL" "reports/report.json"
+          node scripts/lighthouse-report-summary.js reports/report.json
       - if: always()
         uses: actions/upload-artifact@v4
         with:
