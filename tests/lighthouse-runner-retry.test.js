@@ -26,7 +26,7 @@ count=$((count + 1))
 printf '%s' "$count" > "$state"
 out=''
 for arg in "$@"; do
-  case "$arg" in --output-path=*) out="${arg#*=}" ;; esac
+  case "$arg" in --output-path=*) out="\${arg#*=}" ;; esac
 done
 case "$FAKE_MODE" in
   success)
