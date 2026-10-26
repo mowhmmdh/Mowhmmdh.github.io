@@ -1023,3 +1023,49 @@ html.theme-light .skip-link{background:#15212d;color:#fff}
   html.theme-light .about-nav.menu-open .about-nav-links a,
   html.theme-light .en-nav.menu-open .en-nav-links a{color:#354b60}
 }
+
+
+/* Legacy standalone pages: align their hard-coded dark styles with the shared theme toggle. */
+html.theme-light body{background:var(--bg,#f6f8fb)!important;color:var(--text,#15212d)!important}
+html.theme-light .service-card,
+html.theme-light .card,
+html.theme-light .cluster,
+html.theme-light .cta,
+html.theme-light .footer-note,
+html.theme-light .process-step{
+  color:var(--text,#15212d)!important;
+  background:linear-gradient(145deg,#fff,#edf3f8)!important;
+  border-color:#d5dfe8!important;
+  box-shadow:0 12px 30px rgba(24,45,66,.07);
+}
+html.theme-light .service-card h2,
+html.theme-light .card h2,
+html.theme-light .cluster h2,
+html.theme-light .cta h2,
+html.theme-light .hero h1{color:#172b3e!important}
+html.theme-light .service-card p,
+html.theme-light .card p,
+html.theme-light .cluster p,
+html.theme-light .cta p,
+html.theme-light .hero p,
+html.theme-light .footer-note{color:#4b5e70!important}
+html.theme-light .service-card ul{color:#536779!important}
+html.theme-light .service-card .tag,
+html.theme-light .hero-kicker,
+html.theme-light .tag{color:#805500!important}
+html.theme-light .topics span,
+html.theme-light .meta span{color:#42566a!important;border-color:#d5dfe8!important;background:#fff!important}
+html.theme-light .featured{background:linear-gradient(135deg,#f6f0e3,#fff)!important}
+html.theme-light .read,
+html.theme-light .cluster a{color:#075f96!important}
+html.theme-light .nav{border-color:#d5dfe8!important}
+html.theme-light .nav a{color:#42566a}
+html.theme-light .nav a:first-child{color:#805500}
+html.theme-light .nav-actions .theme-toggle{color:#172b3e;background:#fff;border-color:#d5dfe8}
+html.theme-light details{color:#26384a}
+html.theme-light details p{color:#4b5e70}
+@media(max-width:720px){
+  .nav .service-nav-links{display:flex;flex-basis:100%;order:3;justify-content:flex-start;gap:4px}
+  .nav .service-nav-links a{padding:5px 7px;font-size:.82rem}
+  .nav .nav-actions{margin-inline-start:auto}
+}
