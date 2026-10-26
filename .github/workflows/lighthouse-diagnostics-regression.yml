@@ -4,7 +4,9 @@ on:
     branches: [main]
     paths:
       - "scripts/lighthouse-report-summary.js"
+      - "scripts/run-lighthouse-with-retry.sh"
       - "tests/lighthouse-report-summary.test.js"
+      - "tests/lighthouse-runner-retry.test.js"
       - ".github/workflows/lighthouse-diagnostics-regression.yml"
       - ".github/workflows/lighthouse-pages.yml"
   push:
@@ -30,5 +32,7 @@ jobs:
           node-version: 22
       - name: Check diagnostic script syntax
         run: node --check scripts/lighthouse-report-summary.js
-      - name: Test Lighthouse report summarizer
-        run: node --test tests/lighthouse-report-summary.test.js
+      - name: Check Lighthouse retry runner syntax
+        run: bash -n scripts/run-lighthouse-with-retry.sh
+      - name: Test Lighthouse report summarizer and retry runner
+        run: node --test tests/lighthouse-report-summary.test.js tests/lighthouse-runner-retry.test.js
