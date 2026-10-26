@@ -84,11 +84,7 @@ jobs:
           URL: https://mowhmmdh.github.io${{ matrix.page }}
         run: |
           mkdir -p reports
-          lighthouse "$URL" \
-            --output=json \
-            --output-path="reports/report.json" \
-            --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
-            --quiet
+          bash scripts/run-lighthouse-with-retry.sh "$URL" "reports/report.json"
           node scripts/lighthouse-report-summary.js reports/report.json
       - if: always()
         uses: actions/upload-artifact@v4
