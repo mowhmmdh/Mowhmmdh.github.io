@@ -53,6 +53,9 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn("html.theme-light .mh-home", HOME_CSS)
         self.assertIn("theme(saved||'dark')", THEME_JS)
 
+    def test_lower_orbit_nodes_are_lifted_above_the_terminal_panel(self):
+        self.assertIn(".mh-home .mh-node-c,.mh-home .mh-node-d{bottom:32%}", HOME_CSS)
+
     def test_english_homepage_remains_ltr_and_outside_persian_redesign_scope(self):
         self.assertTrue(EN_HOME.startswith('<!doctype html><html lang="en" dir="ltr">'))
         self.assertNotIn("/assets/home-visual-redesign-2026.css", EN_HOME)
