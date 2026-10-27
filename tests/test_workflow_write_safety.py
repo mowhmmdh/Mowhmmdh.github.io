@@ -13,6 +13,10 @@ WORKFLOW_PATHS = (
     ".github/workflows/sitewide-seo-visual-sync.yml",
     ".github/workflows/visual-consistency-2026.yml",
 )
+DIRECT_MAIN_PUSH = re.compile(
+    r"\bgit\s+push\b[^\n]*\b(?:HEAD:)?(?:refs/heads/)?main\b",
+    re.IGNORECASE,
+)
 
 
 def workflow_files():
@@ -34,18 +38,24 @@ class WorkflowWriteSafetyTests(unittest.TestCase):
                 self.assertNotRegex(content, r"(?m)^\s*contents:\s*write\s*$")
                 self.assertIn("Report generated changes without writing to main", content)
 
+    def test_detector_catches_main_pushes_but_allows_branch_pushes(self):
+        for command in (
+            "git push origin main",
+            "git push upstream HEAD:main",
+            "git push --force origin HEAD:refs/heads/main",
+        ):
+            with self.subTest(command=command):
+                self.assertIsNotNone(DIRECT_MAIN_PUSH.search(command))
+        self.assertIsNone(DIRECT_MAIN_PUSH.search("git push origin feature/safe-branch"))
+
     def test_no_workflow_contains_a_direct_git_push_to_main(self):
         # Normalize shell line continuations so split commands are inspected together.
-        direct_main_push = re.compile(
-            r"\bgit\s+push\b[^\n]*(?:\bHEAD:main\b|\brefs/heads/main\b|\borigin\s+main\b)",
-            re.IGNORECASE,
-        )
         for path in workflow_files():
             with self.subTest(workflow=path.name):
                 content = path.read_text(encoding="utf-8")
                 normalized = re.sub(r"\\\s*\n", " ", content)
                 self.assertIsNone(
-                    direct_main_push.search(normalized),
+                    DIRECT_MAIN_PUSH.search(normalized),
                     f"{path.relative_to(ROOT)} contains a direct git push to main",
                 )
 
