@@ -4,6 +4,7 @@ import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+WORKFLOW_DIR = ROOT / ".github" / "workflows"
 WORKFLOW_PATHS = (
     ".github/workflows/seo-sync.yml",
     ".github/workflows/site-repair-2026.yml",
@@ -12,6 +13,13 @@ WORKFLOW_PATHS = (
     ".github/workflows/sitewide-seo-visual-sync.yml",
     ".github/workflows/visual-consistency-2026.yml",
 )
+
+
+def workflow_files():
+    return sorted(
+        path for path in WORKFLOW_DIR.iterdir()
+        if path.is_file() and path.suffix.lower() in {".yml", ".yaml"}
+    )
 
 
 class WorkflowWriteSafetyTests(unittest.TestCase):
@@ -25,6 +33,21 @@ class WorkflowWriteSafetyTests(unittest.TestCase):
                 self.assertNotRegex(content, r"(?im)\bgit\s+commit\b")
                 self.assertNotRegex(content, r"(?m)^\s*contents:\s*write\s*$")
                 self.assertIn("Report generated changes without writing to main", content)
+
+    def test_no_workflow_contains_a_direct_git_push_to_main(self):
+        # Normalize shell line continuations so split commands are inspected together.
+        direct_main_push = re.compile(
+            r"\bgit\s+push\b[^\n]*(?:\bHEAD:main\b|\brefs/heads/main\b|\borigin\s+main\b)",
+            re.IGNORECASE,
+        )
+        for path in workflow_files():
+            with self.subTest(workflow=path.name):
+                content = path.read_text(encoding="utf-8")
+                normalized = re.sub(r"\\\s*\n", " ", content)
+                self.assertIsNone(
+                    direct_main_push.search(normalized),
+                    f"{path.relative_to(ROOT)} contains a direct git push to main",
+                )
 
     def test_safety_gate_is_read_only_and_runs_on_pull_requests(self):
         workflow = (ROOT / ".github/workflows/workflow-write-safety.yml").read_text(encoding="utf-8")
