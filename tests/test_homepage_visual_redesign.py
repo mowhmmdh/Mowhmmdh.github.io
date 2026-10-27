@@ -13,6 +13,21 @@ HOME_CSS = (ROOT / "assets/home-visual-redesign-2026.css").read_text(encoding="u
 QUALITY_JS = (ROOT / "assets/site-final-quality-2026.js").read_text(encoding="utf-8")
 THEME_JS = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
 
+def _relative_luminance(hex_color):
+    """Return WCAG relative luminance for a #RRGGBB sRGB color."""
+    channels = [int(hex_color[index:index + 2], 16) / 255 for index in (1, 3, 5)]
+    linear = [channel / 12.92 if channel <= 0.04045 else ((channel + 0.055) / 1.055) ** 2.4
+              for channel in channels]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def _contrast_ratio(foreground, background):
+    first = _relative_luminance(foreground)
+    second = _relative_luminance(background)
+    lighter, darker = max(first, second), min(first, second)
+    return (lighter + 0.05) / (darker + 0.05)
+
+
 
 class HomepageVisualRedesignTests(unittest.TestCase):
     def test_redesign_stylesheet_is_loaded_once_after_shared_home_layers(self):
@@ -60,6 +75,23 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertTrue(EN_HOME.startswith('<!doctype html><html lang="en" dir="ltr">'))
         self.assertNotIn("/assets/home-visual-redesign-2026.css", EN_HOME)
         self.assertNotIn('<body class="mh-home"', EN_HOME)
+
+    def test_light_theme_small_labels_meet_wcag_aa_contrast(self):
+        muted_rule = (
+            "html.theme-light .mh-home .mh-node small,\n"
+            "html.theme-light .mh-home .mh-proofbar small,\n"
+            "html.theme-light .mh-home .mh-card-index,\n"
+            "html.theme-light .mh-home .mh-terminal-top b,\n"
+            "html.theme-light .mh-home .mh-identity-card span {color:#40566f}"
+        )
+        self.assertIn(muted_rule, HOME_CSS)
+        self.assertIn(
+            "html.theme-light .mh-home .mh-terminal code span {color:#245a85}",
+            HOME_CSS,
+        )
+        # Check against the palest backgrounds used by the light-theme surfaces.
+        self.assertGreaterEqual(_contrast_ratio("#40566f", "#edf3f8"), 4.5)
+        self.assertGreaterEqual(_contrast_ratio("#245a85", "#f0f5f9"), 4.5)
 
 
 if __name__ == "__main__":
