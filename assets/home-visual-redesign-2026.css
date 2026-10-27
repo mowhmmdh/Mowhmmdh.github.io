@@ -162,3 +162,11 @@ html.theme-light .mh-home .legal-footer-2026{color:#64768b;border-color:rgba(35,
 
 /* Keep the lower orbit nodes clear of the terminal panel on narrow and short viewports. */
 .mh-home .mh-node-c,.mh-home .mh-node-d{bottom:32%}
+
+/* WCAG AA contrast for secondary labels on the redesigned homepage's light theme. */
+html.theme-light .mh-home .mh-node small,
+html.theme-light .mh-home .mh-proofbar small,
+html.theme-light .mh-home .mh-card-index,
+html.theme-light .mh-home .mh-terminal-top b,
+html.theme-light .mh-home .mh-identity-card span {color:#40566f}
+html.theme-light .mh-home .mh-terminal code span {color:#245a85}
