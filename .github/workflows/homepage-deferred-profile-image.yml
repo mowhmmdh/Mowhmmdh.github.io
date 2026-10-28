@@ -1,0 +1,21 @@
+name: Homepage Deferred Profile Image Regression
+
+on:
+  pull_request:
+    paths:
+      - "index.html"
+      - "tests/test_homepage_deferred_profile_image.py"
+      - ".github/workflows/homepage-deferred-profile-image.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  profile-image-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Test below-the-fold image loading policy
+        run: python3 tests/test_homepage_deferred_profile_image.py
