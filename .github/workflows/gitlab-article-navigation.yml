@@ -1,0 +1,36 @@
+name: GitLab Article Navigation Regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "blog/gitlab-ci-cd-for-it-infrastructure.html"
+      - "assets/site-theme.js"
+      - "assets/site-bundle.css"
+      - "tests/test_gitlab_article_navigation.py"
+      - ".github/workflows/gitlab-article-navigation.yml"
+  push:
+    branches: [main]
+    paths:
+      - "blog/gitlab-ci-cd-for-it-infrastructure.html"
+      - "assets/site-theme.js"
+      - "assets/site-bundle.css"
+      - "tests/test_gitlab_article_navigation.py"
+      - ".github/workflows/gitlab-article-navigation.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: gitlab-article-navigation
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    name: Primary navigation regression tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run navigation regression tests
+        run: python3 tests/test_gitlab_article_navigation.py -v
