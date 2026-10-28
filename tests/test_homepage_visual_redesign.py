@@ -95,7 +95,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
 
     def test_light_theme_footer_metadata_meets_wcag_aa_contrast(self):
         footer_rule = (
-            "html.theme-light .mh-home .mh-footer>div:first-child span{color:#586b80}\\n"
+            "html.theme-light .mh-home .mh-footer>div:first-child span{color:#586b80}\n"
             "html.theme-light .mh-home .legal-footer-2026{color:#586b80;border-color:rgba(35,58,84,.12)}"
         )
         self.assertIn(footer_rule, HOME_CSS)
