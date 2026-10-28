@@ -157,8 +157,8 @@ html.theme-light .mh-home .q-conversion p{color:#52657b}
 html.theme-light .mh-home .q-conversion-secondary{color:#243b55;border-color:rgba(35,58,84,.2)}
 html.theme-light .mh-home .mh-footer{border-color:rgba(35,58,84,.14)}
 html.theme-light .mh-home .mh-footer>div:first-child strong{color:#122237}
-html.theme-light .mh-home .mh-footer>div:first-child span{color:#64768b}
-html.theme-light .mh-home .legal-footer-2026{color:#64768b;border-color:rgba(35,58,84,.12)}
+html.theme-light .mh-home .mh-footer>div:first-child span{color:#586b80}
+html.theme-light .mh-home .legal-footer-2026{color:#586b80;border-color:rgba(35,58,84,.12)}
 
 /* Keep the lower orbit nodes clear of the terminal panel on narrow and short viewports. */
 .mh-home .mh-node-c,.mh-home .mh-node-d{bottom:32%}
