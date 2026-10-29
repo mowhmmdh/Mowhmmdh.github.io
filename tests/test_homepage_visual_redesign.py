@@ -93,6 +93,13 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertGreaterEqual(_contrast_ratio("#40566f", "#edf3f8"), 4.5)
         self.assertGreaterEqual(_contrast_ratio("#245a85", "#f0f5f9"), 4.5)
 
+    def test_light_theme_core_label_meets_wcag_aa_contrast(self):
+        core_rule = "html.theme-light .mh-home .mh-core small{color:#40566f}"
+        self.assertIn(core_rule, HOME_CSS)
+        # The core uses a white-to-pale-blue gradient in light theme.
+        self.assertGreaterEqual(_contrast_ratio("#40566f", "#ffffff"), 4.5)
+        self.assertGreaterEqual(_contrast_ratio("#40566f", "#e4eef8"), 4.5)
+
     def test_light_theme_footer_metadata_meets_wcag_aa_contrast(self):
         footer_rule = (
             "html.theme-light .mh-home .mh-footer>div:first-child span{color:#586b80}\n"
