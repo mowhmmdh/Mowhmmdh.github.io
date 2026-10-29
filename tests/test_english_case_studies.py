@@ -92,13 +92,11 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         script = read("assets/site-final-quality-2026.js")
         self.assertIn("path === k + '.html'", script)
 
-        persian_pool = re.search(r"'/projects': \[(.*?)\n      \]", script, re.S)
-        english_pool = re.search(r"'/en-projects': \[(.*?)\n      \]", script, re.S)
-        self.assertIsNotNone(persian_pool)
-        self.assertIsNotNone(english_pool)
+        persian_block = script.split("'/projects': [", 1)[1].split("\n      ]", 1)[0]
+        english_block = script.split("'/en-projects': [", 1)[1].split("\n      ]", 1)[0]
 
-        persian_targets = re.findall(r"\['([^']+)'", persian_pool.group(1))
-        english_targets = re.findall(r"\['([^']+)'", english_pool.group(1))
+        persian_targets = re.findall(r"\['([^']+)'", persian_block)
+        english_targets = re.findall(r"\['([^']+)'", english_block)
         self.assertEqual(persian_targets, [
             "/case-studies/gitlab-infrastructure.html",
             "/case-studies/network-troubleshooting.html",
