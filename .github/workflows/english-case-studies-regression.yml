@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'en-case-studies.html'
+      - 'assets/site-final-quality-2026.js'
+      - 'en-blog/*.html'
       - 'en.html'
       - 'en-sitemap.html'
       - 'case-studies/index.html'
