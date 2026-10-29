@@ -52,6 +52,20 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         self.assertIn('href="/en-case-studies.html"', self.html_sitemap)
         self.assertNotIn('href="/case-studies/"', self.html_sitemap)
 
+    def test_english_reference_pages_link_to_english_case_study_index(self):
+        paths = (
+            "en-authority.html",
+            "en-linkedin.html",
+            "en-press.html",
+            "en-media-kit.html",
+        )
+        for path in paths:
+            html = read(path)
+            with self.subTest(path=path):
+                self.assertRegex(html, r'<html\\b[^>]*lang="en"[^>]*dir="ltr"')
+                self.assertIn('href="/en-case-studies.html"', html)
+                self.assertNotIn('href="/case-studies/"', html)
+
     def test_each_summary_links_to_its_persian_source(self):
         expected = (
             "/case-studies/network-troubleshooting.html",
