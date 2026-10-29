@@ -4,6 +4,10 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - 'en-media-kit.html'
+      - 'en-press.html'
+      - 'en-linkedin.html'
+      - 'en-authority.html'
       - 'en-case-studies.html'
       - 'assets/site-final-quality-2026.js'
       - 'en-blog/*.html'
@@ -16,6 +20,10 @@ on:
   push:
     branches: [main]
     paths:
+      - 'en-media-kit.html'
+      - 'en-press.html'
+      - 'en-linkedin.html'
+      - 'en-authority.html'
       - 'en-case-studies.html'
       - 'en.html'
       - 'en-sitemap.html'
