@@ -88,5 +88,34 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         self.assertEqual(self.english.count("AUTO-BREADCRUMB:END"), 1)
 
 
+    def test_project_related_links_match_real_routes_and_language(self):
+        script = read("assets/site-final-quality-2026.js")
+        self.assertIn("path === k + '.html'", script)
+
+        persian_pool = re.search(r"'/projects': \\[(.*?)\\n      \\]", script, re.S)
+        english_pool = re.search(r"'/en-projects': \\[(.*?)\\n      \\]", script, re.S)
+        self.assertIsNotNone(persian_pool)
+        self.assertIsNotNone(english_pool)
+
+        persian_targets = re.findall(r"\\['([^']+)'", persian_pool.group(1))
+        english_targets = re.findall(r"\\['([^']+)'", english_pool.group(1))
+        self.assertEqual(persian_targets, [
+            "/case-studies/gitlab-infrastructure.html",
+            "/case-studies/network-troubleshooting.html",
+            "/case-studies/windows-domain-hardening.html",
+        ])
+        self.assertEqual(english_targets, [
+            "/en-blog/gitlab-ci-cd-for-it-infrastructure.html",
+            "/en-blog/network-troubleshooting-checklist.html",
+            "/en-blog/active-directory-hardening.html",
+        ])
+
+        for target in persian_targets:
+            with self.subTest(target=target):
+                self.assertRegex(read(target.lstrip("/")), r'<html\\b[^>]*lang="fa"[^>]*dir="rtl"')
+        for target in english_targets:
+            with self.subTest(target=target):
+                self.assertRegex(read(target.lstrip("/")), r'<html\\b[^>]*lang="en"[^>]*dir="ltr"')
+
 if __name__ == "__main__":
     unittest.main()
