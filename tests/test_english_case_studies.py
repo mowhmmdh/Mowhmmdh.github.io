@@ -62,7 +62,7 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         for path in paths:
             html = read(path)
             with self.subTest(path=path):
-                self.assertRegex(html, r'<html\\b[^>]*lang="en"[^>]*dir="ltr"')
+                self.assertRegex(html, r'<html\b[^>]*lang="en"[^>]*dir="ltr"')
                 self.assertIn('href="/en-case-studies.html"', html)
                 self.assertNotIn('href="/case-studies/"', html)
 
