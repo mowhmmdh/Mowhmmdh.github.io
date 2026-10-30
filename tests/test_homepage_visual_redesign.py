@@ -68,6 +68,13 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn("html.theme-light .mh-home", HOME_CSS)
         self.assertIn("theme(saved||'dark')", THEME_JS)
 
+    def test_homepage_navigation_hides_the_redundant_mobile_menu_toggle(self):
+        # The redesign deliberately keeps navigation links visible and wrapping on small screens.
+        # A visible toggle would change aria-expanded but would not collapse or reveal these links.
+        self.assertIn(".mh-home .mobile-menu{display:none}", HOME_CSS)
+        self.assertIn(".mh-home .mh-nav-links{display:flex", HOME_CSS)
+        self.assertIn(".mh-home .mh-nav-links{order:3;width:100%", HOME_CSS)
+
     def test_lower_orbit_nodes_are_lifted_above_the_terminal_panel(self):
         self.assertIn(".mh-home .mh-node-c,.mh-home .mh-node-d{bottom:32%}", HOME_CSS)
 
