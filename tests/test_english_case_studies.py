@@ -130,5 +130,25 @@ class EnglishCaseStudiesTests(unittest.TestCase):
                 self.assertRegex(read(target.lstrip("/")), r'<html\b[^>]*lang="en"[^>]*dir="ltr"')
 
 
+    def test_case_study_index_links_have_well_formed_href_attributes(self):
+        expected_counts = {
+            "en-authority.html": 2,
+            "en-press.html": 1,
+            "en-linkedin.html": 1,
+            "en-media-kit.html": 1,
+        }
+        for path, expected in expected_counts.items():
+            html = read(path)
+            with self.subTest(path=path):
+                # A quote immediately after the closing href quote is invalid markup.
+                valid_links = re.findall(
+                    r'href="/en-case-studies\\.html"(?=[\\s>])',
+                    html,
+                    flags=re.I,
+                )
+                self.assertEqual(len(valid_links), expected)
+                self.assertEqual(html.count('href="/en-case-studies.html"'), expected)
+
+
 if __name__ == "__main__":
     unittest.main()
