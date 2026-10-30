@@ -20,6 +20,8 @@
 .mh-home .mh-nav-links a{font-size:12px;color:var(--mh-muted);text-decoration:none;padding:8px 0;border-bottom:1px solid transparent}
 .mh-home .mh-nav-links a:hover,.mh-home .mh-nav-links a:focus-visible{color:var(--mh-cyan);border-color:var(--mh-cyan)}
 .mh-home .nav-actions{display:flex;gap:8px;align-items:center}.mh-home .nav-actions button{width:38px;height:38px;border:1px solid var(--mh-line);border-radius:12px;background:#101a28;color:var(--mh-text)}
+/* The homepage keeps its navigation links visible and wrapping on small screens; hide the redundant toggle rather than expose a control that cannot collapse this layout. */
+.mh-home .mobile-menu{display:none}
 .mh-home .mh-hero{padding-top:clamp(54px,8vw,100px);padding-bottom:36px}
 .mh-home .mh-hero-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:clamp(28px,5vw,72px);align-items:center}
 .mh-home .mh-kicker,.mh-home .mh-eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--mh-cyan);font:700 10px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase}
