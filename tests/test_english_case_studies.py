@@ -142,7 +142,7 @@ class EnglishCaseStudiesTests(unittest.TestCase):
             with self.subTest(path=path):
                 # A quote immediately after the closing href quote is invalid markup.
                 valid_links = re.findall(
-                    r'href="/en-case-studies\\.html"(?=[\\s>])',
+                    r'href="/en-case-studies[.]html"(?=[ >])',
                     html,
                     flags=re.I,
                 )
