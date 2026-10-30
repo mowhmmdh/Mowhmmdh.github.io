@@ -1,0 +1,32 @@
+name: Network Security Playbook Static Mobile CTA Regression
+
+on:
+  pull_request:
+    paths:
+      - "blog/network-security-engineering-playbook.html"
+      - "tests/test_network_security_playbook_static_mobile_cta.py"
+      - ".github/workflows/network-security-playbook-static-mobile-cta.yml"
+      - "assets/site-final-quality-2026.css"
+  push:
+    branches: [main]
+    paths:
+      - "blog/network-security-engineering-playbook.html"
+      - "tests/test_network_security_playbook_static_mobile_cta.py"
+      - ".github/workflows/network-security-playbook-static-mobile-cta.yml"
+      - "assets/site-final-quality-2026.css"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: network-security-playbook-static-mobile-cta-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run focused regression tests
+        run: python3 -m unittest discover -s tests -p "test_network_security_playbook_static_mobile_cta.py" -v
