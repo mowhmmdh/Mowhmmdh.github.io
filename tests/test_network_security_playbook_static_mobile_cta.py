@@ -29,7 +29,7 @@ class NetworkSecurityPlaybookStaticCtaTests(unittest.TestCase):
 
     def test_existing_article_conversion_cta_is_preserved(self):
         match = re.search(
-            r'<section\b[^>]*class=["\'][^"\']*\bseo-conversion-cta\b[^"\']*["\'][\s\S]*?</section>',
+            r'<aside\b[^>]*class=["\'][^"\']*\bseo-conversion-cta\b[^"\']*["\'][\s\S]*?</aside>',
             PAGE,
         )
         self.assertIsNotNone(match)
