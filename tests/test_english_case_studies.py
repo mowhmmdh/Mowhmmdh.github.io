@@ -150,5 +150,61 @@ class EnglishCaseStudiesTests(unittest.TestCase):
                 self.assertEqual(html.count('href="/en-case-studies.html"'), expected)
 
 
+    def test_english_media_kit_has_english_bio_and_language_aware_resource_links(self):
+        media = read("en-media-kit.html")
+        self.assertRegex(media, r'<html\\b[^>]*lang="en"[^>]*dir="ltr"')
+        self.assertIn(
+            "Mohammad Hossein Asgari Somarin focuses on network and infrastructure operations",
+            media,
+        )
+        self.assertNotIn("متخصص Network", media)
+
+        resources_match = re.search(
+            r'<section class="card"><h2>Public resources</h2>(.*?)</section>',
+            media,
+            flags=re.S,
+        )
+        self.assertIsNotNone(resources_match)
+        resources = resources_match.group(1)
+        expected = (
+            "/en.html",
+            "/en-authority.html",
+            "/en-projects.html",
+            "/en-case-studies.html",
+            "/en-blog.html",
+        )
+        for target in expected:
+            with self.subTest(target=target):
+                self.assertIn(f'href="{target}"', resources)
+                self.assertTrue((ROOT / target.lstrip("/")).is_file(), target)
+
+        self.assertNotIn('href="/"', resources)
+        self.assertNotIn('href="/authority.html"', resources)
+        self.assertNotIn('href="/projects.html"', resources)
+        self.assertNotIn('href="/blog/"', resources)
+        self.assertIn(
+            'href="/verification.html" hreflang="fa-IR">Identity reference (Persian)</a>',
+            resources,
+        )
+
+    def test_english_media_kit_legal_links_disclose_persian_destinations(self):
+        media = read("en-media-kit.html")
+        footer = re.search(r'<footer class="legal-footer-2026">(.*?)</footer>', media, re.S)
+        self.assertIsNotNone(footer)
+        for target, label in (
+            ("/privacy.html", "Privacy (Persian)"),
+            ("/terms.html", "Terms (Persian)"),
+            ("/disclosure.html", "Disclosure (Persian)"),
+        ):
+            with self.subTest(target=target):
+                self.assertIn(f'href="{target}" hreflang="fa-IR">{label}</a>', footer.group(1))
+
+    def test_english_authority_press_references_stay_in_english(self):
+        authority = read("en-authority.html")
+        self.assertEqual(authority.count('href="/en-press.html"'), 2)
+        self.assertNotIn('href="/press.html"', authority)
+        self.assertIn('href="/authority.html">FA</a>', authority)
+
+
 if __name__ == "__main__":
     unittest.main()
