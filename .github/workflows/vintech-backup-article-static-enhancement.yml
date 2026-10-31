@@ -1,0 +1,32 @@
+name: VinTech Backup Article Static Enhancement Regression
+
+on:
+  pull_request:
+    paths:
+      - "vintech/insights/backup-and-disaster-recovery.html"
+      - "tests/test_vintech_backup_article_static_enhancements.py"
+      - ".github/workflows/vintech-backup-article-static-enhancement.yml"
+      - "assets/site-final-quality-2026.css"
+  push:
+    branches: [main]
+    paths:
+      - "vintech/insights/backup-and-disaster-recovery.html"
+      - "tests/test_vintech_backup_article_static_enhancements.py"
+      - ".github/workflows/vintech-backup-article-static-enhancement.yml"
+      - "assets/site-final-quality-2026.css"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vintech-backup-article-static-enhancement-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run focused regression tests
+        run: python3 -m unittest discover -s tests -p "test_vintech_backup_article_static_enhancements.py" -v
