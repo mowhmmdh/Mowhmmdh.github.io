@@ -152,7 +152,7 @@ class EnglishCaseStudiesTests(unittest.TestCase):
 
     def test_english_media_kit_has_english_bio_and_language_aware_resource_links(self):
         media = read("en-media-kit.html")
-        self.assertRegex(media, r'<html\\b[^>]*lang="en"[^>]*dir="ltr"')
+        self.assertRegex(media, r'<html\b[^>]*lang="en"[^>]*dir="ltr"')
         self.assertIn(
             "Mohammad Hossein Asgari Somarin focuses on network and infrastructure operations",
             media,
