@@ -112,6 +112,9 @@
 (() => {
   const applyEliteHome = () => {
     if (!document.body || !document.body.classList.contains('mh-home')) return;
+    // The explicit homepage redesign owns the cascade on pages that opt in.
+    // Do not append the older elite layer after it, or its overlapping selectors win.
+    if (document.querySelector('link[data-home-visual-redesign]')) return;
     if (document.querySelector('link[data-elite-home-visual]')) return;
     const link = document.createElement('link');
     link.rel = 'stylesheet';
