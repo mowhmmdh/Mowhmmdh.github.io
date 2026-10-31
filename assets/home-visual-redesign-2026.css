@@ -87,7 +87,7 @@
 .mh-home .mh-footer-links{display:flex;flex-wrap:wrap;gap:15px}.mh-home .mh-footer-links a,.mh-home .legal-footer-2026 a{font-size:10px;color:#92a5bc;text-decoration:none}.mh-home .mh-footer-links a:hover,.mh-home .legal-footer-2026 a:hover{color:var(--mh-cyan)}
 .mh-home .legal-footer-2026{padding:15px 22px 25px;text-align:center;color:#61748b;border-top:1px solid rgba(148,163,184,.08);font-size:10px}
 .mh-home :focus-visible{outline:2px solid var(--mh-cyan);outline-offset:4px}
-@media(prefers-reduced-motion:reduce){.mh-home *{transition:none!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){.mh-home *, .mh-home *::before, .mh-home *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media(min-width:1400px){.mh-home .mh-hero{padding-top:110px}.mh-home .mh-hero-visual{min-height:490px}}
 @media(max-width:900px){
  .mh-home .mh-nav{flex-wrap:wrap}.mh-home .mh-nav-links{order:3;width:100%;justify-content:flex-start;gap:8px 17px}
