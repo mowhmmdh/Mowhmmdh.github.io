@@ -10,6 +10,7 @@ ROOT = Path(__file__).resolve().parents[1]
 HOME = (ROOT / "index.html").read_text(encoding="utf-8")
 EN_HOME = (ROOT / "en.html").read_text(encoding="utf-8")
 HOME_CSS = (ROOT / "assets/home-visual-redesign-2026.css").read_text(encoding="utf-8")
+BUNDLE_CSS = (ROOT / "assets/site-bundle.css").read_text(encoding="utf-8")
 QUALITY_JS = (ROOT / "assets/site-final-quality-2026.js").read_text(encoding="utf-8")
 THEME_JS = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
 
@@ -67,6 +68,27 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertNotIn("@media(prefers-color-scheme:light)", HOME_CSS)
         self.assertIn("html.theme-light .mh-home", HOME_CSS)
         self.assertIn("theme(saved||'dark')", THEME_JS)
+
+    def test_reduced_motion_disables_inherited_animations_and_pseudo_elements(self):
+        # The shared bundle animates the orbit, rings, core, core pseudo-element, and nodes.
+        for animation in (
+            "animation:mh-float 7s ease-in-out infinite",
+            "animation:mh-spin 18s linear infinite",
+            "animation:mh-pulse 3.4s ease-in-out infinite",
+            "animation:mh-spin-rev 20s linear infinite",
+            "animation:mh-node 4s ease-in-out infinite",
+        ):
+            self.assertIn(animation, BUNDLE_CSS)
+
+        reduced_motion_rule = (
+            "@media(prefers-reduced-motion:reduce){"
+            ".mh-home *, .mh-home *::before, .mh-home *::after{"
+            "animation:none!important;"
+            "transition:none!important;"
+            "scroll-behavior:auto!important}"
+            "}"
+        )
+        self.assertIn(reduced_motion_rule, HOME_CSS)
 
     def test_homepage_navigation_hides_the_redundant_mobile_menu_toggle(self):
         # The redesign deliberately keeps navigation links visible and wrapping on small screens.
