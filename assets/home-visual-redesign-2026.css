@@ -173,3 +173,14 @@ html.theme-light .mh-home .mh-card-index,
 html.theme-light .mh-home .mh-terminal-top b,
 html.theme-light .mh-home .mh-identity-card span {color:#40566f}
 html.theme-light .mh-home .mh-terminal code span {color:#245a85}
+
+/* WCAG AA contrast for small accent labels on light-theme surfaces. */
+html.theme-light .mh-home .mh-kicker,
+html.theme-light .mh-home .mh-eyebrow,
+html.theme-light .mh-home .mh-hero h1 span,
+html.theme-light .mh-home .mh-text-link,
+html.theme-light .mh-home .mh-node i,
+html.theme-light .mh-home .mh-card-tag,
+html.theme-light .mh-home .mh-expertise>span,
+html.theme-light .mh-home .mh-identity-card small,
+html.theme-light .mh-home .q-conversion-eyebrow {color:#075f64}
