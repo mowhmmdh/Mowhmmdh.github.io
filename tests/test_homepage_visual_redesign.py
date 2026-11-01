@@ -142,14 +142,14 @@ class HomepageVisualRedesignTests(unittest.TestCase):
 
     def test_light_theme_accent_labels_meet_wcag_aa_contrast(self):
         accent_rule = (
-            "html.theme-light .mh-home .mh-kicker,\\n"
-            "html.theme-light .mh-home .mh-eyebrow,\\n"
-            "html.theme-light .mh-home .mh-hero h1 span,\\n"
-            "html.theme-light .mh-home .mh-text-link,\\n"
-            "html.theme-light .mh-home .mh-node i,\\n"
-            "html.theme-light .mh-home .mh-card-tag,\\n"
-            "html.theme-light .mh-home .mh-expertise>span,\\n"
-            "html.theme-light .mh-home .mh-identity-card small,\\n"
+            "html.theme-light .mh-home .mh-kicker,\n"
+            "html.theme-light .mh-home .mh-eyebrow,\n"
+            "html.theme-light .mh-home .mh-hero h1 span,\n"
+            "html.theme-light .mh-home .mh-text-link,\n"
+            "html.theme-light .mh-home .mh-node i,\n"
+            "html.theme-light .mh-home .mh-card-tag,\n"
+            "html.theme-light .mh-home .mh-expertise>span,\n"
+            "html.theme-light .mh-home .mh-identity-card small,\n"
             "html.theme-light .mh-home .q-conversion-eyebrow {color:#075f64}"
         )
         self.assertIn(accent_rule, HOME_CSS)
