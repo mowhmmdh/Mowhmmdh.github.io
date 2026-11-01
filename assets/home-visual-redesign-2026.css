@@ -184,3 +184,11 @@ html.theme-light .mh-home .mh-card-tag,
 html.theme-light .mh-home .mh-expertise>span,
 html.theme-light .mh-home .mh-identity-card small,
 html.theme-light .mh-home .q-conversion-eyebrow {color:#075f64}
+
+/* Keep interactive light-theme accent text above WCAG AA contrast on pale surfaces. */
+html.theme-light .mh-home .mh-brand em,
+html.theme-light .mh-home .mh-nav-links a:hover,
+html.theme-light .mh-home .mh-nav-links a:focus-visible,
+html.theme-light .mh-home .mh-profile-links a:hover,
+html.theme-light .mh-home .mh-footer-links a:hover,
+html.theme-light .mh-home .legal-footer-2026 a:hover {color:#075f64}
