@@ -22,7 +22,7 @@ jobs:
     outputs:
       pages: ${{ steps.pages.outputs.pages }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - id: pages
         name: Build Lighthouse matrix from sitemap
         run: |
