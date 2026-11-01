@@ -19,7 +19,7 @@ class EnglishVinTechLegalFooterTests(unittest.TestCase):
         for path in PAGES:
             with self.subTest(page=path.relative_to(ROOT).as_posix()):
                 html = path.read_text(encoding="utf-8")
-                html_tag = html.split(">", 1)[0] + ">"
+                html_tag = html.split("<html", 1)[1].split(">", 1)[0]
                 self.assertIn('lang="en"', html_tag)
                 self.assertIn('dir="ltr"', html_tag)
 
