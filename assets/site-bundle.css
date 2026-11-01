@@ -1086,3 +1086,11 @@ html.theme-light :is(.content th,.article th,.post-content th,.case-content th) 
     transform:none!important;
   }
 }
+
+/* Small light-theme accent text needs the full WCAG AA normal-text ratio. */
+html.theme-light :is(.tag,.hero-kicker,.kicker,.eyebrow,.section-tag,.read,.case-link) {
+  color:#805300;
+}
+html.theme-light :is(.nav a:hover,.nav-links a:hover,.about-nav-links a:hover,.en-nav-links a:hover) {
+  color:#805300;
+}
