@@ -1,0 +1,21 @@
+name: English Homepage Claim Accuracy
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "en.html"
+      - "tests/test_english_homepage_claim_accuracy.py"
+      - ".github/workflows/english-homepage-claim-accuracy.yml"
+permissions:
+  contents: read
+concurrency:
+  group: english-homepage-claim-accuracy-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  claim-accuracy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run English homepage claim-accuracy tests
+        run: python3 tests/test_english_homepage_claim_accuracy.py
