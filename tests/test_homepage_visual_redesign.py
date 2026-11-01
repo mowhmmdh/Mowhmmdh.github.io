@@ -139,5 +139,30 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertGreaterEqual(_contrast_ratio("#586b80", "#f4f7fb"), 4.5)
 
 
+
+    def test_light_theme_accent_labels_meet_wcag_aa_contrast(self):
+        accent_rule = (
+            "html.theme-light .mh-home .mh-kicker,\\n"
+            "html.theme-light .mh-home .mh-eyebrow,\\n"
+            "html.theme-light .mh-home .mh-hero h1 span,\\n"
+            "html.theme-light .mh-home .mh-text-link,\\n"
+            "html.theme-light .mh-home .mh-node i,\\n"
+            "html.theme-light .mh-home .mh-card-tag,\\n"
+            "html.theme-light .mh-home .mh-expertise>span,\\n"
+            "html.theme-light .mh-home .mh-identity-card small,\\n"
+            "html.theme-light .mh-home .q-conversion-eyebrow {color:#075f64}"
+        )
+        self.assertIn(accent_rule, HOME_CSS)
+        # Cover the light-theme page, cards, split section, conversion panel and node surfaces.
+        for background in (
+            "#eff4fa", "#edf3f9", "#e8eff7",
+            "#f6f9fc", "#f4f7fb", "#ffffff",
+        ):
+            self.assertGreaterEqual(
+                _contrast_ratio("#075f64", background),
+                4.5,
+                f"accent text fails WCAG AA on {background}",
+            )
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
