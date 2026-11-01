@@ -48,6 +48,29 @@ class SitewideVisualPolishTests(unittest.TestCase):
         for background in ("#ffffff", "#edf2f7", "#f6f8fb", "#edf3f9"):
             self.assertGreaterEqual(contrast(foreground, background), 4.5)
 
+
+    def test_legacy_light_theme_overrides_cover_low_contrast_components(self):
+        services = (ROOT / "services.html").read_text(encoding="utf-8")
+        projects = (ROOT / "projects.html").read_text(encoding="utf-8")
+        blog = (ROOT / "blog" / "index.html").read_text(encoding="utf-8")
+
+        for html in (services, projects, blog):
+            self.assertIn('/assets/site-bundle.css', html)
+            self.assertIn('/assets/site-theme.js', html)
+
+        self.assertIn(".service-card h2{", services)
+        self.assertIn(".project-card h2{", projects)
+        self.assertIn(".project-card a{", projects)
+        self.assertIn(".architecture span{", projects)
+        self.assertIn(".cluster a{", blog)
+
+        self.assertIn("html.theme-light :is(.service-card h2,.project-card h2)", CSS)
+        self.assertIn("html.theme-light :is(.project-card a,.cluster a)", CSS)
+        self.assertIn("html.theme-light .architecture span", CSS)
+        self.assertGreaterEqual(contrast("#15212d", "#ffffff"), 4.5)
+        self.assertGreaterEqual(contrast("#805300", "#edf2f7"), 4.5)
+        self.assertGreaterEqual(contrast("#596979", "#edf2f7"), 4.5)
+
     def test_shared_design_does_not_change_language_or_page_content(self):
         for path, expected in (
             ("index.html", 'lang="fa" dir="rtl"'),
