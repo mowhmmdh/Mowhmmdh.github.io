@@ -7,6 +7,23 @@ SCRIPT = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
 
 
 class MobileNavAccessibilityTests(unittest.TestCase):
+    def test_persian_about_page_has_a_real_mobile_menu_control(self):
+        page = (ROOT / "about.html").read_text(encoding="utf-8")
+        self.assertIn('class="about-nav"', page)
+        self.assertIn('class="about-nav-links"', page)
+        self.assertIn('class="mobile-menu"', page)
+        self.assertIn('aria-expanded="false"', page)
+        self.assertIn(".about-nav.menu-open .about-nav-links", page)
+
+    def test_english_about_page_has_a_real_mobile_menu_control(self):
+        page = (ROOT / "en-about.html").read_text(encoding="utf-8")
+        self.assertIn('<html lang="en" dir="ltr">', page)
+        self.assertIn('class="en-nav-links"', page)
+        self.assertIn('class="mobile-menu"', page)
+        self.assertIn('aria-expanded="false"', page)
+        self.assertIn('aria-current="page">About</a>', page)
+        self.assertIn(".en-nav.menu-open .en-nav-links", page)
+
     def test_menu_labels_follow_the_document_language(self):
         self.assertIn("const english=(document.documentElement.lang||'').toLowerCase().startsWith('en');", SCRIPT)
         self.assertIn("? {open:'Open menu',close:'Close menu'}", SCRIPT)
