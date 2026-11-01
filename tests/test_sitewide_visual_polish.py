@@ -25,6 +25,7 @@ class SitewideVisualPolishTests(unittest.TestCase):
         self.assertIn("html.theme-light :is(.hero p,.hero-copy,.lead", CSS)
         self.assertIn("html.theme-light :is(.card p,.post-card p,.project-card p", CSS)
         self.assertIn("color:var(--muted)!important", CSS)
+        self.assertIn("color:#805300", CSS)
 
     def test_light_theme_surfaces_are_consistent_across_legacy_cards(self):
         self.assertIn("html.theme-light :is(.card,.post-card,.project-card,.service-card", CSS)
