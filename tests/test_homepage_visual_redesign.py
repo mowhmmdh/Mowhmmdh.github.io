@@ -153,6 +153,15 @@ class HomepageVisualRedesignTests(unittest.TestCase):
             "html.theme-light .mh-home .q-conversion-eyebrow {color:#075f64}"
         )
         self.assertIn(accent_rule, HOME_CSS)
+        interactive_accent_rule = (
+            "html.theme-light .mh-home .mh-brand em,\n"
+            "html.theme-light .mh-home .mh-nav-links a:hover,\n"
+            "html.theme-light .mh-home .mh-nav-links a:focus-visible,\n"
+            "html.theme-light .mh-home .mh-profile-links a:hover,\n"
+            "html.theme-light .mh-home .mh-footer-links a:hover,\n"
+            "html.theme-light .mh-home .legal-footer-2026 a:hover {color:#075f64}"
+        )
+        self.assertIn(interactive_accent_rule, HOME_CSS)
         # Cover the light-theme page, cards, split section, conversion panel and node surfaces.
         for background in (
             "#eff4fa", "#edf3f9", "#e8eff7",
