@@ -1094,3 +1094,17 @@ html.theme-light :is(.tag,.hero-kicker,.kicker,.eyebrow,.section-tag,.read,.case
 html.theme-light :is(.nav a:hover,.nav-links a:hover,.about-nav-links a:hover,.en-nav-links a:hover) {
   color:#805300;
 }
+
+
+/* Light-theme fixes for remaining legacy component labels and links. */
+html.theme-light :is(.service-card h2,.project-card h2) {
+  color:var(--text);
+}
+html.theme-light :is(.project-card a,.cluster a) {
+  color:#805300;
+}
+html.theme-light .architecture span {
+  color:var(--muted);
+  background:var(--surface2);
+  border-color:var(--line);
+}
