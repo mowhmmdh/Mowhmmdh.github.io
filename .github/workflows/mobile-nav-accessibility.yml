@@ -4,6 +4,8 @@ on:
     branches: [main]
     paths:
       - assets/site-theme.js
+      - about.html
+      - en-about.html
       - tests/test_mobile_nav_accessibility.py
       - .github/workflows/mobile-nav-accessibility.yml
   workflow_dispatch:
