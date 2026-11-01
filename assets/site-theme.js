@@ -28,24 +28,46 @@ function bind(){
     });
   });
 
+  const english=(document.documentElement.lang||'').toLowerCase().startsWith('en');
+  const menuLabels=english
+    ? {open:'Open menu',close:'Close menu'}
+    : {open:'باز کردن منو',close:'بستن منو'};
+
   document.querySelectorAll('.site-nav,.about-nav,.en-nav,.nav,.vt-nav').forEach(nav=>{
     const menu=nav.querySelector('.mobile-menu');
     const links=nav.querySelector('.nav-links,.about-nav-links,.en-nav-links');
     if(!menu||!links||menu.dataset.bound)return;
     menu.dataset.bound='1';
-    const close=()=>{
+    menu.setAttribute('aria-expanded','false');
+    menu.setAttribute('aria-label',menuLabels.open);
+
+    const close=(restoreFocus=false)=>{
+      const wasOpen=nav.classList.contains('menu-open');
       nav.classList.remove('menu-open');
       menu.setAttribute('aria-expanded','false');
-      menu.setAttribute('aria-label','باز کردن منو');
+      menu.setAttribute('aria-label',menuLabels.open);
       menu.textContent='☰';
+      if(restoreFocus&&wasOpen)menu.focus();
     };
+
     menu.addEventListener('click',e=>{
       e.stopPropagation();
       const open=!nav.classList.contains('menu-open');
-      if(open)nav.classList.add('menu-open');else close();
-      menu.setAttribute('aria-expanded',String(open));
-      menu.setAttribute('aria-label',open?'بستن منو':'باز کردن منو');
-      menu.textContent=open?'×':'☰';
+      if(open){
+        nav.classList.add('menu-open');
+        menu.setAttribute('aria-expanded','true');
+        menu.setAttribute('aria-label',menuLabels.close);
+        menu.textContent='×';
+        const focusFirstLink=()=>{
+          if(!nav.classList.contains('menu-open'))return;
+          const firstLink=links.querySelector('a[href]:not([hidden])');
+          if(firstLink)firstLink.focus();
+        };
+        if(typeof window.requestAnimationFrame==='function')window.requestAnimationFrame(focusFirstLink);
+        else window.setTimeout(focusFirstLink,0);
+      }else{
+        close();
+      }
     });
     links.addEventListener('click',e=>{if(e.target.closest('a'))close()});
     nav._mhaClose=close;
@@ -63,6 +85,6 @@ document.addEventListener('click',e=>{
   document.querySelectorAll('.menu-open').forEach(n=>n._mhaClose?.());
 });
 document.addEventListener('keydown',e=>{
-  if(e.key==='Escape')document.querySelectorAll('.menu-open').forEach(n=>n._mhaClose?.());
+  if(e.key==='Escape')document.querySelectorAll('.menu-open').forEach(n=>n._mhaClose?.(true));
 });
 })();
