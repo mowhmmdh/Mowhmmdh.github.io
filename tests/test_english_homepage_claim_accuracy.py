@@ -52,7 +52,7 @@ class EnglishHomepageClaimAccuracyTests(unittest.TestCase):
         for markup in expected:
             with self.subTest(link=markup):
                 self.assertIn(markup, footer)
-        self.assertFalse(any("\\u0600" <= char <= "\\u06FF" for char in footer))
+        self.assertFalse(any("\u0600" <= char <= "\u06FF" for char in footer))
         for target in ("en-privacy.html", "en-terms.html", "en-disclosure.html"):
             with self.subTest(target=target):
                 self.assertTrue((ROOT / target).is_file())
