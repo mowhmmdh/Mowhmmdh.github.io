@@ -88,5 +88,41 @@ class EnglishArticleSchemaUrlTests(unittest.TestCase):
                 )
 
 
+    def test_dns_page_no_longer_loads_the_shared_dom_enhancement_script(self):
+        page = (ROOT / "en-blog/dns-troubleshooting.html").read_text(encoding="utf-8")
+        self.assertNotIn(
+            '<script src="/assets/site-final-quality-2026.js" defer></script>',
+            page,
+        )
+
+    def test_dns_page_has_one_static_english_mobile_conversion_cta(self):
+        page = (ROOT / "en-blog/dns-troubleshooting.html").read_text(encoding="utf-8")
+        self.assertEqual(page.count('class="q-mobile-cta"'), 1)
+        self.assertIn('href="/en-vintech/request.html"', page)
+        self.assertIn('data-conversion="mobile_service_request"', page)
+        self.assertIn(">Request a project review</a>", page)
+        self.assertTrue((ROOT / "en-vintech/request.html").is_file())
+
+    def test_dns_page_footer_separator_is_static_and_decorative(self):
+        page = (ROOT / "en-blog/dns-troubleshooting.html").read_text(encoding="utf-8")
+        self.assertIn(
+            '<footer class="legal-footer-2026"><div class="q-footerline" aria-hidden="true"></div>',
+            page,
+        )
+
+    def test_dns_page_preserves_existing_related_content_and_service_cta(self):
+        page = (ROOT / "en-blog/dns-troubleshooting.html").read_text(encoding="utf-8")
+        self.assertIn('class="auto-related"', page)
+        self.assertIn('class="related-articles site-auto-related"', page)
+        self.assertIn('class="seo-conversion-cta"', page)
+        self.assertIn('href="/en-vintech/request.html"', page)
+
+    def test_dns_page_mobile_cta_has_existing_responsive_css(self):
+        css = (ROOT / "assets/site-final-quality-2026.css").read_text(encoding="utf-8")
+        self.assertIn(".q-mobile-cta{display:none}", css)
+        self.assertIn("@media(max-width:760px)", css)
+        self.assertIn(".q-mobile-cta{display:flex", css)
+
+
 if __name__ == "__main__":
     unittest.main()
