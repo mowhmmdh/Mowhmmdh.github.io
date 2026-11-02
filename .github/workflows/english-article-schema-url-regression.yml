@@ -1,0 +1,28 @@
+name: English Article Schema URL Regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "en-blog/*.html"
+      - "tests/test_english_article_schema_urls.py"
+      - ".github/workflows/english-article-schema-url-regression.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  article-schema-url-regression:
+    name: Article schema URLs match canonical URLs
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Run regression tests
+        run: python3 -m unittest discover -s tests -p "test_english_article_schema_urls.py" -v
