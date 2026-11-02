@@ -39,5 +39,23 @@ class EnglishHomepageClaimAccuracyTests(unittest.TestCase):
         self.assertIn('"محمدحسین عسگری"', HTML)
 
 
+    def test_english_legal_footer_uses_english_labels_and_destinations(self):
+        marker = '<footer class="legal-footer-2026">'
+        self.assertEqual(HTML.count(marker), 1)
+        footer = HTML.split(marker, 1)[1].split("</footer>", 1)[0]
+        expected = (
+            '<a href="/en-privacy.html">Privacy</a>',
+            '<a href="/en-terms.html">Terms</a>',
+            '<a href="/en-disclosure.html">Disclosure</a>',
+            '<a href="mailto:mohammedhasgari@gmail.com">Contact</a>',
+        )
+        for markup in expected:
+            with self.subTest(link=markup):
+                self.assertIn(markup, footer)
+        self.assertFalse(any("\\u0600" <= char <= "\\u06FF" for char in footer))
+        for target in ("en-privacy.html", "en-terms.html", "en-disclosure.html"):
+            with self.subTest(target=target):
+                self.assertTrue((ROOT / target).is_file())
+
 if __name__ == "__main__":
     unittest.main()
