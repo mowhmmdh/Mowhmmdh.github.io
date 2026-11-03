@@ -71,3 +71,6 @@ jobs:
           if errors:
               print('\n'.join(errors)); raise SystemExit(1)
           print(f'Production stylesheet contract passed for {len(pages)} HTML pages')
+
+      - name: Validate llms.txt Markdown links
+        run: python3 -m unittest discover -s tests -p "test_llms_txt_markdown_links.py" -v
