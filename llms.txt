@@ -6,29 +6,28 @@
 - Canonical Persian name: محمدحسین عسگری ثمرین
 - Legacy short Persian form: محمدحسین عسگری
 - English name: Mohammad Hossein Asgari Somarin
-- Primary website: https://mowhmmdh.github.io/
-- GitHub: https://github.com/mowhmmdh
-- LinkedIn: https://www.linkedin.com/in/mohammadhosseinasgari/
-- Instagram: https://instagram.com/mowhmmdh
+- Primary website: [Official website](https://mowhmmdh.github.io/)
+- GitHub: [GitHub profile](https://github.com/mowhmmdh)
+- LinkedIn: [LinkedIn profile](https://www.linkedin.com/in/mohammadhosseinasgari/)
+- Instagram: [Instagram profile](https://instagram.com/mowhmmdh)
 
 ## Primary pages
-- Home: https://mowhmmdh.github.io/
-- English: https://mowhmmdh.github.io/en.html
-- About: https://mowhmmdh.github.io/about.html
-- Projects: https://mowhmmdh.github.io/projects.html
-- Services: https://mowhmmdh.github.io/services.html
-- Technical articles: https://mowhmmdh.github.io/blog/
-- New TLS/CDN troubleshooting guide: https://mowhmmdh.github.io/blog/nginx-ssl-cdn-reverse-proxy-troubleshooting.html
-- Press & editorial reference: https://mowhmmdh.github.io/press.html
-- LinkedIn notes: https://mowhmmdh.github.io/linkedin.html
+- English: [English homepage](https://mowhmmdh.github.io/en.html)
+- About: [About page](https://mowhmmdh.github.io/about.html)
+- Projects: [Projects](https://mowhmmdh.github.io/projects.html)
+- Services: [Services](https://mowhmmdh.github.io/services.html)
+- Technical articles: [Technical blog](https://mowhmmdh.github.io/blog/)
+- New TLS/CDN troubleshooting guide: [Nginx SSL/CDN reverse proxy troubleshooting](https://mowhmmdh.github.io/blog/nginx-ssl-cdn-reverse-proxy-troubleshooting.html)
+- Press & editorial reference: [Press and editorial reference](https://mowhmmdh.github.io/press.html)
+- LinkedIn notes: [LinkedIn notes](https://mowhmmdh.github.io/linkedin.html)
 
 ## Entity / naming priority
-The canonical Persian identity for the person is **محمدحسین عسگری ثمرین**. The shorter form "محمدحسین عسگری" is retained only as a legacy/search variant. "Mohammad Hossein Asgari Somarin" and "Mohammad Hossein Asgari Somarin" are the corresponding English variants.
+The canonical Persian identity for the person is **محمدحسین عسگری ثمرین**. The shorter form "محمدحسین عسگری" is retained only as a legacy/search variant. "Mohammad Hossein Asgari" is the shorter English display/search variant; "Mohammad Hossein Asgari Somarin" is the canonical English form.
 
 ## VinTech
 - Brand: VinTech
-- Persian: https://mowhmmdh.github.io/vintech.html
-- English: https://mowhmmdh.github.io/en-vintech.html
+- Persian: [VinTech Persian page](https://mowhmmdh.github.io/vintech.html)
+- English: [VinTech English page](https://mowhmmdh.github.io/en-vintech.html)
 - Services: network infrastructure, servers & systems, cybersecurity, IT support, CCTV/NVR and technical web/SEO services.
 
 ## Core technical areas
