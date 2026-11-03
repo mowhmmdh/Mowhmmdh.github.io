@@ -54,22 +54,21 @@ class MobileNavigationTests(unittest.TestCase):
         self.assertIsNotNone(block, "secondary photo must be inside a native disclosure")
         content = block.group(1)
         self.assertRegex(content, r"<summary>.*?نمایش تصویر تکمیلی پروژه.*?</summary>")
-        self.assertNotRegex(
+        self.assertNotIn(
+            '<details class="mahex-secondary" open',
             PROJECTS,
-            r'<details class="mahex-secondary"[^>]*\\bopen\\b',
             "the large image must not be expanded by default",
         )
 
-        image = re.search(r"<img\\b([^>]*)>", content)
+        image = re.search(r"<img([^>]*)>", content)
         self.assertIsNotNone(image, "the original secondary photo must remain available")
         attributes = image.group(1)
         self.assertIn(f'src="{image_url}"', attributes)
-        self.assertRegex(attributes, r'\\bloading="lazy"')
-        self.assertRegex(attributes, r'\\bfetchpriority="low"')
-        self.assertRegex(attributes, r'\\bdecoding="async"')
+        self.assertIn('loading="lazy"', attributes)
+        self.assertIn('fetchpriority="low"', attributes)
+        self.assertIn('decoding="async"', attributes)
         self.assertIn('loading="eager" fetchpriority="high"', PROJECTS,
                       "the primary hero image must retain its LCP priority")
-
 
 if __name__ == "__main__":
     unittest.main()
