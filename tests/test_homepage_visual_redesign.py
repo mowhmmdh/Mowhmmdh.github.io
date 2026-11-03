@@ -4,6 +4,7 @@ These source-level tests protect the page contract and prevent a legacy styleshe
 from being injected after the redesign and silently winning the CSS cascade.
 """
 from pathlib import Path
+import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -172,6 +173,43 @@ class HomepageVisualRedesignTests(unittest.TestCase):
                 4.5,
                 f"accent text fails WCAG AA on {background}",
             )
+
+
+    def test_terminal_describes_work_domains_not_live_system_status(self):
+        match = re.search(
+            r'<div class="mh-terminal">.*?<pre><code>(.*?)</code></pre>',
+            HOME,
+            flags=re.DOTALL,
+        )
+        self.assertIsNotNone(match, "homepage terminal block must remain present")
+        terminal = match.group(1)
+        for unsupported in ("status --systems", "ONLINE", "MONITORED", "STABLE", "READY"):
+            with self.subTest(unsupported=unsupported):
+                self.assertNotIn(unsupported, terminal)
+        for supported in (
+            "focus --domains",
+            "NETWORK</span>    DESIGN",
+            "SECURITY</span>   HARDENING",
+            "SYSTEMS</span>    OPERATIONS",
+            "DELIVERY</span>   DOCUMENTATION",
+        ):
+            with self.subTest(supported=supported):
+                self.assertIn(supported, terminal)
+
+    def test_unverified_expertise_percentage_bars_are_removed(self):
+        self.assertNotIn('class="mh-mini-bar"', HOME)
+        self.assertNotRegex(HOME, r"--w:\s*\d+%")
+
+    def test_below_fold_profile_image_is_deferred_and_keeps_identity_metadata(self):
+        images = re.findall(r'<img\b[^>]*src="/images/profile\.webp"[^>]*>', HOME)
+        self.assertEqual(len(images), 1, "profile image must appear exactly once")
+        image = images[0]
+        self.assertIn('loading="lazy"', image)
+        self.assertNotIn("fetchpriority=", image)
+        self.assertIn('width="580"', image)
+        self.assertIn('height="725"', image)
+        self.assertIn("محمدحسین عسگری ثمرین", image)
+        self.assertIn("Mohammad Hossein Asgari Somarin", image)
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
