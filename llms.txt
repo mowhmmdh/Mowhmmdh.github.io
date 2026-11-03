@@ -22,7 +22,7 @@
 - LinkedIn notes: [LinkedIn notes](https://mowhmmdh.github.io/linkedin.html)
 
 ## Entity / naming priority
-The canonical Persian identity for the person is **محمدحسین عسگری ثمرین**. The shorter form "محمدحسین عسگری" is retained only as a legacy/search variant. "Mohammad Hossein Asgari Somarin" and "Mohammad Hossein Asgari Somarin" are the corresponding English variants.
+The canonical Persian identity for the person is **محمدحسین عسگری ثمرین**. The shorter form "محمدحسین عسگری" is retained only as a legacy/search variant. "Mohammad Hossein Asgari" is the shorter English display/search variant; "Mohammad Hossein Asgari Somarin" is the canonical English form.
 
 ## VinTech
 - Brand: VinTech
