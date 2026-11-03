@@ -41,6 +41,8 @@ class LlmsTxtMarkdownLinksTests(unittest.TestCase):
     def test_identity_and_sanitization_guidance_remain_present(self):
         self.assertIn("محمدحسین عسگری ثمرین", CONTENT)
         self.assertIn("Mohammad Hossein Asgari Somarin", CONTENT)
+        self.assertIn('"Mohammad Hossein Asgari" is the shorter English display/search variant', CONTENT)
+        self.assertIn('"Mohammad Hossein Asgari Somarin" is the canonical English form', CONTENT)
         self.assertIn("Public technical material is sanitized", CONTENT)
         self.assertIn("confidential information", CONTENT)
 
