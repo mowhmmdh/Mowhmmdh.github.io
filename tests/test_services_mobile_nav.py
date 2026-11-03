@@ -42,5 +42,34 @@ class MobileNavigationTests(unittest.TestCase):
                 self.assertRegex(html, r'<html[^>]*lang="fa"[^>]*dir="rtl"')
 
 
+    def test_large_secondary_project_photo_loads_only_on_user_request(self):
+        image_url = "https://raw.githubusercontent.com/mowhmmdh/Projects/main/20260430_204434.jpg"
+        self.assertEqual(PROJECTS.count(image_url), 1)
+
+        block = re.search(
+            r'<details class="mahex-secondary">(.*?)</details>',
+            PROJECTS,
+            re.DOTALL,
+        )
+        self.assertIsNotNone(block, "secondary photo must be inside a native disclosure")
+        content = block.group(1)
+        self.assertRegex(content, r"<summary>.*?نمایش تصویر تکمیلی پروژه.*?</summary>")
+        self.assertNotRegex(
+            PROJECTS,
+            r'<details class="mahex-secondary"[^>]*\\bopen\\b',
+            "the large image must not be expanded by default",
+        )
+
+        image = re.search(r"<img\\b([^>]*)>", content)
+        self.assertIsNotNone(image, "the original secondary photo must remain available")
+        attributes = image.group(1)
+        self.assertIn(f'src="{image_url}"', attributes)
+        self.assertRegex(attributes, r'\\bloading="lazy"')
+        self.assertRegex(attributes, r'\\bfetchpriority="low"')
+        self.assertRegex(attributes, r'\\bdecoding="async"')
+        self.assertIn('loading="eager" fetchpriority="high"', PROJECTS,
+                      "the primary hero image must retain its LCP priority")
+
+
 if __name__ == "__main__":
     unittest.main()
