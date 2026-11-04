@@ -45,6 +45,9 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn(guard, QUALITY_JS)
         self.assertLess(QUALITY_JS.index(guard), QUALITY_JS.index("link.href = '/assets/elite-home-2026.css'"))
         self.assertIn("link.dataset.eliteHomeVisual = 'true'", QUALITY_JS)
+        # The shared bundle's generic header rule must yield to the scoped homepage sticky rule.
+        self.assertIn(".mh-header{position:relative}", BUNDLE_CSS)
+        self.assertIn(".mh-home .mh-header{position:sticky;top:0;", HOME_CSS)
 
     def test_persian_homepage_seo_language_and_accessibility_contract_is_preserved(self):
         self.assertTrue(HOME.startswith('<!doctype html><html lang="fa" dir="rtl">'))
