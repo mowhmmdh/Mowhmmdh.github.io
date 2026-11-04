@@ -19,7 +19,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: cctv-article-static-enhancement-\${{ github.ref }}
+  group: cctv-article-static-enhancement-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
