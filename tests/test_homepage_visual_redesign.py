@@ -199,6 +199,13 @@ class HomepageVisualRedesignTests(unittest.TestCase):
             with self.subTest(supported=supported):
                 self.assertIn(supported, terminal)
 
+    def test_homepage_hero_illustration_has_a_named_graphic_role(self):
+        expected = (
+            '<div class="mh-hero-visual" role="img" '
+            'aria-label="نمایش گرافیکی حوزه‌های شبکه، امنیت، سیستم‌ها و عملیات">'
+        )
+        self.assertIn(expected, HOME)
+
     def test_unverified_expertise_percentage_bars_are_removed(self):
         self.assertNotIn('class="mh-mini-bar"', HOME)
         self.assertNotRegex(HOME, r"--w:\s*\d+%")
