@@ -1,0 +1,32 @@
+name: CCTV Article Static Enhancement Regression
+
+on:
+  pull_request:
+    paths:
+      - "blog/cctv-ip-camera-network-design.html"
+      - "tests/test_cctv_article_static_enhancements.py"
+      - ".github/workflows/cctv-article-static-enhancement.yml"
+      - "assets/site-bundle.css"
+  push:
+    branches: [main]
+    paths:
+      - "blog/cctv-ip-camera-network-design.html"
+      - "tests/test_cctv_article_static_enhancements.py"
+      - ".github/workflows/cctv-article-static-enhancement.yml"
+      - "assets/site-bundle.css"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cctv-article-static-enhancement-\${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run focused regression tests
+        run: python3 -m unittest discover -s tests -p "test_cctv_article_static_enhancements.py" -v
