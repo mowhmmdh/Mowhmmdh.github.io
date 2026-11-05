@@ -231,7 +231,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         aria_label = re.search(r'aria-label="([^"]+)"', match.group(1))
         self.assertIsNotNone(aria_label, "homepage brand link needs an accessible name")
         visible_text = re.sub(r"<[^>]+>", "", match.group(2))
-        visible_text = re.sub(r"\\s+", " ", visible_text).strip()
+        visible_text = re.sub(r"\s+", " ", visible_text).strip()
         for token in ("MH", "×", "VinTech"):
             with self.subTest(token=token):
                 self.assertIn(token, visible_text)
