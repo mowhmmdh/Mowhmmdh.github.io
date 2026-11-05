@@ -221,5 +221,21 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn("محمدحسین عسگری ثمرین", image)
         self.assertIn("Mohammad Hossein Asgari Somarin", image)
 
+    def test_homepage_brand_accessible_name_contains_its_visible_label(self):
+        match = re.search(
+            r'<a class="brand mh-brand"([^>]*)>(.*?)</a>',
+            HOME,
+            flags=re.DOTALL,
+        )
+        self.assertIsNotNone(match, "homepage brand link must remain present")
+        aria_label = re.search(r'aria-label="([^"]+)"', match.group(1))
+        self.assertIsNotNone(aria_label, "homepage brand link needs an accessible name")
+        visible_text = re.sub(r"<[^>]+>", "", match.group(2))
+        visible_text = re.sub(r"\\s+", " ", visible_text).strip()
+        for token in ("MH", "×", "VinTech"):
+            with self.subTest(token=token):
+                self.assertIn(token, visible_text)
+                self.assertIn(token, aria_label.group(1))
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
