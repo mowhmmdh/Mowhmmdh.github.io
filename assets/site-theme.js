@@ -1,6 +1,10 @@
 (()=>{'use strict';
 const root=document.documentElement;
 const KEY='mha-theme';
+const english=(root.lang||'').toLowerCase().startsWith('en');
+const themeLabels=english
+  ? {enableLight:'Enable light mode',enableDark:'Enable dark mode'}
+  : {enableLight:'فعال‌کردن حالت روشن',enableDark:'فعال‌کردن حالت تیره'};
 
 function theme(mode){
   const light=mode==='light';
@@ -12,7 +16,7 @@ function theme(mode){
   if(root.classList.contains('theme-light')!==light)root.classList.toggle('theme-light',light);
   document.querySelectorAll('.theme-toggle').forEach(b=>{
     b.textContent=light?'☀':'☾';
-    b.setAttribute('aria-label',light?'فعال‌کردن حالت تیره':'فعال‌کردن حالت روشن');
+    b.setAttribute('aria-label',light?themeLabels.enableDark:themeLabels.enableLight);
     b.setAttribute('aria-pressed',String(light));
   });
 }
@@ -54,8 +58,8 @@ function bind(){
 
 let saved=null;
 try{saved=localStorage.getItem(KEY)}catch(_){}
-// Default to the site's dark palette. Several technical articles have dark, page-specific
-// surfaces; auto-applying a light OS preference would mix dark backgrounds with light-theme text.
+ // Default to the site's dark palette. Several technical articles have dark, page-specific
+ // surfaces; auto-applying a light OS preference would mix dark backgrounds with light-theme text.
 theme(saved||'dark');
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
 document.addEventListener('click',e=>{
