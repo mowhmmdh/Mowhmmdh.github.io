@@ -1,0 +1,26 @@
+name: Theme Toggle Label Localization
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "assets/site-theme.js"
+      - "tests/test_theme_toggle_localization.py"
+      - ".github/workflows/theme-toggle-label-localization.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: theme-toggle-label-localization-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  theme-toggle-labels:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Run theme-toggle localization regression tests
+        run: python3 tests/test_theme_toggle_localization.py

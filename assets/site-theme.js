@@ -1,6 +1,10 @@
 (()=>{'use strict';
 const root=document.documentElement;
 const KEY='mha-theme';
+const english=(root.lang||'').toLowerCase().startsWith('en');
+const themeLabels=english
+  ? {light:'Light theme'}
+  : {light:'حالت روشن'};
 
 function theme(mode){
   const light=mode==='light';
@@ -12,7 +16,7 @@ function theme(mode){
   if(root.classList.contains('theme-light')!==light)root.classList.toggle('theme-light',light);
   document.querySelectorAll('.theme-toggle').forEach(b=>{
     b.textContent=light?'☀':'☾';
-    b.setAttribute('aria-label',light?'فعال‌کردن حالت تیره':'فعال‌کردن حالت روشن');
+    b.setAttribute('aria-label',themeLabels.light);
     b.setAttribute('aria-pressed',String(light));
   });
 }
