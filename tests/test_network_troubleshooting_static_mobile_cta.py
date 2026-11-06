@@ -18,14 +18,14 @@ class NetworkTroubleshootingStaticCtaTests(unittest.TestCase):
 
     def test_exactly_one_static_mobile_cta_uses_the_existing_request_route(self):
         anchors = re.findall(
-            r'<a\\b(?=[^>]*\\bclass=["\\'][^"\\']*\\bq-mobile-cta\\b[^"\\']*["\\'])([^>]*)>(.*?)</a>',
+            r"""<a\b(?=[^>]*\bclass=["'][^"']*\bq-mobile-cta\b[^"']*["'])([^>]*)>(.*?)</a>""",
             PAGE,
             flags=re.IGNORECASE | re.DOTALL,
         )
         self.assertEqual(len(anchors), 1)
         attrs, label = anchors[0]
-        self.assertRegex(attrs, r'\\bhref=["\\']/vintech/request\\.html["\\']')
-        self.assertRegex(attrs, r'\\bdata-conversion=["\\']mobile_service_request["\\']')
+        self.assertRegex(attrs, r"""\bhref=["']/vintech/request\.html["']""")
+        self.assertRegex(attrs, r"""\bdata-conversion=["']mobile_service_request["']""")
         self.assertTrue(re.sub(r"<[^>]+>", "", label).strip())
         self.assertTrue((ROOT / "vintech/request.html").is_file())
 
@@ -55,7 +55,7 @@ class NetworkTroubleshootingStaticCtaTests(unittest.TestCase):
         self.assertIn(".q-mobile-cta{display:flex", QUALITY_CSS)
 
     def test_persian_rtl_and_existing_seo_metadata_are_preserved(self):
-        self.assertTrue(PAGE.startswith('<!doctype html>\\n<html lang="fa" dir="rtl">'))
+        self.assertTrue(PAGE.startswith('<!doctype html>\n<html lang="fa" dir="rtl">'))
         self.assertIn(
             '<link rel="canonical" href="https://mowhmmdh.github.io/blog/network-troubleshooting-checklist.html">',
             PAGE,
