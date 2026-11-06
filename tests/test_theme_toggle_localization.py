@@ -1,4 +1,4 @@
-"""Regression tests for language-aware theme-toggle accessible names."""
+"""Regression tests for language-aware, stable theme-toggle accessible names."""
 from pathlib import Path
 import unittest
 
@@ -15,20 +15,27 @@ class ThemeToggleLocalizationTests(unittest.TestCase):
             THEME_SCRIPT,
         )
         self.assertIn(
-            "enableLight:'Enable light mode',enableDark:'Enable dark mode'",
+            "? {light:'Light theme'}",
             THEME_SCRIPT,
         )
         self.assertIn(
-            "enableLight:'فعال‌کردن حالت روشن',enableDark:'فعال‌کردن حالت تیره'",
+            ": {light:'حالت روشن'};",
             THEME_SCRIPT,
         )
 
-    def test_accessible_name_describes_the_action_not_the_current_theme(self):
+    def test_toggle_name_is_stable_while_pressed_state_tracks_light_mode(self):
         self.assertIn(
-            "b.setAttribute('aria-label',light?themeLabels.enableDark:themeLabels.enableLight);",
+            "b.setAttribute('aria-label',themeLabels.light);",
             THEME_SCRIPT,
         )
-        self.assertIn("b.setAttribute('aria-pressed',String(light));", THEME_SCRIPT)
+        self.assertIn(
+            "b.setAttribute('aria-pressed',String(light));",
+            THEME_SCRIPT,
+        )
+        self.assertNotIn("Enable light mode", THEME_SCRIPT)
+        self.assertNotIn("Enable dark mode", THEME_SCRIPT)
+        self.assertNotIn("فعال‌کردن حالت روشن", THEME_SCRIPT)
+        self.assertNotIn("فعال‌کردن حالت تیره", THEME_SCRIPT)
 
     def test_bilingual_homepages_declare_their_language(self):
         self.assertIn('<html lang="fa" dir="rtl">', PERSIAN_HOME)
