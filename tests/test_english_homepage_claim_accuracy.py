@@ -57,5 +57,15 @@ class EnglishHomepageClaimAccuracyTests(unittest.TestCase):
             with self.subTest(target=target):
                 self.assertTrue((ROOT / target).is_file())
 
+    def test_brand_link_accessible_name_contains_visible_label(self):
+        marker = '<a class="brand" href="/en.html"'
+        self.assertEqual(HTML.count(marker), 1)
+        link = HTML.split(marker, 1)[1].split("</a>", 1)[0]
+        self.assertIn('aria-label="MH × VinTech — Home"', link)
+        for visible_part in ('<span>MH</span>', '<em>×</em>', '<strong>VinTech</strong>'):
+            with self.subTest(visible_part=visible_part):
+                self.assertIn(visible_part, link)
+
+
 if __name__ == "__main__":
     unittest.main()
