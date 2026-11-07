@@ -1,0 +1,26 @@
+name: English site legal footer regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "en-*.html"
+      - "en-blog/**/*.html"
+      - "tests/test_english_site_legal_footer.py"
+      - ".github/workflows/english-site-legal-footer-regression.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: english-site-legal-footer-regression-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  english-site-legal-footer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run English site legal footer regression tests
+        run: python3 tests/test_english_site_legal_footer.py
