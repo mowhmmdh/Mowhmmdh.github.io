@@ -25,6 +25,8 @@ jobs:
         run: python3 -m py_compile scripts/quality-audit.py scripts/seo-deep-audit.py scripts/asset-reference-audit.py scripts/site-integrity-fix.py scripts/site-audit-fix-2026.py scripts/editorial-growth-2026.py scripts/monetization-growth-2026.py scripts/identity-sync-2026.py scripts/canonical-finalize.py scripts/pagespeed-optimize-2026.py scripts/release-smoke-test.py scripts/rss-feed-audit.py scripts/generate-sitemap.py tools/seo_sync.py tools/discovery_sync.py
       - name: Repository quality audit
         run: python3 scripts/quality-audit.py
+      - name: Run sitewide visual regression tests
+        run: python3 -m unittest discover -s tests -p 'test_sitewide_visual_polish.py' -v
       - name: SEO deep audit
         run: python3 scripts/seo-deep-audit.py
       - name: Asset reference audit
