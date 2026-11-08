@@ -37,6 +37,7 @@ async function inspect(page, spec) {
         height: Math.round(box.height)
       };
     };
+    const linkStyle = links ? getComputedStyle(links) : null;
     return {
       lang: document.documentElement.lang,
       dir: document.documentElement.dir,
@@ -49,7 +50,10 @@ async function inspect(page, spec) {
         expanded: menu.getAttribute('aria-expanded')
       } : null,
       links: links ? {
-        display: getComputedStyle(links).display,
+        display: linkStyle.display,
+        visibility: linkStyle.visibility,
+        opacity: Number(linkStyle.opacity),
+        maxHeight: parseFloat(linkStyle.maxHeight),
         rect: rect(links),
         hrefs: Array.from(links.querySelectorAll('a')).map(a => a.getAttribute('href'))
       } : null,
@@ -89,24 +93,34 @@ async function inspect(page, spec) {
         initial.menu.expanded !== 'false') {
       fail('mobile menu button is not available in its closed state');
     }
-    if (initial.links.display !== 'none') {
-      fail('mobile navigation links should start collapsed');
+    if (initial.links.visibility !== 'hidden' || initial.links.opacity > 0.05 ||
+        initial.links.maxHeight > 1) {
+      fail('mobile navigation links should start visually collapsed');
     }
 
     await page.locator('header .site-nav .mobile-menu').click();
     await page.waitForFunction(() => {
       const nav = document.querySelector('header .site-nav');
+      const links = nav?.querySelector('.nav-links');
+      const style = links ? getComputedStyle(links) : null;
       return nav?.classList.contains('menu-open') &&
-        nav.querySelector('.mobile-menu')?.getAttribute('aria-expanded') === 'true';
+        nav.querySelector('.mobile-menu')?.getAttribute('aria-expanded') === 'true' &&
+        style?.visibility === 'visible' &&
+        Number(style.opacity) >= 0.95 &&
+        parseFloat(style.maxHeight) > 1;
     }, { timeout: 5000 });
 
     const opened = await page.evaluate(() => {
       const nav = document.querySelector('header .site-nav');
       const links = nav?.querySelector('.nav-links');
+      const style = links ? getComputedStyle(links) : null;
       return {
         expanded: nav?.querySelector('.mobile-menu')?.getAttribute('aria-expanded'),
         open: nav?.classList.contains('menu-open'),
-        display: links ? getComputedStyle(links).display : 'missing',
+        display: style?.display || 'missing',
+        visibility: style?.visibility || 'missing',
+        opacity: style ? Number(style.opacity) : 0,
+        maxHeight: style ? parseFloat(style.maxHeight) : 0,
         linkRects: Array.from(links?.querySelectorAll('a') || []).map(a => {
           const box = a.getBoundingClientRect();
           return {
@@ -123,6 +137,7 @@ async function inspect(page, spec) {
     });
 
     if (!opened.open || opened.expanded !== 'true' || opened.display === 'none' ||
+        opened.visibility !== 'visible' || opened.opacity < 0.95 || opened.maxHeight < 1 ||
         opened.linkRects.length !== expectedHrefs.length ||
         opened.linkRects.some(r => r.width < 1 || r.height < 1 ||
           r.left < -1 || r.right > spec.width + 1 ||
@@ -144,7 +159,8 @@ async function inspect(page, spec) {
         nav?.querySelector('.mobile-menu')?.getAttribute('aria-expanded') === 'false';
     }, { timeout: 5000 });
   } else {
-    if (initial.menu.display !== 'none' || initial.links.display === 'none') {
+    if (initial.menu.display !== 'none' || initial.links.visibility !== 'visible' ||
+        initial.links.opacity < 0.95) {
       fail('desktop navigation visibility is incorrect');
     }
     await page.screenshot({
@@ -159,7 +175,7 @@ async function inspect(page, spec) {
     width: spec.width,
     documentWidth: initial.documentWidth,
     navBackdropWidth: initial.backdrop.width,
-    menuInteraction: spec.mobile ? 'open-and-Escape-close passed' : 'desktop links visible',
+    menuInteraction: spec.mobile ? 'open and Escape-close passed' : 'desktop links visible',
     navigationLinks: initial.links.hrefs.length
   };
 }
