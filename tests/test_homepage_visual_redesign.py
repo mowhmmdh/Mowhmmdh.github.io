@@ -246,7 +246,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
             HOME_CSS,
         )
         self.assertIn(
-            ".mh-home .mh-nav-links a{font-size:12px;flex:0 0 auto;min-width:auto;min-height:32px;white-space:nowrap;text-align:start;justify-content:flex-start;padding:5px 0}",
+            ".mh-home .mh-nav-links a{font-size:12px;width:auto;max-width:none;flex:0 0 auto;min-width:auto;min-height:32px;white-space:nowrap;text-align:start;justify-content:flex-start;padding:5px 0}",
             HOME_CSS,
         )
 
