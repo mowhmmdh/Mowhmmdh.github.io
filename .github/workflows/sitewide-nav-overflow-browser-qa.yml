@@ -1,17 +1,17 @@
-name: Shared Navigation Backdrop Browser QA
+name: Shared Navigation Backdrop and Mobile Menu Browser QA
 
 on:
   pull_request:
     branches: [main]
     paths:
       - "assets/site-bundle.css"
-      - "en-blog.html"
-      - "scripts/en-blog-mobile-nav-qa.cjs"
+      - "index.html"
+      - "scripts/shared-nav-backdrop-qa.cjs"
       - ".github/workflows/sitewide-nav-overflow-browser-qa.yml"
   workflow_dispatch:
     inputs:
       pull_request_number:
-        description: "Pull request number whose Netlify deploy preview should be audited"
+        description: "Pull request number whose homepage Netlify preview should be audited"
         required: false
         default: "45"
         type: string
@@ -50,15 +50,15 @@ jobs:
           done
           echo "Netlify preview did not return HTTP 200: $PREVIEW_URL"
           exit 1
-      - name: Run desktop and mobile navigation checks
+      - name: Run homepage shared-navigation checks
         run: |
           mkdir -p qa-artifacts
-          NODE_PATH="$(npm root -g)" node scripts/en-blog-mobile-nav-qa.cjs
+          NODE_PATH="$(npm root -g)" node scripts/shared-nav-backdrop-qa.cjs
       - name: Upload browser screenshots and report
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sitewide-navigation-overflow-browser-qa
+          name: shared-navigation-backdrop-browser-qa
           path: qa-artifacts/
           if-no-files-found: warn
           retention-days: 14
