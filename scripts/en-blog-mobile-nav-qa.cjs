@@ -139,7 +139,7 @@ async function main() {
         throw new Error(spec.name + ': brand or expected navigation links are missing: ' + JSON.stringify(snapshot));
       }
 
-      const normalizePath = value => value.replace(/\\.html(?=$|[?#])/, '');
+      const normalizePath = value => value.replace(/\.html(?=$|[?#])/, '');
       const actualHrefs = snapshot.links.map(link => normalizePath(link.href));
       for (const href of expectedHrefs.map(normalizePath)) {
         if (!actualHrefs.includes(href)) {
