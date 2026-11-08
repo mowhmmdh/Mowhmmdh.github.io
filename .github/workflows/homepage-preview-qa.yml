@@ -1,0 +1,66 @@
+name: Homepage Preview Browser and Lighthouse QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "index.html"
+      - "assets/home-visual-redesign-2026.css"
+      - "assets/site-final-quality-2026.js"
+      - "tests/test_homepage_visual_redesign.py"
+      - "scripts/homepage-preview-browser-qa.cjs"
+      - ".github/workflows/homepage-preview-qa.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: homepage-preview-qa-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  homepage-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PREVIEW_URL: https://deploy-preview-27--mowhmmdh.netlify.app/
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for Netlify deploy preview
+        run: |
+          for i in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify preview did not return HTTP 200: $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile browser checks
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/homepage-preview-browser-qa.cjs
+      - name: Run mobile Lighthouse
+        run: |
+          lighthouse "$PREVIEW_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          node -e 'const fs=require("fs");const r=JSON.parse(fs.readFileSync("qa-artifacts/lighthouse-mobile.json","utf8"));const keys=["performance","accessibility","best-practices","seo"];const scores={};for(const k of keys)scores[k]=Math.round((r.categories[k]?.score??0)*100);console.log(JSON.stringify({formFactor:"mobile",scores,metrics:{fcp:r.audits["first-contentful-paint"]?.displayValue,lcp:r.audits["largest-contentful-paint"]?.displayValue,tbt:r.audits["total-blocking-time"]?.displayValue,cls:r.audits["cumulative-layout-shift"]?.displayValue}},null,2));'
+      - name: Run desktop Lighthouse
+        run: |
+          lighthouse "$PREVIEW_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          node -e 'const fs=require("fs");const r=JSON.parse(fs.readFileSync("qa-artifacts/lighthouse-desktop.json","utf8"));const keys=["performance","accessibility","best-practices","seo"];const scores={};for(const k of keys)scores[k]=Math.round((r.categories[k]?.score??0)*100);console.log(JSON.stringify({formFactor:"desktop",scores,metrics:{fcp:r.audits["first-contentful-paint"]?.displayValue,lcp:r.audits["largest-contentful-paint"]?.displayValue,tbt:r.audits["total-blocking-time"]?.displayValue,cls:r.audits["cumulative-layout-shift"]?.displayValue}},null,2));'
+      - name: Upload screenshots and Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: homepage-preview-browser-lighthouse
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
