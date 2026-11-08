@@ -132,6 +132,9 @@ async function main() {
           snapshot.navLinksStyle.transform !== 'none') {
         throw new Error(spec.name + ': navigation links are present in DOM but visually unavailable: ' + JSON.stringify(snapshot));
       }
+      if (spec.name === 'mobile' && snapshot.navLinksRect.height > 120) {
+        throw new Error('mobile: navigation row is too tall for the compact layout: ' + JSON.stringify(snapshot.navLinksRect));
+      }
       if (!snapshot.brandLabel.includes('MH') || !snapshot.brandLabel.includes('VinTech')) {
         throw new Error(spec.name + ': accessible brand label is incomplete.');
       }
