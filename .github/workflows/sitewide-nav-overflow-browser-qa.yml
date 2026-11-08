@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - "assets/site-bundle.css"
+      - "assets/site-final-quality-2026.css"
+      - "assets/site-theme.js"
       - "index.html"
       - "scripts/shared-nav-backdrop-qa.cjs"
       - ".github/workflows/sitewide-nav-overflow-browser-qa.yml"
