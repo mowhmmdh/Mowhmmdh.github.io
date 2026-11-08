@@ -54,12 +54,37 @@ async function main() {
           document.documentElement.scrollWidth,
           document.body.scrollWidth
         );
+        const overflowCandidates = Array.from(document.querySelectorAll('body *'))
+          .map(element => {
+            const box = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return {
+              tag: element.tagName.toLowerCase(),
+              id: element.id || '',
+              className: typeof element.className === 'string' ? element.className : '',
+              left: Math.round(box.left),
+              right: Math.round(box.right),
+              width: Math.round(box.width),
+              scrollWidth: element.scrollWidth,
+              position: style.position,
+              overflowX: style.overflowX,
+              whiteSpace: style.whiteSpace,
+              cssWidth: style.width,
+              minWidth: style.minWidth,
+              maxWidth: style.maxWidth,
+              transform: style.transform
+            };
+          })
+          .filter(item => item.width > 0 && (item.right > window.innerWidth + 1 || item.left < -1))
+          .sort((a, b) => Math.max(b.right - window.innerWidth, -b.left) - Math.max(a.right - window.innerWidth, -a.left))
+          .slice(0, 20);
         return {
           lang: document.documentElement.lang,
           dir: document.documentElement.dir,
           viewportWidth: window.innerWidth,
           scrollWidth,
           horizontalOverflow: scrollWidth > window.innerWidth + 1,
+          overflowCandidates,
           headerPosition: header ? getComputedStyle(header).position : null,
           heroVisible: !!rect('.mh-hero'),
           heroVisualVisible: !!rect('.mh-hero-visual'),
