@@ -97,6 +97,13 @@ async function main() {
         };
       });
 
+      await page.screenshot({
+        path: 'qa-artifacts/en-blog-' + spec.name + '.png',
+        fullPage: true,
+        animations: 'disabled'
+      });
+      process.stdout.write(JSON.stringify({ targetUrl, viewport: spec.name, snapshot }, null, 2) + '\\n');
+
       if (snapshot.lang !== 'en' || snapshot.dir !== 'ltr') {
         throw new Error(spec.name + ': expected an English LTR document: ' + JSON.stringify(snapshot));
       }
@@ -111,7 +118,7 @@ async function main() {
       const actualHrefs = snapshot.links.map(link => link.href);
       for (const href of expectedHrefs) {
         if (!actualHrefs.includes(href)) {
-          throw new Error(spec.name + ': missing navigation destination ' + href);
+          throw new Error(spec.name + ': missing navigation destination ' + href + '; actual=' + JSON.stringify(actualHrefs) + '; page=' + targetUrl);
         }
       }
       for (const link of snapshot.links) {
@@ -128,11 +135,6 @@ async function main() {
         throw new Error(spec.name + ': uncaught browser errors: ' + pageErrors.join(' | '));
       }
 
-      await page.screenshot({
-        path: 'qa-artifacts/en-blog-' + spec.name + '.png',
-        fullPage: true,
-        animations: 'disabled'
-      });
       results.push({ viewport: spec.name, ...snapshot, pageErrors });
       await page.close();
     }
