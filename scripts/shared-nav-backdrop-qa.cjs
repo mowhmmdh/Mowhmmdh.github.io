@@ -58,7 +58,7 @@ async function inspect(page, spec) {
         hrefs: Array.from(links.querySelectorAll('a')).map(a => a.getAttribute('href'))
       } : null,
       backdrop: backdrop ? (() => {
-        const matrix = backdrop.transform.match(/^matrix\\(([^)]+)\\)$/);
+        const matrix = backdrop.transform.match(/^matrix\(([^)]+)\)$/);
         const translateX = matrix ? Number(matrix[1].split(',')[4]) : NaN;
         const left = parseFloat(backdrop.left);
         const width = parseFloat(backdrop.width);
@@ -93,7 +93,7 @@ async function inspect(page, spec) {
       initial.backdrop.transform === 'none') {
     fail('shared navigation backdrop is not centered at exactly one viewport width');
   }
-  const normalizePath = href => href.replace(/\\.html(?=$|[?#])/, '');
+  const normalizePath = href => href.replace(/\.html(?=$|[?#])/, '');
   const actualHrefs = initial.links.hrefs.map(normalizePath);
   const normalizedExpectedHrefs = expectedHrefs.map(normalizePath);
   if (actualHrefs.length !== normalizedExpectedHrefs.length ||
