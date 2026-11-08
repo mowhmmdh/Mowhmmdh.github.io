@@ -116,7 +116,7 @@ async function main() {
       for (const link of snapshot.links) {
         if (link.display === 'none' || link.visibility === 'hidden' ||
             Number(link.opacity) === 0 || link.width < 1 || link.height < 1 ||
-            link.left < -1 || link.right > window.innerWidth + 1) {
+            link.left < -1 || link.right > spec.width + 1) {
           throw new Error(spec.name + ': a primary navigation link is not visibly reachable: ' + JSON.stringify(link));
         }
       }
