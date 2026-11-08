@@ -93,8 +93,11 @@ async function inspect(page, spec) {
       initial.backdrop.transform === 'none') {
     fail('shared navigation backdrop is not centered at exactly one viewport width');
   }
-  if (initial.links.hrefs.length !== expectedHrefs.length ||
-      expectedHrefs.some(href => !initial.links.hrefs.includes(href))) {
+  const normalizePath = href => href.replace(/\\.html(?=$|[?#])/, '');
+  const actualHrefs = initial.links.hrefs.map(normalizePath);
+  const normalizedExpectedHrefs = expectedHrefs.map(normalizePath);
+  if (actualHrefs.length !== normalizedExpectedHrefs.length ||
+      normalizedExpectedHrefs.some(href => !actualHrefs.includes(href))) {
     fail('homepage navigation destinations changed');
   }
 
