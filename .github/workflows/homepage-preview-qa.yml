@@ -57,7 +57,8 @@ jobs:
           lighthouse "$PREVIEW_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
           node -e 'const fs=require("fs");const r=JSON.parse(fs.readFileSync("qa-artifacts/lighthouse-desktop.json","utf8"));const keys=["performance","accessibility","best-practices","seo"];const scores={};for(const k of keys)scores[k]=Math.round((r.categories[k]?.score??0)*100);console.log(JSON.stringify({formFactor:"desktop",scores,metrics:{fcp:r.audits["first-contentful-paint"]?.displayValue,lcp:r.audits["largest-contentful-paint"]?.displayValue,tbt:r.audits["total-blocking-time"]?.displayValue,cls:r.audits["cumulative-layout-shift"]?.displayValue}},null,2));'
       - name: Explain preview-only SEO score
-        run: echo "Netlify deploy previews send x-robots-tag: noindex; the Lighthouse SEO score here is not production indexability evidence."
+        run: |
+          echo "Netlify deploy previews send x-robots-tag: noindex; the Lighthouse SEO score here is not production indexability evidence."
       - name: Upload screenshots and Lighthouse reports
         if: always()
         uses: actions/upload-artifact@v4
