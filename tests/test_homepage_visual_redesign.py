@@ -239,6 +239,13 @@ class HomepageVisualRedesignTests(unittest.TestCase):
 
 
 
+
+    def test_mobile_homepage_navigation_overrides_shared_collapsed_link_state(self):
+        self.assertIn(
+            ".mh-home .mh-nav-links{order:3;width:100%;justify-content:flex-start;gap:8px 17px;max-height:none;overflow:visible;opacity:1;pointer-events:auto}",
+            HOME_CSS,
+        )
+
     def test_homepage_nav_backdrop_cannot_expand_document_width(self):
         # The shared .site-nav::before rule uses -100vw side insets. The homepage
         # overrides those insets to the exact viewport bleed instead of 100vw.
