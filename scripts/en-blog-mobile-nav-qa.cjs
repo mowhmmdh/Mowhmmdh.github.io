@@ -2,7 +2,8 @@
 
 const { chromium } = require('playwright');
 
-const previewUrl = process.env.PREVIEW_URL || 'https://deploy-preview-25--mowhmmdh.netlify.app/';
+const previewBase = process.env.PREVIEW_URL || 'https://deploy-preview-25--mowhmmdh.netlify.app/';
+const targetUrl = new URL('/en-blog.html', previewBase).toString();
 const viewports = [
   { name: 'desktop', width: 1280, height: 900 },
   { name: 'mobile', width: 390, height: 844 },
@@ -30,7 +31,7 @@ async function main() {
       const pageErrors = [];
       page.on('pageerror', error => pageErrors.push(error.message));
 
-      const response = await page.goto(previewUrl, {
+      const response = await page.goto(targetUrl, {
         waitUntil: 'networkidle',
         timeout: 60000
       });
@@ -136,7 +137,7 @@ async function main() {
       await page.close();
     }
 
-    process.stdout.write(JSON.stringify({ previewUrl, results }, null, 2) + '\n');
+    process.stdout.write(JSON.stringify({ previewUrl: targetUrl, results }, null, 2) + '\n');
   } finally {
     await browser.close();
   }
