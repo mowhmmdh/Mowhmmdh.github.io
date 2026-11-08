@@ -13,6 +13,8 @@
 .mh-home .site-wrap{width:min(1160px,calc(100% - 44px));margin-inline:auto}
 .mh-home .mh-header{position:sticky;top:0;z-index:30;padding-top:12px;padding-bottom:8px;background:linear-gradient(180deg,rgba(7,11,18,.96),rgba(7,11,18,.82));backdrop-filter:blur(18px);border-bottom:1px solid rgba(148,163,184,.09)}
 .mh-home .mh-nav{min-height:62px;display:flex;align-items:center;justify-content:space-between;gap:22px;padding:10px 16px;border:1px solid var(--mh-line);border-radius:18px;background:rgba(13,20,32,.86);box-shadow:0 10px 35px rgba(0,0,0,.18)}
+/* Keep the shared full-bleed nav backdrop inside the viewport. */
+.mh-home .mh-nav:before{inset-inline:calc((100vw - 100%)/-2)}
 .mh-home .mh-brand{display:flex;align-items:center;gap:8px;white-space:nowrap;text-decoration:none}
 .mh-home .mh-brand>span{display:grid;place-items:center;width:37px;height:37px;border-radius:12px;background:linear-gradient(135deg,var(--mh-cyan),#4e8aff);color:#07111c;font-weight:900;letter-spacing:-1px}
 .mh-home .mh-brand em{color:var(--mh-cyan);font-style:normal}.mh-home .mh-brand strong{font-size:15px;letter-spacing:.04em;color:var(--mh-text)}
