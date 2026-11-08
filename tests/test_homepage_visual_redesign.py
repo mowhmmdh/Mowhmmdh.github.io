@@ -265,5 +265,22 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertNotIn("personal-site", body.group(0))
         self.assertNotIn('/assets/interaction-2026.js', HOME)
 
+
+class HomepagePreviewWorkflowTests(unittest.TestCase):
+    def test_preview_qa_targets_the_triggering_pull_request(self):
+        workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
+        self.assertIn("pull_request_number:", workflow)
+        self.assertIn('default: "27"', workflow)
+        self.assertIn(
+            "github.event.pull_request.number || inputs.pull_request_number || '27'",
+            workflow,
+        )
+        self.assertNotIn(
+            "PREVIEW_URL: https://deploy-preview-27--mowhmmdh.netlify.app/",
+            workflow,
+            "PR-triggered runs must not silently audit the stale #27 preview",
+        )
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
