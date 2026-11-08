@@ -107,6 +107,10 @@ class SitewideVisualPolishTests(unittest.TestCase):
         self.assertIn("new URL('/', previewBase)", script)
         self.assertIn("getComputedStyle(nav, '::before')", script)
         self.assertIn("document.documentElement.scrollWidth", script)
+        self.assertIn("viewportLeft", script)
+        self.assertIn("viewportRight", script)
+        self.assertIn("translateX", script)
+        self.assertIn("normalizePath", script)
 
     def test_browser_qa_exercises_mobile_menu_at_multiple_widths(self):
         script = (ROOT / "scripts" / "shared-nav-backdrop-qa.cjs").read_text(encoding="utf-8")
