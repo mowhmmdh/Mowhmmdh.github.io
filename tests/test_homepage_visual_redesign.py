@@ -239,7 +239,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
 
 
     def test_homepage_does_not_load_personal_site_only_interaction_bundle(self):
-        body = re.search(r"<body\\b[^>]*>", HOME)
+        body = re.search(r"<body\b[^>]*>", HOME)
         self.assertIsNotNone(body, "homepage body must remain present")
         self.assertIn('class="mh-home"', body.group(0))
         self.assertNotIn("personal-site", body.group(0))
