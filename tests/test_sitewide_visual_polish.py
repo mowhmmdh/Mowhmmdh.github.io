@@ -49,7 +49,6 @@ class SitewideVisualPolishTests(unittest.TestCase):
         for background in ("#ffffff", "#edf2f7", "#f6f8fb", "#edf3f9"):
             self.assertGreaterEqual(contrast(foreground, background), 4.5)
 
-
     def test_legacy_light_theme_overrides_cover_low_contrast_components(self):
         services = (ROOT / "services.html").read_text(encoding="utf-8")
         projects = (ROOT / "projects.html").read_text(encoding="utf-8")
@@ -100,6 +99,9 @@ class SitewideVisualPolishTests(unittest.TestCase):
         script = (ROOT / "scripts" / "shared-nav-backdrop-qa.cjs").read_text(encoding="utf-8")
 
         self.assertIn('"index.html"', workflow)
+        self.assertIn('"assets/site-bundle.css"', workflow)
+        self.assertIn('"assets/site-final-quality-2026.css"', workflow)
+        self.assertIn('"assets/site-theme.js"', workflow)
         self.assertIn('"scripts/shared-nav-backdrop-qa.cjs"', workflow)
         self.assertNotIn('"en-blog.html"', workflow)
         self.assertIn("new URL('/', previewBase)", script)
