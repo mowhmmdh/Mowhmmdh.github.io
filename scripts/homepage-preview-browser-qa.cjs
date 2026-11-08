@@ -98,7 +98,9 @@ async function main() {
             visibility: navLinksStyle.visibility,
             opacity: navLinksStyle.opacity,
             maxHeight: navLinksStyle.maxHeight,
-            pointerEvents: navLinksStyle.pointerEvents
+            pointerEvents: navLinksStyle.pointerEvents,
+            position: navLinksStyle.position,
+            transform: navLinksStyle.transform
           } : null,
           brandLabel: brand ? (brand.getAttribute('aria-label') || brand.textContent).trim() : '',
           headerRect: rect('.mh-header'),
@@ -125,7 +127,9 @@ async function main() {
       if (!snapshot.navLinksRect || snapshot.navLinksRect.height < 1 ||
           snapshot.navLinksStyle.opacity === '0' ||
           snapshot.navLinksStyle.visibility === 'hidden' ||
-          snapshot.navLinksStyle.pointerEvents === 'none') {
+          snapshot.navLinksStyle.pointerEvents === 'none' ||
+          snapshot.navLinksStyle.position !== 'static' ||
+          snapshot.navLinksStyle.transform !== 'none') {
         throw new Error(spec.name + ': navigation links are present in DOM but visually unavailable: ' + JSON.stringify(snapshot));
       }
       if (!snapshot.brandLabel.includes('MH') || !snapshot.brandLabel.includes('VinTech')) {
