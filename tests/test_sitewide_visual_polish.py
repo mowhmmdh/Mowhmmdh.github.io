@@ -100,8 +100,10 @@ class SitewideVisualPolishTests(unittest.TestCase):
 
         self.assertIn('"index.html"', workflow)
         self.assertIn('"assets/site-bundle.css"', workflow)
+        self.assertIn('"assets/home-finish-2026.css"', workflow)
         self.assertIn('"assets/site-final-quality-2026.css"', workflow)
         self.assertIn('"assets/site-theme.js"', workflow)
+        self.assertIn('"assets/site-final-quality-2026.js"', workflow)
         self.assertIn('"scripts/shared-nav-backdrop-qa.cjs"', workflow)
         self.assertNotIn('"en-blog.html"', workflow)
         self.assertIn("new URL('/', previewBase)", script)
