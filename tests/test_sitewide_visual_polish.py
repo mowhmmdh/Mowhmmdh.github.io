@@ -94,6 +94,27 @@ class SitewideVisualPolishTests(unittest.TestCase):
         self.assertRegex(rule, r"\btransform\s*:\s*translateX\(-50%\)")
         self.assertNotRegex(rule, r"\binset\s*:\s*0\s+-100vw")
 
+    def test_browser_qa_targets_the_shared_homepage_navigation(self):
+        workflow = (ROOT / ".github" / "workflows" /
+                    "sitewide-nav-overflow-browser-qa.yml").read_text(encoding="utf-8")
+        script = (ROOT / "scripts" / "shared-nav-backdrop-qa.cjs").read_text(encoding="utf-8")
+
+        self.assertIn('"index.html"', workflow)
+        self.assertIn('"scripts/shared-nav-backdrop-qa.cjs"', workflow)
+        self.assertNotIn('"en-blog.html"', workflow)
+        self.assertIn("new URL('/', previewBase)", script)
+        self.assertIn("getComputedStyle(nav, '::before')", script)
+        self.assertIn("document.documentElement.scrollWidth", script)
+
+    def test_browser_qa_exercises_mobile_menu_at_multiple_widths(self):
+        script = (ROOT / "scripts" / "shared-nav-backdrop-qa.cjs").read_text(encoding="utf-8")
+        for width in ("1440", "390", "320"):
+            with self.subTest(width=width):
+                self.assertIn("width: " + width, script)
+        self.assertIn("page.locator('header .site-nav .mobile-menu').click()", script)
+        self.assertIn("page.keyboard.press('Escape')", script)
+        self.assertIn("aria-expanded", script)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
