@@ -89,7 +89,10 @@ async function inspect(page, spec) {
   if (!initial.backdrop || initial.backdrop.content === 'none' ||
       initial.backdrop.position !== 'absolute' ||
       Math.abs(initial.backdrop.width - spec.width) > 1 ||
-      !/^50(?:\.0+)?%$/.test(initial.backdrop.left) ||
+      Math.abs(initial.backdrop.left - initial.nav.width / 2) > 2 ||
+      Math.abs(initial.backdrop.translateX + spec.width / 2) > 1 ||
+      initial.backdrop.viewportLeft < -1 ||
+      initial.backdrop.viewportRight > spec.width + 1 ||
       initial.backdrop.transform === 'none') {
     fail('shared navigation backdrop is not centered at exactly one viewport width');
   }
