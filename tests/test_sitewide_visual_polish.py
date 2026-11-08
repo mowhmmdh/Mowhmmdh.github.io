@@ -82,6 +82,17 @@ class SitewideVisualPolishTests(unittest.TestCase):
             self.assertIn(expected, html)
             self.assertIn("/assets/site-bundle.css", html)
 
+    def test_shared_navigation_backdrop_stays_within_the_viewport(self):
+        selector = ".site-nav:before,.nav:before,.about-nav:before,.vt-nav:before"
+        match = re.search(re.escape(selector) + r"\\{([^}]*)\\}", CSS)
+        self.assertIsNotNone(match, "Expected the shared navigation backdrop rule.")
+        rule = match.group(1)
+        self.assertRegex(rule, r"\\binset-block\\s*:\\s*0\\b")
+        self.assertRegex(rule, r"\\bleft\\s*:\\s*50%")
+        self.assertRegex(rule, r"\\bwidth\\s*:\\s*100vw")
+        self.assertRegex(rule, r"\\btransform\\s*:\\s*translateX\\(-50%\\)")
+        self.assertNotRegex(rule, r"\\binset\\s*:\\s*0\\s+-100vw")
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
