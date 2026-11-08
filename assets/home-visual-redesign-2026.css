@@ -100,7 +100,7 @@
 @media(max-width:600px){
  .mh-home .site-wrap,.mh-home .q-conversion{width:calc(100% - 28px)}
  .mh-home .mh-header{padding-top:7px}.mh-home .mh-nav{padding:9px 10px;gap:10px;border-radius:15px}.mh-home .mh-brand>span{width:33px;height:33px}.mh-home .mh-brand strong{font-size:13px}
- .mh-home .mh-nav-links{gap:4px 13px}.mh-home .mh-nav-links a{font-size:12px;flex:0 0 auto;min-width:auto;min-height:32px;white-space:nowrap;text-align:start;justify-content:flex-start;padding:5px 0}
+ .mh-home .mh-nav-links{gap:4px 13px}.mh-home .mh-nav-links a{font-size:12px;width:auto;max-width:none;flex:0 0 auto;min-width:auto;min-height:32px;white-space:nowrap;text-align:start;justify-content:flex-start;padding:5px 0}
  .mh-home .mh-hero{padding-top:44px}.mh-home .mh-hero h1{font-size:clamp(31px,9vw,43px);line-height:1.38;margin-top:18px}.mh-home .mh-hero h1 span{font-size:15px}
  .mh-home .mh-lead{font-size:14px;line-height:2.05}.mh-home .mh-actions{gap:8px}.mh-home .mh-btn{font-size:11px;padding:11px 12px;min-height:44px}
  .mh-home .mh-hero-visual{min-height:390px;border-radius:21px}.mh-home .mh-orbit{width:270px;top:24px}.mh-home .mh-core{width:90px;height:90px;border-radius:24px}.mh-home .mh-core b{font-size:29px}
