@@ -57,13 +57,23 @@ async function inspect(page, spec) {
         rect: rect(links),
         hrefs: Array.from(links.querySelectorAll('a')).map(a => a.getAttribute('href'))
       } : null,
-      backdrop: backdrop ? {
-        content: backdrop.content,
-        position: backdrop.position,
-        width: parseFloat(backdrop.width),
-        left: backdrop.left,
-        transform: backdrop.transform
-      } : null
+      backdrop: backdrop ? (() => {
+        const matrix = backdrop.transform.match(/^matrix\\(([^)]+)\\)$/);
+        const translateX = matrix ? Number(matrix[1].split(',')[4]) : NaN;
+        const left = parseFloat(backdrop.left);
+        const width = parseFloat(backdrop.width);
+        const navLeft = nav.getBoundingClientRect().left;
+        return {
+          content: backdrop.content,
+          position: backdrop.position,
+          width,
+          left,
+          translateX,
+          viewportLeft: navLeft + left + translateX,
+          viewportRight: navLeft + left + translateX + width,
+          transform: backdrop.transform
+        };
+      })() : null
     };
   });
 
