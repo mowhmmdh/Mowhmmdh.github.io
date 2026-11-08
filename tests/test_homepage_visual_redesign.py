@@ -245,6 +245,10 @@ class HomepageVisualRedesignTests(unittest.TestCase):
             ".mh-home .mh-nav-links{order:3;width:100%;justify-content:flex-start;gap:8px 17px;position:static;inset:auto;top:auto;display:flex;flex-wrap:wrap;max-height:none;overflow:visible;opacity:1;visibility:visible;pointer-events:auto;background:transparent;border:0;border-radius:0;box-shadow:none;transform:none;z-index:auto}",
             HOME_CSS,
         )
+        self.assertIn(
+            ".mh-home .mh-nav-links a{font-size:12px;flex:0 0 auto;min-width:auto;min-height:32px;white-space:nowrap;text-align:start;justify-content:flex-start;padding:5px 0}",
+            HOME_CSS,
+        )
 
     def test_homepage_nav_backdrop_cannot_expand_document_width(self):
         # The shared .site-nav::before rule uses -100vw side insets. The homepage
