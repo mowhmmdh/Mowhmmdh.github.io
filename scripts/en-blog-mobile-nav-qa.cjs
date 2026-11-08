@@ -81,12 +81,36 @@ async function main() {
           document.documentElement.scrollWidth,
           document.body.scrollWidth
         );
+        const overflowCandidates = Array.from(document.querySelectorAll('body *'))
+          .map(element => {
+            const box = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return {
+              tag: element.tagName.toLowerCase(),
+              id: element.id || '',
+              className: typeof element.className === 'string' ? element.className : '',
+              left: Math.round(box.left),
+              right: Math.round(box.right),
+              width: Math.round(box.width),
+              scrollWidth: element.scrollWidth,
+              position: style.position,
+              overflowX: style.overflowX,
+              cssWidth: style.width,
+              minWidth: style.minWidth,
+              maxWidth: style.maxWidth,
+              transform: style.transform
+            };
+          })
+          .filter(item => item.width > 0 && (item.right > window.innerWidth + 1 || item.left < -1))
+          .sort((a, b) => Math.max(b.right - window.innerWidth, -b.left) - Math.max(a.right - window.innerWidth, -a.left))
+          .slice(0, 20);
         return {
           lang: document.documentElement.lang,
           dir: document.documentElement.dir,
           viewportWidth: window.innerWidth,
           documentWidth,
           horizontalOverflow: documentWidth > window.innerWidth + 1,
+          overflowCandidates,
           header: rect(header),
           headerDisplay: headerStyle ? headerStyle.display : null,
           nav: rect(nav),
@@ -115,11 +139,20 @@ async function main() {
         throw new Error(spec.name + ': brand or expected navigation links are missing: ' + JSON.stringify(snapshot));
       }
 
-      const actualHrefs = snapshot.links.map(link => link.href);
-      for (const href of expectedHrefs) {
+      const normalizePath = value => value.replace(/\\.html(?=$|[?#])/, '');
+      const actualHrefs = snapshot.links.map(link => normalizePath(link.href));
+      for (const href of expectedHrefs.map(normalizePath)) {
         if (!actualHrefs.includes(href)) {
           throw new Error(spec.name + ': missing navigation destination ' + href + '; actual=' + JSON.stringify(actualHrefs) + '; page=' + targetUrl);
         }
+      }
+      const destinationChecks = await Promise.all(snapshot.links.map(async link => {
+        const response = await page.request.get(new URL(link.href, targetUrl).toString(), { timeout: 30000 });
+        return { href: link.href, status: response.status(), finalUrl: response.url() };
+      }));
+      const brokenDestinations = destinationChecks.filter(item => item.status < 200 || item.status >= 400);
+      if (brokenDestinations.length) {
+        throw new Error(spec.name + ': navigation destinations did not resolve: ' + JSON.stringify(brokenDestinations));
       }
       for (const link of snapshot.links) {
         if (link.display === 'none' || link.visibility === 'hidden' ||
@@ -129,13 +162,13 @@ async function main() {
         }
       }
       if (snapshot.horizontalOverflow) {
-        throw new Error(spec.name + ': horizontal page overflow detected: ' + JSON.stringify(snapshot));
+        throw new Error(spec.name + ': horizontal page overflow detected: ' + JSON.stringify(snapshot.overflowCandidates));
       }
       if (pageErrors.length) {
         throw new Error(spec.name + ': uncaught browser errors: ' + pageErrors.join(' | '));
       }
 
-      results.push({ viewport: spec.name, ...snapshot, pageErrors });
+      results.push({ viewport: spec.name, ...snapshot, destinationChecks, pageErrors });
       await page.close();
     }
 
