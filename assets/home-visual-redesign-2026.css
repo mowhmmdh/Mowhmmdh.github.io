@@ -92,7 +92,7 @@
 @media(prefers-reduced-motion:reduce){.mh-home *, .mh-home *::before, .mh-home *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 @media(min-width:1400px){.mh-home .mh-hero{padding-top:110px}.mh-home .mh-hero-visual{min-height:490px}}
 @media(max-width:900px){
- .mh-home .mh-nav{flex-wrap:wrap}.mh-home .mh-nav-links{order:3;width:100%;justify-content:flex-start;gap:8px 17px;max-height:none;overflow:visible;opacity:1;pointer-events:auto}
+ .mh-home .mh-nav{flex-wrap:wrap}.mh-home .mh-nav-links{order:3;width:100%;justify-content:flex-start;gap:8px 17px;position:static;inset:auto;top:auto;display:flex;flex-wrap:wrap;max-height:none;overflow:visible;opacity:1;visibility:visible;pointer-events:auto;background:transparent;border:0;border-radius:0;box-shadow:none;transform:none;z-index:auto}
  .mh-home .mh-hero-grid{grid-template-columns:1fr;gap:32px}.mh-home .mh-hero-copy{max-width:760px}.mh-home .mh-hero-visual{min-height:430px;max-width:650px;width:100%;margin-inline:auto}
  .mh-home .mh-expertise-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mh-home .mh-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
  .mh-home .mh-proofbar{grid-template-columns:repeat(2,minmax(0,1fr))}
