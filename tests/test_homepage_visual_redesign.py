@@ -238,6 +238,15 @@ class HomepageVisualRedesignTests(unittest.TestCase):
                 self.assertIn(token, aria_label.group(1))
 
 
+
+    def test_homepage_nav_backdrop_cannot_expand_document_width(self):
+        # The shared .site-nav::before rule uses -100vw side insets. The homepage
+        # overrides those insets to the exact viewport bleed instead of 100vw.
+        self.assertIn(
+            ".mh-home .mh-nav:before{inset-inline:calc((100vw - 100%)/-2)}",
+            HOME_CSS,
+        )
+
     def test_homepage_does_not_load_personal_site_only_interaction_bundle(self):
         body = re.search(r"<body\b[^>]*>", HOME)
         self.assertIsNotNone(body, "homepage body must remain present")
