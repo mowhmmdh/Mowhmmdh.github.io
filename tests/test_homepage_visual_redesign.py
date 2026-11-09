@@ -270,14 +270,21 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
 
     def test_preview_qa_triggers_for_every_local_homepage_asset(self):
         workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
-        path_section = re.search(r"(?ms)^    paths:\\s*\\n(?P<paths>(?:^      - .*\\n)+)", workflow)
-        self.assertIsNotNone(path_section, "homepage preview workflow must declare PR path filters")
-        configured_paths = set(
-            re.findall(r"(?m)^\\s*-\\s*[\"']?([^\"'\\s]+)", path_section.group("paths"))
-        )
+        lines = workflow.splitlines()
+        try:
+            paths_index = lines.index("    paths:")
+        except ValueError:
+            self.fail("homepage preview workflow must declare PR path filters")
+
+        configured_paths = set()
+        for line in lines[paths_index + 1:]:
+            if not line.startswith("      - "):
+                break
+            configured_paths.add(line[8:].strip().strip('"').strip("'"))
+
         runtime_assets = {
             path.lstrip("/")
-            for path in re.findall(r"(?:href|src)=[\"'](/(?:assets|images)/[^\"']+)[\"']", HOME)
+            for path in re.findall(r'(?:href|src)="(/(?:assets|images)/[^"]+)"', HOME)
         }
         self.assertTrue(runtime_assets, "homepage should expose local runtime assets to audit")
         missing = sorted(runtime_assets - configured_paths)
