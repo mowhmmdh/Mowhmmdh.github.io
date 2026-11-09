@@ -19,7 +19,7 @@ ALIASES = {
 def jsonld_documents(path):
     html = (ROOT / path).read_text(encoding="utf-8")
     return [json.loads(match) for match in re.findall(
-        r'<script type="application/ld\\+json">(.*?)</script>', html, re.S
+        r'<script type="application/ld\+json">(.*?)</script>', html, re.S
     )]
 
 def walk(value):
@@ -72,7 +72,7 @@ class PersonImageSeoTests(unittest.TestCase):
 
     def test_profile_landing_page_contains_real_image_and_profilepage_markup(self):
         page = (ROOT / "profile.html").read_text(encoding="utf-8")
-        self.assertRegex(page, r'<img[^>]+src="/images/profile\\.webp"[^>]+alt="[^"]+محمدحسین عسگری ثمرین')
+        self.assertRegex(page, r'<img[^>]+src="/images/profile\.webp"[^>]+alt="[^"]+محمدحسین عسگری ثمرین')
         nodes = [node for doc in jsonld_documents("profile.html") for node in walk(doc)]
         profile = next(node for node in nodes if node.get("@type") == "ProfilePage")
         main_entity = profile["mainEntity"]
