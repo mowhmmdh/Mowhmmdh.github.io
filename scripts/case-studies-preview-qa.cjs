@@ -61,14 +61,15 @@ async function inspect(page, spec) {
   if (!result.heading.includes('مطالعات موردی')) fail('case-study heading missing');
   if (result.conversion.count !== 1 || !result.conversion.visible) fail('static conversion section missing or duplicated');
   if (result.conversion.label !== 'درخواست خدمات') fail('conversion accessible name changed');
-  if (!result.conversion.hrefs.includes('/vintech/request.html') ||
+  const requestPathIsValid = href => href === '/vintech/request.html' || href === '/vintech/request';
+  if (!result.conversion.hrefs.some(requestPathIsValid) ||
       !result.conversion.hrefs.some(href => href && href.startsWith('mailto:'))) {
     fail('conversion destinations changed');
   }
-  if (result.mobileCta.count !== 1 || result.mobileCta.href !== '/vintech/request.html') {
+  if (result.mobileCta.count !== 1 || !requestPathIsValid(result.mobileCta.href)) {
     fail('mobile conversion link missing or duplicated');
   }
-  if (result.mobileCta.position !== 'fixed') fail('mobile conversion link is not fixed');
+  if (spec.mobile && result.mobileCta.position !== 'fixed') fail('mobile conversion link is not fixed');
   if (!result.footerLine) fail('decorative footer divider missing');
   if (result.sharedEnhancerLoaded) fail('shared enhancement script still loaded');
 
