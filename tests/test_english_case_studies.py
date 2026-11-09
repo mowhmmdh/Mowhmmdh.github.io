@@ -236,5 +236,12 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         self.assertIn("@media(max-width:760px)", css)
 
 
+    def test_case_studies_head_has_no_literal_newline_tokens(self):
+        head = self.persian.split("</head>", 1)[0]
+        self.assertNotIn("\\n", head)
+        self.assertIn('<link rel="canonical" href="https://mowhmmdh.github.io/case-studies/">', head)
+        self.assertIn('hreflang="en" href="https://mowhmmdh.github.io/en-case-studies.html"', head)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -48,7 +48,10 @@ async function inspect(page, spec) {
       },
       footerLine: !!footerLine,
       sharedEnhancerLoaded: performance.getEntriesByType('resource')
-        .some(entry => entry.name.includes('/assets/site-final-quality-2026.js'))
+        .some(entry => entry.name.includes('/assets/site-final-quality-2026.js')),
+      canonicalInHead: !!document.head.querySelector('link[rel="canonical"][href="https://mowhmmdh.github.io/case-studies/"]'),
+      englishAlternateInHead: !!document.head.querySelector('link[rel="alternate"][hreflang="en"][href="https://mowhmmdh.github.io/en-case-studies.html"]'),
+      visibleEscapedNewlineText: document.body.innerText.includes('\\n')
     };
   });
 
@@ -72,6 +75,8 @@ async function inspect(page, spec) {
   if (spec.mobile && result.mobileCta.position !== 'fixed') fail('mobile conversion link is not fixed');
   if (!result.footerLine) fail('decorative footer divider missing');
   if (result.sharedEnhancerLoaded) fail('shared enhancement script still loaded');
+  if (!result.canonicalInHead || !result.englishAlternateInHead) fail('canonical or hreflang metadata is outside the parsed head');
+  if (result.visibleEscapedNewlineText) fail('literal escaped newline text is visible in the document');
 
   if (spec.mobile && result.mobileCta.display !== 'flex') fail('mobile CTA is not visible at the mobile viewport');
   if (!spec.mobile && result.mobileCta.display !== 'none') fail('mobile CTA should remain hidden on desktop');
