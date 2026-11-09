@@ -3,6 +3,12 @@ on:
   pull_request:
     branches: [main]
     paths:
+      - "assets/site-bundle.css"
+      - "assets/home-finish-2026.css"
+      - "assets/site-final-quality-2026.css"
+      - "assets/site-theme.js"
+      - "images/profile.webp"
+      - "images/vinicon.webp"
       - "index.html"
       - "assets/home-visual-redesign-2026.css"
       - "assets/site-final-quality-2026.js"
