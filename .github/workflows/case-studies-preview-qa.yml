@@ -1,0 +1,96 @@
+name: Case Studies Preview Browser and Lighthouse QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "case-studies/index.html"
+      - "assets/site-bundle.css"
+      - "assets/site-final-quality-2026.css"
+      - "assets/site-theme.js"
+      - "scripts/case-studies-preview-qa.cjs"
+      - ".github/workflows/case-studies-preview-qa.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: case-studies-preview-qa-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  case-studies-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/case-studies/
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for this commit's Netlify preview content
+        shell: bash
+        run: |
+          for i in {1..48}; do
+            code=$(curl -L -s -o /tmp/case-studies-preview.html -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [[ "$code" = "200" ]] &&
+               grep -Fq 'class="q-conversion"' /tmp/case-studies-preview.html &&
+               ! grep -Fq 'site-final-quality-2026.js' /tmp/case-studies-preview.html; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "The expected static conversion markup did not appear on $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile Chromium checks
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/case-studies-preview-qa.cjs
+      - name: Run mobile Lighthouse
+        run: |
+          lighthouse "$PREVIEW_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Run desktop Lighthouse
+        run: |
+          lighthouse "$PREVIEW_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Print Lighthouse scores and key metrics
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          for (const [formFactor, file] of [
+            ['mobile', 'qa-artifacts/lighthouse-mobile.json'],
+            ['desktop', 'qa-artifacts/lighthouse-desktop.json']
+          ]) {
+            const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const categories = report.categories || {};
+            const scores = {};
+            for (const key of ['performance', 'accessibility', 'best-practices', 'seo']) {
+              scores[key] = Math.round((categories[key]?.score ?? 0) * 100);
+            }
+            const audits = report.audits || {};
+            console.log(JSON.stringify({
+              formFactor,
+              scores,
+              metrics: {
+                fcp: audits['first-contentful-paint']?.displayValue,
+                lcp: audits['largest-contentful-paint']?.displayValue,
+                tbt: audits['total-blocking-time']?.displayValue,
+                cls: audits['cumulative-layout-shift']?.displayValue
+              }
+            }, null, 2));
+          }
+          NODE
+      - name: Upload browser screenshots and Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: case-studies-preview-browser-lighthouse
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14

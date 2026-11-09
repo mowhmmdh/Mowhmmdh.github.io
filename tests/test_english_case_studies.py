@@ -206,5 +206,35 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         self.assertIn('href="/authority.html">FA</a>', authority)
 
 
+    def test_persian_case_studies_conversion_is_static_without_shared_enhancer(self):
+        page = self.persian
+        self.assertNotIn('src="/assets/site-final-quality-2026.js"', page)
+        self.assertIn('href="/assets/site-final-quality-2026.css"', page)
+        self.assertIn('href="/assets/site-bundle.css"', page)
+
+        self.assertEqual(page.count('class="q-conversion"'), 1)
+        self.assertIn('aria-label="درخواست خدمات"', page)
+        self.assertIn('اگر این موضوع به یک مشکل واقعی در شبکه یا زیرساخت شما مربوط است', page)
+        self.assertIn('href="/vintech/request.html"', page)
+        self.assertIn('mailto:mohammedhasgari@gmail.com?subject=', page)
+
+        self.assertEqual(page.count('class="q-mobile-cta"'), 1)
+        self.assertIn('data-conversion="mobile_service_request"', page)
+        self.assertIn('درخواست پروژه / مشاوره', page)
+        self.assertIn('class="q-footerline" aria-hidden="true"', page)
+
+        self.assertLess(page.index('</main>'), page.index('<section class="q-conversion"'))
+        self.assertLess(page.index('<section class="q-conversion"'), page.index('<footer class="legal-footer-2026">'))
+        self.assertEqual(page.count('AUTO-BREADCRUMB:START'), 1)
+        self.assertEqual(page.count('AUTO-BREADCRUMB:END'), 1)
+
+    def test_static_conversion_styles_remain_available(self):
+        css = read("assets/site-final-quality-2026.css")
+        self.assertIn(".q-conversion{", css)
+        self.assertIn(".q-mobile-cta{display:none}", css)
+        self.assertIn(".q-footerline{", css)
+        self.assertIn("@media(max-width:760px)", css)
+
+
 if __name__ == "__main__":
     unittest.main()
