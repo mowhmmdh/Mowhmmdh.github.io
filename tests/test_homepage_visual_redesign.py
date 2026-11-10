@@ -4,6 +4,7 @@ These source-level tests protect the page contract and prevent a legacy styleshe
 from being injected after the redesign and silently winning the CSS cascade.
 """
 from pathlib import Path
+import fnmatch
 import re
 import unittest
 
@@ -28,6 +29,45 @@ def _contrast_ratio(foreground, background):
     second = _relative_luminance(background)
     lighter, darker = max(first, second), min(first, second)
     return (lighter + 0.05) / (darker + 0.05)
+
+
+def _homepage_css_dependencies():
+    """Return local assets referenced by homepage stylesheets, including nested CSS imports."""
+    entrypoints = {
+        path.lstrip("/")
+        for path in re.findall(r'href="(/assets/[^\"]+\\.css)"', HOME)
+    }
+    pending = list(entrypoints)
+    visited_css = set()
+    dependencies = set()
+
+    while pending:
+        css_path = pending.pop()
+        if css_path in visited_css:
+            continue
+        visited_css.add(css_path)
+        dependencies.add(css_path)
+        css_file = ROOT / css_path
+        if not css_file.is_file():
+            continue
+
+        css = css_file.read_text(encoding="utf-8")
+        for raw_url in re.findall(r"url\\(\\s*['\\\"]?([^'\\\")]+)['\\\"]?\\s*\\)", css, re.IGNORECASE):
+            url = raw_url.strip()
+            if not url.startswith("/") or url.startswith("//"):
+                continue
+            dependency = url.split("?", 1)[0].split("#", 1)[0].lstrip("/")
+            if not dependency:
+                continue
+            dependencies.add(dependency)
+            if dependency.endswith(".css"):
+                pending.append(dependency)
+
+    return dependencies
+
+
+def _path_is_covered(path, patterns):
+    return any(fnmatch.fnmatchcase(path, pattern) for pattern in patterns)
 
 
 
@@ -287,11 +327,35 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
             for path in re.findall(r'(?:href|src)="(/(?:assets|images)/[^"]+)"', HOME)
         }
         self.assertTrue(runtime_assets, "homepage should expose local runtime assets to audit")
-        missing = sorted(runtime_assets - configured_paths)
+        missing = sorted(path for path in runtime_assets if not _path_is_covered(path, configured_paths))
         self.assertEqual(
             missing,
             [],
             "homepage browser/Lighthouse QA must run when any directly referenced local asset changes",
+        )
+
+
+    def test_preview_qa_triggers_for_nested_stylesheet_and_font_dependencies(self):
+        workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
+        lines = workflow.splitlines()
+        paths_index = lines.index("    paths:")
+        configured_patterns = set()
+        for line in lines[paths_index + 1:]:
+            if not line.startswith("      - "):
+                break
+            configured_patterns.add(line[8:].strip().strip('"').strip("'"))
+
+        dependencies = _homepage_css_dependencies()
+        self.assertIn("assets/theme-stability-2026.css", dependencies)
+        self.assertTrue(any(path.startswith("fonts/") for path in dependencies))
+        missing = sorted(
+            path for path in dependencies
+            if not _path_is_covered(path, configured_patterns)
+        )
+        self.assertEqual(
+            missing,
+            [],
+            "homepage browser/Lighthouse QA must run when nested CSS or font dependencies change",
         )
 
     def test_preview_qa_targets_the_triggering_pull_request(self):
