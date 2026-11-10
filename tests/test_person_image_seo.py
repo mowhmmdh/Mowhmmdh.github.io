@@ -70,6 +70,18 @@ class PersonImageSeoTests(unittest.TestCase):
         self.assertEqual(webpage.get("url"), SITE + "en.html")
         self.assertEqual(webpage.get("primaryImageOfPage"), IMAGE)
 
+    def test_homepages_reference_a_resolvable_primary_image_object(self):
+        image_id = IMAGE + "#image-rights"
+        for page in ("index.html", "en.html"):
+            with self.subTest(page=page):
+                nodes = [node for document in jsonld_documents(page) for node in walk(document)]
+                webpage = next(node for node in nodes if node.get("@type") == "WebPage")
+                self.assertEqual(webpage.get("primaryImageOfPage"), {"@id": image_id})
+                self.assertTrue(
+                    any(node.get("@type") == "ImageObject" and node.get("@id") == image_id for node in nodes),
+                    f"{page} must define the referenced ImageObject",
+                )
+
     def test_profile_landing_page_contains_real_image_and_profilepage_markup(self):
         page = (ROOT / "profile.html").read_text(encoding="utf-8")
         self.assertRegex(page, r'<img[^>]+src="/images/profile\.webp"[^>]+alt="[^"]+محمدحسین عسگری ثمرین')
