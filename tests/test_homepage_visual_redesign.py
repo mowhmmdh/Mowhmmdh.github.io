@@ -35,7 +35,7 @@ def _homepage_css_dependencies():
     """Return local assets referenced by homepage stylesheets, including nested CSS imports."""
     entrypoints = {
         path.lstrip("/")
-        for path in re.findall(r'href="(/assets/[^\"]+\\.css)"', HOME)
+        for path in re.findall(r'href="(/assets/[^"]+\.css)"', HOME)
     }
     pending = list(entrypoints)
     visited_css = set()
@@ -52,7 +52,7 @@ def _homepage_css_dependencies():
             continue
 
         css = css_file.read_text(encoding="utf-8")
-        for raw_url in re.findall(r"url\\(\\s*['\\\"]?([^'\\\")]+)['\\\"]?\\s*\\)", css, re.IGNORECASE):
+        for raw_url in re.findall(r"""url\(\s*['"]?([^'")]+)['"]?\s*\)""", css, re.IGNORECASE):
             url = raw_url.strip()
             if not url.startswith("/") or url.startswith("//"):
                 continue
