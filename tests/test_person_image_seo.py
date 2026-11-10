@@ -68,7 +68,6 @@ class PersonImageSeoTests(unittest.TestCase):
         webpage = next(node for node in nodes if node.get("@type") == "WebPage")
         self.assertEqual(website.get("url"), SITE)
         self.assertEqual(webpage.get("url"), SITE + "en.html")
-        self.assertEqual(webpage.get("primaryImageOfPage"), IMAGE)
 
     def test_homepages_reference_a_resolvable_primary_image_object(self):
         image_id = IMAGE + "#image-rights"
