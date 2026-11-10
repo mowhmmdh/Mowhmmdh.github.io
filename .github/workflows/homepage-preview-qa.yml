@@ -4,9 +4,11 @@ on:
     branches: [main]
     paths:
       - "assets/site-bundle.css"
+      - "assets/theme-stability-2026.css"
       - "assets/home-finish-2026.css"
       - "assets/site-final-quality-2026.css"
       - "assets/site-theme.js"
+      - "fonts/**"
       - "images/profile.webp"
       - "images/vinicon.webp"
       - "index.html"
