@@ -1,0 +1,45 @@
+name: Person and Profile Image SEO Regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'en.html'
+      - 'profile.html'
+      - 'about.html'
+      - 'en-about.html'
+      - 'image-sitemap.xml'
+      - 'sitemap.xml'
+      - 'tests/test_person_image_seo.py'
+      - '.github/workflows/person-image-seo.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'en.html'
+      - 'profile.html'
+      - 'about.html'
+      - 'en-about.html'
+      - 'image-sitemap.xml'
+      - 'sitemap.xml'
+      - 'tests/test_person_image_seo.py'
+      - '.github/workflows/person-image-seo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: person-image-seo-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run Person entity and image SEO regression tests
+        run: python3 -m unittest discover -s tests -p 'test_person_image_seo.py' -v
