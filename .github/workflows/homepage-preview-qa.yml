@@ -10,12 +10,15 @@ on:
       - "assets/site-theme.js"
       - "fonts/**"
       - "images/profile.webp"
+      - "images/profile-240.webp"
+      - "images/profile-480.webp"
       - "images/vinicon.webp"
       - "index.html"
       - "assets/home-visual-redesign-2026.css"
       - "assets/site-final-quality-2026.js"
       - "tests/test_homepage_visual_redesign.py"
       - "scripts/homepage-preview-browser-qa.cjs"
+      - "scripts/generate-profile-image-variants.py"
       - ".github/workflows/homepage-preview-qa.yml"
   workflow_dispatch:
     inputs:
@@ -62,6 +65,11 @@ jobs:
         run: |
           mkdir -p qa-artifacts
           NODE_PATH="$(npm root -g)" node scripts/homepage-preview-browser-qa.cjs
+      - name: Generate smaller responsive profile candidates
+        run: |
+          python3 -m venv /tmp/profile-image-venv
+          /tmp/profile-image-venv/bin/pip install --quiet Pillow
+          /tmp/profile-image-venv/bin/python scripts/generate-profile-image-variants.py
       - name: Run mobile Lighthouse
         run: |
           lighthouse "$PREVIEW_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
