@@ -1,5 +1,4 @@
 from pathlib import Path
-import re
 import unittest
 
 
@@ -11,13 +10,18 @@ class DnsTroubleshootingHeadRegressionTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         source = PAGE.read_text(encoding="utf-8")
-        match = re.search(r"<head\\b[^>]*>(.*?)</head\\s*>", source, re.IGNORECASE | re.DOTALL)
-        if match is None:
+        lower = source.lower()
+        opening = lower.find("<head")
+        if opening < 0:
             raise AssertionError("DNS troubleshooting page must contain a head element")
-        cls.head = match.group(1)
+        start = source.find(">", opening)
+        end = lower.find("</head>", start + 1)
+        if start < 0 or end < 0:
+            raise AssertionError("DNS troubleshooting page must contain a closed head element")
+        cls.head = source[start + 1:end]
 
     def test_head_has_no_literal_backslash_n_sequences(self):
-        self.assertNotIn(r"\\n", self.head)
+        self.assertNotIn(chr(92) + "n", self.head)
 
     def test_canonical_and_bilingual_alternates_remain_in_head(self):
         self.assertIn('rel="canonical"', self.head)
