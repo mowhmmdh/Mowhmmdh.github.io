@@ -10,8 +10,8 @@ import json
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE = ROOT / "images" / "profile.webp"
 OUTPUT_DIR = ROOT / "qa-artifacts" / "profile-variants"
-TARGET_WIDTHS = (240, 480)
-QUALITY = 80
+TARGET_WIDTHS = (360,)
+QUALITY = 76
 
 
 def main():
