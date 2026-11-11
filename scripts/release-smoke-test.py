@@ -133,6 +133,25 @@ integrity = ROOT / "scripts/site-integrity-fix.py"
 if not integrity.is_file() or "FULL_EN='Mohammad Hossein Asgari Somarin'" not in integrity.read_text(encoding="utf-8"):
     errors.append("site-integrity-fix.py: canonical English identity is incorrect")
 
+
+# Guard the DNS troubleshooting page against escaped newline text leaking
+# from <head> into the rendered document, while preserving its SEO metadata.
+dns_page = ROOT / "blog" / "dns-troubleshooting.html"
+if not dns_page.is_file():
+    errors.append("missing required page: blog/dns-troubleshooting.html")
+else:
+    dns_source = dns_page.read_text(encoding="utf-8")
+    dns_head_end = dns_source.lower().find("</head>")
+    if dns_head_end < 0:
+        errors.append("blog/dns-troubleshooting.html: closing head element missing")
+    else:
+        dns_head = dns_source[:dns_head_end]
+        if chr(92) + "n" in dns_head:
+            errors.append("blog/dns-troubleshooting.html: literal escaped newline sequence remains in head")
+        for required in ('rel="canonical"', 'hreflang="fa-IR"', 'hreflang="en"'):
+            if required not in dns_head:
+                errors.append(f"blog/dns-troubleshooting.html: required head metadata missing: {required}")
+
 if errors:
     print(f"Release smoke test failed with {len(errors)} issue(s):")
     for error in errors:
