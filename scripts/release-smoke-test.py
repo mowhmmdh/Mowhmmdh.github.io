@@ -158,4 +158,4 @@ if errors:
         print(" -", error)
     sys.exit(1)
 
-print("PASS: profile/article metadata, canonical URLs, H1, JSON-LD, profile image, XML sitemaps, robots.txt, and canonical identity.")
+print("PASS: profile/article metadata, canonical URLs, H1, JSON-LD, profile image, DNS head whitespace/hreflang, XML sitemaps, robots.txt, and canonical identity.")
