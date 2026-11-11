@@ -262,7 +262,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn("Mohammad Hossein Asgari Somarin", image)
 
     def test_below_fold_profile_image_uses_a_smaller_responsive_candidate(self):
-        image = re.search(r'<img\\b[^>]*src="/images/profile\\.webp"[^>]*>', HOME)
+        image = re.search(r'<img\b[^>]*src="/images/profile\.webp"[^>]*>', HOME)
         self.assertIsNotNone(image, "homepage profile image must remain present")
         markup = image.group(0)
         self.assertIn('srcset="/images/profile-360.webp 360w, /images/profile.webp 958w"', markup)
