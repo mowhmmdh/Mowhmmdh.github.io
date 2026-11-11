@@ -261,6 +261,21 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn("محمدحسین عسگری ثمرین", image)
         self.assertIn("Mohammad Hossein Asgari Somarin", image)
 
+    def test_below_fold_profile_image_uses_a_smaller_responsive_candidate(self):
+        image = re.search(r'<img\\b[^>]*src="/images/profile\\.webp"[^>]*>', HOME)
+        self.assertIsNotNone(image, "homepage profile image must remain present")
+        markup = image.group(0)
+        self.assertIn('srcset="/images/profile-360.webp 360w, /images/profile.webp 958w"', markup)
+        self.assertIn('sizes="(max-width: 600px) 92px, 112px"', markup)
+        original = ROOT / "images" / "profile.webp"
+        optimized = ROOT / "images" / "profile-360.webp"
+        self.assertTrue(optimized.is_file(), "responsive portrait candidate must be committed")
+        self.assertLess(
+            optimized.stat().st_size,
+            original.stat().st_size,
+            "responsive portrait candidate must be smaller than the original fallback",
+        )
+
     def test_homepage_brand_accessible_name_contains_its_visible_label(self):
         match = re.search(
             r'<a class="brand mh-brand"([^>]*)>(.*?)</a>',
