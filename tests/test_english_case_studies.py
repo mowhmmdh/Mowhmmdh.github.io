@@ -243,5 +243,26 @@ class EnglishCaseStudiesTests(unittest.TestCase):
         self.assertIn('hreflang="en" href="https://mowhmmdh.github.io/en-case-studies.html"', head)
 
 
+    def test_english_reference_page_heads_have_no_literal_newline_tokens(self):
+        expected = {
+            "en-authority.html": "https://mowhmmdh.github.io/en-authority.html",
+            "en-linkedin.html": "https://mowhmmdh.github.io/en-linkedin.html",
+            "en-press.html": "https://mowhmmdh.github.io/en-press.html",
+            "en-sitemap.html": "https://mowhmmdh.github.io/en-sitemap.html",
+        }
+        for path, canonical in expected.items():
+            with self.subTest(page=path):
+                page = read(path)
+                self.assertIn("</head>", page)
+                head = page.split("</head>", 1)[0]
+                self.assertNotIn("\\n", head)
+                self.assertEqual(head.count('rel="canonical"'), 1)
+                self.assertIn(f'<link rel="canonical" href="{canonical}">', head)
+                html_tag = page.split(">", 1)[0]
+                self.assertIn('lang="en"', html_tag)
+                self.assertIn('dir="ltr"', html_tag)
+
+
+
 if __name__ == "__main__":
     unittest.main()
