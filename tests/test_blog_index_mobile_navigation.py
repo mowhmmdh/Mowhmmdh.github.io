@@ -82,5 +82,14 @@ class BlogIndexMobileNavigationTests(unittest.TestCase):
         self.assertIn('id="main-content"', self.page)
 
 
+    def test_blog_index_head_has_no_literal_newline_tokens(self):
+        self.assertIn("</head>", self.page)
+        head = self.page.split("</head>", 1)[0]
+        self.assertNotIn("\\n", head)
+        self.assertEqual(head.count('rel="canonical"'), 1)
+        self.assertIn('<link rel="canonical" href="https://mowhmmdh.github.io/blog/">', head)
+
+
+
 if __name__ == "__main__":
     unittest.main()
