@@ -258,7 +258,7 @@ class EnglishCaseStudiesTests(unittest.TestCase):
                 self.assertNotIn("\\n", head)
                 self.assertEqual(head.count('rel="canonical"'), 1)
                 self.assertIn(f'<link rel="canonical" href="{canonical}">', head)
-                html_tag = page.split(">", 1)[0]
+                html_tag = page.split("<html", 1)[1].split(">", 1)[0]
                 self.assertIn('lang="en"', html_tag)
                 self.assertIn('dir="ltr"', html_tag)
 
