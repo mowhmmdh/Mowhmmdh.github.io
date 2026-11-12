@@ -134,23 +134,61 @@ if not integrity.is_file() or "FULL_EN='Mohammad Hossein Asgari Somarin'" not in
     errors.append("site-integrity-fix.py: canonical English identity is incorrect")
 
 
-# Guard the DNS troubleshooting page against escaped newline text leaking
-# from <head> into the rendered document, while preserving its SEO metadata.
-dns_page = ROOT / "blog" / "dns-troubleshooting.html"
-if not dns_page.is_file():
-    errors.append("missing required page: blog/dns-troubleshooting.html")
-else:
-    dns_source = dns_page.read_text(encoding="utf-8")
-    dns_head_end = dns_source.lower().find("</head>")
-    if dns_head_end < 0:
-        errors.append("blog/dns-troubleshooting.html: closing head element missing")
-    else:
-        dns_head = dns_source[:dns_head_end]
-        if chr(92) + "n" in dns_head:
-            errors.append("blog/dns-troubleshooting.html: literal escaped newline sequence remains in head")
-        for required in ('rel="canonical"', 'hreflang="fa-IR"', 'hreflang="en"'):
-            if required not in dns_head:
-                errors.append(f"blog/dns-troubleshooting.html: required head metadata missing: {required}")
+# Guard every repaired page against escaped newline text leaking from <head>,
+# while asserting canonical URLs and the bilingual alternates that each page owns.
+HEAD_WHITESPACE_PAGES = {
+    "blog/dns-troubleshooting.html": (
+        "https://mowhmmdh.github.io/blog/dns-troubleshooting.html",
+        {"fa-IR", "en"},
+    ),
+    "authority.html": (
+        "https://mowhmmdh.github.io/authority.html",
+        {"fa-IR", "en"},
+    ),
+    "blog/vlan-segmentation.html": (
+        "https://mowhmmdh.github.io/blog/vlan-segmentation.html",
+        {"fa-IR", "en"},
+    ),
+    "services/network-support.html": (
+        "https://mowhmmdh.github.io/services/network-support.html",
+        {"fa-IR"},
+    ),
+    "blog/network-hardening.html": (
+        "https://mowhmmdh.github.io/blog/network-hardening.html",
+        {"fa-IR", "en"},
+    ),
+}
+
+for relative_path, (expected_canonical, required_hreflangs) in HEAD_WHITESPACE_PAGES.items():
+    page_path = ROOT / relative_path
+    if not page_path.is_file():
+        errors.append(f"missing required page: {relative_path}")
+        continue
+
+    page_source = page_path.read_text(encoding="utf-8")
+    head_end = page_source.lower().find("</head>")
+    if head_end < 0:
+        errors.append(f"{relative_path}: closing head element missing")
+        continue
+
+    head = page_source[:head_end]
+    if chr(92) + "n" in head:
+        errors.append(f"{relative_path}: literal escaped newline sequence remains in head")
+
+    head_parser = Page()
+    head_parser.feed(head)
+    canonicals = [
+        item.get("href", "")
+        for item in head_parser.links
+        if "canonical" in (item.get("rel") or "").lower().split()
+    ]
+    if len(canonicals) != 1 or canonicals[0] != expected_canonical:
+        errors.append(f"{relative_path}: canonical URL missing, duplicated, or changed")
+
+    available_hreflangs = {item.get("hreflang") for item in head_parser.links}
+    for language in required_hreflangs:
+        if language not in available_hreflangs:
+            errors.append(f"{relative_path}: required hreflang missing: {language}")
 
 if errors:
     print(f"Release smoke test failed with {len(errors)} issue(s):")
