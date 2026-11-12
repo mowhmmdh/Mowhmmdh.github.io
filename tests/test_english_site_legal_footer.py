@@ -84,5 +84,24 @@ class EnglishSiteLegalFooterTests(unittest.TestCase):
                 self.assertIn('<html lang="en" dir="ltr">', html)
 
 
+    def test_english_projects_and_services_heads_have_no_literal_newline_tokens(self):
+        expected = {
+            "en-projects.html": "https://mowhmmdh.github.io/en-projects.html",
+            "en-services.html": "https://mowhmmdh.github.io/en-services.html",
+        }
+        for path, canonical in expected.items():
+            with self.subTest(page=path):
+                page = (ROOT / path).read_text(encoding="utf-8")
+                self.assertIn("</head>", page)
+                head = page.split("</head>", 1)[0]
+                self.assertNotIn("\\n", head)
+                self.assertEqual(head.count('rel="canonical"'), 1)
+                self.assertIn(f'<link rel="canonical" href="{canonical}">', head)
+                html_tag = page.split("<html", 1)[1].split(">", 1)[0]
+                self.assertIn('lang="en"', html_tag)
+                self.assertIn('dir="ltr"', html_tag)
+
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
