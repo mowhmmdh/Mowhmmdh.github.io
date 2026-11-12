@@ -39,7 +39,7 @@ jobs:
           python scripts/quality-audit.py 2>&1 | tee audit-report/quality-audit.txt
       - name: Upload audit report
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site-quality-audit
           path: audit-report/quality-audit.txt
