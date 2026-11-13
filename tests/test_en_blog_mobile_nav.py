@@ -57,7 +57,7 @@ class EnglishBlogMobileNavigationTests(unittest.TestCase):
     def test_browser_qa_checks_user_scroll_not_decorative_scroll_width(self):
         qa_script = QA_SCRIPT_PATH.read_text(encoding="utf-8")
         self.assertIn("window.scrollTo(500, window.scrollY)", qa_script)
-        self.assertIn("horizontalScrollLeft: horizontalScrollLeft > 1", qa_script)
+        self.assertIn("horizontalOverflow: horizontalScrollLeft > 1", qa_script)
         self.assertIn("documentScrollWidth", qa_script)
         self.assertNotIn("horizontalOverflow: documentWidth >", qa_script)
 
