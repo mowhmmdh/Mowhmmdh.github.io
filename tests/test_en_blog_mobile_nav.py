@@ -6,6 +6,7 @@ import unittest
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 PAGE_PATH = REPOSITORY_ROOT / "en-blog.html"
+QA_SCRIPT_PATH = REPOSITORY_ROOT / "scripts" / "en-blog-mobile-nav-qa.cjs"
 
 
 class EnglishBlogMobileNavigationTests(unittest.TestCase):
@@ -52,6 +53,13 @@ class EnglishBlogMobileNavigationTests(unittest.TestCase):
         ):
             with self.subTest(href=href):
                 self.assertIn(f'href="{href}"', nav)
+
+    def test_browser_qa_checks_user_scroll_not_decorative_scroll_width(self):
+        qa_script = QA_SCRIPT_PATH.read_text(encoding="utf-8")
+        self.assertIn("window.scrollTo(500, window.scrollY)", qa_script)
+        self.assertIn("horizontalScrollLeft: horizontalScrollLeft > 1", qa_script)
+        self.assertIn("documentScrollWidth", qa_script)
+        self.assertNotIn("horizontalOverflow: documentWidth >", qa_script)
 
     def test_skip_link_and_main_landmark_remain_available(self):
         self.assertIn('href="#main-content"', self.html)
