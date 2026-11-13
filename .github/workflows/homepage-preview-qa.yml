@@ -42,9 +42,9 @@ jobs:
       PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number || inputs.pull_request_number || '27' }}--mowhmmdh.netlify.app/
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install free browser and Lighthouse tooling
@@ -82,7 +82,7 @@ jobs:
           echo "Netlify deploy previews send x-robots-tag: noindex; the Lighthouse SEO score here is not production indexability evidence."
       - name: Upload screenshots and Lighthouse reports
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: homepage-preview-browser-lighthouse
           path: qa-artifacts/
