@@ -248,14 +248,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
 
     def test_unverified_expertise_percentage_bars_are_removed(self):
         self.assertNotIn('class="mh-mini-bar"', HOME)
-        deprecated_actions = (
-            "uses: actions/checkout@v4",
-            "uses: actions/setup-node@v4",
-            "uses: actions/upload-artifact@v4",
-        )
-        for action in deprecated_actions:
-            with self.subTest(deprecated_action=action):
-                self.assertNotIn(action, workflow)
+        self.assertNotRegex(HOME, r"--w:\\s*\\d+%")
 
     def test_homepage_brand_accessible_name_contains_its_visible_label(self):
         match = re.search(
@@ -378,11 +371,14 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
         for action in expected_actions:
             with self.subTest(action=action):
                 self.assertIn(action, workflow)
-        self.assertNotRegex(
-            workflow,
-            r"uses: actions/(?:checkout|setup-node|upload-artifact)@v4\\b",
-            "the homepage QA workflow must not keep the deprecated Node 20 action majors",
+        deprecated_actions = (
+            "uses: actions/checkout@v4",
+            "uses: actions/setup-node@v4",
+            "uses: actions/upload-artifact@v4",
         )
+        for action in deprecated_actions:
+            with self.subTest(deprecated_action=action):
+                self.assertNotIn(action, workflow)
 
 
 if __name__ == "__main__":
