@@ -77,10 +77,17 @@ async function main() {
         });
         const navStyle = nav ? getComputedStyle(nav) : null;
         const headerStyle = header ? getComputedStyle(header) : null;
-        const documentWidth = Math.max(
-          document.documentElement.scrollWidth,
-          document.body.scrollWidth
-        );
+        // The shared navigation backdrop uses a viewport-spanning ::before
+        // decoration. Raw scrollWidth includes that clipped paint area, so test
+        // whether the page can actually be scrolled horizontally by a user.
+        const root = document.documentElement;
+        const documentScrollWidth = Math.max(root.scrollWidth, document.body.scrollWidth);
+        const previousScrollBehavior = root.style.scrollBehavior;
+        root.style.scrollBehavior = 'auto';
+        window.scrollTo(500, window.scrollY);
+        const horizontalScrollLeft = window.scrollX;
+        window.scrollTo(0, window.scrollY);
+        root.style.scrollBehavior = previousScrollBehavior;
         const overflowCandidates = Array.from(document.querySelectorAll('body *'))
           .map(element => {
             const box = element.getBoundingClientRect();
@@ -108,8 +115,11 @@ async function main() {
           lang: document.documentElement.lang,
           dir: document.documentElement.dir,
           viewportWidth: window.innerWidth,
-          documentWidth,
-          horizontalOverflow: documentWidth > window.innerWidth + 1,
+          documentScrollWidth,
+          horizontalScrollLeft,
+          rootOverflowX: getComputedStyle(root).overflowX,
+          bodyOverflowX: getComputedStyle(document.body).overflowX,
+          horizontalOverflow: horizontalScrollLeft > 1,
           overflowCandidates,
           header: rect(header),
           headerDisplay: headerStyle ? headerStyle.display : null,
@@ -162,7 +172,7 @@ async function main() {
         }
       }
       if (snapshot.horizontalOverflow) {
-        throw new Error(spec.name + ': horizontal page overflow detected: ' + JSON.stringify(snapshot.overflowCandidates));
+        throw new Error(spec.name + ': page can scroll horizontally (scrollLeft=' + snapshot.horizontalScrollLeft + ', scrollWidth=' + snapshot.documentScrollWidth + ', rootOverflowX=' + snapshot.rootOverflowX + ', bodyOverflowX=' + snapshot.bodyOverflowX + '): ' + JSON.stringify(snapshot.overflowCandidates));
       }
       if (pageErrors.length) {
         throw new Error(spec.name + ': uncaught browser errors: ' + pageErrors.join(' | '));
