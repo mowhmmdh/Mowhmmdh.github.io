@@ -387,6 +387,22 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
             "PR-triggered runs must not silently audit the stale #27 preview",
         )
 
+    def test_preview_workflow_uses_node24_compatible_actions(self):
+        workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
+        expected_actions = (
+            "uses: actions/checkout@v7",
+            "uses: actions/setup-node@v7",
+            "uses: actions/upload-artifact@v7",
+        )
+        for action in expected_actions:
+            with self.subTest(action=action):
+                self.assertIn(action, workflow)
+        self.assertNotRegex(
+            workflow,
+            r"uses: actions/(?:checkout|setup-node|upload-artifact)@v4\\b",
+            "the homepage QA workflow must not keep the deprecated Node 20 action majors",
+        )
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
