@@ -111,5 +111,19 @@ class PersianNetworkSecurityTitleTests(unittest.TestCase):
         self.assertLessEqual(len(description), 170)
 
 
+    def test_mobile_cta_and_footerline_are_static_without_shared_enhancer(self):
+        html = PAGE.read_text(encoding="utf-8")
+        self.assertNotIn('src="/assets/site-final-quality-2026.js"', html)
+        self.assertIn('href="/assets/site-final-quality-2026.css"', html)
+        self.assertIn(
+            '<a class="q-mobile-cta" data-conversion="mobile_service_request" href="/vintech/request.html">',
+            html,
+        )
+        self.assertIn('<div class="q-footerline" aria-hidden="true"></div>', html)
+        self.assertIn('class="seo-conversion-cta"', html)
+        self.assertIn('class="auto-related"', html)
+        self.assertIn('class="related-articles site-auto-related"', html)
+
+
 if __name__ == "__main__":
     unittest.main()
