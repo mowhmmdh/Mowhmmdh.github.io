@@ -7,6 +7,7 @@ on:
       - "en-*.html"
       - "en-blog/**/*.html"
       - "tests/test_english_site_legal_footer.py"
+      - "tests/test_english_network_security_title.py"
       - ".github/workflows/english-site-legal-footer-regression.yml"
 
 permissions:
@@ -23,4 +24,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Run English site legal footer regression tests
-        run: python3 tests/test_english_site_legal_footer.py
+        run: |
+          python3 tests/test_english_site_legal_footer.py
+          python3 tests/test_english_network_security_title.py
