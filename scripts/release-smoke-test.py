@@ -190,6 +190,35 @@ for relative_path, (expected_canonical, required_hreflangs) in HEAD_WHITESPACE_P
         if language not in available_hreflangs:
             errors.append(f"{relative_path}: required hreflang missing: {language}")
 
+# Keep the Persian authority page's ProfilePage entity anchored to its own URL.
+authority_path = ROOT / "authority.html"
+if authority_path.is_file():
+    authority_parser = Page()
+    authority_parser.feed(authority_path.read_text(encoding="utf-8"))
+    profile_page_ids = []
+    for raw in authority_parser.jsonld:
+        try:
+            data = json.loads(raw)
+        except Exception:
+            continue  # Invalid JSON-LD is reported by the required-page checks above.
+        if data.get("@type") == "ProfilePage":
+            profile_page_ids.append(data.get("@id"))
+        profile_page_ids.extend(
+            node.get("@id")
+            for node in data.get("@graph", [])
+            if node.get("@type") == "ProfilePage"
+        )
+
+    expected_profile_page_id = "https://mowhmmdh.github.io/authority.html#profile"
+    if not profile_page_ids or any(
+        page_id != expected_profile_page_id for page_id in profile_page_ids
+    ):
+        errors.append(
+            "authority.html: ProfilePage JSON-LD must identify the current Persian authority URL"
+        )
+else:
+    errors.append("missing required page: authority.html")
+
 if errors:
     print(f"Release smoke test failed with {len(errors)} issue(s):")
     for error in errors:
