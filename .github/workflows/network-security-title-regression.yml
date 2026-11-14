@@ -1,0 +1,26 @@
+name: Persian Network Security Title Regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "blog/network-security-assessment-checklist.html"
+      - "tests/test_network_security_assessment_title.py"
+      - ".github/workflows/network-security-title-regression.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: network-security-title-regression-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  metadata-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Run Persian metadata regression
+        run: python3 -m unittest discover -s tests -p "test_network_security_assessment_title.py" -v
