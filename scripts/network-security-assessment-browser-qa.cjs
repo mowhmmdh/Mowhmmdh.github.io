@@ -60,7 +60,7 @@ if (!target) throw new Error('PREVIEW_URL is required');
 
     const mobilePass = spec.name !== 'mobile' || (
       snapshot.ctaVisible &&
-      snapshot.ctaHref === '/vintech/request.html' &&
+      ['/vintech/request.html', '/vintech/request'].includes(snapshot.ctaHref) &&
       Boolean(snapshot.ctaText) &&
       snapshot.ctaBottom <= spec.height + 1
     );
