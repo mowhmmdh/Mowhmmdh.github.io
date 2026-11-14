@@ -267,7 +267,7 @@ class EnglishCaseStudiesTests(unittest.TestCase):
     def test_english_authority_profile_page_ids_match_page_url(self):
         authority = read("en-authority.html")
         blocks = re.findall(
-            r'<script type="application/ld\\+json">(.*?)</script>',
+            r'<script type="application/ld\+json">(.*?)</script>',
             authority,
             flags=re.S,
         )
