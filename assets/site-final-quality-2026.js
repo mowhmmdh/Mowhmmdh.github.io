@@ -50,12 +50,12 @@
         ['/en-vintech/it-support.html','IT Support','Troubleshooting, maintenance and operations.']
       ],
       '/en-projects': [
-        ['/case-studies/gitlab-infrastructure.html','GitLab Infrastructure','Deployment, HTTPS and service maintenance.'],
-        ['/case-studies/network-troubleshooting.html','Network Troubleshooting','From symptoms to root cause and validation.'],
-        ['/case-studies/windows-domain-hardening.html','Domain Hardening','Identity, access control and hardening.']
+        ['/en-blog/gitlab-ci-cd-for-it-infrastructure.html','GitLab CI/CD Infrastructure','Deployment, HTTPS, storage and reliable delivery.'],
+        ['/en-blog/network-troubleshooting-checklist.html','Network Troubleshooting','From symptoms to root cause and validation.'],
+        ['/en-blog/active-directory-hardening.html','Windows Domain Hardening','Identity, access control and hardening.']
       ]
     };
-    const key = Object.keys(pools).find(k => path === k || path.startsWith(k + '/'));
+    const key = Object.keys(pools).find(k => path === k || path === k + '.html' || path.startsWith(k + '/'));
     const links = key ? pools[key] : null;
     const article = main.classList.contains('article') || !!main.querySelector('.content');
 
