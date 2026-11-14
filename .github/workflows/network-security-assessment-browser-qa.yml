@@ -1,0 +1,84 @@
+name: Network Security Assessment Browser and Lighthouse QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "blog/network-security-assessment-checklist.html"
+      - "scripts/network-security-assessment-browser-qa.cjs"
+      - ".github/workflows/network-security-assessment-browser-qa.yml"
+      - "assets/site-final-quality-2026.css"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: network-security-assessment-browser-qa-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-and-lighthouse:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/blog/network-security-assessment-checklist.html
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for this commit's Netlify preview
+        shell: bash
+        run: |
+          for i in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify preview did not return HTTP 200: $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile Chromium checks
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/network-security-assessment-browser-qa.cjs
+      - name: Run mobile Lighthouse
+        run: lighthouse "$PREVIEW_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Run desktop Lighthouse
+        run: lighthouse "$PREVIEW_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Print Lighthouse scores and key metrics
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          for (const [name, file] of [['mobile', 'qa-artifacts/lighthouse-mobile.json'], ['desktop', 'qa-artifacts/lighthouse-desktop.json']]) {
+            const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const audits = report.audits || {};
+            const scores = {};
+            for (const key of ['performance', 'accessibility', 'best-practices', 'seo']) {
+              scores[key] = Math.round((report.categories[key]?.score ?? 0) * 100);
+            }
+            console.log(JSON.stringify({
+              formFactor: name,
+              scores,
+              metrics: {
+                fcp: audits['first-contentful-paint']?.displayValue,
+                lcp: audits['largest-contentful-paint']?.displayValue,
+                tbt: audits['total-blocking-time']?.displayValue,
+                cls: audits['cumulative-layout-shift']?.displayValue
+              }
+            }, null, 2));
+          }
+          NODE
+      - name: Upload browser screenshots and Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: network-security-assessment-browser-lighthouse
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
