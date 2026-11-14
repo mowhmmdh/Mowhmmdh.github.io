@@ -264,5 +264,30 @@ class EnglishCaseStudiesTests(unittest.TestCase):
 
 
 
+    def test_english_authority_profile_page_ids_match_page_url(self):
+        authority = read("en-authority.html")
+        blocks = re.findall(
+            r'<script type="application/ld\\+json">(.*?)</script>',
+            authority,
+            flags=re.S,
+        )
+        parsed = [json.loads(block) for block in blocks]
+        profile_pages = []
+        for node in parsed:
+            if node.get("@type") == "ProfilePage":
+                profile_pages.append(node)
+            profile_pages.extend(
+                item for item in node.get("@graph", [])
+                if item.get("@type") == "ProfilePage"
+            )
+
+        expected_id = "https://mowhmmdh.github.io/en-authority.html#profile"
+        self.assertTrue(profile_pages, "Expected ProfilePage structured data")
+        self.assertTrue(
+            all(page.get("@id") == expected_id for page in profile_pages),
+            "Every ProfilePage entity must identify the current English authority URL",
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
