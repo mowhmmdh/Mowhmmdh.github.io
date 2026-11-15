@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - "blog/index.html"
+      - "feed.xml"
+      - "sitemap.xml"
+      - "tests/test_rss_feed_freshness.py"
       - "assets/site-theme.js"
       - "assets/site-bundle.css"
       - "tests/test_blog_index_mobile_navigation.py"
@@ -12,6 +15,9 @@ on:
     branches: [main]
     paths:
       - "blog/index.html"
+      - "feed.xml"
+      - "sitemap.xml"
+      - "tests/test_rss_feed_freshness.py"
       - "assets/site-theme.js"
       - "assets/site-bundle.css"
       - "tests/test_blog_index_mobile_navigation.py"
@@ -26,10 +32,12 @@ concurrency:
 
 jobs:
   regression:
-    name: Mobile navigation regression tests
+    name: Blog navigation and RSS regression tests
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - name: Run dependency-free regression tests
-        run: |\n          python3 -m unittest discover -s tests -p "test_blog_index_mobile_navigation.py" -v\n          python3 -m unittest discover -s tests -p "test_rss_feed_freshness.py" -v
+        run: |
+          python3 -m unittest discover -s tests -p "test_blog_index_mobile_navigation.py" -v
+          python3 -m unittest discover -s tests -p "test_rss_feed_freshness.py" -v
