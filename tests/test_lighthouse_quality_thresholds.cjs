@@ -3,6 +3,8 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
+const fs = require('node:fs');
+const path = require('node:path');
 const { evaluateReports, THRESHOLDS } = require('../scripts/check-lighthouse-quality.cjs');
 
 function report(performance, accessibility = 100, bestPractices = 96, seo = 66) {
@@ -38,6 +40,15 @@ test('fails when either viewport falls below a required threshold', () => {
   assert.deepEqual(result.failures, [
     { formFactor: 'mobile', category: 'performance', score: 89, minimum: 90 }
   ]);
+});
+
+test('preview Lighthouse excludes only Netlify injected CDP helper from site metrics', () => {
+  const workflowPath = path.join(__dirname, '../.github/workflows/network-security-assessment-browser-qa.yml');
+  const workflow = fs.readFileSync(workflowPath, 'utf8');
+  const blockPattern = "--blocked-url-patterns='*/.netlify/scripts/cdp*'";
+
+  assert.equal(workflow.split(blockPattern).length - 1, 2);
+  assert.equal(workflow.includes("--blocked-url-patterns='*netlify*'"), false);
 });
 
 test('fails closed when a required Lighthouse category is missing', () => {
