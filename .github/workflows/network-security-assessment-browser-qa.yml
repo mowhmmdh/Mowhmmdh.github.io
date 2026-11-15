@@ -51,10 +51,10 @@ jobs:
         run: |
           mkdir -p qa-artifacts
           NODE_PATH="$(npm root -g)" node scripts/network-security-assessment-browser-qa.cjs
-      - name: Run mobile Lighthouse
-        run: lighthouse "$PREVIEW_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
-      - name: Run desktop Lighthouse
-        run: lighthouse "$PREVIEW_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Run mobile Lighthouse (exclude Netlify preview CDP helper)
+        run: lighthouse "$PREVIEW_URL" --blocked-url-patterns='*/.netlify/scripts/cdp*' --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Run desktop Lighthouse (exclude Netlify preview CDP helper)
+        run: lighthouse "$PREVIEW_URL" --blocked-url-patterns='*/.netlify/scripts/cdp*' --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
       - name: Print Lighthouse scores and key metrics
         run: |
           node - <<'NODE'
