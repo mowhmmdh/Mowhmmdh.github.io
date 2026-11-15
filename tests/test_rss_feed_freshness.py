@@ -16,7 +16,7 @@ SITEMAP = ROOT / "sitemap.xml"
 
 def heading_from_page(path):
     source = path.read_text(encoding="utf-8")
-    match = re.search(r"<h1[^>]*>([\\s\\S]*?)</h1>", source, re.IGNORECASE)
+    match = re.search(r"<h1[^>]*>([\s\S]*?)</h1>", source, re.IGNORECASE)
     if not match:
         raise AssertionError(f"Missing H1 in {path.relative_to(ROOT)}")
     return unescape(re.sub(r"<[^>]+>", "", match.group(1))).strip()
