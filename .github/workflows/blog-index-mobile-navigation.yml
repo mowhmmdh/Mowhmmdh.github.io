@@ -1,4 +1,4 @@
-name: Blog Index Mobile Navigation Regression
+name: Blog Index Navigation and RSS Regression
 
 on:
   pull_request:
@@ -32,4 +32,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Run dependency-free regression tests
-        run: python3 -m unittest discover -s tests -p "test_blog_index_mobile_navigation.py" -v
+        run: |\n          python3 -m unittest discover -s tests -p "test_blog_index_mobile_navigation.py" -v\n          python3 -m unittest discover -s tests -p "test_rss_feed_freshness.py" -v
