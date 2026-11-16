@@ -1,0 +1,36 @@
+name: Network Security Baseline Static Enhancement Regression
+
+on:
+  pull_request:
+    branches:
+      - growth/en-small-business-security-baseline-2026-10-24
+    paths:
+      - "blog/network-security-baseline-for-small-business.html"
+      - "tests/test_network_security_baseline_static_enhancements.py"
+      - ".github/workflows/network-security-baseline-static-enhancement.yml"
+      - "assets/site-final-quality-2026.css"
+  push:
+    branches:
+      - performance/static-network-security-baseline-cta-2026-11-16
+    paths:
+      - "blog/network-security-baseline-for-small-business.html"
+      - "tests/test_network_security_baseline_static_enhancements.py"
+      - ".github/workflows/network-security-baseline-static-enhancement.yml"
+      - "assets/site-final-quality-2026.css"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: network-security-baseline-static-enhancement-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run focused regression tests
+        run: python3 -m unittest discover -s tests -p "test_network_security_baseline_static_enhancements.py" -v
