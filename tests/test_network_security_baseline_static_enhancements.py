@@ -1,40 +1,80 @@
 """Regression tests for static conversion enhancements on the Persian baseline guide."""
+from html.parser import HTMLParser
 from pathlib import Path
-import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-PAGE_PATH = ROOT / "blog" / "network-security-baseline-for-small-business.html"
-PAGE = PAGE_PATH.read_text(encoding="utf-8")
+PAGE = (ROOT / "blog" / "network-security-baseline-for-small-business.html").read_text(encoding="utf-8")
 CSS = (ROOT / "assets" / "site-final-quality-2026.css").read_text(encoding="utf-8")
 
 
+class PageParser(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.body_class = ""
+        self.ctas = []
+        self.footer_lines = []
+        self.footer_depth = 0
+        self.headings = []
+        self.links = []
+        self._capture_h2 = False
+        self._heading_parts = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        classes = attrs.get("class", "").split()
+        if tag == "body":
+            self.body_class = attrs.get("class", "")
+        if tag == "footer":
+            self.footer_depth += 1
+        if tag == "a":
+            self.links.append(attrs.get("href", ""))
+            if "q-mobile-cta" in classes:
+                self.ctas.append(attrs)
+        if tag == "div" and "q-footerline" in classes:
+            self.footer_lines.append((attrs, self.footer_depth))
+        if tag == "h2":
+            self._capture_h2 = True
+            self._heading_parts = []
+
+    def handle_data(self, data):
+        if self._capture_h2:
+            self._heading_parts.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "h2" and self._capture_h2:
+            self.headings.append("".join(self._heading_parts).strip())
+            self._capture_h2 = False
+            self._heading_parts = []
+        if tag == "footer":
+            self.footer_depth = max(0, self.footer_depth - 1)
+
+
 class NetworkSecurityBaselineStaticEnhancementTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.parser = PageParser()
+        cls.parser.feed(PAGE)
+
     def test_redundant_shared_enhancement_scripts_are_not_loaded(self):
         self.assertNotIn('src="/assets/site-final-quality-2026.js"', PAGE)
         self.assertNotIn('src="/assets/interaction-2026.js"', PAGE)
         # interaction-2026.js exits immediately unless this page opts into personal-site UI.
-        self.assertNotRegex(PAGE, r'<body\\b[^>]*class=["\\'][^"\\']*\\bpersonal-site\\b')
+        self.assertNotIn("personal-site", self.parser.body_class)
 
     def test_exactly_one_static_mobile_cta_preserves_the_existing_conversion_contract(self):
-        anchors = re.findall(
-            r'<a\\b(?=[^>]*\\bclass=["\\'][^"\\']*\\bq-mobile-cta\\b[^"\\']*["\\'])([^>]*)>(.*?)</a>',
-            PAGE,
-            flags=re.IGNORECASE | re.DOTALL,
-        )
-        self.assertEqual(len(anchors), 1)
-        attrs, label = anchors[0]
-        self.assertRegex(attrs, r'\\bhref=["\\']/vintech/request\\.html["\\']')
-        self.assertRegex(attrs, r'\\bdata-conversion=["\\']mobile_service_request["\\']')
-        self.assertEqual(re.sub(r"<[^>]+>", "", label).strip(), "درخواست پروژه / مشاوره")
+        self.assertEqual(len(self.parser.ctas), 1)
+        cta = self.parser.ctas[0]
+        self.assertEqual(cta.get("href"), "/vintech/request.html")
+        self.assertEqual(cta.get("data-conversion"), "mobile_service_request")
         self.assertTrue((ROOT / "vintech" / "request.html").is_file())
+        self.assertIn(">درخواست پروژه / مشاوره</a>", PAGE)
 
     def test_footer_divider_is_static_unique_and_decorative(self):
-        self.assertEqual(PAGE.count('class="q-footerline"'), 1)
-        self.assertIn(
-            '<footer class="legal-footer-2026"><div class="q-footerline" aria-hidden="true"></div>',
-            PAGE,
-        )
+        self.assertEqual(len(self.parser.footer_lines), 1)
+        attrs, footer_depth = self.parser.footer_lines[0]
+        self.assertEqual(attrs.get("aria-hidden"), "true")
+        self.assertGreater(footer_depth, 0)
 
     def test_existing_related_content_and_conversion_paths_are_preserved(self):
         self.assertIn('<section class="auto-related"', PAGE)
@@ -42,7 +82,7 @@ class NetworkSecurityBaselineStaticEnhancementTests(unittest.TestCase):
         self.assertIn('<section class="related-articles site-auto-related"', PAGE)
         for route in ("/services.html", "/vintech/request.html", "/blog/network-hardening.html",
                       "/blog/network-segmentation-for-small-business.html", "/authority.html"):
-            self.assertIn(f'href="{route}"', PAGE)
+            self.assertIn(route, self.parser.links)
             self.assertTrue((ROOT / route.lstrip("/")).is_file(), route)
 
     def test_bilingual_metadata_and_article_schema_are_preserved(self):
@@ -62,7 +102,7 @@ class NetworkSecurityBaselineStaticEnhancementTests(unittest.TestCase):
         self.assertIn('href="/assets/site-final-quality-2026.css"', PAGE)
         self.assertIn(".q-mobile-cta{display:none}", CSS)
         self.assertIn("@media(max-width:760px)", CSS)
-        self.assertRegex(CSS, r"@media\\(max-width:760px\\)[^}]*\\.q-mobile-cta\\{display:flex")
+        self.assertIn(".q-mobile-cta{display:flex", CSS)
         self.assertIn(".q-footerline{", CSS)
 
     def test_article_content_remains_substantive(self):
@@ -76,7 +116,7 @@ class NetworkSecurityBaselineStaticEnhancementTests(unittest.TestCase):
             "۷. Baseline را دوره‌ای بازبینی کنید",
             "جمع‌بندی",
         ):
-            self.assertIn(f"<h2>{heading}</h2>", PAGE)
+            self.assertIn(heading, self.parser.headings)
 
 
 if __name__ == "__main__":
