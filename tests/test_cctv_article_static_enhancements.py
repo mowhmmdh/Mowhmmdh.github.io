@@ -105,5 +105,18 @@ class CctvArticleStaticEnhancementTests(unittest.TestCase):
         self.assertIn("Run desktop Lighthouse", workflow)
 
 
+    def test_browser_qa_distinguishes_clipped_decoration_from_real_horizontal_scroll(self):
+        script = (ROOT / "scripts/cctv-article-browser-qa.cjs").read_text(encoding="utf-8")
+        self.assertIn("window.scrollTo(10000, 0)", script)
+        self.assertIn("horizontalScrollX > 1", script)
+        self.assertIn("fullPage: false", script)
+
+    def test_browser_qa_accepts_preview_clean_url_but_checks_the_conversion_destination(self):
+        script = (ROOT / "scripts/cctv-article-browser-qa.cjs").read_text(encoding="utf-8")
+        self.assertIn("new Set(['/vintech/request.html', '/vintech/request'])", script)
+        self.assertIn("ctaRouteStatus === 200", script)
+        self.assertIn("href=\"/vintech/request.html\"", PAGE)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
