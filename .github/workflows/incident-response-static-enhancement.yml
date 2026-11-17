@@ -12,19 +12,6 @@ on:
       - "assets/site-final-quality-2026.css"
       - "assets/site-theme.js"
       - "fonts/**"
-  push:
-    branches:
-      - performance/static-mobile-cta-incident-response-2026-11-17
-    paths:
-      - "blog/incident-response-network-outage.html"
-      - "tests/test_incident_response_static_enhancements.py"
-      - "scripts/incident-response-browser-qa.cjs"
-      - ".github/workflows/incident-response-static-enhancement.yml"
-      - "assets/site-bundle.css"
-      - "assets/site-final-quality-2026.css"
-      - "assets/site-theme.js"
-      - "fonts/**"
-
 permissions:
   contents: read
 
