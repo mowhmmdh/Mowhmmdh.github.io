@@ -10,6 +10,9 @@ on:
       - "scripts/network-security-baseline-browser-qa.cjs"
       - ".github/workflows/network-security-baseline-static-enhancement.yml"
       - "assets/site-final-quality-2026.css"
+      - "assets/site-bundle.css"
+      - "assets/site-theme.js"
+      - "fonts/**"
   push:
     branches:
       - performance/static-network-security-baseline-cta-2026-11-16
@@ -19,6 +22,9 @@ on:
       - "scripts/network-security-baseline-browser-qa.cjs"
       - ".github/workflows/network-security-baseline-static-enhancement.yml"
       - "assets/site-final-quality-2026.css"
+      - "assets/site-bundle.css"
+      - "assets/site-theme.js"
+      - "fonts/**"
 
 permissions:
   contents: read
