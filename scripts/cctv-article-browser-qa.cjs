@@ -79,6 +79,14 @@ const viewports = [
             document.documentElement.scrollWidth,
             document.body.scrollWidth
           );
+          // The shared nav uses a full-bleed pseudo-element that can inflate scrollWidth
+          // while remaining clipped. Test whether a user can actually scroll sideways.
+          const previousScrollBehavior = document.documentElement.style.scrollBehavior;
+          document.documentElement.style.scrollBehavior = 'auto';
+          window.scrollTo(10000, 0);
+          const horizontalScrollX = window.scrollX;
+          window.scrollTo(0, 0);
+          document.documentElement.style.scrollBehavior = previousScrollBehavior;
 
           return {
             title: document.title,
@@ -86,7 +94,8 @@ const viewports = [
             dir: document.documentElement.dir,
             viewportWidth: window.innerWidth,
             scrollWidth,
-            horizontalOverflow: scrollWidth > window.innerWidth + 1,
+            horizontalScrollX,
+            horizontalOverflow: horizontalScrollX > 1,
             mainPresent: Boolean(document.querySelector('main#main-content')),
             h1Count: document.querySelectorAll('main#main-content h1').length,
             skipLinkTarget: document.querySelector('.skip-link')?.getAttribute('href') || null,
@@ -120,6 +129,12 @@ const viewports = [
           };
         });
 
+        const ctaRouteResponse = snapshot.ctaHref
+          ? await page.request.get(new URL(snapshot.ctaHref, target).href)
+          : null;
+        const ctaRouteStatus = ctaRouteResponse?.status() ?? null;
+        const allowedCtaHrefs = new Set(['/vintech/request.html', '/vintech/request']);
+
         const checks = {
           http200: response?.status() === 200,
           persianRtl: snapshot.lang === 'fa' && snapshot.dir === 'rtl',
@@ -131,9 +146,10 @@ const viewports = [
           ),
           articleSchema: snapshot.articleSchemaLanguage === 'fa-IR',
           singleConversionCta: snapshot.ctaCount === 1 &&
-            snapshot.ctaHref === '/vintech/request.html' &&
+            allowedCtaHrefs.has(snapshot.ctaHref) &&
             snapshot.ctaConversion === 'mobile_service_request' &&
-            Boolean(snapshot.ctaText),
+            Boolean(snapshot.ctaText) &&
+            ctaRouteStatus === 200,
           noHorizontalOverflow: !snapshot.horizontalOverflow,
           fontPreloads: ['Regular', 'Bold', 'ExtraBold'].every(weight =>
             snapshot.fontPreloads.some(item =>
@@ -177,12 +193,13 @@ const viewports = [
 
         await page.screenshot({
           path: 'qa-artifacts/cctv-' + spec.name + '.png',
-          fullPage: true
+          fullPage: false
         });
 
         const result = {
           viewport: spec.name,
           size: spec.width + 'x' + spec.height,
+          ctaRouteStatus,
           checks,
           snapshot,
           pageErrors,
