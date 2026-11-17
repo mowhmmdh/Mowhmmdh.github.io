@@ -1,19 +1,29 @@
-name: CCTV Article Static Enhancement Regression
+name: CCTV Article Static Enhancement Browser and Lighthouse QA
 
 on:
   pull_request:
-    paths:
-      - "blog/cctv-ip-camera-network-design.html"
-      - "tests/test_cctv_article_static_enhancements.py"
-      - ".github/workflows/cctv-article-static-enhancement.yml"
-      - "assets/site-bundle.css"
-  push:
     branches: [main]
     paths:
       - "blog/cctv-ip-camera-network-design.html"
       - "tests/test_cctv_article_static_enhancements.py"
+      - "scripts/cctv-article-browser-qa.cjs"
       - ".github/workflows/cctv-article-static-enhancement.yml"
       - "assets/site-bundle.css"
+      - "assets/site-final-quality-2026.css"
+      - "assets/site-theme.js"
+      - "fonts/**"
+  push:
+    branches:
+      - performance/cctv-static-mobile-cta-2026-11-04
+    paths:
+      - "blog/cctv-ip-camera-network-design.html"
+      - "tests/test_cctv_article_static_enhancements.py"
+      - "scripts/cctv-article-browser-qa.cjs"
+      - ".github/workflows/cctv-article-static-enhancement.yml"
+      - "assets/site-bundle.css"
+      - "assets/site-final-quality-2026.css"
+      - "assets/site-theme.js"
+      - "fonts/**"
 
 permissions:
   contents: read
@@ -24,9 +34,87 @@ concurrency:
 
 jobs:
   regression:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out repository
+        uses: actions/checkout@v7
       - name: Run focused regression tests
         run: python3 -m unittest discover -s tests -p "test_cctv_article_static_enhancements.py" -v
+
+  browser-and-lighthouse:
+    needs: regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PREVIEW_URL: https://deploy-preview-49--mowhmmdh.netlify.app/blog/cctv-ip-camera-network-design.html
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for Netlify deploy preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify deploy preview did not return HTTP 200: $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile Chromium checks
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/cctv-article-browser-qa.cjs
+      - name: Run mobile Lighthouse
+        run: |
+          lighthouse "$PREVIEW_URL" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Run desktop Lighthouse
+        run: |
+          lighthouse "$PREVIEW_URL" --only-categories=performance,accessibility,best-practices,seo --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Enforce performance, accessibility and best-practice thresholds
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const thresholds = { performance: 90, accessibility: 95, 'best-practices': 95 };
+          let failed = false;
+          for (const [name, file] of [
+            ['mobile', 'qa-artifacts/lighthouse-mobile.json'],
+            ['desktop', 'qa-artifacts/lighthouse-desktop.json']
+          ]) {
+            const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const scores = {};
+            for (const key of ['performance', 'accessibility', 'best-practices', 'seo']) {
+              const score = report.categories?.[key]?.score;
+              if (typeof score !== 'number') throw new Error(name + ': missing Lighthouse category ' + key);
+              scores[key] = Math.round(score * 100);
+            }
+            console.log(JSON.stringify({ formFactor: name, scores }, null, 2));
+            for (const [key, minimum] of Object.entries(thresholds)) {
+              if (scores[key] < minimum) {
+                console.error(name + ': ' + key + ' score ' + scores[key] + ' is below ' + minimum);
+                failed = true;
+              }
+            }
+          }
+          if (failed) process.exit(1);
+          NODE
+      - name: Explain preview SEO scope
+        run: |
+          echo "SEO is reported but not gated: Netlify deploy previews intentionally return x-robots-tag: noindex. This is not a production indexability measurement."
+      - name: Upload screenshots, browser report and Lighthouse JSON
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: cctv-article-browser-lighthouse
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
