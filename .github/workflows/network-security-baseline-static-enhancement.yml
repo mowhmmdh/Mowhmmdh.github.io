@@ -1,4 +1,4 @@
-name: Network Security Baseline Static Enhancement Regression
+name: Network Security Baseline Static Enhancement and Browser QA
 
 on:
   pull_request:
@@ -7,6 +7,7 @@ on:
     paths:
       - "blog/network-security-baseline-for-small-business.html"
       - "tests/test_network_security_baseline_static_enhancements.py"
+      - "scripts/network-security-baseline-browser-qa.cjs"
       - ".github/workflows/network-security-baseline-static-enhancement.yml"
       - "assets/site-final-quality-2026.css"
   push:
@@ -15,6 +16,7 @@ on:
     paths:
       - "blog/network-security-baseline-for-small-business.html"
       - "tests/test_network_security_baseline_static_enhancements.py"
+      - "scripts/network-security-baseline-browser-qa.cjs"
       - ".github/workflows/network-security-baseline-static-enhancement.yml"
       - "assets/site-final-quality-2026.css"
 
@@ -22,15 +24,97 @@ permissions:
   contents: read
 
 concurrency:
-  group: network-security-baseline-static-enhancement-${{ github.ref }}
+  group: network-security-baseline-static-enhancement
   cancel-in-progress: true
 
 jobs:
   regression:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Run focused regression tests
         run: python3 -m unittest discover -s tests -p "test_network_security_baseline_static_enhancements.py" -v
+
+  browser-and-lighthouse:
+    needs: regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      TARGET_URL: http://127.0.0.1:4173/blog/network-security-baseline-for-small-business.html
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Start local static preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/network-security-baseline-http.log 2>&1 &
+          echo $! > /tmp/network-security-baseline-http.pid
+          for attempt in {1..30}; do
+            if curl --fail --silent "$TARGET_URL" -o /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/network-security-baseline-http.log
+          echo "Local static preview did not become ready: $TARGET_URL"
+          exit 1
+      - name: Run desktop and mobile Chromium checks
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/network-security-baseline-browser-qa.cjs
+      - name: Run mobile Lighthouse (local static preview)
+        run: |
+          lighthouse "$TARGET_URL" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Run desktop Lighthouse (local static preview)
+        run: |
+          lighthouse "$TARGET_URL" --only-categories=performance,accessibility,best-practices,seo --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Print Lighthouse scores and key metrics
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          for (const [name, file] of [
+            ['mobile', 'qa-artifacts/lighthouse-mobile.json'],
+            ['desktop', 'qa-artifacts/lighthouse-desktop.json']
+          ]) {
+            const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const audits = report.audits || {};
+            const scores = {};
+            for (const key of ['performance', 'accessibility', 'best-practices', 'seo']) {
+              const score = report.categories[key] && report.categories[key].score;
+              if (typeof score !== 'number') throw new Error(name + ': missing Lighthouse category ' + key);
+              scores[key] = Math.round(score * 100);
+            }
+            console.log(JSON.stringify({
+              formFactor: name,
+              scores,
+              metrics: {
+                fcp: audits['first-contentful-paint'] && audits['first-contentful-paint'].displayValue,
+                lcp: audits['largest-contentful-paint'] && audits['largest-contentful-paint'].displayValue,
+                tbt: audits['total-blocking-time'] && audits['total-blocking-time'].displayValue,
+                cls: audits['cumulative-layout-shift'] && audits['cumulative-layout-shift'].displayValue
+              }
+            }, null, 2));
+          }
+          NODE
+      - name: Explain local-lab measurement scope
+        run: |
+          echo "These Lighthouse runs use a local static preview on the GitHub runner. They validate page behavior and provide lab diagnostics; they are not Netlify-preview, production, or field Core Web Vitals measurements."
+      - name: Upload browser screenshots and Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: network-security-baseline-browser-lighthouse
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
