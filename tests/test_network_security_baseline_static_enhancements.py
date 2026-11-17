@@ -126,6 +126,9 @@ class NetworkSecurityBaselineStaticEnhancementTests(unittest.TestCase):
         self.assertIn('lighthouse "$TARGET_URL"', BROWSER_WORKFLOW)
         self.assertIn("--preset=desktop", BROWSER_WORKFLOW)
         self.assertIn("actions/upload-artifact@v7", BROWSER_WORKFLOW)
+        self.assertIn('"assets/site-bundle.css"', BROWSER_WORKFLOW)
+        self.assertIn('"assets/site-theme.js"', BROWSER_WORKFLOW)
+        self.assertIn('"fonts/**"', BROWSER_WORKFLOW)
         self.assertNotIn("secrets.", BROWSER_WORKFLOW.lower())
 
     def test_browser_qa_script_checks_bilingual_metadata_conversion_and_no_overflow(self):
