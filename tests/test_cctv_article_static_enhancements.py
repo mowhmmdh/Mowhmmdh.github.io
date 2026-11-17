@@ -63,5 +63,47 @@ class CctvArticleStaticEnhancementTests(unittest.TestCase):
         self.assertIn('class="mobile-menu"', PAGE)
 
 
+    def test_critical_vazirmatn_fonts_are_preloaded_once_with_anonymous_cors(self):
+        expected = (
+            "/fonts/Vazirmatn-Regular.woff2",
+            "/fonts/Vazirmatn-Bold.woff2",
+            "/fonts/Vazirmatn-ExtraBold.woff2",
+        )
+        stylesheet_position = PAGE.index('href="/assets/site-bundle.css"')
+        for font in expected:
+            tag = (
+                f'<link rel="preload" href="{font}" as="font" '
+                'type="font/woff2" crossorigin="anonymous">'
+            )
+            self.assertEqual(PAGE.count(tag), 1, font)
+            self.assertLess(PAGE.index(tag), stylesheet_position, font)
+            self.assertTrue((ROOT / font.lstrip("/")).is_file(), font)
+            self.assertIn(font, CSS)
+
+    def test_preloaded_fonts_match_the_shared_font_face_definitions(self):
+        for font in ("Regular", "Bold", "ExtraBold"):
+            self.assertIn(
+                f"src:url('/fonts/Vazirmatn-{font}.woff2') format('woff2')",
+                CSS,
+            )
+
+    def test_browser_qa_workflow_is_read_only_and_tracks_render_dependencies(self):
+        workflow = (ROOT / ".github/workflows/cctv-article-static-enhancement.yml").read_text(encoding="utf-8")
+        self.assertIn("permissions:", workflow)
+        self.assertIn("contents: read", workflow)
+        for dependency in (
+            "blog/cctv-ip-camera-network-design.html",
+            "assets/site-bundle.css",
+            "assets/site-final-quality-2026.css",
+            "assets/site-theme.js",
+            "fonts/**",
+            "scripts/cctv-article-browser-qa.cjs",
+        ):
+            self.assertIn(dependency, workflow)
+        self.assertIn("Run desktop and mobile Chromium checks", workflow)
+        self.assertIn("Run mobile Lighthouse", workflow)
+        self.assertIn("Run desktop Lighthouse", workflow)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
