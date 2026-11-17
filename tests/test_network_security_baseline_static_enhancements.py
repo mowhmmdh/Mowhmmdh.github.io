@@ -6,6 +6,8 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = (ROOT / "blog" / "network-security-baseline-for-small-business.html").read_text(encoding="utf-8")
 CSS = (ROOT / "assets" / "site-final-quality-2026.css").read_text(encoding="utf-8")
+BROWSER_SCRIPT = (ROOT / "scripts" / "network-security-baseline-browser-qa.cjs").read_text(encoding="utf-8")
+BROWSER_WORKFLOW = (ROOT / ".github" / "workflows" / "network-security-baseline-static-enhancement.yml").read_text(encoding="utf-8")
 
 
 class PageParser(HTMLParser):
@@ -59,7 +61,6 @@ class NetworkSecurityBaselineStaticEnhancementTests(unittest.TestCase):
     def test_redundant_shared_enhancement_scripts_are_not_loaded(self):
         self.assertNotIn('src="/assets/site-final-quality-2026.js"', PAGE)
         self.assertNotIn('src="/assets/interaction-2026.js"', PAGE)
-        # interaction-2026.js exits immediately unless this page opts into personal-site UI.
         self.assertNotIn("personal-site", self.parser.body_class)
 
     def test_exactly_one_static_mobile_cta_preserves_the_existing_conversion_contract(self):
@@ -117,6 +118,33 @@ class NetworkSecurityBaselineStaticEnhancementTests(unittest.TestCase):
             "جمع‌بندی",
         ):
             self.assertIn(heading, self.parser.headings)
+
+    def test_browser_qa_workflow_is_read_only_and_runs_both_lighthouse_profiles(self):
+        self.assertIn("permissions:\n  contents: read", BROWSER_WORKFLOW)
+        self.assertIn("python3 -m http.server 4173", BROWSER_WORKFLOW)
+        self.assertIn("playwright install --with-deps chromium", BROWSER_WORKFLOW)
+        self.assertIn('lighthouse "$TARGET_URL"', BROWSER_WORKFLOW)
+        self.assertIn("--preset=desktop", BROWSER_WORKFLOW)
+        self.assertIn("actions/upload-artifact@v7", BROWSER_WORKFLOW)
+        self.assertNotIn("secrets.", BROWSER_WORKFLOW.lower())
+
+    def test_browser_qa_script_checks_bilingual_metadata_conversion_and_no_overflow(self):
+        for required in (
+            "lang === 'fa'",
+            "dir === 'rtl'",
+            "horizontalOverflow",
+            "q-mobile-cta",
+            "mobile",
+            "desktop",
+            "fa-IR",
+            "x-default",
+            "mobile_service_request",
+            "/assets/site-final-quality-2026.js",
+            "/assets/interaction-2026.js",
+            "pageErrors",
+            "consoleErrors",
+        ):
+            self.assertIn(required, BROWSER_SCRIPT)
 
 
 if __name__ == "__main__":
