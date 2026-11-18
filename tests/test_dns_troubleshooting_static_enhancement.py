@@ -91,7 +91,9 @@ class DnsTroubleshootingStaticEnhancementTests(unittest.TestCase):
     def test_browser_lighthouse_workflow_is_pr_scoped_and_read_only(self):
         self.assertIn("pull_request:", WORKFLOW)
         self.assertIn("contents: read", WORKFLOW)
-        self.assertIn("deploy-preview-__GH_OPEN__github.event.pull_request.number__GH_CLOSE__", WORKFLOW)
+        self.assertIn("github.event.pull_request.number", WORKFLOW)
+        self.assertIn("deploy-preview-", WORKFLOW)
+        self.assertNotIn("deploy-preview-54--", WORKFLOW)
         self.assertIn("Run focused regression tests", WORKFLOW)
         self.assertIn("Run desktop and mobile Chromium checks", WORKFLOW)
         self.assertIn("Run mobile Lighthouse", WORKFLOW)

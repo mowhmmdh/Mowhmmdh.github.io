@@ -17,7 +17,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: dns-troubleshooting-static-enhancement-${github.event.pull_request.number}
+  group: dns-troubleshooting-static-enhancement-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -35,7 +35,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 25
     env:
-      PREVIEW_URL: https://deploy-preview-${github.event.pull_request.number}--mowhmmdh.netlify.app/blog/dns-troubleshooting.html
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/blog/dns-troubleshooting.html
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
