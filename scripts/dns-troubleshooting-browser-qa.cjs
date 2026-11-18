@@ -8,6 +8,8 @@ const target = process.env.PREVIEW_URL ||
   'https://deploy-preview-54--mowhmmdh.netlify.app/blog/dns-troubleshooting.html';
 const expectedCanonical =
   'https://mowhmmdh.github.io/blog/dns-troubleshooting.html';
+const allowedRequestHrefs = new Set(['/vintech/request.html', '/vintech/request']);
+const allowedServicesHrefs = new Set(['/services.html', '/services']);
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'mobile', width: 390, height: 844 }
@@ -137,8 +139,11 @@ const viewports = [
             footerLineDecorative: Boolean(
               footerLine && footerLine.getAttribute('aria-hidden') === 'true'
             ),
-            legalFooterLinks: ['/privacy.html', '/terms.html', '/disclosure.html']
-              .every(path => Boolean(footer?.querySelector('a[href="' + path + '"]'))),
+            legalFooterLinks: [
+              ['/privacy.html', '/privacy'],
+              ['/terms.html', '/terms'],
+              ['/disclosure.html', '/disclosure']
+            ].every(paths => paths.some(path => Boolean(footer?.querySelector('a[href="' + path + '"]')))),
             emailLinkPresent: Boolean(footer?.querySelector('a[href^="mailto:"]')),
             iconLinkPresent: Boolean(document.querySelector('link[rel~="icon"]')),
             horizontalScrollX,
@@ -172,13 +177,13 @@ const viewports = [
             snapshot.articleUrl === expectedCanonical,
           breadcrumbSchema: snapshot.breadcrumbPresent,
           serviceConversionPreserved: snapshot.servicePresent &&
-            snapshot.serviceLinks.includes('/services.html') &&
-            snapshot.serviceLinks.includes('/vintech/request.html') &&
+            snapshot.serviceLinks.some(path => allowedServicesHrefs.has(path)) &&
+            snapshot.serviceLinks.some(path => allowedRequestHrefs.has(path)) &&
             servicesRoute.status() === 200,
           relatedSectionsPreserved: snapshot.autoRelatedPresent &&
             snapshot.relatedArticlesPresent,
           singleMobileCta: snapshot.ctaCount === 1 &&
-            snapshot.ctaHref === '/vintech/request.html' &&
+            allowedRequestHrefs.has(snapshot.ctaHref) &&
             snapshot.ctaText === 'درخواست پروژه / مشاوره' &&
             snapshot.ctaConversion === 'mobile_service_request' &&
             requestRoute.status() === 200,

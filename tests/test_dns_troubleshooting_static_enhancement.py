@@ -85,6 +85,9 @@ class DnsTroubleshootingStaticEnhancementTests(unittest.TestCase):
             "relatedSectionsPreserved",
             "footerLineDecorative",
             "removedEnhancerNotRequested",
+            "allowedRequestHrefs",
+            "allowedServicesHrefs",
+            "['/privacy.html', '/privacy']"
         ):
             self.assertIn(contract, BROWSER_QA)
 
