@@ -133,10 +133,96 @@ integrity = ROOT / "scripts/site-integrity-fix.py"
 if not integrity.is_file() or "FULL_EN='Mohammad Hossein Asgari Somarin'" not in integrity.read_text(encoding="utf-8"):
     errors.append("site-integrity-fix.py: canonical English identity is incorrect")
 
+
+# Guard every repaired page against escaped newline text leaking from <head>,
+# while asserting canonical URLs and the bilingual alternates that each page owns.
+HEAD_WHITESPACE_PAGES = {
+    "blog/dns-troubleshooting.html": (
+        "https://mowhmmdh.github.io/blog/dns-troubleshooting.html",
+        {"fa-IR", "en"},
+    ),
+    "authority.html": (
+        "https://mowhmmdh.github.io/authority.html",
+        {"fa-IR", "en"},
+    ),
+    "blog/vlan-segmentation.html": (
+        "https://mowhmmdh.github.io/blog/vlan-segmentation.html",
+        {"fa-IR", "en"},
+    ),
+    "services/network-support.html": (
+        "https://mowhmmdh.github.io/services/network-support.html",
+        {"fa-IR"},
+    ),
+    "blog/network-hardening.html": (
+        "https://mowhmmdh.github.io/blog/network-hardening.html",
+        {"fa-IR", "en"},
+    ),
+}
+
+for relative_path, (expected_canonical, required_hreflangs) in HEAD_WHITESPACE_PAGES.items():
+    page_path = ROOT / relative_path
+    if not page_path.is_file():
+        errors.append(f"missing required page: {relative_path}")
+        continue
+
+    page_source = page_path.read_text(encoding="utf-8")
+    head_end = page_source.lower().find("</head>")
+    if head_end < 0:
+        errors.append(f"{relative_path}: closing head element missing")
+        continue
+
+    head = page_source[:head_end]
+    if chr(92) + "n" in head:
+        errors.append(f"{relative_path}: literal escaped newline sequence remains in head")
+
+    head_parser = Page()
+    head_parser.feed(head)
+    canonicals = [
+        item.get("href", "")
+        for item in head_parser.links
+        if "canonical" in (item.get("rel") or "").lower().split()
+    ]
+    if len(canonicals) != 1 or canonicals[0] != expected_canonical:
+        errors.append(f"{relative_path}: canonical URL missing, duplicated, or changed")
+
+    available_hreflangs = {item.get("hreflang") for item in head_parser.links}
+    for language in required_hreflangs:
+        if language not in available_hreflangs:
+            errors.append(f"{relative_path}: required hreflang missing: {language}")
+
+# Keep the Persian authority page's ProfilePage entity anchored to its own URL.
+authority_path = ROOT / "authority.html"
+if authority_path.is_file():
+    authority_parser = Page()
+    authority_parser.feed(authority_path.read_text(encoding="utf-8"))
+    profile_page_ids = []
+    for raw in authority_parser.jsonld:
+        try:
+            data = json.loads(raw)
+        except Exception:
+            continue  # Invalid JSON-LD is reported by the required-page checks above.
+        if data.get("@type") == "ProfilePage":
+            profile_page_ids.append(data.get("@id"))
+        profile_page_ids.extend(
+            node.get("@id")
+            for node in data.get("@graph", [])
+            if node.get("@type") == "ProfilePage"
+        )
+
+    expected_profile_page_id = "https://mowhmmdh.github.io/authority.html#profile"
+    if not profile_page_ids or any(
+        page_id != expected_profile_page_id for page_id in profile_page_ids
+    ):
+        errors.append(
+            "authority.html: ProfilePage JSON-LD must identify the current Persian authority URL"
+        )
+else:
+    errors.append("missing required page: authority.html")
+
 if errors:
     print(f"Release smoke test failed with {len(errors)} issue(s):")
     for error in errors:
         print(" -", error)
     sys.exit(1)
 
-print("PASS: profile/article metadata, canonical URLs, H1, JSON-LD, profile image, XML sitemaps, robots.txt, and canonical identity.")
+print("PASS: profile/article metadata, canonical URLs, H1, JSON-LD, profile image, DNS head whitespace/hreflang, XML sitemaps, robots.txt, and canonical identity.")
