@@ -15,6 +15,7 @@ HOME_CSS = (ROOT / "assets/home-visual-redesign-2026.css").read_text(encoding="u
 BUNDLE_CSS = (ROOT / "assets/site-bundle.css").read_text(encoding="utf-8")
 QUALITY_JS = (ROOT / "assets/site-final-quality-2026.js").read_text(encoding="utf-8")
 THEME_JS = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
+QUALITY_CSS = (ROOT / "assets/site-final-quality-2026.css").read_text(encoding="utf-8")
 
 def _relative_luminance(hex_color):
     """Return WCAG relative luminance for a #RRGGBB sRGB color."""
@@ -293,6 +294,25 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         self.assertIn('class="mh-home"', body.group(0))
         self.assertNotIn("personal-site", body.group(0))
         self.assertNotIn('/assets/interaction-2026.js', HOME)
+
+
+    def test_homepage_static_mobile_conversion_replaces_shared_enhancement_script(self):
+        self.assertNotIn('/assets/site-final-quality-2026.js', HOME)
+        self.assertIn('<section class="q-conversion"', HOME)
+        expected_cta = (
+            '<a class="q-mobile-cta" href="/vintech/request.html" '
+            'data-conversion="mobile_service_request">درخواست پروژه / مشاوره</a>'
+        )
+        self.assertEqual(HOME.count(expected_cta), 1)
+        self.assertEqual(HOME.count('class="q-mobile-cta"'), 1)
+        self.assertRegex(
+            HOME,
+            r'<footer class="site-wrap mh-footer"><div class="q-footerline" aria-hidden="true"></div>',
+        )
+        self.assertEqual(HOME.count('class="q-footerline"'), 1)
+        self.assertIn('.q-mobile-cta{display:none}', QUALITY_CSS)
+        self.assertIn('@media(max-width:760px)', QUALITY_CSS)
+        self.assertIn('.q-mobile-cta{display:flex;position:fixed', QUALITY_CSS)
 
 
 class HomepagePreviewWorkflowTests(unittest.TestCase):
