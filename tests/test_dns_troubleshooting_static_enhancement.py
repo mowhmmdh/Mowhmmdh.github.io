@@ -100,7 +100,7 @@ class DnsTroubleshootingStaticEnhancementTests(unittest.TestCase):
         self.assertIn("Run desktop Lighthouse", WORKFLOW)
         self.assertIn("performance: 90", WORKFLOW)
         self.assertIn("accessibility: 95", WORKFLOW)
-        self.assertIn("best-practices: 95", WORKFLOW)
+        self.assertIn("'best-practices': 95", WORKFLOW)
 
 
 if __name__ == "__main__":
