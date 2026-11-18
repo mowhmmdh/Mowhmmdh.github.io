@@ -55,7 +55,7 @@ async function main() {
         const brand = document.querySelector('.mh-brand');
         const links = document.querySelector('.mh-nav-links');
         const navLinksStyle = links ? getComputedStyle(links) : null;
-        const request = document.querySelector('a[href="/vintech/request.html"]');
+        const request = document.querySelector('a[href="/vintech/request.html"],a[href="/vintech/request"]');
         const mobileCta = document.querySelector('.q-mobile-cta');
         const mobileCtaStyle = mobileCta ? getComputedStyle(mobileCta) : null;
         const footerLine = document.querySelector('.mh-footer > .q-footerline[aria-hidden="true"]');
@@ -139,7 +139,7 @@ async function main() {
       if (requestedPaths.includes('/assets/site-final-quality-2026.js')) {
         throw new Error(spec.name + ': redundant shared enhancement script was requested.');
       }
-      if (snapshot.mobileCtaHref !== '/vintech/request.html' ||
+      if (!['/vintech/request.html', '/vintech/request'].includes(snapshot.mobileCtaHref) ||
           snapshot.mobileCtaConversion !== 'mobile_service_request' ||
           snapshot.mobileCtaLabel !== 'درخواست پروژه / مشاوره') {
         throw new Error(spec.name + ': static mobile conversion contract failed: ' + JSON.stringify(snapshot));
