@@ -19,6 +19,11 @@ async function main() {
         reducedMotion: 'reduce'
       });
       const pageErrors = [];
+      const requestedPaths = [];
+      page.on('request', request => {
+        try { requestedPaths.push(new URL(request.url()).pathname); }
+        catch (_) { requestedPaths.push(request.url()); }
+      });
       page.on('pageerror', error => pageErrors.push(error.message));
 
       const response = await page.goto(previewUrl, {
@@ -51,6 +56,9 @@ async function main() {
         const links = document.querySelector('.mh-nav-links');
         const navLinksStyle = links ? getComputedStyle(links) : null;
         const request = document.querySelector('a[href="/vintech/request.html"]');
+        const mobileCta = document.querySelector('.q-mobile-cta');
+        const mobileCtaStyle = mobileCta ? getComputedStyle(mobileCta) : null;
+        const footerLine = document.querySelector('.mh-footer > .q-footerline[aria-hidden="true"]');
         const scrollWidth = Math.max(
           document.documentElement.scrollWidth,
           document.body.scrollWidth
@@ -90,6 +98,13 @@ async function main() {
           heroVisible: !!rect('.mh-hero'),
           heroVisualVisible: !!rect('.mh-hero-visual'),
           conversionLinkPresent: !!request,
+          mobileCta: rect('.q-mobile-cta'),
+          mobileCtaDisplay: mobileCtaStyle ? mobileCtaStyle.display : null,
+          mobileCtaHref: mobileCta ? mobileCta.getAttribute('href') : null,
+          mobileCtaConversion: mobileCta ? mobileCta.getAttribute('data-conversion') : null,
+          mobileCtaLabel: mobileCta ? mobileCta.textContent.trim() : '',
+          footerLineCount: document.querySelectorAll('.mh-footer > .q-footerline[aria-hidden="true"]').length,
+          footerLineIsFirstChild: !!footerLine && footerLine.parentElement.firstElementChild === footerLine,
           profileLazy: !!profile && profile.getAttribute('loading') === 'lazy',
           navLinkCount: links ? links.querySelectorAll('a').length : 0,
           navLinksRect: rect('.mh-nav-links'),
@@ -117,6 +132,26 @@ async function main() {
       }
       if (snapshot.headerPosition !== 'sticky') {
         throw new Error(spec.name + ': homepage header is not sticky: ' + snapshot.headerPosition);
+      }
+      if (snapshot.footerLineCount !== 1 || !snapshot.footerLineIsFirstChild) {
+        throw new Error(spec.name + ': static footer divider contract failed: ' + JSON.stringify(snapshot));
+      }
+      if (requestedPaths.includes('/assets/site-final-quality-2026.js')) {
+        throw new Error(spec.name + ': redundant shared enhancement script was requested.');
+      }
+      if (snapshot.mobileCtaHref !== '/vintech/request.html' ||
+          snapshot.mobileCtaConversion !== 'mobile_service_request' ||
+          snapshot.mobileCtaLabel !== 'درخواست پروژه / مشاوره') {
+        throw new Error(spec.name + ': static mobile conversion contract failed: ' + JSON.stringify(snapshot));
+      }
+      if (spec.name === 'mobile') {
+        if (snapshot.mobileCtaDisplay !== 'flex' || !snapshot.mobileCta ||
+            snapshot.mobileCta.width < 300 ||
+            snapshot.mobileCta.y + snapshot.mobileCta.height > spec.height + 1) {
+          throw new Error('mobile: static CTA is not visible and in-bounds: ' + JSON.stringify(snapshot));
+        }
+      } else if (snapshot.mobileCtaDisplay !== 'none') {
+        throw new Error('desktop: mobile CTA should be hidden: ' + JSON.stringify(snapshot));
       }
       if (!snapshot.heroVisible || !snapshot.heroVisualVisible) {
         throw new Error(spec.name + ': hero content is not visible.');
