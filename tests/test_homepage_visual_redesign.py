@@ -401,5 +401,28 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
                 self.assertNotIn(action, workflow)
 
 
+    def test_preview_lighthouse_gate_is_enforced_for_mobile_and_desktop(self):
+        workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
+        checker = (ROOT / "scripts/check-homepage-lighthouse.cjs").read_text(encoding="utf-8")
+        gate_tests = (ROOT / "scripts/test-homepage-lighthouse-gate.cjs").read_text(encoding="utf-8")
+
+        self.assertIn("node scripts/test-homepage-lighthouse-gate.cjs", workflow)
+        self.assertIn(
+            "node scripts/check-homepage-lighthouse.cjs qa-artifacts/lighthouse-mobile.json mobile",
+            workflow,
+        )
+        self.assertIn(
+            "node scripts/check-homepage-lighthouse.cjs qa-artifacts/lighthouse-desktop.json desktop",
+            workflow,
+        )
+        self.assertIn("performance: 90", checker)
+        self.assertIn("accessibility: 95", checker)
+        self.assertIn("'best-practices': 95", checker)
+        self.assertIn("rawScore * 100 < minimum", checker)
+        self.assertIn("preview-only SEO", checker)
+        self.assertIn("rejects Performance below 90", gate_tests)
+        self.assertIn("rejects a missing required Lighthouse category", gate_tests)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
