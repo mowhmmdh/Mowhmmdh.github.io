@@ -419,7 +419,7 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
         self.assertIn("accessibility: 95", checker)
         self.assertIn("'best-practices': 95", checker)
         self.assertIn("rawScore * 100 < minimum", checker)
-        self.assertIn("preview-only SEO", checker)
+        self.assertIn("Preview SEO is reported but not gated", checker)
         self.assertIn("rejects Performance below 90", gate_tests)
         self.assertIn("rejects a missing required Lighthouse category", gate_tests)
 
