@@ -84,6 +84,14 @@ const viewports = [
           const menu = document.querySelector('.nav .mobile-menu');
           const nav = document.querySelector('.nav');
           const themeToggle = document.querySelector('.theme-toggle');
+          const discovery = document.querySelector('section.auto-discovery.q-discovery');
+          const discoveryGrid = discovery?.querySelector('.q-discovery-grid');
+          const discoveryCards = Array.from(discovery?.querySelectorAll('a.q-discovery-card') || []);
+          const discoveryGridStyle = discoveryGrid ? getComputedStyle(discoveryGrid) : null;
+          const discoveryColumnCount = discoveryGridStyle?.gridTemplateColumns
+            ? discoveryGridStyle.gridTemplateColumns.split(' ').filter(Boolean).length
+            : 0;
+          const discoveryCardDisplays = discoveryCards.map(card => getComputedStyle(card).display);
           const oldBehavior = document.documentElement.style.scrollBehavior;
           document.documentElement.style.scrollBehavior = 'auto';
           window.scrollTo(10000, 0);
@@ -107,6 +115,10 @@ const viewports = [
             menuExpanded: menu?.getAttribute('aria-expanded') || null,
             menuOpen: Boolean(nav?.classList.contains('menu-open')),
             themeTogglePresent: Boolean(themeToggle),
+            discoveryGridDisplay: discoveryGridStyle?.display || null,
+            discoveryColumnCount,
+            discoveryCardCount: discoveryCards.length,
+            discoveryCardDisplays,
             ctaCount: document.querySelectorAll('a.q-mobile-cta').length,
             ctaDisplay: ctaStyle?.display || null,
             ctaVisible: Boolean(
@@ -151,6 +163,13 @@ const viewports = [
             snapshot.schemaTypes.includes('CollectionPage') &&
             snapshot.schemaTypes.includes('BreadcrumbList'),
           primaryNavigation: snapshot.navLinkCount >= 5 && snapshot.menuPresent,
+          discoveryCardsUseResponsiveGrid:
+            snapshot.discoveryGridDisplay === 'grid' &&
+            snapshot.discoveryCardCount === 31 &&
+            snapshot.discoveryCardDisplays.every(display => display === 'flex') &&
+            (spec.name === 'mobile'
+              ? snapshot.discoveryColumnCount === 1
+              : snapshot.discoveryColumnCount >= 2),
           oneStaticMobileCta: snapshot.ctaCount === 1 &&
             allowedRequestPaths.has(snapshot.ctaHref) &&
             snapshot.ctaConversion === 'mobile_service_request' &&
