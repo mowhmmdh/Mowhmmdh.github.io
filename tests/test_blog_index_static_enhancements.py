@@ -131,7 +131,7 @@ class BlogIndexStaticEnhancementTests(unittest.TestCase):
             for item in PARSER.links if item.get("hreflang")
         }
         self.assertEqual(alternates.get("fa-IR"), "https://mowhmmdh.github.io/blog/")
-        self.assertEqual(alternates.get("en"), "https://mowhmmdh.github.io/en-blog/")
+        self.assertEqual(alternates.get("en"), "https://mowhmmdh.github.io/en-blog.html")
         self.assertEqual(alternates.get("x-default"), "https://mowhmmdh.github.io/blog/")
         rss = [
             item.get("href") for item in PARSER.links
