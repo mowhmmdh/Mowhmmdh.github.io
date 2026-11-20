@@ -193,5 +193,13 @@ class BlogIndexStaticEnhancementTests(unittest.TestCase):
                 )
 
 
+    def test_blog_index_navigation_backdrop_stays_within_the_viewport(self):
+        self.assertIn('<body class="blog-index">', PAGE)
+        self.assertIn(
+            "body.blog-index .nav:before{inset-inline:calc((100vw - 100%)/-2)}",
+            PAGE,
+        )
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

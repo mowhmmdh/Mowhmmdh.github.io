@@ -127,7 +127,10 @@ const viewports = [
             conversionEmail: conversion?.querySelector('a[data-conversion="email"]')?.getAttribute('href') || null,
             footerLineCount: footer?.querySelectorAll('.q-footerline').length || 0,
             footerLineFirstChild: Boolean(footerLine && footer?.firstElementChild === footerLine),
-            horizontalScrollX
+            horizontalScrollX,
+            innerWidth: window.innerWidth,
+            documentScrollWidth: document.documentElement.scrollWidth,
+            bodyScrollWidth: document.body.scrollWidth
           };
         });
 
@@ -160,7 +163,10 @@ const viewports = [
           ctaResponsive: spec.name === 'mobile'
             ? snapshot.ctaVisible && snapshot.ctaInBounds
             : !snapshot.ctaVisible,
-          noHorizontalScroll: snapshot.horizontalScrollX <= 1,
+          noHorizontalScroll:
+            snapshot.horizontalScrollX <= 1 &&
+            snapshot.documentScrollWidth <= snapshot.innerWidth + 1 &&
+            snapshot.bodyScrollWidth <= snapshot.innerWidth + 1,
           noRedundantEnhancementRequest:
             !requestedPaths.includes('/assets/site-final-quality-2026.js'),
           noPageErrors: pageErrors.length === 0,
