@@ -66,8 +66,11 @@ jobs:
           safe_page=$(printf '%s' "${{ matrix.page }}" | sed 's#^/##; s#/#-#g')
           [ -n "$safe_page" ] || safe_page=home
           echo "ARTIFACT_NAME=lighthouse-$safe_page" >> "$GITHUB_ENV"
-      - name: Install Lighthouse
-        run: npm install --global lighthouse@13
+      # Keep Lighthouse and its Sentry transitive dependency pair reproducible.
+      # Lighthouse 13.6.0 accepts @sentry/node ^11.8.0; pin a published node/core
+      # pair so a newly published node release cannot require a not-yet-published core.
+      - name: Install pinned Lighthouse toolchain
+        run: npm install --global lighthouse@13.6.0 @sentry/node@11.13.0 @sentry/core@11.13.0
       - name: Wait until GitHub Pages serves the page
         env:
           URL: https://mowhmmdh.github.io${{ matrix.page }}
