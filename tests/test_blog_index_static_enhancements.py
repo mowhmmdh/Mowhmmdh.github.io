@@ -164,7 +164,7 @@ class BlogIndexStaticEnhancementTests(unittest.TestCase):
         self.assertIn('<section class="auto-discovery section q-discovery"', PAGE)
         self.assertIn('<div class="discovery-grid q-discovery-grid">', PAGE)
         cards = re.findall(
-            r'<a class="discovery-link q-discovery-card" href="[^"]+">([\\s\\S]*?)</a>',
+            r'<a class="discovery-link q-discovery-card" href="[^"]+">([\s\S]*?)</a>',
             PAGE,
         )
         self.assertEqual(len(cards), 31, "all existing discovery destinations must remain")
