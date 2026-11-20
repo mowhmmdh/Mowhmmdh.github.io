@@ -149,11 +149,15 @@ class BlogIndexStaticEnhancementTests(unittest.TestCase):
         schemas = [json.loads(raw) for raw in raw_schemas]
         serialized = json.dumps(schemas, ensure_ascii=False)
         self.assertIn("BreadcrumbList", serialized)
-        self.assertTrue(
-            any(
-                isinstance(schema, dict) and schema.get("@type") in ("CollectionPage", "Blog")
-                for schema in schemas
-            )
+        schema_types = [
+            schema.get("@type") for schema in schemas if isinstance(schema, dict)
+        ]
+        self.assertIn("CollectionPage", schema_types)
+        self.assertIn("BreadcrumbList", schema_types)
+        self.assertNotIn(
+            "Article",
+            schema_types,
+            "A blog collection index must not be marked up as a single Article",
         )
 
     def test_primary_mobile_navigation_and_skip_link_remain(self):
