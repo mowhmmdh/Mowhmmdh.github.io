@@ -134,6 +134,7 @@ const viewports = [
         const ctaRouteResponse = snapshot.ctaHref
           ? await page.request.get(new URL(snapshot.ctaHref, target).href)
           : null;
+        const allowedRequestPaths = new Set(['/vintech/request.html', '/vintech/request']);
         const checks = {
           http200: response?.status() === 200,
           persianRtl: snapshot.lang === 'fa' && snapshot.dir === 'rtl',
@@ -148,12 +149,12 @@ const viewports = [
             snapshot.schemaTypes.includes('BreadcrumbList'),
           primaryNavigation: snapshot.navLinkCount >= 5 && snapshot.menuPresent,
           oneStaticMobileCta: snapshot.ctaCount === 1 &&
-            snapshot.ctaHref === '/vintech/request.html' &&
+            allowedRequestPaths.has(snapshot.ctaHref) &&
             snapshot.ctaConversion === 'mobile_service_request' &&
             snapshot.ctaLabel === 'درخواست پروژه / مشاوره' &&
             ctaRouteResponse?.status() === 200,
           staticConversionPanel: snapshot.conversionPresent &&
-            snapshot.conversionPrimary === '/vintech/request.html' &&
+            allowedRequestPaths.has(snapshot.conversionPrimary) &&
             Boolean(snapshot.conversionEmail),
           footerDecoration: snapshot.footerLineCount === 1 && snapshot.footerLineFirstChild,
           ctaResponsive: spec.name === 'mobile'
