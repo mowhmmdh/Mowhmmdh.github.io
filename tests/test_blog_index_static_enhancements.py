@@ -160,6 +160,23 @@ class BlogIndexStaticEnhancementTests(unittest.TestCase):
             "A blog collection index must not be marked up as a single Article",
         )
 
+    def test_auto_discovery_uses_responsive_static_cards(self):
+        self.assertIn('<section class="auto-discovery section q-discovery"', PAGE)
+        self.assertIn('<div class="discovery-grid q-discovery-grid">', PAGE)
+        cards = re.findall(
+            r'<a class="discovery-link q-discovery-card" href="[^"]+">([\\s\\S]*?)</a>',
+            PAGE,
+        )
+        self.assertEqual(len(cards), 31, "all existing discovery destinations must remain")
+        for card in cards:
+            self.assertRegex(card, r'<strong>[^<]+</strong>')
+            self.assertIn('<em aria-hidden="true">↗</em>', card)
+        self.assertIn(".q-discovery-grid{display:grid", QUALITY_CSS)
+        self.assertIn(
+            "@media(max-width:640px){.q-discovery{padding:20px;border-radius:20px}.q-discovery-grid{grid-template-columns:1fr}",
+            QUALITY_CSS,
+        )
+
     def test_primary_mobile_navigation_and_skip_link_remain(self):
         self.assertIn('href="#main-content"', PAGE)
         self.assertIn('id="main-content"', PAGE)
