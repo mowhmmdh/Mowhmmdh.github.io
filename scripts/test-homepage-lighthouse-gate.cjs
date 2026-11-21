@@ -74,5 +74,24 @@ test('rejects invalid scores outside the Lighthouse 0..1 range', () => {
   assert.equal(result.failures[0].reason, 'missing-or-invalid-score');
 });
 
-process.stdout.write('\n' + passed + '/6 Lighthouse gate tests passed\n');
-if (passed !== 6) process.exitCode = 1;
+test('rejects reports measured with Netlify deploy-preview toolbar instrumentation', () => {
+  const contaminated = report();
+  contaminated.audits = {
+    'network-requests': {
+      details: {
+        items: [
+          { url: 'https://deploy-preview-27--mowhmmdh.netlify.app/.netlify/scripts/cdp' },
+          { url: 'https://app.netlify.com/cdp/?deployID=example&siteID=example' }
+        ]
+      }
+    }
+  };
+  const result = evaluateReport(contaminated);
+  assert.equal(result.passed, false);
+  assert.equal(result.failures[0].category, 'preview-instrumentation');
+  assert.equal(result.failures[0].reason, 'netlify-preview-toolbar-present');
+  assert.equal(result.previewInstrumentationRequests.length, 2);
+});
+
+process.stdout.write('\n' + passed + '/7 Lighthouse gate tests passed\n');
+if (passed !== 7) process.exitCode = 1;
