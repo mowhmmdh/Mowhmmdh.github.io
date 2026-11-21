@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('node:fs');
 const { chromium } = require('playwright');
 
 const previewUrl = process.env.PREVIEW_URL || 'https://deploy-preview-27--mowhmmdh.netlify.app';
@@ -20,9 +21,12 @@ async function main() {
       });
       const pageErrors = [];
       const requestedPaths = [];
+      const requestUrls = [];
       page.on('request', request => {
-        try { requestedPaths.push(new URL(request.url()).pathname); }
-        catch (_) { requestedPaths.push(request.url()); }
+        const requestUrl = request.url();
+        requestUrls.push(requestUrl);
+        try { requestedPaths.push(new URL(requestUrl).pathname); }
+        catch (_) { requestedPaths.push(requestUrl); }
       });
       page.on('pageerror', error => pageErrors.push(error.message));
 
@@ -37,6 +41,22 @@ async function main() {
       await page.evaluate(async () => {
         if (document.fonts && document.fonts.ready) await document.fonts.ready;
       });
+
+      const netlifyCdpUrl = [
+        ...page.frames().map(frame => frame.url()),
+        ...requestUrls
+      ].find(rawUrl => {
+        try {
+          const url = new URL(rawUrl);
+          return url.hostname === 'app.netlify.com' &&
+            url.pathname === '/cdp/' && url.searchParams.has('deployID');
+        } catch (_) {
+          return false;
+        }
+      });
+      const netlifyDeployId = netlifyCdpUrl
+        ? new URL(netlifyCdpUrl).searchParams.get('deployID')
+        : null;
 
       const snapshot = await page.evaluate(() => {
         const rect = selector => {
@@ -90,6 +110,7 @@ async function main() {
         return {
           lang: document.documentElement.lang,
           dir: document.documentElement.dir,
+          netlifyDeployId,
           viewportWidth: window.innerWidth,
           scrollWidth,
           horizontalOverflow: scrollWidth > window.innerWidth + 1,
@@ -198,7 +219,15 @@ async function main() {
       await page.close();
     }
 
-    process.stdout.write(JSON.stringify({ previewUrl, results }, null, 2) + '\n');
+    const deployIds = Array.from(new Set(results.map(result => result.netlifyDeployId).filter(Boolean)));
+    if (deployIds.length > 1) {
+      throw new Error('Desktop and mobile previews resolved different Netlify deploy IDs: ' + deployIds.join(', '));
+    }
+    const netlifyDeployId = deployIds[0] || '';
+    if (process.env.GITHUB_OUTPUT) {
+      fs.appendFileSync(process.env.GITHUB_OUTPUT, 'netlify_deploy_id=' + netlifyDeployId + '\n');
+    }
+    process.stdout.write(JSON.stringify({ previewUrl, netlifyDeployId, results }, null, 2) + '\n');
   } finally {
     await browser.close();
   }
