@@ -32,10 +32,26 @@ function evaluateReport(report) {
     }
   }
 
+  const networkItems = report?.audits?.['network-requests']?.details?.items;
+  const previewInstrumentationRequests = Array.isArray(networkItems)
+    ? networkItems
+        .map(item => item && typeof item.url === 'string' ? item.url : '')
+        .filter(url => url.includes('/.netlify/scripts/cdp') || url.includes('app.netlify.com/cdp/'))
+    : [];
+
+  if (previewInstrumentationRequests.length) {
+    failures.push({
+      category: 'preview-instrumentation',
+      reason: 'netlify-preview-toolbar-present',
+      requests: previewInstrumentationRequests
+    });
+  }
+
   return {
     passed: failures.length === 0,
     scores,
     thresholds: { ...THRESHOLDS },
+    previewInstrumentationRequests,
     failures
   };
 }
