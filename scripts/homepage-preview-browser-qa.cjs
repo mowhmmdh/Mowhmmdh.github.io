@@ -58,7 +58,7 @@ async function main() {
         ? new URL(netlifyCdpUrl).searchParams.get('deployID')
         : null;
 
-      const snapshot = await page.evaluate(() => {
+      const snapshot = await page.evaluate(netlifyDeployId => {
         const rect = selector => {
           const element = document.querySelector(selector);
           if (!element) return null;
@@ -143,7 +143,7 @@ async function main() {
           heroRect: rect('.mh-hero'),
           heroVisualRect: rect('.mh-hero-visual')
         };
-      });
+      }, netlifyDeployId);
 
       if (snapshot.lang !== 'fa' || snapshot.dir !== 'rtl') {
         throw new Error(spec.name + ': Persian RTL document contract failed: ' + JSON.stringify(snapshot));
