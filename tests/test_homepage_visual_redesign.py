@@ -16,6 +16,8 @@ BUNDLE_CSS = (ROOT / "assets/site-bundle.css").read_text(encoding="utf-8")
 QUALITY_JS = (ROOT / "assets/site-final-quality-2026.js").read_text(encoding="utf-8")
 THEME_JS = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
 QUALITY_CSS = (ROOT / "assets/site-final-quality-2026.css").read_text(encoding="utf-8")
+BROWSER_QA = (ROOT / "scripts/homepage-preview-browser-qa.cjs").read_text(encoding="utf-8")
+LIGHTHOUSE_CHECKER = (ROOT / "scripts/check-homepage-lighthouse.cjs").read_text(encoding="utf-8")
 
 def _relative_luminance(hex_color):
     """Return WCAG relative luminance for a #RRGGBB sRGB color."""
@@ -401,6 +403,18 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
                 self.assertNotIn(action, workflow)
 
 
+    def test_lighthouse_uses_clean_netlify_deploy_permalink_and_rejects_toolbar_noise(self):
+        workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
+        self.assertIn("id: browser_qa", workflow)
+        self.assertIn("NETLIFY_DEPLOY_ID: ${{ steps.browser_qa.outputs.netlify_deploy_id }}", workflow)
+        self.assertIn('target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app/"', workflow)
+        self.assertIn('echo "LIGHTHOUSE_URL=$target" >> "$GITHUB_ENV"', workflow)
+        self.assertIn('lighthouse "$LIGHTHOUSE_URL"', workflow)
+        self.assertNotIn('lighthouse "$PREVIEW_URL"', workflow)
+        self.assertIn("netlifyDeployId", BROWSER_QA)
+        self.assertIn("netlify_deploy_id=", BROWSER_QA)
+        self.assertIn("app.netlify.com", BROWSER_QA)
+        self.assertIn("netlify-preview-toolbar-present", LIGHTHOUSE_CHECKER)
     def test_preview_lighthouse_gate_is_enforced_for_mobile_and_desktop(self):
         workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
         checker = (ROOT / "scripts/check-homepage-lighthouse.cjs").read_text(encoding="utf-8")
