@@ -65,9 +65,32 @@ jobs:
           echo "Netlify preview did not return HTTP 200: $PREVIEW_URL"
           exit 1
       - name: Run desktop and mobile browser checks
+        id: browser_qa
         run: |
           mkdir -p qa-artifacts
           NODE_PATH="$(npm root -g)" node scripts/homepage-preview-browser-qa.cjs
+      - name: Resolve immutable Netlify deploy permalink for Lighthouse
+        env:
+          NETLIFY_DEPLOY_ID: ${{ steps.browser_qa.outputs.netlify_deploy_id }}
+        run: |
+          set -euo pipefail
+          target="$PREVIEW_URL"
+          if [[ -n "$NETLIFY_DEPLOY_ID" ]]; then
+            target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app/"
+            echo "Using the immutable Netlify deploy permalink for Lighthouse; browser QA remains on the standard PR preview."
+          else
+            echo "No Netlify CDP toolbar was detected; using the standard PR preview."
+          fi
+          for i in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$target" || true)
+            if [ "$code" = "200" ]; then
+              echo "LIGHTHOUSE_URL=$target" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Lighthouse target did not return HTTP 200: $target"
+          exit 1
       - name: Generate smaller responsive profile candidates
         run: |
           python3 -m venv /tmp/profile-image-venv
@@ -75,11 +98,11 @@ jobs:
           /tmp/profile-image-venv/bin/python scripts/generate-profile-image-variants.py
       - name: Run mobile Lighthouse
         run: |
-          lighthouse "$PREVIEW_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          lighthouse "$LIGHTHOUSE_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
           node scripts/check-homepage-lighthouse.cjs qa-artifacts/lighthouse-mobile.json mobile
       - name: Run desktop Lighthouse
         run: |
-          lighthouse "$PREVIEW_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          lighthouse "$LIGHTHOUSE_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
           node scripts/check-homepage-lighthouse.cjs qa-artifacts/lighthouse-desktop.json desktop
       - name: Explain preview-only SEO score
         run: |
