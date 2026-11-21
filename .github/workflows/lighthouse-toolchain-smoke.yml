@@ -1,0 +1,56 @@
+name: Lighthouse toolchain install smoke
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/lighthouse-pages.yml"
+      - ".github/workflows/lighthouse-toolchain-smoke.yml"
+      - "tests/test_lighthouse_toolchain_pinning.py"
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: Verify pinned Lighthouse toolchain
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Test workflow pinning contract
+        run: python3 -m unittest discover -s tests -p "test_lighthouse_toolchain_pinning.py" -v
+      - name: Install the same pinned toolchain as the scheduled audit
+        run: npm install --global lighthouse@13.6.0 @sentry/node@11.13.0 @sentry/core@11.13.0
+      - name: Verify CLI and exact installed dependency versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          lighthouse --version
+          npm ls --global --depth=2 lighthouse @sentry/node @sentry/core
+          npm ls --global --depth=0 --json > "$RUNNER_TEMP/lighthouse-toolchain.json"
+          node - "$RUNNER_TEMP/lighthouse-toolchain.json" <<'NODE'
+          const fs = require('node:fs');
+          const tree = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
+          const expected = {
+            lighthouse: '13.6.0',
+            '@sentry/node': '11.13.0',
+            '@sentry/core': '11.13.0',
+          };
+          let failed = false;
+          for (const [name, version] of Object.entries(expected)) {
+            const actual = tree.dependencies?.[name]?.version;
+            if (actual !== version) {
+              console.error(`Expected ${name}@${version}; found ${actual ?? 'missing'}`);
+              failed = true;
+            } else {
+              console.log(`Verified ${name}@${actual}`);
+            }
+          }
+          if (failed) process.exit(1);
+          NODE
