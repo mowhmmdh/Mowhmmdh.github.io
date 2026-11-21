@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGE_PATH = ROOT / "blog" / "linux-server-hardening-checklist.html"
 PAGE = PAGE_PATH.read_text(encoding="utf-8")
 CSS = (ROOT / "assets" / "site-final-quality-2026.css").read_text(encoding="utf-8")
+WORKFLOW = (ROOT / ".github" / "workflows" / "linux-server-hardening-static-enhancement.yml").read_text(encoding="utf-8")
 
 
 class PageContractParser(HTMLParser):
@@ -168,6 +169,13 @@ class LinuxServerHardeningStaticEnhancementTests(unittest.TestCase):
             if not target.is_file():
                 missing.append(href)
         self.assertEqual(missing, [], "Missing local targets: " + ", ".join(missing))
+
+    def test_workflow_uses_current_node24_compatible_actions_and_read_only_permissions(self):
+        self.assertIn("actions/checkout@v7", WORKFLOW)
+        self.assertIn("actions/setup-node@v7", WORKFLOW)
+        self.assertIn("actions/upload-artifact@v7", WORKFLOW)
+        self.assertIn("contents: read", WORKFLOW)
+        self.assertNotIn("contents: write", WORKFLOW)
 
     def test_existing_css_keeps_cta_hidden_on_desktop_and_visible_with_focus_on_mobile(self):
         self.assertIn(".q-mobile-cta{display:none}", CSS)

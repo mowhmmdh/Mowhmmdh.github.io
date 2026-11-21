@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Run focused source regression tests
         run: python3 -m unittest discover -s tests -p "test_linux_server_hardening_static_enhancements.py" -v
 
@@ -39,9 +39,9 @@ jobs:
       PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/blog/linux-server-hardening-checklist.html
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 22
       - name: Install pinned free browser and Lighthouse tooling
@@ -129,7 +129,7 @@ jobs:
           NODE
       - name: Upload screenshots, browser report and Lighthouse JSON
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: linux-hardening-browser-lighthouse
           path: qa-artifacts/
