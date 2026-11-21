@@ -243,7 +243,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
                 self.assertIn(supported, terminal)
 
     def test_home_core_pulse_uses_compositor_only_transform(self):
-        core_rule = re.search(r"\\.mh-home \\.mh-core\\{([^}]*)\\}", HOME_CSS)
+        core_rule = re.search(r"\.mh-home \.mh-core\{([^}]*)\}", HOME_CSS)
         self.assertIsNotNone(core_rule, "homepage core illustration must remain present")
         self.assertIn("animation:mh-core-pulse 3.4s ease-in-out infinite", core_rule.group(1))
         pulse_keyframes = (
@@ -252,7 +252,7 @@ class HomepageVisualRedesignTests(unittest.TestCase):
         )
         self.assertIn(pulse_keyframes, HOME_CSS)
         self.assertNotIn("box-shadow", pulse_keyframes)
-        self.assertRegex(BUNDLE_CSS, r"@media\\(prefers-reduced-motion:reduce\\)[\\s\\S]*?\\.mh-core[\\s\\S]*?animation:none!important")
+        self.assertRegex(BUNDLE_CSS, r"@media\(prefers-reduced-motion:reduce\)[\s\S]*?\.mh-core[\s\S]*?animation:none!important")
     def test_homepage_hero_illustration_has_a_named_graphic_role(self):
         expected = (
             '<div class="mh-hero-visual" role="img" '
