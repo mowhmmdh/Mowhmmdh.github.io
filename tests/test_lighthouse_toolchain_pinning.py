@@ -21,7 +21,7 @@ class LighthouseToolchainPinningTests(unittest.TestCase):
     def test_production_audit_uses_exact_compatible_versions(self):
         source = PRODUCTION_WORKFLOW.read_text(encoding="utf-8")
         self.assertIn(INSTALL, source)
-        self.assertNotRegex(source, r"npm install --global lighthouse@13(?:\\s|$)")
+        self.assertNotRegex(source, r"npm install --global lighthouse@13(?:\s|$)")
 
     def test_smoke_workflow_installs_and_verifies_same_toolchain(self):
         source = SMOKE_WORKFLOW.read_text(encoding="utf-8")
@@ -40,8 +40,8 @@ class LighthouseToolchainPinningTests(unittest.TestCase):
 
     def test_smoke_workflow_is_read_only_and_path_scoped(self):
         source = SMOKE_WORKFLOW.read_text(encoding="utf-8")
-        self.assertRegex(source, r"permissions:\\s*\\n\\s+contents:\\s*read")
-        self.assertNotRegex(source, r"contents:\\s*write")
+        self.assertRegex(source, r"permissions:\s*\n\s+contents:\s*read")
+        self.assertNotRegex(source, r"contents:\s*write")
         self.assertIn("pull_request:", source)
         self.assertIn("paths:", source)
 
