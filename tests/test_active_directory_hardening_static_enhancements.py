@@ -141,9 +141,15 @@ class ActiveDirectoryHardeningStaticEnhancementTests(unittest.TestCase):
         self.assertTrue(EN_PAGE_PATH.is_file())
 
     def test_article_and_breadcrumb_json_ld_remain_valid(self):
-        types = {
-            item.get("@type") for item in PARSER.schemas if isinstance(item, dict)
-        }
+        types = set()
+        for item in PARSER.schemas:
+            if not isinstance(item, dict):
+                continue
+            if item.get("@type"):
+                types.add(item["@type"])
+            for nested in item.get("@graph", []):
+                if isinstance(nested, dict) and nested.get("@type"):
+                    types.add(nested["@type"])
         self.assertIn("Article", types)
         self.assertIn("BreadcrumbList", types)
 
