@@ -169,7 +169,7 @@ class BlogIndexStaticEnhancementTests(unittest.TestCase):
         )
         self.assertEqual(len(cards), 31, "all existing discovery destinations must remain")
         for card in cards:
-            self.assertRegex(card, r'<strong>[^<]+</strong>')
+            self.assertRegex(card, r'<strong(?: lang="en")?>[^<]+</strong>')
             self.assertIn('<em aria-hidden="true">↗</em>', card)
         self.assertIn(".q-discovery-grid{display:grid", QUALITY_CSS)
         self.assertIn(
