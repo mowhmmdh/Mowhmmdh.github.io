@@ -111,7 +111,12 @@ const viewports = [
             skipLink: document.querySelector('.skip-link')?.getAttribute('href') || null,
             canonical: canonical?.getAttribute('href') || null,
             alternates,
-            schemaTypes: schemas.map(item => item['@type']),
+            schemaTypes: schemas.flatMap(item => [
+              item['@type'],
+              ...(Array.isArray(item['@graph'])
+                ? item['@graph'].map(node => node?.['@type'])
+                : [])
+            ]).filter(Boolean),
             ctaCount: ctas.length,
             ctaDisplay: ctaStyle?.display || null,
             ctaVisible: Boolean(
