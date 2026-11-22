@@ -221,6 +221,46 @@ class BlogIndexStaticEnhancementTests(unittest.TestCase):
             PAGE,
         )
 
+    def test_discovery_labels_are_curated_and_marked_as_english(self):
+        expected = [
+            ("/blog/active-directory-hardening.html", "Active Directory Hardening"),
+            ("/blog/active-directory-security-basics.html", "Active Directory Security Basics"),
+            ("/blog/active-directory-zero-trust-basics.html", "Active Directory Zero Trust Basics"),
+            ("/blog/backup-3-2-1-practical-guide.html", "Backup 3-2-1 Practical Guide"),
+            ("/blog/cctv-ip-camera-network-design.html", "CCTV IP Camera Network Design"),
+            ("/blog/cctv-troubleshooting-checklist.html", "CCTV Troubleshooting Checklist"),
+            ("/blog/dhcp-snooping-dai-network-security.html", "DHCP Snooping & DAI Network Security"),
+            ("/blog/dns-security-and-troubleshooting.html", "DNS Security and Troubleshooting"),
+            ("/blog/dns-troubleshooting.html", "DNS Troubleshooting"),
+            ("/blog/docker-production-security-checklist.html", "Docker Production Security Checklist"),
+            ("/blog/fortigate-firewall-policy-design.html", "FortiGate Firewall Policy Design"),
+            ("/blog/fortigate-hardening-checklist.html", "FortiGate Hardening Checklist"),
+            ("/blog/gitlab-ci-cd-for-it-infrastructure.html", "GitLab CI/CD for IT Infrastructure"),
+            ("/blog/gitlab-production-checklist.html", "GitLab Production Checklist"),
+            ("/blog/incident-response-network-outage.html", "Incident Response: Network Outage"),
+            ("/blog/it-infrastructure-documentation-guide.html", "IT Infrastructure Documentation Guide"),
+            ("/blog/linux-server-hardening-checklist.html", "Linux Server Hardening Checklist"),
+            ("/blog/network-hardening.html", "Network Hardening"),
+            ("/blog/network-infrastructure-security-roadmap.html", "Network Infrastructure Security Roadmap"),
+            ("/blog/network-monitoring-basics.html", "Network Monitoring Basics"),
+            ("/blog/network-security-assessment-checklist.html", "Network Security Assessment Checklist"),
+            ("/blog/network-security-baseline-for-small-business.html", "Network Security Baseline for Small Business"),
+            ("/blog/network-security-engineering-playbook.html", "Network Security Engineering Playbook"),
+            ("/blog/network-segmentation-for-small-business.html", "Network Segmentation for Small Business"),
+            ("/blog/network-troubleshooting-checklist.html", "Network Troubleshooting Checklist"),
+            ("/blog/network-troubleshooting-method.html", "Network Troubleshooting Method"),
+            ("/blog/nginx-ssl-cdn-reverse-proxy-troubleshooting.html", "Nginx SSL/CDN Reverse Proxy Troubleshooting"),
+            ("/blog/prometheus-network-monitoring-guide.html", "Prometheus Network Monitoring Guide"),
+            ("/blog/vlan-segmentation.html", "VLAN Segmentation"),
+            ("/blog/vlan-vs-subnet-practical-guide.html", "VLAN vs Subnet Practical Guide"),
+            ("/blog/windows-domain-hardening-baseline.html", "Windows Domain Hardening Baseline"),
+        ]
+        actual = re.findall(
+            r'<a class="discovery-link q-discovery-card" href="([^"]+)"><strong lang="en">([^<]+)</strong>',
+            PAGE,
+        )
+        self.assertEqual(actual, expected)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
