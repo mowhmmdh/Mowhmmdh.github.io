@@ -145,7 +145,8 @@ const viewports = [
         const ctaRouteResponse = snapshot.ctaHref
           ? await page.request.get(new URL(snapshot.ctaHref, target).href)
           : null;
-        const englishAlternateResponse = await page.request.get(expectedEnglish);
+        const englishAlternatePreviewUrl = new URL('/en-blog/active-directory-hardening.html', target).href;
+        const englishAlternateResponse = await page.request.get(englishAlternatePreviewUrl);
         const checks = {
           http200: response?.status() === 200,
           persianRtl: snapshot.lang === 'fa' && snapshot.dir === 'rtl',
