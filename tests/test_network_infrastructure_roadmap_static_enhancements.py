@@ -203,7 +203,7 @@ class NetworkInfrastructureRoadmapStaticEnhancementTests(unittest.TestCase):
 
     def test_navigation_backdrop_is_clamped_to_viewport(self):
         self.assertIn(
-            ".site-nav:before{inset-inline:calc((100vw - 100%)/-2)}",
+            "body .site-nav:before{inset-inline:calc((100vw - 100%)/-2)}",
             PAGE,
         )
 
