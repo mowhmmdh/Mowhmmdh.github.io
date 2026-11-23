@@ -110,8 +110,10 @@ const check = (condition, label, detail = '') => {
       check(await links.isVisible(), 'mobile: navigation links become visible after opening');
       check(await links.locator('a').count() === 3, 'mobile: all three original destinations are present');
       const englishLink = links.locator('a').nth(2);
-      check(await englishLink.getAttribute('href') === '/en-vintech/cybersecurity.html',
-        'mobile: English link retains its bilingual destination');
+      const englishHref = await englishLink.getAttribute('href');
+      const englishPath = new URL(englishHref, target).pathname;
+      check(englishPath === '/en-vintech/cybersecurity.html',
+        'mobile: English link retains its bilingual destination', englishHref || 'missing href');
       await page.screenshot({ path: 'qa-artifacts/cybersecurity-mobile-menu-open.png', fullPage: true });
 
       await page.keyboard.press('Escape');
