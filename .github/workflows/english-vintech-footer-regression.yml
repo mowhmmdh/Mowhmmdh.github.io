@@ -1,0 +1,26 @@
+name: English VinTech legal footer regression
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "en-vintech.html"
+      - "en-vintech/**/*.html"
+      - "tests/test_english_vintech_legal_footer.py"
+      - ".github/workflows/english-vintech-footer-regression.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: english-vintech-footer-regression-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  english-vintech-footer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run English VinTech footer regression tests
+        run: python3 tests/test_english_vintech_legal_footer.py
