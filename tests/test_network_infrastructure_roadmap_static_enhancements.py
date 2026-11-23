@@ -201,5 +201,12 @@ class NetworkInfrastructureRoadmapStaticEnhancementTests(unittest.TestCase):
         self.assertIn(".q-footerline{", CSS)
 
 
+    def test_navigation_backdrop_is_clamped_to_viewport(self):
+        self.assertIn(
+            ".site-nav:before{inset-inline:calc((100vw - 100%)/-2)}",
+            PAGE,
+        )
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
