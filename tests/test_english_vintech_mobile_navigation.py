@@ -148,6 +148,13 @@ class EnglishVinTechMobileNavigationTests(unittest.TestCase):
         self.assertIn("menu.setAttribute('aria-label',open?closeLabel:openLabel);", THEME_JS)
         self.assertIn("if(e.key==='Escape')", THEME_JS)
 
+    def test_existing_persian_homepage_keeps_the_shared_default_menu_labels(self):
+        homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+        self.assertIn('aria-label="باز کردن منو"', homepage)
+        self.assertNotIn('data-open-label=', homepage)
+        self.assertIn("const openLabel=menu.dataset.openLabel||'باز کردن منو';", THEME_JS)
+        self.assertIn("const closeLabel=menu.dataset.closeLabel||'بستن منو';", THEME_JS)
+
     def test_shared_responsive_css_supports_the_mobile_menu(self):
         self.assertIn(".mobile-menu{display:none}", BUNDLE_CSS)
         self.assertIn(".site-nav.menu-open .nav-links", BUNDLE_CSS)

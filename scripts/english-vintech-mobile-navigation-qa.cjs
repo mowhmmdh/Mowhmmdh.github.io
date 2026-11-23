@@ -135,6 +135,24 @@ const check = (condition, label, detail = '') => {
       }
     }
 
+    const homepageUrl = new URL('/', origin).toString();
+    const homepageResponse = await page.goto(homepageUrl, { waitUntil: 'networkidle', timeout: 60000 });
+    check(homepageResponse && homepageResponse.status() === 200, 'Persian homepage fallback smoke test: HTTP 200');
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.reload({ waitUntil: 'networkidle', timeout: 60000 });
+    const homepageMenu = page.locator('nav.site-nav button.mobile-menu').first();
+    check(await homepageMenu.count() === 1, 'Persian homepage has its existing mobile menu');
+    check(await homepageMenu.getAttribute('data-open-label') === null,
+      'Persian homepage continues to use the shared default labels');
+    check(await homepageMenu.getAttribute('aria-label') === 'باز کردن منو',
+      'Persian homepage keeps its Persian collapsed label');
+    await homepageMenu.click();
+    check(await homepageMenu.getAttribute('aria-label') === 'بستن منو',
+      'Persian homepage keeps its Persian expanded label');
+    await page.keyboard.press('Escape');
+    check(await homepageMenu.getAttribute('aria-label') === 'باز کردن منو',
+      'Persian homepage restores its Persian label after Escape');
+
     check(pageErrors.length === 0, 'no uncaught browser page errors', JSON.stringify(pageErrors));
     check(consoleErrors.length === 0, 'no browser console errors', JSON.stringify(consoleErrors));
     check(failedLocalRequests.length === 0, 'no failed local requests', JSON.stringify(failedLocalRequests));
