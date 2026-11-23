@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: vintech-cybersecurity-mobile-navigation-\${{ github.ref }}
+  group: vintech-cybersecurity-mobile-navigation-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     env:
-      PREVIEW_URL: https://deploy-preview-\${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/vintech/cybersecurity.html
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/vintech/cybersecurity.html
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
