@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const { chromium } = require('playwright');
 
 const target = process.env.PREVIEW_URL;
-const englishUrl = 'https://mowhmmdh.github.io/en-vintech/cybersecurity.html';
+const englishUrl = new URL('/en-vintech/cybersecurity.html', target).toString();
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'mobile', width: 390, height: 844 }
@@ -127,7 +127,7 @@ const check = (condition, label, detail = '') => {
 
       await menu.click();
       await Promise.all([
-        page.waitForURL('**/en-vintech/cybersecurity.html', { timeout: 30000 }),
+        page.waitForURL(url => url.pathname === '/en-vintech/cybersecurity.html', { timeout: 30000 }),
         page.locator('nav.site-nav .nav-links a[href="/en-vintech/cybersecurity.html"]').click()
       ]);
       check(await page.locator('html').getAttribute('lang') === 'en',
