@@ -6,13 +6,13 @@ const { chromium } = require('playwright');
 const previewUrl = process.env.PREVIEW_URL;
 const routes = [
   { path: '/en-vintech/cctv-nvr.html', fa: '/vintech/cctv-nvr.html',
-    hrefs: ['/en-vintech.html', '/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/cctv-nvr.html'] },
+    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/cctv-nvr.html'] },
   { path: '/en-vintech/cybersecurity.html', fa: '/vintech/cybersecurity.html',
-    hrefs: ['/en-vintech.html', '/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/cybersecurity.html'] },
+    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/cybersecurity.html'] },
   { path: '/en-vintech/network-infrastructure.html', fa: '/vintech/network-infrastructure.html',
-    hrefs: ['/en-vintech.html', '/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/network-infrastructure.html'] },
+    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/network-infrastructure.html'] },
   { path: '/en-vintech/servers-systems.html', fa: '/vintech/servers-systems.html',
-    hrefs: ['/en-vintech.html', '/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/servers-systems.html'] }
+    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/servers-systems.html'] }
 ];
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -91,11 +91,14 @@ const check = (condition, label, detail = '') => {
         check(await menu.count() === 1, route.path + ' ' + viewport.name + ': exactly one menu button');
         check(await links.getAttribute('id') === await menu.getAttribute('aria-controls'),
           route.path + ' ' + viewport.name + ': aria-controls relationship');
-        const hrefs = await links.locator('a').evaluateAll(anchors =>
+        const navHrefs = await links.locator('a').evaluateAll(anchors =>
           anchors.map(anchor => anchor.getAttribute('href')));
-        const allHrefs = [await nav.locator('a.brand').getAttribute('href'), ...hrefs];
-        check(JSON.stringify(allHrefs) === JSON.stringify(route.hrefs),
-          route.path + ' ' + viewport.name + ': original navigation links/order');
+        const brandHref = await nav.locator('a.brand').getAttribute('href');
+        const brandMatches = brandHref === route.brandHref;
+        const linksMatch = JSON.stringify(navHrefs) === JSON.stringify(route.links);
+        check(brandMatches && linksMatch,
+          route.path + ' ' + viewport.name + ': original navigation links/order',
+          JSON.stringify({ brandHref, expectedBrandHref: route.brandHref, navHrefs, expectedLinks: route.links }));
 
         const dimensions = await page.evaluate(() => ({
           viewport: window.innerWidth,
