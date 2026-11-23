@@ -449,5 +449,23 @@ class HomepagePreviewWorkflowTests(unittest.TestCase):
         self.assertIn("rejects a missing required Lighthouse category", gate_tests)
 
 
+    def test_preview_lighthouse_toolchain_is_pinned_to_compatible_versions(self):
+        workflow = (ROOT / ".github/workflows/homepage-preview-qa.yml").read_text(encoding="utf-8")
+        install = (
+            "npm install --global playwright@1.56.1 lighthouse@13.6.0 "
+            "@sentry/node@11.13.0 @sentry/core@11.13.0"
+        )
+        self.assertIn(install, workflow)
+        self.assertNotRegex(
+            workflow,
+            r"npm install --global playwright@1\\.56\\.1 lighthouse@13(?:\\s|$)",
+        )
+        self.assertIn("lighthouse@13.6.0", workflow)
+        self.assertIn("@sentry/node@11.13.0", workflow)
+        self.assertIn("@sentry/core@11.13.0", workflow)
+        self.assertIn("contents: read", workflow)
+        self.assertNotIn("contents: write", workflow)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
