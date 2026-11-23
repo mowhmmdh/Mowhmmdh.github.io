@@ -1,0 +1,117 @@
+name: Homepage Preview Browser and Lighthouse QA
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "assets/site-bundle.css"
+      - "assets/theme-stability-2026.css"
+      - "assets/home-finish-2026.css"
+      - "assets/site-final-quality-2026.css"
+      - "assets/site-theme.js"
+      - "fonts/**"
+      - "images/profile.webp"
+      - "images/profile-360.webp"
+      - "images/vinicon.webp"
+      - "index.html"
+      - "assets/home-visual-redesign-2026.css"
+      - "assets/site-final-quality-2026.js"
+      - "tests/test_homepage_visual_redesign.py"
+      - "scripts/homepage-preview-browser-qa.cjs"
+      - "scripts/generate-profile-image-variants.py"
+      - "scripts/check-homepage-lighthouse.cjs"
+      - "scripts/test-homepage-lighthouse-gate.cjs"
+      - ".github/workflows/homepage-preview-qa.yml"
+  workflow_dispatch:
+    inputs:
+      pull_request_number:
+        description: "Pull request number whose Netlify deploy preview should be audited"
+        required: false
+        default: "27"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: homepage-preview-qa-${{ github.event.pull_request.number || inputs.pull_request_number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  homepage-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number || inputs.pull_request_number || '27' }}--mowhmmdh.netlify.app/
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Test Lighthouse threshold gate
+        run: node scripts/test-homepage-lighthouse-gate.cjs
+      - name: Install pinned free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13.6.0 @sentry/node@11.13.0 @sentry/core@11.13.0
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for Netlify deploy preview
+        run: |
+          for i in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify preview did not return HTTP 200: $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile browser checks
+        id: browser_qa
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/homepage-preview-browser-qa.cjs
+      - name: Resolve immutable Netlify deploy permalink for Lighthouse
+        env:
+          NETLIFY_DEPLOY_ID: ${{ steps.browser_qa.outputs.netlify_deploy_id }}
+        run: |
+          set -euo pipefail
+          target="$PREVIEW_URL"
+          if [[ -n "$NETLIFY_DEPLOY_ID" ]]; then
+            target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app/"
+            echo "Using the immutable Netlify deploy permalink for Lighthouse; browser QA remains on the standard PR preview."
+          else
+            echo "No Netlify CDP toolbar was detected; using the standard PR preview."
+          fi
+          for i in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$target" || true)
+            if [ "$code" = "200" ]; then
+              echo "LIGHTHOUSE_URL=$target" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Lighthouse target did not return HTTP 200: $target"
+          exit 1
+      - name: Generate smaller responsive profile candidates
+        run: |
+          python3 -m venv /tmp/profile-image-venv
+          /tmp/profile-image-venv/bin/pip install --quiet Pillow
+          /tmp/profile-image-venv/bin/python scripts/generate-profile-image-variants.py
+      - name: Run mobile Lighthouse
+        run: |
+          lighthouse "$LIGHTHOUSE_URL" --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          node scripts/check-homepage-lighthouse.cjs qa-artifacts/lighthouse-mobile.json mobile
+      - name: Run desktop Lighthouse
+        run: |
+          lighthouse "$LIGHTHOUSE_URL" --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          node scripts/check-homepage-lighthouse.cjs qa-artifacts/lighthouse-desktop.json desktop
+      - name: Explain preview-only SEO score
+        run: |
+          echo "Netlify deploy previews send x-robots-tag: noindex; the Lighthouse SEO score here is not production indexability evidence."
+      - name: Upload screenshots and Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: homepage-preview-browser-lighthouse
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
