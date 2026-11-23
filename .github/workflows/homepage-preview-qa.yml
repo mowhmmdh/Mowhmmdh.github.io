@@ -51,8 +51,8 @@ jobs:
           node-version: 22
       - name: Test Lighthouse threshold gate
         run: node scripts/test-homepage-lighthouse-gate.cjs
-      - name: Install free browser and Lighthouse tooling
-        run: npm install --global playwright@1.56.1 lighthouse@13
+      - name: Install pinned free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13.6.0 @sentry/node@11.13.0 @sentry/core@11.13.0
       - name: Install Chromium
         run: playwright install --with-deps chromium
       - name: Wait for Netlify deploy preview
