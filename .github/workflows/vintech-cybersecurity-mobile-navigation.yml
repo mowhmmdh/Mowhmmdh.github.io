@@ -1,0 +1,70 @@
+name: VinTech Cybersecurity Mobile Navigation QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "vintech/cybersecurity.html"
+      - "assets/site-theme.js"
+      - "assets/site-bundle.css"
+      - "assets/site-final-quality-2026.css"
+      - "tests/test_vintech_cybersecurity_mobile_navigation.py"
+      - "scripts/vintech-cybersecurity-mobile-nav-qa.cjs"
+      - ".github/workflows/vintech-cybersecurity-mobile-navigation.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vintech-cybersecurity-mobile-navigation-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Run focused source regression tests
+        run: python3 -m unittest discover -s tests -p "test_vintech_cybersecurity_mobile_navigation.py" -v
+
+  browser:
+    needs: regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/vintech/cybersecurity.html
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install pinned free Playwright tooling
+        run: npm install --global playwright@1.56.1
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for Netlify deploy preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify deploy preview did not return HTTP 200: $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile Chromium checks
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/vintech-cybersecurity-mobile-nav-qa.cjs
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: vintech-cybersecurity-mobile-navigation
+          path: qa-artifacts/
+          if-no-files-found: warn
