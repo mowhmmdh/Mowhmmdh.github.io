@@ -154,8 +154,8 @@ class EnglishVinTechMobileNavigationTests(unittest.TestCase):
         homepage = (ROOT / "index.html").read_text(encoding="utf-8")
         self.assertIn('aria-label="باز کردن منو"', homepage)
         self.assertNotIn('data-open-label=', homepage)
-        self.assertIn("const openLabel=menu.dataset.openLabel||'باز کردن منو';", THEME_JS)
-        self.assertIn("const closeLabel=menu.dataset.closeLabel||'بستن منو';", THEME_JS)
+        self.assertIn("menu.setAttribute('aria-label','باز کردن منو');", THEME_JS)
+        self.assertIn("menu.setAttribute('aria-label',open?'بستن منو':'باز کردن منو');", THEME_JS)
 
     def test_shared_responsive_css_supports_the_mobile_menu(self):
         self.assertIn(".mobile-menu{display:none}", BUNDLE_CSS)
