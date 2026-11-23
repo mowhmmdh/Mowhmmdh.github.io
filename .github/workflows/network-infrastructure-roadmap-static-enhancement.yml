@@ -6,7 +6,7 @@ on:
     paths:
       - "blog/network-infrastructure-security-roadmap.html"
       - "en-blog/network-infrastructure-security-roadmap.html"
-      - "tests/test_active_directory_hardening_static_enhancements.py"
+      - "tests/test_network_infrastructure_roadmap_static_enhancements.py"
       - "scripts/network-infrastructure-security-roadmap-browser-qa.cjs"
       - ".github/workflows/network-infrastructure-security-roadmap-static-enhancement.yml"
       - "assets/site-bundle.css"
@@ -29,7 +29,7 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v7
       - name: Run focused source regression tests
-        run: python3 -m unittest discover -s tests -p "test_active_directory_hardening_static_enhancements.py" -v
+        run: python3 -m unittest discover -s tests -p "test_network_infrastructure_roadmap_static_enhancements.py" -v
 
   browser-and-lighthouse:
     needs: regression
