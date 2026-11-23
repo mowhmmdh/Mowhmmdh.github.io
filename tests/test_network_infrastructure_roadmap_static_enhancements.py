@@ -1,4 +1,4 @@
-"""Regression tests for the Active Directory hardening article's static enhancements."""
+"""Regression tests for the Network Infrastructure Security Roadmap article's static enhancements."""
 from html.parser import HTMLParser
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -10,7 +10,7 @@ PAGE_PATH = ROOT / "blog" / "network-infrastructure-security-roadmap.html"
 EN_PAGE_PATH = ROOT / "en-blog" / "network-infrastructure-security-roadmap.html"
 PAGE = PAGE_PATH.read_text(encoding="utf-8")
 CSS = (ROOT / "assets" / "site-final-quality-2026.css").read_text(encoding="utf-8")
-WORKFLOW = (ROOT / ".github" / "workflows" / "network-infrastructure-security-roadmap-static-enhancement.yml").read_text(encoding="utf-8")
+WORKFLOW = (ROOT / ".github" / "workflows" / "network-infrastructure-roadmap-static-enhancement.yml").read_text(encoding="utf-8")
 
 
 class PageContractParser(HTMLParser):
