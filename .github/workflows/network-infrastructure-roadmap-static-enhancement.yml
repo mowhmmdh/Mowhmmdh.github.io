@@ -7,7 +7,7 @@ on:
       - "blog/network-infrastructure-security-roadmap.html"
       - "en-blog/network-infrastructure-security-roadmap.html"
       - "tests/test_network_infrastructure_roadmap_static_enhancements.py"
-      - "scripts/network-infrastructure-security-roadmap-browser-qa.cjs"
+      - "scripts/network-infrastructure-roadmap-browser-qa.cjs"
       - ".github/workflows/network-infrastructure-security-roadmap-static-enhancement.yml"
       - "assets/site-bundle.css"
       - "assets/site-final-quality-2026.css"
@@ -64,7 +64,7 @@ jobs:
         id: browser_qa
         run: |
           mkdir -p qa-artifacts
-          NODE_PATH="$(npm root -g)" node scripts/network-infrastructure-security-roadmap-browser-qa.cjs
+          NODE_PATH="$(npm root -g)" node scripts/network-infrastructure-roadmap-browser-qa.cjs
       - name: Resolve immutable Netlify deploy permalink for Lighthouse
         env:
           NETLIFY_DEPLOY_ID: ${{ steps.browser_qa.outputs.netlify_deploy_id }}
