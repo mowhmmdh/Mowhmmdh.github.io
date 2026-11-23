@@ -92,6 +92,9 @@ class VinTechCybersecurityMobileNavigationTests(unittest.TestCase):
         self.assertIn(".site-nav.menu-open .nav-links", BUNDLE_CSS)
         self.assertIn(".mobile-menu:focus-visible", QUALITY_CSS)
 
+    def test_navigation_backdrop_is_clamped_to_viewport(self):
+        self.assertIn("body .site-nav:before{inset-inline:calc((100vw - 100%)/-2)}", PAGE)
+
     def test_bilingual_metadata_and_service_conversion_remain_present(self):
         self.assertIn('href="https://mowhmmdh.github.io/vintech/cybersecurity.html"', PAGE)
         self.assertIn('hreflang="fa-IR"', PAGE)
