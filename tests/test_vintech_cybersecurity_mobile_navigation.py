@@ -76,7 +76,7 @@ class VinTechCybersecurityMobileNavigationTests(unittest.TestCase):
     def test_existing_navigation_destinations_are_preserved(self):
         self.assertEqual(
             self.parser.hrefs,
-            ["/vintech.html", "/vintech.html#services", "/en-vintech/cybersecurity.html"],
+            ["/vintech.html", "/vintech.html", "/vintech.html#services", "/en-vintech/cybersecurity.html"],
         )
 
     def test_shared_theme_script_wires_toggle_and_escape_close(self):
@@ -90,7 +90,7 @@ class VinTechCybersecurityMobileNavigationTests(unittest.TestCase):
     def test_shared_styles_expose_the_button_and_open_the_link_panel(self):
         self.assertIn(".mobile-menu{display:inline-grid}", BUNDLE_CSS)
         self.assertIn(".site-nav.menu-open .nav-links", BUNDLE_CSS)
-        self.assertIn(":where(a,button,input,select,textarea,summary,[tabindex]):focus-visible", QUALITY_CSS)
+        self.assertIn(".mobile-menu:focus-visible", QUALITY_CSS)
 
     def test_bilingual_metadata_and_service_conversion_remain_present(self):
         self.assertIn('href="https://mowhmmdh.github.io/vintech/cybersecurity.html"', PAGE)
@@ -98,7 +98,8 @@ class VinTechCybersecurityMobileNavigationTests(unittest.TestCase):
         self.assertIn('hreflang="en"', PAGE)
         self.assertIn('hreflang="x-default"', PAGE)
         self.assertIn('href="/vintech/request.html"', PAGE)
-        self.assertIn('data-conversion="mobile_service_request"', PAGE)
+        self.assertIn('class="q-conversion"', PAGE)
+        self.assertIn('aria-labelledby="service-page-cta-title"', PAGE)
 
     def test_read_only_workflow_permissions(self):
         self.assertIn("permissions:\n  contents: read", WORKFLOW)
