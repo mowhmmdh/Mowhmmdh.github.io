@@ -6,13 +6,13 @@ const { chromium } = require('playwright');
 const previewUrl = process.env.PREVIEW_URL;
 const routes = [
   { path: '/en-vintech/cctv-nvr.html', fa: '/vintech/cctv-nvr.html',
-    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/cctv-nvr.html'] },
+    brandHref: '/en-vintech', links: ['/en-vintech', '/en-vintech#services', '/en-vintech#contact', '/vintech/cctv-nvr'] },
   { path: '/en-vintech/cybersecurity.html', fa: '/vintech/cybersecurity.html',
-    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/cybersecurity.html'] },
+    brandHref: '/en-vintech', links: ['/en-vintech', '/en-vintech#services', '/en-vintech#contact', '/vintech/cybersecurity'] },
   { path: '/en-vintech/network-infrastructure.html', fa: '/vintech/network-infrastructure.html',
-    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/network-infrastructure.html'] },
+    brandHref: '/en-vintech', links: ['/en-vintech', '/en-vintech#services', '/en-vintech#contact', '/vintech/network-infrastructure'] },
   { path: '/en-vintech/servers-systems.html', fa: '/vintech/servers-systems.html',
-    brandHref: '/en-vintech.html', links: ['/en-vintech.html', '/en-vintech.html#services', '/en-vintech.html#contact', '/vintech/servers-systems.html'] }
+    brandHref: '/en-vintech', links: ['/en-vintech', '/en-vintech#services', '/en-vintech#contact', '/vintech/servers-systems'] }
 ];
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
@@ -99,6 +99,16 @@ const check = (condition, label, detail = '') => {
         check(brandMatches && linksMatch,
           route.path + ' ' + viewport.name + ': original navigation links/order',
           JSON.stringify({ brandHref, expectedBrandHref: route.brandHref, navHrefs, expectedLinks: route.links }));
+        if (viewport.name === 'desktop') {
+          for (const href of [brandHref, ...navHrefs]) {
+            const destination = new URL(href, origin);
+            destination.hash = '';
+            const destinationResponse = await page.request.get(destination.toString(), { timeout: 30000 });
+            check(destinationResponse.status() === 200,
+              route.path + ': navigation destination HTTP 200: ' + href,
+              'status=' + destinationResponse.status());
+          }
+        }
 
         const dimensions = await page.evaluate(() => ({
           viewport: window.innerWidth,
