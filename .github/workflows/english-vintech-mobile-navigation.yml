@@ -1,0 +1,70 @@
+name: English VinTech Mobile Navigation QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "en-vintech/cctv-nvr.html"
+      - "en-vintech/cybersecurity.html"
+      - "en-vintech/network-infrastructure.html"
+      - "en-vintech/servers-systems.html"
+      - "assets/site-theme.js"
+      - "assets/site-bundle.css"
+      - "tests/test_english_vintech_mobile_navigation.py"
+      - "scripts/english-vintech-mobile-navigation-qa.cjs"
+      - ".github/workflows/english-vintech-mobile-navigation.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: english-vintech-mobile-navigation-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run English VinTech navigation regression tests
+        run: python3 -m unittest discover -s tests -p "test_english_vintech_mobile_navigation.py" -v
+
+  browser:
+    needs: regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/en-vintech/cybersecurity.html
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install pinned free Playwright tooling
+        run: npm install --global playwright@1.56.1
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for English VinTech preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify deploy preview did not return HTTP 200: $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile Chromium checks across all four service pages
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/english-vintech-mobile-navigation-qa.cjs
+      - name: Upload browser evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: english-vintech-mobile-navigation
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14

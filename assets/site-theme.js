@@ -33,10 +33,12 @@ function bind(){
     const links=nav.querySelector('.nav-links,.about-nav-links,.en-nav-links');
     if(!menu||!links||menu.dataset.bound)return;
     menu.dataset.bound='1';
+    const openLabel=menu.dataset.openLabel||'باز کردن منو';
+    const closeLabel=menu.dataset.closeLabel||'بستن منو';
     const close=()=>{
       nav.classList.remove('menu-open');
       menu.setAttribute('aria-expanded','false');
-      menu.setAttribute('aria-label','باز کردن منو');
+      menu.setAttribute('aria-label',openLabel);
       menu.textContent='☰';
     };
     menu.addEventListener('click',e=>{
@@ -44,7 +46,7 @@ function bind(){
       const open=!nav.classList.contains('menu-open');
       if(open)nav.classList.add('menu-open');else close();
       menu.setAttribute('aria-expanded',String(open));
-      menu.setAttribute('aria-label',open?'بستن منو':'باز کردن منو');
+      menu.setAttribute('aria-label',open?closeLabel:openLabel);
       menu.textContent=open?'×':'☰';
     });
     links.addEventListener('click',e=>{if(e.target.closest('a'))close()});
