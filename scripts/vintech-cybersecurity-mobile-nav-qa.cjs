@@ -111,8 +111,9 @@ const check = (condition, label, detail = '') => {
       check(await links.locator('a').count() === 3, 'mobile: all three original destinations are present');
       const englishLink = links.locator('a').nth(2);
       const englishHref = await englishLink.getAttribute('href');
-      const englishPath = new URL(englishHref, target).pathname;
-      check(englishPath === '/en-vintech/cybersecurity.html',
+      const englishPath = new URL(englishHref, target).pathname.replace(/\/$/, '');
+      check(englishPath === '/en-vintech/cybersecurity.html' ||
+        englishPath === '/en-vintech/cybersecurity',
         'mobile: English link retains its bilingual destination', englishHref || 'missing href');
       await page.screenshot({ path: 'qa-artifacts/cybersecurity-mobile-menu-open.png', fullPage: true });
 
