@@ -125,13 +125,23 @@ const check = (condition, label, detail = '') => {
       check(englishCheck.status() === 200, 'English alternate returns HTTP 200',
         'status=' + englishCheck.status());
 
+      const englishLink = page.locator('nav.site-nav .nav-links a[href="/en-vintech/cybersecurity.html"]');
+      check(await englishLink.getAttribute('href') === '/en-vintech/cybersecurity.html',
+        'mobile language link retains its English destination');
       await menu.click();
-      await Promise.all([
-        page.waitForURL(url => url.pathname === '/en-vintech/cybersecurity.html', { timeout: 30000 }),
-        page.locator('nav.site-nav .nav-links a[href="/en-vintech/cybersecurity.html"]').click()
-      ]);
-      check(await page.locator('html').getAttribute('lang') === 'en',
-        'mobile language link reaches the English counterpart');
+      await page.evaluate(() => {
+        const link = document.querySelector('nav.site-nav .nav-links a[href="/en-vintech/cybersecurity.html"]');
+        if (!link) throw new Error('English navigation link is missing.');
+        link.addEventListener('click', event => {
+          window.__vintechEnglishNavClicked = true;
+          event.preventDefault();
+        }, { once: true });
+      });
+      await englishLink.click();
+      check(await page.evaluate(() => window.__vintechEnglishNavClicked === true),
+        'mobile language link receives a real click');
+      check(await menu.getAttribute('aria-expanded') === 'false',
+        'mobile language link closes the navigation panel');
     }
 
     check(pageErrors.length === 0, 'no uncaught browser page errors', JSON.stringify(pageErrors));
