@@ -1,0 +1,138 @@
+name: Network Infrastructure Roadmap Static Enhancement QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "blog/network-infrastructure-security-roadmap.html"
+      - "en-blog/network-infrastructure-security-roadmap.html"
+      - "tests/test_network_infrastructure_roadmap_static_enhancements.py"
+      - "scripts/network-infrastructure-roadmap-browser-qa.cjs"
+      - ".github/workflows/network-infrastructure-security-roadmap-static-enhancement.yml"
+      - "assets/site-bundle.css"
+      - "assets/site-final-quality-2026.css"
+      - "assets/site-theme.js"
+      - "fonts/**"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: network-infrastructure-security-roadmap-static-enhancement-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Run focused source regression tests
+        run: python3 -m unittest discover -s tests -p "test_network_infrastructure_roadmap_static_enhancements.py" -v
+
+  browser-and-lighthouse:
+    needs: regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/blog/network-infrastructure-security-roadmap.html
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install pinned free browser and Lighthouse tooling
+        run: npm install --global playwright@1.56.1 lighthouse@13.6.0 @sentry/node@11.13.0 @sentry/core@11.13.0
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for Netlify deploy preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify deploy preview did not return HTTP 200: $PREVIEW_URL"
+          exit 1
+      - name: Run desktop and mobile Chromium checks
+        id: browser_qa
+        run: |
+          mkdir -p qa-artifacts
+          NODE_PATH="$(npm root -g)" node scripts/network-infrastructure-roadmap-browser-qa.cjs
+      - name: Resolve immutable Netlify deploy permalink for Lighthouse
+        env:
+          NETLIFY_DEPLOY_ID: ${{ steps.browser_qa.outputs.netlify_deploy_id }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          target="$PREVIEW_URL"
+          if [[ -n "$NETLIFY_DEPLOY_ID" ]]; then
+            path="${PREVIEW_URL#https://deploy-preview-${PR_NUMBER}--mowhmmdh.netlify.app}"
+            target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app${path}"
+            echo "Using immutable Netlify deploy permalink for Lighthouse."
+          else
+            echo "No Netlify CDP deploy ID was detected; using the standard preview."
+          fi
+          for attempt in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$target" || true)
+            if [ "$code" = "200" ]; then
+              echo "LIGHTHOUSE_URL=$target" >> "$GITHUB_ENV"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Lighthouse target did not return HTTP 200: $target"
+          exit 1
+      - name: Run mobile Lighthouse
+        run: |
+          lighthouse "$LIGHTHOUSE_URL" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path=qa-artifacts/lighthouse-mobile.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Run desktop Lighthouse
+        run: |
+          lighthouse "$LIGHTHOUSE_URL" --only-categories=performance,accessibility,best-practices,seo --preset=desktop --output=json --output-path=qa-artifacts/lighthouse-desktop.json --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+      - name: Report Lighthouse scores and metrics
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          for (const [name, file] of [
+            ['mobile', 'qa-artifacts/lighthouse-mobile.json'],
+            ['desktop', 'qa-artifacts/lighthouse-desktop.json']
+          ]) {
+            const report = JSON.parse(fs.readFileSync(file, 'utf8'));
+            const categories = report.categories || {};
+            const required = ['performance', 'accessibility', 'best-practices', 'seo'];
+            const scores = {};
+            for (const key of required) {
+              const score = categories[key]?.score;
+              if (typeof score !== 'number' || !Number.isFinite(score)) {
+                throw new Error(name + ': missing or invalid Lighthouse category ' + key);
+              }
+              scores[key] = Math.round(score * 100);
+            }
+            const audits = report.audits || {};
+            console.log(JSON.stringify({
+              formFactor: name,
+              scores,
+              metrics: {
+                fcp: audits['first-contentful-paint']?.displayValue || null,
+                lcp: audits['largest-contentful-paint']?.displayValue || null,
+                tbt: audits['total-blocking-time']?.displayValue || null,
+                cls: audits['cumulative-layout-shift']?.displayValue || null
+              },
+              note: 'Preview lab data only; not production or field Core Web Vitals. SEO is reported but not gated because Netlify previews send noindex.'
+            }, null, 2));
+          }
+          NODE
+      - name: Upload screenshots, browser report and Lighthouse JSON
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: network-infrastructure-security-roadmap-browser-lighthouse
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
