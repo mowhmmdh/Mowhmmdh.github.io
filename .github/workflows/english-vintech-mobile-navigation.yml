@@ -9,6 +9,7 @@ on:
       - "en-vintech/network-infrastructure.html"
       - "en-vintech/servers-systems.html"
       - "assets/site-theme.js"
+      - "assets/english-vintech-mobile-nav-labels.js"
       - "assets/site-bundle.css"
       - "tests/test_english_vintech_mobile_navigation.py"
       - "scripts/english-vintech-mobile-navigation-qa.cjs"

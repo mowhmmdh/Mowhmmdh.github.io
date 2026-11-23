@@ -23,6 +23,7 @@ PAGES = {
     ],
 }
 THEME_JS = (ROOT / "assets" / "site-theme.js").read_text(encoding="utf-8")
+LOCALIZED_MENU_JS = (ROOT / "assets" / "english-vintech-mobile-nav-labels.js").read_text(encoding="utf-8")
 BUNDLE_CSS = (ROOT / "assets" / "site-bundle.css").read_text(encoding="utf-8")
 WORKFLOW = (ROOT / ".github" / "workflows" / "english-vintech-mobile-navigation.yml").read_text(encoding="utf-8")
 
@@ -141,11 +142,12 @@ class EnglishVinTechMobileNavigationTests(unittest.TestCase):
                 html, _parser = self.parse(path)
                 self.assertEqual(html.count(rule), 1)
 
-    def test_shared_theme_script_uses_localized_button_labels_with_persian_fallback(self):
-        self.assertIn("const openLabel=menu.dataset.openLabel||'باز کردن منو';", THEME_JS)
-        self.assertIn("const closeLabel=menu.dataset.closeLabel||'بستن منو';", THEME_JS)
-        self.assertIn("menu.setAttribute('aria-label',openLabel);", THEME_JS)
-        self.assertIn("menu.setAttribute('aria-label',open?closeLabel:openLabel);", THEME_JS)
+    def test_shared_theme_script_keeps_persian_fallback_and_local_helper_localizes_english(self):
+        self.assertIn("menu.setAttribute('aria-label',open?'بستن منو':'باز کردن منو');", THEME_JS)
+        self.assertIn("menu.dataset.openLabel", LOCALIZED_MENU_JS)
+        self.assertIn("menu.dataset.closeLabel", LOCALIZED_MENU_JS)
+        self.assertIn("new MutationObserver(updateLabel)", LOCALIZED_MENU_JS)
+        self.assertIn("nav.classList.contains('menu-open')", LOCALIZED_MENU_JS)
         self.assertIn("if(e.key==='Escape')", THEME_JS)
 
     def test_existing_persian_homepage_keeps_the_shared_default_menu_labels(self):
