@@ -123,9 +123,10 @@ class DnsSecurityStaticEnhancementTests(unittest.TestCase):
             "۶. Hardening",
             "جمع‌بندی",
         ]
+        article_body = PAGE.split("<!-- AUTO-RELATED:START -->", 1)[0]
         actual = [
             re.sub(r"<[^>]+>", "", heading).strip()
-            for heading in re.findall(r"<h2[^>]*>(.*?)</h2>", PAGE, flags=re.S)
+            for heading in re.findall(r"<h2[^>]*>(.*?)</h2>", article_body, flags=re.S)
         ]
         self.assertEqual(actual, expected)
 
@@ -172,9 +173,9 @@ class DnsSecurityStaticEnhancementTests(unittest.TestCase):
     def test_legal_footer_and_conversion_destinations_remain(self):
         for href in ("/privacy.html", "/terms.html", "/disclosure.html", "mailto:mohammedhasgari@gmail.com"):
             self.assertIn(href, PARSER.hrefs)
+        self.assertIn('<section class="seo-conversion-cta"', PAGE)
+        self.assertIn('href="/services.html"', PAGE)
         self.assertIn('href="/vintech/request.html"', PAGE)
-        self.assertIn('data-conversion="service_request"', PAGE)
-        self.assertIn('data-conversion="email"', PAGE)
 
 
 if __name__ == "__main__":
