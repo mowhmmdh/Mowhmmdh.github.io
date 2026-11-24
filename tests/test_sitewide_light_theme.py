@@ -61,7 +61,8 @@ class SitewideLightThemeTests(unittest.TestCase):
         self.assertIn("if(snapshot.hasToggle)", BROWSER_QA)
         self.assertIn("const themeToggle = page.locator('.theme-toggle').first();", BROWSER_QA)
         self.assertEqual(BROWSER_QA.count("await themeToggle.click();"), 2)
-        self.assertNotRegex(BROWSER_QA, r"(?m)^\\s*if\\s*\\(\\s*toggle\\s*\\)")
+        self.assertNotIn("if(toggle)", BROWSER_QA)
+        self.assertNotIn("await toggle.click();", BROWSER_QA)
 
 
 if __name__ == "__main__":
