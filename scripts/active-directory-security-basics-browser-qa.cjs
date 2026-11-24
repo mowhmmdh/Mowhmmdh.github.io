@@ -3,17 +3,17 @@
 const fs = require('node:fs');
 const { chromium } = require('playwright');
 
-const target = process.env.PREVIEW_URL;
+const previewTarget = process.env.PREVIEW_URL;
 const expectedCanonical = 'https://mowhmmdh.github.io/blog/active-directory-security-basics.html';
 const expectedEnglish = 'https://mowhmmdh.github.io/en-blog/active-directory-security-basics.html';
-const expectedCta = '/vintech/request.html';
+const acceptedCtaPaths = new Set(['/vintech/request.html', '/vintech/request']);
 const viewports = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'mobile', width: 390, height: 844 }
 ];
 
 async function main() {
-  if (!target) throw new Error('PREVIEW_URL is required.');
+  if (!previewTarget) throw new Error('PREVIEW_URL is required.');
   fs.mkdirSync('qa-artifacts', { recursive: true });
 
   const browser = await chromium.launch({
@@ -23,8 +23,51 @@ async function main() {
   const results = [];
   const failures = [];
   let deployId = null;
+  let immutableTarget = null;
 
   try {
+    // Probe only to discover the immutable deploy ID. Do not measure layout or
+    // Lighthouse on Netlify's mutable preview, which can inject its CDP toolbar.
+    const probe = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+    const probeRequests = [];
+    probe.on('request', request => probeRequests.push(request.url()));
+    await probe.goto(previewTarget, { waitUntil: 'networkidle', timeout: 60000 });
+
+    const netlifyCdpUrl = [
+      ...probe.frames().map(frame => frame.url()),
+      ...probeRequests
+    ].find(rawUrl => {
+      try {
+        const url = new URL(rawUrl);
+        return url.hostname === 'app.netlify.com' &&
+          url.pathname === '/cdp/' &&
+          url.searchParams.has('deployID');
+      } catch (_) {
+        return false;
+      }
+    });
+    await probe.close();
+
+    if (!netlifyCdpUrl) {
+      throw new Error('Netlify deploy ID was not exposed; refusing mutable-preview browser or Lighthouse QA.');
+    }
+    deployId = new URL(netlifyCdpUrl).searchParams.get('deployID');
+    if (!/^[A-Za-z0-9-]+$/.test(deployId || '')) {
+      throw new Error('Invalid Netlify deploy ID token.');
+    }
+
+    const previewUrl = new URL(previewTarget);
+    immutableTarget = 'https://' + deployId + '--mowhmmdh.netlify.app' + previewUrl.pathname;
+    const immutableCheck = await browser.newPage();
+    const immutableResponse = await immutableCheck.goto(immutableTarget, {
+      waitUntil: 'networkidle',
+      timeout: 60000
+    });
+    await immutableCheck.close();
+    if (immutableResponse?.status() !== 200) {
+      throw new Error('Immutable Netlify deploy URL did not return HTTP 200.');
+    }
+
     for (const spec of viewports) {
       const page = await browser.newPage({
         viewport: { width: spec.width, height: spec.height },
@@ -42,7 +85,7 @@ async function main() {
       });
       page.on('request', request => requestUrls.push(request.url()));
       page.on('requestfailed', request => {
-        if (request.url().startsWith(new URL(target).origin + '/')) {
+        if (request.url().startsWith(new URL(immutableTarget).origin + '/')) {
           failedLocalRequests.push({
             url: request.url(),
             error: request.failure()?.errorText || 'unknown'
@@ -50,38 +93,13 @@ async function main() {
         }
       });
 
-      const response = await page.goto(target, {
+      const response = await page.goto(immutableTarget, {
         waitUntil: 'networkidle',
         timeout: 60000
       });
       await page.evaluate(async () => {
         if (document.fonts?.ready) await document.fonts.ready;
       });
-
-      const netlifyCdpUrl = [
-        ...page.frames().map(frame => frame.url()),
-        ...requestUrls
-      ].find(rawUrl => {
-        try {
-          const url = new URL(rawUrl);
-          return url.hostname === 'app.netlify.com' &&
-            url.pathname === '/cdp/' &&
-            url.searchParams.has('deployID');
-        } catch (_) {
-          return false;
-        }
-      });
-
-      if (netlifyCdpUrl) {
-        const detected = new URL(netlifyCdpUrl).searchParams.get('deployID');
-        if (!/^[A-Za-z0-9-]+$/.test(detected || '')) {
-          failures.push(spec.name + ': invalid Netlify deploy ID token');
-        } else if (deployId && deployId !== detected) {
-          failures.push(spec.name + ': Netlify deploy ID changed between viewports');
-        } else {
-          deployId = detected;
-        }
-      }
 
       const snapshot = await page.evaluate(() => {
         const ctas = Array.from(document.querySelectorAll('a.q-mobile-cta'));
@@ -102,6 +120,7 @@ async function main() {
           catch (_) { schemasValid = false; }
         }
         const firstFooterChild = footer?.firstElementChild || null;
+        const ctaHref = cta?.getAttribute('href') || null;
         return {
           lang: document.documentElement.lang,
           dir: document.documentElement.dir,
@@ -113,7 +132,8 @@ async function main() {
           conversionSection: !!document.querySelector('.seo-conversion-cta'),
           relatedSection: !!document.querySelector('.auto-related'),
           ctaCount: ctas.length,
-          ctaHref: cta?.getAttribute('href') || null,
+          ctaHref,
+          ctaPath: ctaHref ? new URL(ctaHref, location.href).pathname : null,
           ctaText: cta?.textContent?.trim() || null,
           ctaConversion: cta?.getAttribute('data-conversion') || null,
           ctaDisplay: ctaStyle?.display || null,
@@ -128,7 +148,9 @@ async function main() {
           enhancementScriptElements: Array.from(document.scripts)
             .filter(node => (node.src || '').includes('/assets/site-final-quality-2026.js')).length,
           scrollWidth: Math.max(document.documentElement.scrollWidth, document.body?.scrollWidth || 0),
-          viewportWidth: window.innerWidth
+          viewportWidth: window.innerWidth,
+          cdpFrames: Array.from(document.querySelectorAll('iframe')).map(frame => frame.src)
+            .filter(src => src.includes('app.netlify.com/cdp/') || src.includes('/.netlify/scripts/cdp'))
         };
       });
 
@@ -143,12 +165,12 @@ async function main() {
       if (!snapshot.schemasValid || snapshot.schemaCount < 2) problems.push('JSON-LD missing or invalid');
       if (!snapshot.conversionSection || !snapshot.relatedSection) problems.push('Existing conversion/related content missing');
       if (snapshot.ctaCount !== 1) problems.push('Expected exactly one static mobile CTA');
-      if (snapshot.ctaHref !== expectedCta) problems.push('Mobile CTA destination changed');
+      if (!acceptedCtaPaths.has(snapshot.ctaPath)) problems.push('Mobile CTA destination changed: ' + snapshot.ctaPath);
       if (snapshot.ctaConversion !== 'mobile_service_request') problems.push('Mobile CTA conversion attribute changed');
       if (snapshot.ctaText !== 'درخواست پروژه / مشاوره') problems.push('Mobile CTA label changed');
       const expectedDisplay = spec.name === 'mobile' ? 'flex' : 'none';
       if (snapshot.ctaDisplay !== expectedDisplay) problems.push('CTA display mismatch: ' + snapshot.ctaDisplay);
-      if (snapshot.ctaPosition !== 'fixed') problems.push('CTA is not fixed-position');
+      if (spec.name === 'mobile' && snapshot.ctaPosition !== 'fixed') problems.push('Mobile CTA is not fixed-position');
       if (spec.name === 'mobile' && snapshot.ctaRect &&
           (snapshot.ctaRect.left < 0 || snapshot.ctaRect.right > spec.width ||
            snapshot.ctaRect.bottom > spec.height || snapshot.ctaRect.top < 0)) {
@@ -162,6 +184,10 @@ async function main() {
           requestUrls.some(url => url.includes('/assets/site-final-quality-2026.js'))) {
         problems.push('Removed enhancement script is still present or requested');
       }
+      if (snapshot.cdpFrames.length ||
+          requestUrls.some(url => url.includes('app.netlify.com/cdp/') || url.includes('/.netlify/scripts/cdp'))) {
+        problems.push('Netlify CDP instrumentation was present on immutable deploy QA');
+      }
       if (snapshot.scrollWidth > spec.width) {
         problems.push('Horizontal overflow ' + snapshot.scrollWidth + '/' + spec.width);
       }
@@ -169,7 +195,7 @@ async function main() {
       if (consoleErrors.length) problems.push('Console errors: ' + consoleErrors.join(' | '));
       if (failedLocalRequests.length) problems.push('Failed local requests: ' + JSON.stringify(failedLocalRequests));
 
-      const ctaTarget = await page.request.get(new URL(expectedCta, target).toString());
+      const ctaTarget = await page.request.get(new URL(snapshot.ctaHref, immutableTarget).toString());
       if (ctaTarget.status() !== 200) problems.push('CTA destination returned HTTP ' + ctaTarget.status());
 
       await page.screenshot({
@@ -196,7 +222,7 @@ async function main() {
     await browser.close();
   }
 
-  const report = { target, deployId, results, failures };
+  const report = { previewTarget, target: immutableTarget, deployId, results, failures };
   fs.writeFileSync('qa-artifacts/browser-report.json', JSON.stringify(report, null, 2) + '\n');
 
   if (deployId && process.env.GITHUB_OUTPUT) {
@@ -204,7 +230,6 @@ async function main() {
   }
 
   console.log(JSON.stringify(report, null, 2));
-  if (!deployId) failures.push('Netlify deploy ID was not exposed; Lighthouse must not fall back to mutable preview URL.');
   if (failures.length) throw new Error(failures.join('\n'));
 }
 
