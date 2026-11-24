@@ -115,11 +115,20 @@ function contrast(a,b) {
               const s=getComputedStyle(el), r=el.getBoundingClientRect();
               return {selector:sel,color:s.color,background:s.backgroundColor,visible:r.width>0&&r.height>0};
             }).filter(Boolean);
+            const scrollWidth=Math.max(root.scrollWidth,body.scrollWidth);
+            const overflowCandidates=scrollWidth>innerWidth+1
+              ? Array.from(document.querySelectorAll('body *')).map(el=>{
+                  const r=el.getBoundingClientRect(),cs=getComputedStyle(el);
+                  const before=getComputedStyle(el,'::before'),after=getComputedStyle(el,'::after');
+                  const pseudo=p=>p.content&&p.content!=='none'?{content:p.content,left:p.left,right:p.right,width:p.width,position:p.position}:null;
+                  return {tag:el.tagName.toLowerCase(),id:el.id||'',classes:typeof el.className==='string'?el.className:'',left:+r.left.toFixed(1),right:+r.right.toFixed(1),width:+r.width.toFixed(1),scrollWidth:el.scrollWidth,clientWidth:el.clientWidth,overflowX:cs.overflowX,whiteSpace:cs.whiteSpace,position:cs.position,before:pseudo(before),after:pseudo(after)};
+                }).filter(x=>x.right>innerWidth+1||x.left< -1||x.scrollWidth>x.clientWidth+1).slice(0,25)
+              : [];
             return {lang:root.lang,dir:root.dir,theme:root.classList.contains('theme-light')&&root.dataset.theme==='light',
               hasBundle:sheets.some(h=>h.includes('/assets/site-bundle.css')),
               hasThemeScript:Array.from(document.scripts).some(s=>(s.src||'').includes('/assets/site-theme.js')),
-              hasToggle:!!toggle,background:bg,foreground:fg,scrollWidth:Math.max(root.scrollWidth,body.scrollWidth),
-              viewport:innerWidth,badImages,visible};
+              hasToggle:!!toggle,background:bg,foreground:fg,scrollWidth,
+              viewport:innerWidth,overflowCandidates,badImages,visible};
           });
           if(snapshot.hasToggle) {
             const themeToggle = page.locator('.theme-toggle').first();
