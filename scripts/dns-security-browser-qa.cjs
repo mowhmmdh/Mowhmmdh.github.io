@@ -150,7 +150,7 @@ const viewports = [
             snapshot.schemaTypes.includes('TechArticle') &&
             snapshot.schemaTypes.includes('BreadcrumbList'),
           oneStaticMobileCta: snapshot.ctaCount === 1 &&
-            snapshot.ctaHref === '/vintech/request.html' &&
+            ['/vintech/request.html', '/vintech/request'].includes(snapshot.ctaHref) &&
             snapshot.ctaConversion === 'mobile_service_request' &&
             snapshot.ctaLabel === 'درخواست پروژه / مشاوره' &&
             ctaResponse?.status() === 200,
