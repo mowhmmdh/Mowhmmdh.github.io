@@ -256,5 +256,12 @@ class GitLabArticleStaticEnhancementTests(unittest.TestCase):
         self.assertIn('class="theme-toggle"', self.html)
         self.assertIn('href="/en-blog/gitlab-ci-cd-for-it-infrastructure.html"', self.html)
 
+    def test_navigation_backdrop_is_clamped_to_viewport(self):
+        self.assertIn(
+            "<style>body .nav:before{inset-inline:calc((100vw - 100%)/-2)}</style>",
+            self.html,
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
