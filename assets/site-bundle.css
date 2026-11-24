@@ -1177,3 +1177,7 @@ html.theme-light .mahex-hero:after{background:linear-gradient(0deg,rgba(3,7,12,.
     background:#fff!important;border-color:#d7e0e9!important;
   }
 }
+
+/* Standalone legal pages without a navigation bar still expose the shared theme control. */
+.theme-page-actions{position:fixed;z-index:10001;inset-block-start:12px;inset-inline-end:12px}
+.theme-page-actions .theme-toggle{box-shadow:0 8px 24px rgba(0,0,0,.14)}
