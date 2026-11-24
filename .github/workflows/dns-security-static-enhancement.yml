@@ -70,14 +70,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          target="$PREVIEW_URL"
-          if [[ -n "$NETLIFY_DEPLOY_ID" ]]; then
-            path="${PREVIEW_URL#https://deploy-preview-${PR_NUMBER}--mowhmmdh.netlify.app}"
-            target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app${path}"
-            echo "Using immutable Netlify deploy permalink for Lighthouse."
-          else
-            echo "Netlify deploy ID was not detected; Lighthouse will use the standard preview."
+          if [[ ! "$NETLIFY_DEPLOY_ID" =~ ^[A-Za-z0-9-]{1,64}$ ]]; then
+            echo "Netlify deploy ID missing or invalid; refusing to run Lighthouse against an instrumented preview URL."
+            exit 1
           fi
+          path="${PREVIEW_URL#https://deploy-preview-${PR_NUMBER}--mowhmmdh.netlify.app}"
+          target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app${path}"
+          echo "Using immutable Netlify deploy permalink for Lighthouse."
           for attempt in {1..48}; do
             code=$(curl -L -s -o /dev/null -w '%{http_code}' "$target" || true)
             if [ "$code" = "200" ]; then
@@ -113,6 +112,14 @@ jobs:
               scores[key] = Math.round(score * 100);
             }
             const audits = report.audits || {};
+            const reportText = JSON.stringify(report);
+            if (/deploy-preview-\\d+--mowhmmdh\\.netlify\\.app/i.test(report.requestedUrl || '') ||
+                /deploy-preview-\\d+--mowhmmdh\\.netlify\\.app/i.test(report.finalDisplayedUrl || '')) {
+              throw new Error(formFactor + ': Lighthouse used a mutable deploy-preview URL instead of an immutable deploy permalink.');
+            }
+            if (/(?:app\\.netlify\\.com\\/cdp\\/|\\/\\.netlify\\/scripts\\/cdp)/i.test(reportText)) {
+              throw new Error(formFactor + ': Netlify Deploy Preview instrumentation was present in the Lighthouse report.');
+            }
             const mainThread = audits['mainthread-work-breakdown']?.details?.items || [];
             const longTasks = audits['long-tasks']?.details?.items || [];
             const unusedCss = audits['unused-css-rules']?.details?.items || [];
