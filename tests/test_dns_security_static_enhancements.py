@@ -9,6 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 PAGE_PATH = ROOT / "blog" / "dns-security-and-troubleshooting.html"
 PAGE = PAGE_PATH.read_text(encoding="utf-8")
 QUALITY_CSS = (ROOT / "assets" / "site-final-quality-2026.css").read_text(encoding="utf-8")
+WORKFLOW = (ROOT / ".github" / "workflows" / "dns-security-static-enhancement.yml").read_text(encoding="utf-8")
 
 
 class PageParser(HTMLParser):
@@ -176,6 +177,19 @@ class DnsSecurityStaticEnhancementTests(unittest.TestCase):
         self.assertIn('<section class="seo-conversion-cta"', PAGE)
         self.assertIn('href="/services.html"', PAGE)
         self.assertIn('href="/vintech/request.html"', PAGE)
+
+    def test_lighthouse_fails_closed_without_a_valid_immutable_deploy_id(self):
+        self.assertIn('if [[ ! "$NETLIFY_DEPLOY_ID" =~ ^[A-Za-z0-9-]{1,64}$ ]]', WORKFLOW)
+        self.assertIn("refusing to run Lighthouse against an instrumented preview URL", WORKFLOW)
+        self.assertIn('target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app${path}"', WORKFLOW)
+        self.assertNotIn("Lighthouse will use the standard preview", WORKFLOW)
+
+    def test_lighthouse_report_rejects_preview_toolbar_instrumentation(self):
+        self.assertIn("report.requestedUrl", WORKFLOW)
+        self.assertIn("report.finalDisplayedUrl", WORKFLOW)
+        self.assertIn("app.netlify.com/cdp/", WORKFLOW)
+        self.assertIn("/.netlify/scripts/cdp", WORKFLOW)
+        self.assertIn("Netlify Deploy Preview instrumentation was present", WORKFLOW)
 
 
 if __name__ == "__main__":
