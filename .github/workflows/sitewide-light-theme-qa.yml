@@ -27,8 +27,6 @@ jobs:
     needs: source-regression
     runs-on: ubuntu-24.04
     timeout-minutes: 35
-    env:
-      PREVIEW_BASE_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -38,18 +36,7 @@ jobs:
         run: npm install --global playwright@1.56.1
       - name: Install Chromium
         run: playwright install --with-deps chromium
-      - name: Wait for immutable deploy preview
-        shell: bash
-        run: |
-          set -euo pipefail
-          for attempt in {1..48}; do
-            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_BASE_URL" || true)
-            if [ "$code" = "200" ]; then exit 0; fi
-            sleep 5
-          done
-          echo "Preview did not return HTTP 200: $PREVIEW_BASE_URL"
-          exit 1
-      - name: Run light-theme and responsive QA on every HTML page
+      - name: Run light-theme and responsive QA against the checked-out static site
         run: |
           mkdir -p qa-artifacts/light-theme
           NODE_PATH="$(npm root -g)" node scripts/sitewide-light-theme-browser-qa.cjs
