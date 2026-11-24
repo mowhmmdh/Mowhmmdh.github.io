@@ -6,6 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = (ROOT / "assets/site-bundle.css").read_text(encoding="utf-8")
 THEME = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
+BROWSER_QA = (ROOT / "scripts/sitewide-light-theme-browser-qa.cjs").read_text(encoding="utf-8")
 PAGES = sorted(p for p in ROOT.rglob("*.html") if ".git" not in p.parts and "node_modules" not in p.parts and p.name != "404.html")
 
 
@@ -54,6 +55,13 @@ class SitewideLightThemeTests(unittest.TestCase):
         self.assertIn("theme(saved||'dark')", THEME)
         self.assertIn('<html lang="fa" dir="rtl">', (ROOT / "index.html").read_text(encoding="utf-8"))
         self.assertIn('<html lang="en" dir="ltr">', (ROOT / "en.html").read_text(encoding="utf-8"))
+
+    def test_browser_audit_uses_snapshot_scoped_theme_toggle(self):
+        self.assertIn("hasToggle:!!toggle", BROWSER_QA)
+        self.assertIn("if(snapshot.hasToggle)", BROWSER_QA)
+        self.assertIn("const themeToggle = page.locator('.theme-toggle').first();", BROWSER_QA)
+        self.assertEqual(BROWSER_QA.count("await themeToggle.click();"), 2)
+        self.assertNotRegex(BROWSER_QA, r"(?m)^\\s*if\\s*\\(\\s*toggle\\s*\\)")
 
 
 if __name__ == "__main__":
