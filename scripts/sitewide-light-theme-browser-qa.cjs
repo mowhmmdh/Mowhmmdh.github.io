@@ -4,8 +4,61 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
 const { chromium } = require('playwright');
+const http = require('node:http');
 
-const base = (process.env.PREVIEW_BASE_URL || 'https://deploy-preview-39--mowhmmdh.netlify.app').replace(/\/$/, '');
+const ROOT = process.cwd();
+const MIME_TYPES = {
+  '.css': 'text/css; charset=utf-8',
+  '.html': 'text/html; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
+  '.json': 'application/json; charset=utf-8',
+  '.svg': 'image/svg+xml',
+  '.webp': 'image/webp',
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.woff': 'font/woff',
+  '.woff2': 'font/woff2',
+  '.xml': 'application/xml; charset=utf-8',
+  '.txt': 'text/plain; charset=utf-8'
+};
+
+function startStaticServer() {
+  const server = http.createServer(async (req, res) => {
+    try {
+      let pathname = decodeURIComponent(new URL(req.url || '/', 'http://127.0.0.1').pathname);
+      if (pathname.endsWith('/')) pathname += 'index.html';
+      let filePath = path.resolve(ROOT, '.' + pathname);
+      const relative = path.relative(ROOT, filePath);
+      if (relative === '..' || relative.startsWith('..' + path.sep) || path.isAbsolute(relative)) {
+        res.writeHead(403, { 'Content-Type': 'text/plain; charset=utf-8' });
+        res.end('Forbidden');
+        return;
+      }
+      let stat = await fs.promises.stat(filePath);
+      if (stat.isDirectory()) filePath = path.join(filePath, 'index.html');
+      const body = await fs.promises.readFile(filePath);
+      const type = MIME_TYPES[path.extname(filePath).toLowerCase()] || 'application/octet-stream';
+      res.writeHead(200, {
+        'Content-Type': type,
+        'Cache-Control': 'no-store',
+        'X-Content-Type-Options': 'nosniff'
+      });
+      res.end(body);
+    } catch (error) {
+      const status = error.code === 'ENOENT' || error.code === 'ENOTDIR' ? 404 : 500;
+      res.writeHead(status, { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-store' });
+      res.end(status === 404 ? 'Not Found' : 'Internal Server Error');
+    }
+  });
+  return new Promise((resolve, reject) => {
+    server.once('error', reject);
+    server.listen(0, '127.0.0.1', () => {
+      server.removeListener('error', reject);
+      resolve({ server, base: 'http://127.0.0.1:' + server.address().port });
+    });
+  });
+}
 const routes = execFileSync('git', ['ls-files', '*.html'], { encoding: 'utf8' })
   .split(/\r?\n/).filter(Boolean).filter(p => p !== '404.html')
   .map(p => p.endsWith('/index.html') ? '/' + p.slice(0, -'index.html'.length) : p === 'index.html' ? '/' : '/' + p);
@@ -26,9 +79,11 @@ function contrast(a,b) {
 
 (async()=>{
   fs.mkdirSync('qa-artifacts/light-theme',{recursive:true});
-  const browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
+  const {server,base}=await startStaticServer();
+  let browser=null;
   const failures=[], summary=[];
   try {
+    browser=await chromium.launch({headless:true,args:['--no-sandbox','--disable-dev-shm-usage']});
     for(const vp of viewports) {
       const context=await browser.newContext({viewport:{width:vp.width,height:vp.height},reducedMotion:'reduce'});
       await context.addInitScript(()=>{try{localStorage.setItem('mha-theme','light')}catch(_){}});
@@ -99,7 +154,10 @@ function contrast(a,b) {
       }
       await context.close();
     }
-  } finally { await browser.close(); }
+  } finally {
+    if(browser) await browser.close();
+    await new Promise(resolve=>server.close(resolve));
+  }
   fs.writeFileSync('qa-artifacts/light-theme/sitewide-report.json',JSON.stringify({base,totalRoutes:routes.length,viewports:viewports.length,checked:summary.length,failures},null,2));
   console.log(JSON.stringify({base,totalRoutes:routes.length,checked:summary.length,failed:failures.length,failures:failures.slice(0,100)},null,2));
   if(failures.length)process.exitCode=1;
