@@ -77,6 +77,11 @@ class SitewideLightThemeTests(unittest.TestCase):
         self.assertNotIn("PREVIEW_BASE_URL", browser_job)
         self.assertNotIn("Wait for immutable deploy preview", browser_job)
 
+    def test_browser_audit_reports_overflow_candidates_for_diagnosis(self):
+        self.assertIn("overflowCandidates", BROWSER_QA)
+        self.assertIn("getBoundingClientRect()", BROWSER_QA)
+        self.assertIn("getComputedStyle(el,'::before')", BROWSER_QA)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
