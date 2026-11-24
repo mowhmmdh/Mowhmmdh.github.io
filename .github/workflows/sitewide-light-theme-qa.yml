@@ -1,0 +1,96 @@
+name: Sitewide Light Theme Audit
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "**/*.html"
+      - "assets/site-bundle.css"
+      - "assets/site-theme.js"
+      - "assets/theme-stability-2026.css"
+      - "tests/test_sitewide_light_theme.py"
+      - "scripts/sitewide-light-theme-browser-qa.cjs"
+      - ".github/workflows/sitewide-light-theme-qa.yml"
+permissions:
+  contents: read
+concurrency:
+  group: sitewide-light-theme-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  source-regression:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Audit every tracked HTML page and shared theme contract
+        run: python3 -m unittest discover -s tests -p "test_sitewide_light_theme.py" -v
+  browser-all-pages:
+    needs: source-regression
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      PREVIEW_BASE_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install pinned free browser tooling
+        run: npm install --global playwright@1.56.1
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for immutable deploy preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..48}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_BASE_URL" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Preview did not return HTTP 200: $PREVIEW_BASE_URL"
+          exit 1
+      - name: Run light-theme and responsive QA on every HTML page
+        run: |
+          mkdir -p qa-artifacts/light-theme
+          NODE_PATH="$(npm root -g)" node scripts/sitewide-light-theme-browser-qa.cjs
+      - name: Upload all-page screenshots and report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: sitewide-light-theme-browser
+          path: qa-artifacts/light-theme/
+          if-no-files-found: warn
+          retention-days: 14
+  lighthouse-samples:
+    needs: browser-all-pages
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      PREVIEW_BASE_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install pinned Lighthouse
+        run: npm install --global lighthouse@13.6.0
+      - name: Install Chromium
+        run: npx --yes playwright@1.56.1 install --with-deps chromium
+      - name: Run Lighthouse on representative Persian and English templates
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p qa-artifacts/lighthouse
+          for route in / /blog/ /about.html /services.html /vintech.html /en.html /en-services.html; do
+            slug=$(echo "$route" | tr '/.' '__')
+            lighthouse "$PREVIEW_BASE_URL$route" --only-categories=performance,accessibility,best-practices,seo --output=json --output-path="qa-artifacts/lighthouse/${slug}-mobile.json" --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+            lighthouse "$PREVIEW_BASE_URL$route" --only-categories=performance,accessibility,best-practices,seo --preset=desktop --output=json --output-path="qa-artifacts/lighthouse/${slug}-desktop.json" --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' --quiet
+          done
+      - name: Upload Lighthouse reports
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: sitewide-light-theme-lighthouse
+          path: qa-artifacts/lighthouse/
+          if-no-files-found: warn
+          retention-days: 14
