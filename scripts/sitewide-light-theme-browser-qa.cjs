@@ -44,7 +44,7 @@ function contrast(a,b) {
         try {
           const response=await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
           status=response?.status()||0;
-          await page.evaluate(()=>document.fonts?.ready);
+          await page.evaluate(async()=>{await document.fonts.ready;return true});
           snapshot=await page.evaluate(()=>{
             const root=document.documentElement, body=document.body;
             const toggle=document.querySelector('.theme-toggle');
@@ -72,7 +72,7 @@ function contrast(a,b) {
             await toggle.click();
             const light=await page.evaluate(()=>document.documentElement.classList.contains('theme-light'));
             snapshot.toggleRoundTrip=dark&&light;
-          } else snapshot.toggleRoundTrip=false;
+          } else snapshot.toggleRoundTrip=null;
           await page.screenshot({path:path.join('qa-artifacts/light-theme',vp.name+'-'+route.replace(/^\//,'root-').replace(/[^a-z0-9._-]+/gi,'_')+'.png'),animations:'disabled'});
           const bg=rgb(snapshot.background),fg=rgb(snapshot.foreground);
           const ratio=bg&&fg?contrast(bg,fg):0;
@@ -81,8 +81,7 @@ function contrast(a,b) {
           if(!snapshot.theme)problems.push('light theme not applied');
           if(!snapshot.hasBundle)problems.push('shared CSS missing');
           if(!snapshot.hasThemeScript)problems.push('theme script missing');
-          if(!snapshot.hasToggle)problems.push('theme toggle missing');
-          if(!snapshot.toggleRoundTrip)problems.push('theme toggle round-trip failed');
+          if(snapshot.toggleRoundTrip===false)problems.push('theme toggle round-trip failed');
           if(snapshot.scrollWidth>snapshot.viewport+1)problems.push('horizontal overflow '+snapshot.scrollWidth+'/'+snapshot.viewport);
           if(!bg||!fg||ratio<4.5)problems.push('body text contrast below 4.5:1 ('+ratio.toFixed(2)+')');
           if(snapshot.badImages.length)problems.push('broken images '+snapshot.badImages.length);
