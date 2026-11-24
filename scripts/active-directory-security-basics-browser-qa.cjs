@@ -149,6 +149,26 @@ async function main() {
             .filter(node => (node.src || '').includes('/assets/site-final-quality-2026.js')).length,
           scrollWidth: Math.max(document.documentElement.scrollWidth, document.body?.scrollWidth || 0),
           viewportWidth: window.innerWidth,
+          rootOverflowX: getComputedStyle(document.documentElement).overflowX,
+          bodyOverflowX: getComputedStyle(document.body).overflowX,
+          visibleOverflowElements: Array.from(document.querySelectorAll('body *')).map(element => {
+            const rect = element.getBoundingClientRect();
+            const style = getComputedStyle(element);
+            return {
+              tag: element.tagName.toLowerCase(),
+              id: element.id || null,
+              className: typeof element.className === 'string' ? element.className.slice(0, 120) : null,
+              left: Math.round(rect.left * 10) / 10,
+              right: Math.round(rect.right * 10) / 10,
+              width: Math.round(rect.width * 10) / 10,
+              display: style.display,
+              visibility: style.visibility,
+              opacity: style.opacity,
+              position: style.position
+            };
+          }).filter(item => item.display !== 'none' && item.visibility !== 'hidden' &&
+            Number(item.opacity) > 0 && item.width > 0 &&
+            (item.left < -1 || item.right > window.innerWidth + 1)).slice(0, 12),
           cdpFrames: Array.from(document.querySelectorAll('iframe')).map(frame => frame.src)
             .filter(src => src.includes('app.netlify.com/cdp/') || src.includes('/.netlify/scripts/cdp'))
         };
@@ -188,8 +208,13 @@ async function main() {
           requestUrls.some(url => url.includes('app.netlify.com/cdp/') || url.includes('/.netlify/scripts/cdp'))) {
         problems.push('Netlify CDP instrumentation was present on immutable deploy QA');
       }
-      if (snapshot.scrollWidth > spec.width) {
-        problems.push('Horizontal overflow ' + snapshot.scrollWidth + '/' + spec.width);
+      if (snapshot.visibleOverflowElements.length) {
+        problems.push('Visible elements extend beyond viewport: ' + JSON.stringify(snapshot.visibleOverflowElements));
+      }
+      if (snapshot.rootOverflowX !== 'clip' && snapshot.rootOverflowX !== 'hidden' &&
+          snapshot.bodyOverflowX !== 'clip' && snapshot.bodyOverflowX !== 'hidden' &&
+          snapshot.scrollWidth > spec.width) {
+        problems.push('Horizontally scrollable document ' + snapshot.scrollWidth + '/' + spec.width);
       }
       if (pageErrors.length) problems.push('Page errors: ' + pageErrors.join(' | '));
       if (consoleErrors.length) problems.push('Console errors: ' + consoleErrors.join(' | '));
