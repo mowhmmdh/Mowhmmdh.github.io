@@ -66,10 +66,11 @@ function contrast(a,b) {
               hasToggle:!!toggle,background:bg,foreground:fg,scrollWidth:Math.max(root.scrollWidth,body.scrollWidth),
               viewport:innerWidth,badImages,visible};
           });
-          if(toggle) {
-            await toggle.click();
+          if(snapshot.hasToggle) {
+            const themeToggle = page.locator('.theme-toggle').first();
+            await themeToggle.click();
             const dark=await page.evaluate(()=>!document.documentElement.classList.contains('theme-light'));
-            await toggle.click();
+            await themeToggle.click();
             const light=await page.evaluate(()=>document.documentElement.classList.contains('theme-light'));
             snapshot.toggleRoundTrip=dark&&light;
           } else snapshot.toggleRoundTrip=null;
