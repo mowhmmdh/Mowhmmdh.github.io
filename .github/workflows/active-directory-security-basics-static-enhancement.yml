@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: active-directory-security-basics-static-enhancement-\${{ github.event.pull_request.number }}
+  group: active-directory-security-basics-static-enhancement-${{ github.event.pull_request.number }}
   cancel-in-progress: true
 
 jobs:
@@ -35,8 +35,8 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 35
     env:
-      PR_NUMBER: \${{ github.event.pull_request.number }}
-      PREVIEW_URL: https://deploy-preview-\${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/blog/active-directory-security-basics.html
+      PR_NUMBER: ${{ github.event.pull_request.number }}
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app/blog/active-directory-security-basics.html
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -64,7 +64,7 @@ jobs:
           NODE_PATH="$(npm root -g)" node scripts/active-directory-security-basics-browser-qa.cjs
       - name: Resolve immutable Netlify deploy permalink for Lighthouse
         env:
-          NETLIFY_DEPLOY_ID: \${{ steps.browser_qa.outputs.netlify_deploy_id }}
+          NETLIFY_DEPLOY_ID: ${{ steps.browser_qa.outputs.netlify_deploy_id }}
         shell: bash
         run: |
           set -euo pipefail
@@ -72,8 +72,8 @@ jobs:
             echo "A valid immutable Netlify deploy ID was not detected; refusing a mutable preview Lighthouse run."
             exit 1
           fi
-          path="\${PREVIEW_URL#https://deploy-preview-\${PR_NUMBER}--mowhmmdh.netlify.app}"
-          target="https://\${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app\${path}"
+          path="${PREVIEW_URL#https://deploy-preview-${PR_NUMBER}--mowhmmdh.netlify.app}"
+          target="https://${NETLIFY_DEPLOY_ID}--mowhmmdh.netlify.app${path}"
           for attempt in {1..48}; do
             code=$(curl -L -s -o /dev/null -w '%{http_code}' "$target" || true)
             if [ "$code" = "200" ]; then
