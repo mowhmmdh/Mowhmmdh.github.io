@@ -92,9 +92,6 @@ class GitLabArticleNavigationTests(unittest.TestCase):
         self.assertIn(".mobile-menu{display:inline-grid}", self.css)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
 
 class ArticleEnhancementParser(HTMLParser):
     def __init__(self):
@@ -258,3 +255,6 @@ class GitLabArticleStaticEnhancementTests(unittest.TestCase):
         self.assertIn('class="mobile-menu"', self.html)
         self.assertIn('class="theme-toggle"', self.html)
         self.assertIn('href="/en-blog/gitlab-ci-cd-for-it-infrastructure.html"', self.html)
+
+if __name__ == "__main__":
+    unittest.main()
