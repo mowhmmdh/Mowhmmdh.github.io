@@ -82,6 +82,9 @@ class SitewideLightThemeTests(unittest.TestCase):
         self.assertIn("getBoundingClientRect()", BROWSER_QA)
         self.assertIn("getComputedStyle(el,'::before')", BROWSER_QA)
 
+    def test_headings_allow_long_words_to_wrap_on_narrow_viewports(self):
+        self.assertIn("h1{overflow-wrap:anywhere;", BUNDLE)
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
