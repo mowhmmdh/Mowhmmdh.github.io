@@ -6,6 +6,7 @@ import unittest
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = (ROOT / "assets/site-bundle.css").read_text(encoding="utf-8")
 THEME = (ROOT / "assets/site-theme.js").read_text(encoding="utf-8")
+WORKFLOW = (ROOT / ".github/workflows/sitewide-light-theme-qa.yml").read_text(encoding="utf-8")
 BROWSER_QA = (ROOT / "scripts/sitewide-light-theme-browser-qa.cjs").read_text(encoding="utf-8")
 PAGES = sorted(p for p in ROOT.rglob("*.html") if ".git" not in p.parts and "node_modules" not in p.parts and p.name != "404.html")
 
@@ -63,6 +64,18 @@ class SitewideLightThemeTests(unittest.TestCase):
         self.assertEqual(BROWSER_QA.count("await themeToggle.click();"), 2)
         self.assertNotIn("if(toggle)", BROWSER_QA)
         self.assertNotIn("await toggle.click();", BROWSER_QA)
+
+    def test_shared_nav_backdrop_does_not_expand_scrollable_width(self):
+        self.assertIn("inset:0;inset-inline:calc((100vw - 100%)/-2)", BUNDLE)
+        self.assertNotIn("inset:0 -100vw", BUNDLE)
+
+    def test_all_page_browser_audit_uses_local_checked_out_site(self):
+        self.assertIn("http.createServer", BROWSER_QA)
+        self.assertIn("127.0.0.1", BROWSER_QA)
+        self.assertIn("await startStaticServer()", BROWSER_QA)
+        browser_job = WORKFLOW.split("  lighthouse-samples:", 1)[0]
+        self.assertNotIn("PREVIEW_BASE_URL", browser_job)
+        self.assertNotIn("Wait for immutable deploy preview", browser_job)
 
 
 if __name__ == "__main__":
