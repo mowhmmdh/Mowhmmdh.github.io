@@ -113,11 +113,12 @@ jobs:
             }
             const audits = report.audits || {};
             const reportText = JSON.stringify(report);
-            if (/deploy-preview-\\d+--mowhmmdh\\.netlify\\.app/i.test(report.requestedUrl || '') ||
-                /deploy-preview-\\d+--mowhmmdh\\.netlify\\.app/i.test(report.finalDisplayedUrl || '')) {
+            if (String(report.requestedUrl || '').includes('deploy-preview-') ||
+                String(report.finalDisplayedUrl || '').includes('deploy-preview-')) {
               throw new Error(formFactor + ': Lighthouse used a mutable deploy-preview URL instead of an immutable deploy permalink.');
             }
-            if (/(?:app\\.netlify\\.com\\/cdp\\/|\\/\\.netlify\\/scripts\\/cdp)/i.test(reportText)) {
+            if (reportText.includes('app.netlify.com/cdp/') ||
+                reportText.includes('/.netlify/scripts/cdp')) {
               throw new Error(formFactor + ': Netlify Deploy Preview instrumentation was present in the Lighthouse report.');
             }
             const mainThread = audits['mainthread-work-breakdown']?.details?.items || [];
