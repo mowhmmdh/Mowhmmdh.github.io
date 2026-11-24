@@ -52,10 +52,8 @@ class SitewideLightThemeTests(unittest.TestCase):
 
     def test_dark_mode_defaults_and_persian_english_document_contracts_remain(self):
         self.assertIn("theme(saved||'dark')", THEME)
-        self.assertRegex((ROOT / "index.html").read_text(encoding="utf-8"),
-                         r'<html\\b[^>]*lang=["\\']fa["\\'][^>]*dir=["\\']rtl["\\']')
-        self.assertRegex((ROOT / "en.html").read_text(encoding="utf-8"),
-                         r'<html\\b[^>]*lang=["\\']en["\\'][^>]*dir=["\\']ltr["\\']')
+        self.assertIn('<html lang="fa" dir="rtl">', (ROOT / "index.html").read_text(encoding="utf-8"))
+        self.assertIn('<html lang="en" dir="ltr">', (ROOT / "en.html").read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
