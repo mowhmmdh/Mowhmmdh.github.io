@@ -151,6 +151,8 @@ async function main() {
           enhancementScriptElements: Array.from(document.scripts)
             .filter(node => (node.src || '').includes('/assets/site-final-quality-2026.js')).length,
           scrollWidth: Math.max(document.documentElement.scrollWidth, document.body?.scrollWidth || 0),
+          documentWidth: document.documentElement.scrollWidth,
+          bodyWidth: document.body?.scrollWidth || 0,
           viewportWidth: window.innerWidth,
           rootOverflowX: getComputedStyle(document.documentElement).overflowX,
           bodyOverflowX: getComputedStyle(document.body).overflowX,
@@ -217,10 +219,9 @@ async function main() {
       if (snapshot.visibleOverflowElements.length) {
         problems.push('Visible elements extend beyond viewport: ' + JSON.stringify(snapshot.visibleOverflowElements));
       }
-      if (snapshot.rootOverflowX !== 'clip' && snapshot.rootOverflowX !== 'hidden' &&
-          snapshot.bodyOverflowX !== 'clip' && snapshot.bodyOverflowX !== 'hidden' &&
-          snapshot.scrollWidth > spec.width) {
-        problems.push('Horizontally scrollable document ' + snapshot.scrollWidth + '/' + spec.width);
+      if (snapshot.scrollWidth > spec.width + 1) {
+        problems.push('Raw document scroll width exceeds viewport: ' + snapshot.scrollWidth + '/' + spec.width +
+          ' (document=' + snapshot.documentWidth + ', body=' + snapshot.bodyWidth + ')');
       }
       if (pageErrors.length) problems.push('Page errors: ' + pageErrors.join(' | '));
       if (consoleErrors.length) problems.push('Console errors: ' + consoleErrors.join(' | '));
