@@ -149,9 +149,9 @@ test('profile page titles are distinct and concise for their search intent', () 
   const fa = fs.readFileSync(path.join(ROOT, 'profile.html'), 'utf8');
   const en = fs.readFileSync(path.join(ROOT, 'en-profile.html'), 'utf8');
   const home = fs.readFileSync(path.join(ROOT, 'en.html'), 'utf8');
-  const faTitle = fa.match(/<title>(.*?)<\\/title>/s)?.[1] || '';
-  const enTitle = en.match(/<title>(.*?)<\\/title>/s)?.[1] || '';
-  const homeTitle = home.match(/<title>(.*?)<\\/title>/s)?.[1] || '';
+  const faTitle = fa.match(/<title>(.*?)<\/title>/s)?.[1] || '';
+  const enTitle = en.match(/<title>(.*?)<\/title>/s)?.[1] || '';
+  const homeTitle = home.match(/<title>(.*?)<\/title>/s)?.[1] || '';
   const enDescription = en.match(/<meta name="description" content="([^"]+)"/)?.[1] || '';
   assert.ok(faTitle.length <= 60, 'Persian profile title should stay concise');
   assert.ok(enTitle.length <= 60, 'English profile title should stay concise');
