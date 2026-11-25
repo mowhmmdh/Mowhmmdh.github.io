@@ -2,6 +2,10 @@
 const root=document.documentElement;
 const KEY='mha-theme';
 const normalize=value=>value==='light'?'light':'dark';
+const isEnglish=/^en(?:-|$)/i.test(root.lang||'');
+const labels=isEnglish
+  ? {switchToLight:'Switch to light mode',switchToDark:'Switch to dark mode',openMenu:'Open menu',closeMenu:'Close menu'}
+  : {switchToLight:'فعال‌کردن حالت روشن',switchToDark:'فعال‌کردن حالت تیره',openMenu:'باز کردن منو',closeMenu:'بستن منو'};
 function apply(mode){
   const selected=normalize(mode),light=selected==='light';
   root.dataset.theme=selected;
@@ -9,9 +13,9 @@ function apply(mode){
   root.style.colorScheme=selected;
   document.querySelectorAll('.theme-toggle').forEach(button=>{
     button.textContent=light?'☀':'☾';
-    button.setAttribute('aria-label',light?'فعال‌کردن حالت تیره':'فعال‌کردن حالت روشن');
+    button.setAttribute('aria-label',light?labels.switchToDark:labels.switchToLight);
     button.setAttribute('aria-pressed',String(light));
-    button.setAttribute('title',light?'Switch to dark mode':'Switch to light mode');
+    button.setAttribute('title',light?labels.switchToDark:labels.switchToLight);
   });
 }
 function persist(mode){try{localStorage.setItem(KEY,normalize(mode))}catch(_){}}
