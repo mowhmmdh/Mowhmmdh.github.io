@@ -46,6 +46,9 @@ jobs:
             node --check "$file"
           done
 
+      - name: Test localized theme and mobile-menu controls
+        run: node --test tests/theme-control-localization.test.cjs
+
       - name: Check production stylesheet contract
         shell: python
         run: |
