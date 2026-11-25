@@ -93,3 +93,17 @@ body.vintech-modern .vt-btn:focus-visible,body.vintech-modern .vt-menu:focus-vis
 body.vintech-modern .auto-discovery .discovery-link{min-height:54px;overflow-wrap:anywhere}
 @media(max-width:680px){body.vintech-modern .vt-hero h1{max-width:15ch;margin-inline:auto;font-size:clamp(2.2rem,9.5vw,3.25rem)}body.vintech-modern .vt-hero-grid{gap:24px}body.vintech-modern .vt-hero-visual{min-height:230px}body.vintech-modern .vt-trust{gap:7px}body.vintech-modern .vt-trust span{font-size:.76rem}body.vintech-modern .vt-card:hover,body.vintech-modern .vt-expertise>div:hover,body.vintech-modern .vt-steps>div:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){body.vintech-modern .vt-card,body.vintech-modern .vt-expertise>div,body.vintech-modern .vt-steps>div,body.vintech-modern .vt-btn{transition:none!important}}
+
+
+/* Theme parity with the shared site shell */
+:root{--ui-bg:#08121e;--ui-panel:#101d2b;--ui-panel-2:#142437;--ui-text:#edf3f9;--ui-muted:#a7b5c4;--ui-border:rgba(166,190,214,.17);--ui-accent:#d8ad58;--ui-accent-strong:#f0ce83;--ui-link:#8fc8f1}
+html.theme-light,html[data-theme="light"]{--ui-bg:#f3f6fa;--ui-panel:#fff;--ui-panel-2:#eaf0f6;--ui-text:#172638;--ui-muted:#586a7c;--ui-border:rgba(30,52,76,.16);--ui-accent:#946300;--ui-accent-strong:#795000;--ui-link:#075f9b}
+html,body{background-color:var(--ui-bg)!important;color:var(--ui-text)}
+body{background-image:radial-gradient(ellipse at 12% 0%,color-mix(in srgb,var(--ui-link) 8%,transparent),transparent 34rem)}
+.vt-page :where(.vt-card,.vt-panel,.vt-service,.vt-feature,.vt-contact,.vt-metric,.vt-stat){background:linear-gradient(145deg,var(--ui-panel),var(--ui-panel-2));color:var(--ui-text);border-color:var(--ui-border)}
+.vt-page :where(p,li,small,.muted,.vt-muted){color:var(--ui-muted)}
+.vt-page :where(h1,h2,h3,h4,strong,b){color:var(--ui-text)}
+.vt-page :where(.vt-nav,.vt-header){background:color-mix(in srgb,var(--ui-panel) 94%,transparent);border-color:var(--ui-border)}
+.vt-page :where(.vt-btn,.vt-link,.vt-action){border-color:var(--ui-border)}
+.vt-page input,.vt-page textarea,.vt-page select{background:var(--ui-panel);color:var(--ui-text);border-color:var(--ui-border)}
+.vt-page :focus-visible{outline:3px solid var(--ui-link);outline-offset:3px}

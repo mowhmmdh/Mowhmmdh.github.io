@@ -1,6 +1,6 @@
 # محمدحسین عسگری ثمرین | Mohammad Hossein Asgari Somarin
 
-**IT / Network & Infrastructure Specialist** focused on network engineering, systems, infrastructure security, hardening, evidence-based troubleshooting and practical IT operations.
+**IT Infrastructure & Network Specialist** focused on network engineering, systems, infrastructure security, hardening, evidence-based troubleshooting and practical IT operations.
 
 🌐 **Official professional website:** https://mowhmmdh.github.io/
 📚 **Technical authority hub:** https://mowhmmdh.github.io/authority.html

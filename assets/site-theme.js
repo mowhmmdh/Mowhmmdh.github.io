@@ -1,68 +1,63 @@
 (()=>{'use strict';
 const root=document.documentElement;
 const KEY='mha-theme';
-
-function theme(mode){
-  const light=mode==='light';
-  if(light){
-    if(root.dataset.theme!=='light')root.dataset.theme='light';
-  }else if(root.hasAttribute('data-theme')){
-    root.removeAttribute('data-theme');
-  }
-  if(root.classList.contains('theme-light')!==light)root.classList.toggle('theme-light',light);
-  document.querySelectorAll('.theme-toggle').forEach(b=>{
-    b.textContent=light?'☀':'☾';
-    b.setAttribute('aria-label',light?'فعال‌کردن حالت تیره':'فعال‌کردن حالت روشن');
-    b.setAttribute('aria-pressed',String(light));
+const normalize=value=>value==='light'?'light':'dark';
+function apply(mode){
+  const selected=normalize(mode),light=selected==='light';
+  root.dataset.theme=selected;
+  root.classList.toggle('theme-light',light);
+  root.style.colorScheme=selected;
+  document.querySelectorAll('.theme-toggle').forEach(button=>{
+    button.textContent=light?'☀':'☾';
+    button.setAttribute('aria-label',light?'فعال‌کردن حالت تیره':'فعال‌کردن حالت روشن');
+    button.setAttribute('aria-pressed',String(light));
+    button.setAttribute('title',light?'Switch to dark mode':'Switch to light mode');
   });
 }
-
-function bind(){
-  document.querySelectorAll('.theme-toggle').forEach(b=>{
-    if(b.dataset.bound)return;
-    b.dataset.bound='1';
-    b.addEventListener('click',()=>{
+function persist(mode){try{localStorage.setItem(KEY,normalize(mode))}catch(_){}}
+function bindTheme(){
+  document.querySelectorAll('.theme-toggle').forEach(button=>{
+    if(button.dataset.themeBound==='1')return;
+    button.dataset.themeBound='1';
+    button.addEventListener('click',()=>{
       const next=root.dataset.theme==='light'?'dark':'light';
-      theme(next);
-      try{localStorage.setItem(KEY,next)}catch(_){}
+      apply(next);persist(next);
     });
-  });
-
-  document.querySelectorAll('.site-nav,.about-nav,.en-nav,.nav,.vt-nav').forEach(nav=>{
-    const menu=nav.querySelector('.mobile-menu');
-    const links=nav.querySelector('.nav-links,.about-nav-links,.en-nav-links');
-    if(!menu||!links||menu.dataset.bound)return;
-    menu.dataset.bound='1';
-    const close=()=>{
-      nav.classList.remove('menu-open');
-      menu.setAttribute('aria-expanded','false');
-      menu.setAttribute('aria-label','باز کردن منو');
-      menu.textContent='☰';
-    };
-    menu.addEventListener('click',e=>{
-      e.stopPropagation();
-      const open=!nav.classList.contains('menu-open');
-      if(open)nav.classList.add('menu-open');else close();
-      menu.setAttribute('aria-expanded',String(open));
-      menu.setAttribute('aria-label',open?'بستن منو':'باز کردن منو');
-      menu.textContent=open?'×':'☰';
-    });
-    links.addEventListener('click',e=>{if(e.target.closest('a'))close()});
-    nav._mhaClose=close;
   });
 }
-
-let saved=null;
-try{saved=localStorage.getItem(KEY)}catch(_){}
-// Default to the site's dark palette. Several technical articles have dark, page-specific
-// surfaces; auto-applying a light OS preference would mix dark backgrounds with light-theme text.
-theme(saved||'dark');
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bind,{once:true});else bind();
-document.addEventListener('click',e=>{
-  if(e.target.closest('.menu-open'))return;
-  document.querySelectorAll('.menu-open').forEach(n=>n._mhaClose?.());
+let saved='dark';
+try{saved=localStorage.getItem(KEY)||'dark'}catch(_){}
+apply(saved);
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',bindTheme,{once:true});else bindTheme();
+window.addEventListener('storage',event=>{if(event.key===KEY)apply(event.newValue||'dark')});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape')document.querySelectorAll('.menu-open').forEach(nav=>{
+    nav.classList.remove('menu-open');
+    const button=nav.querySelector('.mobile-menu');
+    if(button){button.setAttribute('aria-expanded','false');button.textContent='☰'}
+  });
 });
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape')document.querySelectorAll('.menu-open').forEach(n=>n._mhaClose?.());
+document.addEventListener('click',event=>{
+  if(event.target.closest('.menu-open'))return;
+  document.querySelectorAll('.menu-open').forEach(nav=>{
+    nav.classList.remove('menu-open');
+    const button=nav.querySelector('.mobile-menu');
+    if(button){button.setAttribute('aria-expanded','false');button.textContent='☰'}
+  });
+});
+document.querySelectorAll('.site-nav,.about-nav,.en-nav,.nav,.vt-nav').forEach(nav=>{
+  const button=nav.querySelector('.mobile-menu');
+  const links=nav.querySelector('.nav-links,.about-nav-links,.en-nav-links');
+  if(!button||!links||button.dataset.menuBound==='1')return;
+  button.dataset.menuBound='1';
+  const close=()=>{nav.classList.remove('menu-open');button.setAttribute('aria-expanded','false');button.textContent='☰'};
+  button.addEventListener('click',event=>{
+    event.stopPropagation();
+    const open=!nav.classList.contains('menu-open');
+    nav.classList.toggle('menu-open',open);
+    button.setAttribute('aria-expanded',String(open));
+    button.textContent=open?'×':'☰';
+  });
+  links.addEventListener('click',event=>{if(event.target.closest('a'))close()});
 });
 })();
