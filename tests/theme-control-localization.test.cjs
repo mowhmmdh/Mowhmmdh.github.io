@@ -120,7 +120,7 @@ test('English mobile menu announces open and close state correctly', () => {
   h.menuButton.listeners.click({ stopPropagation() {} });
   assert.equal(h.menuButton.attributes['aria-expanded'], 'true');
   assert.equal(h.menuButton.attributes['aria-label'], 'Close menu');
-  h.nav._mhaClose();
+  h.menuButton.listeners.click({ stopPropagation() {} });
   assert.equal(h.menuButton.attributes['aria-expanded'], 'false');
   assert.equal(h.menuButton.attributes['aria-label'], 'Open menu');
 });
@@ -130,7 +130,7 @@ test('Persian mobile menu retains localized open and close labels', () => {
   assert.equal(h.menuButton.attributes['aria-label'], 'باز کردن منو');
   h.menuButton.listeners.click({ stopPropagation() {} });
   assert.equal(h.menuButton.attributes['aria-label'], 'بستن منو');
-  h.nav._mhaClose();
+  h.menuButton.listeners.click({ stopPropagation() {} });
   assert.equal(h.menuButton.attributes['aria-label'], 'باز کردن منو');
 });
 
@@ -143,4 +143,19 @@ test('both professional profile pages expose a working theme control', () => {
   }
   assert.match(fa, /html\.theme-light,html\[data-theme="light"\]/);
   assert.match(fa, /--bg:#f3f6fa/);
+});
+
+test('profile page titles are distinct and concise for their search intent', () => {
+  const fa = fs.readFileSync(path.join(ROOT, 'profile.html'), 'utf8');
+  const en = fs.readFileSync(path.join(ROOT, 'en-profile.html'), 'utf8');
+  const home = fs.readFileSync(path.join(ROOT, 'en.html'), 'utf8');
+  const faTitle = fa.match(/<title>(.*?)<\\/title>/s)?.[1] || '';
+  const enTitle = en.match(/<title>(.*?)<\\/title>/s)?.[1] || '';
+  const homeTitle = home.match(/<title>(.*?)<\\/title>/s)?.[1] || '';
+  const enDescription = en.match(/<meta name="description" content="([^"]+)"/)?.[1] || '';
+  assert.ok(faTitle.length <= 60, 'Persian profile title should stay concise');
+  assert.ok(enTitle.length <= 60, 'English profile title should stay concise');
+  assert.notEqual(enTitle, homeTitle, 'English profile must not duplicate the homepage title');
+  assert.ok(enTitle.includes('Professional Profile'));
+  assert.ok(enDescription.length <= 160, 'English profile description should stay concise');
 });
