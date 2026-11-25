@@ -1,5 +1,7 @@
 name: Sitewide Visual Regression 2026
 on:
+  push:
+    branches: [professional-visibility-2026]
   pull_request:
     branches: [main]
     paths:
