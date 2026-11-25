@@ -38,7 +38,7 @@ document.addEventListener('keydown',event=>{
   if(event.key==='Escape')document.querySelectorAll('.menu-open').forEach(nav=>{
     nav.classList.remove('menu-open');
     const button=nav.querySelector('.mobile-menu');
-    if(button){button.setAttribute('aria-expanded','false');button.textContent='☰'}
+    if(button){button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',labels.openMenu);button.textContent='☰'}
   });
 });
 document.addEventListener('click',event=>{
@@ -46,7 +46,7 @@ document.addEventListener('click',event=>{
   document.querySelectorAll('.menu-open').forEach(nav=>{
     nav.classList.remove('menu-open');
     const button=nav.querySelector('.mobile-menu');
-    if(button){button.setAttribute('aria-expanded','false');button.textContent='☰'}
+    if(button){button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',labels.openMenu);button.textContent='☰'}
   });
 });
 document.querySelectorAll('.site-nav,.about-nav,.en-nav,.nav,.vt-nav').forEach(nav=>{
@@ -54,12 +54,14 @@ document.querySelectorAll('.site-nav,.about-nav,.en-nav,.nav,.vt-nav').forEach(n
   const links=nav.querySelector('.nav-links,.about-nav-links,.en-nav-links');
   if(!button||!links||button.dataset.menuBound==='1')return;
   button.dataset.menuBound='1';
-  const close=()=>{nav.classList.remove('menu-open');button.setAttribute('aria-expanded','false');button.textContent='☰'};
+  button.setAttribute('aria-label',labels.openMenu);
+  const close=()=>{nav.classList.remove('menu-open');button.setAttribute('aria-expanded','false');button.setAttribute('aria-label',labels.openMenu);button.textContent='☰'};
   button.addEventListener('click',event=>{
     event.stopPropagation();
     const open=!nav.classList.contains('menu-open');
     nav.classList.toggle('menu-open',open);
     button.setAttribute('aria-expanded',String(open));
+    button.setAttribute('aria-label',open?labels.closeMenu:labels.openMenu);
     button.textContent=open?'×':'☰';
   });
   links.addEventListener('click',event=>{if(event.target.closest('a'))close()});
