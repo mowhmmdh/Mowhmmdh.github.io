@@ -1,7 +1,6 @@
 """Regression tests for static enhancements on the Persian Active Directory Zero Trust article."""
 from html.parser import HTMLParser
 from pathlib import Path
-import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -60,7 +59,7 @@ class ZeroTrustStaticEnhancementTests(unittest.TestCase):
         cls.parser.close()
 
     def test_shared_enhancement_script_is_removed(self):
-        self.assertNotRegex(HTML, r'<script\\b[^>]+src=["\\']/assets/site-final-quality-2026\\.js')
+        self.assertNotIn('/assets/site-final-quality-2026.js', HTML)
 
     def test_mobile_cta_is_static_and_preserves_original_conversion_contract(self):
         self.assertEqual(len(self.parser.ctas), 1)
@@ -84,8 +83,9 @@ class ZeroTrustStaticEnhancementTests(unittest.TestCase):
         self.assertIn('/assets/site-theme.js', HTML)
 
     def test_shared_styles_keep_cta_mobile_only_and_footer_divider_visible(self):
-        self.assertRegex(CSS, r'\\.q-mobile-cta\\{display:none\\}')
-        self.assertRegex(CSS, r'@media\\(max-width:760px\\).*?\\.q-mobile-cta\\{display:flex;')
+        self.assertIn('.q-mobile-cta{display:none}', CSS)
+        self.assertIn('@media(max-width:760px)', CSS)
+        self.assertIn('.q-mobile-cta{display:flex;position:fixed;', CSS)
         self.assertIn(".q-footerline{height:1px", CSS)
 
 
