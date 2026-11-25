@@ -38,6 +38,9 @@ jobs:
           python3 scripts/quality-audit.py
           python3 scripts/seo-deep-audit.py
 
+      - name: Run Zero Trust article static-enhancement regression tests
+        run: python3 -m unittest discover -s tests -p "test_zero_trust_static_enhancements.py" -v
+
       - name: Syntax-check JavaScript
         shell: bash
         run: |
