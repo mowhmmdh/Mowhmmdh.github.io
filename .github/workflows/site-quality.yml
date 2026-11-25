@@ -47,7 +47,7 @@ jobs:
           done
 
       - name: Test localized theme and mobile-menu controls
-        run: node --test tests/theme-control-localization.test.cjs
+        run: node --test tests/profile-theme-controls.test.cjs
 
       - name: Check production stylesheet contract
         shell: python
