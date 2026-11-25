@@ -46,7 +46,7 @@ jobs:
             node --check "$file"
           done
 
-      - name: Test localized theme and mobile-menu controls
+      - name: Test Persian and English profile theme controls
         run: node --test tests/profile-theme-controls.test.cjs
 
       - name: Check production stylesheet contract
