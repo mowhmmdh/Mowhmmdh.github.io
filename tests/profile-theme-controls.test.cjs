@@ -13,6 +13,8 @@ test('Persian and English profile pages include the shared theme controller and 
 
   assert.match(fa, /<html lang="fa" dir="rtl">/);
   assert.match(en, /<html lang="en" dir="ltr">/);
+  assert.match(fa, /href="\\/en-profile\\.html" lang="en" dir="ltr"/);
+  assert.match(en, /href="\\/profile\\.html" lang="fa"/);
   for (const page of [fa, en]) {
     assert.match(page, /class="theme-toggle"/);
     assert.match(page, /\/assets\/site-theme\.js/);
