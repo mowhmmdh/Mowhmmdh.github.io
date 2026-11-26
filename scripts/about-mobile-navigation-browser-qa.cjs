@@ -72,10 +72,16 @@ async function checkScroller(page, selector, label) {
   const canReachOverflow = await page.locator(selector).evaluate(el => {
     const max = el.scrollWidth - el.clientWidth;
     if (max <= 1) return true;
-    el.scrollLeft = max;
-    const moved = el.scrollLeft > 0;
-    el.scrollLeft = 0;
-    return moved;
+    const start = el.scrollLeft;
+    for (const target of [max, -max]) {
+      el.scrollLeft = target;
+      if (Math.abs(el.scrollLeft - start) > 1) {
+        el.scrollLeft = start;
+        return true;
+      }
+    }
+    el.scrollLeft = start;
+    return false;
   });
   assert(canReachOverflow, label + ': overflowing links cannot be reached by scrolling');
   return snapshot;
