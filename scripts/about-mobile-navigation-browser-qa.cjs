@@ -177,7 +177,7 @@ async function run() {
         }
 
         const theme = spec.theme ? await checkTheme(page, spec.name) : null;
-        await page.screenshot({ path: 'qa-artifacts/' + spec.name + '.png', fullPage: true });
+        await page.screenshot({ path: 'qa-artifacts/' + spec.name + '.png', fullPage: false });
         if (pageErrors.length) failures.push(spec.name + ': uncaught page errors: ' + pageErrors.join('; '));
         if (firstPartyFailures.length) failures.push(spec.name + ': first-party failed requests: ' + JSON.stringify(firstPartyFailures));
         results.push({ name: spec.name, path: spec.path, viewport: spec.viewport, documentState, navigation, theme, pageErrors, firstPartyFailures });
