@@ -20,7 +20,7 @@ class AboutMobileNavigationTests(unittest.TestCase):
         self.assertTrue(self.navigation_block, "shared <=900px navigation rule is missing")
         compact = "".join(self.navigation_block.split())
         for fragment in (
-            ".about-nav .about-nav-links,.en-nav .en-nav-links{",
+            ".about-nav.about-nav-links,.en-nav.en-nav-links{",
             "display:flex;",
             "flex-wrap:nowrap;",
             "overflow-x:auto;",
