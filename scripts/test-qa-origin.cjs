@@ -11,6 +11,21 @@ test('accepts the exact HTTPS Netlify deploy-preview host', () => {
   );
 });
 
+test('accepts other numeric preview IDs without widening the host allowlist', () => {
+  assert.equal(
+    normalizePreviewOrigin('https://deploy-preview-120--mowhmmdh.netlify.app/'),
+    'https://deploy-preview-120--mowhmmdh.netlify.app'
+  );
+  assert.throws(
+    () => normalizePreviewOrigin('https://deploy-preview-x--mowhmmdh.netlify.app/'),
+    TypeError
+  );
+  assert.throws(
+    () => normalizePreviewOrigin('https://deploy-preview-120--mowhmmdh.netlify.app.attacker.example/'),
+    TypeError
+  );
+});
+
 test('rejects lookalike hosts and non-HTTPS or credential-bearing URLs', () => {
   for (const value of [
     'https://deploy-preview-69--mowhmmdh.netlify.app.attacker.example/',
