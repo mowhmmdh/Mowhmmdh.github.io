@@ -102,6 +102,7 @@ async function checkTheme(page, label) {
     pressed: document.querySelector('.theme-toggle')?.getAttribute('aria-pressed')
   }));
   assert(light.theme === 'light' && light.classApplied && light.pressed === 'true', label + ': light theme state did not synchronize');
+  await page.screenshot({ path: 'qa-artifacts/' + label + '-light.png', fullPage: false });
   await button.click();
   await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark', null, { timeout: 5000 });
   const dark = await page.evaluate(() => ({
@@ -113,6 +114,29 @@ async function checkTheme(page, label) {
   return { light, dark };
 }
 
+async function checkPersistedTheme(page, label) {
+  await page.evaluate(() => localStorage.setItem('mha-theme', 'light'));
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await settle(page);
+  const light = await page.evaluate(() => ({
+    theme: document.documentElement.dataset.theme,
+    classApplied: document.documentElement.classList.contains('theme-light'),
+    colorScheme: getComputedStyle(document.documentElement).colorScheme
+  }));
+  assert(light.theme === 'light' && light.classApplied && light.colorScheme === 'light', label + ': persisted light theme did not apply');
+  await page.screenshot({ path: 'qa-artifacts/' + label + '-persisted-light.png', fullPage: false });
+
+  await page.evaluate(() => localStorage.setItem('mha-theme', 'dark'));
+  await page.reload({ waitUntil: 'domcontentloaded' });
+  await settle(page);
+  const dark = await page.evaluate(() => ({
+    theme: document.documentElement.dataset.theme,
+    classApplied: document.documentElement.classList.contains('theme-light')
+  }));
+  assert(dark.theme === 'dark' && !dark.classApplied, label + ': persisted dark theme did not apply');
+  return { light, dark };
+}
+
 async function run() {
   fs.mkdirSync('qa-artifacts', { recursive: true });
   const browser = await chromium.launch({ headless: true, args: ['--no-sandbox', '--disable-dev-shm-usage'] });
@@ -120,8 +144,8 @@ async function run() {
   const specs = [
     { path: '/about.html', name: 'fa-about-390x844', viewport: { width: 390, height: 844 }, lang: 'fa', dir: 'rtl', scroller: '.about-nav .about-nav-links', theme: true },
     { path: '/about.html', name: 'fa-about-768x1024', viewport: { width: 768, height: 1024 }, lang: 'fa', dir: 'rtl', scroller: '.about-nav .about-nav-links', theme: false },
-    { path: '/en-about.html', name: 'en-about-390x844', viewport: { width: 390, height: 844 }, lang: 'en', dir: 'ltr', scroller: '.en-nav .en-nav-links', theme: false },
-    { path: '/en-about.html', name: 'en-about-768x1024', viewport: { width: 768, height: 1024 }, lang: 'en', dir: 'ltr', scroller: '.en-nav .en-nav-links', theme: false },
+    { path: '/en-about.html', name: 'en-about-390x844', viewport: { width: 390, height: 844 }, lang: 'en', dir: 'ltr', scroller: '.en-nav .en-nav-links', theme: false, persistedTheme: true },
+    { path: '/en-about.html', name: 'en-about-768x1024', viewport: { width: 768, height: 1024 }, lang: 'en', dir: 'ltr', scroller: '.en-nav .en-nav-links', theme: false, persistedTheme: true },
     { path: '/profile.html', name: 'profile-390x844', viewport: { width: 390, height: 844 }, lang: 'fa', dir: 'rtl', menu: true, theme: true },
     { path: '/profile.html', name: 'profile-1440x1000', viewport: { width: 1440, height: 1000 }, lang: 'fa', dir: 'rtl', menu: false, theme: true }
   ];
@@ -178,10 +202,11 @@ async function run() {
         }
 
         const theme = spec.theme ? await checkTheme(page, spec.name) : null;
+        const persistedTheme = spec.persistedTheme ? await checkPersistedTheme(page, spec.name) : null;
         await page.screenshot({ path: 'qa-artifacts/' + spec.name + '.png', fullPage: false });
         if (pageErrors.length) failures.push(spec.name + ': uncaught page errors: ' + pageErrors.join('; '));
         if (firstPartyFailures.length) failures.push(spec.name + ': first-party failed requests: ' + JSON.stringify(firstPartyFailures));
-        results.push({ name: spec.name, path: spec.path, viewport: spec.viewport, documentState, navigation, theme, pageErrors, firstPartyFailures });
+        results.push({ name: spec.name, path: spec.path, viewport: spec.viewport, documentState, navigation, theme, persistedTheme, pageErrors, firstPartyFailures });
       } catch (error) {
         failures.push(spec.name + ': ' + error.message);
       } finally {
