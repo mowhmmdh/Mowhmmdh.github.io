@@ -974,8 +974,35 @@ img{height:auto}
 }
 
 
-/* 2026-11-26 visual audit: keep legacy About navigation reachable on tablet/mobile. */
-@media(max-width:900px){.about-nav .about-nav-links{display:flex;flex:1 0 100%;order:3;max-width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;gap:4px;padding-bottom:4px;scrollbar-width:thin}.about-nav .about-nav-links a{flex:0 0 auto;white-space:nowrap}}
+/* 2026-11-26 visual audit: keep legacy Persian and English About navigation reachable on tablet/mobile.
+   Older mobile rules collapse these link rows to max-height:0 and opacity:0. */
+@media(max-width:900px){
+  .about-nav .about-nav-links,
+  .en-nav .en-nav-links{
+    display:flex;
+    flex:1 0 100%;
+    order:3;
+    width:100%;
+    max-width:100%;
+    min-width:0;
+    flex-wrap:nowrap;
+    justify-content:flex-start;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    gap:8px;
+    padding-bottom:4px;
+    max-height:none;
+    opacity:1;
+    pointer-events:auto;
+    scrollbar-width:thin;
+  }
+  .about-nav .about-nav-links a,
+  .en-nav .en-nav-links a{
+    flex:0 0 auto;
+    white-space:nowrap;
+  }
+}
 
 
 /* 2026-11-26: unify light mode for legacy pages that still carry inline dark palettes. */
