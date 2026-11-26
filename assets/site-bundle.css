@@ -976,3 +976,27 @@ img{height:auto}
 
 /* 2026-11-26 visual audit: keep legacy About navigation reachable on tablet/mobile. */
 @media(max-width:900px){.about-nav .about-nav-links{display:flex;flex:1 0 100%;order:3;max-width:100%;flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;overflow-y:hidden;gap:4px;padding-bottom:4px;scrollbar-width:thin}.about-nav .about-nav-links a{flex:0 0 auto;white-space:nowrap}}
+
+
+/* 2026-11-26: unify light mode for legacy pages that still carry inline dark palettes. */
+html.theme-light{
+  --bg:#f6f8fb!important;--surface:#fff!important;--surface2:#edf2f7!important;
+  --panel:#fff!important;--text:#15212d!important;--muted:#596979!important;
+  --line:#d8e0e8!important;--accent:#8b5e00!important;--accent2:#8b5e00!important;
+  --gold:#8b5e00!important;--blue:#086da8!important;
+  color-scheme:light!important;
+}
+html.theme-light body{background-color:var(--bg)!important;color:var(--text)!important}
+html.theme-light :where(.nav,.site-nav,.about-nav,.vt-nav,.footer,.site-footer,.footer-note){
+  background-color:var(--surface)!important;color:var(--text)!important;border-color:var(--line)!important
+}
+html.theme-light :where(.card,.service-card,.cluster,.post-card,.project-card,.about-card,.contact-wrapper,.content,.article,.top,.profile-card,.contact-card,.mahex-showcase){
+  background:var(--surface)!important;color:var(--text)!important;border-color:var(--line)!important;
+  box-shadow:0 10px 32px rgba(30,50,70,.08)!important
+}
+html.theme-light :where(h1,h2,h3,h4,.card h2,.service-card h2,.cluster h2){color:var(--text)!important}
+html.theme-light :where(p,li,.muted,.hero p,.lead,.about-hero p,.card p,.service-card p,.cluster p,.post-card p,.project-card p,.about-card p,.footer-note){
+  color:var(--muted)!important
+}
+html.theme-light :where(.tag,.eyebrow,.kicker,.hero-kicker,.about-eyebrow){color:#805500!important}
+html.theme-light :where(input,textarea,select){background:#fff!important;color:#15212d!important;border-color:#cbd5df!important}
