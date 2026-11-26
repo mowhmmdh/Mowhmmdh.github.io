@@ -4,7 +4,8 @@
 const fs = require('node:fs');
 const { chromium } = require('playwright');
 
-const base = process.env.PREVIEW_URL || 'https://deploy-preview-69--mowhmmdh.netlify.app';
+const { normalizePreviewOrigin, isFirstPartyRequest } = require('./qa-origin.cjs');
+const base = normalizePreviewOrigin(process.env.PREVIEW_URL || 'https://deploy-preview-69--mowhmmdh.netlify.app');
 const results = [];
 const failures = [];
 
@@ -137,7 +138,7 @@ async function run() {
       const firstPartyFailures = [];
       page.on('pageerror', error => pageErrors.push(error.message));
       page.on('requestfailed', request => {
-        if (request.url().startsWith(base)) {
+        if (isFirstPartyRequest(request.url(), base)) {
           firstPartyFailures.push({ url: request.url(), error: request.failure()?.errorText || 'unknown' });
         }
       });
