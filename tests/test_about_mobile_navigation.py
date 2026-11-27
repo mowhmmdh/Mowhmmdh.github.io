@@ -7,6 +7,7 @@ CSS = (ROOT / "assets/site-bundle.css").read_text(encoding="utf-8")
 ABOUT = (ROOT / "about.html").read_text(encoding="utf-8")
 EN_ABOUT = (ROOT / "en-about.html").read_text(encoding="utf-8")
 PROFILE = (ROOT / "profile.html").read_text(encoding="utf-8")
+BROWSER_QA = (ROOT / "scripts/about-mobile-navigation-browser-qa.cjs").read_text(encoding="utf-8")
 
 
 class AboutMobileNavigationTests(unittest.TestCase):
@@ -39,6 +40,23 @@ class AboutMobileNavigationTests(unittest.TestCase):
         self.assertIn('<html lang="en" dir="ltr">', EN_ABOUT)
         self.assertIn('class="en-nav-links"', EN_ABOUT)
         self.assertNotIn(".en-nav div{display:none}", EN_ABOUT)
+
+    def test_navigation_backdrop_is_centered_and_cannot_expand_document_width(self):
+        selector = ".site-nav:before,.nav:before,.about-nav:before,.vt-nav:before{"
+        start = CSS.find(selector)
+        end = CSS.find("}", start)
+        self.assertGreaterEqual(start, 0, "shared navigation backdrop rule is missing")
+        rule = CSS[start:end]
+        self.assertIn("left:50%", rule)
+        self.assertIn("right:auto", rule)
+        self.assertIn("width:100vw", rule)
+        self.assertIn("transform:translateX(-50%)", rule)
+        self.assertNotIn("inset:0 -100vw", rule)
+
+    def test_browser_qa_fails_on_document_width_and_visible_element_overflow(self):
+        self.assertIn("documentScrollWidth <= documentState.viewportWidth + 1", BROWSER_QA)
+        self.assertIn("documentState.overflowCandidates.length === 0", BROWSER_QA)
+        self.assertIn("overflowCandidates", BROWSER_QA)
 
     def test_profile_mobile_menu_and_theme_controls_remain_present(self):
         self.assertIn('class="mobile-menu"', PROFILE)
