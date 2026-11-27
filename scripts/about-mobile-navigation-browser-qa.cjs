@@ -28,13 +28,37 @@ async function checkDocument(page, label, expected) {
     const horizontalScrollX = window.scrollX;
     window.scrollTo(0, 0);
     root.style.scrollBehavior = '';
+    const documentScrollWidth = Math.max(root.scrollWidth, document.body.scrollWidth);
+    const overflowCandidates = Array.from(document.querySelectorAll('body *')).filter(el => {
+      const rect = el.getBoundingClientRect();
+      const style = getComputedStyle(el);
+      if (!rect.width || !rect.height || style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0) return false;
+      if (rect.left >= -1 && rect.right <= window.innerWidth + 1) return false;
+      let ancestor = el.parentElement;
+      while (ancestor && ancestor !== document.body) {
+        const overflowX = getComputedStyle(ancestor).overflowX;
+        if (['auto', 'scroll', 'hidden', 'clip'].includes(overflowX)) return false;
+        ancestor = ancestor.parentElement;
+      }
+      return true;
+    }).slice(0, 12).map(el => {
+      const rect = el.getBoundingClientRect();
+      return {
+        tag: el.tagName.toLowerCase(),
+        id: el.id || '',
+        className: typeof el.className === 'string' ? el.className : '',
+        left: Math.round(rect.left * 100) / 100,
+        right: Math.round(rect.right * 100) / 100
+      };
+    });
     return {
       label,
       lang: root.lang,
       dir: root.dir,
       viewportWidth: window.innerWidth,
-      documentScrollWidth: Math.max(root.scrollWidth, document.body.scrollWidth),
+      documentScrollWidth,
       horizontalScrollX,
+      overflowCandidates,
       expectedLang: expected.lang,
       expectedDir: expected.dir
     };
@@ -175,6 +199,8 @@ async function run() {
         assert(documentState.lang === spec.lang, spec.name + ': incorrect document language');
         assert(documentState.dir === spec.dir, spec.name + ': incorrect document direction');
         assert(documentState.horizontalScrollX <= 1, spec.name + ': document can scroll horizontally');
+        assert(documentState.documentScrollWidth <= documentState.viewportWidth + 1, spec.name + ': document width exceeds viewport (' + documentState.documentScrollWidth + ' > ' + documentState.viewportWidth + ')');
+        assert(documentState.overflowCandidates.length === 0, spec.name + ': visible elements exceed viewport bounds: ' + JSON.stringify(documentState.overflowCandidates));
 
         let navigation = null;
         if (spec.scroller) navigation = await checkScroller(page, spec.scroller, spec.name);
