@@ -1,6 +1,5 @@
 """Regression tests for legacy bilingual VinTech insight pages in light mode."""
 from pathlib import Path
-import re
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -35,17 +34,17 @@ class LegacyLightModeTests(unittest.TestCase):
                 self.assertIn(f'<html lang="{language}" dir="{direction}">', html)
                 self.assertIn('class="theme-toggle"', html)
                 self.assertIn('/assets/site-theme.js', html)
-                self.assertRegex(html, r'\.ey\\{color:#d9ad55')
-                self.assertRegex(html, r'\.matrix strong\\{[^}]*color:#eaf2fb')
+                self.assertIn(".ey{color:#d9ad55", html)
+                self.assertIn(".matrix strong{display:block;color:#eaf2fb", html)
 
     def test_light_theme_overrides_legacy_inline_ink_and_matrix_surface(self):
-        self.assertRegex(
+        self.assertIn(
+            "html.theme-light :where(.ey,.matrix strong){\n  color:var(--accent2)!important;",
             CSS,
-            r"html\\.theme-light\\s+:where\\(\\.ey,\\.matrix strong\\)\\s*\\{\\s*color:var\\(--accent2\\)!important",
         )
-        self.assertRegex(
+        self.assertIn(
+            "html.theme-light .matrix div{\n  background:var(--surface2)!important;\n  border-color:var(--line)!important;",
             CSS,
-            r"html\\.theme-light\\s+\\.matrix div\\s*\\{\\s*background:var\\(--surface2\\)!important;\\s*border-color:var\\(--line\\)!important",
         )
 
     def test_light_theme_text_color_meets_wcag_aa_on_page_surfaces(self):
