@@ -138,25 +138,6 @@ async function checkTheme(page, label) {
   return { light, dark };
 }
 
-function colorChannels(color) {
-  const channels = color.match(/[0-9.]+/g);
-  return channels ? channels.slice(0, 3).map(Number) : [];
-}
-
-function relativeLuminance(color) {
-  const channels = colorChannels(color).map(channel => {
-    const value = channel / 255;
-    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
-  });
-  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
-}
-
-function contrastRatio(foreground, background) {
-  const a = relativeLuminance(foreground);
-  const b = relativeLuminance(background);
-  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
-}
-
 async function checkLegacyArticleTheme(page, label) {
   const button = page.locator('.theme-toggle').first();
   assert(await button.count(), label + ': theme toggle is missing');
