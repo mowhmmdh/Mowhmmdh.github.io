@@ -1027,3 +1027,13 @@ html.theme-light :where(p,li,.muted,.hero p,.lead,.about-hero p,.card p,.service
 }
 html.theme-light :where(.tag,.eyebrow,.kicker,.hero-kicker,.about-eyebrow){color:#805500!important}
 html.theme-light :where(input,textarea,select){background:#fff!important;color:#15212d!important;border-color:#cbd5df!important}
+
+/* 2026-11-28 light-theme contrast repair for legacy bilingual VinTech insight cards.
+   These pages retain page-local dark ink colors, so theme overrides must be important. */
+html.theme-light :where(.ey,.matrix strong){
+  color:var(--accent2)!important;
+}
+html.theme-light .matrix div{
+  background:var(--surface2)!important;
+  border-color:var(--line)!important;
+}
