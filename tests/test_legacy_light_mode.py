@@ -39,14 +39,13 @@ class LegacyLightModeTests(unittest.TestCase):
                 self.assertRegex(html, r'\.matrix strong\\{[^}]*color:#eaf2fb')
 
     def test_light_theme_overrides_legacy_inline_ink_and_matrix_surface(self):
-        compact = "".join(CSS.split())
-        self.assertIn(
-            "html.theme-light:where(.ey,.matrixstrong){color:var(--accent2)!important}",
-            compact,
+        self.assertRegex(
+            CSS,
+            r"html\\.theme-light\\s+:where\\(\\.ey,\\.matrix strong\\)\\s*\\{\\s*color:var\\(--accent2\\)!important",
         )
-        self.assertIn(
-            "html.theme-light.matrixdiv{background:var(--surface2)!important;border-color:var(--line)!important}",
-            compact,
+        self.assertRegex(
+            CSS,
+            r"html\\.theme-light\\s+\\.matrix div\\s*\\{\\s*background:var\\(--surface2\\)!important;\\s*border-color:var\\(--line\\)!important",
         )
 
     def test_light_theme_text_color_meets_wcag_aa_on_page_surfaces(self):
