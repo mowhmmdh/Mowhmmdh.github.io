@@ -4,6 +4,7 @@ import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
 CSS = (ROOT / "assets/site-bundle.css").read_text(encoding="utf-8")
+BROWSER_QA = (ROOT / "scripts/about-mobile-navigation-browser-qa.cjs").read_text(encoding="utf-8")
 PAGES = {
     "Persian": (ROOT / "vintech/insights/cctv-ip-camera-security.html", "fa", "rtl"),
     "English": (ROOT / "en-vintech/insights/cctv-ip-camera-security.html", "en", "ltr"),
@@ -46,6 +47,13 @@ class LegacyLightModeTests(unittest.TestCase):
             "html.theme-light .matrix div{\n  background:var(--surface2)!important;\n  border-color:var(--line)!important;",
             CSS,
         )
+
+    def test_browser_qa_checks_bilingual_article_light_mode_contrast(self):
+        self.assertIn("/vintech/insights/cctv-ip-camera-security.html", BROWSER_QA)
+        self.assertIn("/en-vintech/insights/cctv-ip-camera-security.html", BROWSER_QA)
+        self.assertIn("checkLegacyArticleTheme", BROWSER_QA)
+        self.assertIn("eyebrowContrast >= 4.5", BROWSER_QA)
+        self.assertIn("matrixHeadingContrast >= 4.5", BROWSER_QA)
 
     def test_light_theme_text_color_meets_wcag_aa_on_page_surfaces(self):
         # The prior hard-coded #eaf2fb matrix heading on the forced white article
