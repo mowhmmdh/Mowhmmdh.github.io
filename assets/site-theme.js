@@ -4,11 +4,8 @@ const KEY='mha-theme';
 
 function theme(mode){
   const light=mode==='light';
-  if(light){
-    if(root.dataset.theme!=='light')root.dataset.theme='light';
-  }else if(root.hasAttribute('data-theme')){
-    root.removeAttribute('data-theme');
-  }
+  // Keep an explicit value for both modes so data-theme selectors work consistently.
+  if(root.dataset.theme!==mode)root.dataset.theme=mode;
   if(root.classList.contains('theme-light')!==light)root.classList.toggle('theme-light',light);
   document.querySelectorAll('.theme-toggle').forEach(b=>{
     b.textContent=light?'☀':'☾';

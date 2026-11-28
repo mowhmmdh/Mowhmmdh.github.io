@@ -1,0 +1,60 @@
+name: About Navigation Responsive Browser QA
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - "about.html"
+      - "en-about.html"
+      - "profile.html"
+      - "assets/site-bundle.css"
+      - "assets/site-theme.js"
+      - "scripts/about-mobile-navigation-browser-qa.cjs"
+      - "tests/test_about_mobile_navigation.py"
+      - ".github/workflows/about-mobile-navigation-browser-qa.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: about-navigation-browser-qa-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  browser:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PREVIEW_URL: https://deploy-preview-${{ github.event.pull_request.number }}--mowhmmdh.netlify.app
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: npm install --global playwright@1.56.1
+      - name: Install Chromium
+        run: playwright install --with-deps chromium
+      - name: Wait for the Netlify deploy preview
+        shell: bash
+        run: |
+          set -euo pipefail
+          for attempt in {1..120}; do
+            code=$(curl -L -s -o /dev/null -w '%{http_code}' "$PREVIEW_URL/about.html" || true)
+            if [ "$code" = "200" ]; then exit 0; fi
+            sleep 5
+          done
+          echo "Netlify deploy preview did not return HTTP 200: $PREVIEW_URL/about.html"
+          exit 1
+      - name: Run Persian/English responsive navigation and theme checks
+        run: NODE_PATH="$(npm root -g)" node scripts/about-mobile-navigation-browser-qa.cjs
+      - name: Upload screenshots and browser report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: about-navigation-responsive-browser-qa
+          path: qa-artifacts/
+          if-no-files-found: warn
+          retention-days: 14
