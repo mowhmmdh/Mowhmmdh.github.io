@@ -138,6 +138,86 @@ async function checkTheme(page, label) {
   return { light, dark };
 }
 
+function colorChannels(color) {
+  const channels = color.match(/[0-9.]+/g);
+  return channels ? channels.slice(0, 3).map(Number) : [];
+}
+
+function relativeLuminance(color) {
+  const channels = colorChannels(color).map(channel => {
+    const value = channel / 255;
+    return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+}
+
+function contrastRatio(foreground, background) {
+  const a = relativeLuminance(foreground);
+  const b = relativeLuminance(background);
+  return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+}
+
+async function checkLegacyArticleTheme(page, label) {
+  const button = page.locator('.theme-toggle').first();
+  assert(await button.count(), label + ': theme toggle is missing');
+  await button.click();
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'light', null, { timeout: 5000 });
+
+  const snapshot = await page.evaluate(() => {
+    const eyebrow = document.querySelector('.ey');
+    const matrixHeading = document.querySelector('.matrix strong');
+    const matrixCell = document.querySelector('.matrix div');
+    if (!eyebrow || !matrixHeading || !matrixCell) {
+      return { missingElements: true };
+    }
+    const eyebrowColor = getComputedStyle(eyebrow).color;
+    const bodyBackground = getComputedStyle(document.body).backgroundColor;
+    const matrixHeadingColor = getComputedStyle(matrixHeading).color;
+    const matrixBackground = getComputedStyle(matrixCell).backgroundColor;
+    const matrixBorder = getComputedStyle(matrixCell).borderTopColor;
+
+    const channels = color => {
+      const values = color.match(/[0-9.]+/g);
+      return values ? values.slice(0, 3).map(Number) : [];
+    };
+    const luminance = color => {
+      const values = channels(color).map(channel => {
+        const value = channel / 255;
+        return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * values[0] + 0.7152 * values[1] + 0.0722 * values[2];
+    };
+    const contrast = (foreground, background) => {
+      const a = luminance(foreground);
+      const b = luminance(background);
+      return (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
+    };
+
+    return {
+      eyebrowColor,
+      bodyBackground,
+      eyebrowContrast: contrast(eyebrowColor, bodyBackground),
+      matrixHeadingColor,
+      matrixBackground,
+      matrixHeadingContrast: contrast(matrixHeadingColor, matrixBackground),
+      matrixBorder
+    };
+  });
+
+  assert(!snapshot.missingElements, label + ': legacy light-mode test elements are missing');
+  if (!snapshot.missingElements) {
+    assert(snapshot.eyebrowContrast >= 4.5, label + ': eyebrow contrast is below WCAG AA (' + snapshot.eyebrowContrast + ':1)');
+    assert(snapshot.matrixHeadingContrast >= 4.5, label + ': matrix heading contrast is below WCAG AA (' + snapshot.matrixHeadingContrast + ':1)');
+    assert(snapshot.matrixBackground !== 'rgba(0, 0, 0, 0)', label + ': matrix surface did not receive its light-theme background');
+    assert(snapshot.matrixBorder !== 'rgba(0, 0, 0, 0)', label + ': matrix border did not receive its light-theme color');
+  }
+
+  await page.screenshot({ path: 'qa-artifacts/' + label + '-light-contrast.png', fullPage: false });
+  await button.click();
+  await page.waitForFunction(() => document.documentElement.dataset.theme === 'dark', null, { timeout: 5000 });
+  return snapshot;
+}
+
 async function checkPersistedTheme(page, label) {
   await page.evaluate(() => localStorage.setItem('mha-theme', 'light'));
   await page.reload({ waitUntil: 'domcontentloaded' });
@@ -171,7 +251,9 @@ async function run() {
     { path: '/en-about.html', name: 'en-about-390x844', viewport: { width: 390, height: 844 }, lang: 'en', dir: 'ltr', scroller: '.en-nav .en-nav-links', theme: false, persistedTheme: true },
     { path: '/en-about.html', name: 'en-about-768x1024', viewport: { width: 768, height: 1024 }, lang: 'en', dir: 'ltr', scroller: '.en-nav .en-nav-links', theme: false, persistedTheme: true },
     { path: '/profile.html', name: 'profile-390x844', viewport: { width: 390, height: 844 }, lang: 'fa', dir: 'rtl', menu: true, theme: true },
-    { path: '/profile.html', name: 'profile-1440x1000', viewport: { width: 1440, height: 1000 }, lang: 'fa', dir: 'rtl', menu: false, theme: true }
+    { path: '/profile.html', name: 'profile-1440x1000', viewport: { width: 1440, height: 1000 }, lang: 'fa', dir: 'rtl', menu: false, theme: true },
+    { path: '/vintech/insights/cctv-ip-camera-security.html', name: 'fa-vintech-insight-390x844', viewport: { width: 390, height: 844 }, lang: 'fa', dir: 'rtl', legacyLight: true },
+    { path: '/en-vintech/insights/cctv-ip-camera-security.html', name: 'en-vintech-insight-390x844', viewport: { width: 390, height: 844 }, lang: 'en', dir: 'ltr', legacyLight: true }
   ];
 
   try {
@@ -228,11 +310,12 @@ async function run() {
         }
 
         const theme = spec.theme ? await checkTheme(page, spec.name) : null;
+        const legacyLight = spec.legacyLight ? await checkLegacyArticleTheme(page, spec.name) : null;
         const persistedTheme = spec.persistedTheme ? await checkPersistedTheme(page, spec.name) : null;
         await page.screenshot({ path: 'qa-artifacts/' + spec.name + '.png', fullPage: false });
         if (pageErrors.length) failures.push(spec.name + ': uncaught page errors: ' + pageErrors.join('; '));
         if (firstPartyFailures.length) failures.push(spec.name + ': first-party failed requests: ' + JSON.stringify(firstPartyFailures));
-        results.push({ name: spec.name, path: spec.path, viewport: spec.viewport, documentState, navigation, theme, persistedTheme, pageErrors, firstPartyFailures });
+        results.push({ name: spec.name, path: spec.path, viewport: spec.viewport, documentState, navigation, theme, legacyLight, persistedTheme, pageErrors, firstPartyFailures });
       } catch (error) {
         failures.push(spec.name + ': ' + error.message);
       } finally {
